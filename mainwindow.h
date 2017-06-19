@@ -23,6 +23,7 @@
 #include "visualisationframe.h"
 #include "playlistmodel.h"
 #include "dbusadaptors.h"
+#include "aboutwindow.h"
 
 using namespace Phonon;
 
@@ -80,6 +81,8 @@ private slots:
     void on_actionLines_triggered();
 
     void on_actionCircle_triggered();
+
+    void on_actionAbout_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -28,16 +28,19 @@ SOURCES += \
         mainwindow.cpp \
     visualisationframe.cpp \
     playlistmodel.cpp \
-    dbusadaptors.cpp
+    dbusadaptors.cpp \
+    aboutwindow.cpp
 
 HEADERS += \
         mainwindow.h \
     visualisationframe.h \
     playlistmodel.h \
-    dbusadaptors.h
+    dbusadaptors.h \
+    aboutwindow.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    aboutwindow.ui
 
 RESOURCES += \
     resources.qrc

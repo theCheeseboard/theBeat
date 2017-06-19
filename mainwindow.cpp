@@ -277,3 +277,9 @@ void MainWindow::on_actionCircle_triggered()
     ui->actionLines->setChecked(true);
     ui->actionCircle->setChecked(false);
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutWindow window;
+    window.exec();
+}
