@@ -56,6 +56,8 @@ private slots:
 
     void on_sourcesList_activated(const QModelIndex &index);
 
+    void on_actionExit_triggered();
+
 private:
     Ui::MainWindow *ui;
 

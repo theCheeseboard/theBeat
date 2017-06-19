@@ -171,3 +171,8 @@ void MainWindow::on_sourcesList_activated(const QModelIndex &index)
             ui->actionOpen->trigger();
     }
 }
+
+void MainWindow::on_actionExit_triggered()
+{
+    QApplication::exit();
+}
