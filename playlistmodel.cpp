@@ -47,12 +47,16 @@ void PlaylistModel::append(MediaSource source) {
 }
 
 void PlaylistModel::enqueueNext() {
-    if (currentPlayingItem + 1 == rowCount()) {
-        currentPlayingItem = -1;
-    }
+    if (repeat && currentPlayingItem != -1) {
+        mediaObj->enqueue(sources.at(currentPlayingItem));
+    } else {
+        if (currentPlayingItem + 1 == rowCount()) {
+            currentPlayingItem = -1;
+        }
 
-    currentPlayingItem++;
-    mediaObj->enqueue(sources.at(currentPlayingItem));
+        currentPlayingItem++;
+        mediaObj->enqueue(sources.at(currentPlayingItem));
+    }
 }
 
 void PlaylistModel::enqueueAndPlayNext() {
@@ -72,4 +76,8 @@ void PlaylistModel::mediaChanged(MediaSource source) {
 void PlaylistModel::playItem(int i) {
     mediaObj->setCurrentSource(sources.at(i));
     mediaObj->play();
+}
+
+void PlaylistModel::setRepeat(bool repeat) {
+    this->repeat = repeat;
 }

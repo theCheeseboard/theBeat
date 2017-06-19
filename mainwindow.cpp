@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->currentMediaFrame->setVisible(false);
 
     player = new MediaObject(this);
+    dataOut = new AudioDataOutput(this);
     playlist = new PlaylistModel(player);
 
     createPath(player, new AudioOutput(Phonon::MusicCategory, this));
@@ -17,18 +18,20 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect(player, SIGNAL(aboutToFinish()), this, SLOT(playerAboutToFinish()));
     connect(player, SIGNAL(aboutToFinish()), playlist, SLOT(enqueueNext()));
     connect(player, SIGNAL(stateChanged(Phonon::State,Phonon::State)), this, SLOT(playerStateChanged(Phonon::State,Phonon::State)));
+    connect(player, SIGNAL(currentSourceChanged(Phonon::MediaSource)), this, SLOT(updateMetadata()));
+
+    dataOut->setDataSize(ui->visualisationFrame->width());
+    connect(dataOut, SIGNAL(dataReady(QMap<Phonon::AudioDataOutput::Channel,QVector<qint16>>)), this, SLOT(dataDecoded(QMap<Phonon::AudioDataOutput::Channel,QVector<qint16>>)));
+    createPath(player, dataOut);
 
     ui->seeker->setMediaObject(player);
 
     ui->playlistWidget->setModel(playlist);
 
+    ui->sourcesList->addItem("Visualiser");
     ui->sourcesList->addItem("Music Library");
-
-    QListWidgetItem* openFileItem = new QListWidgetItem("Open File");
-    ui->sourcesList->addItem(openFileItem);
-
-    QListWidgetItem* openUrlItem = new QListWidgetItem("Open Network Stream");
-    ui->sourcesList->addItem(openUrlItem);
+    ui->sourcesList->addItem("Open File");
+    ui->sourcesList->addItem("Open Network Stream");
 
     new MediaPlayer2Adaptor(this);
     new PlayerAdaptor(this);
@@ -60,21 +63,28 @@ void MainWindow::on_actionOpen_triggered()
 }
 
 void MainWindow::updateMetadata() {
-    QStringList Title = player->metaData(Phonon::TitleMetaData);
-
+    bool showChangedNotification = false;
     QStringList metadata;
+
+    QString title, artist;
+
+    QStringList Title = player->metaData(Phonon::TitleMetaData);
     if (Title.count() > 0) {
         if (Title.at(0) != ui->currentTitleLabel->text()) {
-            ui->currentTitleLabel->setText(Title.at(0));
+            title = Title.at(0);
+            ui->currentTitleLabel->setText(title);
+            showChangedNotification = true;
         }
         mprisMetadataMap.insert("xesam:title", Title.first());
     } else {
+        ui->currentTitleLabel->setText("");
         mprisMetadataMap.remove("xesam:title");
     }
 
     QStringList Artist = player->metaData(Phonon::ArtistMetaData);
     if (Artist.count() > 0) {
-        metadata.append(Artist.at(0));
+        artist = Artist.at(0);
+        metadata.append(artist);
         mprisMetadataMap.insert("xesam:artist", Artist);
     } else {
         mprisMetadataMap.remove("xesam:artist");
@@ -91,6 +101,21 @@ void MainWindow::updateMetadata() {
     ui->currentMetadataLabel->setText(metadata.join(" · "));
     ui->currentMediaFrame->setVisible(true);
     ui->albumArtLabel->setPixmap(QIcon::fromTheme("audio").pixmap(32, 32));
+
+    if (showChangedNotification) {
+        tNotification* notification = new tNotification();
+        notification->setSummary("Now Playing");
+
+        QStringList notificationText;
+        notificationText.append(title);
+        notificationText.append(artist);
+
+        notification->setText(notificationText.join(" · "));
+        notification->setSoundOn(false);
+        notification->setAppName("theBeat");
+        notification->setTransient(true);
+        notification->post();
+    }
 
     //Send the PropertiesChanged signal.
     QDBusMessage signal = QDBusMessage::createSignal("/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged");
@@ -167,7 +192,7 @@ MediaObject* MainWindow::getPlayer() {
 void MainWindow::on_sourcesList_activated(const QModelIndex &index)
 {
     switch (index.row()) {
-        case 1: //Open File
+        case 2: //Open File
             ui->actionOpen->trigger();
     }
 }
@@ -175,4 +200,80 @@ void MainWindow::on_sourcesList_activated(const QModelIndex &index)
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::exit();
+}
+
+void MainWindow::on_repeatButton_toggled(bool checked)
+{
+    playlist->setRepeat(checked);
+}
+
+void MainWindow::on_sourcesList_currentRowChanged(int currentRow)
+{
+    switch (currentRow) {
+        case 0:
+            ui->sourcesStack->setCurrentIndex(0);
+            break;
+        case 3:
+            ui->sourcesStack->setCurrentIndex(2);
+            break;
+    }
+}
+
+void MainWindow::on_AddNetworkStreamButton_clicked()
+{
+    playlist->append(MediaSource(QUrl::fromUserInput(ui->networkStreamURL->text())));
+    playlist->enqueueAndPlayNext();
+
+    ui->networkStreamURL->setText("");
+
+    tToast* toast = new tToast(this);
+    toast->setTitle("Media Stream Added");
+    toast->setText("Media Stream has been added to the playlist.");
+    toast->setTimeout(5000);
+    connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+    toast->show(this);
+}
+
+void MainWindow::dataDecoded(QMap<AudioDataOutput::Channel, QVector<qint16>> data) {
+    ui->visualisationFrame->setVisualisation(data.value(AudioDataOutput::LeftChannel));
+    ui->visualisationFrame->update();
+}
+
+void MainWindow::on_visualisationFrame_visualisationRateChanged(int size)
+{
+    dataOut->setDataSize(size);
+}
+
+void MainWindow::on_visualisationFrame_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu* menu = new QMenu(this);
+    menu->addSection("Visualisation");
+    menu->addAction(ui->actionScope);
+    menu->addAction(ui->actionLines);
+    menu->addAction(ui->actionCircle);
+    menu->exec(ui->visualisationFrame->mapToGlobal(pos));
+}
+
+void MainWindow::on_actionScope_triggered()
+{
+    ui->visualisationFrame->setVisualisationType(VisualisationFrame::Scope);
+    ui->actionScope->setChecked(true);
+    ui->actionLines->setChecked(false);
+    ui->actionCircle->setChecked(false);
+}
+
+void MainWindow::on_actionLines_triggered()
+{
+    ui->visualisationFrame->setVisualisationType(VisualisationFrame::Lines);
+    ui->actionScope->setChecked(false);
+    ui->actionLines->setChecked(true);
+    ui->actionCircle->setChecked(false);
+}
+
+void MainWindow::on_actionCircle_triggered()
+{
+    ui->visualisationFrame->setVisualisationType(VisualisationFrame::Circle);
+    ui->actionScope->setChecked(false);
+    ui->actionLines->setChecked(true);
+    ui->actionCircle->setChecked(false);
 }

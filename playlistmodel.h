@@ -4,6 +4,7 @@
 #include <QAbstractListModel>
 #include <phonon/MediaSource>
 #include <phonon/MediaObject>
+#include <phonon/AudioDataOutput>
 #include <QFileIconProvider>
 
 using namespace Phonon;
@@ -29,16 +30,21 @@ public slots:
 
     void playItem(int i);
 
+    void setRepeat(bool repeat);
+
 private slots:
     void mediaChanged(Phonon::MediaSource source);
 
 private:
     MediaObject* mediaObj;
+    AudioDataOutput* dataOut;
 
     QList<MediaSource> sources;
     int currentPlayingItem = -1;
 
     QFileIconProvider fileIconProvider;
+
+    bool repeat = false;
 };
 
 Q_DECLARE_METATYPE(MediaSource)

@@ -56,7 +56,6 @@ void VisualisationFrame::setVisualisation(QVector<qint16> visualisation) {
 void VisualisationFrame::paintEvent(QPaintEvent *paintEvent) {
     QPainter painter(this);
     painter.setBrush(this->palette().brush(QPalette::WindowText));
-    painter.drawLine(0, 0, this->width(), 0);
 
     if (VisType == Lines) {
         int i = 0;

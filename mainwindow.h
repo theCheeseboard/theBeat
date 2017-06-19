@@ -15,6 +15,11 @@
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QAction>
+#include <QStackedWidget>
+#include <QLineEdit>
+#include <ttoast.h>
+#include <QMenu>
+#include <tnotification.h>
 #include "visualisationframe.h"
 #include "playlistmodel.h"
 #include "dbusadaptors.h"
@@ -57,6 +62,24 @@ private slots:
     void on_sourcesList_activated(const QModelIndex &index);
 
     void on_actionExit_triggered();
+
+    void on_repeatButton_toggled(bool checked);
+
+    void on_sourcesList_currentRowChanged(int currentRow);
+
+    void on_AddNetworkStreamButton_clicked();
+
+    void dataDecoded(QMap<Phonon::AudioDataOutput::Channel,QVector<qint16>> data);
+
+    void on_visualisationFrame_visualisationRateChanged(int size);
+
+    void on_visualisationFrame_customContextMenuRequested(const QPoint &pos);
+
+    void on_actionScope_triggered();
+
+    void on_actionLines_triggered();
+
+    void on_actionCircle_triggered();
 
 private:
     Ui::MainWindow *ui;
