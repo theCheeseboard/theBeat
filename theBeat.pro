@@ -8,7 +8,7 @@ QT       += core gui phonon4qt5 dbus x11extras thelib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = theBeat
+TARGET = thebeat
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
