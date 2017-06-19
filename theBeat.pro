@@ -41,3 +41,6 @@ FORMS += \
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    thebeat.desktop
