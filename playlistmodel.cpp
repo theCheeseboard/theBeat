@@ -81,3 +81,59 @@ void PlaylistModel::playItem(int i) {
 void PlaylistModel::setRepeat(bool repeat) {
     this->repeat = repeat;
 }
+
+bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) {
+    if (action == Qt::CopyAction) {
+        if (data->hasUrls()) {
+            bool append = !parent.isValid();
+            for (QUrl url : data->urls()) {
+                MediaSource source(url);
+                if (append) {
+                    sources.append(source);
+                } else {
+                    sources.insert(row, source);
+                }
+            }
+            dataChanged(this->index(0), this->index(rowCount()));
+            return true;
+        } else {
+            return false;
+        }
+    } else if (action == Qt::IgnoreAction) {
+        return true;
+    }
+    return true;
+}
+
+Qt::DropActions PlaylistModel::supportedDropActions() const {
+    return Qt::CopyAction;
+}
+
+bool PlaylistModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) {
+    //QList<MediaSource> sourcesToMove = sources.mid(sourceParent.row(), count);
+    for (int i = 0; i < count; i++) {
+        sources.move(sourceParent.row(), destinationParent.row());
+    }
+    return true;
+}
+
+Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const {
+    Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
+    return Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled | defaultFlags;
+}
+
+QStringList PlaylistModel::mimeTypes() const {
+    QStringList types;
+    types.append("text/uri-list");
+    return types;
+}
+
+QMimeData* PlaylistModel::mimeData(const QModelIndexList &indexes) const {
+    QMimeData* mime = new QMimeData();
+    QList<QUrl> files;
+    for (QModelIndex index : indexes) {
+        files.append(sources.at(index.row()).url());
+    }
+    mime->setUrls(files);
+    return mime;
+}

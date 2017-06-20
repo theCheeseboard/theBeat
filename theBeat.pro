@@ -29,18 +29,23 @@ SOURCES += \
     visualisationframe.cpp \
     playlistmodel.cpp \
     dbusadaptors.cpp \
-    aboutwindow.cpp
+    aboutwindow.cpp \
+    librarymodel.cpp \
+    librarymanagedialog.cpp
 
 HEADERS += \
         mainwindow.h \
     visualisationframe.h \
     playlistmodel.h \
     dbusadaptors.h \
-    aboutwindow.h
+    aboutwindow.h \
+    librarymodel.h \
+    librarymanagedialog.h
 
 FORMS += \
         mainwindow.ui \
-    aboutwindow.ui
+    aboutwindow.ui \
+    librarymanagedialog.ui
 
 RESOURCES += \
     resources.qrc

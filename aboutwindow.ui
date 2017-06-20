@@ -26,7 +26,7 @@
       </font>
      </property>
      <property name="text">
-      <string>theBeat 0.2 Preview</string>
+      <string>theBeat 0.3 Preview</string>
      </property>
     </widget>
    </item>
@@ -81,7 +81,8 @@
         <string>OK</string>
        </property>
        <property name="icon">
-        <iconset theme="dialog-ok"/>
+        <iconset theme="dialog-ok">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>

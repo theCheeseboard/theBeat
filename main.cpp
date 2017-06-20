@@ -4,6 +4,10 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    a.setOrganizationName("theSuite");
+    a.setApplicationName("theBeat");
+
     MainWindow w;
     w.show();
 

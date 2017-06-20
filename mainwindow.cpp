@@ -39,6 +39,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/org/mpris/MediaPlayer2", this, QDBusConnection::ExportAdaptors);
     dbus.registerService("org.mpris.MediaPlayer2.theBeat");
+
+    library = new LibraryModel;
+    ui->library->setModel(library);
+    ui->library->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 }
 
 MainWindow::~MainWindow()
@@ -191,10 +195,10 @@ MediaObject* MainWindow::getPlayer() {
 
 void MainWindow::on_sourcesList_activated(const QModelIndex &index)
 {
-    switch (index.row()) {
+    /*switch (index.row()) {
         case 2: //Open File
             ui->actionOpen->trigger();
-    }
+    }*/
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -209,14 +213,15 @@ void MainWindow::on_repeatButton_toggled(bool checked)
 
 void MainWindow::on_sourcesList_currentRowChanged(int currentRow)
 {
-    switch (currentRow) {
+    /*switch (currentRow) {
         case 0:
             ui->sourcesStack->setCurrentIndex(0);
             break;
         case 3:
             ui->sourcesStack->setCurrentIndex(2);
             break;
-    }
+    }*/
+    ui->sourcesStack->setCurrentIndex(currentRow);
 }
 
 void MainWindow::on_AddNetworkStreamButton_clicked()
@@ -282,4 +287,27 @@ void MainWindow::on_actionAbout_triggered()
 {
     AboutWindow window;
     window.exec();
+}
+
+void MainWindow::on_OpenFileButton_clicked()
+{
+    ui->actionOpen->trigger();
+}
+
+void MainWindow::on_actionManage_Library_triggered()
+{
+    LibraryManageDialog d;
+    d.exec();
+    library->reloadData();
+}
+
+void MainWindow::on_library_activated(const QModelIndex &index)
+{
+}
+
+void MainWindow::on_library_doubleClicked(const QModelIndex &index)
+{
+    MediaSource source(library->data(index, Qt::UserRole).toString());
+    playlist->append(source);
+    playlist->enqueueAndPlayNext();
 }

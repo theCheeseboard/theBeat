@@ -19,11 +19,15 @@
 #include <QLineEdit>
 #include <ttoast.h>
 #include <QMenu>
+#include <QSettings>
+#include <QTableWidget>
 #include <tnotification.h>
 #include "visualisationframe.h"
 #include "playlistmodel.h"
 #include "dbusadaptors.h"
 #include "aboutwindow.h"
+#include "librarymodel.h"
+#include "librarymanagedialog.h"
 
 using namespace Phonon;
 
@@ -84,10 +88,19 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_OpenFileButton_clicked();
+
+    void on_actionManage_Library_triggered();
+
+    void on_library_activated(const QModelIndex &index);
+
+    void on_library_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
 
     PlaylistModel* playlist;
+    LibraryModel* library;
 
     MediaObject* player;
     MediaController* controller;
