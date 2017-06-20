@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui phonon4qt5 dbus x11extras thelib
+LIBS     += -ltag
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,7 +32,8 @@ SOURCES += \
     dbusadaptors.cpp \
     aboutwindow.cpp \
     librarymodel.cpp \
-    librarymanagedialog.cpp
+    librarymanagedialog.cpp \
+    playlistlistwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +42,8 @@ HEADERS += \
     dbusadaptors.h \
     aboutwindow.h \
     librarymodel.h \
-    librarymanagedialog.h
+    librarymanagedialog.h \
+    playlistlistwidget.h
 
 FORMS += \
         mainwindow.ui \

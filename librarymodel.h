@@ -8,6 +8,8 @@
 #include <QMimeData>
 #include <QUrl>
 #include <QFileIconProvider>
+#include <taglib/fileref.h>
+#include <taglib/tag.h>
 
 class LibraryModel : public QAbstractTableModel
 {
@@ -32,7 +34,45 @@ public slots:
     void reloadData();
 
 private:
-    QStringList availableMediaFiles;
+    struct MediaFile {
+        QString title;
+        QString artist;
+        QString filename;
+
+        bool operator <(const MediaFile& other) const {
+            QString compare1, compare2;
+            if (title != "" && other.title != "") {
+                compare1 = title;
+                compare2 = other.title;
+            } else if (title == "" && other.title != "") {
+                QFileInfo fileInfo1(filename);
+                compare1 = fileInfo1.completeBaseName();
+                compare2 = other.title;
+            } else if (title != "" && other.title == "") {
+                QFileInfo fileInfo2(other.filename);
+                compare1 = title;
+                compare2 = fileInfo2.completeBaseName();
+            } else {
+                QFileInfo fileInfo1(filename);
+                QFileInfo fileInfo2(other.filename);
+                compare1 = fileInfo1.completeBaseName();
+                compare2 = fileInfo2.completeBaseName();
+            }
+
+            int compare = compare1.localeAwareCompare(compare2);
+            if (compare < 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        bool operator >(const MediaFile& other) const {
+            return other < *this;
+        }
+    };
+
+    QList<MediaFile> availableMediaFiles;
     QSettings settings;
 
     QFileIconProvider fileIconProvider;

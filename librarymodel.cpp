@@ -12,9 +12,11 @@ QVariant LibraryModel::headerData(int section, Qt::Orientation orientation, int 
         switch (section) {
             case 0:
                 return "Name";
+            case 1:
+                return "Artist";
         }
     } else if (role == Qt::SizeHintRole) {
-        return QSize(100, 29);
+        return QSize(500, 29);
     }
     return QAbstractTableModel::headerData(section, orientation, role);
 }
@@ -33,7 +35,7 @@ int LibraryModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 1;
+        return 2;
     }
 }
 
@@ -44,15 +46,23 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
     } else {
         int row = index.row();
         int col = index.column();
-        switch (col) {
-            case 0: { //Name
-                QFileInfo fileInfo(availableMediaFiles.at(row));
-                if (role == Qt::DisplayRole) {
-                    return fileInfo.completeBaseName();
-                } else if (role == Qt::UserRole) {
-                    return fileInfo.filePath();
-                } else if (role == Qt::DecorationRole) {
-                    return fileIconProvider.icon(fileInfo);
+        MediaFile metadata = availableMediaFiles.at(row);
+        QFileInfo fileInfo(metadata.filename);
+        if (role == Qt::UserRole) {
+            return fileInfo.filePath();
+        } else {
+            switch (col) {
+                case 0: { //Name
+                    if (role == Qt::DisplayRole) {
+                        return metadata.title;
+                    } else if (role == Qt::DecorationRole) {
+                        return fileIconProvider.icon(fileInfo);
+                    }
+                }
+                case 1: { //Artist
+                    if (role == Qt::DisplayRole) {
+                        return metadata.artist;
+                    }
                 }
             }
         }
@@ -70,11 +80,29 @@ void LibraryModel::reloadData() {
         while (iterator.hasNext()) {
             QString filename = iterator.next();
             if (iterator.fileInfo().isFile()) {
-                availableMediaFiles.append(filename);
+                MediaFile metadata;
+                metadata.filename = filename;
+                TagLib::FileRef tags(filename.toUtf8());
+                if (tags.tag() == NULL) {
+                    //Skip over this one
+                    continue;
+                }
+                QString title = QString::fromStdWString(tags.tag()->title().toWString());
+                if (title != "") {
+                    metadata.title = title;
+                } else {
+                    metadata.title = iterator.fileInfo().completeBaseName();
+                }
+
+                metadata.artist = QString::fromStdWString(tags.tag()->artist().toWString());
+
+                availableMediaFiles.append(metadata);
             }
         }
     }
     settings.endArray();
+
+    std::sort(availableMediaFiles.begin(), availableMediaFiles.end());
 }
 
 Qt::ItemFlags LibraryModel::flags(const QModelIndex &index) const {
@@ -92,7 +120,9 @@ QMimeData* LibraryModel::mimeData(const QModelIndexList &indexes) const {
     QMimeData* mime = new QMimeData();
     QList<QUrl> files;
     for (QModelIndex index : indexes) {
-        files.append(QUrl::fromLocalFile(availableMediaFiles.at(index.row())));
+        if (index.column() == 0) {
+            files.append(QUrl::fromLocalFile(availableMediaFiles.at(index.row()).filename));
+        }
     }
     mime->setUrls(files);
     return mime;

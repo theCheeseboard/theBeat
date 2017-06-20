@@ -28,10 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->playlistWidget->setModel(playlist);
 
-    ui->sourcesList->addItem("Visualiser");
-    ui->sourcesList->addItem("Music Library");
-    ui->sourcesList->addItem("Open File");
-    ui->sourcesList->addItem("Open Network Stream");
+    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("password-show-on"), "Visualiser"));
+    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("media-playback-start"), "Music Library"));
+    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("document-open"), "Open File"));
+    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("online"), "Open Network Stream"));
 
     new MediaPlayer2Adaptor(this);
     new PlayerAdaptor(this);
@@ -178,6 +178,33 @@ void MainWindow::playerStateChanged(State newState, State oldState) {
     } else {
         ui->playButton->setIcon(QIcon::fromTheme("media-playback-start"));
     }
+
+    QString status;
+    if (newState == PlayingState) {
+        status = "Playing";
+    } else if (newState == PausedState) {
+        status = "Paused";
+    } else {
+        status = "Stopped";
+    }
+
+    //Send the PropertiesChanged signal.
+    QDBusMessage signal = QDBusMessage::createSignal("/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged");
+
+    QList<QVariant> args;
+    args.append("org.mpris.MediaPlayer2.Player");
+
+    QVariantMap changedProperties;
+    changedProperties.insert("PlaybackStatus", status);
+    args.append(changedProperties);
+
+    QStringList invalidatedProperties;
+    invalidatedProperties.append("PlaybackStatus");
+    args.append(invalidatedProperties);
+
+    signal.setArguments(args);
+
+    QDBusConnection::sessionBus().send(signal);
 }
 
 void MainWindow::on_playlistWidget_activated(const QModelIndex &index)
@@ -309,5 +336,30 @@ void MainWindow::on_library_doubleClicked(const QModelIndex &index)
 {
     MediaSource source(library->data(index, Qt::UserRole).toString());
     playlist->append(source);
-    playlist->enqueueAndPlayNext();
+    playlist->playItem(playlist->rowCount() - 1);
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event) {
+    //Move items around accordingly
+    if (this->height() < 400 || this->width() < 450) {
+        ui->contentFrame->setVisible(false);
+        ui->musicDivider->setVisible(false);
+        ui->playlistContainerMainFrame->setVisible(false);
+        ui->playlistContainerUnderFrame->setVisible(true);
+        ui->playlistContainerUnder->addWidget(ui->playlistWidget);
+    } else {
+        ui->contentFrame->setVisible(true);
+        ui->musicDivider->setVisible(true);
+        ui->playlistContainerMainFrame->setVisible(true);
+        ui->playlistContainerUnderFrame->setVisible(false);
+        ui->playlistContainerMain->addWidget(ui->playlistWidget);
+
+        if (this->width() < 1000) {
+            ui->sourcesList->setVisible(false);
+            ui->sourcesDivider->setVisible(false);
+        } else {
+            ui->sourcesList->setVisible(true);
+            ui->sourcesDivider->setVisible(true);
+        }
+    }
 }

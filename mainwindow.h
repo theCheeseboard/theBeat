@@ -21,6 +21,7 @@
 #include <QMenu>
 #include <QSettings>
 #include <QTableWidget>
+#include <QResizeEvent>
 #include <tnotification.h>
 #include "visualisationframe.h"
 #include "playlistmodel.h"
@@ -107,6 +108,7 @@ private:
     AudioDataOutput* dataOut;
 
     QVariantMap mprisMetadataMap;
+    void resizeEvent(QResizeEvent* event);
 };
 
 #endif // MAINWINDOW_H

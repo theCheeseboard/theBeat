@@ -91,7 +91,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                 if (append) {
                     sources.append(source);
                 } else {
-                    sources.insert(row, source);
+                    sources.insert(parent.row(), source);
                 }
             }
             dataChanged(this->index(0), this->index(rowCount()));
