@@ -38,7 +38,7 @@
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>9</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
         <number>9</number>
@@ -60,6 +60,9 @@
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>32</width>
@@ -78,9 +81,9 @@
        <item>
         <widget class="QStackedWidget" name="sourcesStack">
          <property name="currentIndex">
-          <number>1</number>
+          <number>5</number>
          </property>
-         <widget class="QWidget" name="sourcesStackPage1_2" native="true">
+         <widget class="QWidget" name="sourcesStackPage1_2">
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <property name="leftMargin">
             <number>0</number>
@@ -109,7 +112,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="sourcesStackPage2_2" native="true">
+         <widget class="QWidget" name="sourcesStackPage2_2">
           <layout class="QVBoxLayout" name="verticalLayout_7">
            <property name="leftMargin">
             <number>0</number>
@@ -180,7 +183,48 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="sourcesStackPage3_2" native="true">
+         <widget class="QWidget" name="page">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_7">
+             <property name="font">
+              <font>
+               <pointsize>20</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Playlists</string>
+             </property>
+             <property name="indent">
+              <number>9</number>
+             </property>
+             <property name="buddy">
+              <cstring></cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListView" name="PlaylistsView">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="sourcesStackPage3_2">
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <property name="topMargin">
             <number>0</number>
@@ -260,7 +304,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="sourcesStackPage4_2" native="true">
+         <widget class="QWidget" name="sourcesStackPage4_2">
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <property name="topMargin">
             <number>0</number>
@@ -337,6 +381,54 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="page_2">
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_8">
+             <property name="font">
+              <font>
+               <pointsize>20</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Play CD</string>
+             </property>
+             <property name="indent">
+              <number>9</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>CD Playback is coming soon. Stay tuned!</string>
+             </property>
+             <property name="indent">
+              <number>9</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListView" name="listView">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
        <item>
@@ -393,6 +485,9 @@
             <property name="dragDropMode">
              <enum>QAbstractItemView::DropOnly</enum>
             </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
            </widget>
           </item>
          </layout>
@@ -422,12 +517,12 @@
          <item>
           <widget class="QLabel" name="albumArtLabel">
            <property name="text">
-            <string notr="true">Albu&amp;mArt</string>
+            <string notr="true">AlbumArt</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="">
+          <widget class="QFrame" name="frame">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -464,7 +559,7 @@
                </font>
               </property>
               <property name="text">
-               <string notr="true">Bit &amp;Quest</string>
+               <string notr="true">Bit Quest</string>
               </property>
              </widget>
             </item>
@@ -480,7 +575,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string notr="true">&amp;Kevin MacLeod</string>
+               <string notr="true">Kevin MacLeod</string>
               </property>
              </widget>
             </item>
@@ -691,7 +786,7 @@
   </action>
   <action name="actionManage_Library">
    <property name="text">
-    <string>Manage Library</string>
+    <string>&amp;Manage Library</string>
    </property>
   </action>
  </widget>

@@ -28,10 +28,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->playlistWidget->setModel(playlist);
 
-    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("password-show-on"), "Visualiser"));
+    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("view-media-visualisation"), "Visualiser"));
     ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("media-playback-start"), "Music Library"));
+    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("view-media-playlist"), "Playlists"));
     ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("document-open"), "Open File"));
     ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("online"), "Open Network Stream"));
+    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("media-optical-audio"), "Play CD"));
 
     new MediaPlayer2Adaptor(this);
     new PlayerAdaptor(this);
@@ -43,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
     library = new LibraryModel;
     ui->library->setModel(library);
     ui->library->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+
+    ui->PlaylistsView->setModel(new PlaylistFileModel);
 }
 
 MainWindow::~MainWindow()
@@ -306,8 +310,9 @@ void MainWindow::on_actionCircle_triggered()
 {
     ui->visualisationFrame->setVisualisationType(VisualisationFrame::Circle);
     ui->actionScope->setChecked(false);
-    ui->actionLines->setChecked(true);
-    ui->actionCircle->setChecked(false);
+    ui->actionLines->setChecked(false);
+    ui->actionCircle->setChecked(true);
+
 }
 
 void MainWindow::on_actionAbout_triggered()
@@ -355,11 +360,20 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
         ui->playlistContainerMain->addWidget(ui->playlistWidget);
 
         if (this->width() < 1000) {
-            ui->sourcesList->setVisible(false);
-            ui->sourcesDivider->setVisible(false);
+            //ui->sourcesList->setVisible(false);
+            ui->sourcesList->setMaximumSize(36, ui->sourcesList->maximumHeight());
+            //ui->sourcesDivider->setVisible(false);
         } else {
-            ui->sourcesList->setVisible(true);
-            ui->sourcesDivider->setVisible(true);
+            //ui->sourcesList->setVisible(true);
+            ui->sourcesList->setMaximumSize(300, ui->sourcesList->maximumHeight());
+            //ui->sourcesDivider->setVisible(true);
         }
     }
+}
+
+void MainWindow::on_PlaylistsView_doubleClicked(const QModelIndex &index)
+{
+    int play = playlist->rowCount();
+    playlist->appendPlaylist(ui->PlaylistsView->model()->data(index, Qt::UserRole).toString());
+    playlist->playItem(play);
 }

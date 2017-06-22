@@ -78,4 +78,15 @@ private:
     QFileIconProvider fileIconProvider;
 };
 
+class PlaylistFileModel : public QAbstractListModel
+{
+    Q_OBJECT
+
+public:
+    explicit PlaylistFileModel(QObject *parent = nullptr);
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+};
+
 #endif // LIBRARYMODEL_H

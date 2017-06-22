@@ -6,6 +6,8 @@ PlaylistModel::PlaylistModel(MediaObject* object, QObject *parent)
     this->mediaObj = object;
 
     connect(object, SIGNAL(currentSourceChanged(Phonon::MediaSource)), this, SLOT(mediaChanged(Phonon::MediaSource)));
+
+    controller = new MediaController(object);
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
@@ -26,13 +28,20 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     } else {
         int i = index.row();
         switch (role) {
-            case Qt::DisplayRole:
-                return QFileInfo(sources.at(i).fileName()).baseName();
+            case Qt::DisplayRole: {
+                MediaSource src = sources.at(i);
+                QUrl url = src.url();
+                if (url.isLocalFile()) {
+                    return QFileInfo(src.fileName()).baseName();
+                } else {
+                    return url.toDisplayString();
+                }
+            }
             case Qt::DecorationRole:
                 if (i == currentPlayingItem) {
                     return QIcon::fromTheme("media-playback-start");
                 } else {
-                    return fileIconProvider.icon(QFileInfo(sources.at(i).fileName()));
+                    return fileIconProvider.icon(QFileInfo(sources.at(i).source.fileName()));
                 }
             case Qt::UserRole: //Return the media source
                 return QVariant::fromValue(sources.at(i));
@@ -43,6 +52,21 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
 void PlaylistModel::append(MediaSource source) {
     sources.append(source);
+    dataChanged(this->index(0), this->index(rowCount()));
+}
+
+void PlaylistModel::appendPlaylist(QString path) {
+    QFile open(path);
+    open.open(QFile::ReadOnly);
+    QString contents(open.readAll());
+    open.close();
+
+    for (QString file : contents.split("\n")) {
+        if (file != "") {
+            MediaSource source(file);
+            sources.append(source);
+        }
+    }
     dataChanged(this->index(0), this->index(rowCount()));
 }
 
@@ -86,12 +110,27 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
     if (action == Qt::CopyAction) {
         if (data->hasUrls()) {
             bool append = !parent.isValid();
+
             for (QUrl url : data->urls()) {
-                MediaSource source(url);
-                if (append) {
-                    sources.append(source);
+                if (url.toLocalFile().startsWith(QDir::homePath() + "/.themedia/playlists/")) {
+                    QFile open(url.toLocalFile());
+                    open.open(QFile::ReadOnly);
+                    QString contents(open.readAll());
+                    open.close();
+
+                    for (QString file : contents.split("\n")) {
+                        if (file != "") {
+                            MediaSource source(file);
+                            sources.append(source);
+                        }
+                    }
                 } else {
-                    sources.insert(parent.row(), source);
+                    MediaSource source(url);
+                    if (append) {
+                        sources.append(source);
+                    } else {
+                        sources.insert(parent.row(), source);
+                    }
                 }
             }
             dataChanged(this->index(0), this->index(rowCount()));
@@ -132,8 +171,17 @@ QMimeData* PlaylistModel::mimeData(const QModelIndexList &indexes) const {
     QMimeData* mime = new QMimeData();
     QList<QUrl> files;
     for (QModelIndex index : indexes) {
-        files.append(sources.at(index.row()).url());
+        files.append(sources.at(index.row()).source.url());
     }
     mime->setUrls(files);
     return mime;
+}
+
+MediaItem::MediaItem(const MediaSource &source) {
+    this->source = source;
+    currentType = Source;
+}
+
+MediaItem::MediaItem() {
+
 }

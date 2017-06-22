@@ -97,6 +97,8 @@ private slots:
 
     void on_library_doubleClicked(const QModelIndex &index);
 
+    void on_PlaylistsView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
 

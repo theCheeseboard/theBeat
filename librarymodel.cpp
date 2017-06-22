@@ -85,16 +85,18 @@ void LibraryModel::reloadData() {
                 TagLib::FileRef tags(filename.toUtf8());
                 if (tags.tag() == NULL) {
                     //Skip over this one
-                    continue;
-                }
-                QString title = QString::fromStdWString(tags.tag()->title().toWString());
-                if (title != "") {
-                    metadata.title = title;
-                } else {
+                    //continue;
                     metadata.title = iterator.fileInfo().completeBaseName();
-                }
+                } else {
+                    QString title = QString::fromStdWString(tags.tag()->title().toWString());
+                    if (title != "") {
+                        metadata.title = title;
+                    } else {
+                        metadata.title = iterator.fileInfo().completeBaseName();
+                    }
 
-                metadata.artist = QString::fromStdWString(tags.tag()->artist().toWString());
+                    metadata.artist = QString::fromStdWString(tags.tag()->artist().toWString());
+                }
 
                 availableMediaFiles.append(metadata);
             }
@@ -126,4 +128,32 @@ QMimeData* LibraryModel::mimeData(const QModelIndexList &indexes) const {
     }
     mime->setUrls(files);
     return mime;
+}
+
+PlaylistFileModel::PlaylistFileModel(QObject *parent) : QAbstractListModel(parent) {
+
+}
+
+int PlaylistFileModel::rowCount(const QModelIndex &parent) const {
+    if (parent.isValid()) {
+        return 0;
+    } else {
+        int numPlaylists = QDir(QDir::homePath() + "/.themedia/playlists").entryList(QDir::Files | QDir::NoDotAndDotDot).count();
+        return numPlaylists;
+    }
+}
+
+QVariant PlaylistFileModel::data(const QModelIndex &index, int role) const {
+    if (!index.isValid()) {
+        return QVariant();
+    } else {
+        QFileInfo fileInfo = QDir(QDir::homePath() + "/.themedia/playlists/").entryInfoList(QDir::Files | QDir::NoDotAndDotDot).at(index.row());
+        if (role == Qt::DisplayRole) {
+            return fileInfo.fileName();
+        } else if (role == Qt::UserRole) {
+            return fileInfo.filePath();
+        } else {
+            return QVariant();
+        }
+    }
 }

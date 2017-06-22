@@ -7,8 +7,41 @@
 #include <phonon/AudioDataOutput>
 #include <QFileIconProvider>
 #include <QMimeData>
+#include <QDir>
+#include <phonon/MediaController>
 
 using namespace Phonon;
+
+struct MediaItem {
+    MediaItem();
+    MediaItem(const MediaSource &source);
+
+    enum MediaType {
+        Source,
+        Optical
+    };
+
+    MediaSource source;
+    MediaType currentType;
+
+    operator MediaSource() const {
+        return source;
+    }
+
+    bool operator==(const MediaItem &other) {
+        if (this->currentType == other.currentType) {
+            if (this->currentType == Source) {
+                return this->source == other.source;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+};
+
+Q_DECLARE_METATYPE(MediaItem)
 
 class PlaylistModel : public QAbstractListModel
 {
@@ -33,6 +66,8 @@ public:
 public slots:
     void append(MediaSource source);
 
+    void appendPlaylist(QString path);
+
     void enqueueAndPlayNext();
 
     void enqueueNext();
@@ -45,10 +80,12 @@ private slots:
     void mediaChanged(Phonon::MediaSource source);
 
 private:
+
     MediaObject* mediaObj;
+    MediaController* controller;
     AudioDataOutput* dataOut;
 
-    QList<MediaSource> sources;
+    QList<MediaItem> sources;
     int currentPlayingItem = -1;
 
     QFileIconProvider fileIconProvider;
