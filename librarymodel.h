@@ -38,6 +38,7 @@ private:
         QString title;
         QString artist;
         QString filename;
+        QString album;
 
         bool operator <(const MediaFile& other) const {
             QString compare1, compare2;

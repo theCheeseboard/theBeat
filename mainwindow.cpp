@@ -19,6 +19,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(player, SIGNAL(aboutToFinish()), playlist, SLOT(enqueueNext()));
     connect(player, SIGNAL(stateChanged(Phonon::State,Phonon::State)), this, SLOT(playerStateChanged(Phonon::State,Phonon::State)));
     connect(player, SIGNAL(currentSourceChanged(Phonon::MediaSource)), this, SLOT(updateMetadata()));
+    connect(player, &MediaObject::totalTimeChanged, [=](qint64 totalTime) {
+        mprisMetadataMap.insert("mpris:length", totalTime * 1000);
+    });
 
     dataOut->setDataSize(ui->visualisationFrame->width());
     connect(dataOut, SIGNAL(dataReady(QMap<Phonon::AudioDataOutput::Channel,QVector<qint16>>)), this, SLOT(dataDecoded(QMap<Phonon::AudioDataOutput::Channel,QVector<qint16>>)));
@@ -28,12 +31,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->playlistWidget->setModel(playlist);
 
-    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("view-media-visualisation"), "Visualiser"));
+    /*ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("view-media-visualisation"), "Visualiser"));
     ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("media-playback-start"), "Music Library"));
     ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("view-media-playlist"), "Playlists"));
     ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("document-open"), "Open File"));
     ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("online"), "Open Network Stream"));
-    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("media-optical-audio"), "Play CD"));
+    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("media-optical-audio"), "Play CD"));*/
+
+    QMenu* playlistMenu = new QMenu();
+    playlistMenu->addAction(ui->actionClear_Playlist);
+    playlistMenu->addAction(ui->actionSave_Playlist);
+    playlistMenu->addAction(ui->actionAdd_to_existing_playlist);
+    ui->playlistMenuButton->setMenu(playlistMenu);
 
     new MediaPlayer2Adaptor(this);
     new PlayerAdaptor(this);
@@ -125,6 +134,8 @@ void MainWindow::updateMetadata() {
         notification->post();
     }
 
+    mprisMetadataMap.insert("mpris:trackid", QVariant::fromValue(QDBusObjectPath("/org/thesuite/thebeat/currentmedia")));
+
     //Send the PropertiesChanged signal.
     QDBusMessage signal = QDBusMessage::createSignal("/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged");
 
@@ -157,23 +168,15 @@ void MainWindow::on_playButton_clicked()
 
 void MainWindow::on_nextButton_clicked()
 {
-    //playlist->enqueueNext();
-
+    playlist->playNext();
 }
 
 void MainWindow::on_backButton_clicked()
 {
-
+    playlist->skipBack();
 }
 
 void MainWindow::playerAboutToFinish() {
-    /*if (currentPlaylist + 1 == playlist.count()) {
-        currentPlaylist = 0;
-    } else {
-        currentPlaylist++;
-    }
-
-    player->enqueue(playlist.at(currentPlaylist));*/
 }
 
 void MainWindow::playerStateChanged(State newState, State oldState) {
@@ -357,7 +360,7 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
         ui->musicDivider->setVisible(true);
         ui->playlistContainerMainFrame->setVisible(true);
         ui->playlistContainerUnderFrame->setVisible(false);
-        ui->playlistContainerMain->addWidget(ui->playlistWidget);
+        ui->playlistContainerMain->insertWidget(0, ui->playlistWidget);
 
         if (this->width() < 1000) {
             //ui->sourcesList->setVisible(false);
@@ -376,4 +379,8 @@ void MainWindow::on_PlaylistsView_doubleClicked(const QModelIndex &index)
     int play = playlist->rowCount();
     playlist->appendPlaylist(ui->PlaylistsView->model()->data(index, Qt::UserRole).toString());
     playlist->playItem(play);
+}
+
+PlaylistModel* MainWindow::getPlaylist() {
+    return playlist;
 }

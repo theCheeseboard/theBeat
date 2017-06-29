@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui phonon4qt5 dbus x11extras thelib
-LIBS     += -ltag
+LIBS     += -ltag -lX11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -33,7 +33,8 @@ SOURCES += \
     aboutwindow.cpp \
     librarymodel.cpp \
     librarymanagedialog.cpp \
-    playlistlistwidget.cpp
+    playlistlistwidget.cpp \
+    nativeeventfilter.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,7 +44,8 @@ HEADERS += \
     aboutwindow.h \
     librarymodel.h \
     librarymanagedialog.h \
-    playlistlistwidget.h
+    playlistlistwidget.h \
+    nativeeventfilter.h
 
 FORMS += \
         mainwindow.ui \

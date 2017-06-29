@@ -9,6 +9,8 @@
 #include <QMimeData>
 #include <QDir>
 #include <phonon/MediaController>
+#include <taglib/tag.h>
+#include <taglib/fileref.h>
 
 using namespace Phonon;
 
@@ -73,6 +75,10 @@ public slots:
     void enqueueNext();
 
     void playItem(int i);
+
+    void playNext();
+
+    void skipBack();
 
     void setRepeat(bool repeat);
 

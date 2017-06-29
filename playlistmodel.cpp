@@ -32,7 +32,12 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 MediaSource src = sources.at(i);
                 QUrl url = src.url();
                 if (url.isLocalFile()) {
-                    return QFileInfo(src.fileName()).baseName();
+                    //TagLib::FileRef tags(src.fileName().toUtf8());
+                    //if (tags.tag() == NULL) {
+                        return QFileInfo(src.fileName()).baseName();
+                    //} else {
+                        //return QString::fromStdWString(tags.tag()->title().toWString());
+                    //}
                 } else {
                     return url.toDisplayString();
                 }
@@ -175,6 +180,28 @@ QMimeData* PlaylistModel::mimeData(const QModelIndexList &indexes) const {
     }
     mime->setUrls(files);
     return mime;
+}
+
+void PlaylistModel::playNext() {
+    if (currentPlayingItem + 1 == rowCount()) {
+        currentPlayingItem = -1;
+    }
+
+    currentPlayingItem++;
+    playItem(currentPlayingItem);
+}
+
+void PlaylistModel::skipBack() {
+    if (mediaObj->currentTime() < 5000) {
+        if (currentPlayingItem - 1 == -1) {
+            currentPlayingItem = rowCount();
+        }
+
+        currentPlayingItem--;
+        playItem(currentPlayingItem);
+    } else {
+        mediaObj->seek(0);
+    }
 }
 
 MediaItem::MediaItem(const MediaSource &source) {

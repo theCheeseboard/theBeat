@@ -44,7 +44,7 @@
         <number>9</number>
        </property>
        <property name="rightMargin">
-        <number>9</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -69,6 +69,60 @@
            <height>32</height>
           </size>
          </property>
+         <item>
+          <property name="text">
+           <string>Visualiser</string>
+          </property>
+          <property name="icon">
+           <iconset theme="view-media-visualisation">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Music Library</string>
+          </property>
+          <property name="icon">
+           <iconset theme="media-playback-start">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Playlists</string>
+          </property>
+          <property name="icon">
+           <iconset theme="view-media-playlist">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Open File</string>
+          </property>
+          <property name="icon">
+           <iconset theme="document-open">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Open Network Stream</string>
+          </property>
+          <property name="icon">
+           <iconset theme="online">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Play CD</string>
+          </property>
+          <property name="icon">
+           <iconset theme="media-optical-audio">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
@@ -452,7 +506,7 @@
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QHBoxLayout" name="playlistContainerMain">
+         <layout class="QVBoxLayout" name="playlistContainerMain">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -489,6 +543,39 @@
              <enum>QAbstractItemView::SingleSelection</enum>
             </property>
            </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="playlistOptions">
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="playlistMenuButton">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset theme="application-menu"/>
+              </property>
+              <property name="popupMode">
+               <enum>QToolButton::InstantPopup</enum>
+              </property>
+              <property name="autoRaise">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -787,6 +874,30 @@
   <action name="actionManage_Library">
    <property name="text">
     <string>&amp;Manage Library</string>
+   </property>
+  </action>
+  <action name="actionClear_Playlist">
+   <property name="icon">
+    <iconset theme="edit-delete"/>
+   </property>
+   <property name="text">
+    <string>Clear Playlist</string>
+   </property>
+  </action>
+  <action name="actionSave_Playlist">
+   <property name="icon">
+    <iconset theme="document-save"/>
+   </property>
+   <property name="text">
+    <string>Save Playlist</string>
+   </property>
+  </action>
+  <action name="actionAdd_to_existing_playlist">
+   <property name="icon">
+    <iconset theme="list-add"/>
+   </property>
+   <property name="text">
+    <string>Add to existing playlist</string>
    </property>
   </action>
  </widget>

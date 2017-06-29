@@ -14,6 +14,8 @@ QVariant LibraryModel::headerData(int section, Qt::Orientation orientation, int 
                 return "Name";
             case 1:
                 return "Artist";
+            case 2:
+                return "Album";
         }
     } else if (role == Qt::SizeHintRole) {
         return QSize(500, 29);
@@ -35,7 +37,7 @@ int LibraryModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return 2;
+        return 3;
     }
 }
 
@@ -62,6 +64,11 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
                 case 1: { //Artist
                     if (role == Qt::DisplayRole) {
                         return metadata.artist;
+                    }
+                }
+                case 2: { //Album
+                    if (role == Qt::DisplayRole) {
+                        return metadata.album;
                     }
                 }
             }
@@ -96,6 +103,7 @@ void LibraryModel::reloadData() {
                     }
 
                     metadata.artist = QString::fromStdWString(tags.tag()->artist().toWString());
+                    metadata.album = QString::fromStdWString(tags.tag()->album().toWString());
                 }
 
                 availableMediaFiles.append(metadata);

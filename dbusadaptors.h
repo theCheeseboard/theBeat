@@ -110,6 +110,11 @@ class PlayerAdaptor: public QDBusAbstractAdaptor
 "    <method name=\"Stop\"/>\n"
 "    <method name=\"Play\"/>\n"
 "    <method type=\"ox\" name=\"SetPosition\"/>\n"
+"    <method type=\"x\" name=\"Seek\"/>\n"
+"    <signal name=\"Seeked\">\n"
+"      <arg name=\"time\" type=\"x\" direction=\"out\"/>\n"
+"      <annotation name=\"org.qtproject.QtDBus.QtTypeName.Out1\" value=\"qint64\"/>\n"
+"    </signal>"
 "  </interface>\n"
         "")
 public:
@@ -177,9 +182,11 @@ public Q_SLOTS: // METHODS
     void Play();
     void PlayPause();
     void Previous();
+    void Seek(qint64 position);
     void SetPosition(QDBusObjectPath track, qlonglong position);
     void Stop();
 Q_SIGNALS: // SIGNALS
+    void Seeked(qint64 time);
 
 private:
     MainWindow* mainWindow;

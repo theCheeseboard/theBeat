@@ -10,6 +10,9 @@ MediaPlayer2Adaptor::~MediaPlayer2Adaptor() {
 
 PlayerAdaptor::PlayerAdaptor(MainWindow *parent) : QDBusAbstractAdaptor(parent) {
     mainWindow = parent;
+    connect(mainWindow->getPlayer(), &MediaObject::tick, [=](qint64 time) {
+        emit Seeked(time * 1000);
+    });
 }
 
 PlayerAdaptor::~PlayerAdaptor() {
@@ -35,12 +38,23 @@ qlonglong PlayerAdaptor::position() const {
     return mainWindow->getPlayer()->currentTime();
 }
 
-void PlayerAdaptor::Next() {
+void PlayerAdaptor::Seek(qint64 position) {
+    qint64 seek = mainWindow->getPlayer()->currentTime() + position / 1000;
+    if (seek < 0) {
+        seek = 0;
+    } else if (seek > mainWindow->getPlayer()->totalTime()) {
+        Next();
+        return;
+    }
+    mainWindow->getPlayer()->seek(seek);
+}
 
+void PlayerAdaptor::Next() {
+    mainWindow->getPlaylist()->playNext();
 }
 
 void PlayerAdaptor::Previous() {
-
+    mainWindow->getPlaylist()->skipBack();
 }
 
 void PlayerAdaptor::PlayPause() {
@@ -64,5 +78,5 @@ void PlayerAdaptor::Stop() {
 }
 
 void PlayerAdaptor::SetPosition(QDBusObjectPath track, qlonglong position) {
-    mainWindow->getPlayer()->seek(position);
+    mainWindow->getPlayer()->seek(position / 1000);
 }

@@ -23,6 +23,7 @@
 #include <QTableWidget>
 #include <QResizeEvent>
 #include <tnotification.h>
+#include <QToolButton>
 #include "visualisationframe.h"
 #include "playlistmodel.h"
 #include "dbusadaptors.h"
@@ -47,6 +48,7 @@ public:
     QVariantMap metadataMap();
 
     MediaObject* getPlayer();
+    PlaylistModel* getPlaylist();
 
 private slots:
     void on_actionOpen_triggered();
