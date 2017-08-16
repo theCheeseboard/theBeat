@@ -31,13 +31,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->playlistWidget->setModel(playlist);
 
-    /*ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("view-media-visualisation"), "Visualiser"));
-    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("media-playback-start"), "Music Library"));
-    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("view-media-playlist"), "Playlists"));
-    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("document-open"), "Open File"));
-    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("online"), "Open Network Stream"));
-    ui->sourcesList->addItem(new QListWidgetItem(QIcon::fromTheme("media-optical-audio"), "Play CD"));*/
-
     QMenu* playlistMenu = new QMenu();
     playlistMenu->addAction(ui->actionClear_Playlist);
     playlistMenu->addAction(ui->actionSave_Playlist);

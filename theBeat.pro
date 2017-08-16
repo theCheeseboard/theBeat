@@ -57,3 +57,12 @@ RESOURCES += \
 
 DISTFILES += \
     thebeat.desktop
+
+unix {
+    target.path = /usr/bin
+
+    appentry.path = /usr/share/applications
+    appentry.files = thebeat.desktop
+
+    INSTALLS += target appentry
+}
