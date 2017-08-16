@@ -56,7 +56,8 @@ RESOURCES += \
     resources.qrc
 
 DISTFILES += \
-    thebeat.desktop
+    thebeat.desktop \
+    thebeat.svg
 
 unix {
     target.path = /usr/bin
@@ -64,5 +65,8 @@ unix {
     appentry.path = /usr/share/applications
     appentry.files = thebeat.desktop
 
-    INSTALLS += target appentry
+    icon.path = /usr/share/icons
+    icon.files = thebeat.svg
+
+    INSTALLS += target appentry icon
 }
