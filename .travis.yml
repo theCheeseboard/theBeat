@@ -1,0 +1,11 @@
+language: cpp
+before_install:
+  - sudo add-apt-repository 'deb https://vicr123.com/repo/apt/ubuntu bionic main'
+  - sudo apt-get update -qq
+  - sudo apt-get install phonon4qt5-dev libtag1v5-dev the-libs
+script:
+  - qmake
+  - make
+compiler:
+  - gcc
+dist: xenial
