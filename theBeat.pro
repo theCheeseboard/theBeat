@@ -5,7 +5,13 @@
 #-------------------------------------------------
 
 QT       += core gui phonon4qt5 dbus x11extras thelib
-LIBS     += -ltag -lX11
+LIBS     += -ltag
+CONFIG   += c++14
+
+unix {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += x11
+}
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
