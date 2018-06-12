@@ -1,11 +1,36 @@
 language: cpp
 before_install:
+  - wget -O ~/vicr12345.gpg.key https://vicr123.com/repo/apt/vicr12345.gpg.key
+  - sudo apt-key add ~/vicr12345.gpg.key
   - sudo add-apt-repository 'deb https://vicr123.com/repo/apt/ubuntu bionic main'
   - sudo apt-get update -qq
-  - sudo apt-get install phonon4qt5-dev libtag1v5-dev the-libs
+  - sudo apt-get install libphonon4qt5-dev libtag1-dev qt5-qmake libqt5x11extras5-dev qt5-default
 script:
+  - git clone https://github.com/vicr123/the-libs.git
+  - cd the-libs
   - qmake
   - make
+  - sudo make install INSTALL_ROOT=/
+  - cd ..
+  - qmake
+  - make
+  - make install INSTALL_ROOT=appdir
+  - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+  - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+  - "./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -bundle-non-qt-libs"
+  - "./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage"
+after_success:
+  - find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh APPNAME*.AppImage*
+
 compiler:
   - gcc
 dist: xenial
+# deploy:
+#  provider: releases
+#  api_key:
+#    secure: EcNKeue/CzBq2dxMAv0E71XQfdedQ8MAWVxcY6iM9OqcMrPmFMIGyqizWHc9/+uYU9wpdk+X5aJ4tzOV2NxwtYBWU4W3Tcy7+d9cRPhh+SMjQNr3AbuA9RknbpkUj+Cif6Er9kqdvKgXZRPHfp745qoBQ0E12vyEDJDWU0V0kvZGTcHvCyPepx0CO9YCB331UAOsfET6XnnHIfBIRuG5gf3ePj5R3Z9AG9ITW1008mY6N10IvofQkVYEbQhDefERW9HIaTSrwr7V3JbaorAZDGJEAuCDnE35gbIsCmtCk1RjPS8sVITfpAnz5dJaOCrN/dx7Xq3M7mtcpacACKo4fC7crtCMTdmHNhPotjEGSXXzdbehYf8JrvJSYoy2xkrajSeTMB7iwO/LPEidBko/rwS5FhEt9UVjUSQ7KCHNLm8oIeejqIj0ZOOQ7XhG7t9Q/iOaV1w6hVwiRGFL1o9aRwvTWXG6xHqV+6O7d5JE2baYQbzgrLi3ZOKZ3WPQL/DhOZZXW/vZDB1AOmooIP29AVtp0NfOS+PoqPslkxLMMoCTppg0SrfqOF4zrNp76emY8/vvxNIEGZVlJopJlmycvyX848gkWxDe0USnL4Thewk6HZKcyGfo+RsKGMna8h3G2YimHsNlbMl9e9/sT768v0Ye8d3Nac4UytR0uTlL2G8=
+#  file: upload
+#  on:
+#    repo: vicr123/theBeat
