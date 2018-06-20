@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     controller = new MediaController(player);
     cdController = new MediaController(cdFinder);
 
+    player->setTickInterval(1000);
+
     createPath(player, new AudioOutput(Phonon::MusicCategory, this));
     connect(player, SIGNAL(metaDataChanged()), this, SLOT(updateMetadata()));
     //connect(player, SIGNAL(aboutToFinish()), this, SLOT(playerAboutToFinish()));
@@ -24,6 +26,25 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(player, SIGNAL(currentSourceChanged(Phonon::MediaSource)), this, SLOT(updateMetadata()));
     connect(player, &MediaObject::totalTimeChanged, [=](qint64 totalTime) {
         mprisMetadataMap.insert("mpris:length", totalTime * 1000);
+
+        if (totalTime == 0) {
+            ui->totalTime->setText("∞");
+        } else {
+            QDateTime t = QDateTime::fromMSecsSinceEpoch(totalTime);
+            if (t.time().hour() == 0) {
+                ui->totalTime->setText(t.toString("HH:mm:ss"));
+            } else {
+                ui->totalTime->setText(t.toString("mm:ss"));
+            }
+        }
+    });
+    connect(player, &MediaObject::tick, [=](qint64 time) {
+        QDateTime t = QDateTime::fromMSecsSinceEpoch(time);
+        if (t.time().hour() == 0) {
+            ui->elapsedTime->setText(t.toString("HH:mm:ss"));
+        } else {
+            ui->elapsedTime->setText(t.toString("mm:ss"));
+        }
     });
 
     dataOut->setDataSize(ui->visualisationFrame->width());

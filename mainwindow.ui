@@ -738,12 +738,26 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
+          <widget class="QLabel" name="elapsedTime">
+           <property name="text">
+            <string notr="true">Elapsed</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="Phonon::SeekSlider" name="seeker">
            <property name="iconVisible">
             <bool>false</bool>
            </property>
            <property name="tracking">
             <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="totalTime">
+           <property name="text">
+            <string notr="true">Total</string>
            </property>
           </widget>
          </item>

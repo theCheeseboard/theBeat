@@ -7,6 +7,7 @@
 #include <phonon/MediaController>
 #include <phonon/AudioDataOutput>
 #include <phonon/AudioOutput>
+#include <QDateTime>
 #include <QFileDialog>
 #include <QLabel>
 #include <QPushButton>
