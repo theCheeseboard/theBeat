@@ -23,6 +23,7 @@
 #include <QFrame>
 #include <QPainter>
 #include <QtMath>
+#include <complex>
 
 class VisualisationFrame : public QFrame
 {
@@ -55,6 +56,7 @@ private:
     QVector<qint16> visualisations;
 
     QList<qreal> previousVolumes;
+    QList<std::complex<double>> ftVolumes;
 
     int oldRadius = -1;
 

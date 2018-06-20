@@ -10,8 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->currentMediaFrame->setVisible(false);
 
     player = new MediaObject(this);
+    cdFinder = new MediaObject(this);
     dataOut = new AudioDataOutput(this);
     playlist = new PlaylistModel(player);
+    controller = new MediaController(player);
+    cdController = new MediaController(cdFinder);
 
     createPath(player, new AudioOutput(Phonon::MusicCategory, this));
     connect(player, SIGNAL(metaDataChanged()), this, SLOT(updateMetadata()));
@@ -28,6 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
     createPath(player, dataOut);
 
     ui->seeker->setMediaObject(player);
+
+    ui->widget->setVisible(false);
+    ui->label_9->setVisible(false);
 
     ui->playlistWidget->setModel(playlist);
 
@@ -46,9 +52,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     library = new LibraryModel;
     ui->library->setModel(library);
-    ui->library->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    //ui->library->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->library->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 
     ui->PlaylistsView->setModel(new PlaylistFileModel);
+
+    AudioDataOutput* dummyOutput = new AudioDataOutput(this);
+    createPath(cdFinder, dummyOutput);
+    connect(cdController, &MediaController::availableTitlesChanged, [=](int numberOfTracks) {
+        //New CD inserted
+        qDebug() << numberOfTracks;
+    });
+    cdFinder->setCurrentSource(MediaSource(Phonon::Cd, "/dev/sr0"));
+    cdFinder->play();
+    cdFinder->pause();
 }
 
 MainWindow::~MainWindow()

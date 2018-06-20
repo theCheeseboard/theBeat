@@ -24,6 +24,8 @@
 #include <QResizeEvent>
 #include <tnotification.h>
 #include <QToolButton>
+#include <QTreeView>
+#include <QHeaderView>
 #include "visualisationframe.h"
 #include "playlistmodel.h"
 #include "dbusadaptors.h"
@@ -107,8 +109,8 @@ private:
     PlaylistModel* playlist;
     LibraryModel* library;
 
-    MediaObject* player;
-    MediaController* controller;
+    MediaObject *player, *cdFinder;
+    MediaController *controller, *cdController;
     AudioDataOutput* dataOut;
 
     QVariantMap mprisMetadataMap;

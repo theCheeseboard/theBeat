@@ -135,7 +135,7 @@
        <item>
         <widget class="QStackedWidget" name="sourcesStack">
          <property name="currentIndex">
-          <number>5</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="sourcesStackPage1_2">
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -199,7 +199,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTableView" name="library">
+            <widget class="QTreeView" name="library">
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
              </property>
@@ -218,21 +218,9 @@
              <property name="horizontalScrollMode">
               <enum>QAbstractItemView::ScrollPerPixel</enum>
              </property>
-             <property name="showGrid">
+             <property name="rootIsDecorated">
               <bool>false</bool>
              </property>
-             <property name="gridStyle">
-              <enum>Qt::SolidLine</enum>
-             </property>
-             <attribute name="horizontalHeaderDefaultSectionSize">
-              <number>200</number>
-             </attribute>
-             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-              <bool>true</bool>
-             </attribute>
-             <attribute name="verticalHeaderVisible">
-              <bool>false</bool>
-             </attribute>
             </widget>
            </item>
           </layout>
@@ -465,12 +453,22 @@
             </widget>
            </item>
            <item>
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>CD Playback coming soon. Stay tuned!</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="tCircularSpinner" name="widget" native="true"/>
+           </item>
+           <item>
             <widget class="QLabel" name="label_9">
              <property name="text">
-              <string>CD Playback is coming soon. Stay tuned!</string>
+              <string>Loading CD</string>
              </property>
-             <property name="indent">
-              <number>9</number>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -565,7 +563,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="application-menu"/>
+               <iconset theme="application-menu">
+                <normaloff>.</normaloff>.</iconset>
               </property>
               <property name="popupMode">
                <enum>QToolButton::InstantPopup</enum>
@@ -878,7 +877,8 @@
   </action>
   <action name="actionClear_Playlist">
    <property name="icon">
-    <iconset theme="edit-delete"/>
+    <iconset theme="edit-delete">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Clear Playlist</string>
@@ -886,7 +886,8 @@
   </action>
   <action name="actionSave_Playlist">
    <property name="icon">
-    <iconset theme="document-save"/>
+    <iconset theme="document-save">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Save Playlist</string>
@@ -894,7 +895,8 @@
   </action>
   <action name="actionAdd_to_existing_playlist">
    <property name="icon">
-    <iconset theme="list-add"/>
+    <iconset theme="list-add">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Add to existing playlist</string>
@@ -907,6 +909,12 @@
    <class>Phonon::SeekSlider</class>
    <extends>QWidget</extends>
    <header location="global">phonon/seekslider.h</header>
+  </customwidget>
+  <customwidget>
+   <class>tCircularSpinner</class>
+   <extends>QWidget</extends>
+   <header location="global">tcircularspinner.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>VisualisationFrame</class>

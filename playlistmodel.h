@@ -18,6 +18,8 @@ struct MediaItem {
     MediaItem();
     MediaItem(const MediaSource &source);
 
+    int opticalTrack;
+
     enum MediaType {
         Source,
         Optical
