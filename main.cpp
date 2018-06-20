@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "nativeeventfilter.h"
 #include <QApplication>
+#include <QMainWindow>
 
 int main(int argc, char *argv[])
 {
@@ -8,6 +9,9 @@ int main(int argc, char *argv[])
 
     a.setOrganizationName("theSuite");
     a.setApplicationName("theBeat");
+
+    //QMainWindow w;
+    //w.show();
 
     MainWindow w;
     w.show();

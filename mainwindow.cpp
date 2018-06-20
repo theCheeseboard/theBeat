@@ -300,6 +300,7 @@ void MainWindow::on_visualisationFrame_customContextMenuRequested(const QPoint &
     menu->addAction(ui->actionScope);
     menu->addAction(ui->actionLines);
     menu->addAction(ui->actionCircle);
+    menu->addAction(ui->actionBars);
     menu->exec(ui->visualisationFrame->mapToGlobal(pos));
 }
 
@@ -309,6 +310,7 @@ void MainWindow::on_actionScope_triggered()
     ui->actionScope->setChecked(true);
     ui->actionLines->setChecked(false);
     ui->actionCircle->setChecked(false);
+    ui->actionBars->setChecked(false);
 }
 
 void MainWindow::on_actionLines_triggered()
@@ -317,6 +319,7 @@ void MainWindow::on_actionLines_triggered()
     ui->actionScope->setChecked(false);
     ui->actionLines->setChecked(true);
     ui->actionCircle->setChecked(false);
+    ui->actionBars->setChecked(false);
 }
 
 void MainWindow::on_actionCircle_triggered()
@@ -325,6 +328,7 @@ void MainWindow::on_actionCircle_triggered()
     ui->actionScope->setChecked(false);
     ui->actionLines->setChecked(false);
     ui->actionCircle->setChecked(true);
+    ui->actionBars->setChecked(false);
 
 }
 
@@ -393,4 +397,14 @@ void MainWindow::on_PlaylistsView_doubleClicked(const QModelIndex &index)
 
 PlaylistModel* MainWindow::getPlaylist() {
     return playlist;
+}
+
+void MainWindow::on_actionBars_triggered()
+{
+
+    ui->visualisationFrame->setVisualisationType(VisualisationFrame::Bars);
+    ui->actionScope->setChecked(false);
+    ui->actionLines->setChecked(false);
+    ui->actionCircle->setChecked(false);
+    ui->actionBars->setChecked(true);
 }

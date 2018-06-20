@@ -23,7 +23,7 @@
 #include <QFrame>
 #include <QPainter>
 #include <QtMath>
-#include <complex>
+#include <ffft/FFTReal.h>
 
 class VisualisationFrame : public QFrame
 {
@@ -54,9 +54,9 @@ public:
 
 private:
     QVector<qint16> visualisations;
+    qint16 ftBaskets[32];
 
     QList<qreal> previousVolumes;
-    QList<std::complex<double>> ftVolumes;
 
     int oldRadius = -1;
 

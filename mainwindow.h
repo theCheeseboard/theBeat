@@ -103,7 +103,9 @@ private slots:
 
     void on_PlaylistsView_doubleClicked(const QModelIndex &index);
 
-private:
+    void on_actionBars_triggered();
+
+    private:
     Ui::MainWindow *ui;
 
     PlaylistModel* playlist;

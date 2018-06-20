@@ -104,6 +104,30 @@ void VisualisationFrame::paintEvent(QPaintEvent *paintEvent) {
         painter.setPen(this->palette().color(QPalette::WindowText));
 
         painter.drawEllipse(center, radius, radius);
+    } else if (VisType == Bars) {
+        if (visualisations.count() == 1024) {
+            //ffft::FFTRealFixLen<10> ft;
+            ffft::FFTReal<float> ft(1024);
+            float ftPoints[1024];
+            float visPoints[1024];
+            for (int i = 0; i < 1024; i++) {
+                visPoints[i] = visualisations.at(i);
+            }
+            ft.do_fft(ftPoints, visPoints);
+
+            //Put them into baskets
+            for (int i = 0; i < 1024; i++) {
+                int basket = i / 32;
+                ftBaskets[basket] -= 20;
+                if (ftBaskets[basket] < visPoints[basket]) ftBaskets[basket] = visPoints[basket];
+            }
+
+            for (int i = 0; i < 32; i++) {
+                painter.drawRect(this->width() / 32 * i, this->height() - ftBaskets[i] / 50, this->width() / 32, ftBaskets[i] / 50);
+                //painter.drawRect(iteration, this->height(), iteration, this->height() - ypoint / 50);
+                //iteration++;
+            }
+        }
     } else {
         if (visualisations.count() != 0) {
             qint16 oldypoint = visualisations.at(0);
@@ -125,6 +149,8 @@ void VisualisationFrame::paintEvent(QPaintEvent *paintEvent) {
 void VisualisationFrame::resizeEvent(QResizeEvent *) {
     if (this->VisType == Lines || this->VisType == Circle) {
         emit visualisationRateChanged(500);
+    } else if (this->VisType == Bars) {
+        emit visualisationRateChanged(1024);
     } else {
         emit visualisationRateChanged(this->width());
     }
@@ -134,6 +160,8 @@ void VisualisationFrame::setVisualisationType(visualisationType type) {
     this->VisType = type;
     if (this->VisType == Lines || this->VisType == Circle) {
         emit visualisationRateChanged(500);
+    } else if (this->VisType == Bars) {
+        emit visualisationRateChanged(1024);
     } else {
         emit visualisationRateChanged(this->width());
     }
