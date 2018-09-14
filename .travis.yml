@@ -4,7 +4,7 @@ before_install:
   - sudo apt-key add ~/vicr12345.gpg.key
   - sudo add-apt-repository 'deb https://vicr123.com/repo/apt/ubuntu bionic main'
   - sudo apt-get update -qq
-  - sudo apt-get install libphonon4qt5-dev libtag1-dev qt5-qmake libqt5x11extras5-dev qt5-default
+  - sudo apt-get install libphonon4qt5-dev libtag1-dev qt5-qmake libqt5x11extras5-dev qt5-default the-libs
 script:
   - git clone https://github.com/vicr123/the-libs.git
   - cd the-libs
