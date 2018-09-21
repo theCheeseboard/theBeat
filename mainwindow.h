@@ -32,7 +32,6 @@
 #include "dbusadaptors.h"
 #include "aboutwindow.h"
 #include "librarymodel.h"
-#include "librarymanagedialog.h"
 #include "librarymanagewidget.h"
 
 #ifdef BUILD_DISCORD
@@ -100,8 +99,6 @@ private slots:
     void on_actionAbout_triggered();
 
     void on_OpenFileButton_clicked();
-
-    void on_actionManage_Library_triggered();
 
     void on_library_activated(const QModelIndex &index);
 

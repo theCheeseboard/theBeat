@@ -388,13 +388,6 @@ void MainWindow::on_OpenFileButton_clicked()
     ui->actionOpen->trigger();
 }
 
-void MainWindow::on_actionManage_Library_triggered()
-{
-    LibraryManageDialog d;
-    d.exec();
-    ui->libStack->setCurrentIndex(library->reloadData());
-}
-
 void MainWindow::on_library_activated(const QModelIndex &index)
 {
 }

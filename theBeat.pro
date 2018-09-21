@@ -20,6 +20,7 @@ no-discord {
     exists(/usr/lib/libdiscord-rpc.so) || discord {
         #Build Discord
         DEFINES += BUILD_DISCORD
+        CONFIG += BUILD_DISCORD
     }
 }
 
@@ -48,12 +49,11 @@ SOURCES += \
     dbusadaptors.cpp \
     aboutwindow.cpp \
     librarymodel.cpp \
-    librarymanagedialog.cpp \
     playlistlistwidget.cpp \
     nativeeventfilter.cpp \
     librarymanagewidget.cpp
 
-discord {
+BUILD_DISCORD {
     SOURCES += discordintegration.cpp
 }
 
@@ -64,19 +64,17 @@ HEADERS += \
     dbusadaptors.h \
     aboutwindow.h \
     librarymodel.h \
-    librarymanagedialog.h \
     playlistlistwidget.h \
     nativeeventfilter.h \
     librarymanagewidget.h
 
-discord {
+BUILD_DISCORD {
     HEADERS += discordintegration.h
 }
 
 FORMS += \
         mainwindow.ui \
     aboutwindow.ui \
-    librarymanagedialog.ui \
     librarymanagewidget.ui
 
 RESOURCES += \

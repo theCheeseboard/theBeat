@@ -1314,7 +1314,6 @@
      <string>Fi&amp;le</string>
     </property>
     <addaction name="actionOpen"/>
-    <addaction name="actionManage_Library"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1384,11 +1383,6 @@
    </property>
    <property name="text">
     <string>&amp;About</string>
-   </property>
-  </action>
-  <action name="actionManage_Library">
-   <property name="text">
-    <string>&amp;Manage Library</string>
    </property>
   </action>
   <action name="actionClear_Playlist">
