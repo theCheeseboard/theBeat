@@ -1,6 +1,7 @@
 #include "librarymodel.h"
 
 #include <QFileSystemWatcher>
+#include <QIcon>
 
 LibraryModel::LibraryModel(QObject *parent)
     : QAbstractTableModel(parent)
@@ -60,7 +61,8 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
                     if (role == Qt::DisplayRole) {
                         return metadata.title;
                     } else if (role == Qt::DecorationRole) {
-                        return fileIconProvider.icon(fileInfo);
+                        QMimeType t = mimedb.mimeTypeForFile(fileInfo);
+                        return QIcon::fromTheme(t.iconName());
                     }
                 }
                 case 1: { //Artist

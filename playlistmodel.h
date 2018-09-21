@@ -5,9 +5,10 @@
 #include <phonon/MediaSource>
 #include <phonon/MediaObject>
 #include <phonon/AudioDataOutput>
-#include <QFileIconProvider>
 #include <QMimeData>
 #include <QDir>
+#include <QMimeDatabase>
+#include <QIcon>
 #include <phonon/MediaController>
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
@@ -100,7 +101,7 @@ private:
     QList<MediaItem> sources;
     int currentPlayingItem = -1;
 
-    QFileIconProvider fileIconProvider;
+    QMimeDatabase mimeDb;
 
     bool repeat = false;
 };

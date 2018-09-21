@@ -7,7 +7,7 @@
 #include <QDirIterator>
 #include <QMimeData>
 #include <QUrl>
-#include <QFileIconProvider>
+#include <QMimeDatabase>
 #include "tagcache.h"
 
 class LibraryModel : public QAbstractTableModel
@@ -75,7 +75,7 @@ private:
     QList<MediaFile> availableMediaFiles;
     QSettings settings;
 
-    QFileIconProvider fileIconProvider;
+    QMimeDatabase mimedb;
 };
 
 class PlaylistFileModel : public QAbstractListModel

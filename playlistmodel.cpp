@@ -44,12 +44,24 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                     return url.toDisplayString();
                 }
             }
-            case Qt::DecorationRole:
+            case Qt::DecorationRole: {
+                MediaSource current = sources.at(i).source;
+
                 if (i == currentPlayingItem) {
                     return QIcon::fromTheme("media-playback-start");
-                } else {
-                    return fileIconProvider.icon(QFileInfo(sources.at(i).source.fileName()));
+                } else if (current.type() == MediaSource::LocalFile) {
+                    QMimeType t = mimeDb.mimeTypeForFile(current.fileName());
+                    return QIcon::fromTheme(t.iconName());
+                } else if (current.type() == MediaSource::Url) {
+                    QUrl u = current.url();
+                    if (u.isLocalFile()) {
+                        QMimeType t = mimeDb.mimeTypeForUrl(current.url());
+                        return QIcon::fromTheme(t.iconName());
+                    } else {
+                        return QIcon::fromTheme("network-wireless-connected-75");
+                    }
                 }
+            }
             case Qt::UserRole: //Return the media source
                 return QVariant::fromValue(sources.at(i));
         }
