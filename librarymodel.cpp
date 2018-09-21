@@ -91,21 +91,22 @@ int LibraryModel::reloadData() {
             if (iterator.fileInfo().isFile()) {
                 MediaFile metadata;
                 metadata.filename = filename;
-                TagLib::FileRef tags(filename.toUtf8());
-                if (tags.tag() == NULL) {
+
+                TagLib::Tag* tag = TagCache::getTag(filename);
+                if (tag == nullptr) {
                     //Skip over this one
                     //continue;
                     metadata.title = iterator.fileInfo().completeBaseName();
                 } else {
-                    QString title = QString::fromStdWString(tags.tag()->title().toWString());
+                    QString title = QString::fromStdWString(tag->title().toWString());
                     if (title != "") {
                         metadata.title = title;
                     } else {
                         metadata.title = iterator.fileInfo().completeBaseName();
                     }
 
-                    metadata.artist = QString::fromStdWString(tags.tag()->artist().toWString());
-                    metadata.album = QString::fromStdWString(tags.tag()->album().toWString());
+                    metadata.artist = QString::fromStdWString(tag->artist().toWString());
+                    metadata.album = QString::fromStdWString(tag->album().toWString());
                 }
 
                 availableMediaFiles.append(metadata);

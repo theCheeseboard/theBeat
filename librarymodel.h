@@ -8,8 +8,7 @@
 #include <QMimeData>
 #include <QUrl>
 #include <QFileIconProvider>
-#include <taglib/fileref.h>
-#include <taglib/tag.h>
+#include "tagcache.h"
 
 class LibraryModel : public QAbstractTableModel
 {

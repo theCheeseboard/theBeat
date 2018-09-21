@@ -1,5 +1,7 @@
 #include "playlistmodel.h"
 
+#include "tagcache.h"
+
 PlaylistModel::PlaylistModel(MediaObject* object, QObject *parent)
     : QAbstractListModel(parent)
 {
@@ -32,12 +34,12 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 MediaSource src = sources.at(i);
                 QUrl url = src.url();
                 if (url.isLocalFile()) {
-                    //TagLib::FileRef tags(src.fileName().toUtf8());
-                    //if (tags.tag() == NULL) {
+                    TagLib::Tag* tag = TagCache::getTag(src.fileName());
+                    if (tag == nullptr) {
                         return QFileInfo(src.fileName()).baseName();
-                    //} else {
-                        //return QString::fromStdWString(tags.tag()->title().toWString());
-                    //}
+                    } else {
+                        return QString::fromStdWString(tag->title().toWString());
+                    }
                 } else {
                     return url.toDisplayString();
                 }
