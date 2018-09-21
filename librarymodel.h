@@ -31,7 +31,7 @@ public:
     QMimeData* mimeData(const QModelIndexList &indexes) const override;
 
 public slots:
-    void reloadData();
+    int reloadData();
 
 private:
     struct MediaFile {

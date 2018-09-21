@@ -5,7 +5,7 @@
 LibraryModel::LibraryModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
-    reloadData();
+
 }
 
 QVariant LibraryModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -79,7 +79,7 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void LibraryModel::reloadData() {
+int LibraryModel::reloadData() {
     availableMediaFiles.clear();
 
     int count = settings.beginReadArray("library/folders");
@@ -115,6 +115,12 @@ void LibraryModel::reloadData() {
     settings.endArray();
 
     std::sort(availableMediaFiles.begin(), availableMediaFiles.end());
+
+    if (availableMediaFiles.count() == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 Qt::ItemFlags LibraryModel::flags(const QModelIndex &index) const {

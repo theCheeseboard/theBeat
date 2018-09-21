@@ -40,7 +40,8 @@ SOURCES += \
     librarymodel.cpp \
     librarymanagedialog.cpp \
     playlistlistwidget.cpp \
-    nativeeventfilter.cpp
+    nativeeventfilter.cpp \
+    librarymanagewidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,12 +52,14 @@ HEADERS += \
     librarymodel.h \
     librarymanagedialog.h \
     playlistlistwidget.h \
-    nativeeventfilter.h
+    nativeeventfilter.h \
+    librarymanagewidget.h
 
 FORMS += \
         mainwindow.ui \
     aboutwindow.ui \
-    librarymanagedialog.ui
+    librarymanagedialog.ui \
+    librarymanagewidget.ui
 
 RESOURCES += \
     resources.qrc

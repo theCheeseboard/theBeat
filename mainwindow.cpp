@@ -13,6 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->currentMediaFrame->setVisible(false);
 
+    libWidget = new LibraryManageWidget();
+    ui->libStack->addWidget(libWidget);
+    connect(libWidget, &LibraryManageWidget::editingDone, [=] {
+        ui->libStack->setCurrentIndex(library->reloadData());
+    });
+
     player = new MediaObject(this);
     cdFinder = new MediaObject(this);
     dataOut = new AudioDataOutput(this);
@@ -80,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->library->setModel(library);
     //ui->library->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->library->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->libStack->setCurrentIndex(library->reloadData());
 
     ui->PlaylistsView->setModel(new PlaylistFileModel);
 
@@ -381,7 +388,7 @@ void MainWindow::on_actionManage_Library_triggered()
 {
     LibraryManageDialog d;
     d.exec();
-    library->reloadData();
+    ui->libStack->setCurrentIndex(library->reloadData());
 }
 
 void MainWindow::on_library_activated(const QModelIndex &index)
@@ -474,4 +481,15 @@ void MainWindow::on_actionClear_Playlist_triggered()
 void MainWindow::on_actionAdd_to_existing_playlist_triggered()
 {
 
+}
+
+void MainWindow::on_editMusicLibraryButton_clicked()
+{
+    ui->libStack->setCurrentIndex(2);
+    libWidget->reloadLibrary();
+}
+
+void MainWindow::on_manageMusicLibrarySplashButton_clicked()
+{
+    ui->editMusicLibraryButton->click();
 }

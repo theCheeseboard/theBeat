@@ -33,6 +33,7 @@
 #include "aboutwindow.h"
 #include "librarymodel.h"
 #include "librarymanagedialog.h"
+#include "librarymanagewidget.h"
 
 using namespace Phonon;
 
@@ -112,6 +113,10 @@ private slots:
 
     void on_actionAdd_to_existing_playlist_triggered();
 
+    void on_editMusicLibraryButton_clicked();
+
+    void on_manageMusicLibrarySplashButton_clicked();
+
     private:
     Ui::MainWindow *ui;
 
@@ -121,6 +126,8 @@ private slots:
     MediaObject *player, *cdFinder;
     MediaController *controller, *cdController;
     AudioDataOutput* dataOut;
+
+    LibraryManageWidget* libWidget;
 
     QVariantMap mprisMetadataMap;
     void resizeEvent(QResizeEvent* event);
