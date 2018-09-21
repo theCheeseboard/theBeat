@@ -87,6 +87,8 @@ MainWindow::MainWindow(QWidget *parent) :
     cdFinder->setCurrentSource(MediaSource(Phonon::Cd, "/dev/sr0"));
     cdFinder->play();
     cdFinder->pause();
+
+    ui->appTitleLabel->setFixedHeight(ui->appTitleLabel->fontMetrics().height() + 18); //Don't scale DPI because margins don't scale
 }
 
 MainWindow::~MainWindow()
@@ -111,6 +113,7 @@ void MainWindow::on_actionOpen_triggered()
 }
 
 void MainWindow::updateMetadata() {
+    QVariantMap currentDataMap = mprisMetadataMap;
     bool showChangedNotification = false;
     QStringList metadata;
 
@@ -167,25 +170,27 @@ void MainWindow::updateMetadata() {
 
     mprisMetadataMap.insert("mpris:trackid", QVariant::fromValue(QDBusObjectPath("/org/thesuite/thebeat/currentmedia")));
 
-    //Send the PropertiesChanged signal.
-    QDBusMessage signal = QDBusMessage::createSignal("/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged");
+    if (currentDataMap != mprisMetadataMap) {
+        //Send the PropertiesChanged signal.
+        QDBusMessage signal = QDBusMessage::createSignal("/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged");
 
-    QList<QVariant> args;
-    args.append("org.mpris.MediaPlayer2.Player");
+        QList<QVariant> args;
+        args.append("org.mpris.MediaPlayer2.Player");
 
-    QVariantMap changedProperties;
-    changedProperties.insert("Metadata", mprisMetadataMap);
-    //changedProperties.insert("PlaybackStatus", this->PlaybackStatus());
-    args.append(changedProperties);
+        QVariantMap changedProperties;
+        changedProperties.insert("Metadata", mprisMetadataMap);
+        //changedProperties.insert("PlaybackStatus", this->PlaybackStatus());
+        args.append(changedProperties);
 
-    QStringList invalidatedProperties;
-    invalidatedProperties.append("Metadata");
-    //invalidatedProperties.append("PlaybackStatus");
-    args.append(invalidatedProperties);
+        QStringList invalidatedProperties;
+        invalidatedProperties.append("Metadata");
+        //invalidatedProperties.append("PlaybackStatus");
+        args.append(invalidatedProperties);
 
-    signal.setArguments(args);
+        signal.setArguments(args);
 
-    QDBusConnection::sessionBus().send(signal);
+        QDBusConnection::sessionBus().send(signal);
+    }
 }
 
 void MainWindow::on_playButton_clicked()
@@ -384,12 +389,13 @@ void MainWindow::on_library_doubleClicked(const QModelIndex &index)
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
     //Move items around accordingly
-    if (this->height() < 400 || this->width() < 450) {
+    if (this->height() < 400 * theLibsGlobal::getDPIScaling() || this->width() < 450 * theLibsGlobal::getDPIScaling()) {
         ui->contentFrame->setVisible(false);
         ui->musicDivider->setVisible(false);
         ui->playlistContainerMainFrame->setVisible(false);
         ui->playlistContainerUnderFrame->setVisible(true);
         ui->playlistContainerUnder->addWidget(ui->playlistWidget);
+        ui->appTitleLabel->setText("theBeat");
     } else {
         ui->contentFrame->setVisible(true);
         ui->musicDivider->setVisible(true);
@@ -397,13 +403,15 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
         ui->playlistContainerUnderFrame->setVisible(false);
         ui->playlistContainerMain->insertWidget(0, ui->playlistWidget);
 
-        if (this->width() < 1000) {
+        if (this->width() < 1000 * theLibsGlobal::getDPIScaling()) {
             //ui->sourcesList->setVisible(false);
-            ui->sourcesList->setMaximumSize(36, ui->sourcesList->maximumHeight());
+            ui->sourcesList->setMaximumSize(36 * theLibsGlobal::getDPIScaling(), ui->sourcesList->maximumHeight());
+            ui->appTitleLabel->setPixmap(QIcon::fromTheme("thebeat", QIcon::fromTheme(":/icons/icon.svg")).pixmap(QSize(16, 16) * theLibsGlobal::getDPIScaling()));
             //ui->sourcesDivider->setVisible(false);
         } else {
             //ui->sourcesList->setVisible(true);
-            ui->sourcesList->setMaximumSize(300, ui->sourcesList->maximumHeight());
+            ui->sourcesList->setMaximumSize(300 * theLibsGlobal::getDPIScaling(), ui->sourcesList->maximumHeight());
+            ui->appTitleLabel->setText("theBeat");
             //ui->sourcesDivider->setVisible(true);
         }
     }
