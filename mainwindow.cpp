@@ -4,6 +4,7 @@
 #include <QScroller>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QShortcut>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -71,6 +72,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->label_9->setVisible(false);
 
     ui->playlistWidget->setModel(playlist);
+
+    QShortcut* spaceShortcut = new QShortcut(QKeySequence(Qt::Key_Space), this);
+    spaceShortcut->setAutoRepeat(false);
+    connect(spaceShortcut, &QShortcut::activated, [=] {
+        ui->playButton->click();
+    });
 
     QMenu* playlistMenu = new QMenu();
     playlistMenu->addSection(tr("For current playlist"));
@@ -490,3 +497,4 @@ void MainWindow::on_manageMusicLibrarySplashButton_clicked()
 {
     ui->editMusicLibraryButton->click();
 }
+
