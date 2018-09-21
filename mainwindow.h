@@ -34,7 +34,10 @@
 #include "librarymodel.h"
 #include "librarymanagedialog.h"
 #include "librarymanagewidget.h"
+
+#ifdef BUILD_DISCORD
 #include "discordintegration.h"
+#endif
 
 using namespace Phonon;
 
