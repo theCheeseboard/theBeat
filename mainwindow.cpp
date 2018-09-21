@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QScroller>
+#include <QInputDialog>
+#include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -59,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->playlistWidget->setModel(playlist);
 
     QMenu* playlistMenu = new QMenu();
+    playlistMenu->addSection(tr("For current playlist"));
     playlistMenu->addAction(ui->actionClear_Playlist);
     playlistMenu->addAction(ui->actionSave_Playlist);
     playlistMenu->addAction(ui->actionAdd_to_existing_playlist);
@@ -89,6 +94,12 @@ MainWindow::MainWindow(QWidget *parent) :
     cdFinder->pause();
 
     ui->appTitleLabel->setFixedHeight(ui->appTitleLabel->fontMetrics().height() + 18); //Don't scale DPI because margins don't scale
+
+    //Allow dragging with finger
+    QScroller::grabGesture(ui->sourcesList, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->library, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->PlaylistsView, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->playlistWidget, QScroller::LeftMouseButtonGesture);
 }
 
 MainWindow::~MainWindow()
@@ -216,18 +227,15 @@ void MainWindow::playerAboutToFinish() {
 }
 
 void MainWindow::playerStateChanged(State newState, State oldState) {
-    if (newState == PlayingState) {
-        ui->playButton->setIcon(QIcon::fromTheme("media-playback-pause"));
-    } else {
-        ui->playButton->setIcon(QIcon::fromTheme("media-playback-start"));
-    }
-
     QString status;
     if (newState == PlayingState) {
+        ui->playButton->setIcon(QIcon::fromTheme("media-playback-pause"));
         status = "Playing";
-    } else if (newState == PausedState) {
+    } else if (newState == PausedState || newState == BufferingState) {
+        ui->playButton->setIcon(QIcon::fromTheme("media-playback-start"));
         status = "Paused";
     } else {
+        ui->currentMediaFrame->setVisible(false);
         status = "Stopped";
     }
 
@@ -436,4 +444,34 @@ void MainWindow::on_actionBars_triggered()
     ui->actionLines->setChecked(false);
     ui->actionCircle->setChecked(false);
     ui->actionBars->setChecked(true);
+}
+
+void MainWindow::on_actionSave_Playlist_triggered()
+{
+    bool ok;
+    QString playlistName = QInputDialog::getText(this, tr("Save Playlist"), tr("What do you want to call the playlist?"), QLineEdit::Normal, "", &ok);
+    if (ok) {
+        QDir playlistDir(QDir::homePath() + "/.themedia/playlists");
+        QFile playlistFile(playlistDir.absoluteFilePath(playlistName));
+        if (playlistFile.exists()) {
+            if (QMessageBox::warning(this, tr("Playlist already exists"), tr("The playlist called <b>%1</b> already exists. Do you want to clear it and replace it with the current one?").arg(playlistName), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No) {
+                //Cancel and return
+                return;
+            }
+        }
+
+        playlistFile.open(QFile::WriteOnly);
+        playlistFile.write(playlist->createPlaylist());
+        playlistFile.close();
+    }
+}
+
+void MainWindow::on_actionClear_Playlist_triggered()
+{
+    playlist->clear();
+}
+
+void MainWindow::on_actionAdd_to_existing_playlist_triggered()
+{
+
 }

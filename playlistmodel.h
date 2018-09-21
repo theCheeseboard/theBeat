@@ -67,6 +67,8 @@ public:
 
     bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override;
 
+    QByteArray createPlaylist();
+
 public slots:
     void append(MediaSource source);
 
@@ -83,6 +85,8 @@ public slots:
     void skipBack();
 
     void setRepeat(bool repeat);
+
+    void clear();
 
 private slots:
     void mediaChanged(Phonon::MediaSource source);

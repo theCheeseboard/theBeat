@@ -204,6 +204,25 @@ void PlaylistModel::skipBack() {
     }
 }
 
+void PlaylistModel::clear() {
+    currentPlayingItem = -1;
+    sources.clear();
+    mediaObj->stop();
+    dataChanged(this->index(0), this->index(rowCount()));
+}
+
+QByteArray PlaylistModel::createPlaylist() {
+    QStringList playlistEntries;
+    for (MediaSource src : sources) {
+        if (src.type() == MediaSource::LocalFile) {
+            playlistEntries.append(src.fileName());
+        } else if (src.type() == MediaSource::Url) {
+            playlistEntries.append(src.url().toString());
+        }
+    }
+    return playlistEntries.join("\n").toUtf8();
+}
+
 MediaItem::MediaItem(const MediaSource &source) {
     this->source = source;
     currentType = Source;

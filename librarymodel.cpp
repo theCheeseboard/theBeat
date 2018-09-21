@@ -1,5 +1,7 @@
 #include "librarymodel.h"
 
+#include <QFileSystemWatcher>
+
 LibraryModel::LibraryModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
@@ -139,7 +141,11 @@ QMimeData* LibraryModel::mimeData(const QModelIndexList &indexes) const {
 }
 
 PlaylistFileModel::PlaylistFileModel(QObject *parent) : QAbstractListModel(parent) {
-
+    QFileSystemWatcher* watcher = new QFileSystemWatcher();
+    watcher->addPath(QDir::homePath() + "/.themedia/playlists");
+    connect(watcher, &QFileSystemWatcher::directoryChanged, [=] {
+        emit dataChanged(index(0), index(rowCount()));
+    });
 }
 
 int PlaylistFileModel::rowCount(const QModelIndex &parent) const {

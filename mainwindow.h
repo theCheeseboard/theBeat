@@ -106,6 +106,12 @@ private slots:
 
     void on_actionBars_triggered();
 
+    void on_actionSave_Playlist_triggered();
+
+    void on_actionClear_Playlist_triggered();
+
+    void on_actionAdd_to_existing_playlist_triggered();
+
     private:
     Ui::MainWindow *ui;
 

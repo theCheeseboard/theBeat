@@ -5,6 +5,8 @@
 
 int main(int argc, char *argv[])
 {
+    qputenv("PHONON_BACKEND", "phonon_vlc");
+
     QApplication a(argc, argv);
 
     a.setOrganizationName("theSuite");

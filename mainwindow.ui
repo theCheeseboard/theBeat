@@ -185,7 +185,7 @@
        <item>
         <widget class="QStackedWidget" name="sourcesStack">
          <property name="currentIndex">
-          <number>1</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="sourcesStackPage1_2">
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -716,6 +716,9 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="playlistContainerMain">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
