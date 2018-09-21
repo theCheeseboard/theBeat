@@ -6,7 +6,7 @@
 
 QT       += core gui phonon4qt5 dbus x11extras thelib
 LIBS     += -ltag
-CONFIG   += c++14 discord
+CONFIG   += c++14
 
 unix {
     CONFIG += link_pkgconfig
