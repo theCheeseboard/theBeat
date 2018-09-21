@@ -34,6 +34,7 @@
 #include "librarymodel.h"
 #include "librarymanagedialog.h"
 #include "librarymanagewidget.h"
+#include "discordintegration.h"
 
 using namespace Phonon;
 
@@ -128,6 +129,10 @@ private slots:
     AudioDataOutput* dataOut;
 
     LibraryManageWidget* libWidget;
+
+#ifdef BUILD_DISCORD
+    DiscordIntegration* discord;
+#endif
 
     QVariantMap mprisMetadataMap;
     void resizeEvent(QResizeEvent* event);

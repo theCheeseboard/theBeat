@@ -19,6 +19,10 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->libStack->setCurrentIndex(library->reloadData());
     });
 
+#ifdef BUILD_DISCORD
+    discord = new DiscordIntegration();
+#endif
+
     player = new MediaObject(this);
     cdFinder = new MediaObject(this);
     dataOut = new AudioDataOutput(this);

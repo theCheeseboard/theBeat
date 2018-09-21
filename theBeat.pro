@@ -6,11 +6,21 @@
 
 QT       += core gui phonon4qt5 dbus x11extras thelib
 LIBS     += -ltag
-CONFIG   += c++14
+CONFIG   += c++14 discord
 
 unix {
     CONFIG += link_pkgconfig
     PKGCONFIG += x11
+}
+
+#Determine whether to build Discord
+no-discord {
+    #Don't build Discord
+} else {
+    exists(/usr/lib/libdiscord-rpc.so) || discord {
+        #Build Discord
+        DEFINES += BUILD_DISCORD
+    }
 }
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -43,6 +53,10 @@ SOURCES += \
     nativeeventfilter.cpp \
     librarymanagewidget.cpp
 
+discord {
+    SOURCES += discordintegration.cpp
+}
+
 HEADERS += \
         mainwindow.h \
     visualisationframe.h \
@@ -54,6 +68,10 @@ HEADERS += \
     playlistlistwidget.h \
     nativeeventfilter.h \
     librarymanagewidget.h
+
+discord {
+    HEADERS += discordintegration.h
+}
 
 FORMS += \
         mainwindow.ui \
