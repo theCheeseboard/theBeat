@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->currentMediaFrame->setVisible(false);
+    this->resize(this->size() * theLibsGlobal::getDPIScaling());
+    ui->sourcesList->setIconSize(ui->sourcesList->iconSize() * theLibsGlobal::getDPIScaling());
 
     libWidget = new LibraryManageWidget();
     ui->libStack->addWidget(libWidget);
