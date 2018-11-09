@@ -16,12 +16,12 @@ arch:
   - the-libs
   script:
   - "./travis/build.sh"
+  - "./travis/publish.sh"
 
 after_success:
   
 script:
 - "wget -c https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh"
-- "sed -i arch-travis.sh '49i--name \"archbuild\" \\\\'"
+- "sed -i arch-travis.sh '49i--cap-add SYS_ADMIN --device /dev/fuse \\\\'"
 - "cat arch-travis.sh | bash"
-- "./travis/publish.sh"
 
