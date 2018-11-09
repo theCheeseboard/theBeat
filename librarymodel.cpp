@@ -31,7 +31,7 @@ int LibraryModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return 0;
     } else {
-        return availableMediaFiles.count();
+        return shownMediaFiles.count();
     }
 }
 
@@ -51,7 +51,7 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
     } else {
         int row = index.row();
         int col = index.column();
-        MediaFile metadata = availableMediaFiles.at(row);
+        MediaFile metadata = shownMediaFiles.at(row);
         QFileInfo fileInfo(metadata.filename);
         if (role == Qt::UserRole) {
             return fileInfo.filePath();
@@ -119,11 +119,29 @@ int LibraryModel::reloadData() {
 
     std::sort(availableMediaFiles.begin(), availableMediaFiles.end());
 
+    shownMediaFiles = availableMediaFiles;
+
     if (availableMediaFiles.count() == 0) {
         return 1;
     } else {
         return 0;
     }
+}
+
+void LibraryModel::search(QString query) {
+    shownMediaFiles.clear();
+
+    if (query == "") {
+        shownMediaFiles = availableMediaFiles;
+    } else {
+        for (MediaFile file : availableMediaFiles) {
+            if (file.title.contains(query, Qt::CaseInsensitive) || file.artist.contains(query, Qt::CaseInsensitive) || file.album.contains(query, Qt::CaseInsensitive)) {
+                shownMediaFiles.append(file);
+            }
+        }
+    }
+
+    emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
 }
 
 Qt::ItemFlags LibraryModel::flags(const QModelIndex &index) const {
@@ -142,7 +160,7 @@ QMimeData* LibraryModel::mimeData(const QModelIndexList &indexes) const {
     QList<QUrl> files;
     for (QModelIndex index : indexes) {
         if (index.column() == 0) {
-            files.append(QUrl::fromLocalFile(availableMediaFiles.at(index.row()).filename));
+            files.append(QUrl::fromLocalFile(shownMediaFiles.at(index.row()).filename));
         }
     }
     mime->setUrls(files);

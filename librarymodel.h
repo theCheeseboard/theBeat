@@ -31,6 +31,7 @@ public:
 
 public slots:
     int reloadData();
+    void search(QString query);
 
 private:
     struct MediaFile {
@@ -72,7 +73,7 @@ private:
         }
     };
 
-    QList<MediaFile> availableMediaFiles;
+    QList<MediaFile> availableMediaFiles, shownMediaFiles;
     QSettings settings;
 
     QMimeDatabase mimedb;

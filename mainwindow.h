@@ -120,8 +120,14 @@ private slots:
 
     void on_shuffleButton_toggled(bool checked);
 
+    void on_searchButton_clicked();
+
+    void on_searchLineEdit_textChanged(const QString &arg1);
+
     private:
     Ui::MainWindow *ui;
+
+    bool eventFilter(QObject* watched, QEvent* event);
 
     PlaylistModel* playlist;
     LibraryModel* library;

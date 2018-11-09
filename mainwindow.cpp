@@ -72,6 +72,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->widget->setVisible(false);
     ui->label_9->setVisible(false);
+    ui->searchWidget->setFixedWidth(0);
+    ui->searchWidget->setVisible(false);
+    ui->searchLineEdit->installEventFilter(this);
 
     ui->playlistWidget->setModel(playlist);
 
@@ -97,8 +100,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     library = new LibraryModel;
     ui->library->setModel(library);
+    ui->library->header()->setStretchLastSection(false);
+    ui->library->header()->setDefaultSectionSize(300 * theLibsGlobal::getDPIScaling());
     //ui->library->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->library->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->library->header()->setSectionResizeMode(1, QHeaderView::Interactive);
+    ui->library->header()->setSectionResizeMode(2, QHeaderView::Interactive);
+    ui->library->header()->setSortIndicatorShown(true);
+    ui->library->setSortingEnabled(true);
+    ui->library->sortByColumn(0, Qt::DescendingOrder);
+    connect(ui->library->header(), &QHeaderView::sortIndicatorChanged, [=](int index, Qt::SortOrder order) {
+        ui->library->sortByColumn(index, order);
+    });
     ui->libStack->setCurrentIndex(library->reloadData());
 
     ui->PlaylistsView->setModel(new PlaylistFileModel);
@@ -436,6 +449,10 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
             //ui->sourcesDivider->setVisible(true);
         }
     }
+
+    if (ui->searchWidget->width() != 0) {
+        ui->searchWidget->setFixedWidth(ui->musicLibraryHeader->width() - ui->searchButton->width() - ui->editMusicLibraryButton->width());
+    }
 }
 
 void MainWindow::on_PlaylistsView_doubleClicked(const QModelIndex &index)
@@ -500,8 +517,55 @@ void MainWindow::on_manageMusicLibrarySplashButton_clicked()
     ui->editMusicLibraryButton->click();
 }
 
-
 void MainWindow::on_shuffleButton_toggled(bool checked)
 {
     playlist->setShuffle(checked);
+}
+
+void MainWindow::on_searchButton_clicked()
+{
+    ui->searchWidget->setVisible(true);
+    tVariantAnimation* anim = new tVariantAnimation();
+    anim->setStartValue(0);
+    anim->setEndValue(ui->libraryHeaderText->width());
+    anim->setDuration(500);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->start();
+    connect(anim, &tVariantAnimation::finished, [=] {
+        anim->deleteLater();
+        ui->libraryHeaderText->setVisible(false);
+    });
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->searchWidget->setFixedWidth(value.toInt());
+    });
+    ui->searchLineEdit->setFocus();
+}
+
+bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->searchLineEdit) {
+        if (event->type() == QEvent::FocusOut) {
+            if (ui->searchLineEdit->text() == "") {
+                ui->libraryHeaderText->setVisible(true);
+                tVariantAnimation* anim = new tVariantAnimation();
+                anim->setStartValue(ui->searchWidget->width());
+                anim->setEndValue(0);
+                anim->setDuration(500);
+                anim->setEasingCurve(QEasingCurve::InCubic);
+                anim->start();
+                connect(anim, &tVariantAnimation::finished, [=] {
+                    anim->deleteLater();
+                    ui->searchWidget->setVisible(false);
+                });
+                connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                    ui->searchWidget->setFixedWidth(value.toInt());
+                });
+            }
+        }
+    }
+    return false;
+}
+
+void MainWindow::on_searchLineEdit_textChanged(const QString &arg1)
+{
+    library->search(arg1);
 }

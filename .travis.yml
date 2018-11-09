@@ -25,3 +25,7 @@ script:
 - "sed -i '49i--cap-add SYS_ADMIN --device /dev/fuse -e REPO_SLUG=$TRAVIS_REPO_SLUG -e GITHUB_TOKEN=$GITHUB_TOKEN \\\\' arch-travis.sh"
 - "cat arch-travis.sh | bash"
 
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous)/
