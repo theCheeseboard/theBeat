@@ -16,10 +16,10 @@ arch:
   - the-libs
   script:
   - "./travis/build.sh"
-  - "./travis/publish.sh"
 
 after_success:
   
 script:
 - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
+- "./travis/publish.sh"
 
