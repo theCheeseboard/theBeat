@@ -4,6 +4,7 @@ Type=Application
 Version=1.0
 Name=theBeat
 GenericName=Audio Player
+GenericName[vi]=Bộ nghe nhạc
 Categories=Audio;Music;Player;AudioVideo;X-Multimedia;
 Exec=thebeat
 Icon=thebeat

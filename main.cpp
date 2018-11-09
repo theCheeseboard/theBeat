@@ -2,6 +2,12 @@
 #include "nativeeventfilter.h"
 #include <QApplication>
 #include <QMainWindow>
+#include <QTranslator>
+#include <QLibraryInfo>
+
+#ifdef Q_OS_MAC
+#include <CoreFoundation/CFBundle.h>
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +17,45 @@ int main(int argc, char *argv[])
 
     a.setOrganizationName("theSuite");
     a.setApplicationName("theBeat");
+
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&qtTranslator);
+
+    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Services");
+    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide %1");
+    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide Others");
+    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Show All");
+    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Preferences...");
+    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1");
+    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1");
+
+    QTranslator localTranslator;
+#ifdef Q_OS_MAC
+    a.setAttribute(Qt::AA_DontShowIconsInMenus, true);
+    a.setQuitOnLastWindowClosed(false);
+
+    CFURLRef appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    CFStringRef macPath = CFURLCopyFileSystemPath(appUrlRef, kCFURLPOSIXPathStyle);
+    const char *pathPtr = CFStringGetCStringPtr(macPath, CFStringGetSystemEncoding());
+
+    bundlePath = QString::fromLocal8Bit(pathPtr);
+    localTranslator.load(QLocale::system().name(), bundlePath + "/Contents/translations/");
+
+    CFRelease(appUrlRef);
+    CFRelease(macPath);
+#endif
+
+#ifdef Q_OS_LINUX
+    localTranslator.load(QLocale::system().name(), "/usr/share/thebeat/translations");
+#endif
+
+#ifdef Q_OS_WIN
+    localTranslator.load(QLocale::system().name(), a.applicationDirPath() + "\\translations");
+#endif
+
+    a.installTranslator(&localTranslator);
+
 
     //QMainWindow w;
     //w.show();
