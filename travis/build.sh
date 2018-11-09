@@ -1,5 +1,5 @@
 set -e
-sudo pacman -S --noconfirm git qt5-base qt5-charts qt5-location qt5-tools phonon-qt5 taglib wget
+sudo pacman -S --noconfirm git qt5-base qt5-charts qt5-location qt5-tools phonon-qt5 taglib wget fuse2
 
 git clone https://aur.archlinux.org/the-libs.git
 cd the-libs
