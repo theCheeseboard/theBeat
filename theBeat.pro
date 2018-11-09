@@ -86,6 +86,9 @@ DISTFILES += \
     thebeat.desktop \
     thebeat.svg
 
+# Turn off stripping as this causes the install to fail :(
+QMAKE_STRIP = echo
+
 unix {
     target.path = /usr/bin
 
