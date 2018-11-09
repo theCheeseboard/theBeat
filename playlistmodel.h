@@ -79,13 +79,15 @@ public slots:
 
     void enqueueNext();
 
-    void playItem(int i);
+    void playItem(int i, bool fromActualQueue = false);
 
     void playNext();
 
     void skipBack();
 
     void setRepeat(bool repeat);
+
+    void setShuffle(bool shuffle);
 
     void clear();
 
@@ -98,12 +100,13 @@ private:
     MediaController* controller;
     AudioDataOutput* dataOut;
 
-    QList<MediaItem> sources;
+    QList<MediaItem> sources, actualQueue;
     int currentPlayingItem = -1;
 
     QMimeDatabase mimeDb;
 
     bool repeat = false;
+    bool shuffle = false;
 };
 
 Q_DECLARE_METATYPE(MediaSource)

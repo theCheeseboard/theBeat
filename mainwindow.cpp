@@ -498,3 +498,8 @@ void MainWindow::on_manageMusicLibrarySplashButton_clicked()
     ui->editMusicLibraryButton->click();
 }
 
+
+void MainWindow::on_shuffleButton_toggled(bool checked)
+{
+    playlist->setShuffle(checked);
+}

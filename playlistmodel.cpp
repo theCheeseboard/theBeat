@@ -1,6 +1,7 @@
 #include "playlistmodel.h"
 
 #include "tagcache.h"
+#include <QRandomGenerator>
 
 PlaylistModel::PlaylistModel(MediaObject* object, QObject *parent)
     : QAbstractListModel(parent)
@@ -47,7 +48,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             case Qt::DecorationRole: {
                 MediaSource current = sources.at(i).source;
 
-                if (i == currentPlayingItem) {
+                if (currentPlayingItem != -1 && i == sources.indexOf(actualQueue.at(currentPlayingItem))) {
                     return QIcon::fromTheme("media-playback-start");
                 } else if (current.type() == MediaSource::LocalFile) {
                     QMimeType t = mimeDb.mimeTypeForFile(current.fileName());
@@ -71,6 +72,16 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
 void PlaylistModel::append(MediaSource source) {
     sources.append(source);
+    if (shuffle) {
+        int insertInto = QRandomGenerator::system()->bounded(actualQueue.length());
+        actualQueue.insert(insertInto, source);
+
+        if (insertInto <= currentPlayingItem && currentPlayingItem != 0) {
+            currentPlayingItem++;
+        }
+    } else {
+        actualQueue.append(source);
+    }
     dataChanged(this->index(0), this->index(rowCount()));
 }
 
@@ -83,22 +94,22 @@ void PlaylistModel::appendPlaylist(QString path) {
     for (QString file : contents.split("\n")) {
         if (file != "") {
             MediaSource source(file);
-            sources.append(source);
+            append(source);
         }
     }
-    dataChanged(this->index(0), this->index(rowCount()));
+    //dataChanged(this->index(0), this->index(rowCount()));
 }
 
 void PlaylistModel::enqueueNext() {
     if (repeat && currentPlayingItem != -1) {
-        mediaObj->enqueue(sources.at(currentPlayingItem));
+        mediaObj->enqueue(actualQueue.at(currentPlayingItem));
     } else {
         if (currentPlayingItem + 1 == rowCount()) {
             currentPlayingItem = -1;
         }
 
         currentPlayingItem++;
-        mediaObj->enqueue(sources.at(currentPlayingItem));
+        mediaObj->enqueue(actualQueue.at(currentPlayingItem));
     }
 }
 
@@ -110,19 +121,47 @@ void PlaylistModel::enqueueAndPlayNext() {
 }
 
 void PlaylistModel::mediaChanged(MediaSource source) {
-    if (sources.contains(source)) {
-        currentPlayingItem = sources.indexOf(source);
+    if (actualQueue.contains(source)) {
+        currentPlayingItem = actualQueue.indexOf(source);
     }
     dataChanged(this->index(0), this->index(rowCount()));
 }
 
-void PlaylistModel::playItem(int i) {
-    mediaObj->setCurrentSource(sources.at(i));
+void PlaylistModel::playItem(int i, bool fromActualQueue) {
+    if (fromActualQueue) {
+        mediaObj->setCurrentSource(actualQueue.at(i));
+    } else {
+        mediaObj->setCurrentSource(sources.at(i));
+    }
     mediaObj->play();
 }
 
 void PlaylistModel::setRepeat(bool repeat) {
     this->repeat = repeat;
+}
+
+void PlaylistModel::setShuffle(bool shuffle) {
+    this->shuffle = shuffle;
+    MediaItem s = actualQueue.at(currentPlayingItem);
+    if (shuffle) {
+        actualQueue.clear();
+        QList<MediaItem> notUsedSources = sources;
+        while (notUsedSources.count() != 0) {
+            int chosenSong = QRandomGenerator::system()->bounded(notUsedSources.length());
+            actualQueue.append(notUsedSources.at(chosenSong));
+            notUsedSources.removeAt(chosenSong);
+        }
+    } else {
+        //Return to playing sequentially
+        actualQueue = sources;
+    }
+
+    for (int i = 0; i < actualQueue.length(); i++) {
+        if (actualQueue.at(i).source == s) {
+            currentPlayingItem = i;
+            break;
+        }
+    }
 }
 
 bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) {
@@ -140,15 +179,26 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                     for (QString file : contents.split("\n")) {
                         if (file != "") {
                             MediaSource source(file);
-                            sources.append(source);
+                            this->append(source);
                         }
                     }
                 } else {
                     MediaSource source(url);
                     if (append) {
-                        sources.append(source);
+                        this->append(source);
                     } else {
                         sources.insert(parent.row(), source);
+
+                        if (shuffle) {
+                            int insertInto = QRandomGenerator::system()->bounded(actualQueue.length());
+                            actualQueue.insert(insertInto, source);
+
+                            if (insertInto <= currentPlayingItem && currentPlayingItem != 0) {
+                                currentPlayingItem++;
+                            }
+                        } else {
+                            actualQueue.append(source);
+                        }
                     }
                 }
             }
@@ -197,22 +247,26 @@ QMimeData* PlaylistModel::mimeData(const QModelIndexList &indexes) const {
 }
 
 void PlaylistModel::playNext() {
-    if (currentPlayingItem + 1 == rowCount()) {
-        currentPlayingItem = -1;
-    }
+    //if (shuffle) {
+        //playItem(QRandomGenerator::system()->bounded(sources.length()));
+    //} else {
+        if (currentPlayingItem + 1 == actualQueue.length()) {
+            currentPlayingItem = -1;
+        }
 
-    currentPlayingItem++;
-    playItem(currentPlayingItem);
+        currentPlayingItem++;
+        playItem(currentPlayingItem, true);
+    //}
 }
 
 void PlaylistModel::skipBack() {
     if (mediaObj->currentTime() < 5000) {
         if (currentPlayingItem - 1 == -1) {
-            currentPlayingItem = rowCount();
+            currentPlayingItem = actualQueue.length();
         }
 
         currentPlayingItem--;
-        playItem(currentPlayingItem);
+        playItem(currentPlayingItem, true);
     } else {
         mediaObj->seek(0);
     }
@@ -221,6 +275,7 @@ void PlaylistModel::skipBack() {
 void PlaylistModel::clear() {
     currentPlayingItem = -1;
     sources.clear();
+    actualQueue.clear();
     mediaObj->stop();
     dataChanged(this->index(0), this->index(rowCount()));
 }

@@ -293,7 +293,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="configure"/>
+                    <iconset theme="configure">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="flat">
                     <bool>true</bool>
@@ -499,7 +500,8 @@
                       <string>Manage Music Library</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="configure"/>
+                      <iconset theme="configure">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
@@ -1166,6 +1168,22 @@
                </widget>
               </item>
              </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="shuffleButton">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset theme="media-playlist-shuffle"/>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>

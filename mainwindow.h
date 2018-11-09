@@ -118,6 +118,8 @@ private slots:
 
     void on_manageMusicLibrarySplashButton_clicked();
 
+    void on_shuffleButton_toggled(bool checked);
+
     private:
     Ui::MainWindow *ui;
 
