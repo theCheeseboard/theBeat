@@ -1,22 +1,24 @@
-language: cpp
-os:
-  - linux
-before_install:
-  - export STAGE=before_install
-  - ./travis.sh
-script:
-  - export STAGE=script
-  - ./travis.sh
-after_success:
-  - export STAGE=after_success
-  - ./travis.sh
-
-compiler:
-  - gcc
-dist: xenial
 sudo: required
 
-branches:
-  except:
-    - # Do not build tags that we create when we upload to GitHub Releases
-    - /^(?i:continuous)/
+services:
+- docker
+
+arch:
+  repos:
+  - theapps=https://packages.vicr123.com/arch/$arch/
+  packages:
+  - git
+  - qt5-base
+  - qt5-charts
+  - qt5-location
+  - qt5-tools
+  - phonon-qt5
+  script:
+  - "./travis/build.sh"
+  - "./travis/publish.sh"
+
+after_success:
+  
+script:
+- "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
+
