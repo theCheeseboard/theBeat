@@ -1,3 +1,6 @@
+docker cp archbuild:/home/travis/appdir ~/appdir
+ls ~/appdir
+
 cd
 wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
 chmod a+x linuxdeployqt-continuous-x86_64.AppImage

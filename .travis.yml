@@ -20,6 +20,8 @@ arch:
 after_success:
   
 script:
-- "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
+- "wget -c https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh"
+- "sed -i '49i--name \"archbuild\" \\\\'"
+- "cat arch-travis.sh | bash"
 - "./travis/publish.sh"
 
