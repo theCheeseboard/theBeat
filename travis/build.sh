@@ -2,6 +2,7 @@ set -e
 git clone https://github.com/vicr123/thebeat.git
 cd thebeat
 git checkout blueprint
+qmake
 make
 make install INSTALL_ROOT=~/appdir
 wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
