@@ -22,6 +22,6 @@ after_success:
   
 script:
 - "wget -c https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh"
-- "sed -i '49i--cap-add SYS_ADMIN --device /dev/fuse \\\\' arch-travis.sh"
+- "sed -i '49i--cap-add SYS_ADMIN --device /dev/fuse -e REPO_SLUG=$REPO_SLUG -e GITHUB_TOKEN=$GITHUB_TOKEN \\\\' arch-travis.sh"
 - "cat arch-travis.sh | bash"
 
