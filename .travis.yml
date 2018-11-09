@@ -5,7 +5,7 @@ services:
 
 arch:
   repos:
-  - theapps=http://packages.vicr123.com/arch/$arch
+  #- theapps=http://packages.vicr123.com/arch/$arch
   packages:
   - git
   - qt5-base
