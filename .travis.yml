@@ -4,7 +4,7 @@ services:
 - docker
 
 arch:
-  repos:
+  #repos:
   #- theapps=http://packages.vicr123.com/arch/$arch
   packages:
   - git
@@ -13,6 +13,7 @@ arch:
   - qt5-location
   - qt5-tools
   - phonon-qt5
+  - the-libs
   script:
   - "./travis/build.sh"
   - "./travis/publish.sh"
