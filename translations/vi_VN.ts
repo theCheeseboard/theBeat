@@ -32,11 +32,6 @@
 <context>
     <name>LibraryManageWidget</name>
     <message>
-        <location filename="../librarymanagewidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../librarymanagewidget.ui" line="71"/>
         <source>Manage Music Library</source>
         <translation>Quản lý thư viện nhạc</translation>
