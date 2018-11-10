@@ -51,6 +51,11 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
     } else {
         int row = index.row();
         int col = index.column();
+
+        if (shownMediaFiles.length() <= row) {
+            //Stop
+            return QVariant();
+        }
         MediaFile metadata = shownMediaFiles.at(row);
         QFileInfo fileInfo(metadata.filename);
         if (role == Qt::UserRole) {
