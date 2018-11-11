@@ -6,6 +6,13 @@
 #include <QMessageBox>
 #include <QShortcut>
 
+#ifdef Q_OS_LINUX
+    #include <X11/Xlib.h>
+    #include <QX11Info>
+
+    #undef FocusOut
+#endif
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -75,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->searchWidget->setFixedWidth(0);
     ui->searchWidget->setVisible(false);
     ui->searchLineEdit->installEventFilter(this);
+    ui->libraryBackButton->setVisible(false);
 
     ui->playlistWidget->setModel(playlist);
 
@@ -113,6 +121,12 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->library->sortByColumn(index, order);
     });
     ui->libStack->setCurrentIndex(library->reloadData());
+
+    ArtistLibraryModel* artistModel = new ArtistLibraryModel(library);
+    ui->artistsView->setModel(artistModel);
+
+    AlbumLibraryModel* albumModel = new AlbumLibraryModel(library);
+    ui->albumsView->setModel(albumModel);
 
     ui->PlaylistsView->setModel(new PlaylistFileModel);
 
@@ -568,4 +582,115 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
 void MainWindow::on_searchLineEdit_textChanged(const QString &arg1)
 {
     library->search(arg1);
+}
+
+void MainWindow::activate() {
+#ifdef Q_OS_LINUX
+    XEvent event;
+
+    event.xclient.type = ClientMessage;
+    event.xclient.serial = 0;
+    event.xclient.send_event = True;
+    event.xclient.message_type = XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW", False);
+    event.xclient.window = this->winId();
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = 2;
+    event.xclient.data.l[1] = 0;
+    event.xclient.data.l[2] = 0;
+    event.xclient.data.l[3] = 0;
+    event.xclient.data.l[4] = 0;
+
+    XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+
+    this->raise();
+#endif
+}
+
+void MainWindow::on_tracksButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->libraryStack->setCurrentIndex(0);
+
+        library->clearFilter();
+        ui->listPlayOptions->setVisible(true);
+        ui->libraryBackButton->setVisible(false);
+        ui->libraryListTitle->setText(tr("All Tracks"));
+    }
+}
+
+void MainWindow::on_artistsButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->libraryStack->setCurrentIndex(1);
+
+        library->clearFilter();
+        ui->listPlayOptions->setVisible(false);
+        ui->libraryBackButton->setVisible(false);
+        ui->libraryListTitle->setText(tr("All Artists"));
+    }
+}
+
+void MainWindow::on_albumsButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->libraryStack->setCurrentIndex(2);
+
+        library->clearFilter();
+        ui->listPlayOptions->setVisible(false);
+        ui->libraryBackButton->setVisible(false);
+        ui->libraryListTitle->setText(tr("All Albums"));
+    }
+}
+
+void MainWindow::on_artistsView_activated(const QModelIndex &index)
+{
+    QString filter = index.data().toString();
+    ui->libraryStack->setCurrentIndex(0);
+    library->filter(filter, LibraryModel::Artist);
+    ui->libraryListTitle->setText(tr("Music by %1").arg(filter));
+
+    ui->listPlayOptions->setVisible(true);
+    ui->libraryBackButton->setVisible(true);
+    ui->libraryBackButton->setProperty("backAction", "artist");
+}
+
+void MainWindow::on_libraryBackButton_clicked()
+{
+    if (ui->libraryBackButton->property("backAction").toString() == "artist") {
+        on_artistsButton_toggled(true);
+    } else if (ui->libraryBackButton->property("backAction").toString() == "album") {
+        on_albumsButton_toggled(true);
+    }
+}
+
+void MainWindow::on_enqueueAllButton_clicked()
+{
+    for (int i = 0; i < library->rowCount(); i++) {
+        MediaSource source(library->data(library->index(i, 0), Qt::UserRole).toString());
+        playlist->append(source);
+    }
+
+    if (playlist->currentItem() == -1) {
+        playlist->enqueueNext();
+        playlist->playItem(0, true);
+    }
+}
+
+void MainWindow::on_playAllButton_clicked()
+{
+    //Clear the playlist and then enqueue everything
+    ui->actionClear_Playlist->trigger();
+    ui->enqueueAllButton->click();
+}
+
+void MainWindow::on_albumsView_activated(const QModelIndex &index)
+{
+    QString filter = index.data().toString();
+    ui->libraryStack->setCurrentIndex(0);
+    library->filter(filter, LibraryModel::Album);
+    ui->libraryListTitle->setText(tr("Music in %1").arg(filter));
+
+    ui->listPlayOptions->setVisible(true);
+    ui->libraryBackButton->setVisible(true);
+    ui->libraryBackButton->setProperty("backAction", "album");
 }

@@ -75,9 +75,7 @@ public Q_SLOTS: // METHODS
         QApplication::exit();
     }
 
-    void Raise() {
-
-    }
+    void Raise();
 };
 
 /*

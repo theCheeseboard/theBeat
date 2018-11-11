@@ -3,6 +3,8 @@
 #include <QFileSystemWatcher>
 #include <QIcon>
 
+bool LibraryModel::MediaFile::compareByTrackNumber = false;
+
 LibraryModel::LibraryModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
@@ -62,7 +64,7 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
             return fileInfo.filePath();
         } else {
             switch (col) {
-                case 0: { //Name
+                case Track: {
                     if (role == Qt::DisplayRole) {
                         return metadata.title;
                     } else if (role == Qt::DecorationRole) {
@@ -70,12 +72,12 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
                         return QIcon::fromTheme(t.iconName());
                     }
                 }
-                case 1: { //Artist
+                case Artist: {
                     if (role == Qt::DisplayRole) {
                         return metadata.artist;
                     }
                 }
-                case 2: { //Album
+                case Album: {
                     if (role == Qt::DisplayRole) {
                         return metadata.album;
                     }
@@ -114,6 +116,7 @@ int LibraryModel::reloadData() {
 
                     metadata.artist = QString::fromStdWString(tag->artist().toWString());
                     metadata.album = QString::fromStdWString(tag->album().toWString());
+                    metadata.trackNumber = tag->track();
                 }
 
                 availableMediaFiles.append(metadata);
@@ -134,19 +137,60 @@ int LibraryModel::reloadData() {
 }
 
 void LibraryModel::search(QString query) {
-    shownMediaFiles.clear();
+    currentSearchQuery = query;
+    QList<MediaFile> intermediateMediaFiles;
 
     if (query == "") {
-        shownMediaFiles = availableMediaFiles;
+        intermediateMediaFiles = availableMediaFiles;
     } else {
         for (MediaFile file : availableMediaFiles) {
             if (file.title.contains(query, Qt::CaseInsensitive) || file.artist.contains(query, Qt::CaseInsensitive) || file.album.contains(query, Qt::CaseInsensitive)) {
-                shownMediaFiles.append(file);
+                intermediateMediaFiles.append(file);
             }
         }
     }
 
+    if (currentFilterType == None) {
+        shownMediaFiles = intermediateMediaFiles;
+    } else {
+        shownMediaFiles.clear();
+        for (MediaFile file : availableMediaFiles) {
+            switch (currentFilterType) {
+                case Artist:
+                    if (file.artist == currentFilter) shownMediaFiles.append(file);
+                    break;
+                case Track:
+                    if (file.title == currentFilter) shownMediaFiles.append(file);
+                    break;
+                case Album:
+                    if (file.album == currentFilter) shownMediaFiles.append(file);
+                    break;
+            }
+        }
+    }
+
+    if (currentFilterType == Album) {
+        //Sort by track number
+        MediaFile::compareByTrackNumber = true;
+        std::sort(shownMediaFiles.begin(), shownMediaFiles.end());
+        MediaFile::compareByTrackNumber = false;
+    }
+
     emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
+}
+
+void LibraryModel::filter(QString filter, QueryType filterType) {
+    this->currentFilter = filter;
+    this->currentFilterType = filterType;
+
+    search(currentSearchQuery);
+}
+
+void LibraryModel::clearFilter() {
+    currentFilter.clear();
+    currentFilterType = None;
+
+    search(currentSearchQuery);
 }
 
 Qt::ItemFlags LibraryModel::flags(const QModelIndex &index) const {
@@ -202,4 +246,99 @@ QVariant PlaylistFileModel::data(const QModelIndex &index, int role) const {
             return QVariant();
         }
     }
+}
+
+ArtistLibraryModel::ArtistLibraryModel(LibraryModel* libraryModel, QObject* parent) : QAbstractListModel(parent) {
+    this->libraryModel = libraryModel;
+
+    connect(libraryModel, &LibraryModel::dataChanged, this, &ArtistLibraryModel::updateData);
+    updateData();
+}
+
+int ArtistLibraryModel::rowCount(const QModelIndex &parent) const {
+    if (parent.isValid()) {
+        return 0;
+    } else {
+        return artists.count();
+    }
+}
+
+void ArtistLibraryModel::updateData() {
+    artists.clear();
+
+    for (int i = 0; i < libraryModel->rowCount(); i++) {
+        QString artist = libraryModel->data(libraryModel->index(i, LibraryModel::Artist)).toString();
+        if (!artists.contains(artist) && artist != "") {
+            artists.append(artist);
+        }
+    }
+
+    std::sort(artists.begin(), artists.end());
+    emit dataChanged(index(0), index(rowCount()));
+}
+
+QVariant ArtistLibraryModel::data(const QModelIndex &index, int role) const {
+    if (!index.isValid()) {
+        return QVariant();
+    } else {
+        int row = index.row();
+
+        if (artists.length() <= row) {
+            //Stop
+            return QVariant();
+        }
+
+        if (role == Qt::DisplayRole) {
+            return artists.at(row);
+        }
+    }
+    return QVariant();
+}
+
+
+AlbumLibraryModel::AlbumLibraryModel(LibraryModel* libraryModel, QObject* parent) : QAbstractListModel(parent) {
+    this->libraryModel = libraryModel;
+
+    connect(libraryModel, &LibraryModel::dataChanged, this, &AlbumLibraryModel::updateData);
+    updateData();
+}
+
+int AlbumLibraryModel::rowCount(const QModelIndex &parent) const {
+    if (parent.isValid()) {
+        return 0;
+    } else {
+        return albums.count();
+    }
+}
+
+void AlbumLibraryModel::updateData() {
+    albums.clear();
+
+    for (int i = 0; i < libraryModel->rowCount(); i++) {
+        QString album = libraryModel->data(libraryModel->index(i, LibraryModel::Album)).toString();
+        if (!albums.contains(album) && album != "") {
+            albums.append(album);
+        }
+    }
+
+    std::sort(albums.begin(), albums.end());
+    emit dataChanged(index(0), index(rowCount()));
+}
+
+QVariant AlbumLibraryModel::data(const QModelIndex &index, int role) const {
+    if (!index.isValid()) {
+        return QVariant();
+    } else {
+        int row = index.row();
+
+        if (albums.length() <= row) {
+            //Stop
+            return QVariant();
+        }
+
+        if (role == Qt::DisplayRole) {
+            return albums.at(row);
+        }
+    }
+    return QVariant();
 }

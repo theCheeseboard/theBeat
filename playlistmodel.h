@@ -91,6 +91,8 @@ public slots:
 
     void clear();
 
+    int currentItem();
+
 private slots:
     void mediaChanged(Phonon::MediaSource source);
 

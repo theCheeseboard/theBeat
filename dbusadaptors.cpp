@@ -8,6 +8,10 @@ MediaPlayer2Adaptor::~MediaPlayer2Adaptor() {
 
 }
 
+void MediaPlayer2Adaptor::Raise() {
+   qobject_cast<MainWindow*>(parent())->raise();
+}
+
 PlayerAdaptor::PlayerAdaptor(MainWindow *parent) : QDBusAbstractAdaptor(parent) {
     mainWindow = parent;
     connect(mainWindow->getPlayer(), &MediaObject::tick, [=](qint64 time) {

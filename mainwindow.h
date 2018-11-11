@@ -124,6 +124,24 @@ private slots:
 
     void on_searchLineEdit_textChanged(const QString &arg1);
 
+    void activate();
+
+    void on_tracksButton_toggled(bool checked);
+
+    void on_artistsButton_toggled(bool checked);
+
+    void on_albumsButton_toggled(bool checked);
+
+    void on_artistsView_activated(const QModelIndex &index);
+
+    void on_libraryBackButton_clicked();
+
+    void on_enqueueAllButton_clicked();
+
+    void on_playAllButton_clicked();
+
+    void on_albumsView_activated(const QModelIndex &index);
+
     private:
     Ui::MainWindow *ui;
 

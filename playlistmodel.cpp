@@ -97,7 +97,6 @@ void PlaylistModel::appendPlaylist(QString path) {
             append(source);
         }
     }
-    //dataChanged(this->index(0), this->index(rowCount()));
 }
 
 void PlaylistModel::enqueueNext() {
@@ -247,19 +246,19 @@ QMimeData* PlaylistModel::mimeData(const QModelIndexList &indexes) const {
 }
 
 void PlaylistModel::playNext() {
-    //if (shuffle) {
-        //playItem(QRandomGenerator::system()->bounded(sources.length()));
-    //} else {
-        if (currentPlayingItem + 1 == actualQueue.length()) {
-            currentPlayingItem = -1;
-        }
+    if (currentPlayingItem == -1 || actualQueue.length() == 0) return; //Don't do anything if there's nothing in the playlist
 
-        currentPlayingItem++;
-        playItem(currentPlayingItem, true);
-    //}
+    if (currentPlayingItem + 1 == actualQueue.length()) {
+        currentPlayingItem = -1;
+    }
+
+    currentPlayingItem++;
+    playItem(currentPlayingItem, true);
 }
 
 void PlaylistModel::skipBack() {
+    if (currentPlayingItem == -1 || actualQueue.length() == 0) return; //Don't do anything if there's nothing in the playlist
+
     if (mediaObj->currentTime() < 5000) {
         if (currentPlayingItem - 1 == -1) {
             currentPlayingItem = actualQueue.length();
@@ -278,6 +277,10 @@ void PlaylistModel::clear() {
     actualQueue.clear();
     mediaObj->stop();
     dataChanged(this->index(0), this->index(rowCount()));
+}
+
+int PlaylistModel::currentItem() {
+    return currentPlayingItem;
 }
 
 QByteArray PlaylistModel::createPlaylist() {
