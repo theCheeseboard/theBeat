@@ -60,6 +60,9 @@ int main(int argc, char *argv[])
     //QMainWindow w;
     //w.show();
 
+    //Seed the random generator
+    qsrand(QDateTime::currentMSecsSinceEpoch());
+
     MainWindow w;
     w.show();
 

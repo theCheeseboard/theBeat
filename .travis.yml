@@ -1,29 +1,32 @@
-sudo: required
-
-services:
-- docker
-
-arch:
-  #repos:
-  #- theapps=http://packages.vicr123.com/arch/$arch
-  packages:
-  - git
-  - qt5-base
-  - qt5-charts
-  - qt5-location
-  - qt5-tools
-  - phonon-qt5
-  - the-libs
-  script:
-  - "./travis/build.sh"
-  - "./travis/publish.sh"
-
-after_success:
-  
+language: cpp
+before_install:
+  - wget -O ~/vicr12345.gpg.key https://vicr123.com/repo/apt/vicr12345.gpg.key
+  - sudo apt-key add ~/vicr12345.gpg.key
+  - sudo add-apt-repository 'deb https://vicr123.com/repo/apt/ubuntu bionic main'
+  - sudo apt-get update -qq
+  - sudo apt-get install libphonon4qt5-dev libtag1-dev qt5-qmake libqt5x11extras5-dev qt5-default
 script:
-- "wget -c https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh"
-- "sed -i '49i--cap-add SYS_ADMIN --device /dev/fuse -e REPO_SLUG=$TRAVIS_REPO_SLUG -e GITHUB_TOKEN=$GITHUB_TOKEN \\\\' arch-travis.sh"
-- "cat arch-travis.sh | bash"
+  - git clone https://github.com/vicr123/the-libs.git
+  - cd the-libs
+  - qmake
+  - make
+  - sudo make install INSTALL_ROOT=/
+  - cd ..
+  - qmake
+  - make
+  - make install INSTALL_ROOT=appdir
+  - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+  - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+  - "./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -bundle-non-qt-libs"
+  - "./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage"
+after_success:
+  - find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh theBeat*.AppImage*
+
+compiler:
+  - gcc
+dist: xenial
 
 branches:
   except:

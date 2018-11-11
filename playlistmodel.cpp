@@ -1,7 +1,6 @@
 #include "playlistmodel.h"
 
 #include "tagcache.h"
-#include <QRandomGenerator>
 
 PlaylistModel::PlaylistModel(MediaObject* object, QObject *parent)
     : QAbstractListModel(parent)
@@ -73,7 +72,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 void PlaylistModel::append(MediaSource source) {
     sources.append(source);
     if (shuffle) {
-        int insertInto = QRandomGenerator::system()->bounded(actualQueue.length());
+        int insertInto = qrand() % actualQueue.length();
         actualQueue.insert(insertInto, source);
 
         if (insertInto <= currentPlayingItem && currentPlayingItem != 0) {
@@ -146,7 +145,7 @@ void PlaylistModel::setShuffle(bool shuffle) {
         actualQueue.clear();
         QList<MediaItem> notUsedSources = sources;
         while (notUsedSources.count() != 0) {
-            int chosenSong = QRandomGenerator::system()->bounded(notUsedSources.length());
+            int chosenSong = qrand() % notUsedSources.length();
             actualQueue.append(notUsedSources.at(chosenSong));
             notUsedSources.removeAt(chosenSong);
         }
@@ -189,7 +188,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
                         sources.insert(parent.row(), source);
 
                         if (shuffle) {
-                            int insertInto = QRandomGenerator::system()->bounded(actualQueue.length());
+                            int insertInto = qrand() % actualQueue.length();
                             actualQueue.insert(insertInto, source);
 
                             if (insertInto <= currentPlayingItem && currentPlayingItem != 0) {
