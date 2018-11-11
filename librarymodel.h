@@ -8,6 +8,7 @@
 #include <QMimeData>
 #include <QUrl>
 #include <QMimeDatabase>
+#include <QStyledItemDelegate>
 #include "tagcache.h"
 
 class LibraryModel : public QAbstractTableModel
@@ -50,6 +51,7 @@ private:
         QString filename;
         QString album;
         uint trackNumber;
+        int duration;
 
         bool operator <(const MediaFile& other) const {
             if (compareByTrackNumber) {
@@ -96,6 +98,15 @@ private:
     QueryType currentFilterType = None;
 
     QMimeDatabase mimedb;
+};
+
+class LibraryTitleDelegate : public QStyledItemDelegate {
+    Q_OBJECT
+
+    public:
+        explicit LibraryTitleDelegate(QObject* parent = nullptr);
+
+        void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
 class PlaylistFileModel : public QAbstractListModel

@@ -2,6 +2,9 @@
 
 #include <QFileSystemWatcher>
 #include <QIcon>
+#include <QPainter>
+#include <QTime>
+#include <the-libs_global.h>
 
 bool LibraryModel::MediaFile::compareByTrackNumber = false;
 
@@ -70,6 +73,10 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
                     } else if (role == Qt::DecorationRole) {
                         QMimeType t = mimedb.mimeTypeForFile(fileInfo);
                         return QIcon::fromTheme(t.iconName());
+                    } else if (role == Qt::UserRole + 1) { //Track Number
+                        return metadata.trackNumber;
+                    } else if (role == Qt::UserRole + 2) { //Duration
+                        return metadata.duration;
                     }
                 }
                 case Artist: {
@@ -107,6 +114,7 @@ int LibraryModel::reloadData() {
                     //continue;
                     metadata.title = iterator.fileInfo().completeBaseName();
                 } else {
+                    TagLib::AudioProperties* audio = TagCache::getAudioProperties(filename);
                     QString title = QString::fromStdWString(tag->title().toWString());
                     if (title != "") {
                         metadata.title = title;
@@ -117,6 +125,7 @@ int LibraryModel::reloadData() {
                     metadata.artist = QString::fromStdWString(tag->artist().toWString());
                     metadata.album = QString::fromStdWString(tag->album().toWString());
                     metadata.trackNumber = tag->track();
+                    metadata.duration = audio->lengthInMilliseconds();
                 }
 
                 availableMediaFiles.append(metadata);
@@ -342,4 +351,70 @@ QVariant AlbumLibraryModel::data(const QModelIndex &index, int role) const {
         }
     }
     return QVariant();
+}
+
+LibraryTitleDelegate::LibraryTitleDelegate(QObject* parent) : QStyledItemDelegate(parent) {
+
+}
+
+
+void LibraryTitleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    painter->setPen(Qt::transparent);
+    QPen textPen;
+    if (option.state & QStyle::State_Selected) {
+        painter->setBrush(option.palette.brush(QPalette::Highlight));
+        textPen = option.palette.color(QPalette::HighlightedText);
+    } else if (option.state & QStyle::State_MouseOver) {
+        QColor col = option.palette.color(QPalette::Highlight);
+        col.setAlpha(127);
+        painter->setBrush(col);
+        textPen = option.palette.color(QPalette::HighlightedText);
+    } else {
+        painter->setBrush(option.palette.brush(QPalette::Window));
+        textPen = option.palette.color(QPalette::WindowText);
+    }
+    painter->drawRect(option.rect);
+
+    QRect iconRect, textRect = option.rect;
+
+    iconRect.setSize(QSize(16, 16) * theLibsGlobal::getDPIScaling());
+    QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
+    QImage iconImage = icon.pixmap(iconRect.size()).toImage();
+    iconRect.moveLeft(option.rect.left() + 2 * theLibsGlobal::getDPIScaling());
+    iconRect.moveTop(option.rect.top() + (option.rect.height() / 2) - (iconRect.height() / 2));
+    painter->drawImage(iconRect, iconImage);
+    textRect.setLeft(iconRect.right() + 6 * theLibsGlobal::getDPIScaling());
+
+    //Reserve two characters' space for the track number
+    QRect trackRect = textRect;
+    trackRect.setWidth(option.fontMetrics.width("99") + 1);
+    textRect.setLeft(trackRect.right() + 6 * theLibsGlobal::getDPIScaling());
+
+    //Draw the track number
+    painter->setFont(option.font);
+    painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
+    if (index.data(Qt::UserRole + 1) == 0) {
+        painter->drawText(trackRect, Qt::AlignRight | Qt::AlignVCenter, "-");
+    } else {
+        painter->drawText(trackRect, Qt::AlignRight | Qt::AlignVCenter, QString::number(index.data(Qt::UserRole + 1).toInt()));
+    }
+
+    //Draw the track name
+    QRect nameRect = textRect;
+    nameRect.setWidth(option.fontMetrics.width(index.data().toString()) + 1);
+    textRect.setLeft(nameRect.right() + 6 * theLibsGlobal::getDPIScaling());
+
+    painter->setPen(option.palette.color(QPalette::WindowText));
+    painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());
+
+    //Draw the track duration
+    painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
+    QTime duration = QTime::fromMSecsSinceStartOfDay(index.data(Qt::UserRole + 2).toInt());
+    QString durationString;
+    if (duration.hour() == 0) {
+        durationString = duration.toString("mm:ss");
+    } else {
+        durationString = duration.toString("hh:mm:ss");
+    }
+    painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, "- " + durationString);
 }

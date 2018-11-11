@@ -116,6 +116,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->library->header()->setSectionResizeMode(2, QHeaderView::Interactive);
     ui->library->header()->setSortIndicatorShown(true);
     ui->library->setSortingEnabled(true);
+    ui->library->setItemDelegateForColumn(0, new LibraryTitleDelegate(this));
     ui->library->sortByColumn(0, Qt::DescendingOrder);
     connect(ui->library->header(), &QHeaderView::sortIndicatorChanged, [=](int index, Qt::SortOrder order) {
         ui->library->sortByColumn(index, order);
