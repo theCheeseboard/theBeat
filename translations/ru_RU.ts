@@ -166,7 +166,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="528"/>
-        <location filename="../mainwindow.cpp" line="620"/>
+        <location filename="../mainwindow.cpp" line="621"/>
         <source>All Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -297,7 +297,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1803"/>
-        <location filename="../mainwindow.cpp" line="498"/>
+        <location filename="../mainwindow.cpp" line="499"/>
         <source>Save Playlist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -318,9 +318,9 @@
     </message>
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="124"/>
-        <location filename="../mainwindow.cpp" line="617"/>
-        <location filename="../mainwindow.cpp" line="657"/>
-        <location filename="../mainwindow.cpp" line="699"/>
+        <location filename="../mainwindow.cpp" line="618"/>
+        <location filename="../mainwindow.cpp" line="658"/>
+        <location filename="../mainwindow.cpp" line="700"/>
         <source>%n tracks</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -329,22 +329,22 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="498"/>
+        <location filename="../mainwindow.cpp" line="499"/>
         <source>What do you want to call the playlist?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="503"/>
+        <location filename="../mainwindow.cpp" line="504"/>
         <source>Playlist already exists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="503"/>
+        <location filename="../mainwindow.cpp" line="504"/>
         <source>The playlist called &lt;b&gt;%1&lt;/b&gt; already exists. Do you want to clear it and replace it with the current one?</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="630"/>
+        <location filename="../mainwindow.cpp" line="631"/>
         <source>%n artists</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -353,12 +353,12 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="633"/>
+        <location filename="../mainwindow.cpp" line="634"/>
         <source>All Artists</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="643"/>
+        <location filename="../mainwindow.cpp" line="644"/>
         <source>%n albums</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -367,17 +367,17 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="646"/>
+        <location filename="../mainwindow.cpp" line="647"/>
         <source>All Albums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="655"/>
+        <location filename="../mainwindow.cpp" line="656"/>
         <source>Music by %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="697"/>
+        <location filename="../mainwindow.cpp" line="698"/>
         <source>Music in %1</source>
         <translation type="unfinished"></translation>
     </message>

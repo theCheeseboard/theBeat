@@ -35,7 +35,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 QUrl url = src.url();
                 if (url.isLocalFile()) {
                     TagLib::Tag* tag = TagCache::getTag(src.fileName());
-                    if (tag == nullptr) {
+                    if (tag == nullptr || tag->title() == "") {
                         return QFileInfo(src.fileName()).baseName();
                     } else {
                         return QString::fromStdWString(tag->title().toWString());

@@ -188,8 +188,9 @@ void MainWindow::updateMetadata() {
         }
         mprisMetadataMap.insert("xesam:title", Title.first());
     } else {
-        ui->currentTitleLabel->setText("");
-        mprisMetadataMap.remove("xesam:title");
+        title = playlist->data(playlist->index(playlist->currentItem())).toString();
+        ui->currentTitleLabel->setText(title);
+        mprisMetadataMap.insert("xesam:title", title);
     }
 
     QStringList Artist = player->metaData(Phonon::ArtistMetaData);

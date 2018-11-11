@@ -109,7 +109,11 @@ int LibraryModel::reloadData() {
                 metadata.filename = filename;
 
                 TagLib::Tag* tag = TagCache::getTag(filename);
-                if (tag == nullptr) {
+                TagLib::AudioProperties* audio = TagCache::getAudioProperties(filename);
+                if (audio == nullptr) {
+                    //This is probably not an audio file so let's not include it
+                    continue;
+                } else if (tag == nullptr) {
                     //Skip over this one
                     //continue;
                     metadata.title = iterator.fileInfo().completeBaseName();
@@ -359,11 +363,14 @@ LibraryTitleDelegate::LibraryTitleDelegate(QObject* parent) : QStyledItemDelegat
 
 
 void LibraryTitleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    QPen transientColor = option.palette.color(QPalette::Disabled, QPalette::WindowText);
+
     painter->setPen(Qt::transparent);
     QPen textPen;
     if (option.state & QStyle::State_Selected) {
         painter->setBrush(option.palette.brush(QPalette::Highlight));
         textPen = option.palette.color(QPalette::HighlightedText);
+        transientColor = textPen;
     } else if (option.state & QStyle::State_MouseOver) {
         QColor col = option.palette.color(QPalette::Highlight);
         col.setAlpha(127);
@@ -392,7 +399,7 @@ void LibraryTitleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
     //Draw the track number
     painter->setFont(option.font);
-    painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
+    painter->setPen(transientColor);
     if (index.data(Qt::UserRole + 1) == 0) {
         painter->drawText(trackRect, Qt::AlignRight | Qt::AlignVCenter, "-");
     } else {
@@ -408,7 +415,7 @@ void LibraryTitleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());
 
     //Draw the track duration
-    painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
+    painter->setPen(transientColor);
     QTime duration = QTime::fromMSecsSinceStartOfDay(index.data(Qt::UserRole + 2).toInt());
     QString durationString;
     if (duration.hour() == 0) {
