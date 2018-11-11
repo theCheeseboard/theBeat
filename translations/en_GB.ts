@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="en_GB">
 <context>
     <name>AboutWindow</name>
     <message>
@@ -322,10 +322,9 @@
         <location filename="../mainwindow.cpp" line="656"/>
         <location filename="../mainwindow.cpp" line="698"/>
         <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n track</numerusform>
+        <numerusform>%n tracks</numerusform>
+        </translation></message>
     <message>
         <location filename="../mainwindow.cpp" line="497"/>
         <source>What do you want to call the playlist?</source>
@@ -344,10 +343,9 @@
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="629"/>
         <source>%n artists</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n artist</numerusform>
+        <numerusform>%n artists</numerusform>
+        </translation></message>
     <message>
         <location filename="../mainwindow.cpp" line="632"/>
         <source>All Artists</source>
@@ -356,10 +354,9 @@
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="642"/>
         <source>%n albums</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n album</numerusform>
+        <numerusform>%n albums</numerusform>
+        </translation></message>
     <message>
         <location filename="../mainwindow.cpp" line="645"/>
         <source>All Albums</source>
