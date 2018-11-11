@@ -325,7 +325,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="691"/>
         <source>Music in %1</source>
-        <translation>Bài hát trong</translation>
+        <translation>Bài hát trong %1</translation>
     </message>
 </context>
 </TS>
