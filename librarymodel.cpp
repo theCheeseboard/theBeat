@@ -16,11 +16,11 @@ QVariant LibraryModel::headerData(int section, Qt::Orientation orientation, int 
     if (role == Qt::DisplayRole) {
         switch (section) {
             case 0:
-                return "Name";
+                return tr("Name", "Name of a music track");
             case 1:
-                return "Artist";
+                return tr("Artist");
             case 2:
-                return "Album";
+                return tr("Album");
         }
     } else if (role == Qt::SizeHintRole) {
         return QSize(500, 29);
@@ -177,6 +177,7 @@ void LibraryModel::search(QString query) {
     }
 
     emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
+    emit layoutChanged();
 }
 
 void LibraryModel::filter(QString filter, QueryType filterType) {

@@ -120,6 +120,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->library->header(), &QHeaderView::sortIndicatorChanged, [=](int index, Qt::SortOrder order) {
         ui->library->sortByColumn(index, order);
     });
+    ui->libraryTrackNumber->setText(tr("%n tracks", nullptr, library->rowCount()));
     ui->libStack->setCurrentIndex(library->reloadData());
 
     ArtistLibraryModel* artistModel = new ArtistLibraryModel(library);
@@ -612,6 +613,7 @@ void MainWindow::on_tracksButton_toggled(bool checked)
         ui->libraryStack->setCurrentIndex(0);
 
         library->clearFilter();
+        ui->libraryTrackNumber->setText(tr("%n tracks", nullptr, library->rowCount()));
         ui->listPlayOptions->setVisible(true);
         ui->libraryBackButton->setVisible(false);
         ui->libraryListTitle->setText(tr("All Tracks"));
@@ -624,6 +626,7 @@ void MainWindow::on_artistsButton_toggled(bool checked)
         ui->libraryStack->setCurrentIndex(1);
 
         library->clearFilter();
+        ui->libraryTrackNumber->setText(tr("%n artists", nullptr, ui->artistsView->model()->rowCount()));
         ui->listPlayOptions->setVisible(false);
         ui->libraryBackButton->setVisible(false);
         ui->libraryListTitle->setText(tr("All Artists"));
@@ -636,6 +639,7 @@ void MainWindow::on_albumsButton_toggled(bool checked)
         ui->libraryStack->setCurrentIndex(2);
 
         library->clearFilter();
+        ui->libraryTrackNumber->setText(tr("%n albums", nullptr, ui->albumsView->model()->rowCount()));
         ui->listPlayOptions->setVisible(false);
         ui->libraryBackButton->setVisible(false);
         ui->libraryListTitle->setText(tr("All Albums"));
@@ -649,6 +653,7 @@ void MainWindow::on_artistsView_activated(const QModelIndex &index)
     library->filter(filter, LibraryModel::Artist);
     ui->libraryListTitle->setText(tr("Music by %1").arg(filter));
 
+    ui->libraryTrackNumber->setText(tr("%n tracks", nullptr, library->rowCount()));
     ui->listPlayOptions->setVisible(true);
     ui->libraryBackButton->setVisible(true);
     ui->libraryBackButton->setProperty("backAction", "artist");
@@ -690,6 +695,7 @@ void MainWindow::on_albumsView_activated(const QModelIndex &index)
     library->filter(filter, LibraryModel::Album);
     ui->libraryListTitle->setText(tr("Music in %1").arg(filter));
 
+    ui->libraryTrackNumber->setText(tr("%n tracks", nullptr, library->rowCount()));
     ui->listPlayOptions->setVisible(true);
     ui->libraryBackButton->setVisible(true);
     ui->libraryBackButton->setProperty("backAction", "album");

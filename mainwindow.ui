@@ -35,6 +35,19 @@
      <number>0</number>
     </property>
     <item>
+     <widget class="Line" name="line_11">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>1</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QFrame" name="contentFrame">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
@@ -501,7 +514,7 @@
                     <item>
                      <widget class="QLabel" name="libraryListTitle">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -516,6 +529,19 @@
                       </property>
                       <property name="margin">
                        <number>9</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="libraryTrackNumber">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>0 tracks</string>
                       </property>
                      </widget>
                     </item>

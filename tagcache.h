@@ -13,6 +13,7 @@ class TagCache : public QObject
         explicit TagCache(QObject *parent = nullptr);
 
         static TagLib::Tag* getTag(QString filename);
+        static TagLib::AudioProperties* getAudioProperties(QString filename);
 
     signals:
 
@@ -20,6 +21,9 @@ class TagCache : public QObject
 
     private:
         static QMap<QString, TagLib::Tag*> tags;
+        static QMap<QString, TagLib::AudioProperties*> audioProperties;
+
+        static TagLib::FileRef* cache(QString filename);
 };
 
 #endif // TAGCACHE_H
