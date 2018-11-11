@@ -72,7 +72,12 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 void PlaylistModel::append(MediaSource source) {
     sources.append(source);
     if (shuffle) {
-        int insertInto = qrand() % actualQueue.length();
+        int insertInto;
+        if (actualQueue.length() > 0) {
+            insertInto = qrand() % actualQueue.length();
+        } else {
+            insertInto = 0;
+        }
         actualQueue.insert(insertInto, source);
 
         if (insertInto <= currentPlayingItem && currentPlayingItem != 0) {
@@ -140,6 +145,8 @@ void PlaylistModel::setRepeat(bool repeat) {
 
 void PlaylistModel::setShuffle(bool shuffle) {
     this->shuffle = shuffle;
+
+    if (currentPlayingItem == -1) return; //Queue should already be clear so there's nothing else to do right now
     MediaItem s = actualQueue.at(currentPlayingItem);
     if (shuffle) {
         actualQueue.clear();

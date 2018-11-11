@@ -142,6 +142,8 @@ private slots:
 
     void on_albumsView_activated(const QModelIndex &index);
 
+    void on_shuffleAllButton_clicked();
+
     private:
     Ui::MainWindow *ui;
 

@@ -149,6 +149,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QScroller::grabGesture(ui->library, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->PlaylistsView, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->playlistWidget, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->artistsView, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->albumsView, QScroller::LeftMouseButtonGesture);
 }
 
 MainWindow::~MainWindow()
@@ -280,9 +282,11 @@ void MainWindow::playerStateChanged(State newState, State oldState) {
     QString status;
     if (newState == PlayingState) {
         ui->playButton->setIcon(QIcon::fromTheme("media-playback-pause"));
+        ui->playButton->setToolTip(tr("Pause"));
         status = "Playing";
     } else if (newState == PausedState || newState == BufferingState) {
         ui->playButton->setIcon(QIcon::fromTheme("media-playback-start"));
+        ui->playButton->setToolTip(tr("Play"));
         status = "Paused";
     } else {
         ui->currentMediaFrame->setVisible(false);
@@ -380,7 +384,7 @@ void MainWindow::on_visualisationFrame_visualisationRateChanged(int size)
 void MainWindow::on_visualisationFrame_customContextMenuRequested(const QPoint &pos)
 {
     QMenu* menu = new QMenu(this);
-    menu->addSection("Visualisation");
+    menu->addSection(tr("Visualisation"));
     menu->addAction(ui->actionScope);
     menu->addAction(ui->actionLines);
     menu->addAction(ui->actionCircle);
@@ -446,7 +450,7 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
         ui->playlistContainerMainFrame->setVisible(false);
         ui->playlistContainerUnderFrame->setVisible(true);
         ui->playlistContainerUnder->addWidget(ui->playlistWidget);
-        ui->appTitleLabel->setText("theBeat");
+        ui->appTitleLabel->setText(tr("theBeat"));
     } else {
         ui->contentFrame->setVisible(true);
         ui->musicDivider->setVisible(true);
@@ -462,7 +466,7 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
         } else {
             //ui->sourcesList->setVisible(true);
             ui->sourcesList->setMaximumSize(300 * theLibsGlobal::getDPIScaling(), ui->sourcesList->maximumHeight());
-            ui->appTitleLabel->setText("theBeat");
+            ui->appTitleLabel->setText(tr("theBeat"));
             //ui->sourcesDivider->setVisible(true);
         }
     }
@@ -702,3 +706,12 @@ void MainWindow::on_albumsView_activated(const QModelIndex &index)
     ui->libraryBackButton->setVisible(true);
     ui->libraryBackButton->setProperty("backAction", "album");
 }
+
+void MainWindow::on_shuffleAllButton_clicked()
+{
+    //Clear the playlist, turn on shuffling and then enqueue everything
+    ui->actionClear_Playlist->trigger();
+    ui->shuffleButton->setChecked(true);
+    ui->enqueueAllButton->click();
+}
+

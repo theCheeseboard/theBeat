@@ -312,6 +312,9 @@
                       <verstretch>0</verstretch>
                      </sizepolicy>
                     </property>
+                    <property name="toolTip">
+                     <string>Search</string>
+                    </property>
                     <property name="text">
                      <string/>
                     </property>
@@ -500,6 +503,9 @@
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="toolTip">
+                       <string>Back</string>
+                      </property>
                       <property name="text">
                        <string/>
                       </property>
@@ -582,6 +588,16 @@
                        </property>
                        <property name="icon">
                         <iconset theme="media-playback-start"/>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="shuffleAllButton">
+                       <property name="text">
+                        <string>Shuffle All</string>
+                       </property>
+                       <property name="icon">
+                        <iconset theme="media-playlist-shuffle"/>
                        </property>
                       </widget>
                      </item>
@@ -1554,6 +1570,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="shuffleButton">
+             <property name="toolTip">
+              <string>Shuffle</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1570,6 +1589,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="repeatButton">
+             <property name="toolTip">
+              <string>Repeat One</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1587,6 +1609,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="backButton">
+             <property name="toolTip">
+              <string>Skip Back</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1601,6 +1626,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="playButton">
+             <property name="toolTip">
+              <string>Play</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1621,6 +1649,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="nextButton">
+             <property name="toolTip">
+              <string>Skip Next</string>
+             </property>
              <property name="text">
               <string/>
              </property>
