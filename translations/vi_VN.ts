@@ -133,33 +133,33 @@
     <message>
         <location filename="../mainwindow.ui" line="399"/>
         <source>Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="418"/>
         <source>Artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Nghệ sĩ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="434"/>
         <source>Albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Album nhạc</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="515"/>
         <location filename="../mainwindow.cpp" line="617"/>
         <source>All Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Tất cả bài hát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="545"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Thêm tất cả vào hàng phát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="555"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Phát tất cả</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="818"/>
@@ -310,22 +310,22 @@
     <message>
         <location filename="../mainwindow.cpp" line="629"/>
         <source>All Artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Tất cả nghệ sĩ</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="641"/>
         <source>All Albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Tất cả Album</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="650"/>
         <source>Music by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát bởi %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="691"/>
         <source>Music in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát trong</translation>
     </message>
 </context>
 </TS>
