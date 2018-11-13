@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QDBusConnectionInterface>
+#include <QDBusInterface>
 
 #ifdef Q_OS_MAC
 #include <CoreFoundation/CFBundle.h>
@@ -57,8 +59,15 @@ int main(int argc, char *argv[])
     a.installTranslator(&localTranslator);
 
 
-    //QMainWindow w;
-    //w.show();
+    //Check if theBeat is already running
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.mpris.MediaPlayer2.theBeat")) {
+        //theBeat is running
+        QDBusInterface interface("org.mpris.MediaPlayer2.theBeat", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2");
+        interface.call("Raise");
+
+        //Somehow tell theBeat to enqueue the requested song
+        return 0;
+    }
 
     //Seed the random generator
     qsrand(QDateTime::currentMSecsSinceEpoch());
@@ -69,6 +78,7 @@ int main(int argc, char *argv[])
     NativeEventFilter filter(&w);
     a.installNativeEventFilter(&filter);
 
+    //Grab media keys
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioPlay), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioNext), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioPrev), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);

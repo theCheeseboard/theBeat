@@ -605,15 +605,9 @@ void MainWindow::activate() {
     event.xclient.message_type = XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW", False);
     event.xclient.window = this->winId();
     event.xclient.format = 32;
-    event.xclient.data.l[0] = 2;
-    event.xclient.data.l[1] = 0;
-    event.xclient.data.l[2] = 0;
-    event.xclient.data.l[3] = 0;
-    event.xclient.data.l[4] = 0;
 
     XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
-
-    this->raise();
+    XMapRaised(QX11Info::display(), this->winId());
 #endif
 }
 
