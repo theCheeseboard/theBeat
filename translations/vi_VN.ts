@@ -21,7 +21,7 @@
     <message>
         <location filename="../aboutwindow.ui" line="56"/>
         <source>Copyright (c) Victor Tran 2018. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bản quyền (c) Victor Tran 2018. Cấp phép với giấy phép Công cộng GNU, phiên bản 3 hoặc mới hơn.</translation>
     </message>
     <message>
         <location filename="../aboutwindow.ui" line="81"/>
@@ -43,17 +43,17 @@
         <location filename="../librarymodel.cpp" line="22"/>
         <source>Name</source>
         <comment>Name of a music track</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tên</translation>
     </message>
     <message>
         <location filename="../librarymodel.cpp" line="24"/>
         <source>Artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Nghệ sĩ</translation>
     </message>
     <message>
         <location filename="../librarymodel.cpp" line="26"/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
+        <translation>Album</translation>
     </message>
 </context>
 <context>
@@ -66,12 +66,12 @@
     <message>
         <location filename="../main.cpp" line="26"/>
         <source>Hide %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ẩn %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="27"/>
         <source>Hide Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Ẩn các mục khác</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="28"/>
@@ -81,17 +81,17 @@
     <message>
         <location filename="../main.cpp" line="29"/>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cài đặt...</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="30"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Giới thiệu về %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="31"/>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Thoát %1</translation>
     </message>
 </context>
 <context>
@@ -142,7 +142,7 @@
     <message>
         <location filename="../mainwindow.ui" line="316"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Tìm kiếm</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="358"/>
@@ -174,7 +174,7 @@
     <message>
         <location filename="../mainwindow.ui" line="507"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Lại</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="534"/>
@@ -200,7 +200,7 @@
     <message>
         <location filename="../mainwindow.ui" line="597"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Xáo trộn tất cả</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="860"/>
@@ -260,28 +260,28 @@
     <message>
         <location filename="../mainwindow.ui" line="1574"/>
         <source>Shuffle</source>
-        <translation type="unfinished"></translation>
+        <translation>Xáo trộn</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1593"/>
         <source>Repeat One</source>
-        <translation type="unfinished"></translation>
+        <translation>Lặp lại một bài hát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1613"/>
         <source>Skip Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhảy lại</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1630"/>
         <location filename="../mainwindow.cpp" line="289"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Phát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1653"/>
         <source>Skip Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhảy tiếp</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1745"/>
@@ -365,19 +365,17 @@
         <location filename="../mainwindow.cpp" line="662"/>
         <location filename="../mainwindow.cpp" line="704"/>
         <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n bài hát</numerusform>
+        </translation></message>
     <message>
         <location filename="../mainwindow.cpp" line="285"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Tạm dừng</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="387"/>
         <source>Visualisation</source>
-        <translation type="unfinished"></translation>
+        <translation>Hình dung</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="503"/>
@@ -397,10 +395,8 @@
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="635"/>
         <source>%n artists</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n nghệ sĩ</numerusform>
+        </translation></message>
     <message>
         <location filename="../mainwindow.cpp" line="638"/>
         <source>All Artists</source>
@@ -409,10 +405,8 @@
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="648"/>
         <source>%n albums</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n album</numerusform>
+        </translation></message>
     <message>
         <location filename="../mainwindow.cpp" line="651"/>
         <source>All Albums</source>
