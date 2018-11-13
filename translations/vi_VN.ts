@@ -34,7 +34,7 @@
     <message numerus="yes">
         <location filename="../librarymodel.cpp" line="384"/>
         <source>%n artists</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n nghệ sĩ</numerusform>
         </translation>
     </message>
@@ -296,7 +296,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1761"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Trợ giúp</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1774"/>

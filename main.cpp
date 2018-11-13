@@ -66,6 +66,8 @@ int main(int argc, char *argv[])
         interface.call("Raise");
 
         //Somehow tell theBeat to enqueue the requested song
+
+        qDebug() << "Handing control to currently running theBeat process";
         return 0;
     }
 
