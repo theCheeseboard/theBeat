@@ -5,6 +5,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QShortcut>
+#include "secondaryinformationlistdelegate.h"
 
 #ifdef Q_OS_LINUX
     #include <X11/Xlib.h>
@@ -83,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->searchWidget->setVisible(false);
     ui->searchLineEdit->installEventFilter(this);
     ui->libraryBackButton->setVisible(false);
+    ui->sourcesStack->setCurrentIndex(1);
 
     ui->playlistWidget->setModel(playlist);
 
@@ -126,9 +128,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ArtistLibraryModel* artistModel = new ArtistLibraryModel(library);
     ui->artistsView->setModel(artistModel);
+    ui->artistsView->setItemDelegate(new SecondaryInformationListDelegate);
 
     AlbumLibraryModel* albumModel = new AlbumLibraryModel(library);
     ui->albumsView->setModel(albumModel);
+    ui->albumsView->setItemDelegate(new SecondaryInformationListDelegate);
 
     ui->PlaylistsView->setModel(new PlaylistFileModel);
 
@@ -715,3 +719,8 @@ void MainWindow::on_shuffleAllButton_clicked()
     ui->enqueueAllButton->click();
 }
 
+
+void MainWindow::on_sourcesStack_currentChanged(int arg1)
+{
+    ui->sourcesList->setCurrentRow(arg1);
+}

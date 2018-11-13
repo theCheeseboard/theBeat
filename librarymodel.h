@@ -150,8 +150,21 @@ class AlbumLibraryModel : public QAbstractListModel {
         void updateData();
 
     private:
+        struct AlbumDescriptor {
+            QString album;
+            QStringList* artists;
+
+            AlbumDescriptor() {
+                artists = new QStringList();
+            }
+
+            ~AlbumDescriptor() {
+                delete artists;
+            }
+        };
+
         LibraryModel* libraryModel;
-        QStringList albums;
+        QList<AlbumDescriptor*> albums;
 };
 
 #endif // LIBRARYMODEL_H

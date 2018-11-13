@@ -326,16 +326,38 @@ int AlbumLibraryModel::rowCount(const QModelIndex &parent) const {
 }
 
 void AlbumLibraryModel::updateData() {
+    for (AlbumDescriptor* album : albums) {
+        delete album;
+    }
     albums.clear();
 
     for (int i = 0; i < libraryModel->rowCount(); i++) {
         QString album = libraryModel->data(libraryModel->index(i, LibraryModel::Album)).toString();
-        if (!albums.contains(album) && album != "") {
-            albums.append(album);
+        QString artist = libraryModel->data(libraryModel->index(i, LibraryModel::Artist)).toString();
+        if (album == "") continue;
+
+        bool found = false;
+        for (AlbumDescriptor* albumDesc : albums) {
+            if (albumDesc->album == album) {
+                QStringList* artists = albumDesc->artists;
+                if (!artists->contains(artist)) {
+                    artists->append(artist);
+                }
+                found = true;
+            }
+        }
+
+        if (!found) {
+            AlbumDescriptor* descriptor = new AlbumDescriptor();
+            descriptor->album = album;
+            descriptor->artists->append(artist);
+            albums.append(descriptor);
         }
     }
 
-    std::sort(albums.begin(), albums.end());
+    std::sort(albums.begin(), albums.end(), [](const AlbumDescriptor* a, const AlbumDescriptor* b) {
+        return a->album < b->album;
+    });
     emit dataChanged(index(0), index(rowCount()));
 }
 
@@ -345,13 +367,22 @@ QVariant AlbumLibraryModel::data(const QModelIndex &index, int role) const {
     } else {
         int row = index.row();
 
-        if (albums.length() <= row) {
+        if (albums.size() <= row) {
             //Stop
             return QVariant();
         }
 
         if (role == Qt::DisplayRole) {
-            return albums.at(row);
+            return albums.at(row)->album;
+        } else if (role == Qt::UserRole) {
+            QStringList* artists = albums.at(row)->artists;
+            if (artists->count() == 0) {
+                return "";
+            } else if (artists->count() <= 3) {
+                return artists->join(", ");
+            } else {
+                return tr("%n artists", nullptr, artists->count());
+            }
         }
     }
     return QVariant();

@@ -319,7 +319,8 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset theme="system-search"/>
+                     <iconset theme="system-search">
+                      <normaloff>.</normaloff>.</iconset>
                     </property>
                     <property name="flat">
                      <bool>true</bool>
@@ -415,7 +416,8 @@
                     <string>Tracks</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="view-media-track"/>
+                    <iconset theme="view-media-track">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="checkable">
                     <bool>true</bool>
@@ -434,7 +436,8 @@
                     <string>Artists</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="view-media-artist"/>
+                    <iconset theme="view-media-artist">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="checkable">
                     <bool>true</bool>
@@ -450,7 +453,8 @@
                     <string>Albums</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="media-album-cover"/>
+                    <iconset theme="media-album-cover">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="checkable">
                     <bool>true</bool>
@@ -510,7 +514,8 @@
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset theme="go-previous"/>
+                       <iconset theme="go-previous">
+                        <normaloff>.</normaloff>.</iconset>
                       </property>
                       <property name="flat">
                        <bool>true</bool>
@@ -547,7 +552,7 @@
                        </sizepolicy>
                       </property>
                       <property name="text">
-                       <string>0 tracks</string>
+                       <string notr="true">0 tracks</string>
                       </property>
                      </widget>
                     </item>
@@ -577,7 +582,8 @@
                         <string>Enqueue All</string>
                        </property>
                        <property name="icon">
-                        <iconset theme="view-media-playlist"/>
+                        <iconset theme="view-media-playlist">
+                         <normaloff>.</normaloff>.</iconset>
                        </property>
                       </widget>
                      </item>
@@ -587,7 +593,8 @@
                         <string>Play All</string>
                        </property>
                        <property name="icon">
-                        <iconset theme="media-playback-start"/>
+                        <iconset theme="media-playback-start">
+                         <normaloff>.</normaloff>.</iconset>
                        </property>
                       </widget>
                      </item>
@@ -597,7 +604,8 @@
                         <string>Shuffle All</string>
                        </property>
                        <property name="icon">
-                        <iconset theme="media-playlist-shuffle"/>
+                        <iconset theme="media-playlist-shuffle">
+                         <normaloff>.</normaloff>.</iconset>
                        </property>
                       </widget>
                      </item>
@@ -1577,7 +1585,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset theme="media-playlist-shuffle"/>
+              <iconset theme="media-playlist-shuffle">
+               <normaloff>.</normaloff>.</iconset>
              </property>
              <property name="checkable">
               <bool>true</bool>

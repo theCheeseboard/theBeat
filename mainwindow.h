@@ -144,6 +144,8 @@ private slots:
 
     void on_shuffleAllButton_clicked();
 
+    void on_sourcesStack_currentChanged(int arg1);
+
     private:
     Ui::MainWindow *ui;
 

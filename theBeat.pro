@@ -52,7 +52,8 @@ SOURCES += \
     playlistlistwidget.cpp \
     nativeeventfilter.cpp \
     librarymanagewidget.cpp \
-    tagcache.cpp
+    tagcache.cpp \
+    secondaryinformationlistdelegate.cpp
 
 BUILD_DISCORD {
     SOURCES += discordintegration.cpp
@@ -68,7 +69,8 @@ HEADERS += \
     playlistlistwidget.h \
     nativeeventfilter.h \
     librarymanagewidget.h \
-    tagcache.h
+    tagcache.h \
+    secondaryinformationlistdelegate.h
 
 BUILD_DISCORD {
     HEADERS += discordintegration.h
