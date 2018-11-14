@@ -29,9 +29,9 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         return QVariant();
     } else {
         int i = index.row();
+        MediaSource src = sources.at(i);
         switch (role) {
             case Qt::DisplayRole: {
-                MediaSource src = sources.at(i);
                 QUrl url = src.url();
                 if (url.isLocalFile()) {
                     TagLib::Tag* tag = TagCache::getTag(src.fileName());
@@ -60,10 +60,38 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                     } else {
                         return QIcon::fromTheme("network-wireless-connected-75");
                     }
+                } else {
+                    return QIcon();
                 }
             }
             case Qt::UserRole: //Return the media source
                 return QVariant::fromValue(sources.at(i));
+            case Qt::UserRole + 1: {
+                QUrl url = src.url();
+                if (url.isLocalFile()) {
+                    TagLib::Tag* tag = TagCache::getTag(src.fileName());
+                    if (tag == nullptr) {
+                        return 0;
+                    } else {
+                        return tag->track();
+                    }
+                } else {
+                    return -1;
+                }
+            }
+            case Qt::UserRole + 3: {
+                QUrl url = src.url();
+                if (url.isLocalFile()) {
+                    TagLib::AudioProperties* audio = TagCache::getAudioProperties(src.fileName());
+                    if (audio == nullptr) {
+                        return 0;
+                    } else {
+                        return audio->lengthInSeconds();
+                    }
+                } else {
+                    return 0;
+                }
+            }
         }
         return QVariant();
     }
@@ -312,6 +340,7 @@ bool PlaylistModel::removeRow(int row, const QModelIndex &parent) {
             //Actually just clear the playlist
             clear();
             endRemoveRows();
+            emit dataChanged(index(0), index(rowCount()));
             return true;
         } else {
             playNext();
@@ -334,6 +363,7 @@ bool PlaylistModel::removeRow(int row, const QModelIndex &parent) {
 
 
     endRemoveRows();
+    emit dataChanged(index(0), index(rowCount()));
     return true;
 }
 

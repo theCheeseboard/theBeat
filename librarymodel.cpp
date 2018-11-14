@@ -76,18 +76,28 @@ QVariant LibraryModel::data(const QModelIndex &index, int role) const
                     } else if (role == Qt::UserRole + 1) { //Track Number
                         return metadata.trackNumber;
                     } else if (role == Qt::UserRole + 2) { //Duration
-                        return metadata.duration;
+                        QTime duration = QTime::fromMSecsSinceStartOfDay(metadata.duration * 1000);
+                        QString durationString;
+                        if (duration.hour() == 0) {
+                            durationString = duration.toString("mm:ss");
+                        } else {
+                            durationString = duration.toString("hh:mm:ss");
+                        }
+                        return durationString;
                     }
+                    break;
                 }
                 case Artist: {
                     if (role == Qt::DisplayRole) {
                         return metadata.artist;
                     }
+                    break;
                 }
                 case Album: {
                     if (role == Qt::DisplayRole) {
                         return metadata.album;
                     }
+                    break;
                 }
             }
         }
@@ -167,7 +177,7 @@ void LibraryModel::search(QString query) {
         shownMediaFiles = intermediateMediaFiles;
     } else {
         shownMediaFiles.clear();
-        for (MediaFile file : availableMediaFiles) {
+        for (MediaFile file : intermediateMediaFiles) {
             switch (currentFilterType) {
                 case Artist:
                     if (file.artist == currentFilter) shownMediaFiles.append(file);
@@ -429,12 +439,14 @@ void LibraryTitleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     textRect.setLeft(trackRect.right() + 6 * theLibsGlobal::getDPIScaling());
 
     //Draw the track number
-    painter->setFont(option.font);
-    painter->setPen(transientColor);
-    if (index.data(Qt::UserRole + 1) == 0) {
-        painter->drawText(trackRect, Qt::AlignRight | Qt::AlignVCenter, "-");
-    } else {
-        painter->drawText(trackRect, Qt::AlignRight | Qt::AlignVCenter, QString::number(index.data(Qt::UserRole + 1).toInt()));
+    if (index.data(Qt::UserRole + 1) != -1) {
+        painter->setFont(option.font);
+        painter->setPen(transientColor);
+        if (index.data(Qt::UserRole + 1) == 0) {
+            painter->drawText(trackRect, Qt::AlignRight | Qt::AlignVCenter, "-");
+        } else {
+            painter->drawText(trackRect, Qt::AlignRight | Qt::AlignVCenter, QString::number(index.data(Qt::UserRole + 1).toInt()));
+        }
     }
 
     //Draw the track name
@@ -446,13 +458,8 @@ void LibraryTitleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());
 
     //Draw the track duration
-    painter->setPen(transientColor);
-    QTime duration = QTime::fromMSecsSinceStartOfDay(index.data(Qt::UserRole + 2).toInt() * 1000);
-    QString durationString;
-    if (duration.hour() == 0) {
-        durationString = duration.toString("mm:ss");
-    } else {
-        durationString = duration.toString("hh:mm:ss");
+    if (index.data(Qt::UserRole + 2).toString() != "") {
+        painter->setPen(transientColor);
+        painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, "· " + index.data(Qt::UserRole + 2).toString());
     }
-    painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, "- " + durationString);
 }

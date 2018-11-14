@@ -93,6 +93,26 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mediaLibraryInfoWidget->installEventFilter(this);
 
     ui->playlistWidget->setModel(playlist);
+    ui->playlistWidget->setItemDelegate(new LibraryTitleDelegate(this));
+    connect(playlist, &PlaylistFileModel::dataChanged, [=] {
+        QStringList information;
+        information.append(tr("%n tracks", nullptr, playlist->rowCount()));
+
+        int totalTime = 0;
+        for (int i = 0; i < playlist->rowCount(); i++) {
+            QModelIndex index = playlist->index(i);
+            totalTime += index.data(Qt::UserRole + 3).toInt();
+        }
+
+        QTime duration = QTime::fromMSecsSinceStartOfDay(totalTime * 1000);
+        if (duration.hour() == 0) {
+            information.append(duration.toString("mm:ss"));
+        } else {
+            information.append(duration.toString("hh:mm:ss"));
+        }
+
+        ui->playlistInformationLabel->setText(information.join(" · "));
+    });
 
     QShortcut* spaceShortcut = new QShortcut(QKeySequence(Qt::Key_Space), this);
     spaceShortcut->setAutoRepeat(false);
