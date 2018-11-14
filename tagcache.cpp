@@ -38,27 +38,39 @@ TagLib::FileRef* TagCache::cache(QString filename) {
     return tag;
 }
 
-QImage TagCache::getAlbumArt(QString filename) {
-    TagLib::MPEG::File mpegFile(filename.toUtf8());
-    if (!mpegFile.hasID3v2Tag()) return QImage();
-
-    TagLib::ID3v2::Tag* id3v2Tag = mpegFile.ID3v2Tag();
-    if (id3v2Tag == nullptr) return QImage();
-
-    TagLib::ID3v2::FrameList frameList = id3v2Tag->frameListMap()["APIC"];
-    if (frameList.isEmpty()) return QImage();
-
-    TagLib::ID3v2::AttachedPictureFrame* frame;
-    for (TagLib::ID3v2::FrameList::ConstIterator i = frameList.begin(); i != frameList.end(); i++) {
-        frame = (TagLib::ID3v2::AttachedPictureFrame*) *i;
-        if (frame->type() == TagLib::ID3v2::AttachedPictureFrame::FrontCover) {
-            QByteArray ba;
-            ba.append(frame->picture().data(), frame->picture().size());
-            QImage image;
-            image.loadFromData(ba);
-            return image;
+tPromise<QImage>* TagCache::getAlbumArt(QString filename) {
+    return new tPromise<QImage>([=](QString& error) {
+        TagLib::MPEG::File mpegFile(filename.toUtf8());
+        if (!mpegFile.hasID3v2Tag()) {
+            error = "No ID3v2 Tag";
+            return QImage();
         }
-    }
 
-    return QImage();
+        TagLib::ID3v2::Tag* id3v2Tag = mpegFile.ID3v2Tag();
+        if (id3v2Tag == nullptr) {
+            error = "Invalid ID3v2 Tag";
+            return QImage();
+        }
+
+        TagLib::ID3v2::FrameList frameList = id3v2Tag->frameListMap()["APIC"];
+        if (frameList.isEmpty()) {
+            error = "No Album Art available";
+            return QImage();
+        }
+
+        TagLib::ID3v2::AttachedPictureFrame* frame;
+        for (TagLib::ID3v2::FrameList::ConstIterator i = frameList.begin(); i != frameList.end(); i++) {
+            frame = (TagLib::ID3v2::AttachedPictureFrame*) *i;
+            if (frame->type() == TagLib::ID3v2::AttachedPictureFrame::FrontCover) {
+                QByteArray ba;
+                ba.append(frame->picture().data(), frame->picture().size());
+                QImage image;
+                image.loadFromData(ba);
+                return image;
+            }
+        }
+
+        error = "Front Cover art unavailable";
+        return QImage();
+    });
 }

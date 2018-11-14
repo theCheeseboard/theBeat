@@ -6,6 +6,7 @@
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 #include <QImage>
+#include <tpromise.h>
 
 class TagCache : public QObject
 {
@@ -15,7 +16,7 @@ class TagCache : public QObject
 
         static TagLib::Tag* getTag(QString filename);
         static TagLib::AudioProperties* getAudioProperties(QString filename);
-        static QImage getAlbumArt(QString filename);
+        static tPromise<QImage>* getAlbumArt(QString filename);
 
     signals:
 

@@ -186,149 +186,156 @@ void MainWindow::on_actionOpen_triggered()
 }
 
 void MainWindow::updateMetadata() {
-    QVariantMap currentDataMap = mprisMetadataMap;
-    bool showChangedNotification = false;
-    QStringList metadata;
+    //Get album art
 
-    QString title, artist;
+    auto mprisUpdateFunction = [=](QImage albumArt) {
+        QVariantMap currentDataMap = mprisMetadataMap;
+        bool showChangedNotification = false;
+        QStringList metadata;
 
-    QStringList Title = player->metaData(Phonon::TitleMetaData);
-    if (Title.count() > 0) {
-        if (Title.at(0) != ui->currentTitleLabel->text()) {
-            title = Title.at(0);
+        QString title, artist;
+
+        QStringList Title = player->metaData(Phonon::TitleMetaData);
+        if (Title.count() > 0) {
+            if (Title.at(0) != ui->currentTitleLabel->text()) {
+                title = Title.at(0);
+                ui->currentTitleLabel->setText(title);
+                showChangedNotification = true;
+            }
+            mprisMetadataMap.insert("xesam:title", Title.first());
+        } else {
+            title = playlist->data(playlist->index(playlist->currentItem())).toString();
             ui->currentTitleLabel->setText(title);
-            showChangedNotification = true;
+            mprisMetadataMap.insert("xesam:title", title);
         }
-        mprisMetadataMap.insert("xesam:title", Title.first());
-    } else {
-        title = playlist->data(playlist->index(playlist->currentItem())).toString();
-        ui->currentTitleLabel->setText(title);
-        mprisMetadataMap.insert("xesam:title", title);
-    }
 
-    QStringList Artist = player->metaData(Phonon::ArtistMetaData);
-    if (Artist.count() > 0) {
-        artist = Artist.at(0);
-        metadata.append(artist);
-        mprisMetadataMap.insert("xesam:artist", Artist);
-    } else {
-        mprisMetadataMap.remove("xesam:artist");
-    }
+        QStringList Artist = player->metaData(Phonon::ArtistMetaData);
+        if (Artist.count() > 0) {
+            artist = Artist.at(0);
+            metadata.append(artist);
+            mprisMetadataMap.insert("xesam:artist", Artist);
+        } else {
+            mprisMetadataMap.remove("xesam:artist");
+        }
 
-    QStringList Album = player->metaData(Phonon::AlbumMetaData);
-    if (Album.count() > 0) {
-        metadata.append(Album.at(0));
-        mprisMetadataMap.insert("xesam:album", Album.first());
-    } else {
-        mprisMetadataMap.remove("xesam:album");
-    }
+        QStringList Album = player->metaData(Phonon::AlbumMetaData);
+        if (Album.count() > 0) {
+            metadata.append(Album.at(0));
+            mprisMetadataMap.insert("xesam:album", Album.first());
+        } else {
+            mprisMetadataMap.remove("xesam:album");
+        }
 
-    ui->currentMetadataLabel->setText(metadata.join(" · "));
-    ui->currentMediaFrame->setVisible(true);
+        ui->currentMetadataLabel->setText(metadata.join(" · "));
+        ui->currentMediaFrame->setVisible(true);
 
-    temporaryMprisAlbumArt->deleteLater();
-    temporaryMprisAlbumArt = new QTemporaryFile("thebeat-albumart-XXXXXX.png");
-    QImage i = TagCache::getAlbumArt(player->currentSource().fileName());
-    if (i.isNull()) {
-        ui->albumArtLabel->setPixmap(QIcon::fromTheme("audio").pixmap(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling()));
-        mprisMetadataMap.remove("mpris:artUrl");
-        ui->currentMediaFrame->setPalette(this->palette());
-    } else {
-        //Write MPRIS data out
-        temporaryMprisAlbumArt->open();
-        i.save(temporaryMprisAlbumArt, "PNG");
-        mprisMetadataMap.insert("mpris:artUrl", QUrl::fromLocalFile(temporaryMprisAlbumArt->fileName()).toString());
+        temporaryMprisAlbumArt->deleteLater();
+        temporaryMprisAlbumArt = new QTemporaryFile("thebeat-albumart-XXXXXX.png");
+        if (albumArt.isNull()) {
+            ui->albumArtLabel->setPixmap(QIcon::fromTheme("audio").pixmap(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling()));
+            mprisMetadataMap.remove("mpris:artUrl");
+            ui->currentMediaFrame->setPalette(this->palette());
+        } else {
+            //Write MPRIS data out
+            temporaryMprisAlbumArt->open();
+            albumArt.save(temporaryMprisAlbumArt, "PNG");
+            mprisMetadataMap.insert("mpris:artUrl", QUrl::fromLocalFile(temporaryMprisAlbumArt->fileName()).toString());
 
-        //Set image
-        QImage image = i.scaled(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            //Set image
+            QImage image = albumArt.scaled(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-        qulonglong red = 0, green = 0, blue = 0;
+            qulonglong red = 0, green = 0, blue = 0;
 
-        QPalette pal = this->palette();
-        int totalPixels = 0;
-        for (int i = 0; i < image.width(); i++) {
-            for (int j = 0; j < image.height(); j++) {
-                QColor c = image.pixelColor(i, j);
-                if (c.alpha() != 0) {
-                    red += c.red();
-                    green += c.green();
-                    blue += c.blue();
-                    totalPixels++;
+            QPalette pal = this->palette();
+            int totalPixels = 0;
+            for (int i = 0; i < image.width(); i++) {
+                for (int j = 0; j < image.height(); j++) {
+                    QColor c = image.pixelColor(i, j);
+                    if (c.alpha() != 0) {
+                        red += c.red();
+                        green += c.green();
+                        blue += c.blue();
+                        totalPixels++;
+                    }
                 }
             }
+
+            QColor c;
+            int averageCol = (pal.color(QPalette::Window).red() + pal.color(QPalette::Window).green() + pal.color(QPalette::Window).blue()) / 3;
+
+            if (totalPixels == 0) {
+                if (averageCol < 127) {
+                    c = pal.color(QPalette::Window).darker(200);
+                } else {
+                    c = pal.color(QPalette::Window).lighter(200);
+                }
+            } else {
+                c = QColor(red / totalPixels, green / totalPixels, blue / totalPixels);
+
+                if (averageCol < 127) {
+                    c = c.darker(200);
+                } else {
+                    c = c.lighter(200);
+                }
+            }
+
+            pal.setColor(QPalette::Window, c);
+            ui->currentMediaFrame->setPalette(pal);
+
+            QImage rounded(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), QImage::Format_ARGB32);
+            rounded.fill(Qt::transparent);
+            QPainter p(&rounded);
+            p.setRenderHint(QPainter::Antialiasing);
+            p.setBrush(QBrush(image));
+            p.setPen(Qt::transparent);
+            p.drawRoundedRect(0, 0, 48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), 40, 40, Qt::RelativeSize);
+
+            ui->albumArtLabel->setPixmap(QPixmap::fromImage(rounded));
         }
 
-        QColor c;
-        int averageCol = (pal.color(QPalette::Window).red() + pal.color(QPalette::Window).green() + pal.color(QPalette::Window).blue()) / 3;
+        if (showChangedNotification) {
+            tNotification* notification = new tNotification();
+            notification->setSummary("Now Playing");
 
-        if (totalPixels == 0) {
-            if (averageCol < 127) {
-                c = pal.color(QPalette::Window).darker(200);
-            } else {
-                c = pal.color(QPalette::Window).lighter(200);
-            }
-        } else {
-            c = QColor(red / totalPixels, green / totalPixels, blue / totalPixels);
+            QStringList notificationText;
+            notificationText.append(title);
+            notificationText.append(artist);
 
-            if (averageCol < 127) {
-                c = c.darker(200);
-            } else {
-                c = c.lighter(200);
-            }
+            notification->setText(notificationText.join(" · "));
+            notification->setSoundOn(false);
+            notification->setAppName("theBeat");
+            notification->setTransient(true);
+            notification->post();
         }
 
-        pal.setColor(QPalette::Window, c);
-        ui->currentMediaFrame->setPalette(pal);
+        mprisMetadataMap.insert("mpris:trackid", QVariant::fromValue(QDBusObjectPath("/org/thesuite/thebeat/currentmedia")));
 
-        QImage rounded(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), QImage::Format_ARGB32);
-        rounded.fill(Qt::transparent);
-        QPainter p(&rounded);
-        p.setRenderHint(QPainter::Antialiasing);
-        p.setBrush(QBrush(image));
-        p.setPen(Qt::transparent);
-        p.drawRoundedRect(0, 0, 48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), 40, 40, Qt::RelativeSize);
+        if (currentDataMap != mprisMetadataMap) {
+            //Send the PropertiesChanged signal.
+            QDBusMessage signal = QDBusMessage::createSignal("/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged");
 
-        ui->albumArtLabel->setPixmap(QPixmap::fromImage(rounded));
-    }
+            QList<QVariant> args;
+            args.append("org.mpris.MediaPlayer2.Player");
 
-    if (showChangedNotification) {
-        tNotification* notification = new tNotification();
-        notification->setSummary("Now Playing");
+            QVariantMap changedProperties;
+            changedProperties.insert("Metadata", mprisMetadataMap);
+            //changedProperties.insert("PlaybackStatus", this->PlaybackStatus());
+            args.append(changedProperties);
 
-        QStringList notificationText;
-        notificationText.append(title);
-        notificationText.append(artist);
+            QStringList invalidatedProperties;
+            invalidatedProperties.append("Metadata");
+            //invalidatedProperties.append("PlaybackStatus");
+            args.append(invalidatedProperties);
 
-        notification->setText(notificationText.join(" · "));
-        notification->setSoundOn(false);
-        notification->setAppName("theBeat");
-        notification->setTransient(true);
-        notification->post();
-    }
+            signal.setArguments(args);
 
-    mprisMetadataMap.insert("mpris:trackid", QVariant::fromValue(QDBusObjectPath("/org/thesuite/thebeat/currentmedia")));
+            QDBusConnection::sessionBus().send(signal);
+        }
+    };
 
-    if (currentDataMap != mprisMetadataMap) {
-        //Send the PropertiesChanged signal.
-        QDBusMessage signal = QDBusMessage::createSignal("/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged");
-
-        QList<QVariant> args;
-        args.append("org.mpris.MediaPlayer2.Player");
-
-        QVariantMap changedProperties;
-        changedProperties.insert("Metadata", mprisMetadataMap);
-        //changedProperties.insert("PlaybackStatus", this->PlaybackStatus());
-        args.append(changedProperties);
-
-        QStringList invalidatedProperties;
-        invalidatedProperties.append("Metadata");
-        //invalidatedProperties.append("PlaybackStatus");
-        args.append(invalidatedProperties);
-
-        signal.setArguments(args);
-
-        QDBusConnection::sessionBus().send(signal);
-    }
+    TagCache::getAlbumArt(player->currentSource().fileName())->then(mprisUpdateFunction)->error([=](QString error) {
+        mprisUpdateFunction(QImage());
+    });
 }
 
 void MainWindow::on_playButton_clicked()
@@ -835,7 +842,9 @@ void MainWindow::on_albumsView_activated(const QModelIndex &index)
 
     QModelIndex libIndex = library->index(0, 0);
     if (libIndex.isValid()) {
-        setLibraryCoverImage(TagCache::getAlbumArt(libIndex.data(Qt::UserRole).toString()));
+        TagCache::getAlbumArt(libIndex.data(Qt::UserRole).toString())->then([=](QImage image) {
+            setLibraryCoverImage(image);
+        });
     } else {
         playlistBackground = QImage();
         ui->mediaLibraryInfoWidget->update();
