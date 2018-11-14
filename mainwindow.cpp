@@ -860,3 +860,17 @@ void MainWindow::setLibraryCoverImage(QImage image) {
     playlistBackground = image;
     ui->mediaLibraryInfoWidget->update();
 }
+
+void MainWindow::on_playlistWidget_customContextMenuRequested(const QPoint &pos)
+{
+    QModelIndex index = ui->playlistWidget->indexAt(pos);
+    if (index.isValid()) {
+        QMenu* menu = new QMenu();
+        menu->addSection(tr("For %1").arg(index.data().toString()));
+        menu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove from playlist"), [=] {
+            playlist->removeRow(index.row());
+        });
+        menu->exec(ui->playlistWidget->mapToGlobal(pos));
+        menu->deleteLater();
+    }
+}

@@ -68,6 +68,8 @@ public:
 
     bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override;
 
+    bool removeRow(int row, const QModelIndex &parent = QModelIndex());
+
     QByteArray createPlaylist();
 
 public slots:

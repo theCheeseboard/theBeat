@@ -301,6 +301,42 @@ QByteArray PlaylistModel::createPlaylist() {
     return playlistEntries.join("\n").toUtf8();
 }
 
+bool PlaylistModel::removeRow(int row, const QModelIndex &parent) {
+    if (parent.isValid()) return false;
+    if (row >= sources.count()) return false;
+
+    beginRemoveRows(parent, row, row + 1);
+    if (row == currentPlayingItem) {
+        //Immediately skip forward if possible
+        if (sources.count() == 1) {
+            //Actually just clear the playlist
+            clear();
+            endRemoveRows();
+            return true;
+        } else {
+            playNext();
+            currentPlayingItem--;
+        }
+    } else if (currentPlayingItem != -1 && currentPlayingItem > row) {
+        currentPlayingItem--;
+    }
+
+    //Remove the row
+    if (shuffle) {
+        //Remove any instance from the actual queue
+        MediaItem item = sources.at(row);
+        actualQueue.removeOne(item);
+    } else {
+        //Actual queue should be the same as source list
+        actualQueue.removeAt(row);
+    }
+    sources.removeAt(row);
+
+
+    endRemoveRows();
+    return true;
+}
+
 MediaItem::MediaItem(const MediaSource &source) {
     this->source = source;
     currentType = Source;

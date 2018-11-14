@@ -149,6 +149,8 @@ private slots:
 
     void setLibraryCoverImage(QImage image);
 
+    void on_playlistWidget_customContextMenuRequested(const QPoint &pos);
+
     private:
     Ui::MainWindow *ui;
 
