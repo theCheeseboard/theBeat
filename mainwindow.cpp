@@ -693,7 +693,7 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
                 scene.addItem(&item);
 
                 //scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
-                scene.render(&painter, rect, QRectF(-radius, -radius, playlistBackground.width() + radius, playlistBackground.height() + radius));
+                scene.render(&painter, rect.adjusted(-radius, -radius, radius, radius), QRectF(-radius, -radius, playlistBackground.width() + radius, playlistBackground.height() + radius));
 
                 painter.setBrush(QColor(0, 0, 0, 150));
                 painter.setPen(Qt::transparent);
