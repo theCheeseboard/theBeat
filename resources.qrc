@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
         <file alias="icon.svg">thebeat.svg</file>
+        <file alias="coverimage.svg">coverimage.svg</file>
     </qresource>
 </RCC>

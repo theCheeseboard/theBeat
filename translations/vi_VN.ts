@@ -109,8 +109,8 @@
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <location filename="../mainwindow.ui" line="87"/>
-        <location filename="../mainwindow.cpp" line="457"/>
-        <location filename="../mainwindow.cpp" line="473"/>
+        <location filename="../mainwindow.cpp" line="530"/>
+        <location filename="../mainwindow.cpp" line="546"/>
         <source>theBeat</source>
         <translation>theBeat</translation>
     </message>
@@ -122,19 +122,19 @@
     <message>
         <location filename="../mainwindow.ui" line="138"/>
         <location filename="../mainwindow.ui" line="300"/>
-        <location filename="../mainwindow.ui" line="785"/>
+        <location filename="../mainwindow.ui" line="797"/>
         <source>Music Library</source>
         <translation>Thư viện nhạc</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="147"/>
-        <location filename="../mainwindow.ui" line="975"/>
+        <location filename="../mainwindow.ui" line="987"/>
         <source>Playlists</source>
         <translation>Hãng nhạc đã lưu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="156"/>
-        <location filename="../mainwindow.ui" line="1032"/>
+        <location filename="../mainwindow.ui" line="1044"/>
         <source>Open File</source>
         <translation>Mở tệp</translation>
     </message>
@@ -145,7 +145,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="174"/>
-        <location filename="../mainwindow.ui" line="1277"/>
+        <location filename="../mainwindow.ui" line="1289"/>
         <source>Play CD</source>
         <translation>Phát đĩa CD</translation>
     </message>
@@ -161,8 +161,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="378"/>
-        <location filename="../mainwindow.ui" line="804"/>
-        <location filename="../mainwindow.ui" line="906"/>
+        <location filename="../mainwindow.ui" line="816"/>
+        <location filename="../mainwindow.ui" line="918"/>
         <source>Manage Music Library</source>
         <translation>Quản lý thư viện nhạc</translation>
     </message>
@@ -187,249 +187,249 @@
         <translation>Lại</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="539"/>
-        <location filename="../mainwindow.cpp" line="623"/>
+        <location filename="../mainwindow.ui" line="545"/>
+        <location filename="../mainwindow.cpp" line="744"/>
         <source>All Tracks</source>
         <translation>Tất cả bài hát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="582"/>
+        <location filename="../mainwindow.ui" line="594"/>
         <source>Enqueue All</source>
         <translation>Thêm tất cả vào hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="593"/>
+        <location filename="../mainwindow.ui" line="605"/>
         <source>Play All</source>
         <translation>Phát tất cả</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="604"/>
+        <location filename="../mainwindow.ui" line="616"/>
         <source>Shuffle All</source>
         <translation>Xáo trộn tất cả</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="868"/>
+        <location filename="../mainwindow.ui" line="880"/>
         <source>Welcome to theBeat!</source>
         <translation>Chào mừng đến theBeat!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="878"/>
+        <location filename="../mainwindow.ui" line="890"/>
         <source>Let&apos;s get your music library set up so we can find all your music and collate it all into one place.</source>
         <translation>Bây giờ bạn sẽ cần đặt thư viện nhạc để chúng tôi tìm kiếm tất cả nhạc của bạn và xếp vào một chỗ.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1072"/>
+        <location filename="../mainwindow.ui" line="1084"/>
         <source>Open an audio file from your computer</source>
         <translation>Mở tệp nhạc từ máy tính của bạn</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1094"/>
+        <location filename="../mainwindow.ui" line="1106"/>
         <source>Open</source>
         <translation>Mở</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1107"/>
+        <location filename="../mainwindow.ui" line="1119"/>
         <source>Alternatively, drag in music from all around into the playlist box on the right to add it to the playlist.</source>
         <translation>Hoặc kéo nhắc đến hàng phát nhạc trên bên phải để bỏ thêm vào hàng nhạc.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1156"/>
+        <location filename="../mainwindow.ui" line="1168"/>
         <source>Play Network Stream</source>
         <translation>Phát từ mạng</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1196"/>
+        <location filename="../mainwindow.ui" line="1208"/>
         <source>Enter the URL of the network stream to play</source>
         <translation>Nhập vào URL của luồng dữ liệu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1203"/>
+        <location filename="../mainwindow.ui" line="1215"/>
         <source>Network Stream URL</source>
         <translation>URL của luồng dữ liệu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1225"/>
+        <location filename="../mainwindow.ui" line="1237"/>
         <source>Add</source>
         <translation>Thêm</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1317"/>
+        <location filename="../mainwindow.ui" line="1329"/>
         <source>CD Playback coming soon. Stay tuned!</source>
         <translation>Phát lại CD sắp ra mắt. Hãy theo dõi!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1327"/>
+        <location filename="../mainwindow.ui" line="1339"/>
         <source>Loading CD</source>
         <translation>Đang tải đĩa CD</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1582"/>
+        <location filename="../mainwindow.ui" line="1597"/>
         <source>Shuffle</source>
         <translation>Xáo trộn</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1602"/>
+        <location filename="../mainwindow.ui" line="1617"/>
         <source>Repeat One</source>
         <translation>Lặp lại một bài hát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1622"/>
+        <location filename="../mainwindow.ui" line="1637"/>
         <source>Skip Back</source>
         <translation>Nhảy lại</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1639"/>
-        <location filename="../mainwindow.cpp" line="293"/>
+        <location filename="../mainwindow.ui" line="1654"/>
+        <location filename="../mainwindow.cpp" line="364"/>
         <source>Play</source>
         <translation>Phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1662"/>
+        <location filename="../mainwindow.ui" line="1677"/>
         <source>Skip Next</source>
         <translation>Nhảy tiếp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1754"/>
+        <location filename="../mainwindow.ui" line="1769"/>
         <source>Fi&amp;le</source>
         <translation>&amp;Tệp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1761"/>
+        <location filename="../mainwindow.ui" line="1776"/>
         <source>Help</source>
         <translation>Trợ giúp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1774"/>
+        <location filename="../mainwindow.ui" line="1789"/>
         <source>&amp;Open</source>
         <translation>&amp;Mở</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1777"/>
+        <location filename="../mainwindow.ui" line="1792"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1786"/>
+        <location filename="../mainwindow.ui" line="1801"/>
         <source>&amp;Exit</source>
         <translation>&amp;Thoát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1789"/>
+        <location filename="../mainwindow.ui" line="1804"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1800"/>
+        <location filename="../mainwindow.ui" line="1815"/>
         <source>Scope</source>
         <translation>Dao động</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1808"/>
+        <location filename="../mainwindow.ui" line="1823"/>
         <source>Lines</source>
         <translation>Hàng</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1816"/>
+        <location filename="../mainwindow.ui" line="1831"/>
         <source>Circle</source>
         <translation>Vòng tròn</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1825"/>
+        <location filename="../mainwindow.ui" line="1840"/>
         <source>&amp;About</source>
         <translation>&amp;Giới thiệu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1834"/>
+        <location filename="../mainwindow.ui" line="1849"/>
         <source>Clear Playlist</source>
         <translation>Xóa hàng phát nhạc</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1843"/>
-        <location filename="../mainwindow.cpp" line="507"/>
+        <location filename="../mainwindow.ui" line="1858"/>
+        <location filename="../mainwindow.cpp" line="579"/>
         <source>Save Playlist</source>
         <translation>Lưu hàng phát nhạc</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1852"/>
+        <location filename="../mainwindow.ui" line="1867"/>
         <source>Add to existing playlist</source>
         <translation>Thêm vào hàng nhạc đã lưu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1860"/>
+        <location filename="../mainwindow.ui" line="1875"/>
         <source>Bars</source>
         <translation>Thanh</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="98"/>
+        <location filename="../mainwindow.cpp" line="104"/>
         <source>For current playlist</source>
         <translation>Cho hàng phát nhạc này</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="126"/>
-        <location filename="../mainwindow.cpp" line="620"/>
-        <location filename="../mainwindow.cpp" line="660"/>
-        <location filename="../mainwindow.cpp" line="702"/>
+        <location filename="../mainwindow.cpp" line="132"/>
+        <location filename="../mainwindow.cpp" line="741"/>
+        <location filename="../mainwindow.cpp" line="787"/>
+        <location filename="../mainwindow.cpp" line="831"/>
         <source>%n tracks</source>
         <translation>
             <numerusform>%n bài hát</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="289"/>
+        <location filename="../mainwindow.cpp" line="360"/>
         <source>Pause</source>
         <translation>Tạm dừng</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="391"/>
+        <location filename="../mainwindow.cpp" line="462"/>
         <source>Visualisation</source>
         <translation>Hình dung</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="507"/>
+        <location filename="../mainwindow.cpp" line="579"/>
         <source>What do you want to call the playlist?</source>
         <translation>Bạn muốn kêu hàng phát nhạc này là gì?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="512"/>
+        <location filename="../mainwindow.cpp" line="584"/>
         <source>Playlist already exists</source>
         <translation>Hàng phát nhạc này đã tồn tại</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="512"/>
+        <location filename="../mainwindow.cpp" line="584"/>
         <source>The playlist called &lt;b&gt;%1&lt;/b&gt; already exists. Do you want to clear it and replace it with the current one?</source>
         <translation>Hàng phát nhạc gọi &lt;b&gt;%1&lt;/b&gt; đã tồn tại. Bạn có muốn thay thế nó với hãng phát nhạc này không?</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="633"/>
+        <location filename="../mainwindow.cpp" line="756"/>
         <source>%n artists</source>
         <translation>
             <numerusform>%n nghệ sĩ</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="636"/>
+        <location filename="../mainwindow.cpp" line="759"/>
         <source>All Artists</source>
         <translation>Tất cả nghệ sĩ</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="646"/>
+        <location filename="../mainwindow.cpp" line="771"/>
         <source>%n albums</source>
         <translation>
             <numerusform>%n album</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="649"/>
+        <location filename="../mainwindow.cpp" line="774"/>
         <source>All Albums</source>
         <translation>Tất cả Album</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="658"/>
+        <location filename="../mainwindow.cpp" line="785"/>
         <source>Music by %1</source>
         <translation>Bài hát bởi %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="700"/>
+        <location filename="../mainwindow.cpp" line="829"/>
         <source>Music in %1</source>
         <translation>Bài hát trong %1</translation>
     </message>

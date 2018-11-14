@@ -5,6 +5,7 @@
 #include <QMap>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
+#include <QImage>
 
 class TagCache : public QObject
 {
@@ -14,6 +15,7 @@ class TagCache : public QObject
 
         static TagLib::Tag* getTag(QString filename);
         static TagLib::AudioProperties* getAudioProperties(QString filename);
+        static QImage getAlbumArt(QString filename);
 
     signals:
 

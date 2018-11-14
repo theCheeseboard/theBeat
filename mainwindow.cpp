@@ -5,6 +5,10 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QShortcut>
+#include <QSvgRenderer>
+#include <QGraphicsBlurEffect>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 #include "secondaryinformationlistdelegate.h"
 
 #ifdef Q_OS_LINUX
@@ -40,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     playlist = new PlaylistModel(player);
     controller = new MediaController(player);
     cdController = new MediaController(cdFinder);
+    temporaryMprisAlbumArt = new QTemporaryFile();
 
     player->setTickInterval(1000);
 
@@ -85,6 +90,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->searchLineEdit->installEventFilter(this);
     ui->libraryBackButton->setVisible(false);
     ui->sourcesStack->setCurrentIndex(1);
+    ui->mediaLibraryInfoWidget->installEventFilter(this);
 
     ui->playlistWidget->setModel(playlist);
 
@@ -160,6 +166,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    temporaryMprisAlbumArt->deleteLater();
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -218,7 +225,71 @@ void MainWindow::updateMetadata() {
 
     ui->currentMetadataLabel->setText(metadata.join(" · "));
     ui->currentMediaFrame->setVisible(true);
-    ui->albumArtLabel->setPixmap(QIcon::fromTheme("audio").pixmap(32, 32));
+
+    temporaryMprisAlbumArt->deleteLater();
+    temporaryMprisAlbumArt = new QTemporaryFile("thebeat-albumart-XXXXXX.png");
+    QImage i = TagCache::getAlbumArt(player->currentSource().fileName());
+    if (i.isNull()) {
+        ui->albumArtLabel->setPixmap(QIcon::fromTheme("audio").pixmap(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling()));
+        mprisMetadataMap.remove("mpris:artUrl");
+        ui->currentMediaFrame->setPalette(this->palette());
+    } else {
+        //Write MPRIS data out
+        temporaryMprisAlbumArt->open();
+        i.save(temporaryMprisAlbumArt, "PNG");
+        mprisMetadataMap.insert("mpris:artUrl", QUrl::fromLocalFile(temporaryMprisAlbumArt->fileName()).toString());
+
+        //Set image
+        QImage image = i.scaled(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+        qulonglong red = 0, green = 0, blue = 0;
+
+        QPalette pal = this->palette();
+        int totalPixels = 0;
+        for (int i = 0; i < image.width(); i++) {
+            for (int j = 0; j < image.height(); j++) {
+                QColor c = image.pixelColor(i, j);
+                if (c.alpha() != 0) {
+                    red += c.red();
+                    green += c.green();
+                    blue += c.blue();
+                    totalPixels++;
+                }
+            }
+        }
+
+        QColor c;
+        int averageCol = (pal.color(QPalette::Window).red() + pal.color(QPalette::Window).green() + pal.color(QPalette::Window).blue()) / 3;
+
+        if (totalPixels == 0) {
+            if (averageCol < 127) {
+                c = pal.color(QPalette::Window).darker(200);
+            } else {
+                c = pal.color(QPalette::Window).lighter(200);
+            }
+        } else {
+            c = QColor(red / totalPixels, green / totalPixels, blue / totalPixels);
+
+            if (averageCol < 127) {
+                c = c.darker(200);
+            } else {
+                c = c.lighter(200);
+            }
+        }
+
+        pal.setColor(QPalette::Window, c);
+        ui->currentMediaFrame->setPalette(pal);
+
+        QImage rounded(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), QImage::Format_ARGB32);
+        rounded.fill(Qt::transparent);
+        QPainter p(&rounded);
+        p.setRenderHint(QPainter::Antialiasing);
+        p.setBrush(QBrush(image));
+        p.setPen(Qt::transparent);
+        p.drawRoundedRect(0, 0, 48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), 40, 40, Qt::RelativeSize);
+
+        ui->albumArtLabel->setPixmap(QPixmap::fromImage(rounded));
+    }
 
     if (showChangedNotification) {
         tNotification* notification = new tNotification();
@@ -449,8 +520,10 @@ void MainWindow::on_library_doubleClicked(const QModelIndex &index)
 void MainWindow::resizeEvent(QResizeEvent *event) {
     //Move items around accordingly
     if (this->height() < 400 * theLibsGlobal::getDPIScaling() || this->width() < 450 * theLibsGlobal::getDPIScaling()) {
+        //Use mini player
         ui->contentFrame->setVisible(false);
         ui->musicDivider->setVisible(false);
+        ui->topLine->setVisible(false);
         ui->playlistContainerMainFrame->setVisible(false);
         ui->playlistContainerUnderFrame->setVisible(true);
         ui->playlistContainerUnder->addWidget(ui->playlistWidget);
@@ -458,20 +531,19 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     } else {
         ui->contentFrame->setVisible(true);
         ui->musicDivider->setVisible(true);
+        ui->topLine->setVisible(true);
         ui->playlistContainerMainFrame->setVisible(true);
         ui->playlistContainerUnderFrame->setVisible(false);
         ui->playlistContainerMain->insertWidget(0, ui->playlistWidget);
 
         if (this->width() < 1000 * theLibsGlobal::getDPIScaling()) {
-            //ui->sourcesList->setVisible(false);
+            //Collapse sidebar
             ui->sourcesList->setMaximumSize(36 * theLibsGlobal::getDPIScaling(), ui->sourcesList->maximumHeight());
             ui->appTitleLabel->setPixmap(QIcon::fromTheme("thebeat", QIcon::fromTheme(":/icons/icon.svg")).pixmap(QSize(16, 16) * theLibsGlobal::getDPIScaling()));
-            //ui->sourcesDivider->setVisible(false);
         } else {
-            //ui->sourcesList->setVisible(true);
+            //Expand sidebar
             ui->sourcesList->setMaximumSize(300 * theLibsGlobal::getDPIScaling(), ui->sourcesList->maximumHeight());
             ui->appTitleLabel->setText(tr("theBeat"));
-            //ui->sourcesDivider->setVisible(true);
         }
     }
 
@@ -586,6 +658,55 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
                 });
             }
         }
+    } else if (watched == ui->mediaLibraryInfoWidget) {
+        if (event->type() == QEvent::Paint) {
+            QPainter painter(ui->mediaLibraryInfoWidget);
+
+            if (playlistBackground.isNull()) {
+                QSvgRenderer renderer(QString(":/icons/coverimage.svg"));
+
+                QRect rect;
+                rect.setSize(renderer.defaultSize().scaled(ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
+                rect.setLeft(ui->mediaLibraryInfoWidget->width() / 2 - rect.width() / 2);
+                rect.setTop(ui->mediaLibraryInfoWidget->height() / 2 - rect.height() / 2);
+
+                renderer.render(&painter, rect);
+
+                painter.setBrush(QColor(0, 0, 0, 150));
+                painter.setPen(Qt::transparent);
+                painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
+            } else {
+                QRect rect;
+                rect.setSize(playlistBackground.size().scaled(ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
+                rect.moveLeft(ui->mediaLibraryInfoWidget->width() / 2 - rect.width() / 2);
+                rect.moveTop(ui->mediaLibraryInfoWidget->height() / 2 - rect.height() / 2);
+
+                //Blur the background
+                int radius = 30;
+                QGraphicsBlurEffect* blur = new QGraphicsBlurEffect;
+                blur->setBlurRadius(radius);
+
+                QGraphicsScene scene;
+                QGraphicsPixmapItem item;
+                item.setPixmap(QPixmap::fromImage(playlistBackground));
+                item.setGraphicsEffect(blur);
+                scene.addItem(&item);
+
+                //scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
+                scene.render(&painter, rect, QRectF(-radius, -radius, playlistBackground.width() + radius, playlistBackground.height() + radius));
+
+                painter.setBrush(QColor(0, 0, 0, 150));
+                painter.setPen(Qt::transparent);
+                painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
+
+                QRect rightRect;
+                rightRect.setSize(playlistBackground.size().scaled(0, ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
+                rightRect.moveRight(ui->mediaLibraryInfoWidget->width());
+                rightRect.moveTop(ui->mediaLibraryInfoWidget->height() / 2 - rightRect.height() / 2);
+                painter.drawImage(rightRect, playlistBackground.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+            }
+
+        }
     }
     return false;
 }
@@ -621,6 +742,8 @@ void MainWindow::on_tracksButton_toggled(bool checked)
         ui->listPlayOptions->setVisible(true);
         ui->libraryBackButton->setVisible(false);
         ui->libraryListTitle->setText(tr("All Tracks"));
+        playlistBackground = QImage();
+        ui->mediaLibraryInfoWidget->update();
     }
 }
 
@@ -634,6 +757,8 @@ void MainWindow::on_artistsButton_toggled(bool checked)
         ui->listPlayOptions->setVisible(false);
         ui->libraryBackButton->setVisible(false);
         ui->libraryListTitle->setText(tr("All Artists"));
+        playlistBackground = QImage();
+        ui->mediaLibraryInfoWidget->update();
     }
 }
 
@@ -647,6 +772,8 @@ void MainWindow::on_albumsButton_toggled(bool checked)
         ui->listPlayOptions->setVisible(false);
         ui->libraryBackButton->setVisible(false);
         ui->libraryListTitle->setText(tr("All Albums"));
+        playlistBackground = QImage();
+        ui->mediaLibraryInfoWidget->update();
     }
 }
 
@@ -661,6 +788,8 @@ void MainWindow::on_artistsView_activated(const QModelIndex &index)
     ui->listPlayOptions->setVisible(true);
     ui->libraryBackButton->setVisible(true);
     ui->libraryBackButton->setProperty("backAction", "artist");
+    playlistBackground = QImage();
+    ui->mediaLibraryInfoWidget->update();
 }
 
 void MainWindow::on_libraryBackButton_clicked()
@@ -703,6 +832,14 @@ void MainWindow::on_albumsView_activated(const QModelIndex &index)
     ui->listPlayOptions->setVisible(true);
     ui->libraryBackButton->setVisible(true);
     ui->libraryBackButton->setProperty("backAction", "album");
+
+    QModelIndex libIndex = library->index(0, 0);
+    if (libIndex.isValid()) {
+        setLibraryCoverImage(TagCache::getAlbumArt(libIndex.data(Qt::UserRole).toString()));
+    } else {
+        playlistBackground = QImage();
+        ui->mediaLibraryInfoWidget->update();
+    }
 }
 
 void MainWindow::on_shuffleAllButton_clicked()
@@ -717,4 +854,9 @@ void MainWindow::on_shuffleAllButton_clicked()
 void MainWindow::on_sourcesStack_currentChanged(int arg1)
 {
     ui->sourcesList->setCurrentRow(arg1);
+}
+
+void MainWindow::setLibraryCoverImage(QImage image) {
+    playlistBackground = image;
+    ui->mediaLibraryInfoWidget->update();
 }

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <phonon/MediaSource>
+#include <QTemporaryFile>
 #include <phonon/MediaObject>
 #include <phonon/MediaController>
 #include <phonon/AudioDataOutput>
@@ -146,6 +147,8 @@ private slots:
 
     void on_sourcesStack_currentChanged(int arg1);
 
+    void setLibraryCoverImage(QImage image);
+
     private:
     Ui::MainWindow *ui;
 
@@ -157,6 +160,8 @@ private slots:
     MediaObject *player, *cdFinder;
     MediaController *controller, *cdController;
     AudioDataOutput* dataOut;
+    QImage playlistBackground;
+    QTemporaryFile* temporaryMprisAlbumArt;
 
     LibraryManageWidget* libWidget;
 

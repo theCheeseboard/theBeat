@@ -129,7 +129,7 @@ int LibraryModel::reloadData() {
                     metadata.artist = QString::fromStdWString(tag->artist().toWString());
                     metadata.album = QString::fromStdWString(tag->album().toWString());
                     metadata.trackNumber = tag->track();
-                    metadata.duration = audio->lengthInMilliseconds();
+                    metadata.duration = audio->lengthInSeconds();
                 }
 
                 availableMediaFiles.append(metadata);
@@ -447,7 +447,7 @@ void LibraryTitleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
     //Draw the track duration
     painter->setPen(transientColor);
-    QTime duration = QTime::fromMSecsSinceStartOfDay(index.data(Qt::UserRole + 2).toInt());
+    QTime duration = QTime::fromMSecsSinceStartOfDay(index.data(Qt::UserRole + 2).toInt() * 1000);
     QString durationString;
     if (duration.hour() == 0) {
         durationString = duration.toString("mm:ss");
