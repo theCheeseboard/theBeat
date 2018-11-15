@@ -42,6 +42,19 @@
     </message>
 </context>
 <context>
+    <name>DiscordIntegration</name>
+    <message>
+        <location filename="../discordintegration.cpp" line="49"/>
+        <source>Listening to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../discordintegration.cpp" line="52"/>
+        <source>Paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LibraryManageWidget</name>
     <message>
         <location filename="../librarymanagewidget.ui" line="71"/>

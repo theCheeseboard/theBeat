@@ -46,10 +46,10 @@ DiscordIntegration::DiscordIntegration(QObject *parent) : QObject(parent)
 
             QString detailsString;
             if (currentState.value("PlaybackStatus").toString() == "Playing") {
-                detailsString = "Listening to %1";
+                detailsString = tr("Listening to %1");
                 detailsString = detailsString.arg(metadata.value("xesam:title").toString());
             } else {
-                detailsString = "Paused";
+                detailsString = tr("Paused");
             }
             detailsString.truncate(127);
 
