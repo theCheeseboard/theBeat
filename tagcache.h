@@ -23,6 +23,7 @@ class TagCache : public QObject
     public slots:
 
     private:
+        static QList<TagLib::FileRef*> fileRefs;
         static QMap<QString, TagLib::Tag*> tags;
         static QMap<QString, TagLib::AudioProperties*> audioProperties;
 

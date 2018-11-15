@@ -188,7 +188,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="545"/>
-        <location filename="../mainwindow.cpp" line="771"/>
+        <location filename="../mainwindow.cpp" line="778"/>
         <source>All Tracks</source>
         <translation>Tất cả bài hát</translation>
     </message>
@@ -367,9 +367,9 @@
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="99"/>
         <location filename="../mainwindow.cpp" line="152"/>
-        <location filename="../mainwindow.cpp" line="768"/>
-        <location filename="../mainwindow.cpp" line="814"/>
-        <location filename="../mainwindow.cpp" line="858"/>
+        <location filename="../mainwindow.cpp" line="775"/>
+        <location filename="../mainwindow.cpp" line="821"/>
+        <location filename="../mainwindow.cpp" line="865"/>
         <source>%n tracks</source>
         <translation>
             <numerusform>%n bài hát</numerusform>
@@ -401,46 +401,46 @@
         <translation>Hàng phát nhạc gọi &lt;b&gt;%1&lt;/b&gt; đã tồn tại. Bạn có muốn thay thế nó với hãng phát nhạc này không?</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="783"/>
+        <location filename="../mainwindow.cpp" line="790"/>
         <source>%n artists</source>
         <translation>
             <numerusform>%n nghệ sĩ</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="786"/>
+        <location filename="../mainwindow.cpp" line="793"/>
         <source>All Artists</source>
         <translation>Tất cả nghệ sĩ</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="798"/>
+        <location filename="../mainwindow.cpp" line="805"/>
         <source>%n albums</source>
         <translation>
             <numerusform>%n album</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="801"/>
+        <location filename="../mainwindow.cpp" line="808"/>
         <source>All Albums</source>
         <translation>Tất cả Album</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="812"/>
+        <location filename="../mainwindow.cpp" line="819"/>
         <source>Music by %1</source>
         <translation>Bài hát bởi %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="856"/>
+        <location filename="../mainwindow.cpp" line="863"/>
         <source>Music in %1</source>
         <translation>Bài hát trong %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="898"/>
+        <location filename="../mainwindow.cpp" line="905"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="899"/>
+        <location filename="../mainwindow.cpp" line="906"/>
         <source>Remove from playlist</source>
         <translation type="unfinished"></translation>
     </message>

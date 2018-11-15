@@ -101,6 +101,7 @@ class PlayerAdaptor: public QDBusAbstractAdaptor
 "    <property access=\"read\" type=\"b\" name=\"CanPause\"/>\n"
 "    <property access=\"read\" type=\"b\" name=\"CanGoPrevious\"/>\n"
 "    <property access=\"read\" type=\"b\" name=\"CanGoNext\"/>\n"
+"    <property access=\"read\" type=\"b\" name=\"CanSeek\"/>\n"
 "    <method name=\"Next\"/>\n"
 "    <method name=\"Previous\"/>\n"
 "    <method name=\"Pause\"/>\n"
@@ -142,6 +143,11 @@ public: // PROPERTIES
 
     Q_PROPERTY(bool CanPlay READ canPlay)
     bool canPlay() const {
+        return true;
+    }
+
+    Q_PROPERTY(bool CanSeek READ canSeek)
+    bool canSeek() const {
         return true;
     }
 

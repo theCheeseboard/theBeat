@@ -689,6 +689,13 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
         if (event->type() == QEvent::Paint) {
             QPainter painter(ui->mediaLibraryInfoWidget);
 
+            QColor backgroundCol = this->palette().color(QPalette::Window);
+            if ((backgroundCol.red() + backgroundCol.green() + backgroundCol.blue()) / 3 < 127) {
+                backgroundCol = QColor(0, 0, 0, 150);
+            } else {
+                backgroundCol = QColor(255, 255, 255, 150);
+            }
+
             if (playlistBackground.isNull()) {
                 QSvgRenderer renderer(QString(":/icons/coverimage.svg"));
 
@@ -699,7 +706,7 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
 
                 renderer.render(&painter, rect);
 
-                painter.setBrush(QColor(0, 0, 0, 150));
+                painter.setBrush(backgroundCol);
                 painter.setPen(Qt::transparent);
                 painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
             } else {
@@ -722,7 +729,7 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
                 //scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
                 scene.render(&painter, rect.adjusted(-radius, -radius, radius, radius), QRectF(-radius, -radius, playlistBackground.width() + radius, playlistBackground.height() + radius));
 
-                painter.setBrush(QColor(0, 0, 0, 150));
+                painter.setBrush(backgroundCol);
                 painter.setPen(Qt::transparent);
                 painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
 

@@ -1,11 +1,13 @@
 #include "tagcache.h"
 
+#include <QSharedPointer>
 #include <taglib/id3v2frame.h>
 #include <taglib/id3v2header.h>
 #include <taglib/id3v2tag.h>
 #include <taglib/mpegfile.h>
 #include <taglib/attachedpictureframe.h>
 
+QList<TagLib::FileRef*> TagCache::fileRefs;
 QMap<QString, TagLib::Tag*> TagCache::tags;
 QMap<QString, TagLib::AudioProperties*> TagCache::audioProperties;
 
@@ -35,6 +37,7 @@ TagLib::FileRef* TagCache::cache(QString filename) {
     TagLib::FileRef* tag = new TagLib::FileRef(filename.toUtf8());
     tags.insert(filename, tag->tag());
     audioProperties.insert(filename, tag->audioProperties());
+    fileRefs.append(tag);
     return tag;
 }
 
@@ -58,8 +61,10 @@ tPromise<QImage>* TagCache::getAlbumArt(QString filename) {
             return QImage();
         }
 
+        //QSharedPointer<TagLib::ID3v2::AttachedPictureFrame> frame;
         TagLib::ID3v2::AttachedPictureFrame* frame;
         for (TagLib::ID3v2::FrameList::ConstIterator i = frameList.begin(); i != frameList.end(); i++) {
+            //frame = QSharedPointer<TagLib::ID3v2::AttachedPictureFrame>((TagLib::ID3v2::AttachedPictureFrame*) *i);
             frame = (TagLib::ID3v2::AttachedPictureFrame*) *i;
             if (frame->type() == TagLib::ID3v2::AttachedPictureFrame::FrontCover) {
                 QByteArray ba;
