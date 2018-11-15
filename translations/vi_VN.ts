@@ -44,12 +44,12 @@
     <message>
         <location filename="../discordintegration.cpp" line="49"/>
         <source>Listening to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang nghe %1</translation>
     </message>
     <message>
         <location filename="../discordintegration.cpp" line="52"/>
         <source>Paused</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã tạm dừng</translation>
     </message>
 </context>
 <context>
