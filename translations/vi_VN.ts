@@ -86,7 +86,7 @@
     <message>
         <location filename="../main.cpp" line="30"/>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiển thị tất cả</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="31"/>
@@ -437,12 +437,12 @@
     <message>
         <location filename="../mainwindow.cpp" line="905"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cho %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="906"/>
         <source>Remove from playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa khỏi hàng phát</translation>
     </message>
 </context>
 </TS>
