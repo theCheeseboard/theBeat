@@ -56,7 +56,7 @@
     <message>
         <location filename="../librarymanagewidget.ui" line="71"/>
         <source>Manage Music Library</source>
-        <translation>Gerenciar Biblioteca de Musicas</translation>
+        <translation>Gerenciar Biblioteca de Músicas</translation>
     </message>
 </context>
 <context>
@@ -75,7 +75,7 @@
     <message>
         <location filename="../librarymodel.cpp" line="26"/>
         <source>Album</source>
-        <translation>Album</translation>
+        <translation>Álbum</translation>
     </message>
 </context>
 <context>
@@ -136,7 +136,7 @@
         <location filename="../mainwindow.ui" line="300"/>
         <location filename="../mainwindow.ui" line="797"/>
         <source>Music Library</source>
-        <translation>Biblioteca de Musicas</translation>
+        <translation>Biblioteca de Músicas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="147"/>
@@ -176,7 +176,7 @@
         <location filename="../mainwindow.ui" line="816"/>
         <location filename="../mainwindow.ui" line="918"/>
         <source>Manage Music Library</source>
-        <translation>Gerenciar Biblioteca de Musicas</translation>
+        <translation>Gerenciar Biblioteca de Músicas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="416"/>
@@ -227,7 +227,7 @@
     <message>
         <location filename="../mainwindow.ui" line="890"/>
         <source>Let&apos;s get your music library set up so we can find all your music and collate it all into one place.</source>
-        <translation>Vamos preparar sua biblioteca de musicas para que você possa achar e agrupar tudo em um só lugar.</translation>
+        <translation>Vamos preparar sua biblioteca de músicas para que você possa achar e agrupar tudo em um só lugar.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1084"/>
@@ -441,7 +441,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="863"/>
         <source>Music in %1</source>
-        <translation>Musica em %1</translation>
+        <translation>Música em %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="905"/>
