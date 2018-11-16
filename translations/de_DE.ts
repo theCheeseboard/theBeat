@@ -6,27 +6,27 @@
     <message>
         <location filename="../aboutwindow.ui" line="14"/>
         <source>About theBeat</source>
-        <translation type="unfinished"></translation>
+        <translation>Über theBeat</translation>
     </message>
     <message>
         <location filename="../aboutwindow.ui" line="29"/>
         <source>theBeat 2.0</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat 2.0</translation>
     </message>
     <message>
         <location filename="../aboutwindow.ui" line="36"/>
         <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikplayer</translation>
     </message>
     <message>
         <location filename="../aboutwindow.ui" line="56"/>
         <source>Copyright (c) Victor Tran 2018. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (c) Victor Tran 2018. Lizenziert unter den Bedingungen der GNU General Public License, Version 3 oder höher.</translation>
     </message>
     <message>
         <location filename="../aboutwindow.ui" line="81"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -34,23 +34,21 @@
     <message numerus="yes">
         <location filename="../librarymodel.cpp" line="394"/>
         <source>%n artists</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n Künstler</numerusform>
+        <numerusform>%n Künstler</numerusform>
+        </translation></message>
 </context>
 <context>
     <name>DiscordIntegration</name>
     <message>
         <location filename="../discordintegration.cpp" line="49"/>
         <source>Listening to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Höre %1 zu</translation>
     </message>
     <message>
         <location filename="../discordintegration.cpp" line="52"/>
         <source>Paused</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausiert</translation>
     </message>
 </context>
 <context>
@@ -58,7 +56,7 @@
     <message>
         <location filename="../librarymanagewidget.ui" line="71"/>
         <source>Manage Music Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikbibliothek verwalten</translation>
     </message>
 </context>
 <context>
@@ -67,17 +65,17 @@
         <location filename="../librarymodel.cpp" line="22"/>
         <source>Name</source>
         <comment>Name of a music track</comment>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../librarymodel.cpp" line="24"/>
         <source>Artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Künstler</translation>
     </message>
     <message>
         <location filename="../librarymodel.cpp" line="26"/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
+        <translation>Album</translation>
     </message>
 </context>
 <context>
@@ -85,37 +83,37 @@
     <message>
         <location filename="../main.cpp" line="27"/>
         <source>Services</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleistungen</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="28"/>
         <source>Hide %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ausblenden</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="29"/>
         <source>Hide Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Andere verstecken</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="30"/>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige alles</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="31"/>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen...</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="32"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Über %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="33"/>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 beenden</translation>
     </message>
 </context>
 <context>
@@ -126,59 +124,59 @@
         <location filename="../mainwindow.cpp" line="557"/>
         <location filename="../mainwindow.cpp" line="573"/>
         <source>theBeat</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="129"/>
         <source>Visualiser</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualizer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="138"/>
         <location filename="../mainwindow.ui" line="300"/>
         <location filename="../mainwindow.ui" line="797"/>
         <source>Music Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikbibliothek</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="147"/>
         <location filename="../mainwindow.ui" line="987"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Playlisten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="156"/>
         <location filename="../mainwindow.ui" line="1044"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei öffnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="165"/>
         <source>Open Network Stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Netzwerkstream öffnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="174"/>
         <location filename="../mainwindow.ui" line="1289"/>
         <source>Play CD</source>
-        <translation type="unfinished"></translation>
+        <translation>CD abspielen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="316"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="359"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="378"/>
         <location filename="../mainwindow.ui" line="816"/>
         <location filename="../mainwindow.ui" line="918"/>
         <source>Manage Music Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikbibliothek verwalten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="416"/>
