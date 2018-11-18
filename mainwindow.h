@@ -151,6 +151,12 @@ private slots:
 
     void on_playlistWidget_customContextMenuRequested(const QPoint &pos);
 
+    void on_actionHelp_triggered();
+
+    void on_actionFileBug_triggered();
+
+    void on_actionSources_triggered();
+
     private:
     Ui::MainWindow *ui;
 

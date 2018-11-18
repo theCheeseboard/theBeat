@@ -9,6 +9,7 @@
 #include <QGraphicsBlurEffect>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QDesktopServices>
 #include "secondaryinformationlistdelegate.h"
 
 #ifdef Q_OS_LINUX
@@ -909,4 +910,19 @@ void MainWindow::on_playlistWidget_customContextMenuRequested(const QPoint &pos)
         menu->exec(ui->playlistWidget->mapToGlobal(pos));
         menu->deleteLater();
     }
+}
+
+void MainWindow::on_actionHelp_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://vicr123.com/thebeat/help"));
+}
+
+void MainWindow::on_actionFileBug_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/vicr123/thebeat/issues"));
+}
+
+void MainWindow::on_actionSources_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/vicr123/thebeat"));
 }
