@@ -375,22 +375,22 @@
     <message>
         <location filename="../mainwindow.ui" line="1914"/>
         <source>theBeat Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Trợ giúp với theBeat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1917"/>
         <source>F1</source>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1925"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Báo cáo lỗi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1933"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Mã nguồn</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="125"/>
