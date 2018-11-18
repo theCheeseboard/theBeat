@@ -479,7 +479,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="907"/>
         <source>Remove from playlist</source>
-        <translation>Verwijder uit playlist</translation>
+        <translation>Verwijder uit afspeellijst</translation>
     </message>
 </context>
 </TS>
