@@ -3,6 +3,8 @@
 
 #include <QAbstractItemModel>
 #include <QDBusObjectPath>
+#include <QImage>
+#include <QNetworkAccessManager>
 
 class CdModel : public QAbstractTableModel
 {
@@ -20,6 +22,7 @@ class CdModel : public QAbstractTableModel
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
         QString cdTitle();
+        QImage getArt();
 
     private slots:
         void checkCd();
@@ -31,9 +34,11 @@ class CdModel : public QAbstractTableModel
     private:
         QString device;
         QString title;
+        QImage art;
         QDBusObjectPath cdDrivePath;
 
         QStringList trackData;
+        QNetworkAccessManager mgr;
 };
 
 #endif // CDMODEL_H

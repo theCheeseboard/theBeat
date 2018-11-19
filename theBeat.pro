@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui phonon4qt5 dbus x11extras thelib svg
+QT       += core gui phonon4qt5 dbus x11extras thelib svg network
 LIBS     += -ltag
 CONFIG   += c++14
 

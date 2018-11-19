@@ -162,7 +162,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->PlaylistsView->setModel(new PlaylistFileModel);
 
-    CdModel* cdModel = new CdModel();
+    cdModel = new CdModel();
     ui->cdTrackSelection->setModel(cdModel);
     connect(cdModel, &CdModel::changeUiPane, [=](int pane) {
         ui->cdStack->setCurrentIndex(pane);
@@ -170,6 +170,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(cdModel, &CdModel::dataChanged, [=] {
         ui->cdTitle->setText(cdModel->cdTitle());
         ui->cdTracks->setText(tr("%n tracks", nullptr, cdModel->rowCount()));
+        playlist->dataChanged(playlist->index(0), playlist->index(playlist->rowCount()));
+
+        if (player->state() != Phonon::StoppedState) {
+            updateMetadata();
+        }
+        ui->cdInfoWidget->repaint();
     });
     connect(cdModel, &CdModel::queryingCddb, [=](bool querying) {
         ui->cddbQueryIndicator->setVisible(querying);
@@ -211,6 +217,8 @@ void MainWindow::on_actionOpen_triggered()
 void MainWindow::updateMetadata() {
     //Get album art
 
+    bool isCd = (player->currentSource().type() == MediaSource::Disc);
+
     auto mprisUpdateFunction = [=](QImage albumArt) {
         QVariantMap currentDataMap = mprisMetadataMap;
         bool showChangedNotification = false;
@@ -218,18 +226,24 @@ void MainWindow::updateMetadata() {
 
         QString title, artist;
 
-        QStringList Title = player->metaData(Phonon::TitleMetaData);
-        if (Title.count() > 0) {
-            if (Title.at(0) != ui->currentTitleLabel->text()) {
-                title = Title.at(0);
-                ui->currentTitleLabel->setText(title);
-                showChangedNotification = true;
-            }
-            mprisMetadataMap.insert("xesam:title", Title.first());
-        } else {
-            title = playlist->data(playlist->index(playlist->currentItem())).toString();
+        if (isCd) {
+            title = cdModel->data(cdModel->index(controller->currentTitle() - 1, 0)).toString();
             ui->currentTitleLabel->setText(title);
             mprisMetadataMap.insert("xesam:title", title);
+        } else {
+            QStringList Title = player->metaData(Phonon::TitleMetaData);
+            if (Title.count() > 0) {
+                if (Title.at(0) != ui->currentTitleLabel->text()) {
+                    title = Title.at(0);
+                    ui->currentTitleLabel->setText(title);
+                    showChangedNotification = true;
+                }
+                mprisMetadataMap.insert("xesam:title", Title.first());
+            } else {
+                title = playlist->data(playlist->index(playlist->currentItem())).toString();
+                ui->currentTitleLabel->setText(title);
+                mprisMetadataMap.insert("xesam:title", title);
+            }
         }
 
         QStringList Artist = player->metaData(Phonon::ArtistMetaData);
@@ -241,12 +255,17 @@ void MainWindow::updateMetadata() {
             mprisMetadataMap.remove("xesam:artist");
         }
 
-        QStringList Album = player->metaData(Phonon::AlbumMetaData);
-        if (Album.count() > 0) {
-            metadata.append(Album.at(0));
-            mprisMetadataMap.insert("xesam:album", Album.first());
+        if (isCd) {
+            metadata.append(cdModel->cdTitle());
+            mprisMetadataMap.insert("xesam:album", cdModel->cdTitle());
         } else {
-            mprisMetadataMap.remove("xesam:album");
+            QStringList Album = player->metaData(Phonon::AlbumMetaData);
+            if (Album.count() > 0) {
+                metadata.append(Album.at(0));
+                mprisMetadataMap.insert("xesam:album", Album.first());
+            } else {
+                mprisMetadataMap.remove("xesam:album");
+            }
         }
 
         ui->currentMetadataLabel->setText(metadata.join(" · "));
@@ -355,10 +374,13 @@ void MainWindow::updateMetadata() {
             QDBusConnection::sessionBus().send(signal);
         }
     };
-
-    TagCache::getAlbumArt(player->currentSource().fileName())->then(mprisUpdateFunction)->error([=](QString error) {
-        mprisUpdateFunction(QImage());
-    });
+    if (isCd) {
+        mprisUpdateFunction(cdModel->getArt());
+    } else {
+        TagCache::getAlbumArt(player->currentSource().fileName())->then(mprisUpdateFunction)->error([=](QString error) {
+            mprisUpdateFunction(QImage());
+        });
+    }
 }
 
 void MainWindow::on_playButton_clicked()
@@ -703,6 +725,8 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
             QImage background;
             if (w == ui->mediaLibraryInfoWidget) {
                 background = playlistBackground;
+            } else {
+                background = cdModel->getArt();
             }
 
             if (background.isNull()) {
@@ -941,7 +965,7 @@ void MainWindow::on_cdTrackSelection_doubleClicked(const QModelIndex &index)
     MediaItem item(MediaSource(Phonon::Cd, "/dev/sr0"));
     item.currentType = MediaItem::Optical;
     item.opticalTrack = index.row();
-    item.opticalModel = (CdModel*) ui->cdTrackSelection->model();
+    item.opticalModel = cdModel;
     playlist->append(item);
     playlist->playItem(playlist->rowCount() - 1);
 }

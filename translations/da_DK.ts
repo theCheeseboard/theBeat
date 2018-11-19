@@ -42,29 +42,29 @@
 <context>
     <name>CdModel</name>
     <message>
-        <location filename="../cdmodel.cpp" line="45"/>
+        <location filename="../cdmodel.cpp" line="48"/>
         <source>Name</source>
         <comment>Name of a music track</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cdmodel.cpp" line="47"/>
+        <location filename="../cdmodel.cpp" line="50"/>
         <source>Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cdmodel.cpp" line="49"/>
+        <location filename="../cdmodel.cpp" line="52"/>
         <source>Album</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cdmodel.cpp" line="150"/>
+        <location filename="../cdmodel.cpp" line="153"/>
         <source>CD Drive</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../cdmodel.cpp" line="155"/>
-        <location filename="../cdmodel.cpp" line="220"/>
+        <location filename="../cdmodel.cpp" line="159"/>
+        <location filename="../cdmodel.cpp" line="230"/>
         <source>Track %n</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -154,8 +154,8 @@
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <location filename="../mainwindow.ui" line="87"/>
-        <location filename="../mainwindow.cpp" line="560"/>
-        <location filename="../mainwindow.cpp" line="576"/>
+        <location filename="../mainwindow.cpp" line="582"/>
+        <location filename="../mainwindow.cpp" line="598"/>
         <source>theBeat</source>
         <translation type="unfinished"></translation>
     </message>
@@ -233,7 +233,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="545"/>
-        <location filename="../mainwindow.cpp" line="787"/>
+        <location filename="../mainwindow.cpp" line="811"/>
         <source>All Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -352,7 +352,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2007"/>
-        <location filename="../mainwindow.cpp" line="394"/>
+        <location filename="../mainwindow.cpp" line="416"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
@@ -418,7 +418,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2216"/>
-        <location filename="../mainwindow.cpp" line="609"/>
+        <location filename="../mainwindow.cpp" line="631"/>
         <source>Save Playlist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -446,80 +446,80 @@
         <location filename="../mainwindow.cpp" line="99"/>
         <location filename="../mainwindow.cpp" line="152"/>
         <location filename="../mainwindow.cpp" line="172"/>
-        <location filename="../mainwindow.cpp" line="784"/>
-        <location filename="../mainwindow.cpp" line="830"/>
-        <location filename="../mainwindow.cpp" line="874"/>
+        <location filename="../mainwindow.cpp" line="808"/>
+        <location filename="../mainwindow.cpp" line="854"/>
+        <location filename="../mainwindow.cpp" line="898"/>
         <source>%n tracks</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="390"/>
+        <location filename="../mainwindow.cpp" line="412"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="492"/>
+        <location filename="../mainwindow.cpp" line="514"/>
         <source>Visualisation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="609"/>
+        <location filename="../mainwindow.cpp" line="631"/>
         <source>What do you want to call the playlist?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="614"/>
+        <location filename="../mainwindow.cpp" line="636"/>
         <source>Playlist already exists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="614"/>
+        <location filename="../mainwindow.cpp" line="636"/>
         <source>The playlist called &lt;b&gt;%1&lt;/b&gt; already exists. Do you want to clear it and replace it with the current one?</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="799"/>
+        <location filename="../mainwindow.cpp" line="823"/>
         <source>%n artists</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="802"/>
+        <location filename="../mainwindow.cpp" line="826"/>
         <source>All Artists</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="814"/>
+        <location filename="../mainwindow.cpp" line="838"/>
         <source>%n albums</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="817"/>
+        <location filename="../mainwindow.cpp" line="841"/>
         <source>All Albums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="828"/>
+        <location filename="../mainwindow.cpp" line="852"/>
         <source>Music by %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="872"/>
+        <location filename="../mainwindow.cpp" line="896"/>
         <source>Music in %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="914"/>
+        <location filename="../mainwindow.cpp" line="938"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="915"/>
+        <location filename="../mainwindow.cpp" line="939"/>
         <source>Remove from playlist</source>
         <translation type="unfinished"></translation>
     </message>

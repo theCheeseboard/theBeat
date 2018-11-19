@@ -166,6 +166,7 @@ private slots:
 
     PlaylistModel* playlist;
     LibraryModel* library;
+    CdModel* cdModel;
 
     MediaObject *player;
     MediaController *controller;

@@ -8,6 +8,9 @@
 #include <phonon/AudioDataOutput>
 #include <tpromise.h>
 
+#include <QNetworkRequest>
+#include <QNetworkReply>
+
 #include <musicbrainz5/Query.h>
 #include <musicbrainz5/Disc.h>
 #include <musicbrainz5/Release.h>
@@ -148,6 +151,7 @@ void CdModel::checkCd() {
         trackData.clear();
 
         title = tr("CD Drive");
+        art = QImage();
         if (info->numberOfTracks == 0) {
             changeUiPane(0);
         } else {
@@ -163,11 +167,12 @@ void CdModel::checkCd() {
                     bool valid = false;
                     QString title;
                     QStringList tracks;
+                    QImage art;
                 };
 
                 emit queryingCddb(true);
                 (new tPromise<CddbInfo>([=](QString &error) -> CddbInfo {
-                    MusicBrainz5::CQuery query("themedia-1.0");
+                    MusicBrainz5::CQuery query("thebeat-2.0");
                     try {
                         MusicBrainz5::CMetadata data = query.Query("discid", mbDiscId.at(0).toStdString());
                         if (!data.Disc() || !data.Disc()->ReleaseList()) return CddbInfo();
@@ -195,6 +200,11 @@ void CdModel::checkCd() {
 
                                 CddbInfo info;
                                 info.title = QString::fromStdString(release->Title());
+
+                                QNetworkRequest req(QUrl("https://coverartarchive.org/release/" + QString::fromStdString(release->ID()) + "/front"));
+                                req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+                                QNetworkReply* artReply = mgr.get(req);
+
                                 for (int count = 0; count < TrackList->NumItems(); count++) {
                                     MusicBrainz5::CTrack *Track = TrackList->Item(count);
                                     MusicBrainz5::CRecording *Recording = Track->Recording();
@@ -221,6 +231,15 @@ void CdModel::checkCd() {
                                     }
                                 }
 
+                                QEventLoop* eventLoop = new QEventLoop;
+                                connect(artReply, &QNetworkReply::finished, [=, &info] {
+                                    if (artReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
+                                        info.art = QImage::fromData(artReply->readAll());
+                                    }
+                                    eventLoop->exit();
+                                });
+                                eventLoop->exec();
+
                                 info.valid = true;
                                 return info;
                             }
@@ -232,6 +251,7 @@ void CdModel::checkCd() {
                     if (info.valid) {
                         title = info.title;
                         trackData = info.tracks;
+                        art = info.art;
                         emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
                     }
                     emit queryingCddb(false);
@@ -249,4 +269,8 @@ void CdModel::checkCd() {
 
 QString CdModel::cdTitle() {
     return title;
+}
+
+QImage CdModel::getArt() {
+    return art;
 }
