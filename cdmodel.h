@@ -24,6 +24,9 @@ class CdModel : public QAbstractTableModel
         QString cdTitle();
         QImage getArt();
 
+    public slots:
+        void eject();
+
     private slots:
         void checkCd();
 
@@ -38,7 +41,6 @@ class CdModel : public QAbstractTableModel
         QDBusObjectPath cdDrivePath;
 
         QStringList trackData;
-        QNetworkAccessManager mgr;
 };
 
 #endif // CDMODEL_H

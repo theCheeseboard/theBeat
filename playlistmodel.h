@@ -40,7 +40,7 @@ struct MediaItem {
             if (this->currentType == Source) {
                 return this->source == other.source;
             } else {
-                return false;
+                return this->opticalTrack == other.opticalTrack && this->opticalModel == other.opticalModel;
             }
         } else {
             return false;
@@ -113,6 +113,7 @@ private:
 
     bool repeat = false;
     bool shuffle = false;
+    bool pendingCdChange = false;
 };
 
 Q_DECLARE_METATYPE(MediaSource)

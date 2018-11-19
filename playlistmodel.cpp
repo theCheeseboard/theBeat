@@ -10,6 +10,9 @@ PlaylistModel::PlaylistModel(MediaObject* object, QObject *parent)
     connect(object, SIGNAL(currentSourceChanged(Phonon::MediaSource)), this, SLOT(mediaChanged(Phonon::MediaSource)));
 
     controller = new MediaController(object);
+    connect(controller, &MediaController::titleChanged, [=] {
+        this->mediaChanged(object->currentSource());
+    });
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
@@ -51,6 +54,8 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
                 if (currentPlayingItem != -1 && i == sources.indexOf(actualQueue.at(currentPlayingItem))) {
                     return QIcon::fromTheme("media-playback-start");
+                } else if (current.type() == MediaSource::Disc) {
+                    return QIcon::fromTheme("media-optical-audio");
                 } else if (current.type() == MediaSource::LocalFile) {
                     QMimeType t = mimeDb.mimeTypeForFile(current.fileName());
                     return QIcon::fromTheme(t.iconName());
@@ -70,7 +75,9 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 return QVariant::fromValue(sources.at(i));
             case Qt::UserRole + 1: {
                 QUrl url = src.source.url();
-                if (url.isLocalFile()) {
+                if (src.currentType == MediaItem::Optical) {
+                    return src.opticalTrack + 1;
+                } else if (url.isLocalFile()) {
                     TagLib::Tag* tag = TagCache::getTag(src.source.fileName());
                     if (tag == nullptr) {
                         return 0;
@@ -134,15 +141,30 @@ void PlaylistModel::appendPlaylist(QString path) {
 }
 
 void PlaylistModel::enqueueNext() {
-    if (repeat && currentPlayingItem != -1) {
-        mediaObj->enqueue(actualQueue.at(currentPlayingItem));
-    } else {
+    if (pendingCdChange) return;
+
+    if (!(repeat && currentPlayingItem != -1)) {
         if (currentPlayingItem + 1 == rowCount()) {
             currentPlayingItem = -1;
         }
 
         currentPlayingItem++;
-        mediaObj->enqueue(actualQueue.at(currentPlayingItem));
+    }
+
+    MediaItem itemToEnqueue = actualQueue.at(currentPlayingItem);
+    if (itemToEnqueue.currentType == MediaItem::Optical) {
+        //Don't use enqueue for optical media because it doesn't work
+        QMetaObject::Connection* connection = new QMetaObject::Connection;
+        *connection = connect(mediaObj, &MediaObject::stateChanged, [=](Phonon::State newstate, Phonon::State oldstate) {
+            if (newstate == Phonon::StoppedState) {
+                playItem(currentPlayingItem, true);
+            }
+            disconnect(*connection);
+            delete connection;
+        });
+        qDebug() << "Next item is from CD";
+    } else {
+        mediaObj->enqueue(itemToEnqueue);
     }
 }
 
@@ -156,6 +178,14 @@ void PlaylistModel::enqueueAndPlayNext() {
 void PlaylistModel::mediaChanged(MediaSource source) {
     if (actualQueue.contains(source)) {
         currentPlayingItem = actualQueue.indexOf(source);
+    } else if (source.type() == MediaSource::Disc) {
+        //There could be issues if a CD track is in the playlist twice
+        for (int i = 0; i < actualQueue.count(); i++) {
+            MediaItem item = actualQueue.at(i);
+            if (item.currentType == MediaItem::Optical && item.opticalTrack == controller->currentTitle() - 1) {
+                currentPlayingItem = i;
+            }
+        }
     }
     dataChanged(this->index(0), this->index(rowCount()));
 }
@@ -171,17 +201,22 @@ void PlaylistModel::playItem(int i, bool fromActualQueue) {
     if (itemToPlay.currentType == MediaItem::Optical) {
         if (mediaObj->currentSource().deviceName() == itemToPlay.source.deviceName()) {
             controller->setCurrentTitle(itemToPlay.opticalTrack + 1); //Optical Track is 0-based but the track on the CD is 1-based
-        } else {
-            mediaObj->setCurrentSource(itemToPlay);
             mediaObj->play();
+        } else {
+            //mediaObj->blockSignals(true);
+            pendingCdChange = true;
             QMetaObject::Connection* connection = new QMetaObject::Connection;
             *connection = connect(controller, &MediaController::availableTitlesChanged, [=](int availableTitles) {
                 if (availableTitles != 0) {
                     controller->setCurrentTitle(itemToPlay.opticalTrack + 1); //Optical Track is 0-based but the track on the CD is 1-based
                     disconnect(*connection);
                     delete connection;
+                    //mediaObj->blockSignals(false);
+                    pendingCdChange = false;
                 }
             });
+            mediaObj->setCurrentSource(itemToPlay);
+            mediaObj->play();
         }
     } else {
         mediaObj->setCurrentSource(itemToPlay);

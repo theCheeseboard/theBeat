@@ -969,3 +969,39 @@ void MainWindow::on_cdTrackSelection_doubleClicked(const QModelIndex &index)
     playlist->append(item);
     playlist->playItem(playlist->rowCount() - 1);
 }
+
+void MainWindow::on_cdEnqueueAll_clicked()
+{
+    for (int i = 0; i < cdModel->rowCount(); i++) {
+        MediaItem item(MediaSource(Phonon::Cd, "/dev/sr0"));
+        item.currentType = MediaItem::Optical;
+        item.opticalTrack = i;
+        item.opticalModel = cdModel;
+        playlist->append(item);
+    }
+
+    if (playlist->currentItem() == -1) {
+        playlist->enqueueNext();
+        playlist->playItem(0, true);
+    }
+}
+
+void MainWindow::on_cdPlayAll_clicked()
+{
+    //Clear the playlist and then enqueue everything
+    ui->actionClear_Playlist->trigger();
+    ui->cdEnqueueAll->click();
+}
+
+void MainWindow::on_cdShuffleAll_clicked()
+{
+    //Clear the playlist, turn on shuffling and then enqueue everything
+    ui->actionClear_Playlist->trigger();
+    ui->shuffleButton->setChecked(true);
+    ui->cdEnqueueAll->click();
+}
+
+void MainWindow::on_ejectButton_clicked()
+{
+    cdModel->eject();
+}

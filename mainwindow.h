@@ -159,6 +159,14 @@ private slots:
 
     void on_cdTrackSelection_doubleClicked(const QModelIndex &index);
 
+    void on_cdEnqueueAll_clicked();
+
+    void on_cdPlayAll_clicked();
+
+    void on_cdShuffleAll_clicked();
+
+    void on_ejectButton_clicked();
+
     private:
     Ui::MainWindow *ui;
 

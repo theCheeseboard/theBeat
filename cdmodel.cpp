@@ -201,6 +201,7 @@ void CdModel::checkCd() {
                                 CddbInfo info;
                                 info.title = QString::fromStdString(release->Title());
 
+                                QNetworkAccessManager mgr;
                                 QNetworkRequest req(QUrl("https://coverartarchive.org/release/" + QString::fromStdString(release->ID()) + "/front"));
                                 req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
                                 QNetworkReply* artReply = mgr.get(req);
@@ -273,4 +274,10 @@ QString CdModel::cdTitle() {
 
 QImage CdModel::getArt() {
     return art;
+}
+
+void CdModel::eject() {
+    changeUiPane(1);
+    QDBusInterface cdDriveInterface("org.freedesktop.UDisks2", cdDrivePath.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
+    cdDriveInterface.call(QDBus::NoBlock, "Eject", QVariantMap());
 }

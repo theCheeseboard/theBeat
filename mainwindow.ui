@@ -1632,6 +1632,16 @@
                         </widget>
                        </item>
                        <item>
+                        <widget class="QPushButton" name="ejectButton">
+                         <property name="text">
+                          <string>Eject CD</string>
+                         </property>
+                         <property name="icon">
+                          <iconset theme="media-eject"/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
                         <spacer name="horizontalSpacer_9">
                          <property name="orientation">
                           <enum>Qt::Horizontal</enum>
@@ -1670,6 +1680,32 @@
                    </property>
                    <property name="rootIsDecorated">
                     <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="Line" name="line_13">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>1</height>
+                    </size>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_15">
+                   <property name="text">
+                    <string>CD Playback is currently unreliable. theBeat may crash at any given time.</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                   <property name="margin">
+                    <number>9</number>
                    </property>
                   </widget>
                  </item>
