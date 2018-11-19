@@ -10,6 +10,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QDesktopServices>
+#include <QDBusInterface>
+#include "cdmodel.h"
 #include "secondaryinformationlistdelegate.h"
 
 #ifdef Q_OS_LINUX
@@ -40,11 +42,9 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
     player = new MediaObject(this);
-    cdFinder = new MediaObject(this);
     dataOut = new AudioDataOutput(this);
     playlist = new PlaylistModel(player);
     controller = new MediaController(player);
-    cdController = new MediaController(cdFinder);
     temporaryMprisAlbumArt = new QTemporaryFile();
 
     player->setTickInterval(1000);
@@ -84,14 +84,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->seeker->setMediaObject(player);
 
-    ui->widget->setVisible(false);
-    ui->label_9->setVisible(false);
     ui->searchWidget->setFixedWidth(0);
     ui->searchWidget->setVisible(false);
     ui->searchLineEdit->installEventFilter(this);
     ui->libraryBackButton->setVisible(false);
     ui->sourcesStack->setCurrentIndex(1);
     ui->mediaLibraryInfoWidget->installEventFilter(this);
+    ui->cdInfoWidget->installEventFilter(this);
 
     ui->playlistWidget->setModel(playlist);
     ui->playlistWidget->setItemDelegate(new LibraryTitleDelegate(this));
@@ -163,15 +162,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->PlaylistsView->setModel(new PlaylistFileModel);
 
-    AudioDataOutput* dummyOutput = new AudioDataOutput(this);
-    createPath(cdFinder, dummyOutput);
-    connect(cdController, &MediaController::availableTitlesChanged, [=](int numberOfTracks) {
-        //New CD inserted
-        qDebug() << numberOfTracks;
+    CdModel* cdModel = new CdModel();
+    ui->cdTrackSelection->setModel(cdModel);
+    connect(cdModel, &CdModel::changeUiPane, [=](int pane) {
+        ui->cdStack->setCurrentIndex(pane);
     });
-    cdFinder->setCurrentSource(MediaSource(Phonon::Cd, "/dev/sr0"));
-    cdFinder->play();
-    cdFinder->pause();
+    connect(cdModel, &CdModel::dataChanged, [=] {
+        ui->cdTitle->setText(cdModel->cdTitle());
+        ui->cdTracks->setText(tr("%n tracks", nullptr, cdModel->rowCount()));
+    });
+    connect(cdModel, &CdModel::queryingCddb, [=](bool querying) {
+        ui->cddbQueryIndicator->setVisible(querying);
+    });
 
     ui->appTitleLabel->setFixedHeight(ui->appTitleLabel->fontMetrics().height() + 18); //Don't scale DPI because margins don't scale
 
@@ -686,9 +688,10 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
                 });
             }
         }
-    } else if (watched == ui->mediaLibraryInfoWidget) {
+    } else if (watched == ui->mediaLibraryInfoWidget || watched == ui->cdInfoWidget) {
         if (event->type() == QEvent::Paint) {
-            QPainter painter(ui->mediaLibraryInfoWidget);
+            QWidget* w = (QWidget*) watched;
+            QPainter painter(w);
 
             QColor backgroundCol = this->palette().color(QPalette::Window);
             if ((backgroundCol.red() + backgroundCol.green() + backgroundCol.blue()) / 3 < 127) {
@@ -697,24 +700,29 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
                 backgroundCol = QColor(255, 255, 255, 150);
             }
 
-            if (playlistBackground.isNull()) {
+            QImage background;
+            if (w == ui->mediaLibraryInfoWidget) {
+                background = playlistBackground;
+            }
+
+            if (background.isNull()) {
                 QSvgRenderer renderer(QString(":/icons/coverimage.svg"));
 
                 QRect rect;
-                rect.setSize(renderer.defaultSize().scaled(ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
-                rect.setLeft(ui->mediaLibraryInfoWidget->width() / 2 - rect.width() / 2);
-                rect.setTop(ui->mediaLibraryInfoWidget->height() / 2 - rect.height() / 2);
+                rect.setSize(renderer.defaultSize().scaled(w->width(), w->height(), Qt::KeepAspectRatioByExpanding));
+                rect.setLeft(w->width() / 2 - rect.width() / 2);
+                rect.setTop(w->height() / 2 - rect.height() / 2);
 
                 renderer.render(&painter, rect);
 
                 painter.setBrush(backgroundCol);
                 painter.setPen(Qt::transparent);
-                painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
+                painter.drawRect(0, 0, w->width(), w->height());
             } else {
                 QRect rect;
-                rect.setSize(playlistBackground.size().scaled(ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
-                rect.moveLeft(ui->mediaLibraryInfoWidget->width() / 2 - rect.width() / 2);
-                rect.moveTop(ui->mediaLibraryInfoWidget->height() / 2 - rect.height() / 2);
+                rect.setSize(background.size().scaled(w->width(), w->height(), Qt::KeepAspectRatioByExpanding));
+                rect.moveLeft(w->width() / 2 - rect.width() / 2);
+                rect.moveTop(w->height() / 2 - rect.height() / 2);
 
                 //Blur the background
                 int radius = 30;
@@ -723,22 +731,22 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
 
                 QGraphicsScene scene;
                 QGraphicsPixmapItem item;
-                item.setPixmap(QPixmap::fromImage(playlistBackground));
+                item.setPixmap(QPixmap::fromImage(background));
                 item.setGraphicsEffect(blur);
                 scene.addItem(&item);
 
                 //scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
-                scene.render(&painter, rect.adjusted(-radius, -radius, radius, radius), QRectF(-radius, -radius, playlistBackground.width() + radius, playlistBackground.height() + radius));
+                scene.render(&painter, rect.adjusted(-radius, -radius, radius, radius), QRectF(-radius, -radius, background.width() + radius, background.height() + radius));
 
                 painter.setBrush(backgroundCol);
                 painter.setPen(Qt::transparent);
-                painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
+                painter.drawRect(0, 0, w->width(), w->height());
 
                 QRect rightRect;
-                rightRect.setSize(playlistBackground.size().scaled(0, ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
-                rightRect.moveRight(ui->mediaLibraryInfoWidget->width());
-                rightRect.moveTop(ui->mediaLibraryInfoWidget->height() / 2 - rightRect.height() / 2);
-                painter.drawImage(rightRect, playlistBackground.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                rightRect.setSize(background.size().scaled(0, w->height(), Qt::KeepAspectRatioByExpanding));
+                rightRect.moveRight(w->width());
+                rightRect.moveTop(w->height() / 2 - rightRect.height() / 2);
+                painter.drawImage(rightRect, background.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
             }
 
         }
@@ -925,4 +933,15 @@ void MainWindow::on_actionFileBug_triggered()
 void MainWindow::on_actionSources_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/vicr123/thebeat"));
+}
+
+
+void MainWindow::on_cdTrackSelection_doubleClicked(const QModelIndex &index)
+{
+    MediaItem item(MediaSource(Phonon::Cd, "/dev/sr0"));
+    item.currentType = MediaItem::Optical;
+    item.opticalTrack = index.row();
+    item.opticalModel = (CdModel*) ui->cdTrackSelection->model();
+    playlist->append(item);
+    playlist->playItem(playlist->rowCount() - 1);
 }

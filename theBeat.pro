@@ -10,7 +10,7 @@ CONFIG   += c++14
 
 unix {
     CONFIG += link_pkgconfig
-    PKGCONFIG += x11
+    PKGCONFIG += x11 libmusicbrainz5
 }
 
 #Determine whether to build Discord
@@ -53,7 +53,8 @@ SOURCES += \
     nativeeventfilter.cpp \
     librarymanagewidget.cpp \
     tagcache.cpp \
-    secondaryinformationlistdelegate.cpp
+    secondaryinformationlistdelegate.cpp \
+    cdmodel.cpp
 
 BUILD_DISCORD {
     SOURCES += discordintegration.cpp
@@ -70,7 +71,8 @@ HEADERS += \
     nativeeventfilter.h \
     librarymanagewidget.h \
     tagcache.h \
-    secondaryinformationlistdelegate.h
+    secondaryinformationlistdelegate.h \
+    cdmodel.h
 
 BUILD_DISCORD {
     HEADERS += discordintegration.h

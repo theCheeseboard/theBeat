@@ -10,6 +10,7 @@
 #include <QMimeDatabase>
 #include <QIcon>
 #include <phonon/MediaController>
+#include <cdmodel.h>
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
 
@@ -20,6 +21,7 @@ struct MediaItem {
     MediaItem(const MediaSource &source);
 
     int opticalTrack;
+    CdModel* opticalModel;
 
     enum MediaType {
         Source,
@@ -73,7 +75,7 @@ public:
     QByteArray createPlaylist();
 
 public slots:
-    void append(MediaSource source);
+    void append(MediaItem source);
 
     void appendPlaylist(QString path);
 

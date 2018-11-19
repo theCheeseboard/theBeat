@@ -157,6 +157,8 @@ private slots:
 
     void on_actionSources_triggered();
 
+    void on_cdTrackSelection_doubleClicked(const QModelIndex &index);
+
     private:
     Ui::MainWindow *ui;
 
@@ -165,11 +167,13 @@ private slots:
     PlaylistModel* playlist;
     LibraryModel* library;
 
-    MediaObject *player, *cdFinder;
-    MediaController *controller, *cdController;
+    MediaObject *player;
+    MediaController *controller;
     AudioDataOutput* dataOut;
     QImage playlistBackground;
     QTemporaryFile* temporaryMprisAlbumArt;
+
+    QDBusObjectPath cdDrivePath;
 
     LibraryManageWidget* libWidget;
 

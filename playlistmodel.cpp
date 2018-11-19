@@ -29,14 +29,16 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         return QVariant();
     } else {
         int i = index.row();
-        MediaSource src = sources.at(i);
+        MediaItem src = sources.at(i);
         switch (role) {
             case Qt::DisplayRole: {
-                QUrl url = src.url();
-                if (url.isLocalFile()) {
-                    TagLib::Tag* tag = TagCache::getTag(src.fileName());
+                QUrl url = src.source.url();
+                if (src.currentType == MediaItem::Optical) {
+                    return src.opticalModel->data(src.opticalModel->index(src.opticalTrack, 0));
+                } else if (url.isLocalFile()) {
+                    TagLib::Tag* tag = TagCache::getTag(src.source.fileName());
                     if (tag == nullptr || tag->title() == "") {
-                        return QFileInfo(src.fileName()).baseName();
+                        return QFileInfo(src.source.fileName()).baseName();
                     } else {
                         return QString::fromStdWString(tag->title().toWString());
                     }
@@ -67,9 +69,9 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             case Qt::UserRole: //Return the media source
                 return QVariant::fromValue(sources.at(i));
             case Qt::UserRole + 1: {
-                QUrl url = src.url();
+                QUrl url = src.source.url();
                 if (url.isLocalFile()) {
-                    TagLib::Tag* tag = TagCache::getTag(src.fileName());
+                    TagLib::Tag* tag = TagCache::getTag(src.source.fileName());
                     if (tag == nullptr) {
                         return 0;
                     } else {
@@ -80,9 +82,9 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 }
             }
             case Qt::UserRole + 3: {
-                QUrl url = src.url();
+                QUrl url = src.source.url();
                 if (url.isLocalFile()) {
-                    TagLib::AudioProperties* audio = TagCache::getAudioProperties(src.fileName());
+                    TagLib::AudioProperties* audio = TagCache::getAudioProperties(src.source.fileName());
                     if (audio == nullptr) {
                         return 0;
                     } else {
@@ -97,7 +99,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
 }
 
-void PlaylistModel::append(MediaSource source) {
+void PlaylistModel::append(MediaItem source) {
     sources.append(source);
     if (shuffle) {
         int insertInto;
@@ -159,12 +161,32 @@ void PlaylistModel::mediaChanged(MediaSource source) {
 }
 
 void PlaylistModel::playItem(int i, bool fromActualQueue) {
+    MediaItem itemToPlay;
     if (fromActualQueue) {
-        mediaObj->setCurrentSource(actualQueue.at(i));
+        itemToPlay = actualQueue.at(i);
     } else {
-        mediaObj->setCurrentSource(sources.at(i));
+        itemToPlay = sources.at(i);
     }
-    mediaObj->play();
+
+    if (itemToPlay.currentType == MediaItem::Optical) {
+        if (mediaObj->currentSource().deviceName() == itemToPlay.source.deviceName()) {
+            controller->setCurrentTitle(itemToPlay.opticalTrack + 1); //Optical Track is 0-based but the track on the CD is 1-based
+        } else {
+            mediaObj->setCurrentSource(itemToPlay);
+            mediaObj->play();
+            QMetaObject::Connection* connection = new QMetaObject::Connection;
+            *connection = connect(controller, &MediaController::availableTitlesChanged, [=](int availableTitles) {
+                if (availableTitles != 0) {
+                    controller->setCurrentTitle(itemToPlay.opticalTrack + 1); //Optical Track is 0-based but the track on the CD is 1-based
+                    disconnect(*connection);
+                    delete connection;
+                }
+            });
+        }
+    } else {
+        mediaObj->setCurrentSource(itemToPlay);
+        mediaObj->play();
+    }
 }
 
 void PlaylistModel::setRepeat(bool repeat) {
