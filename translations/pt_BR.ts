@@ -376,22 +376,22 @@
     <message>
         <location filename="../mainwindow.ui" line="1914"/>
         <source>theBeat Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuda theBeat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1917"/>
         <source>F1</source>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1925"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Reportar Bug</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1933"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontes</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="125"/>
