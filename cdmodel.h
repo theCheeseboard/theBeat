@@ -33,6 +33,7 @@ class CdModel : public QAbstractTableModel
     signals:
         void changeUiPane(int pane);
         void queryingCddb(bool querying);
+        void removeAllCdTracks();
 
     private:
         QString device;

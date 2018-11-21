@@ -154,6 +154,7 @@ void CdModel::checkCd() {
         art = QImage();
         if (info->numberOfTracks == 0) {
             changeUiPane(0);
+            emit removeAllCdTracks();
         } else {
             for (int i = 0; i < info->numberOfTracks; i++) {
                 trackData.append(tr("Track %n", nullptr, i + 1));
