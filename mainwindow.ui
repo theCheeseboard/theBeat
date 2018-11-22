@@ -196,7 +196,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QStackedWidget" name="sourcesStack">
+        <widget class="tStackedWidget" name="sourcesStack">
          <property name="currentIndex">
           <number>1</number>
          </property>
@@ -1908,10 +1908,11 @@
   </action>
   <action name="actionHelp">
    <property name="icon">
-    <iconset theme="help-contents"/>
+    <iconset theme="help-contents">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>theBeat Help</string>
+    <string>&amp;theBeat Help</string>
    </property>
    <property name="shortcut">
     <string>F1</string>
@@ -1919,18 +1920,20 @@
   </action>
   <action name="actionFileBug">
    <property name="icon">
-    <iconset theme="tools-report-bug"/>
+    <iconset theme="tools-report-bug">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>File Bug</string>
+    <string>&amp;File Bug</string>
    </property>
   </action>
   <action name="actionSources">
    <property name="icon">
-    <iconset theme="commit"/>
+    <iconset theme="commit">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Sources</string>
+    <string>&amp;Sources</string>
    </property>
   </action>
  </widget>
@@ -1960,6 +1963,12 @@
    <class>PlaylistListWidget</class>
    <extends>QListView</extends>
    <header>playlistlistwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>tStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header location="global">tstackedwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

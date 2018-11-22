@@ -92,6 +92,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->libraryBackButton->setVisible(false);
     ui->sourcesStack->setCurrentIndex(1);
     ui->mediaLibraryInfoWidget->installEventFilter(this);
+    ui->sourcesStack->setCurrentAnimation(tStackedWidget::Lift);
 
     ui->playlistWidget->setModel(playlist);
     ui->playlistWidget->setItemDelegate(new LibraryTitleDelegate(this));

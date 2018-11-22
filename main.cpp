@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "nativeeventfilter.h"
-#include <QApplication>
+#include <tapplication.h>
 #include <QMainWindow>
 #include <QTranslator>
 #include <QLibraryInfo>
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 {
     qputenv("PHONON_BACKEND", "phonon_vlc");
 
-    QApplication a(argc, argv);
+    tApplication a(argc, argv);
 
     a.setOrganizationName("theSuite");
     a.setApplicationName("theBeat");
