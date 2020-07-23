@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/thebeat.svg</file>
+    </qresource>
+</RCC>

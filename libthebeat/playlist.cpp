@@ -1,0 +1,112 @@
+/****************************************
+ *
+ *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
+ *   Copyright (C) 2020 Victor Tran
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * *************************************/
+#include "playlist.h"
+
+struct PlaylistPrivate {
+    QList<MediaItem*> items;
+    QList<MediaItem*> playOrder;
+
+    Playlist::State state = Playlist::Stopped;
+    MediaItem* currentItem = nullptr;
+};
+
+Playlist::Playlist(QObject* parent) : QObject(parent) {
+    d = new PlaylistPrivate();
+}
+
+void Playlist::addItem(MediaItem* item) {
+    d->items.append(item);
+    d->playOrder.append(item);
+    this->play();
+}
+
+void Playlist::play() {
+    if (d->state == Playlist::Playing) return;
+
+    if (d->playOrder.isEmpty()) return;
+    if (!d->currentItem) setCurrentItem(d->playOrder.first());
+
+    d->currentItem->play();
+
+    State oldState = d->state;
+    d->state = Playlist::Playing;
+    emit stateChanged(d->state, oldState);
+}
+
+void Playlist::pause() {
+    if (d->state == Playlist::Paused) return;
+
+    if (d->currentItem) {
+        d->currentItem->pause();
+
+        State oldState = d->state;
+        d->state = Playlist::Paused;
+        emit stateChanged(d->state, oldState);
+    }
+}
+
+void Playlist::next() {
+    if (!d->currentItem) {
+        play();
+        return;
+    }
+
+    int index = d->playOrder.indexOf(d->currentItem) + 1;
+    if (index == d->playOrder.count()) index = 0;
+    setCurrentItem(d->playOrder.at(index));
+}
+
+void Playlist::previous() {
+    //TODO: Skip to beginning if elapsed < 5000
+    if (!d->currentItem) {
+        play();
+        return;
+    }
+
+    int index = d->playOrder.indexOf(d->currentItem) - 1;
+    if (index == -1) index = d->playOrder.count() - 1;
+    setCurrentItem(d->playOrder.at(index));
+}
+
+Playlist::State Playlist::state() {
+    return d->state;
+}
+
+MediaItem* Playlist::currentItem() {
+    return d->currentItem;
+}
+
+void Playlist::setCurrentItem(MediaItem* item) {
+    if (d->currentItem) {
+        d->currentItem->pause();
+        d->currentItem->disconnect(this);
+    }
+
+    d->currentItem = item;
+    emit currentItemChanged(item);
+    item->seek(0);
+
+    //TODO: connect to signals
+    connect(d->currentItem, &MediaItem::done, this, &Playlist::next);
+
+    if (d->state == Playlist::Playing) {
+        d->currentItem->play();
+    }
+}

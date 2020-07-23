@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   viewBox="0 0 8.4666665 8.4666669"
+   version="1.1"
+   id="svg20249"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14"
+   sodipodi:docname="thebeat.svg">
+  <defs
+     id="defs20243">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient9165"
+       id="linearGradient822-7-0"
+       x1="4.6862917"
+       y1="35.595917"
+       x2="27.313709"
+       y2="-3.5959179"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.26458333,0,0,0.26458333,75.629416,277.46165)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient9165">
+      <stop
+         style="stop-color:#ff641b;stop-opacity:1"
+         offset="0"
+         id="stop9161" />
+      <stop
+         style="stop-color:#f3c800;stop-opacity:1"
+         offset="1"
+         id="stop9163" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.839192"
+     inkscape:cx="22.730072"
+     inkscape:cy="14.742415"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1046"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid20794"
+       empspacing="4" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid20796"
+       empspacing="1"
+       originy="0.13229167"
+       originx="0.13229167"
+       dotted="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata20246">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-288.53332)">
+    <circle
+       style="opacity:1;fill:url(#linearGradient822-7-0);fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       id="path814-0-9"
+       cx="79.862709"
+       cy="281.69482"
+       r="4.2333331"
+       transform="rotate(15)"
+       inkscape:export-filename="/home/victor/newcontemporary.png"
+       inkscape:export-xdpi="2165.5593"
+       inkscape:export-ydpi="2165.5593" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.36035824;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       d="m 4.5072672,291.74432 c -0.5663401,-0.15175 -1.1444399,0.18202 -1.29618,0.74836 l -1.05944,3.9538 a 4.2333333,4.2333333 0 0 0 0.98603,0.4092 4.2333333,4.2333333 0 0 0 5.1847901,-2.99343 4.2333333,4.2333333 0 0 0 0.1406401,-1.05798 z"
+       id="rect824-2-2"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/victor/newcontemporary.png"
+       inkscape:export-xdpi="2165.5593"
+       inkscape:export-ydpi="2165.5593" />
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.2502782;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path819-5"
+       sodipodi:type="arc"
+       sodipodi:cx="-81.305344"
+       sodipodi:cy="283.1788"
+       sodipodi:rx="1.3139607"
+       sodipodi:ry="1.3139607"
+       sodipodi:start="3.1415927"
+       sodipodi:end="0"
+       sodipodi:open="true"
+       d="m -82.619304,283.1788 a 1.3139607,1.3139607 0 0 1 1.31396,-1.31396 1.3139607,1.3139607 0 0 1 1.313961,1.31396"
+       transform="matrix(-0.96592583,-0.25881905,-0.25881905,0.96592583,0,0)"
+       inkscape:export-filename="/home/victor/newcontemporary.png"
+       inkscape:export-xdpi="2165.5593"
+       inkscape:export-ydpi="2165.5593" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:0.2502782px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 3.9735973,294.23322 -0.23544,0.87868"
+       id="path821-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/victor/newcontemporary.png"
+       inkscape:export-xdpi="2165.5593"
+       inkscape:export-ydpi="2165.5593" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:0.2502782px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 6.5119971,294.91339 -0.2354498,0.87865"
+       id="path823-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/victor/newcontemporary.png"
+       inkscape:export-xdpi="2165.5593"
+       inkscape:export-ydpi="2165.5593" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.26206106px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       d="m 4.3586372,294.85452 -0.27393,1.02227 c 0.20447,0.0548 0.4637,-0.0949 0.5184799,-0.29933 l 0.0548,-0.20445 c 0.0548,-0.20445 -0.0949,-0.46369 -0.29934,-0.51847 z"
+       id="path825-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/victor/newcontemporary.png"
+       inkscape:export-xdpi="2165.5593"
+       inkscape:export-ydpi="2165.5593" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.26206365px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       d="m 5.8920373,295.26539 -0.2739202,1.02228 c -0.2044599,-0.0548 -0.3541299,-0.31401 -0.2993498,-0.51849 l 0.0548,-0.20445 c 0.0548,-0.20444 0.3140299,-0.35413 0.5184899,-0.29934 z"
+       id="path825-6-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/victor/newcontemporary.png"
+       inkscape:export-xdpi="2165.5593"
+       inkscape:export-ydpi="2165.5593" />
+  </g>
+</svg>
