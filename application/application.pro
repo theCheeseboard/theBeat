@@ -1,4 +1,4 @@
-QT       += core gui multimedia
+QT       += core gui multimedia sql
 SHARE_APP_NAME = thebeat
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -11,6 +11,9 @@ unix:!macx {
     QT += thelib
     TARGET = thebeat
 
+    CONFIG += link_pkgconfig
+    PKGCONFIG += taglib
+
     LIBS += -L$$OUT_PWD/../libthebeat/ -lthebeat
 
     target.path = $$[QT_INSTALL_BINS]
@@ -21,12 +24,17 @@ unix:!macx {
     icon.path = /usr/share/icons/hicolor/scalable/apps/
     icon.files = icons/thebeat.svg
 
-    INSTALLS += target desktop icon
+    defaults.files = defaults.conf
+    defaults.path = /etc/theSuite/theBeat/
+
+    INSTALLS += target desktop icon defaults
 }
 
 win32 {
     # Include the-libs build tools
     include(C:/Program Files/thelibs/pri/buildmaster.pri)
+
+    # TODO: Link with taglib
 
     INCLUDEPATH += "C:/Program Files/thelibs/include"
     LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs
@@ -40,6 +48,8 @@ win32 {
 macx {
     # Include the-libs build tools
     include(/usr/local/share/the-libs/pri/buildmaster.pri)
+
+    # TODO: Link with taglib
 
     QT += macextras
     LIBS += -framework CoreFoundation -framework AppKit
@@ -73,19 +83,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    artistsalbumswidget.cpp \
     controlstrip.cpp \
+    library/librarymanager.cpp \
+    library/librarymodel.cpp \
     main.cpp \
     mainwindow.cpp \
-    qtmultimedia/qtmultimediamediaitem.cpp
+    qtmultimedia/qtmultimediamediaitem.cpp \
+    trackswidget.cpp
 
 HEADERS += \
+    artistsalbumswidget.h \
     controlstrip.h \
+    library/librarymanager.h \
+    library/librarymodel.h \
     mainwindow.h \
-    qtmultimedia/qtmultimediamediaitem.h
+    qtmultimedia/qtmultimediamediaitem.h \
+    trackswidget.h
 
 FORMS += \
+    artistsalbumswidget.ui \
     controlstrip.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    trackswidget.ui
 
 RESOURCES += \
     resources.qrc
@@ -95,4 +115,5 @@ DEPENDPATH += $$PWD/../libthebeat
 
 DISTFILES += \
     com.vicr123.thebeat.desktop \
+    defaults.conf \
     icon.rc

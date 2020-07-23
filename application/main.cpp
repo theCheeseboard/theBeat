@@ -19,11 +19,39 @@
  * *************************************/
 #include "mainwindow.h"
 
-#include <QApplication>
+#include <QDir>
+#include <tapplication.h>
+#include <tsettings.h>
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
+int main(int argc, char* argv[]) {
+    tApplication a(argc, argv);
+
+    if (QDir("/usr/share/thebeat/").exists()) {
+        a.setShareDir("/usr/share/thebeat/");
+    } else if (QDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/")).exists()) {
+        a.setShareDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/"));
+    }
+    a.installTranslators();
+
+    a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
+    a.setApplicationVersion("3.0");
+    a.setGenericName(QApplication::translate("main", "Audio Player"));
+    a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
+    a.setApplicationLicense(tApplication::Gpl3OrLater);
+    a.setCopyrightHolder("Victor Tran");
+    a.setCopyrightYear("2020");
+    a.setOrganizationName("theSuite");
+#ifdef T_BLUEPRINT_BUILD
+    a.setApplicationName("theBeat Blueprint");
+    a.setDesktopFileName("com.vicr123.thebeat-blueprint");
+#else
+    a.setApplicationName("theBeat");
+    a.setDesktopFileName("com.vicr123.thebeat");
+#endif
+
+    tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
+    tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
+
     MainWindow w;
     w.show();
     return a.exec();

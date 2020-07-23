@@ -22,9 +22,12 @@
 
 #include <tcsdtools.h>
 #include <QMenu>
+#include <QDesktopServices>
+#include <taboutdialog.h>
 #include <QFileDialog>
 #include <statemanager.h>
 #include <playlist.h>
+#include "library/librarymanager.h"
 
 #include <qtmultimedia/qtmultimediamediaitem.h>
 
@@ -65,6 +68,8 @@ MainWindow::MainWindow(QWidget* parent)
     ui->menuButton->setMenu(menu);
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
 
+    ui->artistsPage->setType(ArtistsAlbumsWidget::Artists);
+    ui->albumsPage->setType(ArtistsAlbumsWidget::Albums);
 }
 
 MainWindow::~MainWindow() {
@@ -81,4 +86,39 @@ void MainWindow::on_actionOpen_File_triggered() {
     });
     connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
     dialog->open();
+}
+
+void MainWindow::on_actionFileBug_triggered() {
+    QDesktopServices::openUrl(QUrl("http://github.com/vicr123/theBeat/issues"));
+}
+
+void MainWindow::on_actionSources_triggered() {
+    QDesktopServices::openUrl(QUrl("http://github.com/vicr123/theBeat"));
+}
+
+void MainWindow::on_actionAbout_triggered() {
+    tAboutDialog d;
+    d.exec();
+}
+
+void MainWindow::on_actionExit_triggered() {
+    QApplication::exit();
+}
+
+void MainWindow::on_tracksButton_toggled(bool checked) {
+    if (checked) {
+        ui->stackedWidget->setCurrentWidget(ui->tracksPage);
+    }
+}
+
+void MainWindow::on_artistsButton_toggled(bool checked) {
+    if (checked) {
+        ui->stackedWidget->setCurrentWidget(ui->artistsPage);
+    }
+}
+
+void MainWindow::on_albumsButton_toggled(bool checked) {
+    if (checked) {
+        ui->stackedWidget->setCurrentWidget(ui->albumsPage);
+    }
 }

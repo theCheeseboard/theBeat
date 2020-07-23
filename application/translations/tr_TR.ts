@@ -2,6 +2,45 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="tr_TR" sourcelanguage="en_US">
 <context>
+    <name>ArtistsAlbumsWidget</name>
+    <message>
+        <location filename="../artistsalbumswidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.ui" line="65"/>
+        <location filename="../artistsalbumswidget.ui" line="190"/>
+        <source>Tracks in Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.ui" line="215"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.cpp" line="50"/>
+        <source>Albums in Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.cpp" line="50"/>
+        <source>Artists in Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.cpp" line="63"/>
+        <source>Tracks in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.cpp" line="63"/>
+        <source>Tracks by %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ControlStrip</name>
     <message>
         <location filename="../controlstrip.ui" line="14"/>
@@ -9,12 +48,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="82"/>
+        <location filename="../controlstrip.ui" line="85"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="89"/>
+        <location filename="../controlstrip.ui" line="92"/>
         <source>Metadata</source>
         <translation type="unfinished"></translation>
     </message>
@@ -47,43 +86,74 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="218"/>
+        <location filename="../mainwindow.ui" line="220"/>
         <source>File Bug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="226"/>
+        <location filename="../mainwindow.ui" line="229"/>
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="234"/>
+        <location filename="../mainwindow.ui" line="238"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="242"/>
+        <location filename="../mainwindow.ui" line="247"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="245"/>
+        <location filename="../mainwindow.ui" line="250"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="253"/>
+        <location filename="../mainwindow.ui" line="259"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="256"/>
+        <location filename="../mainwindow.ui" line="262"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="53"/>
+        <location filename="../mainwindow.cpp" line="56"/>
         <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TracksWidget</name>
+    <message>
+        <location filename="../trackswidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../trackswidget.ui" line="43"/>
+        <source>Tracks in Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../trackswidget.ui" line="52"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../trackswidget.ui" line="93"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <location filename="../main.cpp" line="38"/>
+        <source>Audio Player</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
