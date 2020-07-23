@@ -4,13 +4,13 @@ branches:
   - blueprint
   - master
 skip_tags: true
-image: Visual Studio 2017
+image: Visual Studio 2019
 clone_depth: 5
 
 environment:
   REPO_SLUG: vicr123/theBeat
   GITHUB_TOKEN:
-    secure: CsEqLTfxDs+Js449bYVPi3Ngvo4Qi91afQpNSms+U+QEHchdNV6Fa7hWch0u4nbM
+    secure: ElS0PtagqNioYU/GafjYPflNKSCFt3GiG05gErwfVO2OIdftC7MX/4oQMoSbX877
   api_token:
     secure: hVbnQbmIi8N/AfopJa7JeE4CGLdb4CoXFHWKMvD9TNg=
   deploy_project: theBeat
