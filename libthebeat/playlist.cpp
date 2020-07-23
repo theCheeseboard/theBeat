@@ -38,12 +38,12 @@ void Playlist::addItem(MediaItem* item) {
 }
 
 void Playlist::play() {
-    if (d->state == Playlist::Playing) return;
-
     if (d->playOrder.isEmpty()) return;
     if (!d->currentItem) setCurrentItem(d->playOrder.first());
 
     d->currentItem->play();
+
+    if (d->state == Playlist::Playing) return;
 
     State oldState = d->state;
     d->state = Playlist::Playing;

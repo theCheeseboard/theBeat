@@ -38,6 +38,7 @@ ArtistsAlbumsWidget::ArtistsAlbumsWidget(QWidget* parent) :
     d = new ArtistsAlbumsWidgetPrivate();
     connect(LibraryManager::instance(), &LibraryManager::libraryChanged, this, &ArtistsAlbumsWidget::updateData);
 
+    ui->tracksList->setItemDelegate(new LibraryItemDelegate);
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Lift);
 }
 

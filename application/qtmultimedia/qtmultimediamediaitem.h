@@ -42,6 +42,7 @@ class QtMultimediaMediaItem : public MediaItem {
         QString title();
         QStringList authors();
         QString album();
+        QImage albumArt();
 };
 
 #endif // QTMULTIMEDIAMEDIAITEM_H

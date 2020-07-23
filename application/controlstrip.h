@@ -48,6 +48,9 @@ class ControlStrip : public QWidget {
         void updateState();
         void updateCurrentItem();
         void updateMetadata();
+
+        void expand();
+        void collapse();
 };
 
 #endif // CONTROLSTRIP_H

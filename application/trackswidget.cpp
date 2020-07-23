@@ -38,6 +38,7 @@ TracksWidget::TracksWidget(QWidget* parent) :
     d = new TracksWidgetPrivate();
     connect(LibraryManager::instance(), &LibraryManager::libraryChanged, this, &TracksWidget::updateModel);
 
+    ui->listView->setItemDelegate(new LibraryItemDelegate);
     updateModel();
 }
 

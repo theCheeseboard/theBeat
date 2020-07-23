@@ -21,6 +21,7 @@
 
 #include <QMediaPlayer>
 #include <QMediaMetaData>
+#include <QImage>
 
 struct QtMultimediaMediaItemPrivate {
     QMediaPlayer* player;
@@ -58,9 +59,23 @@ QString QtMultimediaMediaItem::title() {
 }
 
 QStringList QtMultimediaMediaItem::authors() {
-    return d->player->metaData(QMediaMetaData::Author).toStringList();
+    QStringList data = d->player->metaData(QMediaMetaData::Author).toStringList();
+    data.append(d->player->metaData(QMediaMetaData::AlbumArtist).toString());
+    data.append(d->player->metaData(QMediaMetaData::ContributingArtist).toString());
+    data.removeAll("");
+    data.removeDuplicates();
+    return data;
 }
 
 QString QtMultimediaMediaItem::album() {
     return d->player->metaData(QMediaMetaData::AlbumTitle).toString();
+}
+
+QImage QtMultimediaMediaItem::albumArt() {
+    if (d->player->availableMetaData().contains(QMediaMetaData::CoverArtImage)) {
+        return d->player->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
+    } else if (d->player->availableMetaData().contains(QMediaMetaData::CoverArtUrlLarge)) {
+
+    }
+    return QImage();
 }

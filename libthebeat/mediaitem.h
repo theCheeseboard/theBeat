@@ -36,6 +36,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         virtual QString title() = 0;
         virtual QStringList authors() = 0;
         virtual QString album() = 0;
+        virtual QImage albumArt() = 0;
 
     signals:
         void done();

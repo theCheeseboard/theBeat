@@ -19,6 +19,8 @@
  * *************************************/
 #include "librarymodel.h"
 
+#include <QPainter>
+#include <the-libs_global.h>
 #include "librarymanager.h"
 
 struct LibraryModelPrivate {
@@ -64,4 +66,107 @@ QVariant LibraryModel::data(const QModelIndex& index, int role) const {
     }
 
     return QVariant();
+}
+
+LibraryItemDelegate::LibraryItemDelegate(QObject* parent) {
+
+}
+
+void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
+    QPen transientColor = option.palette.color(QPalette::Disabled, QPalette::WindowText);
+
+    painter->setPen(Qt::transparent);
+    QPen textPen;
+    if (option.state & QStyle::State_Selected) {
+        painter->setBrush(option.palette.brush(QPalette::Highlight));
+        textPen = option.palette.color(QPalette::HighlightedText);
+        transientColor = textPen;
+    } else if (option.state & QStyle::State_MouseOver) {
+        QColor col = option.palette.color(QPalette::Highlight);
+        col.setAlpha(127);
+        painter->setBrush(col);
+        textPen = option.palette.color(QPalette::HighlightedText);
+    } else {
+        painter->setBrush(option.palette.brush(QPalette::Window));
+        textPen = option.palette.color(QPalette::WindowText);
+    }
+    painter->drawRect(option.rect);
+
+    QRect textRect = option.rect;
+
+    textRect.setHeight(option.fontMetrics.height());
+    textRect.moveTop(option.rect.top() + 6);
+    textRect.moveLeft(option.rect.left() + 6);
+
+    //Reserve two characters' space for the track number
+    QFont trackFont = option.font;
+    trackFont.setPointSizeF(trackFont.pointSizeF() * 2);
+    QFontMetrics trackFontMetrics(trackFont);
+
+    QRect trackRect = textRect;
+    trackRect.setWidth(trackFontMetrics.horizontalAdvance("99") + 1);
+    trackRect.setHeight(trackFontMetrics.height());
+    trackRect.moveTop(option.rect.top() + option.rect.height() / 2 - trackRect.height() / 2);
+    textRect.setLeft(trackRect.right() + SC_DPI(6));
+
+    //Draw the track number
+    if (index.data(LibraryModel::TrackRole).toInt() != -1) {
+        painter->setFont(trackFont);
+        painter->setPen(transientColor);
+        if (index.data(LibraryModel::TrackRole).toInt() == 0) {
+            painter->drawText(trackRect, Qt::AlignCenter, "-");
+        } else {
+            painter->drawText(trackRect, Qt::AlignCenter, QString::number(index.data(LibraryModel::TrackRole).toInt()));
+        }
+    }
+
+    //Draw the track name
+    QRect nameRect = textRect;
+    nameRect.setWidth(option.fontMetrics.horizontalAdvance(index.data().toString()) + 1);
+    textRect.setLeft(nameRect.right() + SC_DPI(6));
+
+    painter->setFont(option.font);
+    painter->setPen(option.palette.color(QPalette::WindowText));
+    painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());
+
+    //Draw the extra details
+    QString artist = index.data(LibraryModel::ArtistRole).toString();
+    QString album = index.data(LibraryModel::AlbumRole).toString();
+
+    QStringList details;
+    if (!artist.isEmpty()) details.append(tr("by %1").arg(artist));
+    if (!album.isEmpty()) details.append(tr("on %1").arg(album));
+    QString detailsText = details.join(" · ");
+    if (detailsText.isEmpty()) detailsText = tr("Track");
+
+    QRect detailsRect = nameRect;
+    detailsRect.setWidth(option.fontMetrics.horizontalAdvance(detailsText) + 1);
+    detailsRect.moveTop(nameRect.bottom());
+
+    painter->setPen(transientColor);
+    painter->drawText(detailsRect, Qt::AlignLeft | Qt::AlignVCenter, detailsText);
+
+    //Draw the track duration
+    int duration = index.data(LibraryModel::TrackRole).toInt();
+    if (duration != 0) {
+        QStringList parts;
+
+        qint64 seconds = duration / 1000 % 60;
+        qint64 minutes = duration / 1000 / 60 % 60;
+        qint64 hours = duration / 1000 / 60 / 60;
+
+        if (hours > 0) parts.append(QString::number(hours));
+        parts.append(QStringLiteral("%1").arg(minutes, 2, 10, QLatin1Char('0')));
+        parts.append(QStringLiteral("%1").arg(seconds, 2, 10, QLatin1Char('0')));
+
+        painter->setPen(transientColor);
+        painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, "· " + parts.join(":"));
+    }
+}
+
+QSize LibraryItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const {
+    QSize sizeHint;
+    sizeHint.setWidth(option.rect.width());
+    sizeHint.setHeight(option.fontMetrics.height() * 2 + 12);
+    return sizeHint;
 }

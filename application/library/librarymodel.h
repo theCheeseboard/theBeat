@@ -21,6 +21,7 @@
 #define LIBRARYMODEL_H
 
 #include <QSqlQueryModel>
+#include <QStyledItemDelegate>
 
 struct LibraryModelPrivate;
 class LibraryModel : public QSqlQueryModel {
@@ -44,6 +45,16 @@ class LibraryModel : public QSqlQueryModel {
 
     private:
         LibraryModelPrivate* d;
+};
+
+class LibraryItemDelegate : public QStyledItemDelegate {
+        Q_OBJECT
+
+    public:
+        explicit LibraryItemDelegate(QObject* parent = nullptr);
+
+        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
 #endif // LIBRARYMODEL_H

@@ -22,10 +22,11 @@
 
 #include <statemanager.h>
 #include <playlist.h>
-#include <the-libs_global.h>
+#include <tvariantanimation.h>
 
 struct ControlStripPrivate {
     MediaItem* currentItem = nullptr;
+    bool isCollapsed = true;
 };
 
 ControlStrip::ControlStrip(QWidget* parent) :
@@ -38,6 +39,8 @@ ControlStrip::ControlStrip(QWidget* parent) :
     ui->playPauseButton->setIconSize(SC_DPI_T(QSize(32, 32), QSize));
     connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, &ControlStrip::updateState);
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &ControlStrip::updateCurrentItem);
+
+    this->setFixedHeight(0);
 
     updateCurrentItem();
 }
@@ -62,11 +65,15 @@ void ControlStrip::on_playPauseButton_clicked() {
 void ControlStrip::updateState() {
     switch (StateManager::instance()->playlist()->state()) {
         case Playlist::Playing:
+            expand();
             ui->playPauseButton->setIcon(QIcon::fromTheme("media-playback-pause"));
             break;
         case Playlist::Paused:
-        case Playlist::Stopped:
+            expand();
             ui->playPauseButton->setIcon(QIcon::fromTheme("media-playback-start"));
+            break;
+        case Playlist::Stopped:
+            collapse();
             break;
     }
 }
@@ -84,6 +91,55 @@ void ControlStrip::updateCurrentItem() {
 
 void ControlStrip::updateMetadata() {
     ui->titleLabel->setText(d->currentItem->title());
+
+    QStringList parts;
+    parts.append(QLocale().createSeparatedList(d->currentItem->authors()));
+    parts.append(d->currentItem->album());
+
+    parts.removeAll("");
+    ui->metadataLabel->setText(parts.join(" · "));
+
+    QImage image = d->currentItem->albumArt();
+    if (image.isNull()) {
+        ui->artLabel->setPixmap(QIcon::fromTheme("audio").pixmap(SC_DPI_T(QSize(48, 48), QSize)));
+    } else {
+        ui->artLabel->setPixmap(QPixmap::fromImage(image).scaled(SC_DPI_T(QSize(48, 48), QSize), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+}
+
+void ControlStrip::expand() {
+    if (!d->isCollapsed) return;
+
+    tVariantAnimation* anim = new tVariantAnimation(this);
+    anim->setStartValue(this->height());
+    anim->setEndValue(this->sizeHint().height());
+    anim->setDuration(500);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+        this->setFixedHeight(value.toInt());
+    });
+    connect(anim, &tVariantAnimation::finished, this, [ = ] {
+        this->setFixedHeight(QWIDGETSIZE_MAX);
+        anim->deleteLater();
+    });
+    anim->start();
+    d->isCollapsed = false;
+}
+
+void ControlStrip::collapse() {
+    if (d->isCollapsed) return;
+
+    tVariantAnimation* anim = new tVariantAnimation(this);
+    anim->setStartValue(this->height());
+    anim->setEndValue(this->sizeHint().height());
+    anim->setDuration(0);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+        this->setFixedHeight(value.toInt());
+    });
+    connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
+    anim->start();
+    d->isCollapsed = true;
 }
 
 void ControlStrip::on_skipBackButton_clicked() {

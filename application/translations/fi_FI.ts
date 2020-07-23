@@ -20,22 +20,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="50"/>
+        <location filename="../artistsalbumswidget.cpp" line="51"/>
         <source>Albums in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="50"/>
+        <location filename="../artistsalbumswidget.cpp" line="51"/>
         <source>Artists in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="63"/>
+        <location filename="../artistsalbumswidget.cpp" line="64"/>
         <source>Tracks in %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="63"/>
+        <location filename="../artistsalbumswidget.cpp" line="64"/>
         <source>Tracks by %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -55,6 +55,24 @@
     <message>
         <location filename="../controlstrip.ui" line="92"/>
         <source>Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LibraryItemDelegate</name>
+    <message>
+        <location filename="../library/librarymodel.cpp" line="137"/>
+        <source>by %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/librarymodel.cpp" line="138"/>
+        <source>on %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/librarymodel.cpp" line="140"/>
+        <source>Track</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -86,6 +86,7 @@ void LibraryManager::enumerateDirectory(QString path) {
         albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
         durations.append(QVariant(QVariant::Int));
         trackNumbers.append(tag->track());
+
     }
 
     QSqlQuery q;
@@ -164,7 +165,7 @@ LibraryModel* LibraryManager::searchTracks(QString query) {
 
 QStringList LibraryManager::artists() {
     QStringList artists;
-    QSqlQuery q("SELECT DISTINCT artist FROM tracks ORDER BY LOWER(artist) ASC");
+    QSqlQuery q("SELECT DISTINCT artist FROM tracks WHERE artist IS NOT NULL ORDER BY LOWER(artist) ASC");
     while (q.next()) {
         artists.append(q.value("artist").toString());
     }
