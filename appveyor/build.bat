@@ -12,7 +12,7 @@ set PATH=%PATH%;%QTDIR%\bin
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 rem Remove symlinks from contemporary-icons
-cp ci\delink.ps1 application\icons\contemporary-icons
+cp appveyor\delink.ps1 application\icons\contemporary-icons
 cd application\icons\contemporary-icons
 powershell -executionpolicy bypass -File delink.ps1
 cd ..\..\..
