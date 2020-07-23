@@ -21,6 +21,7 @@
 
 #include <QPainter>
 #include <the-libs_global.h>
+#include "common.h"
 #include "librarymanager.h"
 
 struct LibraryModelPrivate {
@@ -149,18 +150,8 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     //Draw the track duration
     int duration = index.data(LibraryModel::TrackRole).toInt();
     if (duration != 0) {
-        QStringList parts;
-
-        qint64 seconds = duration / 1000 % 60;
-        qint64 minutes = duration / 1000 / 60 % 60;
-        qint64 hours = duration / 1000 / 60 / 60;
-
-        if (hours > 0) parts.append(QString::number(hours));
-        parts.append(QStringLiteral("%1").arg(minutes, 2, 10, QLatin1Char('0')));
-        parts.append(QStringLiteral("%1").arg(seconds, 2, 10, QLatin1Char('0')));
-
         painter->setPen(transientColor);
-        painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, "· " + parts.join(":"));
+        painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, "· " + Common::durationToString(duration));
     }
 }
 

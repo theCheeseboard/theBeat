@@ -41,13 +41,16 @@ class ControlStrip : public QWidget {
 
         void on_skipNextButton_clicked();
 
-    private:
+        void on_progressSlider_valueChanged(int value);
+
+private:
         Ui::ControlStrip* ui;
         ControlStripPrivate* d;
 
         void updateState();
         void updateCurrentItem();
         void updateMetadata();
+        void updateBar();
 
         void expand();
         void collapse();

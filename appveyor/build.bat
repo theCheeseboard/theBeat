@@ -46,10 +46,12 @@ nmake release
 mkdir deploy
 mkdir deploy\styles
 mkdir deploy\translations
+mkdir deploy\icons
 copy "contemporary-theme\release\Contemporary.dll" deploy\styles
 copy application\release\thebeat.exe deploy
 copy libthebeat\release\thebeat.dll deploy
 copy application\translations\*.qm deploy\translations
+robocopy application\icons\contemporary-icons deploy\icons\ /mir
 copy "C:\Program Files\thelibs\lib\the-libs.dll" deploy
 copy "C:\OpenSSL-Win64\bin\openssl.exe" deploy
 copy "C:\OpenSSL-Win64\bin\libeay32.dll" deploy

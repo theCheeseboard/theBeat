@@ -84,6 +84,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     artistsalbumswidget.cpp \
+    common.cpp \
     controlstrip.cpp \
     library/librarymanager.cpp \
     library/librarymodel.cpp \
@@ -94,6 +95,7 @@ SOURCES += \
 
 HEADERS += \
     artistsalbumswidget.h \
+    common.h \
     controlstrip.h \
     library/librarymanager.h \
     library/librarymodel.h \

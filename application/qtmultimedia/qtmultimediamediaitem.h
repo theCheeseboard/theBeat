@@ -39,6 +39,8 @@ class QtMultimediaMediaItem : public MediaItem {
         void play();
         void pause();
         void seek(quint64 ms);
+        quint64 elapsed();
+        quint64 duration();
         QString title();
         QStringList authors();
         QString album();

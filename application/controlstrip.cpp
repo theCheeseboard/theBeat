@@ -23,6 +23,7 @@
 #include <statemanager.h>
 #include <playlist.h>
 #include <tvariantanimation.h>
+#include "common.h"
 
 struct ControlStripPrivate {
     MediaItem* currentItem = nullptr;
@@ -85,6 +86,8 @@ void ControlStrip::updateCurrentItem() {
     d->currentItem = StateManager::instance()->playlist()->currentItem();
     if (d->currentItem) {
         connect(d->currentItem, &MediaItem::metadataChanged, this, &ControlStrip::updateMetadata);
+        connect(d->currentItem, &MediaItem::elapsedChanged, this, &ControlStrip::updateBar);
+        connect(d->currentItem, &MediaItem::durationChanged, this, &ControlStrip::updateBar);
         updateMetadata();
     }
 }
@@ -105,6 +108,15 @@ void ControlStrip::updateMetadata() {
     } else {
         ui->artLabel->setPixmap(QPixmap::fromImage(image).scaled(SC_DPI_T(QSize(48, 48), QSize), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
+}
+
+void ControlStrip::updateBar() {
+    QSignalBlocker blocker(ui->progressSlider);
+    ui->progressSlider->setMaximum(d->currentItem->duration());
+    ui->progressSlider->setValue(d->currentItem->elapsed());
+
+    ui->durationLabel->setText(Common::durationToString(d->currentItem->duration()));
+    ui->elapsedLabel->setText(Common::durationToString(d->currentItem->elapsed()));
 }
 
 void ControlStrip::expand() {
@@ -148,4 +160,8 @@ void ControlStrip::on_skipBackButton_clicked() {
 
 void ControlStrip::on_skipNextButton_clicked() {
     StateManager::instance()->playlist()->next();
+}
+
+void ControlStrip::on_progressSlider_valueChanged(int value) {
+    d->currentItem->seek(value);
 }

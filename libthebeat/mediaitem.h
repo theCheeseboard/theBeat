@@ -32,6 +32,8 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         virtual void play() = 0;
         virtual void pause() = 0;
         virtual void seek(quint64 ms) = 0;
+        virtual quint64 elapsed() = 0;
+        virtual quint64 duration() = 0;
 
         virtual QString title() = 0;
         virtual QStringList authors() = 0;
@@ -41,6 +43,8 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
     signals:
         void done();
         void metadataChanged();
+        void elapsedChanged();
+        void durationChanged();
 
     private:
 

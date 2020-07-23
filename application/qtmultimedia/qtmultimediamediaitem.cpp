@@ -36,6 +36,8 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
         if (status == QMediaPlayer::EndOfMedia) emit done();
     });
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::metadataChanged);
+    connect(d->player, &QMediaPlayer::positionChanged, this, &QtMultimediaMediaItem::elapsedChanged);
+    connect(d->player, &QMediaPlayer::durationChanged, this, &QtMultimediaMediaItem::durationChanged);
 }
 
 QtMultimediaMediaItem::~QtMultimediaMediaItem() {
@@ -52,6 +54,14 @@ void QtMultimediaMediaItem::pause() {
 
 void QtMultimediaMediaItem::seek(quint64 ms) {
     d->player->setPosition(ms);
+}
+
+quint64 QtMultimediaMediaItem::elapsed() {
+    return d->player->position();
+}
+
+quint64 QtMultimediaMediaItem::duration() {
+    return d->player->duration();
 }
 
 QString QtMultimediaMediaItem::title() {
