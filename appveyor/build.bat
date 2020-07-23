@@ -42,6 +42,7 @@ mkdir deploy\styles
 mkdir deploy\translations
 copy "contemporary-theme\release\Contemporary.dll" deploy\styles
 copy application\release\thebeat.exe deploy
+copy libthebeat\release\thebeat.dll deploy
 copy application\translations\*.qm deploy\translations
 copy "C:\Program Files\thelibs\lib\the-libs.dll" deploy
 copy "C:\OpenSSL-Win64\bin\openssl.exe" deploy
