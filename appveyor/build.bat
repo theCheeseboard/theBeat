@@ -50,4 +50,4 @@ copy "C:\OpenSSL-Win64\bin\ssleay32.dll" deploy
 copy "C:\OpenSSL-Win64\bin\openssl.cfg" deploy
 copy taglib\build\taglib\tag.dll deploy
 cd deploy
-windeployqt theBeat.exe -network -webengine -webenginecore -webenginewidgets -quickwidgets -sql -multimedia
+windeployqt theBeat.exe -network -quickwidgets -sql -multimedia
