@@ -75,7 +75,11 @@ void LibraryManager::enumerateDirectory(QString path) {
         QString path = iterator.next();
         if (blacklistedPaths.contains(path)) continue;
 
+#ifdef Q_OS_WIN
+        TagLib::FileRef file(path.toUtf8().data());
+#else
         TagLib::FileRef file(path.toUtf8());
+#endif
         TagLib::Tag* tag = file.tag();
 
         if (!tag) continue;
@@ -113,7 +117,11 @@ void LibraryManager::addTrack(QString path) {
     blacklistQuery.bindValue(":path", path);
     blacklistQuery.exec();
 
-    TagLib::FileRef file(path.toUtf8());
+#ifdef Q_OS_WIN
+        TagLib::FileRef file(path.toUtf8().data());
+#else
+        TagLib::FileRef file(path.toUtf8());
+#endif
     TagLib::Tag* tag = file.tag();
 
     if (!tag) return;

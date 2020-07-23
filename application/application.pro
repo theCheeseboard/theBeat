@@ -36,8 +36,8 @@ win32 {
 
     # TODO: Link with taglib
 
-    INCLUDEPATH += "C:/Program Files/thelibs/include"
-    LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs
+    INCLUDEPATH += "C:/Program Files/thelibs/include" "C:/Program Files (x86)/taglib/include"
+    LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -L"C:\Program Files (x86)\taglib\lib" -ltag
     RC_FILE = icon.rc
     TARGET = theBeat
 
