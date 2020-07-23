@@ -3,6 +3,7 @@ branches:
   only:
   - blueprint
   - master
+  - rewrite
 skip_tags: true
 image: Visual Studio 2019
 clone_depth: 5
