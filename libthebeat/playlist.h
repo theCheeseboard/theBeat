@@ -20,11 +20,12 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 
+#include "libthebeat_global.h"
 #include <QObject>
 #include "mediaitem.h"
 
 struct PlaylistPrivate;
-class Playlist : public QObject {
+class LIBTHEBEAT_EXPORT Playlist : public QObject {
         Q_OBJECT
     public:
         explicit Playlist(QObject* parent = nullptr);

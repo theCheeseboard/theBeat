@@ -28,14 +28,13 @@ win32 {
     # Include the-libs build tools
     include(C:/Program Files/thelibs/pri/buildmaster.pri)
 
-    QT += thelib
     INCLUDEPATH += "C:/Program Files/thelibs/include"
     LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs
     RC_FILE = icon.rc
     TARGET = theBeat
 
-    win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../libthebeat/release/ -llibthebeat
-    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../libthebeat/debug/ -llibthebeat
+    win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../libthebeat/release/ -lthebeat
+    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../libthebeat/debug/ -lthebeat
 }
 
 macx {
@@ -95,4 +94,5 @@ INCLUDEPATH += $$PWD/../libthebeat
 DEPENDPATH += $$PWD/../libthebeat
 
 DISTFILES += \
-    com.vicr123.thebeat.desktop
+    com.vicr123.thebeat.desktop \
+    icon.rc

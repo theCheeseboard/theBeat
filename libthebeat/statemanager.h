@@ -20,12 +20,13 @@
 #ifndef STATEMANAGER_H
 #define STATEMANAGER_H
 
+#include "libthebeat_global.h"
 #include <QObject>
 
 class Playlist;
 
 struct StateManagerPrivate;
-class StateManager : public QObject {
+class LIBTHEBEAT_EXPORT StateManager : public QObject {
         Q_OBJECT
     public:
         explicit StateManager(QObject* parent = nullptr);

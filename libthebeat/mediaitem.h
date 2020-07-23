@@ -20,10 +20,11 @@
 #ifndef MEDIAITEM_H
 #define MEDIAITEM_H
 
+#include "libthebeat_global.h"
 #include <QObject>
 #include <QSharedPointer>
 
-class MediaItem : public QObject {
+class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         Q_OBJECT
     public:
         explicit MediaItem();
