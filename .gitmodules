@@ -1,0 +1,3 @@
+[submodule "application/icons/contemporary-icons"]
+	path = application/icons/contemporary-icons
+	url = https://github.com/vicr123/contemporary-icons.git

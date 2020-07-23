@@ -11,6 +11,12 @@ set QTDIR=C:\Qt\5.15\msvc2019_64
 set PATH=%PATH%;%QTDIR%\bin
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 
+rem Remove symlinks from contemporary-icons
+cp ci\delink.ps1 application\icons\contemporary-icons
+cd application\icons\contemporary-icons
+powershell -executionpolicy bypass -File delink.ps1
+cd ..\..\..
+
 git clone https://github.com/taglib/taglib.git
 cd taglib
 mkdir build

@@ -52,6 +52,41 @@ int main(int argc, char* argv[]) {
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
     tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
 
+#if defined(Q_OS_WIN)
+    //Set up the theming
+    a.setStyle(QStyleFactory::create("contemporary"));
+
+    QIcon::setThemeName("contemporary-icons");
+    QIcon::setThemeSearchPaths({a.applicationDirPath() + "\\icons"});
+
+    //Get the accent colour
+    QSettings accentDetection("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM", QSettings::NativeFormat);
+    QColor accentCol(QRgb(accentDetection.value("ColorizationColor", 0xC4003296).toInt() & 0x00FFFFFF));
+
+    QPalette pal = a.palette();
+
+    pal.setColor(QPalette::Button, accentCol);
+    pal.setColor(QPalette::ButtonText, QColor(255, 255, 255));
+    pal.setColor(QPalette::Highlight, accentCol.lighter(125));
+    pal.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
+    pal.setColor(QPalette::Disabled, QPalette::Button, accentCol.darker(200));
+    pal.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(150, 150, 150));
+
+    pal.setColor(QPalette::Window, QColor(40, 40, 40));
+    pal.setColor(QPalette::Base, QColor(40, 40, 40));
+    pal.setColor(QPalette::AlternateBase, QColor(60, 60, 60));
+    pal.setColor(QPalette::WindowText, QColor(255, 255, 255));
+    pal.setColor(QPalette::Text, QColor(255, 255, 255));
+    pal.setColor(QPalette::ToolTipText, QColor(255, 255, 255));
+
+    pal.setColor(QPalette::Disabled, QPalette::WindowText, QColor(150, 150, 150));
+
+    a.setPalette(pal);
+    a.setPalette(pal, "QDockWidget");
+    a.setPalette(pal, "QToolBar");
+#endif
+
+
     MainWindow w;
     w.show();
     return a.exec();
