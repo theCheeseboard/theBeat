@@ -27,13 +27,44 @@
 #include <QDirIterator>
 #include <QVariant>
 #include <QDebug>
+#include <QRandomGenerator>
+#include <tpromise.h>
 #include <taglib/fileref.h>
 
 struct LibraryManagerPrivate {
     bool available = false;
+    int isProcessing = 0;
+};
+
+struct TemporaryDatabase {
+    QString dbName;
+    QSqlDatabase db;
+
+    TemporaryDatabase() {
+        QString chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnpopqrstuvwxyz";
+        for (int i = 0; i < 12; i++) {
+            dbName.append(chars.at(QRandomGenerator::global()->bounded(chars.length())));
+        }
+
+        QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+        QDir::root().mkpath(dataPath);
+        QString dbPath = QDir(dataPath).absoluteFilePath("library.db");
+
+        db = QSqlDatabase::addDatabase("QSQLITE", dbName);
+        if (!db.isValid()) return;
+        db.setDatabaseName(dbPath);
+        if (!db.open()) return;
+    }
+
+    ~TemporaryDatabase() {
+        db.close();
+        QSqlDatabase::removeDatabase(dbName);
+    }
 };
 
 LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
+    d = new LibraryManagerPrivate();
+
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     QDir::root().mkpath(dataPath);
     QString dbPath = QDir(dataPath).absoluteFilePath("library.db");
@@ -50,10 +81,12 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
     db.exec("CREATE TABLE blacklist(path TEXT PRIMARY KEY)");
 
     //Enumerate the Music directory
-    QStringList musicDirectories = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
-    for (QString dir : musicDirectories) {
-        this->enumerateDirectory(dir);
-    }
+    QTimer::singleShot(0, [ = ] {
+        QStringList musicDirectories = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
+        for (QString dir : musicDirectories) {
+            this->enumerateDirectory(dir);
+        }
+    });
 }
 
 LibraryManager* LibraryManager::instance() {
@@ -62,6 +95,9 @@ LibraryManager* LibraryManager::instance() {
 }
 
 void LibraryManager::enumerateDirectory(QString path) {
+    d->isProcessing++;
+    emit isProcessingChanged();
+
     QString blacklistedPaths;
     QSqlQuery blacklistQuery("SELECT * FROM blacklist");
     while (blacklistQuery.next()) {
@@ -85,7 +121,7 @@ void LibraryManager::enumerateDirectory(QString path) {
         if (!tag) continue;
 
         paths.append(path);
-        titles.append(tag->title().isNull() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
+        titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
         artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
         albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
         durations.append(QVariant(QVariant::Int));
@@ -93,21 +129,32 @@ void LibraryManager::enumerateDirectory(QString path) {
 
     }
 
-    QSqlQuery q;
-    q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
-        "UPDATE SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd");
-    q.bindValue(":path", paths);
-    q.bindValue(":title", titles);
-    q.bindValue(":artist", artists);
-    q.bindValue(":album", albums);
-    q.bindValue(":duration", durations);
-    q.bindValue(":tracknumber", trackNumbers);
-    q.bindValue(":titleupd", titles);
-    q.bindValue(":artistupd", artists);
-    q.bindValue(":albumupd", albums);
-    q.bindValue(":durationupd", durations);
-    q.bindValue(":tracknumberupd", trackNumbers);
-    q.execBatch();
+    tPromise<void>::runOnNewThread([ = ](tPromiseFunctions<void>::SuccessFunction res, tPromiseFunctions<void>::FailureFunction rej) {
+        TemporaryDatabase db;
+
+        QSqlQuery q(db.db);
+        q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
+            "UPDATE SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd");
+        q.bindValue(":path", paths);
+        q.bindValue(":title", titles);
+        q.bindValue(":artist", artists);
+        q.bindValue(":album", albums);
+        q.bindValue(":duration", durations);
+        q.bindValue(":tracknumber", trackNumbers);
+        q.bindValue(":titleupd", titles);
+        q.bindValue(":artistupd", artists);
+        q.bindValue(":albumupd", albums);
+        q.bindValue(":durationupd", durations);
+        q.bindValue(":tracknumberupd", trackNumbers);
+        q.execBatch();
+
+        d->isProcessing--;
+        emit isProcessingChanged();
+
+        res();
+    })->then([ = ] {
+        emit libraryChanged();
+    });
 }
 
 void LibraryManager::addTrack(QString path) {
@@ -118,9 +165,9 @@ void LibraryManager::addTrack(QString path) {
     blacklistQuery.exec();
 
 #ifdef Q_OS_WIN
-        TagLib::FileRef file(path.toUtf8().data());
+    TagLib::FileRef file(path.toUtf8().data());
 #else
-        TagLib::FileRef file(path.toUtf8());
+    TagLib::FileRef file(path.toUtf8());
 #endif
     TagLib::Tag* tag = file.tag();
 
@@ -171,6 +218,13 @@ LibraryModel* LibraryManager::searchTracks(QString query) {
     return model;
 }
 
+int LibraryManager::countTracks() {
+    QSqlQuery q("SELECT COUNT(*) FROM tracks");
+    q.next();
+
+    return q.value(0).toInt();
+}
+
 QStringList LibraryManager::artists() {
     QStringList artists;
     QSqlQuery q("SELECT DISTINCT artist FROM tracks WHERE artist IS NOT NULL ORDER BY LOWER(artist) ASC");
@@ -209,4 +263,8 @@ LibraryModel* LibraryManager::tracksByAlbum(QString album) {
     LibraryModel* model = new LibraryModel();
     model->setQuery(q);
     return model;
+}
+
+bool LibraryManager::isProcessing() {
+    return d->isProcessing > 0;
 }

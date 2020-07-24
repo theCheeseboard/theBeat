@@ -37,9 +37,14 @@ TracksWidget::TracksWidget(QWidget* parent) :
 
     d = new TracksWidgetPrivate();
     connect(LibraryManager::instance(), &LibraryManager::libraryChanged, this, &TracksWidget::updateModel);
+    connect(LibraryManager::instance(), &LibraryManager::libraryChanged, this, &TracksWidget::updateProcessing);
+    connect(LibraryManager::instance(), &LibraryManager::isProcessingChanged, this, &TracksWidget::updateProcessing);
 
     ui->listView->setItemDelegate(new LibraryItemDelegate);
+    ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
+    ui->processingSpinner->setFixedSize(QSize(ui->processingTitle->height(), ui->processingTitle->height()));
     updateModel();
+    updateProcessing();
 }
 
 TracksWidget::~TracksWidget() {
@@ -67,4 +72,12 @@ void TracksWidget::updateModel() {
         d->model = LibraryManager::instance()->searchTracks(query);
     }
     ui->listView->setModel(d->model);
+}
+
+void TracksWidget::updateProcessing() {
+    if (LibraryManager::instance()->isProcessing() && LibraryManager::instance()->countTracks() == 0) {
+        ui->stackedWidget->setCurrentWidget(ui->processingPage);
+    } else {
+        ui->stackedWidget->setCurrentWidget(ui->libraryPage);
+    }
 }

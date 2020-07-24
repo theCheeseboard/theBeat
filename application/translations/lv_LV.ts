@@ -157,18 +157,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="43"/>
+        <location filename="../trackswidget.ui" line="62"/>
         <source>Tracks in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="52"/>
+        <location filename="../trackswidget.ui" line="71"/>
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="93"/>
+        <location filename="../trackswidget.ui" line="112"/>
         <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../trackswidget.ui" line="169"/>
+        <source>Processing Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../trackswidget.ui" line="176"/>
+        <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

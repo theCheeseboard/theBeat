@@ -44,6 +44,7 @@ class TracksWidget : public QWidget {
         TracksWidgetPrivate* d;
 
         void updateModel();
+        void updateProcessing();
 };
 
 #endif // TRACKSWIDGET_H

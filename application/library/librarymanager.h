@@ -46,6 +46,7 @@ class LibraryManager : public QObject {
 
         LibraryModel* allTracks();
         LibraryModel* searchTracks(QString query);
+        int countTracks();
 
         QStringList artists();
         QStringList albums();
@@ -53,8 +54,11 @@ class LibraryManager : public QObject {
         LibraryModel* tracksByArtist(QString artist);
         LibraryModel* tracksByAlbum(QString album);
 
+        bool isProcessing();
+
     signals:
         void libraryChanged();
+        bool isProcessingChanged();
 
     private:
         LibraryManagerPrivate* d;
