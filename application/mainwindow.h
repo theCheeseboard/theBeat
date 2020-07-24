@@ -55,6 +55,8 @@ class MainWindow : public QMainWindow {
 
         void on_queueList_activated(const QModelIndex& index);
 
+        void on_queueList_customContextMenuRequested(const QPoint& pos);
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;

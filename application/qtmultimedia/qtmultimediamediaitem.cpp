@@ -52,6 +52,10 @@ void QtMultimediaMediaItem::pause() {
     d->player->pause();
 }
 
+void QtMultimediaMediaItem::stop() {
+    d->player->stop();
+}
+
 void QtMultimediaMediaItem::seek(quint64 ms) {
     d->player->setPosition(ms);
 }

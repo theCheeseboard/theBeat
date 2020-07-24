@@ -143,8 +143,8 @@ void ControlStrip::collapse() {
 
     tVariantAnimation* anim = new tVariantAnimation(this);
     anim->setStartValue(this->height());
-    anim->setEndValue(this->sizeHint().height());
-    anim->setDuration(0);
+    anim->setEndValue(0);
+    anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
         this->setFixedHeight(value.toInt());

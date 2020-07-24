@@ -31,6 +31,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
 
         virtual void play() = 0;
         virtual void pause() = 0;
+        virtual void stop() = 0;
         virtual void seek(quint64 ms) = 0;
         virtual quint64 elapsed() = 0;
         virtual quint64 duration() = 0;

@@ -38,6 +38,7 @@ class QtMultimediaMediaItem : public MediaItem {
     public:
         void play();
         void pause();
+        void stop();
         void seek(quint64 ms);
         quint64 elapsed();
         quint64 duration();

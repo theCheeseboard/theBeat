@@ -37,6 +37,8 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
         };
 
         void addItem(MediaItem* item);
+        void removeItem(MediaItem* item);
+        void clear();
 
         void play();
         void pause();

@@ -39,6 +39,35 @@ void Playlist::addItem(MediaItem* item) {
     this->play();
 }
 
+void Playlist::removeItem(MediaItem* item) {
+    if (d->currentItem == item) {
+        if (d->items.count() == 1) {
+            clear();
+            return;
+        }
+
+        next();
+    }
+
+    item->deleteLater();
+    d->items.removeOne(item);
+    d->playOrder.removeOne(item);
+    emit itemsChanged();
+}
+
+void Playlist::clear() {
+    setCurrentItem(nullptr);
+    qDeleteAll(d->items);
+
+    d->items.clear();
+    d->playOrder.clear();
+
+    State oldState = d->state;
+    d->state = Playlist::Stopped;
+    emit stateChanged(d->state, oldState);
+    emit itemsChanged();
+}
+
 void Playlist::play() {
     if (d->playOrder.isEmpty()) return;
     if (!d->currentItem) setCurrentItem(d->playOrder.first());
@@ -82,6 +111,11 @@ void Playlist::previous() {
         return;
     }
 
+    if (d->currentItem->elapsed() >= 5000) {
+        d->currentItem->seek(0);
+        return;
+    }
+
     int index = d->playOrder.indexOf(d->currentItem) - 1;
     if (index == -1) index = d->playOrder.count() - 1;
     setCurrentItem(d->playOrder.at(index));
@@ -96,6 +130,13 @@ MediaItem* Playlist::currentItem() {
 }
 
 void Playlist::setCurrentItem(MediaItem* item) {
+    if (item == d->currentItem) {
+        if (item == nullptr) return;
+        item->seek(0);
+        if (d->state == Playlist::Playing) item->play();
+        return;
+    }
+
     if (d->currentItem) {
         d->currentItem->pause();
         d->currentItem->disconnect(this);
@@ -103,6 +144,14 @@ void Playlist::setCurrentItem(MediaItem* item) {
 
     d->currentItem = item;
     emit currentItemChanged(item);
+
+    if (!item) {
+        State oldState = d->state;
+        d->state = Playlist::Stopped;
+        emit stateChanged(d->state, oldState);
+        return;
+    }
+
     item->seek(0);
 
     //TODO: connect to signals

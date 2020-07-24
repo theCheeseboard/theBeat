@@ -149,3 +149,29 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 void MainWindow::on_queueList_activated(const QModelIndex& index) {
     StateManager::instance()->playlist()->setCurrentItem(index.data(PlaylistModel::MediaItemRole).value<MediaItem*>());
 }
+
+void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
+    QMenu* menu = new QMenu(this);
+
+    QModelIndexList selected = ui->queueList->selectionModel()->selectedIndexes();
+    if (!selected.isEmpty()) {
+        if (selected.count() == 1) {
+            menu->addSection(tr("For \"%1\"").arg(menu->fontMetrics().elidedText(selected.first().data(Qt::DisplayRole).toString(), Qt::ElideMiddle, SC_DPI(300))));
+        } else {
+            menu->addSection(tr("For %n items", nullptr, selected.count()));
+        }
+        menu->addAction(QIcon::fromTheme("list-remove"), tr("Remove from Queue"), [ = ] {
+            for (QModelIndex idx : selected) {
+                StateManager::instance()->playlist()->removeItem(idx.data(PlaylistModel::MediaItemRole).value<MediaItem*>());
+            }
+        });
+    }
+
+    menu->addSection(tr("For Queue"));
+    menu->addAction(QIcon::fromTheme("list-remove"), tr("Clear Queue"), [ = ] {
+        StateManager::instance()->playlist()->clear();
+    });
+
+    connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
+    menu->popup(ui->queueList->mapToGlobal(pos));
+}
