@@ -52,11 +52,18 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
 
         QList<MediaItem*> items();
 
+        void setRepeatOne(bool repeatOne);
+        void setShuffle(bool shuffle);
+        bool repeatOne();
+        bool shuffle();
+
     signals:
         void stateChanged(State newState, State oldState);
         void currentItemChanged(MediaItem* item);
         void itemsChanged();
         void metadataChanged();
+        void repeatOneChanged(bool repeatOne);
+        void shuffleChanged(bool shuffle);
 
     private:
         PlaylistPrivate* d;

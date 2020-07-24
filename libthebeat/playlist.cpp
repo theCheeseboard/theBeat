@@ -19,12 +19,17 @@
  * *************************************/
 #include "playlist.h"
 
+#include <QRandomGenerator>
+
 struct PlaylistPrivate {
     QList<MediaItem*> items;
     QList<MediaItem*> playOrder;
 
     Playlist::State state = Playlist::Stopped;
     MediaItem* currentItem = nullptr;
+
+    bool repeatOne = false;
+    bool shuffle = false;
 };
 
 Playlist::Playlist(QObject* parent) : QObject(parent) {
@@ -33,7 +38,13 @@ Playlist::Playlist(QObject* parent) : QObject(parent) {
 
 void Playlist::addItem(MediaItem* item) {
     d->items.append(item);
-    d->playOrder.append(item);
+
+    if (d->shuffle) {
+        //Add this item somewhere random in the play order
+        d->playOrder.insert(QRandomGenerator::global()->bounded(d->playOrder.count() + 1), item);
+    } else {
+        d->playOrder.append(item);
+    }
     emit itemsChanged();
 
     this->play();
@@ -96,6 +107,13 @@ void Playlist::pause() {
 void Playlist::next() {
     if (!d->currentItem) {
         play();
+        return;
+    }
+
+    //Repeat this track if repeat one is on
+    if (d->repeatOne) {
+        d->currentItem->seek(0);
+        d->currentItem->play();
         return;
     }
 
@@ -164,4 +182,37 @@ void Playlist::setCurrentItem(MediaItem* item) {
 
 QList<MediaItem*> Playlist::items() {
     return d->items;
+}
+
+void Playlist::setRepeatOne(bool repeatOne) {
+    d->repeatOne = repeatOne;
+    emit repeatOneChanged(repeatOne);
+}
+
+void Playlist::setShuffle(bool shuffle) {
+    d->shuffle = shuffle;
+
+    if (shuffle) {
+        //Shuffle the play order
+        QList<MediaItem*> remaining = d->items;
+        d->playOrder.clear();
+        while (!remaining.isEmpty()) {
+            int index = QRandomGenerator::global()->bounded(remaining.count());
+            d->playOrder.append(remaining.at(index));
+            remaining.removeAt(index);
+        }
+    } else {
+        //Reset the play order
+        d->playOrder = d->items;
+    }
+
+    emit shuffleChanged(shuffle);
+}
+
+bool Playlist::repeatOne() {
+    return d->repeatOne;
+}
+
+bool Playlist::shuffle() {
+    return d->shuffle;
 }

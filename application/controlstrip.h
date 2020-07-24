@@ -43,7 +43,11 @@ class ControlStrip : public QWidget {
 
         void on_progressSlider_valueChanged(int value);
 
-private:
+        void on_repeatOneButton_toggled(bool checked);
+
+        void on_shuffleButton_toggled(bool checked);
+
+    private:
         Ui::ControlStrip* ui;
         ControlStripPrivate* d;
 

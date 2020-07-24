@@ -101,6 +101,32 @@
         <number>0</number>
        </property>
        <item>
+        <widget class="QToolButton" name="shuffleButton">
+         <property name="text">
+          <string notr="true">...</string>
+         </property>
+         <property name="icon">
+          <iconset theme="media-playlist-shuffle"/>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="repeatOneButton">
+         <property name="text">
+          <string notr="true">...</string>
+         </property>
+         <property name="icon">
+          <iconset theme="media-repeat-single"/>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QToolButton" name="skipBackButton">
          <property name="text">
           <string notr="true">...</string>

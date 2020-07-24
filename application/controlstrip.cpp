@@ -40,6 +40,8 @@ ControlStrip::ControlStrip(QWidget* parent) :
     ui->playPauseButton->setIconSize(SC_DPI_T(QSize(32, 32), QSize));
     connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, &ControlStrip::updateState);
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &ControlStrip::updateCurrentItem);
+    connect(StateManager::instance()->playlist(), &Playlist::repeatOneChanged, ui->repeatOneButton, &QToolButton::setChecked);
+    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, ui->shuffleButton, &QToolButton::setChecked);
 
     this->setFixedHeight(0);
 
@@ -164,4 +166,12 @@ void ControlStrip::on_skipNextButton_clicked() {
 
 void ControlStrip::on_progressSlider_valueChanged(int value) {
     d->currentItem->seek(value);
+}
+
+void ControlStrip::on_repeatOneButton_toggled(bool checked) {
+    StateManager::instance()->playlist()->setRepeatOne(checked);
+}
+
+void ControlStrip::on_shuffleButton_toggled(bool checked) {
+    StateManager::instance()->playlist()->setShuffle(checked);
 }

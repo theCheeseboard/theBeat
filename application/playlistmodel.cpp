@@ -41,6 +41,7 @@ int PlaylistModel::rowCount(const QModelIndex& parent) const {
 
 QVariant PlaylistModel::data(const QModelIndex& index, int role) const {
     if (!index.isValid()) return QVariant();
+    if (StateManager::instance()->playlist()->items().count() <= index.row()) return QVariant();
 
     MediaItem* item = StateManager::instance()->playlist()->items().at(index.row());
 
@@ -48,7 +49,11 @@ QVariant PlaylistModel::data(const QModelIndex& index, int role) const {
         case Qt::DisplayRole:
             return item->title();
         case Qt::DecorationRole:
-            if (StateManager::instance()->playlist()->currentItem() == item) return QIcon::fromTheme("media-playback-start");
+            if (StateManager::instance()->playlist()->currentItem() == item) {
+                return QIcon::fromTheme("media-playback-start");
+            } else {
+                return QVariant();
+            }
         case MediaItemRole:
             return QVariant::fromValue(item);
     }
