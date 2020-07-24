@@ -200,11 +200,66 @@
      </widget>
     </item>
     <item>
-     <widget class="tStackedWidget" name="stackedWidget">
-      <widget class="TracksWidget" name="tracksPage"/>
-      <widget class="ArtistsAlbumsWidget" name="artistsPage"/>
-      <widget class="ArtistsAlbumsWidget" name="albumsPage"/>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="tStackedWidget" name="stackedWidget">
+        <widget class="TracksWidget" name="tracksPage"/>
+        <widget class="ArtistsAlbumsWidget" name="artistsPage"/>
+        <widget class="ArtistsAlbumsWidget" name="albumsPage"/>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="queueLine">
+        <property name="maximumSize">
+         <size>
+          <width>1</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="queueWidget" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="tTitleLabel" name="titleLabel">
+           <property name="text">
+            <string>Queue</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListView" name="queueList">
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="ControlStrip" name="controlStrip" native="true"/>
@@ -290,6 +345,14 @@
    <extends>QWidget</extends>
    <header>artistsalbumswidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>tTitleLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">ttitlelabel.h</header>
+   <slots>
+    <signal>backButtonClicked()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources>

@@ -28,11 +28,15 @@
 #include <statemanager.h>
 #include <playlist.h>
 #include "library/librarymanager.h"
+#include "playlistmodel.h"
+#include <QTimer>
 
 #include <qtmultimedia/qtmultimediamediaitem.h>
 
 struct MainWindowPrivate {
     tCsdTools csd;
+
+    QFrame* topBarLine;
 };
 
 MainWindow::MainWindow(QWidget* parent)
@@ -70,6 +74,20 @@ MainWindow::MainWindow(QWidget* parent)
 
     ui->artistsPage->setType(ArtistsAlbumsWidget::Artists);
     ui->albumsPage->setType(ArtistsAlbumsWidget::Albums);
+
+    ui->queueWidget->setFixedWidth(SC_DPI(300));
+    ui->queueList->setModel(new PlaylistModel);
+
+    d->topBarLine = new QFrame(this);
+    d->topBarLine->setFrameShape(QFrame::VLine);
+    d->topBarLine->setFixedWidth(1);
+    d->topBarLine->setParent(ui->topWidget);
+    d->topBarLine->setVisible(true);
+    d->topBarLine->lower();
+
+    QTimer::singleShot(0, this, [ = ] {
+        resizeEvent(nullptr);
+    });
 }
 
 MainWindow::~MainWindow() {
@@ -121,4 +139,13 @@ void MainWindow::on_albumsButton_toggled(bool checked) {
     if (checked) {
         ui->stackedWidget->setCurrentWidget(ui->albumsPage);
     }
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event) {
+    d->topBarLine->move(ui->queueLine->x(), 0);
+    d->topBarLine->setFixedHeight(ui->topWidget->height());
+}
+
+void MainWindow::on_queueList_activated(const QModelIndex& index) {
+    StateManager::instance()->playlist()->setCurrentItem(index.data(PlaylistModel::MediaItemRole).value<MediaItem*>());
 }

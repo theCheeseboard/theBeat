@@ -53,8 +53,12 @@ class MainWindow : public QMainWindow {
 
         void on_albumsButton_toggled(bool checked);
 
+        void on_queueList_activated(const QModelIndex& index);
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;
+
+        void resizeEvent(QResizeEvent* event);
 };
 #endif // MAINWINDOW_H

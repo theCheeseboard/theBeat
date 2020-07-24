@@ -90,6 +90,7 @@ SOURCES += \
     library/librarymodel.cpp \
     main.cpp \
     mainwindow.cpp \
+    playlistmodel.cpp \
     qtmultimedia/qtmultimediamediaitem.cpp \
     trackswidget.cpp
 
@@ -100,6 +101,7 @@ HEADERS += \
     library/librarymanager.h \
     library/librarymodel.h \
     mainwindow.h \
+    playlistmodel.h \
     qtmultimedia/qtmultimediamediaitem.h \
     trackswidget.h
 

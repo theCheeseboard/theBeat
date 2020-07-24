@@ -17,47 +17,27 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef PLAYLIST_H
-#define PLAYLIST_H
+#ifndef PLAYLISTMODEL_H
+#define PLAYLISTMODEL_H
 
-#include "libthebeat_global.h"
-#include <QObject>
-#include "mediaitem.h"
+#include <QAbstractListModel>
 
-struct PlaylistPrivate;
-class LIBTHEBEAT_EXPORT Playlist : public QObject {
+class PlaylistModel : public QAbstractListModel {
         Q_OBJECT
-    public:
-        explicit Playlist(QObject* parent = nullptr);
 
-        enum State {
-            Playing,
-            Paused,
-            Stopped
+    public:
+        explicit PlaylistModel(QObject* parent = nullptr);
+
+        enum Roles {
+            MediaItemRole = Qt::UserRole
         };
 
-        void addItem(MediaItem* item);
+        // Basic functionality:
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
-        void play();
-        void pause();
-        void next();
-        void previous();
-
-        State state();
-
-        MediaItem* currentItem();
-        void setCurrentItem(MediaItem* item);
-
-        QList<MediaItem*> items();
-
-    signals:
-        void stateChanged(State newState, State oldState);
-        void currentItemChanged(MediaItem* item);
-        void itemsChanged();
-        void metadataChanged();
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
     private:
-        PlaylistPrivate* d;
 };
 
-#endif // PLAYLIST_H
+#endif // PLAYLISTMODEL_H

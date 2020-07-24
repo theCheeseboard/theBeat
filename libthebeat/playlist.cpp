@@ -34,6 +34,8 @@ Playlist::Playlist(QObject* parent) : QObject(parent) {
 void Playlist::addItem(MediaItem* item) {
     d->items.append(item);
     d->playOrder.append(item);
+    emit itemsChanged();
+
     this->play();
 }
 
@@ -109,4 +111,8 @@ void Playlist::setCurrentItem(MediaItem* item) {
     if (d->state == Playlist::Playing) {
         d->currentItem->play();
     }
+}
+
+QList<MediaItem*> Playlist::items() {
+    return d->items;
 }
