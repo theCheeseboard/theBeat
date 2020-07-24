@@ -71,6 +71,12 @@ MainWindow::MainWindow(QWidget* parent)
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
+    ui->queueStack->setCurrentAnimation(tStackedWidget::Fade);
+
+    connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [ = ] {
+        ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
+    });
+    ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
 
     ui->artistsPage->setType(ArtistsAlbumsWidget::Artists);
     ui->albumsPage->setType(ArtistsAlbumsWidget::Albums);
