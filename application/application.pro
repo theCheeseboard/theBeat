@@ -57,8 +57,6 @@ macx {
     # Include the-libs build tools
     include(/usr/local/share/the-libs/pri/buildmaster.pri)
 
-    # TODO: Link with taglib
-
     QT += macextras
     LIBS += -framework CoreFoundation -framework AppKit
     QMAKE_INFO_PLIST = Info.plist
@@ -73,8 +71,8 @@ macx {
         ICON = icon.icns
     }
 
-    INCLUDEPATH += "/usr/local/include/the-libs"
-    LIBS += -L/usr/local/lib -lthe-libs
+    INCLUDEPATH += "/usr/local/include/the-libs" "/usr/local/include/"
+    LIBS += -L/usr/local/lib -lthe-libs -ltag
 
     QMAKE_POST_LINK += $$quote(cp $${PWD}/dmgicon.icns $${PWD}/app-dmg-background.png $${PWD}/node-appdmg-config*.json $${OUT_PWD}/..)
 }
