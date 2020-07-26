@@ -40,11 +40,6 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
         void removeItem(MediaItem* item);
         void clear();
 
-        void play();
-        void pause();
-        void next();
-        void previous();
-
         State state();
 
         MediaItem* currentItem();
@@ -56,6 +51,12 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
         void setShuffle(bool shuffle);
         bool repeatOne();
         bool shuffle();
+
+    public slots:
+        void play();
+        void pause();
+        void next();
+        void previous();
 
     signals:
         void stateChanged(State newState, State oldState);

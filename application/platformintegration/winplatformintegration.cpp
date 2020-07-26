@@ -17,6 +17,7 @@
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.Storage.Streams.h>
 
+using namespace std::chrono_literals;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Media;
 
@@ -45,18 +46,19 @@ WinPlatformIntegration::WinPlatformIntegration(QWidget *parent) : QObject(parent
     interop->GetForWindow(reinterpret_cast<HWND>(d->parentWindow->winId()), winrt::guid_of<abi::ISystemMediaTransportControls>(), winrt::put_abi(d->smtc));
 
     d->smtc.ButtonPressed([=](SystemMediaTransportControls smtc, SystemMediaTransportControlsButtonPressedEventArgs e) {
+        Playlist* playlist = StateManager::instance()->playlist();
         switch (e.Button()) {
             case SystemMediaTransportControlsButton::Play:
-                StateManager::instance()->playlist()->play();
+                playlist->metaObject()->invokeMethod(playlist, "play", Qt::QueuedConnection);
                 break;
             case SystemMediaTransportControlsButton::Pause:
-                StateManager::instance()->playlist()->pause();
+                playlist->metaObject()->invokeMethod(playlist, "pause", Qt::QueuedConnection);
                 break;
             case SystemMediaTransportControlsButton::Next:
-                StateManager::instance()->playlist()->next();
+                playlist->metaObject()->invokeMethod(playlist, "next", Qt::QueuedConnection);
                 break;
             case SystemMediaTransportControlsButton::Previous:
-                StateManager::instance()->playlist()->previous();
+                playlist->metaObject()->invokeMethod(playlist, "previous", Qt::QueuedConnection);
                 break;
             case SystemMediaTransportControlsButton::Stop:
             case SystemMediaTransportControlsButton::Record:
@@ -69,6 +71,7 @@ WinPlatformIntegration::WinPlatformIntegration(QWidget *parent) : QObject(parent
     });
 
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &WinPlatformIntegration::updateCurrentItem);
+    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, this, &WinPlatformIntegration::updateCurrentItem);
     updateCurrentItem();
 }
 
@@ -92,12 +95,16 @@ void WinPlatformIntegration::updateCurrentItem() {
 void WinPlatformIntegration::updateSMTC() {
     //TODO: Add a version check for Windows 8 and later
 
+    Playlist* playlist = StateManager::instance()->playlist();
+
     d->smtc.IsPlayEnabled(true);
     d->smtc.IsPauseEnabled(true);
     d->smtc.IsNextEnabled(true);
     d->smtc.IsPreviousEnabled(true);
+    d->smtc.ShuffleEnabled(playlist->shuffle());
+    d->smtc.AutoRepeatMode(playlist->repeatOne() ? MediaPlaybackAutoRepeatMode::Track : MediaPlaybackAutoRepeatMode::None);
 
-    switch (StateManager::instance()->playlist()->state()) {
+    switch (playlist->state()) {
         case Playlist::Playing:
             d->smtc.PlaybackStatus(MediaPlaybackStatus::Playing);
             break;
@@ -114,6 +121,14 @@ void WinPlatformIntegration::updateSMTC() {
     updater.MusicProperties().Title(d->currentItem->title().toStdWString().c_str());
     updater.MusicProperties().Artist(QLocale().createSeparatedList(d->currentItem->authors()).toStdWString().c_str());
     updater.MusicProperties().AlbumTitle(d->currentItem->album().toStdWString().c_str());
+
+    SystemMediaTransportControlsTimelineProperties timeline;
+    timeline.StartTime(0ms);
+    timeline.MinSeekTime(timeline.StartTime());
+    timeline.Position(std::chrono::milliseconds(d->currentItem->elapsed()));
+    timeline.EndTime(std::chrono::milliseconds(d->currentItem->duration()));
+    timeline.MaxSeekTime(timeline.EndTime());
+    d->smtc.UpdateTimelineProperties(timeline);
 
     // WinRT supports async/await heavily. There is no sync API for getting a StorageFile from a path
     // C++20 has support for coroutines (async/await) using co_await. C++/WinRT uses this functionality
