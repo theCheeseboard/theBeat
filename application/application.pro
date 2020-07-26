@@ -1,5 +1,6 @@
 QT       += core gui multimedia sql
 SHARE_APP_NAME = thebeat
+CONFIG += c++17
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -34,12 +35,16 @@ win32 {
     # Include the-libs build tools
     include(C:/Program Files/thelibs/pri/buildmaster.pri)
 
-    # TODO: Link with taglib
-
     INCLUDEPATH += "C:/Program Files/thelibs/include" "C:/Program Files (x86)/taglib/include"
     LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -L"C:\Program Files (x86)\taglib\lib" -ltag
     RC_FILE = icon.rc
     TARGET = theBeat
+
+    SOURCES += \
+        platformintegration/winplatformintegration.cpp
+
+    HEADERS += \
+        platformintegration/winplatformintegration.h
 
     win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../libthebeat/release/ -lthebeat
     else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../libthebeat/debug/ -lthebeat

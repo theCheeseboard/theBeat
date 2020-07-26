@@ -33,6 +33,10 @@
 
 #include <qtmultimedia/qtmultimediamediaitem.h>
 
+#ifdef Q_OS_WIN
+#include "platformintegration/winplatformintegration.h"
+#endif
+
 struct MainWindowPrivate {
     tCsdTools csd;
 
@@ -94,6 +98,10 @@ MainWindow::MainWindow(QWidget* parent)
     QTimer::singleShot(0, this, [ = ] {
         resizeEvent(nullptr);
     });
+
+    #ifdef Q_OS_WIN
+    new WinPlatformIntegration(this);
+    #endif
 }
 
 MainWindow::~MainWindow() {
