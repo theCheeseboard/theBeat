@@ -57,6 +57,10 @@ class MainWindow : public QMainWindow {
 
         void on_queueList_customContextMenuRequested(const QPoint& pos);
 
+        void on_actionOpen_URL_triggered();
+
+        void on_otherButton_toggled(bool checked);
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;

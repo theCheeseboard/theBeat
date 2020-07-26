@@ -4,10 +4,11 @@ CONFIG += c++17
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
 unix:!macx {
     # Include the-libs build tools
     include(/usr/share/the-libs/pri/buildmaster.pri)
+
+    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$[QT_INSTALL_LIBS]\\\"
 
     QT += thelib
     TARGET = thebeat
@@ -95,7 +96,9 @@ SOURCES += \
     library/librarymodel.cpp \
     main.cpp \
     mainwindow.cpp \
+    othersourceswidget.cpp \
     playlistmodel.cpp \
+    pluginmanager.cpp \
     qtmultimedia/qtmultimediamediaitem.cpp \
     trackswidget.cpp
 
@@ -106,7 +109,9 @@ HEADERS += \
     library/librarymanager.h \
     library/librarymodel.h \
     mainwindow.h \
+    othersourceswidget.h \
     playlistmodel.h \
+    pluginmanager.h \
     qtmultimedia/qtmultimediamediaitem.h \
     trackswidget.h
 
@@ -114,6 +119,7 @@ FORMS += \
     artistsalbumswidget.ui \
     controlstrip.ui \
     mainwindow.ui \
+    othersourceswidget.ui \
     trackswidget.ui
 
 RESOURCES += \

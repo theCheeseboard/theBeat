@@ -30,15 +30,17 @@
 #include "library/librarymanager.h"
 #include "playlistmodel.h"
 #include <QTimer>
+#include "pluginmanager.h"
 
 #include <qtmultimedia/qtmultimediamediaitem.h>
 
 #ifdef Q_OS_WIN
-#include "platformintegration/winplatformintegration.h"
+    #include "platformintegration/winplatformintegration.h"
 #endif
 
 struct MainWindowPrivate {
     tCsdTools csd;
+    PluginManager plugins;
 
     QFrame* topBarLine;
 };
@@ -68,6 +70,7 @@ MainWindow::MainWindow(QWidget* parent)
     helpMenu->addAction(ui->actionAbout);
 
     menu->addAction(ui->actionOpen_File);
+    menu->addAction(ui->actionOpen_URL);
     menu->addSeparator();
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
@@ -99,9 +102,11 @@ MainWindow::MainWindow(QWidget* parent)
         resizeEvent(nullptr);
     });
 
-    #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     new WinPlatformIntegration(this);
-    #endif
+#endif
+
+    d->plugins.load();
 }
 
 MainWindow::~MainWindow() {
@@ -188,4 +193,16 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
 
     connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
     menu->popup(ui->queueList->mapToGlobal(pos));
+}
+
+#include <QInputDialog>
+void MainWindow::on_actionOpen_URL_triggered() {
+    QString url = QInputDialog::getText(this, tr("Open URL"), tr("URL"));
+    StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl::fromUserInput(url)));
+}
+
+void MainWindow::on_otherButton_toggled(bool checked) {
+    if (checked) {
+        ui->stackedWidget->setCurrentWidget(ui->otherSourcesPage);
+    }
 }

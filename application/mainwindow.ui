@@ -209,6 +209,7 @@
         <widget class="TracksWidget" name="tracksPage"/>
         <widget class="ArtistsAlbumsWidget" name="artistsPage"/>
         <widget class="ArtistsAlbumsWidget" name="albumsPage"/>
+        <widget class="OtherSourcesWidget" name="otherSourcesPage"/>
        </widget>
       </item>
       <item>
@@ -401,6 +402,11 @@
     <string>Ctrl+O</string>
    </property>
   </action>
+  <action name="actionOpen_URL">
+   <property name="text">
+    <string>Open URL</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -437,6 +443,12 @@
    <slots>
     <signal>backButtonClicked()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>OtherSourcesWidget</class>
+   <extends>QWidget</extends>
+   <header>othersourceswidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

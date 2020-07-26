@@ -20,12 +20,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     mediaitem.cpp \
     playlist.cpp \
+    pluginmediasource.cpp \
+    sourcemanager.cpp \
     statemanager.cpp
 
 HEADERS += \
     libthebeat_global.h \
     mediaitem.h \
     playlist.h \
+    plugininterface.h \
+    pluginmediasource.h \
+    sourcemanager.h \
     statemanager.h
 
 # Default rules for deployment.

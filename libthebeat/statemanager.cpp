@@ -20,14 +20,17 @@
 #include "statemanager.h"
 
 #include "playlist.h"
+#include "sourcemanager.h"
 
 struct StateManagerPrivate {
     Playlist* playlist;
+    SourceManager* sources;
 };
 
 StateManager::StateManager(QObject* parent) : QObject(parent) {
     d = new StateManagerPrivate();
     d->playlist = new Playlist();
+    d->sources = new SourceManager();
 }
 
 StateManager* StateManager::instance() {
@@ -37,4 +40,8 @@ StateManager* StateManager::instance() {
 
 Playlist* StateManager::playlist() {
     return d->playlist;
+}
+
+SourceManager* StateManager::sources() {
+    return d->sources;
 }
