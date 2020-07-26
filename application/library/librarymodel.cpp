@@ -148,7 +148,7 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     painter->drawText(detailsRect, Qt::AlignLeft | Qt::AlignVCenter, detailsText);
 
     //Draw the track duration
-    int duration = index.data(LibraryModel::TrackRole).toInt();
+    int duration = index.data(LibraryModel::DurationRole).toInt();
     if (duration != 0) {
         painter->setPen(transientColor);
         painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, "· " + Common::durationToString(duration));

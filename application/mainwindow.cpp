@@ -198,7 +198,7 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
 #include <QInputDialog>
 void MainWindow::on_actionOpen_URL_triggered() {
     QString url = QInputDialog::getText(this, tr("Open URL"), tr("URL"));
-    StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl::fromUserInput(url)));
+    StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl(url)));
 }
 
 void MainWindow::on_otherButton_toggled(bool checked) {

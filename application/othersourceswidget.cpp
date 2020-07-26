@@ -69,5 +69,5 @@ OtherSourcesWidget::~OtherSourcesWidget() {
 
 void OtherSourcesWidget::on_sourcesList_currentRowChanged(int currentRow) {
     QListWidgetItem* item = ui->sourcesList->item(currentRow);
-    ui->stackedWidget->setCurrentWidget(d->listItems.value(item)->widget());
+    if (item) ui->stackedWidget->setCurrentWidget(d->listItems.value(item)->widget());
 }

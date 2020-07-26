@@ -78,6 +78,8 @@ void TracksWidget::updateProcessing() {
     if (LibraryManager::instance()->isProcessing() && LibraryManager::instance()->countTracks() == 0) {
         ui->stackedWidget->setCurrentWidget(ui->processingPage);
     } else {
-        ui->stackedWidget->setCurrentWidget(ui->libraryPage);
+        QTimer::singleShot(500, this, [ = ] {
+            ui->stackedWidget->setCurrentWidget(ui->libraryPage);
+        });
     }
 }

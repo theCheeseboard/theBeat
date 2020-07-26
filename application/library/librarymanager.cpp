@@ -117,6 +117,7 @@ void LibraryManager::enumerateDirectory(QString path) {
         TagLib::FileRef file(path.toUtf8());
 #endif
         TagLib::Tag* tag = file.tag();
+        TagLib::AudioProperties* audioProperties = file.audioProperties();
 
         if (!tag) continue;
 
@@ -124,13 +125,16 @@ void LibraryManager::enumerateDirectory(QString path) {
         titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
         artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
         albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
-        durations.append(QVariant(QVariant::Int));
+        durations.append(audioProperties->lengthInMilliseconds());
         trackNumbers.append(tag->track());
-
     }
 
     tPromise<void>::runOnNewThread([ = ](tPromiseFunctions<void>::SuccessFunction res, tPromiseFunctions<void>::FailureFunction rej) {
         TemporaryDatabase db;
+
+        db.db.exec("PRAGMA journal_mode = WAL");
+
+        db.db.transaction();
 
         QSqlQuery q(db.db);
         q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
@@ -148,11 +152,14 @@ void LibraryManager::enumerateDirectory(QString path) {
         q.bindValue(":tracknumberupd", trackNumbers);
         q.execBatch();
 
-        d->isProcessing--;
-        emit isProcessingChanged();
+        db.db.commit();
+        db.db.exec("PRAGMA wal_checkpoint(TRUNCATE)");
 
         res();
     })->then([ = ] {
+        d->isProcessing--;
+        emit isProcessingChanged();
+
         emit libraryChanged();
     });
 }
@@ -227,7 +234,7 @@ int LibraryManager::countTracks() {
 
 QStringList LibraryManager::artists() {
     QStringList artists;
-    QSqlQuery q("SELECT DISTINCT artist FROM tracks WHERE artist IS NOT NULL ORDER BY LOWER(artist) ASC");
+    QSqlQuery q("SELECT DISTINCT artist FROM tracks WHERE artist IS NOT NULL AND artist != '' ORDER BY LOWER(artist) ASC");
     while (q.next()) {
         artists.append(q.value("artist").toString());
     }
@@ -236,7 +243,7 @@ QStringList LibraryManager::artists() {
 
 QStringList LibraryManager::albums() {
     QStringList albums;
-    QSqlQuery q("SELECT DISTINCT album FROM tracks ORDER BY LOWER(album) ASC");
+    QSqlQuery q("SELECT DISTINCT album FROM tracks WHERE album IS NOT NULL AND album != '' ORDER BY LOWER(album) ASC");
     while (q.next()) {
         albums.append(q.value("album").toString());
     }
