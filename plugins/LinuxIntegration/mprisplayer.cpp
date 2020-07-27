@@ -24,6 +24,8 @@
 #include <playlist.h>
 #include <QDBusConnection>
 #include <QCryptographicHash>
+#include <QImage>
+#include <QBuffer>
 
 struct MprisPlayerPrivate {
     MediaItem* currentItem = nullptr;
@@ -91,6 +93,16 @@ QVariantMap MprisPlayer::Metadata() {
         data.insert("xesam:artist", d->currentItem->authors());
         data.insert("xesam:album", d->currentItem->album());
         data.insert("mpris:length", static_cast<qint64>(d->currentItem->duration() * 1000));
+
+        QString artUrl = QStringLiteral("data:image/png;base64,");
+
+        QBuffer buf;
+        buf.open(QBuffer::WriteOnly);
+        d->currentItem->albumArt().save(&buf, "PNG");
+        buf.close();
+
+        artUrl.append(buf.data().toBase64(QByteArray::Base64Encoding));
+        data.insert("mpris:artUrl", artUrl);
     } else {
         data.insert("mpris:trackid", QVariant::fromValue(QDBusObjectPath(QStringLiteral("/org/thesuite/thebeat/notrack"))));
     }
