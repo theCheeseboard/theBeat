@@ -46,7 +46,6 @@ NativeEvents::NativeEvents(QObject* parent) : QObject(parent) {
 #endif
 }
 
-
 bool NativeEvents::nativeEventFilter(const QByteArray& eventType, void* message, long* result) {
 #ifdef HAVE_X11
     if (eventType == "xcb_generic_event_t") {

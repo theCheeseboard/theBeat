@@ -17,35 +17,23 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "plugin.h"
+#ifndef MPRISWRAPPER_H
+#define MPRISWRAPPER_H
 
-#include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
-#include <QIcon>
-#include "nativeevents.h"
-#include "mpriswrapper.h"
+#include <QObject>
 
-struct PluginPrivate {
+class MprisWrapper : public QObject {
+        Q_OBJECT
+        Q_CLASSINFO("D-Bus Interface", "org.mpris.MediaPlayer2.Player")
+    public:
+        explicit MprisWrapper(QObject* parent = nullptr);
+
+    public slots:
+        Q_SCRIPTABLE void Raisee();
+        Q_SCRIPTABLE void Quitt();
+
+    signals:
 
 };
 
-Plugin::Plugin() {
-    d = new PluginPrivate();
-}
-
-Plugin::~Plugin() {
-    delete d;
-}
-
-
-void Plugin::activate() {
-    //Capture keys
-    new NativeEvents();
-    new MprisWrapper();
-}
-
-void Plugin::deactivate() {
-
-}
+#endif // MPRISWRAPPER_H

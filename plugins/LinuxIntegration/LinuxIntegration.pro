@@ -1,4 +1,4 @@
-QT += gui widgets
+QT += gui widgets dbus
 
 TEMPLATE = lib
 CONFIG += plugin
@@ -33,10 +33,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(/usr/share/the-libs/pri/gentranslations.pri)
 
 SOURCES += \
+    mprisinstance.cpp \
+    mprisplayer.cpp \
+    mpriswrapper.cpp \
     nativeevents.cpp \
     plugin.cpp
 
 HEADERS += \
+    mprisinstance.h \
+    mprisplayer.h \
+    mpriswrapper.h \
     nativeevents.h \
     plugin.h
 

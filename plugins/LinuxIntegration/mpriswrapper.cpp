@@ -17,35 +17,16 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "plugin.h"
-
-#include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
-#include <QIcon>
-#include "nativeevents.h"
 #include "mpriswrapper.h"
 
-struct PluginPrivate {
+#include <QDBusConnection>
+#include "mprisinstance.h"
+#include "mprisplayer.h"
 
-};
+MprisWrapper::MprisWrapper(QObject* parent) : QObject(parent) {
+    new MprisInstance(this);
+    new MprisPlayer(this);
 
-Plugin::Plugin() {
-    d = new PluginPrivate();
-}
-
-Plugin::~Plugin() {
-    delete d;
-}
-
-
-void Plugin::activate() {
-    //Capture keys
-    new NativeEvents();
-    new MprisWrapper();
-}
-
-void Plugin::deactivate() {
-
+    QDBusConnection::sessionBus().registerService("org.mpris.MediaPlayer2.theBeat");
+    QDBusConnection::sessionBus().registerObject("/org/mpris/MediaPlayer2", this);
 }
