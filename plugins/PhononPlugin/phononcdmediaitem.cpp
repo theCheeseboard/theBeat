@@ -59,7 +59,7 @@ PhononCdMediaItem::PhononCdMediaItem(QString blockDevice, TrackInfoPtr info) : M
     connect(d->player, &MediaObject::totalTimeChanged, this, &PhononCdMediaItem::durationChanged);
     connect(d->player, &MediaObject::finished, this, &PhononCdMediaItem::done);
     connect(d->controller, &MediaController::titleChanged, this, [ = ](int title) {
-        if (title != d->info->track()) d->controller->setCurrentTitle(d->info->track());
+        if (title != d->info->track() + 1) d->controller->setCurrentTitle(d->info->track() + 1);
     });
 
     connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [ = ] {
@@ -85,7 +85,7 @@ void PhononCdMediaItem::blockDeviceGone(QString blockDevice) {
 }
 
 void PhononCdMediaItem::play() {
-    if (d->controller->currentTitle() != d->info->track()) d->controller->setCurrentTitle(d->info->track());
+    if (d->controller->currentTitle() != d->info->track() + 1) d->controller->setCurrentTitle(d->info->track() + 1);
     d->player->play();
 }
 
@@ -115,7 +115,7 @@ QString PhononCdMediaItem::title() {
 }
 
 QStringList PhononCdMediaItem::authors() {
-    return {};
+    return d->info->artist();
 }
 
 QString PhononCdMediaItem::album() {

@@ -155,7 +155,8 @@
                <string notr="true">...</string>
               </property>
               <property name="icon">
-               <iconset theme="go-previous"/>
+               <iconset theme="go-previous">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -213,6 +214,9 @@
              <widget class="QPushButton" name="enqueueAllButton">
               <property name="text">
                <string>Enqueue All</string>
+              </property>
+              <property name="icon">
+               <iconset theme="view-media-playlist"/>
               </property>
              </widget>
             </item>

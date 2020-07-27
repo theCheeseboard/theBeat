@@ -33,7 +33,7 @@
     <widget class="QWidget" name="widget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="albumTitleLabel">
         <property name="font">
          <font>
           <pointsize>15</pointsize>
@@ -50,6 +50,9 @@
          <widget class="QPushButton" name="enqueueAllButton">
           <property name="text">
            <string>Enqueue All</string>
+          </property>
+          <property name="icon">
+           <iconset theme="view-media-playlist"/>
           </property>
          </widget>
         </item>

@@ -39,6 +39,8 @@ class TracksWidget : public QWidget {
 
         void on_searchBox_textEdited(const QString& arg1);
 
+        void on_enqueueAllButton_clicked();
+
     private:
         Ui::TracksWidget* ui;
         TracksWidgetPrivate* d;

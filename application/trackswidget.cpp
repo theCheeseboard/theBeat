@@ -83,3 +83,10 @@ void TracksWidget::updateProcessing() {
         });
     }
 }
+
+void TracksWidget::on_enqueueAllButton_clicked() {
+    for (int i = 0; i < d->model->rowCount(); i++) {
+        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(d->model->index(i, 0).data(LibraryModel::PathRole).toString()));
+        StateManager::instance()->playlist()->addItem(item);
+    }
+}

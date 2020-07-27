@@ -10,12 +10,12 @@
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="65"/>
-        <location filename="../artistsalbumswidget.ui" line="190"/>
+        <location filename="../artistsalbumswidget.ui" line="191"/>
         <source>Tracks in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="215"/>
+        <location filename="../artistsalbumswidget.ui" line="216"/>
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -224,17 +224,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="112"/>
+        <location filename="../trackswidget.ui" line="115"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="169"/>
+        <location filename="../trackswidget.ui" line="172"/>
         <source>Processing Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="176"/>
+        <location filename="../trackswidget.ui" line="179"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
         <translation type="unfinished"></translation>
     </message>

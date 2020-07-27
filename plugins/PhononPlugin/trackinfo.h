@@ -31,10 +31,14 @@ class TrackInfo : public QObject {
         ~TrackInfo();
 
         QString title();
+        QStringList artist();
         QString album();
         int track();
 
+        void setData(QString title, QStringList artist, QString album);
+
     signals:
+        void dataChanged();
 
     private:
         TrackInfoPrivate* d;

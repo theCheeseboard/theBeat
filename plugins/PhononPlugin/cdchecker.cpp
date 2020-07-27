@@ -35,6 +35,17 @@
 #include <phonon/MediaSource>
 #include <phonon/AudioDataOutput>
 
+#ifdef HAVE_MUSICBRAINZ
+    #include <musicbrainz5/Query.h>
+    #include <musicbrainz5/Release.h>
+    #include <musicbrainz5/Medium.h>
+    #include <musicbrainz5/Track.h>
+    #include <musicbrainz5/Recording.h>
+    #include <musicbrainz5/ArtistCredit.h>
+    #include <musicbrainz5/NameCredit.h>
+    #include <musicbrainz5/Artist.h>
+#endif
+
 using namespace Phonon;
 
 struct CdCheckerPrivate {
@@ -44,6 +55,12 @@ struct CdCheckerPrivate {
     PluginMediaSource* source;
     QStringList mbDiscIds;
     QList<TrackInfoPtr> trackInfo;
+
+#ifdef HAVE_MUSICBRAINZ
+    QString currentDiscId;
+    QString currentReleaseId;
+    MusicBrainz5::CReleaseList releases;
+#endif
 };
 
 CdChecker::CdChecker(QString blockDevice, QWidget* parent) :
@@ -127,14 +144,25 @@ void CdChecker::checkCd() {
             d->mbDiscIds = info.mbDiscId;
             d->trackInfo.clear();
 
+#ifdef HAVE_MUSICBRAINZ
+            d->releases = MusicBrainz5::CReleaseList();
+            d->currentReleaseId = "";
+            d->currentDiscId = "";
+#endif
+
             for (int i = 0; i < info.numberOfTracks; i++) {
                 d->trackInfo.append(TrackInfoPtr(new TrackInfo(i)));
             }
 
             d->source->setName(tr("CD"));
+            ui->albumTitleLabel->setText(tr("CD"));
             StateManager::instance()->sources()->addSource(d->source);
 
             updateTrackListing();
+
+            if (!info.mbDiscId.isEmpty()) {
+                loadMusicbrainzData(info.mbDiscId.first());
+            }
         }
     });
 }
@@ -150,11 +178,78 @@ void CdChecker::updateTrackListing() {
 }
 
 void CdChecker::loadMusicbrainzData(QString discId) {
+    //Load information from MusicBrainz
+#ifdef HAVE_MUSICBRAINZ
+    d->currentDiscId = discId;
 
+    MusicBrainz5::CQuery query("thebeat-3.0");
+    try {
+        d->releases = query.LookupDiscID(discId.toStdString());
+        if (d->releases.Count() > 0) {
+            selectMusicbrainzRelease(QString::fromStdString(d->releases.Item(0)->ID()));
+        }
+    }  catch (...) {
+    }
+#endif
+}
+
+void CdChecker::selectMusicbrainzRelease(QString release) {
+#ifdef HAVE_MUSICBRAINZ
+    d->currentReleaseId = release;
+
+    tPromise<MusicBrainz5::CRelease*>::runOnNewThread([ = ](tPromiseFunctions<MusicBrainz5::CRelease*>::SuccessFunction res, tPromiseFunctions<MusicBrainz5::CMetadata>::FailureFunction rej) {
+        try {
+            MusicBrainz5::CQuery query("thebeat-3.0");
+            res(query.LookupRelease(release.toStdString()).Clone());
+        } catch (...) {
+            rej("Failure");
+        }
+    })->then([ = ](MusicBrainz5::CRelease * release) {
+        ui->albumTitleLabel->setText(QString::fromStdString(release->Title()));
+        d->source->setName(QString::fromStdString(release->Title()));
+
+        MusicBrainz5::CMediumList* mediumList = release->MediumList();
+        for (int h = 0; h < mediumList->NumItems(); h++) {
+            MusicBrainz5::CMedium* medium = mediumList->Item(h);
+            if (medium->ContainsDiscID(d->currentDiscId.toStdString())) {
+                MusicBrainz5::CTrackList* tracks = medium->TrackList();
+                for (int i = 0; i < tracks->Count(); i++) {
+                    if (d->trackInfo.count() <= i) continue;
+
+                    MusicBrainz5::CTrack* track = tracks->Item(i);
+                    MusicBrainz5::CRecording* recording = track->Recording();
+                    if (recording) {
+                        QStringList artists;
+                        MusicBrainz5::CNameCreditList* nameCreditList = release->ArtistCredit()->NameCreditList();
+                        for (int j = 0; j < nameCreditList->Count(); j++) {
+                            MusicBrainz5::CNameCredit* credit = nameCreditList->Item(j);
+                            artists.append(QString::fromStdString(credit->Artist()->Name()));
+                        }
+                        artists.removeDuplicates();
+
+                        TrackInfoPtr trackInfo = d->trackInfo.at(i);
+                        trackInfo->setData(QString::fromStdString(recording->Title()), artists, QString::fromStdString(release->Title()));
+                    }
+                }
+
+                break;
+            }
+        }
+
+        updateTrackListing();
+        delete release;
+    });
+#endif
 }
 
 
 void CdChecker::on_tracksWidget_itemActivated(QListWidgetItem* item) {
     int track = item->data(Qt::UserRole).toInt();
     StateManager::instance()->playlist()->addItem(new PhononCdMediaItem(d->blockDevice, d->trackInfo.at(track)));
+}
+
+void CdChecker::on_enqueueAllButton_clicked() {
+    for (TrackInfoPtr trackInfo : d->trackInfo) {
+        StateManager::instance()->playlist()->addItem(new PhononCdMediaItem(d->blockDevice, trackInfo));
+    }
 }

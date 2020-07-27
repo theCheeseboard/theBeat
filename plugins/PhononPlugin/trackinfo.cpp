@@ -21,6 +21,7 @@
 
 struct TrackInfoPrivate {
     QString title;
+    QStringList artist;
     QString album;
     int track;
 };
@@ -45,10 +46,22 @@ QString TrackInfo::title() {
     return d->title;
 }
 
+QStringList TrackInfo::artist() {
+    return d->artist;
+}
+
 QString TrackInfo::album() {
     return d->album;
 }
 
 int TrackInfo::track() {
     return d->track;
+}
+
+void TrackInfo::setData(QString title, QStringList artist, QString album) {
+    d->title = title;
+    d->artist = artist;
+    d->album = album;
+
+    emit dataChanged();
 }

@@ -76,3 +76,10 @@ void ArtistsAlbumsWidget::on_tracksList_activated(const QModelIndex& index) {
     StateManager::instance()->playlist()->addItem(item);
     StateManager::instance()->playlist()->setCurrentItem(item);
 }
+
+void ArtistsAlbumsWidget::on_enqueueAllButton_clicked() {
+    for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
+        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
+        StateManager::instance()->playlist()->addItem(item);
+    }
+}

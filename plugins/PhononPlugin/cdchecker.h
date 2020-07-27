@@ -40,12 +40,15 @@ class CdChecker : public QWidget {
         void on_tracksWidget_itemActivated(QListWidgetItem* item);
         void checkCd();
 
+        void on_enqueueAllButton_clicked();
+
     private:
         Ui::CdChecker* ui;
         CdCheckerPrivate* d;
 
         void updateTrackListing();
         void loadMusicbrainzData(QString discId);
+        void selectMusicbrainzRelease(QString release);
 };
 
 #endif // CDCHECKER_H

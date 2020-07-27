@@ -49,6 +49,8 @@ class ArtistsAlbumsWidget : public QWidget {
 
         void on_tracksList_activated(const QModelIndex& index);
 
+        void on_enqueueAllButton_clicked();
+
     private:
         Ui::ArtistsAlbumsWidget* ui;
         ArtistsAlbumsWidgetPrivate* d;
