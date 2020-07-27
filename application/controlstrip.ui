@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>703</width>
-    <height>106</height>
+    <height>199</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -101,12 +101,54 @@
         <number>0</number>
        </property>
        <item>
+        <widget class="QWidget" name="volumeWidget" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QSlider" name="volumeSlider">
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="volumeButton">
+            <property name="text">
+             <string notr="true">...</string>
+            </property>
+            <property name="icon">
+             <iconset theme="audio-volume-high"/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QToolButton" name="shuffleButton">
          <property name="text">
           <string notr="true">...</string>
          </property>
          <property name="icon">
-          <iconset theme="media-playlist-shuffle"/>
+          <iconset theme="media-playlist-shuffle">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -119,7 +161,8 @@
           <string notr="true">...</string>
          </property>
          <property name="icon">
-          <iconset theme="media-repeat-single"/>
+          <iconset theme="media-repeat-single">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="checkable">
           <bool>true</bool>

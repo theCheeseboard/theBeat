@@ -30,6 +30,7 @@ struct PlaylistPrivate {
 
     bool repeatOne = false;
     bool shuffle = false;
+    double volume = 1;
 };
 
 Playlist::Playlist(QObject* parent) : QObject(parent) {
@@ -215,4 +216,13 @@ bool Playlist::repeatOne() {
 
 bool Playlist::shuffle() {
     return d->shuffle;
+}
+
+void Playlist::setVolume(double volume) {
+    d->volume = volume;
+    emit volumeChanged(volume);
+}
+
+double Playlist::volume() {
+    return d->volume;
 }

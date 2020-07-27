@@ -62,6 +62,11 @@ PhononCdMediaItem::PhononCdMediaItem(QString blockDevice, TrackInfoPtr info) : M
         if (title != d->info->track()) d->controller->setCurrentTitle(d->info->track());
     });
 
+    connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [ = ] {
+        output->setVolume(StateManager::instance()->playlist()->volume());
+    });
+    output->setVolume(StateManager::instance()->playlist()->volume());
+
     d->items.insert(d->blockDevice, this);
 }
 

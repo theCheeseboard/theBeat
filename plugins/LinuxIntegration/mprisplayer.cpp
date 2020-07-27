@@ -168,7 +168,16 @@ void MprisPlayer::Pause() {
 }
 
 void MprisPlayer::PlayPause() {
+    switch (StateManager::instance()->playlist()->state()) {
+        case Playlist::Playing:
+            StateManager::instance()->playlist()->pause();
+            break;
+        case Playlist::Paused:
+        case Playlist::Stopped:
+            StateManager::instance()->playlist()->play();
+            break;
 
+    }
 }
 
 void MprisPlayer::Stop() {

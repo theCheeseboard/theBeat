@@ -22,6 +22,8 @@
 #include <QMediaPlayer>
 #include <QMediaMetaData>
 #include <QImage>
+#include <statemanager.h>
+#include <playlist.h>
 
 struct QtMultimediaMediaItemPrivate {
     QMediaPlayer* player;
@@ -38,6 +40,11 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::metadataChanged);
     connect(d->player, &QMediaPlayer::positionChanged, this, &QtMultimediaMediaItem::elapsedChanged);
     connect(d->player, &QMediaPlayer::durationChanged, this, &QtMultimediaMediaItem::durationChanged);
+
+    connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [ = ] {
+        d->player->setVolume(StateManager::instance()->playlist()->volume() * 100);
+    });
+    d->player->setVolume(StateManager::instance()->playlist()->volume() * 100);
 }
 
 QtMultimediaMediaItem::~QtMultimediaMediaItem() {

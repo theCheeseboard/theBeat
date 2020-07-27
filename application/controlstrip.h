@@ -47,9 +47,13 @@ class ControlStrip : public QWidget {
 
         void on_shuffleButton_toggled(bool checked);
 
+        void on_volumeSlider_valueChanged(int value);
+
     private:
         Ui::ControlStrip* ui;
         ControlStripPrivate* d;
+
+        bool eventFilter(QObject* watched, QEvent* event);
 
         void updateState();
         void updateCurrentItem();

@@ -42,8 +42,14 @@ ControlStrip::ControlStrip(QWidget* parent) :
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &ControlStrip::updateCurrentItem);
     connect(StateManager::instance()->playlist(), &Playlist::repeatOneChanged, ui->repeatOneButton, &QToolButton::setChecked);
     connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, ui->shuffleButton, &QToolButton::setChecked);
+    connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [ = ] {
+        ui->volumeSlider->setValue(StateManager::instance()->playlist()->volume() * 100);
+    });
+    ui->volumeSlider->setValue(StateManager::instance()->playlist()->volume() * 100);
 
     this->setFixedHeight(0);
+    ui->volumeWidget->installEventFilter(this);
+    ui->volumeSlider->setFixedWidth(0);
 
     updateCurrentItem();
 }
@@ -174,4 +180,39 @@ void ControlStrip::on_repeatOneButton_toggled(bool checked) {
 
 void ControlStrip::on_shuffleButton_toggled(bool checked) {
     StateManager::instance()->playlist()->setShuffle(checked);
+}
+
+void ControlStrip::on_volumeSlider_valueChanged(int value) {
+    StateManager::instance()->playlist()->setVolume(static_cast<double>(value) / 100);
+}
+
+bool ControlStrip::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->volumeWidget) {
+        if (event->type() == QEvent::Enter) {
+            tVariantAnimation* anim = new tVariantAnimation(this);
+            anim->setStartValue(ui->volumeSlider->width());
+            anim->setEndValue(SC_DPI(150));
+            anim->setDuration(500);
+            anim->setEasingCurve(QEasingCurve::OutCubic);
+            connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+                ui->volumeSlider->setFixedWidth(value.toInt());
+                ui->volumeWidget->updateGeometry();
+            });
+            connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
+            anim->start();
+        } else if (event->type() == QEvent::Leave) {
+            tVariantAnimation* anim = new tVariantAnimation(this);
+            anim->setStartValue(ui->volumeSlider->width());
+            anim->setEndValue(0);
+            anim->setDuration(500);
+            anim->setEasingCurve(QEasingCurve::OutCubic);
+            connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+                ui->volumeSlider->setFixedWidth(value.toInt());
+                ui->volumeWidget->updateGeometry();
+            });
+            connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
+            anim->start();
+        }
+    }
+    return false;
 }
