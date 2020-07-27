@@ -2,8 +2,10 @@ TEMPLATE = subdirs
 
 unix:!macx {
     SUBDIRS += \
-        PhononPlugin
+        PhononPlugin \
+        LinuxIntegration
 }
 
 DISTFILES += \
     plugins.pri
+
