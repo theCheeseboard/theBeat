@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
 <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
@@ -12,32 +12,32 @@
         <location filename="../artistsalbumswidget.ui" line="65"/>
         <location filename="../artistsalbumswidget.ui" line="191"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát trong thư viện</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="216"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt tất cả vào hàng phát</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="51"/>
         <source>Albums in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Đĩa nhạc trong thư viện</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="51"/>
         <source>Artists in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Nghệ sĩ trong thư viện</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="64"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát trong %1</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="64"/>
         <source>Tracks by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát bởi %1</translation>
     </message>
 </context>
 <context>
@@ -63,17 +63,17 @@
     <message>
         <location filename="../library/librarymodel.cpp" line="138"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>bởi %1</translation>
     </message>
     <message>
         <location filename="../library/librarymodel.cpp" line="139"/>
         <source>on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>trong %1</translation>
     </message>
     <message>
         <location filename="../library/librarymodel.cpp" line="141"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát</translation>
     </message>
 </context>
 <context>
@@ -86,115 +86,145 @@
     <message>
         <location filename="../mainwindow.ui" line="93"/>
         <source>Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="119"/>
         <source>Artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Nghệ sĩ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="142"/>
         <source>Albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Đĩa nhạc</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="165"/>
         <source>Other Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Nguồn khác</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="249"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Hàng phát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="310"/>
         <source>Nothing Here!</source>
-        <translation type="unfinished"></translation>
+        <translation>Không có gì đây!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="320"/>
         <source>Go ahead and select a track to play</source>
-        <translation type="unfinished"></translation>
+        <translation>Hãy chọn một bài hát để phát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="360"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Báo cáo lỗi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="369"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Mã nguồn</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="378"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Giới thiệu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="387"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Thoát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="390"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="399"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Mở tệp</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="402"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="407"/>
-        <location filename="../mainwindow.cpp" line="200"/>
+        <location filename="../mainwindow.cpp" line="252"/>
         <source>Open URL</source>
+        <translation>Mở liên kết</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="416"/>
+        <source>Skip Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="66"/>
+        <location filename="../mainwindow.ui" line="419"/>
+        <source>Shift+Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="431"/>
+        <source>Shift+Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="428"/>
+        <source>Skip Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="440"/>
+        <source>Play</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="443"/>
+        <source>Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="67"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Trợ giúp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="178"/>
+        <location filename="../mainwindow.cpp" line="230"/>
         <source>For &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Cho &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="232"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Cho %n mục</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="182"/>
+        <location filename="../mainwindow.cpp" line="234"/>
         <source>Remove from Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa khỏi hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="189"/>
+        <location filename="../mainwindow.cpp" line="241"/>
         <source>For Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Cho hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="190"/>
+        <location filename="../mainwindow.cpp" line="242"/>
         <source>Clear Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa các mục</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="200"/>
+        <location filename="../mainwindow.cpp" line="252"/>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
@@ -215,27 +245,27 @@
     <message>
         <location filename="../trackswidget.ui" line="62"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát trong thư viện</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="71"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt tất cả vào hàng phát</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="115"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Tìm kiếm</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="172"/>
         <source>Processing Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang xử lý thư viện</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="179"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tùy thuộc vào số bài trong thư viện của bạn, điều này có thể mất một số thời gian. Điều này chỉ có xảy ra lần đầu tiên bạn khởi động theBeat.</translation>
     </message>
 </context>
 <context>
@@ -243,7 +273,7 @@
     <message>
         <location filename="../main.cpp" line="38"/>
         <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Bộ nghe nhạc</translation>
     </message>
 </context>
 </TS>

@@ -60,15 +60,7 @@ ControlStrip::~ControlStrip() {
 }
 
 void ControlStrip::on_playPauseButton_clicked() {
-    switch (StateManager::instance()->playlist()->state()) {
-        case Playlist::Playing:
-            StateManager::instance()->playlist()->pause();
-            break;
-        case Playlist::Paused:
-        case Playlist::Stopped:
-            StateManager::instance()->playlist()->play();
-            break;
-    }
+    StateManager::instance()->playlist()->playPause();
 }
 
 void ControlStrip::updateState() {

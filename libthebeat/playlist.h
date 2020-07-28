@@ -58,6 +58,7 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
 
     public slots:
         void play();
+        void playPause();
         void pause();
         void next();
         void previous();

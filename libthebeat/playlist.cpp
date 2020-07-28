@@ -98,6 +98,18 @@ void Playlist::play() {
     emit stateChanged(d->state, oldState);
 }
 
+void Playlist::playPause() {
+    switch (state()) {
+        case Playlist::Playing:
+            pause();
+            break;
+        case Playlist::Paused:
+        case Playlist::Stopped:
+            play();
+            break;
+    }
+}
+
 void Playlist::pause() {
     if (d->state == Playlist::Paused) return;
 

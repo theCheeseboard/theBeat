@@ -69,6 +69,16 @@
           </property>
          </spacer>
         </item>
+        <item>
+         <widget class="QPushButton" name="ejectButton">
+          <property name="text">
+           <string>Eject</string>
+          </property>
+          <property name="icon">
+           <iconset theme="media-eject"/>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>

@@ -33,7 +33,7 @@ TrackInfo::TrackInfo() : QObject(nullptr) {
 
 TrackInfo::TrackInfo(int track) {
     d = new TrackInfoPrivate();
-    d->title = tr("Track %1").arg(track);
+    d->title = tr("Track %1").arg(track + 1);
     d->album = tr("Unknown");
     d->track = track;
 }

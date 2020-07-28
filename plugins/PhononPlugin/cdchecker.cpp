@@ -253,3 +253,12 @@ void CdChecker::on_enqueueAllButton_clicked() {
         StateManager::instance()->playlist()->addItem(new PhononCdMediaItem(d->blockDevice, trackInfo));
     }
 }
+
+void CdChecker::on_ejectButton_clicked() {
+    //Remove any tracks in the playlist
+    PhononCdMediaItem::blockDeviceGone(d->blockDevice);
+
+    //Eject the CD
+    QDBusInterface cdDriveInterface("org.freedesktop.UDisks2", d->cdDrivePath.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
+    cdDriveInterface.call(QDBus::NoBlock, "Eject", QVariantMap());
+}

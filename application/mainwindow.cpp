@@ -30,6 +30,7 @@
 #include "library/librarymanager.h"
 #include "playlistmodel.h"
 #include <QTimer>
+#include <QShortcut>
 #include "pluginmanager.h"
 
 #include <qtmultimedia/qtmultimediamediaitem.h>
@@ -72,6 +73,10 @@ MainWindow::MainWindow(QWidget* parent)
     menu->addAction(ui->actionOpen_File);
     menu->addAction(ui->actionOpen_URL);
     menu->addSeparator();
+    menu->addAction(ui->actionPlayPause);
+    menu->addAction(ui->actionSkip_Back);
+    menu->addAction(ui->actionSkip_Forward);
+    menu->addSeparator();
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
 
@@ -97,6 +102,34 @@ MainWindow::MainWindow(QWidget* parent)
     d->topBarLine->setParent(ui->topWidget);
     d->topBarLine->setVisible(true);
     d->topBarLine->lower();
+
+    new QShortcut(QKeySequence(Qt::Key_J), this, [ = ] {
+        this->rewind10();
+    });
+    new QShortcut(QKeySequence(Qt::Key_K), this, [ = ] {
+        StateManager::instance()->playlist()->playPause();
+    });
+    new QShortcut(QKeySequence(Qt::Key_L), this, [ = ] {
+        this->ff10();
+    });
+    new QShortcut(QKeySequence(Qt::Key_Up), this, [ = ] {
+        double newVolume = StateManager::instance()->playlist()->volume();
+        newVolume += 0.1;
+        if (newVolume > 1) newVolume = 1;
+        StateManager::instance()->playlist()->setVolume(newVolume);
+    });
+    new QShortcut(QKeySequence(Qt::Key_Down), this, [ = ] {
+        double newVolume = StateManager::instance()->playlist()->volume();
+        newVolume -= 0.1;
+        if (newVolume < 0) newVolume = 0;
+        StateManager::instance()->playlist()->setVolume(newVolume);
+    });
+    new QShortcut(QKeySequence(Qt::Key_Left), this, [ = ] {
+        this->rewind10();
+    });
+    new QShortcut(QKeySequence(Qt::Key_Right), this, [ = ] {
+        this->ff10();
+    });
 
     QTimer::singleShot(0, this, [ = ] {
         resizeEvent(nullptr);
@@ -165,6 +198,25 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     d->topBarLine->setFixedHeight(ui->topWidget->height());
 }
 
+void MainWindow::rewind10() {
+    if (!StateManager::instance()->playlist()->currentItem()) return;
+
+    qint64 seekTo = StateManager::instance()->playlist()->currentItem()->elapsed() - 10000;
+    if (seekTo < 0) seekTo = 0;
+    StateManager::instance()->playlist()->currentItem()->seek(seekTo);
+}
+
+void MainWindow::ff10() {
+    if (!StateManager::instance()->playlist()->currentItem()) return;
+
+    quint64 seekTo = StateManager::instance()->playlist()->currentItem()->elapsed() + 10000;
+    if (seekTo > StateManager::instance()->playlist()->currentItem()->duration()) {
+        StateManager::instance()->playlist()->next();
+    } else {
+        StateManager::instance()->playlist()->currentItem()->seek(seekTo);
+    }
+}
+
 void MainWindow::on_queueList_activated(const QModelIndex& index) {
     StateManager::instance()->playlist()->setCurrentItem(index.data(PlaylistModel::MediaItemRole).value<MediaItem*>());
 }
@@ -205,4 +257,16 @@ void MainWindow::on_otherButton_toggled(bool checked) {
     if (checked) {
         ui->stackedWidget->setCurrentWidget(ui->otherSourcesPage);
     }
+}
+
+void MainWindow::on_actionSkip_Back_triggered() {
+    StateManager::instance()->playlist()->previous();
+}
+
+void MainWindow::on_actionSkip_Forward_triggered() {
+    StateManager::instance()->playlist()->next();
+}
+
+void MainWindow::on_actionPlayPause_triggered() {
+    StateManager::instance()->playlist()->playPause();
 }

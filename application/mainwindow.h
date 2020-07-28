@@ -61,10 +61,19 @@ class MainWindow : public QMainWindow {
 
         void on_otherButton_toggled(bool checked);
 
+        void on_actionSkip_Back_triggered();
+
+        void on_actionSkip_Forward_triggered();
+
+        void on_actionPlayPause_triggered();
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;
 
         void resizeEvent(QResizeEvent* event);
+
+        void rewind10();
+        void ff10();
 };
 #endif // MAINWINDOW_H

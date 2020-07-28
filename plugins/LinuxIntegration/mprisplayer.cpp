@@ -39,6 +39,7 @@ MprisPlayer::MprisPlayer(QObject* parent) : QDBusAbstractAdaptor(parent) {
     connect(playlist, &Playlist::stateChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "PlaybackStatus"));
     connect(playlist, &Playlist::repeatOneChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "LoopStatus"));
     connect(playlist, &Playlist::shuffleChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "Shuffle"));
+    connect(playlist, &Playlist::volumeChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "Volume"));
 
     connect(playlist, &Playlist::currentItemChanged, this, &MprisPlayer::updateCurrentItem);
     updateCurrentItem();
@@ -111,11 +112,11 @@ QVariantMap MprisPlayer::Metadata() {
 }
 
 double MprisPlayer::Volume() {
-    return 1;
+    return StateManager::instance()->playlist()->volume();
 }
 
 void MprisPlayer::setVolume(double volume) {
-
+    StateManager::instance()->playlist()->setVolume(volume);
 }
 
 qint64 MprisPlayer::Position() {

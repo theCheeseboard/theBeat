@@ -15,6 +15,10 @@
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Eject</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TrackInfo</name>
