@@ -43,6 +43,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
 
     signals:
         void done();
+        void error();
         void metadataChanged();
         void elapsedChanged();
         void durationChanged();

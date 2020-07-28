@@ -72,7 +72,9 @@ void Playlist::removeItem(MediaItem* item) {
 
 void Playlist::clear() {
     setCurrentItem(nullptr);
-    qDeleteAll(d->items);
+    for (MediaItem* item : d->items) {
+        item->deleteLater();
+    }
 
     d->items.clear();
     d->playOrder.clear();
@@ -146,26 +148,28 @@ void Playlist::previous() {
 void Playlist::updateMetadata() {
     if (!d->currentItem) return;
     if (d->currentItem->title() != d->oldTitle) {
-        //Fire a notification
-        QStringList text = {
-            d->currentItem->title(),
-            QLocale().createSeparatedList(d->currentItem->authors())
-        };
-        text.removeAll("");
+        if (!d->currentItem->title().isEmpty()) {
+            //Fire a notification
+            QStringList text = {
+                d->currentItem->title(),
+                QLocale().createSeparatedList(d->currentItem->authors())
+            };
+            text.removeAll("");
 
-        tNotification* notification = new tNotification();
-        notification->setSummary(tr("Now Playing"));
-        notification->setText(text.join(" · "));
-        notification->setTransient(true);
-        notification->setSoundOn(false);
-        notification->insertAction(QStringLiteral("next"), tr("Skip Next"));
-        connect(notification, &tNotification::actionClicked, this, [ = ](QString key) {
-            if (key == QStringLiteral("next")) {
-                //Skip to the next track
-                this->next();
-            }
-        });
-        notification->post();
+            tNotification* notification = new tNotification();
+            notification->setSummary(tr("Now Playing"));
+            notification->setText(text.join(" · "));
+            notification->setTransient(true);
+            notification->setSoundOn(false);
+            notification->insertAction(QStringLiteral("next"), tr("Skip Next"));
+            connect(notification, &tNotification::actionClicked, this, [ = ](QString key) {
+                if (key == QStringLiteral("next")) {
+                    //Skip to the next track
+                    this->next();
+                }
+            });
+            notification->post();
+        }
 
         d->oldTitle = d->currentItem->title();
     }
@@ -206,6 +210,18 @@ void Playlist::setCurrentItem(MediaItem* item) {
 
     //TODO: connect to signals
     connect(d->currentItem, &MediaItem::done, this, &Playlist::next);
+    connect(d->currentItem, &MediaItem::error, this, [ = ] {
+        tNotification* notification = new tNotification();
+        notification->setSummary(tr("Playback Failed"));
+        notification->setText(tr("\"%1\" was removed from the play queue because it couldn't be played.").arg(item->title()));
+        notification->setTransient(true);
+        notification->setSoundOn(false);
+        notification->post();
+
+        //Remove the item from the playlist because it can't be played
+        removeItem(item);
+
+    });
     connect(d->currentItem, &MediaItem::metadataChanged, this, &Playlist::updateMetadata);
 
     if (d->state == Playlist::Playing) {

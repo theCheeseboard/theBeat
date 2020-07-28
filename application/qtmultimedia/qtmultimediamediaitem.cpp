@@ -24,6 +24,7 @@
 #include <QImage>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QFileInfo>
 #include <statemanager.h>
 #include <playlist.h>
 
@@ -46,6 +47,9 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::updateAlbumArt);
     connect(d->player, &QMediaPlayer::positionChanged, this, &QtMultimediaMediaItem::elapsedChanged);
     connect(d->player, &QMediaPlayer::durationChanged, this, &QtMultimediaMediaItem::durationChanged);
+    connect(d->player, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, [ = ](QMediaPlayer::Error error) {
+        emit this->error();
+    });
     updateAlbumArt();
 
     connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [ = ] {
@@ -98,7 +102,16 @@ quint64 QtMultimediaMediaItem::duration() {
 }
 
 QString QtMultimediaMediaItem::title() {
-    return d->player->metaData(QMediaMetaData::Title).toString();
+    if (d->player->availableMetaData().contains(QMediaMetaData::Title)) {
+        return d->player->metaData(QMediaMetaData::Title).toString();
+    }
+    QUrl url = d->player->media().request().url();
+    if (url.isLocalFile()) {
+        QFileInfo file(url.toLocalFile());
+        return file.baseName();
+    } else {
+        return url.toString();
+    }
 }
 
 QStringList QtMultimediaMediaItem::authors() {
