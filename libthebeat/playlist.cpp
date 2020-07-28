@@ -19,6 +19,7 @@
  * *************************************/
 #include "playlist.h"
 
+#include <tnotification.h>
 #include <QRandomGenerator>
 
 struct PlaylistPrivate {
@@ -31,6 +32,8 @@ struct PlaylistPrivate {
     bool repeatOne = false;
     bool shuffle = false;
     double volume = 1;
+
+    QString oldTitle;
 };
 
 Playlist::Playlist(QObject* parent) : QObject(parent) {
@@ -140,6 +143,34 @@ void Playlist::previous() {
     setCurrentItem(d->playOrder.at(index));
 }
 
+void Playlist::updateMetadata() {
+    if (!d->currentItem) return;
+    if (d->currentItem->title() != d->oldTitle) {
+        //Fire a notification
+        QStringList text = {
+            d->currentItem->title(),
+            QLocale().createSeparatedList(d->currentItem->authors())
+        };
+        text.removeAll("");
+
+        tNotification* notification = new tNotification();
+        notification->setSummary(tr("Now Playing"));
+        notification->setText(text.join(" · "));
+        notification->setTransient(true);
+        notification->setSoundOn(false);
+        notification->insertAction(QStringLiteral("next"), tr("Skip Next"));
+        connect(notification, &tNotification::actionClicked, this, [ = ](QString key) {
+            if (key == QStringLiteral("next")) {
+                //Skip to the next track
+                this->next();
+            }
+        });
+        notification->post();
+
+        d->oldTitle = d->currentItem->title();
+    }
+}
+
 Playlist::State Playlist::state() {
     return d->state;
 }
@@ -175,10 +206,13 @@ void Playlist::setCurrentItem(MediaItem* item) {
 
     //TODO: connect to signals
     connect(d->currentItem, &MediaItem::done, this, &Playlist::next);
+    connect(d->currentItem, &MediaItem::metadataChanged, this, &Playlist::updateMetadata);
 
     if (d->state == Playlist::Playing) {
         d->currentItem->play();
     }
+
+    updateMetadata();
 }
 
 QList<MediaItem*> Playlist::items() {

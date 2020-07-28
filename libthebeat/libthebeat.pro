@@ -1,4 +1,4 @@
-QT += widgets
+QT += widgets thelib
 
 TEMPLATE = lib
 DEFINES += LIBTHEBEAT_LIBRARY

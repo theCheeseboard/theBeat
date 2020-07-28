@@ -73,6 +73,7 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
 
     private:
         PlaylistPrivate* d;
+        void updateMetadata();
 };
 
 #endif // PLAYLIST_H

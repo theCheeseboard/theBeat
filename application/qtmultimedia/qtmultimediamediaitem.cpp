@@ -22,11 +22,16 @@
 #include <QMediaPlayer>
 #include <QMediaMetaData>
 #include <QImage>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <statemanager.h>
 #include <playlist.h>
 
 struct QtMultimediaMediaItemPrivate {
     QMediaPlayer* player;
+    QImage albumArt;
+
+    QNetworkAccessManager mgr;
 };
 
 QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
@@ -38,8 +43,10 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
         if (status == QMediaPlayer::EndOfMedia) emit done();
     });
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::metadataChanged);
+    connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::updateAlbumArt);
     connect(d->player, &QMediaPlayer::positionChanged, this, &QtMultimediaMediaItem::elapsedChanged);
     connect(d->player, &QMediaPlayer::durationChanged, this, &QtMultimediaMediaItem::durationChanged);
+    updateAlbumArt();
 
     connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [ = ] {
         d->player->setVolume(StateManager::instance()->playlist()->volume() * 100);
@@ -49,6 +56,21 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
 
 QtMultimediaMediaItem::~QtMultimediaMediaItem() {
     delete d;
+}
+
+void QtMultimediaMediaItem::updateAlbumArt() {
+    if (d->player->availableMetaData().contains(QMediaMetaData::CoverArtImage)) {
+        d->albumArt = d->player->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
+    } else if (d->player->availableMetaData().contains(QMediaMetaData::CoverArtUrlLarge)) {
+        QUrl url = d->player->metaData(QMediaMetaData::CoverArtUrlLarge).toUrl();
+        QNetworkReply* reply = d->mgr.get(QNetworkRequest(url));
+        connect(reply, &QNetworkReply::finished, this, [ = ] {
+            d->albumArt = QImage::fromData(reply->readAll());
+            reply->deleteLater();
+
+            emit metadataChanged();
+        });
+    }
 }
 
 void QtMultimediaMediaItem::play() {
@@ -93,10 +115,5 @@ QString QtMultimediaMediaItem::album() {
 }
 
 QImage QtMultimediaMediaItem::albumArt() {
-    if (d->player->availableMetaData().contains(QMediaMetaData::CoverArtImage)) {
-        return d->player->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
-    } else if (d->player->availableMetaData().contains(QMediaMetaData::CoverArtUrlLarge)) {
-
-    }
-    return QImage();
+    return d->albumArt;
 }
