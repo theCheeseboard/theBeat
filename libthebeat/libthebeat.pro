@@ -1,4 +1,4 @@
-QT += widgets thelib
+QT += widgets
 
 TEMPLATE = lib
 DEFINES += LIBTHEBEAT_LIBRARY
@@ -16,6 +16,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+unix:!macx {
+    QT += thelib
+
+    target.path = $$[QT_INSTALL_LIBS]
+
+    INSTALLS += target
+}
+
+win32 {
+    INCLUDEPATH += "C:/Program Files/thelibs/include"
+    LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs
+}
+
 
 SOURCES += \
     mediaitem.cpp \
@@ -35,6 +49,5 @@ HEADERS += \
 
 # Default rules for deployment.
 unix {
-    target.path = $$[QT_INSTALL_LIBS]
 }
 !isEmpty(target.path): INSTALLS += target
