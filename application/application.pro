@@ -36,6 +36,8 @@ win32 {
     # Include the-libs build tools
     include(C:/Program Files/thelibs/pri/buildmaster.pri)
 
+    QT += winextras
+
     INCLUDEPATH += "C:/Program Files/thelibs/include" "C:/Program Files (x86)/taglib/include"
     LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -L"C:\Program Files (x86)\taglib\lib" -ltag
     RC_FILE = icon.rc
