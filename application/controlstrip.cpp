@@ -28,6 +28,8 @@
 struct ControlStripPrivate {
     MediaItem* currentItem = nullptr;
     bool isCollapsed = true;
+
+    tVariantAnimation* volumeBarAnim;
 };
 
 ControlStrip::ControlStrip(QWidget* parent) :
@@ -50,6 +52,18 @@ ControlStrip::ControlStrip(QWidget* parent) :
     this->setFixedHeight(0);
     ui->volumeWidget->installEventFilter(this);
     ui->volumeSlider->setFixedWidth(0);
+
+
+   d->volumeBarAnim = new tVariantAnimation(this);
+   d->volumeBarAnim->setDuration(500);
+   d->volumeBarAnim->setEasingCurve(QEasingCurve::OutCubic);
+   connect(d->volumeBarAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+       this->setFixedHeight(value.toInt());
+   });
+   connect(d->volumeBarAnim, &tVariantAnimation::finished, this, [ = ] {
+       this->setFixedHeight(QWIDGETSIZE_MAX);
+       d->volumeBarAnim->deleteLater();
+   });
 
     updateCurrentItem();
 }
@@ -122,35 +136,20 @@ void ControlStrip::updateBar() {
 void ControlStrip::expand() {
     if (!d->isCollapsed) return;
 
-    tVariantAnimation* anim = new tVariantAnimation(this);
-    anim->setStartValue(this->height());
-    anim->setEndValue(this->sizeHint().height());
-    anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
-        this->setFixedHeight(value.toInt());
-    });
-    connect(anim, &tVariantAnimation::finished, this, [ = ] {
-        this->setFixedHeight(QWIDGETSIZE_MAX);
-        anim->deleteLater();
-    });
-    anim->start();
+    d->volumeBarAnim->stop();
+    d->volumeBarAnim->setStartValue(this->height());
+    d->volumeBarAnim->setEndValue(this->sizeHint().height());
+    d->volumeBarAnim->start();
     d->isCollapsed = false;
 }
 
 void ControlStrip::collapse() {
     if (d->isCollapsed) return;
 
-    tVariantAnimation* anim = new tVariantAnimation(this);
-    anim->setStartValue(this->height());
-    anim->setEndValue(0);
-    anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
-        this->setFixedHeight(value.toInt());
-    });
-    connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
-    anim->start();
+    d->volumeBarAnim->stop();
+    d->volumeBarAnim->setStartValue(this->height());
+    d->volumeBarAnim->setEndValue(0);
+    d->volumeBarAnim->start();
     d->isCollapsed = true;
 }
 
