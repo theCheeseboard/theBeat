@@ -174,7 +174,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     QWinThumbnailToolButton* nextToolButton = new QWinThumbnailToolButton(thumbBar);
     nextToolButton->setToolTip(tr("Skip Next"));
-    nextToolButton->setIcon(QIcon::fromTheme("media-skip-next"));
+    nextToolButton->setIcon(QIcon::fromTheme("media-skip-forward"));
     nextToolButton->setDismissOnClick(false);
     connect(nextToolButton, &QWinThumbnailToolButton::clicked, this, [=] {
         StateManager::instance()->playlist()->next();

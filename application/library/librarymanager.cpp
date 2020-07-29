@@ -54,6 +54,9 @@ struct TemporaryDatabase {
         if (!db.isValid()) return;
         db.setDatabaseName(dbPath);
         if (!db.open()) return;
+
+        db.exec("PRAGMA foreign_keys = ON");
+        db.exec("PRAGMA journal_mode = WAL");
     }
 
     ~TemporaryDatabase() {
@@ -132,8 +135,6 @@ void LibraryManager::enumerateDirectory(QString path) {
     tPromise<void>::runOnNewThread([ = ](tPromiseFunctions<void>::SuccessFunction res, tPromiseFunctions<void>::FailureFunction rej) {
         TemporaryDatabase db;
 
-        db.db.exec("PRAGMA journal_mode = WAL");
-
         db.db.transaction();
 
         QSqlQuery q(db.db);
@@ -206,6 +207,27 @@ void LibraryManager::addTrack(QString path) {
     q.bindValue(":durationupd", durations);
     q.bindValue(":tracknumberupd", trackNumbers);
     q.execBatch();
+}
+
+void LibraryManager::removeTrack(QString path)
+{
+    QSqlQuery q;
+    q.prepare("DELETE FROM tracks WHERE path=:path");
+    q.bindValue(":path", path);
+    q.exec();
+
+    emit libraryChanged();
+}
+
+void LibraryManager::relocateTrack(QString oldPath, QString newPath)
+{
+    QSqlQuery q;
+    q.prepare("UPDATE OR REPLACE tracks SET path=:newpath WHERE path=:oldpath");
+    q.bindValue(":oldpath", oldPath);
+    q.bindValue(":newpath", newPath);
+    q.exec();
+
+    emit libraryChanged();
 }
 
 LibraryModel* LibraryManager::allTracks() {

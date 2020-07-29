@@ -37,7 +37,13 @@ class LibraryModel : public QSqlQueryModel {
             ArtistRole,
             AlbumRole,
             DurationRole,
-            TrackRole
+            TrackRole,
+            ErrorRole
+        };
+
+        enum Errors {
+            NoError,
+            PathNotFoundError
         };
 
         // Basic functionality:
@@ -46,6 +52,7 @@ class LibraryModel : public QSqlQueryModel {
     private:
         LibraryModelPrivate* d;
 };
+Q_DECLARE_METATYPE(LibraryModel::Errors)
 
 class LibraryItemDelegate : public QStyledItemDelegate {
         Q_OBJECT

@@ -96,6 +96,7 @@ SOURCES += \
     controlstrip.cpp \
     library/librarymanager.cpp \
     library/librarymodel.cpp \
+    libraryerrorpopover.cpp \
     main.cpp \
     mainwindow.cpp \
     othersourceswidget.cpp \
@@ -110,6 +111,7 @@ HEADERS += \
     controlstrip.h \
     library/librarymanager.h \
     library/librarymodel.h \
+    libraryerrorpopover.h \
     mainwindow.h \
     othersourceswidget.h \
     playlistmodel.h \
@@ -120,6 +122,7 @@ HEADERS += \
 FORMS += \
     artistsalbumswidget.ui \
     controlstrip.ui \
+    libraryerrorpopover.ui \
     mainwindow.ui \
     othersourceswidget.ui \
     trackswidget.ui

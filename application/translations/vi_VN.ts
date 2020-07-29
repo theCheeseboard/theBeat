@@ -59,19 +59,52 @@
     </message>
 </context>
 <context>
+    <name>LibraryErrorPopover</name>
+    <message>
+        <location filename="../libraryerrorpopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libraryerrorpopover.ui" line="35"/>
+        <source>Hmm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libraryerrorpopover.ui" line="134"/>
+        <source>ACTIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libraryerrorpopover.ui" line="143"/>
+        <source>Locate File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libraryerrorpopover.ui" line="150"/>
+        <source>Remove from Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libraryerrorpopover.cpp" line="39"/>
+        <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="138"/>
+        <location filename="../library/librarymodel.cpp" line="150"/>
         <source>by %1</source>
         <translation>bởi %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="139"/>
+        <location filename="../library/librarymodel.cpp" line="151"/>
         <source>on %1</source>
         <translation>trong %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="141"/>
+        <location filename="../library/librarymodel.cpp" line="153"/>
         <source>Track</source>
         <translation>Bài hát</translation>
     </message>

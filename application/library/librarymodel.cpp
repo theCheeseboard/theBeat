@@ -20,6 +20,7 @@
 #include "librarymodel.h"
 
 #include <QPainter>
+#include <QFile>
 #include <the-libs_global.h>
 #include "common.h"
 #include "librarymanager.h"
@@ -64,6 +65,11 @@ QVariant LibraryModel::data(const QModelIndex& index, int role) const {
             return QSqlQueryModel::data(this->index(index.row(), 5));
         case TrackRole:
             return QSqlQueryModel::data(this->index(index.row(), 6));
+        case ErrorRole:
+            if (!QFile::exists(data(index, PathRole).toString())) {
+                return PathNotFoundError;
+            }
+            return NoError;
     }
 
     return QVariant();
@@ -75,6 +81,8 @@ LibraryItemDelegate::LibraryItemDelegate(QObject* parent) {
 
 void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
     QPen transientColor = option.palette.color(QPalette::Disabled, QPalette::WindowText);
+
+    bool drawAsError = index.data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError;
 
     painter->setPen(Qt::transparent);
     QPen textPen;
@@ -111,7 +119,11 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     textRect.setLeft(trackRect.right() + SC_DPI(6));
 
     //Draw the track number
-    if (index.data(LibraryModel::TrackRole).toInt() != -1) {
+    if (drawAsError) {
+        painter->setFont(trackFont);
+        painter->setPen(transientColor);
+        painter->drawText(trackRect, Qt::AlignCenter, "!");
+    } else if (index.data(LibraryModel::TrackRole).toInt() != -1) {
         painter->setFont(trackFont);
         painter->setPen(transientColor);
         if (index.data(LibraryModel::TrackRole).toInt() == 0) {
@@ -127,7 +139,7 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     textRect.setLeft(nameRect.right() + SC_DPI(6));
 
     painter->setFont(option.font);
-    painter->setPen(option.palette.color(QPalette::WindowText));
+    painter->setPen(drawAsError ? transientColor : option.palette.color(QPalette::WindowText));
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());
 
     //Draw the extra details

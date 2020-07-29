@@ -43,6 +43,8 @@ class LibraryManager : public QObject {
 
         void enumerateDirectory(QString path);
         void addTrack(QString path);
+        void removeTrack(QString path);
+        void relocateTrack(QString oldPath, QString newPath);
 
         LibraryModel* allTracks();
         LibraryModel* searchTracks(QString query);

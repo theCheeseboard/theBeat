@@ -79,6 +79,8 @@ void ArtistsAlbumsWidget::on_tracksList_activated(const QModelIndex& index) {
 
 void ArtistsAlbumsWidget::on_enqueueAllButton_clicked() {
     for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
+        if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) continue;
+
         QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
     }
