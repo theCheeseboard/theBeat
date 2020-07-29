@@ -35,8 +35,6 @@ class TracksWidget : public QWidget {
         ~TracksWidget();
 
     private slots:
-        void on_listView_activated(const QModelIndex& index);
-
         void on_searchBox_textEdited(const QString& arg1);
 
         void on_enqueueAllButton_clicked();

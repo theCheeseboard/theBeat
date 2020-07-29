@@ -52,6 +52,8 @@ OtherSourcesWidget::OtherSourcesWidget(QWidget* parent) :
         d->listItems.insert(item, source);
 
         ui->stackedWidget->addWidget(source->widget());
+
+        ui->mainStack->setCurrentWidget(ui->sourcesPage);
     });
     connect(StateManager::instance()->sources(), &SourceManager::sourceRemoved, this, [ = ](PluginMediaSource * source) {
         QListWidgetItem* item = ui->sourcesList->takeItem(ui->sourcesList->row(d->listItems.key(source)));
@@ -59,7 +61,12 @@ OtherSourcesWidget::OtherSourcesWidget(QWidget* parent) :
         ui->stackedWidget->removeWidget(source->widget());
         source->disconnect(this);
         delete item;
+
+        if (ui->stackedWidget->count() == 0) ui->mainStack->setCurrentWidget(ui->noSourcesPage);
     });
+
+    ui->mainStack->setCurrentAnimation(tStackedWidget::Fade);
+    ui->mainStack->setCurrentWidget(ui->noSourcesPage, false);
 }
 
 OtherSourcesWidget::~OtherSourcesWidget() {

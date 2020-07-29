@@ -216,7 +216,8 @@
                <string>Enqueue All</string>
               </property>
               <property name="icon">
-               <iconset theme="view-media-playlist"/>
+               <iconset theme="view-media-playlist">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -252,7 +253,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QListView" name="tracksList">
+        <widget class="LibraryListView" name="tracksList">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -273,6 +274,11 @@
    <slots>
     <signal>switchingFrame(int)</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>LibraryListView</class>
+   <extends>QListView</extends>
+   <header>library/librarylistview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

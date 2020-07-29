@@ -71,7 +71,8 @@
                <string>Enqueue All</string>
               </property>
               <property name="icon">
-               <iconset theme="view-media-playlist"/>
+               <iconset theme="view-media-playlist">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -117,7 +118,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QListView" name="listView">
+        <widget class="LibraryListView" name="listView">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -235,6 +236,11 @@
    <extends>QWidget</extends>
    <header location="global">tcircularspinner.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LibraryListView</class>
+   <extends>QListView</extends>
+   <header>library/librarylistview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

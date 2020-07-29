@@ -20,22 +20,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="51"/>
+        <location filename="../artistsalbumswidget.cpp" line="50"/>
         <source>Albums in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="51"/>
+        <location filename="../artistsalbumswidget.cpp" line="50"/>
         <source>Artists in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="64"/>
+        <location filename="../artistsalbumswidget.cpp" line="63"/>
         <source>Tracks in %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="64"/>
+        <location filename="../artistsalbumswidget.cpp" line="63"/>
         <source>Tracks by %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -285,6 +285,16 @@
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../othersourceswidget.ui" line="93"/>
+        <source>No other sources available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../othersourceswidget.ui" line="103"/>
+        <source>There&apos;s nothing else to play right now</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TracksWidget</name>
@@ -304,17 +314,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="115"/>
+        <location filename="../trackswidget.ui" line="116"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="172"/>
+        <location filename="../trackswidget.ui" line="173"/>
         <source>Processing Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="179"/>
+        <location filename="../trackswidget.ui" line="180"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
         <translation type="unfinished"></translation>
     </message>

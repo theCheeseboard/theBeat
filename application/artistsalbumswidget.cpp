@@ -38,7 +38,6 @@ ArtistsAlbumsWidget::ArtistsAlbumsWidget(QWidget* parent) :
     d = new ArtistsAlbumsWidgetPrivate();
     connect(LibraryManager::instance(), &LibraryManager::libraryChanged, this, &ArtistsAlbumsWidget::updateData);
 
-    ui->tracksList->setItemDelegate(new LibraryItemDelegate);
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Lift);
 }
 
@@ -69,12 +68,6 @@ void ArtistsAlbumsWidget::on_initialList_itemActivated(QListWidgetItem* item) {
 
 void ArtistsAlbumsWidget::on_backButton_clicked() {
     ui->stackedWidget->setCurrentWidget(ui->mainPage);
-}
-
-void ArtistsAlbumsWidget::on_tracksList_activated(const QModelIndex& index) {
-    QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
-    StateManager::instance()->playlist()->addItem(item);
-    StateManager::instance()->playlist()->setCurrentItem(item);
 }
 
 void ArtistsAlbumsWidget::on_enqueueAllButton_clicked() {

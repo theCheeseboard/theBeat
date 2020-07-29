@@ -130,12 +130,5 @@ void WinPlatformIntegration::updateSMTC() {
     timeline.MaxSeekTime(timeline.EndTime());
     d->smtc.UpdateTimelineProperties(timeline);
 
-    // WinRT supports async/await heavily. There is no sync API for getting a StorageFile from a path
-    // C++20 has support for coroutines (async/await) using co_await. C++/WinRT uses this functionality
-    // This method returns fire_and_forget, allowing the coroutine to be generated - presumably, you
-    // do not need to await this function at the call site
-//    StorageFile file = co_await StorageFile::GetFileFromPathAsync(LR"(C:\Users\reflectronic\Desktop\Evening_1024.jpg)");
-//    updater.Thumbnail(RandomAccessStreamReference::CreateFromFile(file));
-
     updater.Update();
 }

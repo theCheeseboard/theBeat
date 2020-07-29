@@ -94,6 +94,7 @@ SOURCES += \
     artistsalbumswidget.cpp \
     common.cpp \
     controlstrip.cpp \
+    library/librarylistview.cpp \
     library/librarymanager.cpp \
     library/librarymodel.cpp \
     libraryerrorpopover.cpp \
@@ -109,6 +110,7 @@ HEADERS += \
     artistsalbumswidget.h \
     common.h \
     controlstrip.h \
+    library/librarylistview.h \
     library/librarymanager.h \
     library/librarymodel.h \
     libraryerrorpopover.h \
