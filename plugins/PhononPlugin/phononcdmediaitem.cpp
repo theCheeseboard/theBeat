@@ -99,7 +99,7 @@ void PhononCdMediaItem::stop() {
 
 void PhononCdMediaItem::seek(quint64 ms) {
     d->player->seek(ms);
-    if (d->controller->currentTitle() != d->info->track()) d->controller->setCurrentTitle(d->info->track());
+    if (ms == 0 && d->controller->currentTitle() != d->info->track()) d->controller->setCurrentTitle(d->info->track());
 }
 
 quint64 PhononCdMediaItem::elapsed() {
