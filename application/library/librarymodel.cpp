@@ -192,6 +192,5 @@ QMimeData* LibraryModel::mimeData(const QModelIndexList& indexes) const {
 Qt::ItemFlags LibraryModel::flags(const QModelIndex& index) const {
     Qt::ItemFlags defaultFlags = QSqlQueryModel::flags(index);
     defaultFlags |= Qt::ItemIsDragEnabled;
-
     return defaultFlags;
 }

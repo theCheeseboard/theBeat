@@ -183,7 +183,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="416"/>
-        <location filename="../mainwindow.cpp" line="328"/>
+        <location filename="../mainwindow.cpp" line="331"/>
         <source>Open URL</source>
         <translation>Mở liên kết</translation>
     </message>
@@ -241,34 +241,34 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="306"/>
+        <location filename="../mainwindow.cpp" line="309"/>
         <source>For &quot;%1&quot;</source>
         <translation>Cho &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="308"/>
+        <location filename="../mainwindow.cpp" line="311"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Cho %n mục</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="310"/>
+        <location filename="../mainwindow.cpp" line="313"/>
         <source>Remove from Queue</source>
         <translation>Xóa khỏi hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="317"/>
+        <location filename="../mainwindow.cpp" line="320"/>
         <source>For Queue</source>
         <translation>Cho hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="318"/>
+        <location filename="../mainwindow.cpp" line="321"/>
         <source>Clear Queue</source>
         <translation>Xóa các mục</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="328"/>
+        <location filename="../mainwindow.cpp" line="331"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>

@@ -12,6 +12,9 @@ LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
     this->setItemDelegate(new LibraryItemDelegate);
 
     connect(this, &LibraryListView::activated, this, [ = ](QModelIndex index) {
+        //Check if the user is trying to select multiple items
+        if (QApplication::keyboardModifiers() & Qt::ControlModifier || QApplication::keyboardModifiers() & Qt::ShiftModifier) return;
+
         if (index.data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) {
             LibraryErrorPopover* p = new LibraryErrorPopover(this);
             p->setData(index);

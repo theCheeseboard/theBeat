@@ -294,6 +294,9 @@ void MainWindow::ff10() {
 }
 
 void MainWindow::on_queueList_activated(const QModelIndex& index) {
+    //Check if the user is trying to select multiple items
+    if (QApplication::keyboardModifiers() & Qt::ControlModifier || QApplication::keyboardModifiers() & Qt::ShiftModifier) return;
+
     StateManager::instance()->playlist()->setCurrentItem(index.data(PlaylistModel::MediaItemRole).value<MediaItem*>());
 }
 
