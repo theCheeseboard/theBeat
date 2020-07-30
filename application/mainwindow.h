@@ -72,6 +72,7 @@ class MainWindow : public QMainWindow {
         MainWindowPrivate* d;
 
         void resizeEvent(QResizeEvent* event);
+        bool eventFilter(QObject* watched, QEvent* event);
 
         void rewind10();
         void ff10();

@@ -31,13 +31,17 @@
 #include "playlistmodel.h"
 #include <QTimer>
 #include <QShortcut>
+#include <QDragEnterEvent>
+#include <QDragLeaveEvent>
+#include <QDropEvent>
+#include <QMimeData>
 #include "pluginmanager.h"
 
 #include <qtmultimedia/qtmultimediamediaitem.h>
 
 #ifdef Q_OS_WIN
     #include <QWinThumbnailToolBar>
-#include <QWinThumbnailToolButton>
+    #include <QWinThumbnailToolButton>
     #include "platformintegration/winplatformintegration.h"
 #endif
 
@@ -95,7 +99,9 @@ MainWindow::MainWindow(QWidget* parent)
     ui->artistsPage->setType(ArtistsAlbumsWidget::Artists);
     ui->albumsPage->setType(ArtistsAlbumsWidget::Albums);
 
+    ui->queueWidget->installEventFilter(this);
     ui->queueWidget->setFixedWidth(SC_DPI(300));
+    ui->queueWidget->setAcceptDrops(true);
     ui->queueList->setModel(new PlaylistModel);
 
     d->topBarLine = new QFrame(this);
@@ -147,7 +153,7 @@ MainWindow::MainWindow(QWidget* parent)
     backToolButton->setToolTip(tr("Skip Back"));
     backToolButton->setIcon(QIcon::fromTheme("media-skip-backward"));
     backToolButton->setDismissOnClick(false);
-    connect(backToolButton, &QWinThumbnailToolButton::clicked, this, [=] {
+    connect(backToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
         StateManager::instance()->playlist()->previous();
     });
 
@@ -155,10 +161,10 @@ MainWindow::MainWindow(QWidget* parent)
     playPauseToolButton->setToolTip(tr("Play"));
     playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-start"));
     playPauseToolButton->setDismissOnClick(false);
-    connect(playPauseToolButton, &QWinThumbnailToolButton::clicked, this, [=] {
+    connect(playPauseToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
         StateManager::instance()->playlist()->playPause();
     });
-    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [=](Playlist::State state) {
+    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [ = ](Playlist::State state) {
         switch (state) {
             case Playlist::Playing:
                 playPauseToolButton->setToolTip(tr("Pause"));
@@ -176,7 +182,7 @@ MainWindow::MainWindow(QWidget* parent)
     nextToolButton->setToolTip(tr("Skip Next"));
     nextToolButton->setIcon(QIcon::fromTheme("media-skip-forward"));
     nextToolButton->setDismissOnClick(false);
-    connect(nextToolButton, &QWinThumbnailToolButton::clicked, this, [=] {
+    connect(nextToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
         StateManager::instance()->playlist()->next();
     });
 
@@ -242,6 +248,30 @@ void MainWindow::on_albumsButton_toggled(bool checked) {
 void MainWindow::resizeEvent(QResizeEvent* event) {
     d->topBarLine->move(ui->queueLine->x(), 0);
     d->topBarLine->setFixedHeight(ui->topWidget->height());
+}
+
+bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->queueWidget) {
+        if (event->type() == QEvent::DragEnter) {
+            QDragEnterEvent* e = static_cast<QDragEnterEvent*>(event);
+            if (e->mimeData()->hasUrls()) {
+                e->setDropAction(Qt::CopyAction);
+                e->acceptProposedAction();
+            }
+            return true;
+        } else if (event->type() == QEvent::Drop) {
+            QDropEvent* e = static_cast<QDropEvent*>(event);
+            e->setDropAction(Qt::CopyAction);
+            if (e->mimeData()->hasUrls()) {
+                for (QUrl url : e->mimeData()->urls()) {
+                    StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(url));
+                }
+                e->acceptProposedAction();
+            }
+            return true;
+        }
+    }
+    return false;
 }
 
 void MainWindow::rewind10() {

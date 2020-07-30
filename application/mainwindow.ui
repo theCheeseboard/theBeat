@@ -252,6 +252,9 @@
          </item>
          <item>
           <widget class="tStackedWidget" name="queueStack">
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
            <widget class="QWidget" name="queueListPage">
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <property name="spacing">
@@ -276,6 +279,12 @@
                </property>
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="dragEnabled">
+                <bool>true</bool>
+               </property>
+               <property name="dragDropMode">
+                <enum>QAbstractItemView::DragDrop</enum>
                </property>
                <property name="selectionMode">
                 <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -317,7 +326,7 @@
              <item>
               <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>Go ahead and select a track to play</string>
+                <string>Select a track or drop something here!</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

@@ -22,6 +22,9 @@
 #include <statemanager.h>
 #include <playlist.h>
 #include <QIcon>
+#include <QMimeData>
+#include <QUrl>
+#include "qtmultimedia/qtmultimediamediaitem.h"
 
 PlaylistModel::PlaylistModel(QObject* parent)
     : QAbstractListModel(parent) {
@@ -59,4 +62,58 @@ QVariant PlaylistModel::data(const QModelIndex& index, int role) const {
     }
 
     return QVariant();
+}
+
+
+QMimeData* PlaylistModel::mimeData(const QModelIndexList& indexes) const {
+    QStringList idx;
+
+    for (QModelIndex index : indexes) {
+        idx.append(QString::number(index.row()));
+    }
+
+    QMimeData* data = new QMimeData();
+    data->setData("X-theBeat-PlaylistData", idx.join(",").toUtf8());
+    return data;
+}
+
+bool PlaylistModel::canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const {
+    return data->hasUrls() || data->hasFormat("X-theBeat-PlaylistData");
+}
+
+bool PlaylistModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
+    int insertionIndex = row < 0 ? StateManager::instance()->playlist()->items().count() : row;
+    if (data->hasUrls()) {
+        for (QUrl url : data->urls()) {
+            StateManager::instance()->playlist()->insertItem(insertionIndex, new QtMultimediaMediaItem(url));
+            insertionIndex++;
+        }
+    } else if (data->hasFormat("X-theBeat-PlaylistData")) {
+        QStringList rows = QString(data->data("X-theBeat-PlaylistData")).split(",");
+        QList<MediaItem*> itemsToInsert;
+        for (QString rowStr : rows) {
+            int row = rowStr.toInt();
+            if (row < insertionIndex) insertionIndex--;
+            itemsToInsert.append(StateManager::instance()->playlist()->takeItem(row));
+        }
+        for (MediaItem* item : itemsToInsert) {
+            StateManager::instance()->playlist()->insertItem(insertionIndex, item);
+            insertionIndex++;
+        }
+    }
+    return false;
+}
+
+Qt::ItemFlags PlaylistModel::flags(const QModelIndex& index) const {
+    Qt::ItemFlags flags = QAbstractListModel::flags(index);
+    flags |= Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled;
+    return flags;
+}
+
+Qt::DropActions PlaylistModel::supportedDropActions() const {
+    return Qt::CopyAction;
+}
+
+bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent) {
+    return true;
 }

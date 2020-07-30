@@ -70,6 +70,25 @@ void Playlist::removeItem(MediaItem* item) {
     emit itemsChanged();
 }
 
+void Playlist::insertItem(int index, MediaItem* item) {
+    d->items.insert(index, item);
+    if (d->shuffle) {
+        //Add this item somewhere random in the play order
+        d->playOrder.insert(QRandomGenerator::global()->bounded(d->playOrder.count() + 1), item);
+    } else {
+        d->playOrder.insert(index, item);
+    }
+    emit itemsChanged();
+}
+
+MediaItem* Playlist::takeItem(int index) {
+    //This is used exclusively for drag and drop, so we'll see it again soon
+    MediaItem* item = d->items.takeAt(index);
+    d->playOrder.removeOne(item);
+    emit itemsChanged();
+    return item;
+}
+
 void Playlist::clear() {
     setCurrentItem(nullptr);
     for (MediaItem* item : d->items) {

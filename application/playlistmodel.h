@@ -36,8 +36,15 @@ class PlaylistModel : public QAbstractListModel {
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
         QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+        QMimeData* mimeData(const QModelIndexList& indexes) const override;
+        bool canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const override;
+        bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        Qt::DropActions supportedDropActions() const override;
+        bool insertRows(int row, int count, const QModelIndex& parent) override;
 
     private:
+
 };
 
 #endif // PLAYLISTMODEL_H

@@ -21,6 +21,8 @@
 
 #include <QPainter>
 #include <QFile>
+#include <QMimeData>
+#include <QUrl>
 #include <the-libs_global.h>
 #include "common.h"
 #include "librarymanager.h"
@@ -172,4 +174,24 @@ QSize LibraryItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QM
     sizeHint.setWidth(option.rect.width());
     sizeHint.setHeight(option.fontMetrics.height() * 2 + 12);
     return sizeHint;
+}
+
+
+QMimeData* LibraryModel::mimeData(const QModelIndexList& indexes) const {
+    QList<QUrl> urls;
+    for (QModelIndex index : indexes) {
+        urls.append(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
+    }
+
+    QMimeData* data = new QMimeData();
+    data->setUrls(urls);
+    return data;
+}
+
+
+Qt::ItemFlags LibraryModel::flags(const QModelIndex& index) const {
+    Qt::ItemFlags defaultFlags = QSqlQueryModel::flags(index);
+    defaultFlags |= Qt::ItemIsDragEnabled;
+
+    return defaultFlags;
 }

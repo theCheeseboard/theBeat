@@ -8,11 +8,10 @@
 #include <playlist.h>
 #include <tpopover.h>
 
-LibraryListView::LibraryListView(QWidget *parent) : QListView(parent)
-{
+LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
     this->setItemDelegate(new LibraryItemDelegate);
 
-    connect(this, &LibraryListView::activated, this, [=](QModelIndex index) {
+    connect(this, &LibraryListView::activated, this, [ = ](QModelIndex index) {
         if (index.data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) {
             LibraryErrorPopover* p = new LibraryErrorPopover(this);
             p->setData(index);
@@ -20,7 +19,7 @@ LibraryListView::LibraryListView(QWidget *parent) : QListView(parent)
             tPopover* popover = new tPopover(p, this);
             popover->setPopoverWidth(SC_DPI(400));
             connect(p, &LibraryErrorPopover::rejected, popover, &tPopover::dismiss);
-            connect(p, &LibraryErrorPopover::accepted, popover, [=](QString newPath) {
+            connect(p, &LibraryErrorPopover::accepted, popover, [ = ](QString newPath) {
                 QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(newPath));
                 StateManager::instance()->playlist()->addItem(item);
                 StateManager::instance()->playlist()->setCurrentItem(item);
@@ -37,4 +36,8 @@ LibraryListView::LibraryListView(QWidget *parent) : QListView(parent)
         StateManager::instance()->playlist()->addItem(item);
         StateManager::instance()->playlist()->setCurrentItem(item);
     });
+
+    this->setSelectionMode(QListView::ExtendedSelection);
+    this->setDragDropMode(QListView::DragDrop);
+    this->setDragEnabled(true);
 }

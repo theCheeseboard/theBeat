@@ -38,6 +38,8 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
 
         void addItem(MediaItem* item);
         void removeItem(MediaItem* item);
+        void insertItem(int index, MediaItem* item);
+        MediaItem* takeItem(int index);
         void clear();
 
         State state();

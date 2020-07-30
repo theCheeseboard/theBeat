@@ -48,6 +48,8 @@ class LibraryModel : public QSqlQueryModel {
 
         // Basic functionality:
         QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+        QMimeData* mimeData(const QModelIndexList& indexes) const override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
 
     private:
         LibraryModelPrivate* d;
