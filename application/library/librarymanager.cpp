@@ -105,7 +105,7 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
     QTimer::singleShot(0, [ = ] {
         QStringList musicDirectories = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
         for (QString dir : musicDirectories) {
-            this->enumerateDirectory(dir);
+            this->enumerateDirectory(dir, false);
         }
     });
 }
@@ -115,7 +115,7 @@ LibraryManager* LibraryManager::instance() {
     return mgr;
 }
 
-void LibraryManager::enumerateDirectory(QString path) {
+void LibraryManager::enumerateDirectory(QString path, bool ignoreBlacklist) {
     d->isProcessing++;
     emit isProcessingChanged();
 
@@ -130,7 +130,7 @@ void LibraryManager::enumerateDirectory(QString path) {
     QDirIterator iterator(path, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
     while (iterator.hasNext()) {
         QString path = iterator.next();
-        if (blacklistedPaths.contains(path)) continue;
+        if (blacklistedPaths.contains(path) && !ignoreBlacklist) continue;
 
 #ifdef Q_OS_WIN
         TagLib::FileRef file(path.toUtf8().data());
@@ -154,6 +154,11 @@ void LibraryManager::enumerateDirectory(QString path) {
         TemporaryDatabase db;
 
         db.db.transaction();
+
+        QSqlQuery blacklistQ;
+        blacklistQ.prepare("DELETE FROM blacklist WHERE path=:path");
+        blacklistQ.bindValue(":path", paths);
+        blacklistQ.execBatch();
 
         QSqlQuery q(db.db);
         q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
@@ -195,6 +200,7 @@ void LibraryManager::addTrack(QString path) {
     TagLib::FileRef file(path.toUtf8());
 #endif
     TagLib::Tag* tag = file.tag();
+    TagLib::AudioProperties* audioProperties = file.audioProperties();
 
     if (!tag) return;
 
@@ -203,10 +209,10 @@ void LibraryManager::addTrack(QString path) {
     QVariantList paths, titles, artists, albums, durations, trackNumbers;
 
     paths.append(path);
-    titles.append(tag->title().isNull() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
+    titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
     artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
     albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
-    durations.append(QVariant(QVariant::Int));
+    durations.append(audioProperties->lengthInMilliseconds());
     trackNumbers.append(tag->track());
 
     QSqlQuery q;
@@ -224,6 +230,8 @@ void LibraryManager::addTrack(QString path) {
     q.bindValue(":durationupd", durations);
     q.bindValue(":tracknumberupd", trackNumbers);
     q.execBatch();
+
+    emit libraryChanged();
 }
 
 void LibraryManager::removeTrack(QString path) {
@@ -233,6 +241,15 @@ void LibraryManager::removeTrack(QString path) {
     q.exec();
 
     emit libraryChanged();
+}
+
+void LibraryManager::blacklistTrack(QString path) {
+    removeTrack(path);
+
+    QSqlQuery q;
+    q.prepare("INSERT INTO blacklist(path) VALUES(:path)");
+    q.bindValue(":path", path);
+    q.exec();
 }
 
 void LibraryManager::relocateTrack(QString oldPath, QString newPath) {

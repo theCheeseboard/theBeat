@@ -41,9 +41,10 @@ class LibraryManager : public QObject {
 
         static LibraryManager* instance();
 
-        void enumerateDirectory(QString path);
+        void enumerateDirectory(QString path, bool ignoreBlacklist = true);
         void addTrack(QString path);
         void removeTrack(QString path);
+        void blacklistTrack(QString path);
         void relocateTrack(QString oldPath, QString newPath);
 
         LibraryModel* allTracks();

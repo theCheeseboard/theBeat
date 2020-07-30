@@ -23,6 +23,7 @@
 #include <QFile>
 #include <QMimeData>
 #include <QUrl>
+#include <QFileInfo>
 #include <the-libs_global.h>
 #include "common.h"
 #include "librarymanager.h"
@@ -176,7 +177,6 @@ QSize LibraryItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QM
     return sizeHint;
 }
 
-
 QMimeData* LibraryModel::mimeData(const QModelIndexList& indexes) const {
     QList<QUrl> urls;
     for (QModelIndex index : indexes) {
@@ -185,12 +185,33 @@ QMimeData* LibraryModel::mimeData(const QModelIndexList& indexes) const {
 
     QMimeData* data = new QMimeData();
     data->setUrls(urls);
+    data->setData("X-theBeat-LibraryFlag", "true");
     return data;
 }
 
 
 Qt::ItemFlags LibraryModel::flags(const QModelIndex& index) const {
     Qt::ItemFlags defaultFlags = QSqlQueryModel::flags(index);
-    defaultFlags |= Qt::ItemIsDragEnabled;
+    defaultFlags |= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
     return defaultFlags;
+}
+
+bool LibraryModel::canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const {
+    return data->hasUrls() && !data->hasFormat("X-theBeat-LibraryFlag");
+}
+
+bool LibraryModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
+    if (data->hasUrls()) {
+        for (QUrl url : data->urls()) {
+            if (!url.isLocalFile()) continue;
+            QString file = url.toLocalFile();
+
+            if (QFileInfo(file).isDir()) {
+                LibraryManager::instance()->enumerateDirectory(file);
+            } else {
+                LibraryManager::instance()->addTrack(file);
+            }
+        }
+    }
+    return false;
 }

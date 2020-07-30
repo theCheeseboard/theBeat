@@ -13,6 +13,7 @@
 
 struct LibraryListViewPrivate {
     QMenu* addToPlaylistOptions;
+    QMenu* removeFromLibraryMenu;
 };
 
 LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
@@ -21,6 +22,16 @@ LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
     d->addToPlaylistOptions = new QMenu(this);
     d->addToPlaylistOptions->setIcon(QIcon::fromTheme("list-add"));
     d->addToPlaylistOptions->setTitle(tr("Add to Playlist"));
+
+    d->removeFromLibraryMenu = new QMenu(this);
+    d->removeFromLibraryMenu->setIcon(QIcon::fromTheme("edit-delete"));
+    d->removeFromLibraryMenu->setTitle(tr("Remove from Library"));
+    d->removeFromLibraryMenu->addSection(tr("Remove from library?"));
+    d->removeFromLibraryMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove from Library"), this, [ = ] {
+        for (QModelIndex index : this->selectedIndexes()) {
+            LibraryManager::instance()->blacklistTrack(index.data(LibraryModel::PathRole).toString());
+        }
+    });
 
     this->setItemDelegate(new LibraryItemDelegate);
 
@@ -83,9 +94,11 @@ void LibraryListView::contextMenuEvent(QContextMenuEvent* event) {
     if (this->selectedIndexes().count() == 1) {
         menu->addSection(tr("For %1").arg(this->fontMetrics().elidedText(this->selectedIndexes().first().data().toString(), Qt::ElideMiddle, SC_DPI(300))));
         menu->addMenu(d->addToPlaylistOptions);
+        menu->addMenu(d->removeFromLibraryMenu);
     } else {
         menu->addSection(tr("For %n items", nullptr, this->selectedIndexes().count()));
         menu->addMenu(d->addToPlaylistOptions);
+        menu->addMenu(d->removeFromLibraryMenu);
     }
     menu->popup(event->globalPos());
 }

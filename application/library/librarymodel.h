@@ -50,9 +50,12 @@ class LibraryModel : public QSqlQueryModel {
         QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
         QMimeData* mimeData(const QModelIndexList& indexes) const override;
         Qt::ItemFlags flags(const QModelIndex& index) const override;
+        bool canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const override;
+        bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 
     private:
         LibraryModelPrivate* d;
+
 };
 Q_DECLARE_METATYPE(LibraryModel::Errors)
 

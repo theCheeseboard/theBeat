@@ -94,17 +94,17 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="152"/>
+        <location filename="../library/librarymodel.cpp" line="153"/>
         <source>by %1</source>
         <translation>bởi %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="153"/>
+        <location filename="../library/librarymodel.cpp" line="154"/>
         <source>on %1</source>
         <translation>trong %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="155"/>
+        <location filename="../library/librarymodel.cpp" line="156"/>
         <source>Track</source>
         <translation>Bài hát</translation>
     </message>
@@ -112,17 +112,28 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="23"/>
+        <location filename="../library/librarylistview.cpp" line="24"/>
         <source>Add to Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="84"/>
+        <location filename="../library/librarylistview.cpp" line="28"/>
+        <location filename="../library/librarylistview.cpp" line="30"/>
+        <source>Remove from Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/librarylistview.cpp" line="29"/>
+        <source>Remove from library?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/librarylistview.cpp" line="95"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../library/librarylistview.cpp" line="87"/>
+        <location filename="../library/librarylistview.cpp" line="99"/>
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform>Cho %n mục</numerusform>
@@ -162,91 +173,96 @@
         <translation>Nguồn khác</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="272"/>
+        <location filename="../mainwindow.ui" line="275"/>
         <source>Queue</source>
         <translation>Hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="342"/>
+        <location filename="../mainwindow.ui" line="345"/>
         <source>Nothing Here!</source>
         <translation>Không có gì đây!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="392"/>
+        <location filename="../mainwindow.ui" line="395"/>
         <source>File Bug</source>
         <translation>Báo cáo lỗi</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="401"/>
+        <location filename="../mainwindow.ui" line="404"/>
         <source>Sources</source>
         <translation>Mã nguồn</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="410"/>
+        <location filename="../mainwindow.ui" line="413"/>
         <source>About</source>
         <translation>Giới thiệu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="419"/>
+        <location filename="../mainwindow.ui" line="422"/>
         <source>Exit</source>
         <translation>Thoát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="422"/>
+        <location filename="../mainwindow.ui" line="425"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="431"/>
+        <location filename="../mainwindow.ui" line="434"/>
         <source>Open File</source>
         <translation>Mở tệp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="434"/>
+        <location filename="../mainwindow.ui" line="437"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="439"/>
-        <location filename="../mainwindow.cpp" line="331"/>
+        <location filename="../mainwindow.ui" line="442"/>
+        <location filename="../mainwindow.cpp" line="334"/>
         <source>Open URL</source>
         <translation>Mở liên kết</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="448"/>
-        <location filename="../mainwindow.cpp" line="153"/>
+        <location filename="../mainwindow.ui" line="451"/>
+        <location filename="../mainwindow.cpp" line="154"/>
         <source>Skip Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="451"/>
+        <location filename="../mainwindow.ui" line="454"/>
         <source>Shift+Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="463"/>
+        <location filename="../mainwindow.ui" line="466"/>
         <source>Shift+Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="460"/>
+        <location filename="../mainwindow.ui" line="486"/>
+        <source>Add to Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="463"/>
         <source>Skip Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="352"/>
+        <location filename="../mainwindow.ui" line="355"/>
         <source>Select a track or drop something here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="472"/>
-        <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../mainwindow.cpp" line="175"/>
+        <location filename="../mainwindow.ui" line="475"/>
+        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../mainwindow.cpp" line="176"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="475"/>
+        <location filename="../mainwindow.ui" line="478"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
@@ -256,44 +272,44 @@
         <translation>Trợ giúp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="170"/>
+        <location filename="../mainwindow.cpp" line="171"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="182"/>
+        <location filename="../mainwindow.cpp" line="183"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="309"/>
+        <location filename="../mainwindow.cpp" line="312"/>
         <source>For &quot;%1&quot;</source>
         <translation>Cho &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="311"/>
+        <location filename="../mainwindow.cpp" line="314"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Cho %n mục</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="313"/>
+        <location filename="../mainwindow.cpp" line="316"/>
         <source>Remove from Queue</source>
         <translation>Xóa khỏi hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="320"/>
+        <location filename="../mainwindow.cpp" line="323"/>
         <source>For Queue</source>
         <translation>Cho hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="321"/>
+        <location filename="../mainwindow.cpp" line="324"/>
         <source>Clear Queue</source>
         <translation>Xóa các mục</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="331"/>
+        <location filename="../mainwindow.cpp" line="334"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>

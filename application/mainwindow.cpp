@@ -78,6 +78,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     menu->addAction(ui->actionOpen_File);
     menu->addAction(ui->actionOpen_URL);
+    menu->addAction(ui->actionAdd_to_Library);
     menu->addSeparator();
     menu->addAction(ui->actionPlayPause);
     menu->addAction(ui->actionSkip_Back);
@@ -201,10 +202,12 @@ MainWindow::~MainWindow() {
 void MainWindow::on_actionOpen_File_triggered() {
     QFileDialog* dialog = new QFileDialog(this);
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
+    dialog->setFileMode(QFileDialog::ExistingFiles);
     connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
-        //TODO: Enqueue multiple items
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(files.first()));
-        StateManager::instance()->playlist()->addItem(item);
+        for (QString file : files) {
+            QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(file));
+            StateManager::instance()->playlist()->addItem(item);
+        }
     });
     connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
     dialog->open();
@@ -354,4 +357,18 @@ void MainWindow::on_playlistsButton_toggled(bool checked) {
     if (checked) {
         ui->stackedWidget->setCurrentWidget(ui->playlistsPage);
     }
+}
+
+void MainWindow::on_actionAdd_to_Library_triggered() {
+    QFileDialog* dialog = new QFileDialog(this);
+    dialog->setAcceptMode(QFileDialog::AcceptOpen);
+    dialog->setFileMode(QFileDialog::Directory);
+    dialog->setOption(QFileDialog::ShowDirsOnly);
+    connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
+        for (QString file : files) {
+            LibraryManager::instance()->enumerateDirectory(file);
+        }
+    });
+    connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
+    dialog->open();
 }

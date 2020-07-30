@@ -69,6 +69,8 @@ class MainWindow : public QMainWindow {
 
         void on_playlistsButton_toggled(bool checked);
 
+        void on_actionAdd_to_Library_triggered();
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;

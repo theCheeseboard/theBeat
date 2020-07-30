@@ -228,6 +228,9 @@
       </property>
       <item>
        <widget class="tStackedWidget" name="stackedWidget">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
         <widget class="TracksWidget" name="tracksPage"/>
         <widget class="ArtistsAlbumsWidget" name="artistsPage"/>
         <widget class="ArtistsAlbumsWidget" name="albumsPage"/>
@@ -473,6 +476,14 @@
    </property>
    <property name="shortcut">
     <string>Space</string>
+   </property>
+  </action>
+  <action name="actionAdd_to_Library">
+   <property name="icon">
+    <iconset theme="document-open"/>
+   </property>
+   <property name="text">
+    <string>Add to Library</string>
    </property>
   </action>
  </widget>
