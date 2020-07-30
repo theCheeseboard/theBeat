@@ -54,16 +54,15 @@ ControlStrip::ControlStrip(QWidget* parent) :
     ui->volumeSlider->setFixedWidth(0);
 
 
-   d->volumeBarAnim = new tVariantAnimation(this);
-   d->volumeBarAnim->setDuration(500);
-   d->volumeBarAnim->setEasingCurve(QEasingCurve::OutCubic);
-   connect(d->volumeBarAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
-       this->setFixedHeight(value.toInt());
-   });
-   connect(d->volumeBarAnim, &tVariantAnimation::finished, this, [ = ] {
-       this->setFixedHeight(QWIDGETSIZE_MAX);
-       d->volumeBarAnim->deleteLater();
-   });
+    d->volumeBarAnim = new tVariantAnimation(this);
+    d->volumeBarAnim->setDuration(500);
+    d->volumeBarAnim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(d->volumeBarAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+        this->setFixedHeight(value.toInt());
+    });
+    connect(d->volumeBarAnim, &tVariantAnimation::finished, this, [ = ] {
+        if (d->volumeBarAnim->endValue().toInt() != 0) this->setFixedHeight(QWIDGETSIZE_MAX);
+    });
 
     updateCurrentItem();
 }
