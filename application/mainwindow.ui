@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>990</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -154,6 +154,28 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="playlistsButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Playlists</string>
+         </property>
+         <property name="icon">
+          <iconset theme="view-media-playlist"/>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="otherButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -209,6 +231,7 @@
         <widget class="TracksWidget" name="tracksPage"/>
         <widget class="ArtistsAlbumsWidget" name="artistsPage"/>
         <widget class="ArtistsAlbumsWidget" name="albumsPage"/>
+        <widget class="UserPlaylistsWidget" name="playlistsPage"/>
         <widget class="OtherSourcesWidget" name="otherSourcesPage"/>
        </widget>
       </item>
@@ -493,6 +516,12 @@
    <class>OtherSourcesWidget</class>
    <extends>QWidget</extends>
    <header>othersourceswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UserPlaylistsWidget</class>
+   <extends>QWidget</extends>
+   <header>userplaylistswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

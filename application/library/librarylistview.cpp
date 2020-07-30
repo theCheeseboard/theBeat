@@ -3,12 +3,25 @@
 #include <QUrl>
 #include "libraryerrorpopover.h"
 #include "librarymodel.h"
+#include "librarymanager.h"
 #include "qtmultimedia/qtmultimediamediaitem.h"
 #include <statemanager.h>
 #include <playlist.h>
+#include <QMenu>
+#include <QContextMenuEvent>
 #include <tpopover.h>
 
+struct LibraryListViewPrivate {
+    QMenu* addToPlaylistOptions;
+};
+
 LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
+    d = new LibraryListViewPrivate();
+
+    d->addToPlaylistOptions = new QMenu(this);
+    d->addToPlaylistOptions->setIcon(QIcon::fromTheme("list-add"));
+    d->addToPlaylistOptions->setTitle(tr("Add to Playlist"));
+
     this->setItemDelegate(new LibraryItemDelegate);
 
     connect(this, &LibraryListView::activated, this, [ = ](QModelIndex index) {
@@ -43,4 +56,36 @@ LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
     this->setSelectionMode(QListView::ExtendedSelection);
     this->setDragDropMode(QListView::DragDrop);
     this->setDragEnabled(true);
+
+    connect(LibraryManager::instance(), &LibraryManager::playlistsChanged, this, &LibraryListView::updatePlaylists);
+    updatePlaylists();
+}
+
+LibraryListView::~LibraryListView() {
+    delete d;
+}
+
+void LibraryListView::updatePlaylists() {
+    d->addToPlaylistOptions->clear();
+    for (QPair<int, QString> playlist : LibraryManager::instance()->playlists()) {
+        d->addToPlaylistOptions->addAction(playlist.second, this, [ = ] {
+            for (QModelIndex index : this->selectedIndexes()) {
+                LibraryManager::instance()->addTrackToPlaylist(playlist.first, index.data(LibraryModel::PathRole).toString());
+            }
+        });
+    }
+}
+
+void LibraryListView::contextMenuEvent(QContextMenuEvent* event) {
+    if (this->selectedIndexes().count() == 0) return;
+
+    QMenu* menu = new QMenu();
+    if (this->selectedIndexes().count() == 1) {
+        menu->addSection(tr("For %1").arg(this->fontMetrics().elidedText(this->selectedIndexes().first().data().toString(), Qt::ElideMiddle, SC_DPI(300))));
+        menu->addMenu(d->addToPlaylistOptions);
+    } else {
+        menu->addSection(tr("For %n items", nullptr, this->selectedIndexes().count()));
+        menu->addMenu(d->addToPlaylistOptions);
+    }
+    menu->popup(event->globalPos());
 }

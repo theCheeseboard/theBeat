@@ -3,13 +3,21 @@
 
 #include <QListView>
 
-class LibraryListView : public QListView
-{
-    Q_OBJECT
-public:
-    explicit LibraryListView(QWidget *parent = nullptr);
+struct LibraryListViewPrivate;
+class LibraryListView : public QListView {
+        Q_OBJECT
+    public:
+        explicit LibraryListView(QWidget* parent = nullptr);
+        ~LibraryListView();
 
-signals:
+    signals:
+
+    private:
+        LibraryListViewPrivate* d;
+
+        void updatePlaylists();
+
+        void contextMenuEvent(QContextMenuEvent* event);
 
 };
 

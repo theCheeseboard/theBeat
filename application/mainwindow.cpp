@@ -349,3 +349,9 @@ void MainWindow::on_actionSkip_Forward_triggered() {
 void MainWindow::on_actionPlayPause_triggered() {
     StateManager::instance()->playlist()->playPause();
 }
+
+void MainWindow::on_playlistsButton_toggled(bool checked) {
+    if (checked) {
+        ui->stackedWidget->setCurrentWidget(ui->playlistsPage);
+    }
+}

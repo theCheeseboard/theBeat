@@ -60,6 +60,7 @@ struct TemporaryDatabase {
     }
 
     ~TemporaryDatabase() {
+        db.exec("PRAGMA wal_checkpoint(TRUNCATE)");
         db.close();
         QSqlDatabase::removeDatabase(dbName);
     }
@@ -77,11 +78,28 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
     if (!db.open()) return;
 
     db.exec("PRAGMA foreign_keys = ON");
+    db.exec("PRAGMA journal_mode = WAL");
 
     //Initialise the tables
     QStringList tables = db.tables();
-    db.exec("CREATE TABLE tracks(id INTEGER PRIMARY KEY, path TEXT UNIQUE, title TEXT, artist TEXT, album TEXT, duration INTEGER, trackNumber INTEGER)");
-    db.exec("CREATE TABLE blacklist(path TEXT PRIMARY KEY)");
+    db.exec("CREATE TABLE IF NOT EXISTS version(version INTEGER)");
+
+    int version = -1;
+    QSqlQuery versionQuery("SELECT version FROM version");
+    if (versionQuery.next()) {
+        version = versionQuery.value("version").toInt();
+    }
+
+    if (version == -1) {
+        //Initialise a new database
+        db.exec("CREATE TABLE tracks(id INTEGER PRIMARY KEY, path TEXT UNIQUE, title TEXT, artist TEXT, album TEXT, duration INTEGER, trackNumber INTEGER)");
+        db.exec("CREATE TABLE blacklist(path TEXT PRIMARY KEY)");
+        db.exec("CREATE TABLE playlists(id INTEGER PRIMARY KEY, name TEXT UNIQUE)");
+        db.exec("CREATE TABLE playlistTracks(playlistid INTEGER REFERENCES playlists(id) ON DELETE CASCADE, trackid INTEGER REFERENCES tracks(id) ON DELETE CASCADE ON UPDATE CASCADE, sort INTEGER, CONSTRAINT playlistTracks_pk PRIMARY KEY(playlistid, trackid, sort))");
+        db.exec("INSERT INTO version(version) VALUES(1)");
+    } else if (version == 1) {
+        //This is the current database version
+    }
 
     //Enumerate the Music directory
     QTimer::singleShot(0, [ = ] {
@@ -154,7 +172,6 @@ void LibraryManager::enumerateDirectory(QString path) {
         q.execBatch();
 
         db.db.commit();
-        db.db.exec("PRAGMA wal_checkpoint(TRUNCATE)");
 
         res();
     })->then([ = ] {
@@ -209,8 +226,7 @@ void LibraryManager::addTrack(QString path) {
     q.execBatch();
 }
 
-void LibraryManager::removeTrack(QString path)
-{
+void LibraryManager::removeTrack(QString path) {
     QSqlQuery q;
     q.prepare("DELETE FROM tracks WHERE path=:path");
     q.bindValue(":path", path);
@@ -219,8 +235,7 @@ void LibraryManager::removeTrack(QString path)
     emit libraryChanged();
 }
 
-void LibraryManager::relocateTrack(QString oldPath, QString newPath)
-{
+void LibraryManager::relocateTrack(QString oldPath, QString newPath) {
     QSqlQuery q;
     q.prepare("UPDATE OR REPLACE tracks SET path=:newpath WHERE path=:oldpath");
     q.bindValue(":oldpath", oldPath);
@@ -287,6 +302,46 @@ LibraryModel* LibraryManager::tracksByAlbum(QString album) {
     QSqlQuery q;
     q.prepare("SELECT * FROM tracks WHERE album=:album ORDER BY trackNumber ASC");
     q.bindValue(":album", album);
+    q.exec();
+
+    LibraryModel* model = new LibraryModel();
+    model->setQuery(q);
+    return model;
+}
+
+void LibraryManager::createPlaylist(QString playlistName) {
+    QSqlQuery q;
+    q.prepare("INSERT INTO playlists(name) VALUES(:name)");
+    q.bindValue(":name", playlistName);
+    q.exec();
+
+    emit playlistsChanged();
+}
+
+QList<QPair<int, QString>> LibraryManager::playlists() {
+    QSqlQuery q("SELECT * FROM playlists ORDER BY LOWER(name) ASC");
+    QList<QPair<int, QString>> playlists;
+    while (q.next()) {
+        playlists.append({q.value("id").toInt(), q.value("name").toString()});
+    }
+    return playlists;
+}
+
+void LibraryManager::addTrackToPlaylist(int playlist, QString path) {
+    QSqlQuery q;
+    q.prepare("INSERT INTO playlistTracks(playlistid, trackid, sort) VALUES(:playlistid, (SELECT id FROM tracks WHERE path=:path), (SELECT COUNT(*) FROM playlistTracks WHERE playlistid=:playlistidcount))");
+    q.bindValue(":playlistid", playlist);
+    q.bindValue(":playlistidcount", playlist);
+    q.bindValue(":path", path);
+    q.exec();
+
+    emit playlistChanged(playlist);
+}
+
+LibraryModel* LibraryManager::tracksByPlaylist(int playlist) {
+    QSqlQuery q;
+    q.prepare("SELECT tracks.* FROM playlistTracks, tracks WHERE playlistTracks.trackid=tracks.id AND playlistTracks.playlistid=:playlist ORDER BY playlistTracks.sort ASC");
+    q.bindValue(":playlist", playlist);
     q.exec();
 
     LibraryModel* model = new LibraryModel();

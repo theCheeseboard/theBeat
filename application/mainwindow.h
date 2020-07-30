@@ -67,6 +67,8 @@ class MainWindow : public QMainWindow {
 
         void on_actionPlayPause_triggered();
 
+        void on_playlistsButton_toggled(bool checked);
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;

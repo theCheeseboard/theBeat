@@ -56,11 +56,19 @@ class LibraryManager : public QObject {
         LibraryModel* tracksByArtist(QString artist);
         LibraryModel* tracksByAlbum(QString album);
 
+        void createPlaylist(QString playlistName);
+        QList<QPair<int, QString>> playlists();
+
+        void addTrackToPlaylist(int playlist, QString path);
+        LibraryModel* tracksByPlaylist(int playlist);
+
         bool isProcessing();
 
     signals:
         void libraryChanged();
         bool isProcessingChanged();
+        void playlistsChanged();
+        void playlistChanged(int id);
 
     private:
         LibraryManagerPrivate* d;
