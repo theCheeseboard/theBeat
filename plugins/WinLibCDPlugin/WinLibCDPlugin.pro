@@ -1,4 +1,4 @@
-QT += gui
+QT += gui widgets
 
 TEMPLATE = lib
 CONFIG += plugin

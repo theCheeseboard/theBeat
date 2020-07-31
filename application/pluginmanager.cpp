@@ -40,6 +40,7 @@ void PluginManager::load() {
     searchPaths.append(QString(SYSTEM_LIBRARY_DIRECTORY).append("/thebeat/plugins"));
 #elif defined(Q_OS_WIN)
     searchPaths.append(qApp->applicationDirPath() + "/../../plugins");
+    searchPaths.append(qApp->applicationDirPath() + "/plugins");
 #endif
 
     QStringList seenUuids;
