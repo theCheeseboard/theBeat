@@ -21,9 +21,8 @@
 #define PLUGININTERFACE_H
 
 #include <QObject>
-#include "libthebeat_global.h"
 
-class LIBTHEBEAT_EXPORT PluginInterface {
+class PluginInterface {
     public:
         virtual ~PluginInterface() {}
 

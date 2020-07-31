@@ -6,6 +6,11 @@ unix:!macx {
         LinuxIntegration
 }
 
+win32 {
+    SUBDIRS += \
+        WinLibCDPlugin
+}
+
 DISTFILES += \
     plugins.pri
 

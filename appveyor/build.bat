@@ -41,6 +41,18 @@ qmake Contemporary.pro "CONFIG+=release"
 nmake release
 cd ..
 
+rem Build cdlib
+cd plugins\WinLibCDPlugin\cdlib
+nuget restore
+msbuild -p:Configuration=Release -p:WindowsTargetPlatformVersion=10.0.18362.0
+cd x64\Release
+
+for /D %%v in ("%userprofile%\.nuget\packages\microsoft.windows.cppwinrt\2*") do (
+    "%%~v\bin\cppwinrt.exe" -out headers -in CDLib.winmd -in 10.0.18362.0
+)
+
+cd ..\..\..\..\..
+
 qmake theBeat.pro "CONFIG+=release"
 nmake release
 mkdir deploy
@@ -53,6 +65,7 @@ copy libthebeat\release\thebeat.dll deploy
 copy application\translations\*.qm deploy\translations
 robocopy application\icons\contemporary-icons deploy\icons\ /mir
 copy "C:\Program Files\thelibs\lib\the-libs.dll" deploy
+copy plugins\WinLibCDPlugin\cdlib\x64\Release\CDLib.dll deploy
 copy "C:\OpenSSL-Win64\bin\openssl.exe" deploy
 copy "C:\OpenSSL-Win64\bin\libeay32.dll" deploy
 copy "C:\OpenSSL-Win64\bin\ssleay32.dll" deploy

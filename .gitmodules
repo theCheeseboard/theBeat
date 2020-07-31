@@ -1,3 +1,6 @@
 [submodule "application/icons/contemporary-icons"]
 	path = application/icons/contemporary-icons
 	url = https://github.com/vicr123/contemporary-icons.git
+[submodule "plugins/WinLibCDPlugin/cdlib"]
+	path = plugins/WinLibCDPlugin/cdlib
+	url = https://github.com/reflectronic/cdlib.git

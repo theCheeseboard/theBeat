@@ -47,7 +47,3 @@ HEADERS += \
     sourcemanager.h \
     statemanager.h
 
-# Default rules for deployment.
-unix {
-}
-!isEmpty(target.path): INSTALLS += target

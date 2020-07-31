@@ -38,12 +38,14 @@ void PluginManager::load() {
 
 #ifdef T_OS_UNIX_NOT_MAC
     searchPaths.append(QString(SYSTEM_LIBRARY_DIRECTORY).append("/thebeat/plugins"));
+#elif defined(Q_OS_WIN)
+    searchPaths.append(qApp->applicationDirPath() + "/../../plugins");
 #endif
 
     QStringList seenUuids;
 
     for (QString searchPath : searchPaths) {
-        QDirIterator iterator(searchPath, {"*.so"}, QDir::NoFilter, QDirIterator::Subdirectories);
+        QDirIterator iterator(searchPath, {"*.so", "*.dll"}, QDir::NoFilter, QDirIterator::Subdirectories);
         while (iterator.hasNext()) {
             QPluginLoader loader(iterator.next());
             QObject* instance = loader.instance();

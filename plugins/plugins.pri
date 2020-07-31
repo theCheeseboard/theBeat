@@ -8,7 +8,15 @@ unix:!macx: {
 
     target.path = $$[QT_INSTALL_LIBS]/thebeat/plugins
     INSTALLS += target
+
+    QMAKE_POST_LINK += $$QMAKE_COPY_DIR $$quote($$_PRO_FILE_PWD_/translations) $$shell_quote($$OUT_PWD) && \
+        $$QMAKE_COPY $$quote($$_PRO_FILE_PWD_/defaults.conf) $$shell_quote($$OUT_PWD)
 }
 
-QMAKE_POST_LINK += $$QMAKE_COPY_DIR $$quote($$_PRO_FILE_PWD_/translations) $$shell_quote($$OUT_PWD) && \
-    $$QMAKE_COPY $$quote($$_PRO_FILE_PWD_/defaults.conf) $$shell_quote($$OUT_PWD)
+win32 {
+    CONFIG(release, debug|release) {
+        LIBS += -L$$OUT_PWD/../../libthebeat/release/ -lthebeat
+    } else {
+        CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libthebeat/debug/ -lthebeat
+    }
+}
