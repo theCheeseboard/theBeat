@@ -45,13 +45,7 @@ rem Build cdlib
 cd plugins\WinLibCDPlugin\cdlib
 nuget restore
 msbuild -p:Configuration=Release -p:WindowsTargetPlatformVersion=10.0.18362.0
-cd x64\Release
-
-for /D %%v in ("%userprofile%\.nuget\packages\microsoft.windows.cppwinrt\2*") do (
-    "%%~v\bin\cppwinrt.exe" -out headers -in CDLib.winmd -in 10.0.18362.0
-)
-
-cd ..\..\..\..\..
+cd ..\..\..
 
 qmake theBeat.pro "CONFIG+=release"
 nmake release
