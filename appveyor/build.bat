@@ -61,7 +61,7 @@ copy application\translations\*.qm deploy\translations
 robocopy application\icons\contemporary-icons deploy\icons\ /mir
 copy "C:\Program Files\thelibs\lib\the-libs.dll" deploy
 copy plugins\WinLibCDPlugin\cdlib\x64\Release\CDLib.dll deploy
-copy plugins\WinLibCDPlugin\release\WinLibCDPlugin.dll deploy/plugins
+copy plugins\WinLibCDPlugin\release\WinLibCDPlugin.dll deploy\plugins
 copy "C:\OpenSSL-Win64\bin\openssl.exe" deploy
 copy "C:\OpenSSL-Win64\bin\libeay32.dll" deploy
 copy "C:\OpenSSL-Win64\bin\ssleay32.dll" deploy
