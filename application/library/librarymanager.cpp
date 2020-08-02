@@ -28,6 +28,9 @@
 #include <QVariant>
 #include <QDebug>
 #include <QRandomGenerator>
+#include <statemanager.h>
+#include <playlist.h>
+#include "qtmultimedia/qtmultimediamediaitem.h"
 #include <tpromise.h>
 #include <taglib/fileref.h>
 
@@ -91,12 +94,16 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
     }
 
     if (version == -1) {
-        //Initialise a new database
+        //Initialise a new database; this is the first time we're running theBeat
         db.exec("CREATE TABLE tracks(id INTEGER PRIMARY KEY, path TEXT UNIQUE, title TEXT, artist TEXT, album TEXT, duration INTEGER, trackNumber INTEGER)");
         db.exec("CREATE TABLE blacklist(path TEXT PRIMARY KEY)");
         db.exec("CREATE TABLE playlists(id INTEGER PRIMARY KEY, name TEXT UNIQUE)");
         db.exec("CREATE TABLE playlistTracks(playlistid INTEGER REFERENCES playlists(id) ON DELETE CASCADE, trackid INTEGER REFERENCES tracks(id) ON DELETE CASCADE ON UPDATE CASCADE, sort INTEGER, CONSTRAINT playlistTracks_pk PRIMARY KEY(playlistid, trackid, sort))");
         db.exec("INSERT INTO version(version) VALUES(1)");
+
+        //Also add Silly to the playlist
+        StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.flac")));
+        StateManager::instance()->playlist()->pause();
     } else if (version == 1) {
         //This is the current database version
     }

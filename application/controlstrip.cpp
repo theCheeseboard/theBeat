@@ -51,7 +51,7 @@ ControlStrip::ControlStrip(QWidget* parent) :
     });
     ui->volumeSlider->setValue(StateManager::instance()->playlist()->volume() * 100);
 
-    this->setFixedHeight(0);
+    if (StateManager::instance()->playlist()->items().isEmpty()) this->setFixedHeight(0);
     ui->volumeWidget->installEventFilter(this);
     ui->volumeSlider->setFixedWidth(0);
 

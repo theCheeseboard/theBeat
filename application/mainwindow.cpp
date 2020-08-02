@@ -36,6 +36,7 @@
 #include <QDragLeaveEvent>
 #include <QDropEvent>
 #include <QMimeData>
+#include <QInputDialog>
 #include "pluginmanager.h"
 #include "settingsdialog.h"
 
@@ -341,10 +342,13 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
     menu->popup(ui->queueList->mapToGlobal(pos));
 }
 
-#include <QInputDialog>
 void MainWindow::on_actionOpen_URL_triggered() {
-    QString url = QInputDialog::getText(this, tr("Open URL"), tr("URL"));
-    StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl(url)));
+    bool ok;
+    QString url = QInputDialog::getText(this, tr("Open URL"), tr("URL"), QLineEdit::Normal, "", &ok);
+
+    if (ok) {
+        StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl(url)));
+    }
 }
 
 void MainWindow::on_otherButton_toggled(bool checked) {

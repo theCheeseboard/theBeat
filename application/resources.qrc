@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>icons/thebeat.svg</file>
         <file>icons/aboutsplash.svg</file>
+        <file>resources/Silly.flac</file>
     </qresource>
 </RCC>
