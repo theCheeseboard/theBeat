@@ -48,12 +48,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="85"/>
+        <location filename="../controlstrip.ui" line="88"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="92"/>
+        <location filename="../controlstrip.ui" line="95"/>
         <source>Metadata</source>
         <translation type="unfinished"></translation>
     </message>

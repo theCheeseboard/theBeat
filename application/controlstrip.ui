@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -134,7 +137,8 @@
              <string notr="true">...</string>
             </property>
             <property name="icon">
-             <iconset theme="audio-volume-high"/>
+             <iconset theme="audio-volume-high">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>

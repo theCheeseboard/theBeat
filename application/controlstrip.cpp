@@ -29,6 +29,8 @@ struct ControlStripPrivate {
     MediaItem* currentItem = nullptr;
     bool isCollapsed = true;
 
+    QPalette standardPal;
+
     tVariantAnimation* volumeBarAnim;
 };
 
@@ -53,6 +55,7 @@ ControlStrip::ControlStrip(QWidget* parent) :
     ui->volumeWidget->installEventFilter(this);
     ui->volumeSlider->setFixedWidth(0);
 
+    d->standardPal = this->palette();
 
     d->volumeBarAnim = new tVariantAnimation(this);
     d->volumeBarAnim->setDuration(500);
@@ -118,8 +121,37 @@ void ControlStrip::updateMetadata() {
     QImage image = d->currentItem->albumArt();
     if (image.isNull()) {
         ui->artLabel->setPixmap(QIcon::fromTheme("audio").pixmap(SC_DPI_T(QSize(48, 48), QSize)));
+        this->setPalette(d->standardPal);
     } else {
         ui->artLabel->setPixmap(QPixmap::fromImage(image).scaled(SC_DPI_T(QSize(48, 48), QSize), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+        qulonglong red = 0, green = 0, blue = 0;
+
+        QPalette pal = this->palette();
+        int totalPixels = 0;
+        for (int i = 0; i < image.width(); i++) {
+            for (int j = 0; j < image.height(); j++) {
+                QColor c = image.pixelColor(i, j);
+                if (c.alpha() != 0) {
+                    red += c.red();
+                    green += c.green();
+                    blue += c.blue();
+                    totalPixels++;
+                }
+            }
+        }
+
+        int averageCol = (pal.color(QPalette::Window).red() + pal.color(QPalette::Window).green() + pal.color(QPalette::Window).blue()) / 3;
+        QColor c = QColor(red / totalPixels, green / totalPixels, blue / totalPixels);
+
+        if (averageCol < 127) {
+            c = c.darker(200);
+        } else {
+            c = c.lighter(200);
+        }
+
+        pal.setColor(QPalette::Window, c);
+        this->setPalette(pal);
     }
 }
 
