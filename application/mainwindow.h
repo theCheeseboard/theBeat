@@ -71,6 +71,8 @@ class MainWindow : public QMainWindow {
 
         void on_actionAdd_to_Library_triggered();
 
+        void on_actionSettings_triggered();
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;

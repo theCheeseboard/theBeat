@@ -104,6 +104,7 @@ SOURCES += \
     playlistmodel.cpp \
     pluginmanager.cpp \
     qtmultimedia/qtmultimediamediaitem.cpp \
+    settingsdialog.cpp \
     trackswidget.cpp \
     userplaylistswidget.cpp
 
@@ -120,6 +121,7 @@ HEADERS += \
     playlistmodel.h \
     pluginmanager.h \
     qtmultimedia/qtmultimediamediaitem.h \
+    settingsdialog.h \
     trackswidget.h \
     userplaylistswidget.h
 
@@ -129,6 +131,7 @@ FORMS += \
     libraryerrorpopover.ui \
     mainwindow.ui \
     othersourceswidget.ui \
+    settingsdialog.ui \
     trackswidget.ui \
     userplaylistswidget.ui
 

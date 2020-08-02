@@ -58,6 +58,8 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
         void setVolume(double volume);
         double volume();
 
+        void setTrachChangeNotificationsEnabled(bool notificationsEnabled);
+
     public slots:
         void play();
         void playPause();

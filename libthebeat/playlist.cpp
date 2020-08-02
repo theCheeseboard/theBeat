@@ -33,6 +33,8 @@ struct PlaylistPrivate {
     bool shuffle = false;
     double volume = 1;
 
+    bool trackChangeNotificationsEnabled = true;
+
     QString oldTitle;
 };
 
@@ -187,19 +189,21 @@ void Playlist::updateMetadata() {
             };
             text.removeAll("");
 
-            tNotification* notification = new tNotification();
-            notification->setSummary(tr("Now Playing"));
-            notification->setText(text.join(" · "));
-            notification->setTransient(true);
-            notification->setSoundOn(false);
-            notification->insertAction(QStringLiteral("next"), tr("Skip Next"));
-            connect(notification, &tNotification::actionClicked, this, [ = ](QString key) {
-                if (key == QStringLiteral("next")) {
-                    //Skip to the next track
-                    this->next();
-                }
-            });
-            notification->post();
+            if (d->trackChangeNotificationsEnabled) {
+                tNotification* notification = new tNotification();
+                notification->setSummary(tr("Now Playing"));
+                notification->setText(text.join(" · "));
+                notification->setTransient(true);
+                notification->setSoundOn(false);
+                notification->insertAction(QStringLiteral("next"), tr("Skip Next"));
+                connect(notification, &tNotification::actionClicked, this, [ = ](QString key) {
+                    if (key == QStringLiteral("next")) {
+                        //Skip to the next track
+                        this->next();
+                    }
+                });
+                notification->post();
+            }
         }
 
         d->oldTitle = d->currentItem->title();
@@ -306,4 +310,8 @@ void Playlist::setVolume(double volume) {
 
 double Playlist::volume() {
     return d->volume;
+}
+
+void Playlist::setTrachChangeNotificationsEnabled(bool notificationsEnabled) {
+    d->trackChangeNotificationsEnabled = notificationsEnabled;
 }

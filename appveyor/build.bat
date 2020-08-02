@@ -67,5 +67,6 @@ copy "C:\OpenSSL-Win64\bin\libeay32.dll" deploy
 copy "C:\OpenSSL-Win64\bin\ssleay32.dll" deploy
 copy "C:\OpenSSL-Win64\bin\openssl.cfg" deploy
 copy taglib\build\taglib\tag.dll deploy
+copy application\defaults.conf deploy
 cd deploy
 windeployqt theBeat.exe -network -quickwidgets -sql -multimedia

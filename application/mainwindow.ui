@@ -165,7 +165,8 @@
           <string>Playlists</string>
          </property>
          <property name="icon">
-          <iconset theme="view-media-playlist"/>
+          <iconset theme="view-media-playlist">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -480,10 +481,22 @@
   </action>
   <action name="actionAdd_to_Library">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Add to Library</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset theme="configure"/>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+,</string>
    </property>
   </action>
  </widget>

@@ -322,7 +322,8 @@ LibraryModel* LibraryManager::tracksByAlbum(QString album) {
     q.exec();
 
     LibraryModel* model = new LibraryModel();
-    model->setQuery(q);
+    model->setQuery(q);//        if (connection != QSqlDatabase::defaultConnection) {
+
     return model;
 }
 
@@ -368,4 +369,18 @@ LibraryModel* LibraryManager::tracksByPlaylist(int playlist) {
 
 bool LibraryManager::isProcessing() {
     return d->isProcessing > 0;
+}
+
+void LibraryManager::erase() {
+    QStringList connections = QSqlDatabase::connectionNames();
+    for (QString connection : connections) {
+        QSqlDatabase db = QSqlDatabase::database(connection);
+        db.close();
+        QSqlDatabase::removeDatabase(connection);
+    }
+
+    QDir dataDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QFile::remove(dataDir.absoluteFilePath("library.db"));
+    QFile::remove(dataDir.absoluteFilePath("library.db-shm"));
+    QFile::remove(dataDir.absoluteFilePath("library.db-wal"));
 }

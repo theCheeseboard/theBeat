@@ -65,6 +65,8 @@ class LibraryManager : public QObject {
 
         bool isProcessing();
 
+        void erase();
+
     signals:
         void libraryChanged();
         bool isProcessingChanged();

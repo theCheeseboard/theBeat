@@ -22,6 +22,7 @@
 
 #include <tcsdtools.h>
 #include <QMenu>
+#include <tsettings.h>
 #include <QDesktopServices>
 #include <taboutdialog.h>
 #include <QFileDialog>
@@ -36,6 +37,7 @@
 #include <QDropEvent>
 #include <QMimeData>
 #include "pluginmanager.h"
+#include "settingsdialog.h"
 
 #include <qtmultimedia/qtmultimediamediaitem.h>
 
@@ -48,6 +50,8 @@
 struct MainWindowPrivate {
     tCsdTools csd;
     PluginManager plugins;
+
+    tSettings settings;
 
     QFrame* topBarLine;
 };
@@ -84,6 +88,7 @@ MainWindow::MainWindow(QWidget* parent)
     menu->addAction(ui->actionSkip_Back);
     menu->addAction(ui->actionSkip_Forward);
     menu->addSeparator();
+    menu->addAction(ui->actionSettings);
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
 
@@ -191,6 +196,13 @@ MainWindow::MainWindow(QWidget* parent)
     thumbBar->addButton(playPauseToolButton);
     thumbBar->addButton(nextToolButton);
 #endif
+
+    connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
+        if (key == "notifications/trackChange") {
+            StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(value.toBool());
+        }
+    });
+    StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(d->settings.value("notifications/trackChange").toBool());
 
     d->plugins.load();
 }
@@ -371,4 +383,9 @@ void MainWindow::on_actionAdd_to_Library_triggered() {
     });
     connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
     dialog->open();
+}
+
+void MainWindow::on_actionSettings_triggered() {
+    SettingsDialog dialog;
+    dialog.exec();
 }
