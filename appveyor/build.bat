@@ -43,6 +43,7 @@ cd ..
 
 git clone https://github.com/vicr123/theinstaller.git
 cd theinstaller
+git checkout blueprint
 qmake theInstaller.pro "CONFIG+=applib"
 nmake release
 nmake install
