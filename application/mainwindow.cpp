@@ -39,6 +39,7 @@
 #include <QInputDialog>
 #include "pluginmanager.h"
 #include "settingsdialog.h"
+#include "updatechecker.h"
 
 #include <qtmultimedia/qtmultimediamediaitem.h>
 
@@ -78,6 +79,12 @@ MainWindow::MainWindow(QWidget* parent)
     helpMenu->setTitle(tr("Help"));
     helpMenu->addAction(ui->actionFileBug);
     helpMenu->addAction(ui->actionSources);
+
+    if (UpdateChecker::updatesSupported()) {
+        helpMenu->addSeparator();
+        helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
+    }
+
     helpMenu->addSeparator();
     helpMenu->addAction(ui->actionAbout);
 

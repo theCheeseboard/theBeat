@@ -41,6 +41,13 @@ qmake Contemporary.pro "CONFIG+=release"
 nmake release
 cd ..
 
+git clone https://github.com/vicr123/theinstaller.git
+cd theinstaller
+qmake theInstaller.pro "CONFIG+=applib"
+nmake release
+nmake install
+cd ..
+
 rem Build cdlib
 cd plugins\WinLibCDPlugin\cdlib
 nuget restore
@@ -62,10 +69,8 @@ robocopy application\icons\contemporary-icons deploy\icons\ /mir
 copy "C:\Program Files\thelibs\lib\the-libs.dll" deploy
 copy plugins\WinLibCDPlugin\cdlib\x64\Release\CDLib.dll deploy
 copy plugins\WinLibCDPlugin\release\WinLibCDPlugin.dll deploy\plugins
-copy "C:\OpenSSL-Win64\bin\openssl.exe" deploy
-copy "C:\OpenSSL-Win64\bin\libeay32.dll" deploy
-copy "C:\OpenSSL-Win64\bin\ssleay32.dll" deploy
-copy "C:\OpenSSL-Win64\bin\openssl.cfg" deploy
+copy "C:\OpenSSL-v111-Win64\bin\libssl-1_1-x64.dll" deploy
+copy "C:\OpenSSL-v111-Win64\bin\libcrypto-1_1-x64.dll" deploy
 copy taglib\build\taglib\tag.dll deploy
 copy application\defaults.conf deploy
 cd deploy

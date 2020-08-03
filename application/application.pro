@@ -38,8 +38,8 @@ win32 {
 
     QT += winextras
 
-    INCLUDEPATH += "C:/Program Files/thelibs/include" "C:/Program Files (x86)/taglib/include"
-    LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -L"C:\Program Files (x86)\taglib\lib" -ltag
+    INCLUDEPATH += "C:/Program Files/thelibs/include" "C:/Program Files/theinstaller/include" "C:/Program Files (x86)/taglib/include"
+    LIBS += -L"C:/Program Files/thelibs/lib" -L"C:/Program Files/theinstaller/lib" -lthe-libs -ltheinstaller -L"C:\Program Files (x86)\taglib\lib" -ltag
     RC_FILE = icon.rc
     TARGET = theBeat
 
