@@ -84,6 +84,8 @@ int main(int argc, char* argv[]) {
     a.setPalette(pal);
     a.setPalette(pal, "QDockWidget");
     a.setPalette(pal, "QToolBar");
+
+    a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
 #endif
 
 
