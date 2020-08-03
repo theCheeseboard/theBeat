@@ -6,38 +6,38 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="65"/>
         <location filename="../artistsalbumswidget.ui" line="191"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel in der Bibliothek</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="216"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle einreihen</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="50"/>
         <source>Albums in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Alben in der Bibliothek</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="50"/>
         <source>Artists in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Künstler in der Bibliothek</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="63"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel in %1</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="63"/>
         <source>Tracks by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel von %1</translation>
     </message>
 </context>
 <context>
@@ -45,17 +45,17 @@
     <message>
         <location filename="../controlstrip.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../controlstrip.ui" line="88"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../controlstrip.ui" line="95"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadaten</translation>
     </message>
 </context>
 <context>
@@ -63,32 +63,32 @@
     <message>
         <location filename="../libraryerrorpopover.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="35"/>
         <source>Hmm</source>
-        <translation type="unfinished"></translation>
+        <translation>Hmm</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="134"/>
         <source>ACTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>AKTIONEN</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="143"/>
         <source>Locate File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei Finden</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="150"/>
         <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus der Bibliothek entfernen</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.cpp" line="39"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sieht so aus als wäre die Datei untergetaucht. Wenn du weißt wo sie ist, sag uns bescheid, damit wir den Title spielen können.</translation>
     </message>
 </context>
 <context>
@@ -96,17 +96,17 @@
     <message>
         <location filename="../library/librarymodel.cpp" line="153"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>von %1</translation>
     </message>
     <message>
         <location filename="../library/librarymodel.cpp" line="154"/>
         <source>on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>auf %1</translation>
     </message>
     <message>
         <location filename="../library/librarymodel.cpp" line="156"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel</translation>
     </message>
 </context>
 <context>
@@ -114,23 +114,23 @@
     <message>
         <location filename="../library/librarylistview.cpp" line="24"/>
         <source>Add to Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Zur Playlist hinzufügen</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="28"/>
         <location filename="../library/librarylistview.cpp" line="30"/>
         <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus Bibliothek entfernen</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="29"/>
         <source>Remove from library?</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus Bibliothek entfernen?</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="95"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Für %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../library/librarylistview.cpp" line="99"/>
