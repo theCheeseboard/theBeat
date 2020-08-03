@@ -463,7 +463,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="38"/>
+        <location filename="../main.cpp" line="39"/>
         <source>Audio Player</source>
         <translation type="unfinished"></translation>
     </message>

@@ -331,7 +331,7 @@
     <message>
         <location filename="../othersourceswidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formular</translation>
     </message>
     <message>
         <location filename="../othersourceswidget.ui" line="93"/>
@@ -392,17 +392,17 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../trackswidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formular</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="62"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Titel in der Bibliothek</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="71"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alle einreihen</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="116"/>
@@ -425,7 +425,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formular</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="62"/>
@@ -440,12 +440,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.ui" line="215"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Titel in der Bibliothek</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="240"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alle einreihen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="57"/>
@@ -455,13 +455,13 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.cpp" line="82"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Titel in %1</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="38"/>
+        <location filename="../main.cpp" line="39"/>
         <source>Audio Player</source>
         <translation type="unfinished"></translation>
     </message>

@@ -24,6 +24,7 @@
 #include <tsettings.h>
 
 int main(int argc, char* argv[]) {
+    if (!qEnvironmentVariableIsSet("QT_MULTIMEDIA_PREFERRED_PLUGINS")) qputenv("QT_MULTIMEDIA_PREFERRED_PLUGINS", "windowsmediafoundation");
     tApplication a(argc, argv);
 
     if (QDir("/usr/share/thebeat/").exists()) {

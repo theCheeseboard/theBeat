@@ -102,7 +102,11 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
         db.exec("INSERT INTO version(version) VALUES(1)");
 
         //Also add Silly to the playlist
-        StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.flac")));
+#ifdef Q_OS_WIN
+        StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.mp3")));
+#else
+        StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.ogg")));
+#endif
         StateManager::instance()->playlist()->pause();
     } else if (version == 1) {
         //This is the current database version
