@@ -64,9 +64,9 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
     updateAlbumArt();
 
     connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [ = ] {
-        d->player->setVolume(StateManager::instance()->playlist()->volume() * 100);
+        d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
     });
-    d->player->setVolume(StateManager::instance()->playlist()->volume() * 100);
+    d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
 }
 
 QtMultimediaMediaItem::~QtMultimediaMediaItem() {
@@ -86,7 +86,7 @@ void QtMultimediaMediaItem::updateAlbumArt() {
             emit metadataChanged();
         });
     } else {
-        auto extractID3v2 = [=](TagLib::ID3v2::Tag* tag) {
+        auto extractID3v2 = [ = ](TagLib::ID3v2::Tag * tag) {
             qDebug() << "Search frames";
             TagLib::ID3v2::FrameList frameList = tag->frameListMap()["APIC"];
             if (frameList.isEmpty()) return;
