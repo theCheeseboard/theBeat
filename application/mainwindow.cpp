@@ -80,6 +80,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     QMenu* helpMenu = new QMenu(this);
     helpMenu->setTitle(tr("Help"));
+    helpMenu->setIcon(QIcon::fromTheme("help-contents"));
     helpMenu->addAction(ui->actionFileBug);
     helpMenu->addAction(ui->actionSources);
 
@@ -87,6 +88,15 @@ MainWindow::MainWindow(QWidget* parent)
     if (UpdateChecker::updatesSupported()) {
         helpMenu->addSeparator();
         helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
+
+        connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [=] {
+            QPixmap menuPixmap = UpdateChecker::updateAvailableIcon(ui->menuButton->icon().pixmap(ui->menuButton->iconSize()));
+            ui->menuButton->setIcon(QIcon(menuPixmap));
+
+            QImage helpImage = helpMenu->icon().pixmap(SC_DPI_T(QSize(16, 16), QSize)).toImage();
+            theLibsGlobal::tintImage(helpImage, this->palette().color(QPalette::WindowText));
+            helpMenu->setIcon(QIcon(UpdateChecker::updateAvailableIcon(QPixmap::fromImage(helpImage))));
+        });
     }
 #endif
 
