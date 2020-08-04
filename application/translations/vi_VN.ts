@@ -94,17 +94,17 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="153"/>
+        <location filename="../library/librarymodel.cpp" line="164"/>
         <source>by %1</source>
         <translation>bởi %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="154"/>
+        <location filename="../library/librarymodel.cpp" line="165"/>
         <source>on %1</source>
         <translation>trong %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="156"/>
+        <location filename="../library/librarymodel.cpp" line="167"/>
         <source>Track</source>
         <translation>Bài hát</translation>
     </message>

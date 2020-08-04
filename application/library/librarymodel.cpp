@@ -129,10 +129,21 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     } else if (index.data(LibraryModel::TrackRole).toInt() != -1) {
         painter->setFont(trackFont);
         painter->setPen(transientColor);
-        if (index.data(LibraryModel::TrackRole).toInt() == 0) {
+
+        int trackNumber = index.data(LibraryModel::TrackRole).toInt();
+        if (trackNumber == 0) {
             painter->drawText(trackRect, Qt::AlignCenter, "-");
+        } else if (trackNumber < 99) {
+            painter->drawText(trackRect, Qt::AlignCenter, QString::number(trackNumber));
         } else {
-            painter->drawText(trackRect, Qt::AlignCenter, QString::number(index.data(LibraryModel::TrackRole).toInt()));
+            //Squash the text
+            qreal factor = painter->fontMetrics().horizontalAdvance("00") / static_cast<qreal>(painter->fontMetrics().horizontalAdvance(QString::number(trackNumber)));
+            trackRect.setWidth(trackRect.width() / factor);
+            trackRect.moveLeft(trackRect.left() / factor);
+            painter->save();
+            painter->scale(factor, 1);
+            painter->drawText(trackRect, Qt::AlignCenter, QString::number(trackNumber));
+            painter->restore();
         }
     }
 
