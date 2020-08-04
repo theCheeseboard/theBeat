@@ -23,7 +23,10 @@
 #include <QUrl>
 #include <tapplication.h>
 #include <tsettings.h>
-#include <updatechecker.h>
+
+#ifdef HAVE_THEINSTALLER
+    #include <updatechecker.h>
+#endif
 
 int main(int argc, char* argv[]) {
     if (!qEnvironmentVariableIsSet("QT_MULTIMEDIA_PREFERRED_PLUGINS")) qputenv("QT_MULTIMEDIA_PREFERRED_PLUGINS", "windowsmediafoundation");
@@ -91,8 +94,10 @@ int main(int argc, char* argv[]) {
     a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
 #endif
 
+#ifdef HAVE_THEINSTALLER
     UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 0, 0, 0);
     QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
+#endif
 
     MainWindow w;
     w.show();

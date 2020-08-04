@@ -39,7 +39,10 @@
 #include <QInputDialog>
 #include "pluginmanager.h"
 #include "settingsdialog.h"
-#include "updatechecker.h"
+
+#ifdef HAVE_THEINSTALLER
+    #include "updatechecker.h"
+#endif
 
 #include <qtmultimedia/qtmultimediamediaitem.h>
 
@@ -80,10 +83,12 @@ MainWindow::MainWindow(QWidget* parent)
     helpMenu->addAction(ui->actionFileBug);
     helpMenu->addAction(ui->actionSources);
 
+#ifdef HAVE_THEINSTALLER
     if (UpdateChecker::updatesSupported()) {
         helpMenu->addSeparator();
         helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
     }
+#endif
 
     helpMenu->addSeparator();
     helpMenu->addAction(ui->actionAbout);

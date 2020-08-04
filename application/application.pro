@@ -43,6 +43,8 @@ win32 {
     RC_FILE = icon.rc
     TARGET = theBeat
 
+    DEFINES += HAVE_THEINSTALLER
+
     SOURCES += \
         platformintegration/winplatformintegration.cpp
 
