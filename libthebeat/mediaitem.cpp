@@ -19,6 +19,13 @@
  * *************************************/
 #include "mediaitem.h"
 
+#include <QVariant>
+
 MediaItem::MediaItem() : QObject(nullptr) {
 
+}
+
+QVariant MediaItem::metadata(QString key) {
+    Q_UNUSED(key);
+    return QVariant();
 }

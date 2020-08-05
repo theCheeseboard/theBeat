@@ -49,7 +49,9 @@ class ControlStrip : public QWidget {
 
         void on_volumeSlider_valueChanged(int value);
 
-    private:
+        void on_upButton_clicked();
+
+private:
         Ui::ControlStrip* ui;
         ControlStripPrivate* d;
 

@@ -23,6 +23,8 @@
 #include <statemanager.h>
 #include <playlist.h>
 #include <tvariantanimation.h>
+#include <tpopover.h>
+#include "currenttrackpopover.h"
 #include "common.h"
 
 struct ControlStripPrivate {
@@ -237,4 +239,15 @@ bool ControlStrip::eventFilter(QObject* watched, QEvent* event) {
         }
     }
     return false;
+}
+
+void ControlStrip::on_upButton_clicked()
+{
+    CurrentTrackPopover* track = new CurrentTrackPopover();
+    tPopover* popover = new tPopover(track);
+    popover->setPopoverSide(tPopover::Bottom);
+    popover->setPopoverWidth(SC_DPI(-100));
+    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+    connect(popover, &tPopover::dismissed, track, &CurrentTrackPopover::deleteLater);
+    popover->show(this->window());
 }

@@ -48,13 +48,49 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="88"/>
+        <location filename="../controlstrip.ui" line="101"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="95"/>
+        <location filename="../controlstrip.ui" line="108"/>
         <source>Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CurrentTrackPopover</name>
+    <message>
+        <location filename="../currenttrackpopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../currenttrackpopover.cpp" line="94"/>
+        <source>Album</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../currenttrackpopover.cpp" line="95"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../currenttrackpopover.cpp" line="100"/>
+        <location filename="../currenttrackpopover.cpp" line="102"/>
+        <location filename="../currenttrackpopover.cpp" line="105"/>
+        <source>Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../currenttrackpopover.cpp" line="100"/>
+        <source>%1 of %2</source>
+        <comment>Track 1 of 12</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../currenttrackpopover.cpp" line="106"/>
+        <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

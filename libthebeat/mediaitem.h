@@ -40,6 +40,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         virtual QStringList authors() = 0;
         virtual QString album() = 0;
         virtual QImage albumArt() = 0;
+        virtual QVariant metadata(QString key);
 
     signals:
         void done();

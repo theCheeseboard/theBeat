@@ -96,6 +96,7 @@ SOURCES += \
     artistsalbumswidget.cpp \
     common.cpp \
     controlstrip.cpp \
+    currenttrackpopover.cpp \
     library/librarylistview.cpp \
     library/librarymanager.cpp \
     library/librarymodel.cpp \
@@ -114,6 +115,7 @@ HEADERS += \
     artistsalbumswidget.h \
     common.h \
     controlstrip.h \
+    currenttrackpopover.h \
     library/librarylistview.h \
     library/librarymanager.h \
     library/librarymodel.h \
@@ -130,6 +132,7 @@ HEADERS += \
 FORMS += \
     artistsalbumswidget.ui \
     controlstrip.ui \
+    currenttrackpopover.ui \
     libraryerrorpopover.ui \
     mainwindow.ui \
     othersourceswidget.ui \

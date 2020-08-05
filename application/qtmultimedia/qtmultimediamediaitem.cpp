@@ -180,3 +180,7 @@ QString QtMultimediaMediaItem::album() {
 QImage QtMultimediaMediaItem::albumArt() {
     return d->albumArt;
 }
+
+QVariant QtMultimediaMediaItem::metadata(QString key) {
+    return d->player->metaData(key);
+}
