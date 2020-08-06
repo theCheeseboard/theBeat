@@ -37,6 +37,7 @@
 #include <QDropEvent>
 #include <QMimeData>
 #include <QInputDialog>
+#include <tjobmanager.h>
 #include "pluginmanager.h"
 #include "settingsdialog.h"
 
@@ -76,6 +77,8 @@ MainWindow::MainWindow(QWidget* parent)
         ui->rightCsdLayout->addWidget(d->csd.csdBoxForWidget(this));
     }
 
+    ui->jobButtonLayout->addWidget(tJobManager::makeJobButton());
+
     QMenu* menu = new QMenu(this);
 
     QMenu* helpMenu = new QMenu(this);
@@ -89,7 +92,7 @@ MainWindow::MainWindow(QWidget* parent)
         helpMenu->addSeparator();
         helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
 
-        connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [=] {
+        connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [ = ] {
             QPixmap menuPixmap = UpdateChecker::updateAvailableIcon(ui->menuButton->icon().pixmap(ui->menuButton->iconSize()));
             ui->menuButton->setIcon(QIcon(menuPixmap));
 

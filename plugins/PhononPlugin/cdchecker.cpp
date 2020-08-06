@@ -27,6 +27,8 @@
 #include <sourcemanager.h>
 #include <playlist.h>
 #include <tpromise.h>
+#include "importcdpopover.h"
+#include <tpopover.h>
 #include "phononcdmediaitem.h"
 #include "trackinfo.h"
 
@@ -54,6 +56,7 @@ struct CdCheckerPrivate {
 
     PluginMediaSource* source;
     QStringList mbDiscIds;
+    QString albumName;
     QList<TrackInfoPtr> trackInfo;
 
 #ifdef HAVE_MUSICBRAINZ
@@ -156,6 +159,7 @@ void CdChecker::checkCd() {
 
             d->source->setName(tr("CD"));
             ui->albumTitleLabel->setText(tr("CD"));
+            d->albumName = tr("CD");
             StateManager::instance()->sources()->addSource(d->source);
 
             updateTrackListing();
@@ -205,8 +209,9 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
             rej("Failure");
         }
     })->then([ = ](MusicBrainz5::CRelease * release) {
-        ui->albumTitleLabel->setText(QString::fromStdString(release->Title()));
-        d->source->setName(QString::fromStdString(release->Title()));
+        d->albumName = QString::fromStdString(release->Title());
+        ui->albumTitleLabel->setText(d->albumName);
+        d->source->setName(d->albumName);
 
         MusicBrainz5::CMediumList* mediumList = release->MediumList();
         for (int h = 0; h < mediumList->NumItems(); h++) {
@@ -261,4 +266,16 @@ void CdChecker::on_ejectButton_clicked() {
     //Eject the CD
     QDBusInterface cdDriveInterface("org.freedesktop.UDisks2", d->cdDrivePath.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
     cdDriveInterface.call(QDBus::NoBlock, "Eject", QVariantMap());
+}
+
+void CdChecker::on_importCdButton_clicked() {
+    ImportCdPopover* jp = new ImportCdPopover(d->blockDevice, d->albumName, d->trackInfo);
+    tPopover* popover = new tPopover(jp);
+    popover->setPopoverWidth(SC_DPI(-200));
+    popover->setPopoverSide(tPopover::Bottom);
+    connect(jp, &ImportCdPopover::done, popover, &tPopover::dismiss);
+    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+    connect(popover, &tPopover::dismissed, jp, &ImportCdPopover::deleteLater);
+    popover->show(this->window());
+
 }

@@ -7,6 +7,7 @@ CONFIG += c++11
 
 unix {
     CONFIG += link_pkgconfig
+    PKGCONFIG += taglib
 
     packagesExist(libmusicbrainz5) {
         message("Building with libmusicbrainz5 support")
@@ -33,12 +34,18 @@ include(/usr/share/the-libs/pri/gentranslations.pri)
 
 SOURCES += \
     cdchecker.cpp \
+    importcdjob.cpp \
+    importcdjobwidget.cpp \
+    importcdpopover.cpp \
     phononcdmediaitem.cpp \
     plugin.cpp \
     trackinfo.cpp
 
 HEADERS += \
     cdchecker.h \
+    importcdjob.h \
+    importcdjobwidget.h \
+    importcdpopover.h \
     phononcdmediaitem.h \
     plugin.h \
     trackinfo.h
@@ -48,4 +55,6 @@ DISTFILES += PhononPlugin.json
 include(../plugins.pri)
 
 FORMS += \
-    cdchecker.ui
+    cdchecker.ui \
+    importcdjobwidget.ui \
+    importcdpopover.ui

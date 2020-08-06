@@ -213,6 +213,9 @@
         </spacer>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="jobButtonLayout"/>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="rightCsdLayout">
          <property name="spacing">
           <number>0</number>
@@ -490,7 +493,8 @@
   </action>
   <action name="actionSettings">
    <property name="icon">
-    <iconset theme="configure"/>
+    <iconset theme="configure">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Settings</string>
@@ -501,6 +505,14 @@
   </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>tTitleLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">ttitlelabel.h</header>
+   <slots>
+    <signal>backButtonClicked()</signal>
+   </slots>
+  </customwidget>
   <customwidget>
    <class>tStackedWidget</class>
    <extends>QStackedWidget</extends>
@@ -527,14 +539,6 @@
    <extends>QWidget</extends>
    <header>artistsalbumswidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>tTitleLabel</class>
-   <extends>QLabel</extends>
-   <header location="global">ttitlelabel.h</header>
-   <slots>
-    <signal>backButtonClicked()</signal>
-   </slots>
   </customwidget>
   <customwidget>
    <class>OtherSourcesWidget</class>

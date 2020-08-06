@@ -44,6 +44,8 @@ class CdChecker : public QWidget {
 
         void on_ejectButton_clicked();
 
+        void on_importCdButton_clicked();
+
     private:
         Ui::CdChecker* ui;
         CdCheckerPrivate* d;

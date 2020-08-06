@@ -46,13 +46,17 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QPushButton" name="enqueueAllButton">
           <property name="text">
            <string>Enqueue All</string>
           </property>
           <property name="icon">
-           <iconset theme="view-media-playlist"/>
+           <iconset theme="view-media-playlist">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
@@ -70,12 +74,23 @@
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="importCdButton">
+          <property name="text">
+           <string>Import</string>
+          </property>
+          <property name="icon">
+           <iconset theme="media-cd-import"/>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="ejectButton">
           <property name="text">
            <string>Eject</string>
           </property>
           <property name="icon">
-           <iconset theme="media-eject"/>
+           <iconset theme="media-eject">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
