@@ -3,7 +3,8 @@ TEMPLATE = subdirs
 unix:!macx {
     SUBDIRS += \
         PhononPlugin \
-        LinuxIntegration
+        LinuxIntegration \
+        CdrdaoPlugin
 }
 
 win32 {

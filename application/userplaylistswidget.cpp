@@ -20,15 +20,19 @@
 #include "userplaylistswidget.h"
 #include "ui_userplaylistswidget.h"
 
+#include <QMenu>
 #include <QInputDialog>
 #include <QUrl>
 #include <statemanager.h>
 #include <playlist.h>
+#include <burnmanager.h>
+#include <burnbackend.h>
 #include "qtmultimedia/qtmultimediamediaitem.h"
 #include "library/librarymanager.h"
 
 struct UserPlaylistsWidgetPrivate {
     int currentPlaylist = -1;
+    QString currentPlaylistName;
 };
 
 UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent) :
@@ -43,6 +47,10 @@ UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent) :
         if (id == d->currentPlaylist) loadPlaylist(id);
     });
     updatePlaylists();
+
+    connect(StateManager::instance()->burn(), &BurnManager::backendRegistered, this, &UserPlaylistsWidget::updateBurn);
+    connect(StateManager::instance()->burn(), &BurnManager::backendDeregistered, this, &UserPlaylistsWidget::updateBurn);
+    updateBurn();
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Lift);
 }
@@ -78,9 +86,14 @@ void UserPlaylistsWidget::loadPlaylist(int id) {
     d->currentPlaylist = id;
 }
 
+void UserPlaylistsWidget::updateBurn() {
+    ui->burnButton->setVisible(!StateManager::instance()->burn()->availableBackends().isEmpty());
+}
+
 void UserPlaylistsWidget::on_playlistsList_itemActivated(QListWidgetItem* item) {
     ui->tracksTitle->setText(tr("Tracks in %1").arg(item->text()));
     loadPlaylist(item->data(Qt::UserRole).toInt());
+    d->currentPlaylistName = item->text();
 }
 
 void UserPlaylistsWidget::on_backButton_clicked() {
@@ -93,5 +106,33 @@ void UserPlaylistsWidget::on_enqueueAllButton_clicked() {
 
         QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
+    }
+}
+
+void UserPlaylistsWidget::on_burnButton_clicked() {
+    QStringList files;
+    for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
+        if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) {
+            //TODO: Do something!!!
+            continue;
+        }
+
+        files.append(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString());
+    }
+
+    QList<BurnBackend*> backends = StateManager::instance()->burn()->availableBackends();
+
+    if (backends.count() == 1) {
+        backends.first()->burn(files, d->currentPlaylistName, this->window());
+    } else {
+        QMenu* menu = new QMenu();
+        menu->addSection(tr("Select Device"));
+        for (BurnBackend* backend : backends) {
+            menu->addAction(backend->displayName(), [ = ] {
+                backend->burn(files, d->currentPlaylistName, this->window());
+            });
+        }
+        connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
+        menu->popup(ui->burnButton->mapToGlobal(QPoint(0, ui->burnButton->height())));
     }
 }

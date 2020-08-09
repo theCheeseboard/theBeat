@@ -169,6 +169,7 @@ void ImportCdJob::performNextAction() {
                 }
                 map.insert("ARTIST", artists);
                 map.insert("ALBUM", TagLib::StringList(trackInfo->album().toStdString().data()));
+                map.insert("TRACKNUMBER", TagLib::StringList(QString::number(trackInfo->track() + 1).toStdString().data()));
 
                 TagLib::FileRef file(endFile.toStdString().data());
                 file.file()->setProperties(map);
@@ -184,7 +185,13 @@ void ImportCdJob::performNextAction() {
 
             process->deleteLater();
         });
-        process->start("cdparanoia", {"-we", "-S", QString::number(d->readSpeed), "--force-cdrom-device", "/dev/" + d->blockDevice, "--", QString::number(d->nextTrack), "track.wav"});
+
+        QStringList paranoiaArgs = {"-we"};
+        if (d->readSpeed != -1) {
+            paranoiaArgs.append({"-S", QString::number(d->readSpeed)});
+        }
+        paranoiaArgs.append({"--force-cdrom-device", "/dev/" + d->blockDevice, "--", QString::number(d->nextTrack), "track.wav"});
+        process->start("cdparanoia", paranoiaArgs);
     } else {
         d->state = Finished;
         emit stateChanged(Finished);

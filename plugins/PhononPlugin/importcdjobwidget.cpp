@@ -33,7 +33,7 @@ ImportCdJobWidget::ImportCdJobWidget(ImportCdJob* parent) :
     d->parent = parent;
 
     connect(parent, &ImportCdJob::totalProgressChanged, this, [ = ](quint64 totalProgress) {
-        ui->progressBar->setValue(totalProgress);
+        ui->progressBar->setMaximum(totalProgress);
     });
     connect(parent, &ImportCdJob::progressChanged, this, [ = ](quint64 progress) {
         ui->progressBar->setValue(progress);

@@ -71,7 +71,8 @@
                <string>Create Playlist</string>
               </property>
               <property name="icon">
-               <iconset theme="list-add"/>
+               <iconset theme="list-add">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -257,6 +258,17 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="burnButton">
+              <property name="text">
+               <string>Burn</string>
+              </property>
+              <property name="icon">
+               <iconset theme="tools-media-optical-burn">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>

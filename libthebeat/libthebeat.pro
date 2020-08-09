@@ -32,6 +32,8 @@ win32 {
 
 
 SOURCES += \
+    burnbackend.cpp \
+    burnmanager.cpp \
     mediaitem.cpp \
     playlist.cpp \
     pluginmediasource.cpp \
@@ -39,6 +41,8 @@ SOURCES += \
     statemanager.cpp
 
 HEADERS += \
+    burnbackend.h \
+    burnmanager.h \
     libthebeat_global.h \
     mediaitem.h \
     playlist.h \

@@ -44,12 +44,15 @@ class UserPlaylistsWidget : public QWidget {
 
         void on_enqueueAllButton_clicked();
 
+        void on_burnButton_clicked();
+
     private:
         Ui::UserPlaylistsWidget* ui;
         UserPlaylistsWidgetPrivate* d;
 
         void updatePlaylists();
         void loadPlaylist(int id);
+        void updateBurn();
 };
 
 #endif // USERPLAYLISTSWIDGET_H

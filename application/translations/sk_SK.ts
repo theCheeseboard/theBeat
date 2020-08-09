@@ -476,23 +476,33 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="215"/>
+        <location filename="../userplaylistswidget.ui" line="265"/>
+        <source>Burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.ui" line="216"/>
         <source>Tracks in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="240"/>
+        <location filename="../userplaylistswidget.ui" line="241"/>
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="57"/>
+        <location filename="../userplaylistswidget.cpp" line="65"/>
         <source>Playlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="82"/>
+        <location filename="../userplaylistswidget.cpp" line="94"/>
         <source>Tracks in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="129"/>
+        <source>Select Device</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

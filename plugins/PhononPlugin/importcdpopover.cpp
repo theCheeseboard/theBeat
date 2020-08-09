@@ -67,7 +67,7 @@ void ImportCdPopover::on_browseImportFolderButton_clicked() {
 }
 
 void ImportCdPopover::on_importButton_clicked() {
-    ImportCdJob* job = new ImportCdJob(d->blockDevice, d->trackInfo, ui->importFolderLocation->text(), 1);
+    ImportCdJob* job = new ImportCdJob(d->blockDevice, d->trackInfo, ui->importFolderLocation->text(), -1);
     tJobManager::trackJob(job);
     emit done();
 }

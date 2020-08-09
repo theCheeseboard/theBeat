@@ -25,6 +25,7 @@
 
 class Playlist;
 class SourceManager;
+class BurnManager;
 
 struct StateManagerPrivate;
 class LIBTHEBEAT_EXPORT StateManager : public QObject {
@@ -36,6 +37,7 @@ class LIBTHEBEAT_EXPORT StateManager : public QObject {
 
         Playlist* playlist();
         SourceManager* sources();
+        BurnManager* burn();
 
     signals:
 
