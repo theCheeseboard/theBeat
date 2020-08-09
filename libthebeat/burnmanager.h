@@ -21,6 +21,7 @@
 #define BURNMANAGER_H
 
 #include <QObject>
+#include "libthebeat_global.h"
 
 class BurnBackend;
 struct BurnManagerPrivate;
