@@ -20,10 +20,10 @@
 #ifndef BURNBACKEND_H
 #define BURNBACKEND_H
 
-#include <QObject>
+#include "libthebeat_global.h"
 #include <QWidget>
 
-class BurnBackend : public QObject {
+class LIBTHEBEAT_EXPORT BurnBackend : public QObject {
         Q_OBJECT
     public:
         explicit BurnBackend(QObject* parent = nullptr);

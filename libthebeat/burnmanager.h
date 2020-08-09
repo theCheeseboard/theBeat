@@ -24,7 +24,7 @@
 
 class BurnBackend;
 struct BurnManagerPrivate;
-class BurnManager : public QObject {
+class LIBTHEBEAT_EXPORT BurnManager : public QObject {
         Q_OBJECT
     public:
         explicit BurnManager(QObject* parent = nullptr);
