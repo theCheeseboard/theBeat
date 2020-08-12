@@ -20,7 +20,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 unix:!macx {
     QT += thelib
 
-    target.path = $$[QT_INSTALL_LIBS]
+    CI = $$(CI)
+    if (isEmpty(CI)) {
+        target.path = $$[QT_INSTALL_LIBS]
+    } else {
+        target.path = /usr/lib
+    }
 
     INSTALLS += target
 }
