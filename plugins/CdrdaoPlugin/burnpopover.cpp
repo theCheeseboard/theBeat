@@ -56,7 +56,7 @@ BurnPopover::BurnPopover(QStringList files, QString blockDevice, QString albumNa
     for (QString file : files) {
         TagLib::FileRef tagFile(file.toStdString().data());
         if (tagFile.audioProperties()) {
-            d->playlistLength += tagFile.audioProperties()->lengthInMilliseconds();
+            d->playlistLength += tagFile.audioProperties()->length() * 1000;
         }
     }
 
@@ -95,9 +95,9 @@ void BurnPopover::updateCd() {
         ui->warningFrame->setVisible(true);
         ui->burnButton->setEnabled(false);
     } else if (!mediaBlank && media == "optical_cd_rw") {
-        ui->warningText->setText(tr("The CD in the drive is not blank. By burning to this CD, you will erase all the data currently on it."));
+        ui->warningText->setText(tr("The CD in the drive is not blank. Erase the CD first."));
         ui->warningFrame->setVisible(true);
-        ui->burnButton->setEnabled(true);
+        ui->burnButton->setEnabled(false);
     } else if (!mediaBlank && media == "optical_cd_r") {
         ui->warningText->setText(tr("The CD-R in the drive has already been written."));
         ui->warningFrame->setVisible(true);

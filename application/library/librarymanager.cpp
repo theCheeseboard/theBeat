@@ -157,7 +157,7 @@ void LibraryManager::enumerateDirectory(QString path, bool ignoreBlacklist) {
         titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
         artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
         albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
-        durations.append(audioProperties->lengthInMilliseconds());
+        durations.append(audioProperties->length() * 1000);
         trackNumbers.append(tag->track());
     }
 
@@ -223,7 +223,7 @@ void LibraryManager::addTrack(QString path) {
     titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
     artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
     albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
-    durations.append(audioProperties->lengthInMilliseconds());
+    durations.append(audioProperties->length() * 1000);
     trackNumbers.append(tag->track());
 
     QSqlQuery q;
