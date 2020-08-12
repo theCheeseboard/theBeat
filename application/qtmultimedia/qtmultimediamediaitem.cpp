@@ -155,12 +155,11 @@ QString QtMultimediaMediaItem::title() {
     if (d->player->availableMetaData().contains(QMediaMetaData::Title)) {
         return d->player->metaData(QMediaMetaData::Title).toString();
     }
-    QUrl url = d->player->media().request().url();
-    if (url.isLocalFile()) {
-        QFileInfo file(url.toLocalFile());
+    if (d->url.isLocalFile()) {
+        QFileInfo file(d->url.toLocalFile());
         return file.baseName();
     } else {
-        return url.toString();
+        return d->url.toString();
     }
 }
 
