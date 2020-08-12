@@ -74,6 +74,10 @@ OtherSourcesWidget::~OtherSourcesWidget() {
     delete ui;
 }
 
+void OtherSourcesWidget::setTopPadding(int padding) {
+    this->layout()->setContentsMargins(0, padding, 0, 0);
+}
+
 void OtherSourcesWidget::on_sourcesList_currentRowChanged(int currentRow) {
     QListWidgetItem* item = ui->sourcesList->item(currentRow);
     if (item) ui->stackedWidget->setCurrentWidget(d->listItems.value(item)->widget());

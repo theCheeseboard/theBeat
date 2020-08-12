@@ -53,6 +53,10 @@ TracksWidget::~TracksWidget() {
     delete ui;
 }
 
+void TracksWidget::setTopPadding(int padding) {
+    ui->topWidget->setContentsMargins(0, padding, 0, 0);
+}
+
 void TracksWidget::on_searchBox_textEdited(const QString& arg1) {
     Q_UNUSED(arg1)
     updateModel();

@@ -34,6 +34,8 @@ class TracksWidget : public QWidget {
         explicit TracksWidget(QWidget* parent = nullptr);
         ~TracksWidget();
 
+        void setTopPadding(int padding);
+
     private slots:
         void on_searchBox_textEdited(const QString& arg1);
 

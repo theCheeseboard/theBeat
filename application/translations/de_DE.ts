@@ -20,22 +20,22 @@
         <translation>Alle einreihen</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="50"/>
+        <location filename="../artistsalbumswidget.cpp" line="58"/>
         <source>Albums in Library</source>
         <translation>Alben in der Bibliothek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="50"/>
+        <location filename="../artistsalbumswidget.cpp" line="58"/>
         <source>Artists in Library</source>
         <translation>Künstler in der Bibliothek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="63"/>
+        <location filename="../artistsalbumswidget.cpp" line="136"/>
         <source>Tracks in %1</source>
         <translation>Titel in %1</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="63"/>
+        <location filename="../artistsalbumswidget.cpp" line="136"/>
         <source>Tracks by %1</source>
         <translation>Titel von %1</translation>
     </message>
@@ -66,30 +66,30 @@
         <translation type="unfinished">Formular</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="94"/>
+        <location filename="../currenttrackpopover.cpp" line="99"/>
         <source>Album</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="95"/>
+        <location filename="../currenttrackpopover.cpp" line="100"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="100"/>
-        <location filename="../currenttrackpopover.cpp" line="102"/>
         <location filename="../currenttrackpopover.cpp" line="105"/>
+        <location filename="../currenttrackpopover.cpp" line="107"/>
+        <location filename="../currenttrackpopover.cpp" line="110"/>
         <source>Track</source>
         <translation type="unfinished">Titel</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="100"/>
+        <location filename="../currenttrackpopover.cpp" line="105"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="106"/>
+        <location filename="../currenttrackpopover.cpp" line="111"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -130,17 +130,17 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="164"/>
+        <location filename="../library/librarymodel.cpp" line="167"/>
         <source>by %1</source>
         <translation>von %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="165"/>
+        <location filename="../library/librarymodel.cpp" line="168"/>
         <source>on %1</source>
         <translation>auf %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="167"/>
+        <location filename="../library/librarymodel.cpp" line="170"/>
         <source>Track</source>
         <translation>Titel</translation>
     </message>
@@ -185,156 +185,156 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="93"/>
+        <location filename="../mainwindow.ui" line="90"/>
         <source>Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="119"/>
+        <location filename="../mainwindow.ui" line="116"/>
         <source>Artists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="142"/>
+        <location filename="../mainwindow.ui" line="139"/>
         <source>Albums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="165"/>
+        <location filename="../mainwindow.ui" line="162"/>
         <source>Playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="188"/>
+        <location filename="../mainwindow.ui" line="185"/>
         <source>Other Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="279"/>
+        <location filename="../mainwindow.ui" line="276"/>
         <source>Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="349"/>
+        <location filename="../mainwindow.ui" line="346"/>
         <source>Nothing Here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="399"/>
+        <location filename="../mainwindow.ui" line="403"/>
         <source>File Bug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="408"/>
+        <location filename="../mainwindow.ui" line="412"/>
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="417"/>
+        <location filename="../mainwindow.ui" line="421"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="426"/>
+        <location filename="../mainwindow.ui" line="430"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="429"/>
+        <location filename="../mainwindow.ui" line="433"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="438"/>
+        <location filename="../mainwindow.ui" line="442"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="441"/>
+        <location filename="../mainwindow.ui" line="445"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="446"/>
-        <location filename="../mainwindow.cpp" line="372"/>
+        <location filename="../mainwindow.ui" line="450"/>
+        <location filename="../mainwindow.cpp" line="385"/>
         <source>Open URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="455"/>
-        <location filename="../mainwindow.cpp" line="185"/>
+        <location filename="../mainwindow.ui" line="459"/>
+        <location filename="../mainwindow.cpp" line="189"/>
         <source>Skip Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="458"/>
+        <location filename="../mainwindow.ui" line="462"/>
         <source>Shift+Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="470"/>
+        <location filename="../mainwindow.ui" line="474"/>
         <source>Shift+Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="491"/>
+        <location filename="../mainwindow.ui" line="495"/>
         <source>Add to Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="500"/>
+        <location filename="../mainwindow.ui" line="504"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="503"/>
+        <location filename="../mainwindow.ui" line="507"/>
         <source>Ctrl+,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="467"/>
+        <location filename="../mainwindow.ui" line="471"/>
         <source>Skip Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="359"/>
+        <location filename="../mainwindow.ui" line="356"/>
         <source>Select a track or drop something here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="479"/>
-        <location filename="../mainwindow.cpp" line="193"/>
-        <location filename="../mainwindow.cpp" line="207"/>
+        <location filename="../mainwindow.ui" line="483"/>
+        <location filename="../mainwindow.cpp" line="197"/>
+        <location filename="../mainwindow.cpp" line="211"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="482"/>
+        <location filename="../mainwindow.ui" line="486"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="85"/>
+        <location filename="../mainwindow.cpp" line="89"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="202"/>
+        <location filename="../mainwindow.cpp" line="206"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="214"/>
+        <location filename="../mainwindow.cpp" line="218"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="350"/>
+        <location filename="../mainwindow.cpp" line="363"/>
         <source>For &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="352"/>
+        <location filename="../mainwindow.cpp" line="365"/>
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -342,22 +342,22 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="354"/>
+        <location filename="../mainwindow.cpp" line="367"/>
         <source>Remove from Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="361"/>
+        <location filename="../mainwindow.cpp" line="374"/>
         <source>For Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="362"/>
+        <location filename="../mainwindow.cpp" line="375"/>
         <source>Clear Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="372"/>
+        <location filename="../mainwindow.cpp" line="385"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -431,27 +431,27 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished">Formular</translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="62"/>
+        <location filename="../trackswidget.ui" line="65"/>
         <source>Tracks in Library</source>
         <translation type="unfinished">Titel in der Bibliothek</translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="71"/>
+        <location filename="../trackswidget.ui" line="74"/>
         <source>Enqueue All</source>
         <translation type="unfinished">Alle einreihen</translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="116"/>
+        <location filename="../trackswidget.ui" line="119"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="173"/>
+        <location filename="../trackswidget.ui" line="176"/>
         <source>Processing Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="180"/>
+        <location filename="../trackswidget.ui" line="183"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -489,17 +489,17 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished">Alle einreihen</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="65"/>
+        <location filename="../userplaylistswidget.cpp" line="70"/>
         <source>Playlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="94"/>
+        <location filename="../userplaylistswidget.cpp" line="99"/>
         <source>Tracks in %1</source>
         <translation type="unfinished">Titel in %1</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="129"/>
+        <location filename="../userplaylistswidget.cpp" line="134"/>
         <source>Select Device</source>
         <translation type="unfinished"></translation>
     </message>

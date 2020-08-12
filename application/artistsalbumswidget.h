@@ -42,6 +42,8 @@ class ArtistsAlbumsWidget : public QWidget {
 
         void setType(Type type);
 
+        void setTopPadding(int padding);
+
     private slots:
         void on_initialList_itemActivated(QListWidgetItem* item);
 
@@ -54,6 +56,8 @@ class ArtistsAlbumsWidget : public QWidget {
         ArtistsAlbumsWidgetPrivate* d;
 
         void updateData();
+
+        bool eventFilter(QObject* watched, QEvent* event);
 };
 
 #endif // ARTISTSALBUMSWIDGET_H

@@ -17,7 +17,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "mprisplayer.h"
+#include "mprisplayerinterface.h"
 
 #include <QDBusMessage>
 #include <statemanager.h>
@@ -27,29 +27,29 @@
 #include <QImage>
 #include <QBuffer>
 
-struct MprisPlayerPrivate {
+struct MprisPlayerInterfacePrivate {
     MediaItem* currentItem = nullptr;
 };
 
-MprisPlayer::MprisPlayer(QObject* parent) : QDBusAbstractAdaptor(parent) {
-    d = new MprisPlayerPrivate();
+MprisPlayerInterface::MprisPlayerInterface(QObject* parent) : QDBusAbstractAdaptor(parent) {
+    d = new MprisPlayerInterfacePrivate();
 
     Playlist* playlist = StateManager::instance()->playlist();
 
-    connect(playlist, &Playlist::stateChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "PlaybackStatus"));
-    connect(playlist, &Playlist::repeatOneChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "LoopStatus"));
-    connect(playlist, &Playlist::shuffleChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "Shuffle"));
-    connect(playlist, &Playlist::volumeChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "Volume"));
+    connect(playlist, &Playlist::stateChanged, this, std::bind(&MprisPlayerInterface::propertyChanged, this, "PlaybackStatus"));
+    connect(playlist, &Playlist::repeatOneChanged, this, std::bind(&MprisPlayerInterface::propertyChanged, this, "LoopStatus"));
+    connect(playlist, &Playlist::shuffleChanged, this, std::bind(&MprisPlayerInterface::propertyChanged, this, "Shuffle"));
+    connect(playlist, &Playlist::volumeChanged, this, std::bind(&MprisPlayerInterface::propertyChanged, this, "Volume"));
 
-    connect(playlist, &Playlist::currentItemChanged, this, &MprisPlayer::updateCurrentItem);
+    connect(playlist, &Playlist::currentItemChanged, this, &MprisPlayerInterface::updateCurrentItem);
     updateCurrentItem();
 }
 
-MprisPlayer::~MprisPlayer() {
+MprisPlayerInterface::~MprisPlayerInterface() {
     delete d;
 }
 
-QString MprisPlayer::PlaybackStatus() {
+QString MprisPlayerInterface::PlaybackStatus() {
     switch (StateManager::instance()->playlist()->state()) {
         case Playlist::Playing:
             return QStringLiteral("Playing");
@@ -60,32 +60,32 @@ QString MprisPlayer::PlaybackStatus() {
     }
 }
 
-QString MprisPlayer::LoopStatus() {
+QString MprisPlayerInterface::LoopStatus() {
     return StateManager::instance()->playlist()->repeatOne() ? QStringLiteral("Track") : QStringLiteral("Playlist");
 }
 
-void MprisPlayer::setLoopStatus(QString loopStatus) {
+void MprisPlayerInterface::setLoopStatus(QString loopStatus) {
     StateManager::instance()->playlist()->setRepeatOne(loopStatus == QStringLiteral("Track"));
 }
 
-double MprisPlayer::Rate() {
+double MprisPlayerInterface::Rate() {
     return 1;
 }
 
-void MprisPlayer::setRate(double rate) {
+void MprisPlayerInterface::setRate(double rate) {
     //noop
     Q_UNUSED(rate)
 }
 
-bool MprisPlayer::Shuffle() {
+bool MprisPlayerInterface::Shuffle() {
     return StateManager::instance()->playlist()->shuffle();
 }
 
-void MprisPlayer::setShuffle(bool shuffle) {
+void MprisPlayerInterface::setShuffle(bool shuffle) {
     StateManager::instance()->playlist()->setShuffle(shuffle);
 }
 
-QVariantMap MprisPlayer::Metadata() {
+QVariantMap MprisPlayerInterface::Metadata() {
     QVariantMap data;
 
     if (d->currentItem) {
@@ -111,64 +111,64 @@ QVariantMap MprisPlayer::Metadata() {
     return data;
 }
 
-double MprisPlayer::Volume() {
+double MprisPlayerInterface::Volume() {
     return StateManager::instance()->playlist()->volume();
 }
 
-void MprisPlayer::setVolume(double volume) {
+void MprisPlayerInterface::setVolume(double volume) {
     StateManager::instance()->playlist()->setVolume(volume);
 }
 
-qint64 MprisPlayer::Position() {
+qint64 MprisPlayerInterface::Position() {
     if (d->currentItem) return d->currentItem->elapsed() * 1000;
     return 0;
 }
 
-double MprisPlayer::MinimumRate() {
+double MprisPlayerInterface::MinimumRate() {
     return 1;
 }
 
-double MprisPlayer::MaximumRate() {
+double MprisPlayerInterface::MaximumRate() {
     return 1;
 }
 
-bool MprisPlayer::CanGoNext() {
+bool MprisPlayerInterface::CanGoNext() {
     return true;
 }
 
-bool MprisPlayer::CanGoPrevious() {
+bool MprisPlayerInterface::CanGoPrevious() {
     return true;
 }
 
-bool MprisPlayer::CanPlay() {
+bool MprisPlayerInterface::CanPlay() {
     return true;
 }
 
-bool MprisPlayer::CanPause() {
+bool MprisPlayerInterface::CanPause() {
     return true;
 }
 
-bool MprisPlayer::CanSeek() {
+bool MprisPlayerInterface::CanSeek() {
     return true;
 }
 
-bool MprisPlayer::CanControl() {
+bool MprisPlayerInterface::CanControl() {
     return true;
 }
 
-void MprisPlayer::Next() {
+void MprisPlayerInterface::Next() {
     StateManager::instance()->playlist()->next();
 }
 
-void MprisPlayer::Previous() {
+void MprisPlayerInterface::Previous() {
     StateManager::instance()->playlist()->previous();
 }
 
-void MprisPlayer::Pause() {
+void MprisPlayerInterface::Pause() {
     StateManager::instance()->playlist()->pause();
 }
 
-void MprisPlayer::PlayPause() {
+void MprisPlayerInterface::PlayPause() {
     switch (StateManager::instance()->playlist()->state()) {
         case Playlist::Playing:
             StateManager::instance()->playlist()->pause();
@@ -181,15 +181,15 @@ void MprisPlayer::PlayPause() {
     }
 }
 
-void MprisPlayer::Stop() {
+void MprisPlayerInterface::Stop() {
     StateManager::instance()->playlist()->pause();
 }
 
-void MprisPlayer::Play() {
+void MprisPlayerInterface::Play() {
     StateManager::instance()->playlist()->play();
 }
 
-void MprisPlayer::Seek(qint64 us) {
+void MprisPlayerInterface::Seek(qint64 us) {
     if (StateManager::instance()->playlist()->currentItem()) {
         MediaItem* item = StateManager::instance()->playlist()->currentItem();
         qint64 pos = item->elapsed() + us / 1000;
@@ -203,24 +203,24 @@ void MprisPlayer::Seek(qint64 us) {
     }
 }
 
-void MprisPlayer::SetPosition(QDBusObjectPath trackId, qint64 mu) {
+void MprisPlayerInterface::SetPosition(QDBusObjectPath trackId, qint64 mu) {
     if (!d->currentItem) return;
     if (trackId == this->trackPath(d->currentItem)) {
         d->currentItem->seek(mu / 1000);
     }
 }
 
-void MprisPlayer::OpenUri(QString uri) {
+void MprisPlayerInterface::OpenUri(QString uri) {
 
 }
 
-void MprisPlayer::updateCurrentItem() {
+void MprisPlayerInterface::updateCurrentItem() {
     if (d->currentItem) {
         d->currentItem->disconnect(this);
     }
     d->currentItem = StateManager::instance()->playlist()->currentItem();
     if (d->currentItem) {
-        connect(d->currentItem, &MediaItem::metadataChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "Metadata"));
+        connect(d->currentItem, &MediaItem::metadataChanged, this, std::bind(&MprisPlayerInterface::propertyChanged, this, "Metadata"));
         connect(d->currentItem, &MediaItem::elapsedChanged, this, [ = ] {
             emit Seeked(d->currentItem->elapsed() * 1000);
         });
@@ -229,7 +229,7 @@ void MprisPlayer::updateCurrentItem() {
 }
 
 
-void MprisPlayer::propertyChanged(QString property) {
+void MprisPlayerInterface::propertyChanged(QString property) {
     QDBusMessage signal = QDBusMessage::createSignal("/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged");
     QList<QVariant> args = {
         QStringLiteral("org.mpris.MediaPlayer2.Player"),
@@ -244,7 +244,7 @@ void MprisPlayer::propertyChanged(QString property) {
     QDBusConnection::sessionBus().send(signal);
 }
 
-QDBusObjectPath MprisPlayer::trackPath(MediaItem* item) {
+QDBusObjectPath MprisPlayerInterface::trackPath(MediaItem* item) {
     return QDBusObjectPath(QStringLiteral("/org/thesuite/thebeat/") + QCryptographicHash::hash((item->title() + item->authors().join(",")).toUtf8(), QCryptographicHash::Sha256).toHex());
 }
 

@@ -31,6 +31,9 @@
    </property>
    <item>
     <widget class="tStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
      <widget class="QWidget" name="libraryPage">
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <property name="spacing">
@@ -49,7 +52,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QWidget" name="widget" native="true">
+        <widget class="QWidget" name="topWidget" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QLabel" name="label">
@@ -232,15 +235,15 @@
    </slots>
   </customwidget>
   <customwidget>
+   <class>LibraryListView</class>
+   <extends>QListView</extends>
+   <header>library/librarylistview.h</header>
+  </customwidget>
+  <customwidget>
    <class>tCircularSpinner</class>
    <extends>QWidget</extends>
    <header location="global">tcircularspinner.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>LibraryListView</class>
-   <extends>QListView</extends>
-   <header>library/librarylistview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

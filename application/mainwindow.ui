@@ -35,9 +35,6 @@
     </property>
     <item>
      <widget class="QWidget" name="topWidget" native="true">
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
         <number>0</number>
@@ -386,7 +383,14 @@
      </layout>
     </item>
     <item>
-     <widget class="ControlStrip" name="controlStrip" native="true"/>
+     <widget class="ControlStrip" name="controlStrip" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

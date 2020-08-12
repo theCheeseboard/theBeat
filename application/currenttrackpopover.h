@@ -4,20 +4,26 @@
 #include <QWidget>
 
 namespace Ui {
-class CurrentTrackPopover;
+    class CurrentTrackPopover;
 }
 
 struct CurrentTrackPopoverPrivate;
-class CurrentTrackPopover : public QWidget
-{
-    Q_OBJECT
+class CurrentTrackPopover : public QWidget {
+        Q_OBJECT
 
     public:
-        explicit CurrentTrackPopover(QWidget *parent = nullptr);
+        explicit CurrentTrackPopover(QWidget* parent = nullptr);
         ~CurrentTrackPopover();
 
+    private slots:
+        void on_skipBackButton_clicked();
+
+        void on_playButton_clicked();
+
+        void on_skipNextButton_clicked();
+
     private:
-        Ui::CurrentTrackPopover *ui;
+        Ui::CurrentTrackPopover* ui;
         CurrentTrackPopoverPrivate* d;
 
         void updateCurrentItem();
@@ -27,7 +33,9 @@ class CurrentTrackPopover : public QWidget
         void addMetadataEntry(QString entry, QString value);
         void clearMetadataInfo();
 
-        void resizeEvent(QResizeEvent *event);
+        void updateState();
+
+        void resizeEvent(QResizeEvent* event);
 };
 
 #endif // CURRENTTRACKPOPOVER_H

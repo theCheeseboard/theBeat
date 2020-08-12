@@ -35,6 +35,8 @@ class UserPlaylistsWidget : public QWidget {
         explicit UserPlaylistsWidget(QWidget* parent = nullptr);
         ~UserPlaylistsWidget();
 
+        void setTopPadding(int padding);
+
     private slots:
         void on_createButton_clicked();
 

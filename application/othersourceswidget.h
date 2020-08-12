@@ -34,6 +34,8 @@ class OtherSourcesWidget : public QWidget {
         explicit OtherSourcesWidget(QWidget* parent = nullptr);
         ~OtherSourcesWidget();
 
+        void setTopPadding(int padding);
+
     private slots:
         void on_sourcesList_currentRowChanged(int currentRow);
 

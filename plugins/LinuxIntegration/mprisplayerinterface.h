@@ -17,15 +17,15 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef MPRISPLAYER_H
-#define MPRISPLAYER_H
+#ifndef MPRISPLAYERINTERFACE_H
+#define MPRISPLAYERINTERFACE_H
 
 #include <QDBusAbstractAdaptor>
 #include <QDBusObjectPath>
 
 class MediaItem;
-struct MprisPlayerPrivate;
-class MprisPlayer : public QDBusAbstractAdaptor {
+struct MprisPlayerInterfacePrivate;
+class MprisPlayerInterface : public QDBusAbstractAdaptor {
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", "org.mpris.MediaPlayer2.Player")
 
@@ -46,8 +46,8 @@ class MprisPlayer : public QDBusAbstractAdaptor {
         Q_PROPERTY(bool CanControl READ CanControl)
 
     public:
-        explicit MprisPlayer(QObject* parent = nullptr);
-        ~MprisPlayer();
+        explicit MprisPlayerInterface(QObject* parent = nullptr);
+        ~MprisPlayerInterface();
 
         QString PlaybackStatus();
 
@@ -98,7 +98,7 @@ class MprisPlayer : public QDBusAbstractAdaptor {
         Q_SCRIPTABLE void Seeked(qint64 us);
 
     private:
-        MprisPlayerPrivate* d;
+        MprisPlayerInterfacePrivate* d;
 
         void updateCurrentItem();
         void propertyChanged(QString property);
@@ -106,4 +106,4 @@ class MprisPlayer : public QDBusAbstractAdaptor {
 
 };
 
-#endif // MPRISPLAYER_H
+#endif // MPRISPLAYERINTERFACE_H

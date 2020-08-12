@@ -60,6 +60,11 @@ UserPlaylistsWidget::~UserPlaylistsWidget() {
     delete ui;
 }
 
+void UserPlaylistsWidget::setTopPadding(int padding) {
+    ui->playlistsTopWidget->setContentsMargins(0, padding, 0, 0);
+    ui->tracksTopWidget->setContentsMargins(0, padding, 0, 0);
+}
+
 void UserPlaylistsWidget::on_createButton_clicked() {
     bool ok;
     QString playlistName = QInputDialog::getText(this, tr("Playlist Name"), tr("Playlist Name"), QLineEdit::Normal, "", &ok);

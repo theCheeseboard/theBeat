@@ -17,16 +17,16 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "mpriswrapper.h"
+#ifndef HELPERS_H
+#define HELPERS_H
 
-#include <QDBusConnection>
-#include "mprisinstance.h"
-#include "mprisplayerinterface.h"
+#include <QObject>
 
-MprisWrapper::MprisWrapper(QObject* parent) : QObject(parent) {
-    new MprisInstance(this);
-    new MprisPlayerInterface(this);
+class Helpers : public QObject {
+        Q_OBJECT
+    public:
+        static QImage albumArt(QUrl url);
 
-    QDBusConnection::sessionBus().registerService("org.mpris.MediaPlayer2.theBeat");
-    QDBusConnection::sessionBus().registerObject("/org/mpris/MediaPlayer2", this);
-}
+};
+
+#endif // HELPERS_H

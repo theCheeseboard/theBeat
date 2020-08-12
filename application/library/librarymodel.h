@@ -38,6 +38,7 @@ class LibraryModel : public QSqlQueryModel {
             AlbumRole,
             DurationRole,
             TrackRole,
+            AlbumArtRole,
             ErrorRole
         };
 

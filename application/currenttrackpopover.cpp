@@ -18,10 +18,9 @@ struct CurrentTrackPopoverPrivate {
     int currentRow = 0;
 };
 
-CurrentTrackPopover::CurrentTrackPopover(QWidget *parent) :
+CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
     QWidget(parent),
-    ui(new Ui::CurrentTrackPopover)
-{
+    ui(new Ui::CurrentTrackPopover) {
     ui->setupUi(this);
     d = new CurrentTrackPopoverPrivate();
 
@@ -36,17 +35,24 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget *parent) :
     ui->titleLabel->setFixedWidth(SC_DPI(300));
 
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &CurrentTrackPopover::updateCurrentItem);
+    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, &CurrentTrackPopover::updateState);
     updateCurrentItem();
+    updateState();
+
+    QSize iconSize = SC_DPI_T(QSize(32, 32), QSize);
+    QSize bigIconSize = SC_DPI_T(QSize(64, 64), QSize);
+
+    ui->skipBackButton->setIconSize(iconSize);
+    ui->playButton->setIconSize(bigIconSize);
+    ui->skipNextButton->setIconSize(iconSize);
 }
 
-CurrentTrackPopover::~CurrentTrackPopover()
-{
+CurrentTrackPopover::~CurrentTrackPopover() {
     delete d;
     delete ui;
 }
 
-void CurrentTrackPopover::updateCurrentItem()
-{
+void CurrentTrackPopover::updateCurrentItem() {
     if (d->currentItem) {
         d->currentItem->disconnect(this);
     }
@@ -58,8 +64,7 @@ void CurrentTrackPopover::updateCurrentItem()
     }
 }
 
-void CurrentTrackPopover::updateMetadata()
-{
+void CurrentTrackPopover::updateMetadata() {
     if (!d->currentItem) return;
     ui->titleLabel->setText(d->currentItem->title());
 
@@ -75,13 +80,13 @@ void CurrentTrackPopover::updateMetadata()
         ui->artLabel->setVisible(false);
         d->artBackground->setVisible(false);
     } else {
-        QPixmap art = QPixmap::fromImage(image).scaledToWidth(SC_DPI(300));
+        QPixmap art = QPixmap::fromImage(image).scaledToWidth(SC_DPI(300), Qt::SmoothTransformation);
         ui->artLabel->setPixmap(art);
         ui->artLabel->setVisible(true);
 
         QPixmap transparentArt = art;
         QPainter painter(&transparentArt);
-        painter.setOpacity(0.5);
+        painter.setOpacity(0.7);
         painter.setPen(Qt::transparent);
         painter.setBrush(this->palette().color(QPalette::Window));
         painter.drawRect(0, 0, art.width(), art.height());
@@ -106,13 +111,11 @@ void CurrentTrackPopover::updateMetadata()
     if (d->currentItem->metadata(QMediaMetaData::Year).toInt() > 0) addMetadataEntry(tr("Year"), QString::number(d->currentItem->metadata(QMediaMetaData::Year).toInt()));
 }
 
-void CurrentTrackPopover::addMetadataTitle(QString title)
-{
+void CurrentTrackPopover::addMetadataTitle(QString title) {
     d->pendingMetadataTitle = title;
 }
 
-void CurrentTrackPopover::addMetadataEntry(QString entry, QString value)
-{
+void CurrentTrackPopover::addMetadataEntry(QString entry, QString value) {
     if (value.isEmpty()) return;
 
     if (!d->pendingMetadataTitle.isEmpty()) {
@@ -142,8 +145,7 @@ void CurrentTrackPopover::addMetadataEntry(QString entry, QString value)
     d->currentRow++;
 }
 
-void CurrentTrackPopover::clearMetadataInfo()
-{
+void CurrentTrackPopover::clearMetadataInfo() {
     for (QLabel* label : d->metadataInfo) {
         ui->metadataEntryLayout->removeWidget(label);
         label->deleteLater();
@@ -152,12 +154,36 @@ void CurrentTrackPopover::clearMetadataInfo()
     d->currentRow = 0;
 }
 
-void CurrentTrackPopover::resizeEvent(QResizeEvent *event)
-{
+void CurrentTrackPopover::updateState() {
+    switch (StateManager::instance()->playlist()->state()) {
+        case Playlist::Playing:
+            ui->playButton->setIcon(QIcon::fromTheme("media-playback-pause"));
+            break;
+        case Playlist::Paused:
+        case Playlist::Stopped:
+            ui->playButton->setIcon(QIcon::fromTheme("media-playback-start"));
+            break;
+    }
+}
+
+void CurrentTrackPopover::resizeEvent(QResizeEvent* event) {
     updateMetadata();
 
     QRect geometry;
     geometry.setSize(QSize(1, 1).scaled(this->width(), this->height(), Qt::KeepAspectRatioByExpanding));
     geometry.moveCenter(QPoint(this->width() / 2, this->height() / 2));
     d->artBackground->setGeometry(geometry);
+}
+
+void CurrentTrackPopover::on_skipBackButton_clicked() {
+    StateManager::instance()->playlist()->previous();
+}
+
+void CurrentTrackPopover::on_playButton_clicked() {
+    StateManager::instance()->playlist()->playPause();
+}
+
+void CurrentTrackPopover::on_skipNextButton_clicked() {
+    StateManager::instance()->playlist()->next();
+
 }

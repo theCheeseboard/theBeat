@@ -25,6 +25,7 @@
 #include <QUrl>
 #include <QFileInfo>
 #include <the-libs_global.h>
+#include <helpers.h>
 #include "common.h"
 #include "librarymanager.h"
 
@@ -68,6 +69,8 @@ QVariant LibraryModel::data(const QModelIndex& index, int role) const {
             return QSqlQueryModel::data(this->index(index.row(), 5));
         case TrackRole:
             return QSqlQueryModel::data(this->index(index.row(), 6));
+        case AlbumArtRole:
+            return Helpers::albumArt(QUrl::fromLocalFile(data(index, PathRole).toString()));
         case ErrorRole:
             if (!QFile::exists(data(index, PathRole).toString())) {
                 return PathNotFoundError;

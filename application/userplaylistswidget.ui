@@ -49,7 +49,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QWidget" name="widget" native="true">
+        <widget class="QWidget" name="playlistsTopWidget" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QLabel" name="titleLabel">
@@ -134,7 +134,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QWidget" name="widget_2" native="true">
+        <widget class="QWidget" name="tracksTopWidget" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="spacing">
            <number>0</number>

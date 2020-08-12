@@ -79,6 +79,10 @@ MainWindow::MainWindow(QWidget* parent)
 
     ui->jobButtonLayout->addWidget(tJobManager::makeJobButton());
 
+    ui->centralwidget->layout()->removeWidget(ui->topWidget);
+    ui->topWidget->raise();
+    ui->topWidget->move(0, 0);
+
     QMenu* menu = new QMenu(this);
 
     QMenu* helpMenu = new QMenu(this);
@@ -289,6 +293,15 @@ void MainWindow::on_albumsButton_toggled(bool checked) {
 void MainWindow::resizeEvent(QResizeEvent* event) {
     d->topBarLine->move(ui->queueLine->x(), 0);
     d->topBarLine->setFixedHeight(ui->topWidget->height());
+
+    ui->topWidget->setFixedWidth(ui->centralwidget->width());
+    ui->topWidget->setFixedHeight(ui->topWidget->sizeHint().height());
+    ui->tracksPage->setTopPadding(ui->topWidget->height());
+    ui->artistsPage->setTopPadding(ui->topWidget->height());
+    ui->albumsPage->setTopPadding(ui->topWidget->height());
+    ui->playlistsPage->setTopPadding(ui->topWidget->height());
+    ui->otherSourcesPage->setTopPadding(ui->topWidget->height());
+    ui->queueWidget->setContentsMargins(0, ui->topWidget->height(), 0, 0);
 }
 
 bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
