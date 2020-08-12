@@ -117,7 +117,7 @@ void BurnPopover::updateCd() {
                 QString duration = parts.at(3);
 
                 QStringList durationParts = duration.split(":");
-                if (duration.count() < 3) continue;
+                if (durationParts.count() < 3) continue;
                 capacity = durationParts.at(0).toInt() * 60 * 1000 + durationParts.at(1).toInt() * 1000 + durationParts.at(2).toInt() * 100;
             }
         }

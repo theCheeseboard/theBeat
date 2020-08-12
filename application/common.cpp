@@ -2,7 +2,8 @@
 
 #include <QStringList>
 
-QString Common::durationToString(quint64 ms) {
+QString Common::durationToString(quint64 ms, bool zeroIsInfinity) {
+    if (zeroIsInfinity && ms == 0) return "∞";
     QStringList parts;
 
     qint64 seconds = ms / 1000 % 60;

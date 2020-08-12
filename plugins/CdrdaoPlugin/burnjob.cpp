@@ -125,6 +125,11 @@ void BurnJob::performNextAction() {
         tocStream << "}\n"; //LANGUAGE_MAP
         tocStream << "LANGUAGE 0 {\n";
         tocStream << QStringLiteral(R"(TITLE "%1")" "\n").arg(d->albumTitle);
+        tocStream << R"(PERFORMER "")" "\n";
+        tocStream << R"(DISC_ID "")" "\n";
+        tocStream << R"(UPC_EAN "")" "\n";
+        tocStream << R"(ARRANGER "")" "\n";
+        tocStream << R"(COMPOSER "")" "\n";
         tocStream << "}\n"; //LANGUAGE 0
         tocStream << "}\n"; //CD_TEXT
 
@@ -136,9 +141,9 @@ void BurnJob::performNextAction() {
                 //Write CD Text
                 tocStream << "CD_TEXT {\n";
                 tocStream << "LANGUAGE 0 {\n";
-                if (!file.tag()->title().isEmpty()) tocStream << QStringLiteral(R"(TITLE "%1")" "\n").arg(file.tag()->title().toCString());
-                if (!file.tag()->artist().isEmpty()) tocStream << QStringLiteral(R"(ARRANGER "%1")" "\n").arg(file.tag()->artist().toCString());
-                if (!file.tag()->artist().isEmpty()) tocStream << QStringLiteral(R"(COMPOSER "%1")" "\n").arg(file.tag()->artist().toCString());
+                tocStream << QStringLiteral(R"(TITLE "%1")" "\n").arg(file.tag()->title().toCString());
+                tocStream << QStringLiteral(R"(ARRANGER "%1")" "\n").arg(file.tag()->artist().toCString());
+                tocStream << QStringLiteral(R"(COMPOSER "%1")" "\n").arg(file.tag()->artist().toCString());
                 tocStream << "}\n"; //LANGUAGE 0
                 tocStream << "}\n"; //CD_TEXT
             }
@@ -214,7 +219,7 @@ void BurnJob::performNextAction() {
             process->deleteLater();
         });
 
-        QStringList daoArgs = {"write", "-n", "--eject", "--device", "/dev/" + d->blockDevice, "contents.toc"};
+        QStringList daoArgs = {"write", "-n", "--eject", "--device", "/dev/" + d->blockDevice, "--driver", "generic-mmc-raw", "contents.toc"};
         process->start("cdrdao", daoArgs);
 
         d->daoProcess = process;

@@ -162,7 +162,7 @@ void ControlStrip::updateBar() {
     ui->progressSlider->setMaximum(d->currentItem->duration());
     ui->progressSlider->setValue(d->currentItem->elapsed());
 
-    ui->durationLabel->setText(Common::durationToString(d->currentItem->duration()));
+    ui->durationLabel->setText(Common::durationToString(d->currentItem->duration(), true));
     ui->elapsedLabel->setText(Common::durationToString(d->currentItem->elapsed()));
 }
 
@@ -241,8 +241,7 @@ bool ControlStrip::eventFilter(QObject* watched, QEvent* event) {
     return false;
 }
 
-void ControlStrip::on_upButton_clicked()
-{
+void ControlStrip::on_upButton_clicked() {
     CurrentTrackPopover* track = new CurrentTrackPopover();
     tPopover* popover = new tPopover(track);
     popover->setPopoverSide(tPopover::Bottom);
