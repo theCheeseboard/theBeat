@@ -13,7 +13,7 @@ win32 {
 
 qtHaveModule(phonon4qt5) {
     message("Building with Phonon support")
-    SUBDIRS = PhononPlugin
+    SUBDIRS += PhononPlugin
 }
 
 DISTFILES += \

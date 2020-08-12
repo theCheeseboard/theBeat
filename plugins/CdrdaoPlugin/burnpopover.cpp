@@ -112,7 +112,11 @@ void BurnPopover::updateCd() {
         while (cdrdao.canReadLine()) {
             QString line = cdrdao.readLine().trimmed();
             if (line.startsWith("Total Capacity")) {
+#if QT_VERSION_CHECK(5, 14, 0)
                 QStringList parts = line.split(" ", Qt::SkipEmptyParts);
+#else
+                QStringList parts = line.split(" ", QString::SkipEmptyParts);
+#endif
                 if (parts.count() < 4) continue;
                 QString duration = parts.at(3);
 
