@@ -20,9 +20,10 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
+#include "libthebeat_global.h"
 #include <QObject>
 
-class Helpers : public QObject {
+class LIBTHEBEAT_EXPORT Helpers : public QObject {
         Q_OBJECT
     public:
         static QImage albumArt(QUrl url);

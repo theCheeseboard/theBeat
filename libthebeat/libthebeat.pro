@@ -20,6 +20,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 unix:!macx {
     QT += thelib
 
+    CONFIG += link_pkgconfig
+    PKGCONFIG += taglib
+
     CI = $$(CI)
     if (isEmpty(CI)) {
         target.path = $$[QT_INSTALL_LIBS]
