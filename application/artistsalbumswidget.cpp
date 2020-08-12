@@ -27,6 +27,10 @@
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <burnbackend.h>
+#include <burnmanager.h>
+#include <QMenu>
+#include "common.h"
 #include "library/librarymanager.h"
 
 struct ArtistsAlbumsWidgetPrivate {
@@ -34,6 +38,7 @@ struct ArtistsAlbumsWidgetPrivate {
     int topPadding = 0;
 
     QImage playlistBackground;
+    QString listName;
 };
 
 ArtistsAlbumsWidget::ArtistsAlbumsWidget(QWidget* parent) :
@@ -43,6 +48,10 @@ ArtistsAlbumsWidget::ArtistsAlbumsWidget(QWidget* parent) :
 
     d = new ArtistsAlbumsWidgetPrivate();
     connect(LibraryManager::instance(), &LibraryManager::libraryChanged, this, &ArtistsAlbumsWidget::updateData);
+
+    connect(StateManager::instance()->burn(), &BurnManager::backendRegistered, this, &ArtistsAlbumsWidget::updateBurn);
+    connect(StateManager::instance()->burn(), &BurnManager::backendDeregistered, this, &ArtistsAlbumsWidget::updateBurn);
+    updateBurn();
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Lift);
 
@@ -74,6 +83,10 @@ void ArtistsAlbumsWidget::updateData() {
     }
 }
 
+void ArtistsAlbumsWidget::updateBurn() {
+    ui->burnButton->setVisible(!StateManager::instance()->burn()->availableBackends().isEmpty());
+}
+
 bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
     if (watched == ui->topWidget && event->type() == QEvent::Paint) {
         QPainter painter(ui->topWidget);
@@ -98,6 +111,7 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
 //            painter.setBrush(backgroundCol);
 //            painter.setPen(Qt::transparent);
 //            painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
+            ui->buttonWidget->setContentsMargins(0, 0, 0, 0);
         } else {
             QRect rect;
             rect.setSize(d->playlistBackground.size().scaled(ui->topWidget->width(), ui->topWidget->height(), Qt::KeepAspectRatioByExpanding));
@@ -127,12 +141,15 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
             rightRect.moveRight(ui->topWidget->width());
             rightRect.moveTop(d->topPadding + (ui->topWidget->height() - d->topPadding) / 2 - rightRect.height() / 2);
             painter.drawImage(rightRect, d->playlistBackground.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+
+            ui->buttonWidget->setContentsMargins(0, 0, rightRect.width(), 0);
         }
     }
     return false;
 }
 
 void ArtistsAlbumsWidget::on_initialList_itemActivated(QListWidgetItem* item) {
+    d->listName = item->text();
     ui->tracksTitle->setText(d->type == Albums ? tr("Tracks in %1").arg(item->text()) : tr("Tracks by %1").arg(item->text()));
     LibraryModel* model = d->type == Albums ? LibraryManager::instance()->tracksByAlbum(item->text()) : LibraryManager::instance()->tracksByArtist(item->text());
     ui->tracksList->setModel(model);
@@ -140,6 +157,17 @@ void ArtistsAlbumsWidget::on_initialList_itemActivated(QListWidgetItem* item) {
 
     d->playlistBackground = model->index(0, 0).data(LibraryModel::AlbumArtRole).value<QImage>();
     ui->topWidget->update();
+
+    QStringList parts;
+    parts.append(tr("%n tracks", nullptr, model->rowCount()));
+
+    quint64 duration = 0;
+    for (int i = 0; i < model->rowCount(); i++) {
+        duration += model->index(i, 0).data(LibraryModel::DurationRole).toInt();
+    }
+    parts.append(Common::durationToString(duration));
+
+    ui->auxiliaryDataLabel->setText(parts.join(" · "));
 }
 
 void ArtistsAlbumsWidget::on_backButton_clicked() {
@@ -153,4 +181,28 @@ void ArtistsAlbumsWidget::on_enqueueAllButton_clicked() {
         QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
     }
+}
+
+void ArtistsAlbumsWidget::on_shuffleButton_clicked() {
+    ui->enqueueAllButton->click();
+    StateManager::instance()->playlist()->setShuffle(true);
+}
+
+void ArtistsAlbumsWidget::on_playAllButton_clicked() {
+    StateManager::instance()->playlist()->clear();
+    ui->enqueueAllButton->click();
+}
+
+void ArtistsAlbumsWidget::on_burnButton_clicked() {
+    QStringList files;
+    for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
+        if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) {
+            //TODO: Do something!!!
+            continue;
+        }
+
+        files.append(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString());
+    }
+
+    Common::showBurnMenu(files, d->listName, ui->burnButton);
 }

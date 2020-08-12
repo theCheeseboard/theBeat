@@ -29,6 +29,7 @@
 #include <burnbackend.h>
 #include "qtmultimedia/qtmultimediamediaitem.h"
 #include "library/librarymanager.h"
+#include "common.h"
 
 struct UserPlaylistsWidgetPrivate {
     int currentPlaylist = -1;
@@ -125,19 +126,5 @@ void UserPlaylistsWidget::on_burnButton_clicked() {
         files.append(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString());
     }
 
-    QList<BurnBackend*> backends = StateManager::instance()->burn()->availableBackends();
-
-    if (backends.count() == 1) {
-        backends.first()->burn(files, d->currentPlaylistName, this->window());
-    } else {
-        QMenu* menu = new QMenu();
-        menu->addSection(tr("Select Device"));
-        for (BurnBackend* backend : backends) {
-            menu->addAction(backend->displayName(), [ = ] {
-                backend->burn(files, d->currentPlaylistName, this->window());
-            });
-        }
-        connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
-        menu->popup(ui->burnButton->mapToGlobal(QPoint(0, ui->burnButton->height())));
-    }
+    Common::showBurnMenu(files, d->currentPlaylistName, ui->burnButton);
 }

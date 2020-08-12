@@ -10,34 +10,69 @@
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="65"/>
-        <location filename="../artistsalbumswidget.ui" line="191"/>
+        <location filename="../artistsalbumswidget.ui" line="188"/>
         <source>Tracks in Library</source>
         <translation>Bài hát trong thư viện</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="216"/>
+        <location filename="../artistsalbumswidget.ui" line="201"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.ui" line="230"/>
         <source>Enqueue All</source>
         <translation>Đặt tất cả vào hàng phát</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="58"/>
+        <location filename="../artistsalbumswidget.ui" line="241"/>
+        <source>Play All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.ui" line="251"/>
+        <source>Shufle All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.ui" line="274"/>
+        <source>Burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Albums in Library</source>
         <translation>Đĩa nhạc trong thư viện</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="58"/>
+        <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Artists in Library</source>
         <translation>Nghệ sĩ trong thư viện</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="136"/>
+        <location filename="../artistsalbumswidget.cpp" line="153"/>
         <source>Tracks in %1</source>
         <translation>Bài hát trong %1</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="136"/>
+        <location filename="../artistsalbumswidget.cpp" line="153"/>
         <source>Tracks by %1</source>
         <translation>Bài hát bởi %1</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../artistsalbumswidget.cpp" line="162"/>
+        <source>%n tracks</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>Common</name>
+    <message>
+        <location filename="../common.cpp" line="31"/>
+        <source>Select Device</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -255,13 +290,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="450"/>
-        <location filename="../mainwindow.cpp" line="385"/>
+        <location filename="../mainwindow.cpp" line="390"/>
         <source>Open URL</source>
         <translation>Mở liên kết</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="459"/>
-        <location filename="../mainwindow.cpp" line="189"/>
+        <location filename="../mainwindow.cpp" line="194"/>
         <source>Skip Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -302,8 +337,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="483"/>
-        <location filename="../mainwindow.cpp" line="197"/>
-        <location filename="../mainwindow.cpp" line="211"/>
+        <location filename="../mainwindow.cpp" line="202"/>
+        <location filename="../mainwindow.cpp" line="216"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
@@ -318,44 +353,44 @@
         <translation>Trợ giúp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="206"/>
+        <location filename="../mainwindow.cpp" line="211"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="218"/>
+        <location filename="../mainwindow.cpp" line="223"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="363"/>
+        <location filename="../mainwindow.cpp" line="368"/>
         <source>For &quot;%1&quot;</source>
         <translation>Cho &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="365"/>
+        <location filename="../mainwindow.cpp" line="370"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Cho %n mục</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="367"/>
+        <location filename="../mainwindow.cpp" line="372"/>
         <source>Remove from Queue</source>
         <translation>Xóa khỏi hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="374"/>
+        <location filename="../mainwindow.cpp" line="379"/>
         <source>For Queue</source>
         <translation>Cho hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="375"/>
+        <location filename="../mainwindow.cpp" line="380"/>
         <source>Clear Queue</source>
         <translation>Xóa các mục</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="385"/>
+        <location filename="../mainwindow.cpp" line="390"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
@@ -487,19 +522,14 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished">Đặt tất cả vào hàng phát</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="70"/>
+        <location filename="../userplaylistswidget.cpp" line="71"/>
         <source>Playlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="99"/>
+        <location filename="../userplaylistswidget.cpp" line="100"/>
         <source>Tracks in %1</source>
         <translation type="unfinished">Bài hát trong %1</translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="134"/>
-        <source>Select Device</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

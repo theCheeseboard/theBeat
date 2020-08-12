@@ -129,6 +129,11 @@ MainWindow::MainWindow(QWidget* parent)
 
     connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [ = ] {
         ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
+
+        //Sometimes the animation breaks it
+        QTimer::singleShot(500, [ = ] {
+            ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
+        });
     });
     ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
 

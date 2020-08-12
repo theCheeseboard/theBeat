@@ -51,11 +51,18 @@ class ArtistsAlbumsWidget : public QWidget {
 
         void on_enqueueAllButton_clicked();
 
+        void on_shuffleButton_clicked();
+
+        void on_playAllButton_clicked();
+
+        void on_burnButton_clicked();
+
     private:
         Ui::ArtistsAlbumsWidget* ui;
         ArtistsAlbumsWidgetPrivate* d;
 
         void updateData();
+        void updateBurn();
 
         bool eventFilter(QObject* watched, QEvent* event);
 };
