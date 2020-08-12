@@ -22,10 +22,17 @@
 
 #include "burnjob.h"
 
+struct BurnJobWidgetPrivate {
+    BurnJob* parentJob;
+};
+
 BurnJobWidget::BurnJobWidget(BurnJob* parent) :
     QWidget(nullptr),
     ui(new Ui::BurnJobWidget) {
     ui->setupUi(this);
+
+    d = new BurnJobWidgetPrivate();
+    d->parentJob = parent;
 
     connect(parent, &BurnJob::totalProgressChanged, this, [ = ](quint64 totalProgress) {
         ui->progressBar->setMaximum(totalProgress);
@@ -46,5 +53,10 @@ BurnJobWidget::BurnJobWidget(BurnJob* parent) :
 }
 
 BurnJobWidget::~BurnJobWidget() {
+    delete d;
     delete ui;
+}
+
+void BurnJobWidget::on_cancelButton_clicked() {
+    d->parentJob->cancel();
 }

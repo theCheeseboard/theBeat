@@ -65,7 +65,8 @@ void BurnDevice::checkCd() {
         }
 
         QDBusInterface cdDriveInterface("org.freedesktop.UDisks2", d->cdDrivePath.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
-        if (cdDriveInterface.property("MediaAvailable").toBool() && cdDriveInterface.property("Optical").toBool() && cdDriveInterface.property("OpticalBlank").toBool()) {
+        QString media = cdDriveInterface.property("Media").toString();
+        if (cdDriveInterface.property("MediaAvailable").toBool() && cdDriveInterface.property("Optical").toBool() && QStringList({"optical_cd_r", "optical_cd_rw"}).contains(media)) {
             CdInformation info;
             info.available = true;
             info.displayName = QStringLiteral("%1 %2").arg(cdDriveInterface.property("Vendor").toString()).arg(cdDriveInterface.property("Model").toString());

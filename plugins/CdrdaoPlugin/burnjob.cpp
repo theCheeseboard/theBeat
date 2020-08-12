@@ -37,6 +37,8 @@ struct BurnJobPrivate {
 
     QString description;
     bool canCancel;
+    bool cancelNext;
+    QProcess* daoProcess = nullptr;
 
     quint64 progress;
     quint64 maxProgress;
@@ -68,6 +70,16 @@ bool BurnJob::canCancel() {
     return d->canCancel;
 }
 
+void BurnJob::cancel() {
+    d->cancelNext = true;
+    d->canCancel = false;
+    emit canCancelChanged(false);
+
+    if (d->daoProcess) {
+        d->daoProcess->terminate();
+    }
+}
+
 #include <QDebug>
 void BurnJob::performNextAction() {
     if (d->nextItem < d->sourceFiles.count()) {
@@ -85,6 +97,9 @@ void BurnJob::performNextAction() {
 
                 d->description = tr("Couldn't transcode track");
                 emit descriptionChanged(d->description);
+
+                d->workDir.remove();
+
                 return;
             }
 
@@ -92,7 +107,7 @@ void BurnJob::performNextAction() {
             performNextAction();
             ffmpeg->deleteLater();
         });
-        ffmpeg->start("ffmpeg", {"-i", sourceFile, d->workDir.filePath(QStringLiteral("Track%1.wav").arg(d->nextItem, 2, 10, QLatin1Char('0')))});
+        ffmpeg->start("ffmpeg", {"-i", sourceFile, "-ar", "44100", d->workDir.filePath(QStringLiteral("Track%1.wav").arg(d->nextItem, 2, 10, QLatin1Char('0')))});
     } else if (d->nextItem == d->sourceFiles.count()) {
         d->description = tr("Preparing to burn").arg(d->nextItem + 1);
         emit descriptionChanged(d->description);
@@ -162,6 +177,9 @@ void BurnJob::performNextAction() {
 
                         emit totalProgressChanged(d->progress);
                         emit progressChanged(d->progress);
+
+                        d->canCancel = false;
+                        emit canCancelChanged(false);
                     } else {
                         QStringList parts = line.split(" ");
                         d->progress = parts.at(1).toInt();
@@ -180,7 +198,13 @@ void BurnJob::performNextAction() {
                 d->state = Failed;
                 emit stateChanged(Failed);
 
-                d->description = tr("Couldn't burn tracks");
+                d->workDir.remove();
+
+                if (d->cancelNext) {
+                    d->description = tr("Cancelled");
+                } else {
+                    d->description = tr("Couldn't burn tracks");
+                }
                 emit descriptionChanged(d->description);
                 return;
             }
@@ -192,6 +216,11 @@ void BurnJob::performNextAction() {
 
         QStringList daoArgs = {"write", "-n", "--eject", "--device", "/dev/" + d->blockDevice, "contents.toc"};
         process->start("cdrdao", daoArgs);
+
+        d->daoProcess = process;
+
+        d->canCancel = true;
+        emit canCancelChanged(true);
     } else {
         d->state = Finished;
         emit stateChanged(Finished);

@@ -44,9 +44,12 @@ class BurnPopover : public QWidget {
 
         void on_albumNameEdit_textChanged(const QString& arg1);
 
+        void updateCd();
+
     private:
         Ui::BurnPopover* ui;
         BurnPopoverPrivate* d;
+
 };
 
 #endif // BURNPOPOVER_H

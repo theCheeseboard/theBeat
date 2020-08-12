@@ -32,6 +32,8 @@ class BurnJob : public tJob {
         QString description();
         bool canCancel();
 
+        void cancel();
+
     signals:
         void descriptionChanged(QString description);
         void canCancelChanged(bool canCancel);

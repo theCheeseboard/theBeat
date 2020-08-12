@@ -27,6 +27,7 @@ namespace Ui {
 }
 
 class BurnJob;
+struct BurnJobWidgetPrivate;
 class BurnJobWidget : public QWidget {
         Q_OBJECT
 
@@ -34,8 +35,12 @@ class BurnJobWidget : public QWidget {
         explicit BurnJobWidget(BurnJob* parent = nullptr);
         ~BurnJobWidget();
 
+    private slots:
+        void on_cancelButton_clicked();
+
     private:
         Ui::BurnJobWidget* ui;
+        BurnJobWidgetPrivate* d;
 };
 
 #endif // BURNJOBWIDGET_H
