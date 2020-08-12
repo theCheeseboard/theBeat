@@ -143,31 +143,31 @@ MainWindow::MainWindow(QWidget* parent)
     d->topBarLine->setVisible(true);
     d->topBarLine->lower();
 
-    new QShortcut(QKeySequence(Qt::Key_J), this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_J), this), &QShortcut::activated, this, [ = ] {
         this->rewind10();
     });
-    new QShortcut(QKeySequence(Qt::Key_K), this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_K), this), &QShortcut::activated, this, [ = ] {
         StateManager::instance()->playlist()->playPause();
     });
-    new QShortcut(QKeySequence(Qt::Key_L), this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_L), this), &QShortcut::activated, this, [ = ] {
         this->ff10();
     });
-    new QShortcut(QKeySequence(Qt::Key_Up), this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Up), this), &QShortcut::activated, this, [ = ] {
         double newVolume = StateManager::instance()->playlist()->volume();
         newVolume += 0.1;
         if (newVolume > 1) newVolume = 1;
         StateManager::instance()->playlist()->setVolume(newVolume);
     });
-    new QShortcut(QKeySequence(Qt::Key_Down), this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Down), this), &QShortcut::activated, this, [ = ] {
         double newVolume = StateManager::instance()->playlist()->volume();
         newVolume -= 0.1;
         if (newVolume < 0) newVolume = 0;
         StateManager::instance()->playlist()->setVolume(newVolume);
     });
-    new QShortcut(QKeySequence(Qt::Key_Left), this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Left), this), &QShortcut::activated, this, [ = ] {
         this->rewind10();
     });
-    new QShortcut(QKeySequence(Qt::Key_Right), this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Right), this), &QShortcut::activated, this, [ = ] {
         this->ff10();
     });
 
