@@ -6,10 +6,11 @@ DEPENDPATH += $$PWD/../libthebeat
 unix:!macx: {
     LIBS += -L$$OUT_PWD/../../libthebeat/ -lthebeat
 
-    if (equals($$(CI), "true")) {
-        target.path = /usr/lib/thebeat/plugins
-    } else {
+    CI = $$(CI)
+    if (isEmpty(CI)) {
         target.path = $$[QT_INSTALL_LIBS]/thebeat/plugins
+    } else {
+        target.path = /usr/lib/thebeat/plugins
     }
     INSTALLS += target
 

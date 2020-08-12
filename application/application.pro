@@ -18,11 +18,13 @@ unix:!macx {
 
     LIBS += -L$$OUT_PWD/../libthebeat/ -lthebeat
 
-    if (equals($$(CI), "true")) {
+    CI = $$(CI)
+
+    if (isEmpty(CI)) {
+        target.path = $$[QT_INSTALL_BINS]
+    } else {
         message("Building on CI");
         target.path = /usr/bin
-    } else {
-        target.path = $$[QT_INSTALL_BINS]
     }
 
     desktop.path = /usr/share/applications
