@@ -18,7 +18,12 @@ unix:!macx {
 
     LIBS += -L$$OUT_PWD/../libthebeat/ -lthebeat
 
-    target.path = $$[QT_INSTALL_BINS]
+    if (equals($$(CI), "true")) {
+        message("Building on CI");
+        target.path = /usr/bin
+    } else {
+        target.path = $$[QT_INSTALL_BINS]
+    }
 
     desktop.path = /usr/share/applications
     desktop.files = com.vicr123.thebeat.desktop

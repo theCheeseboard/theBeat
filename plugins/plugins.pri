@@ -6,7 +6,11 @@ DEPENDPATH += $$PWD/../libthebeat
 unix:!macx: {
     LIBS += -L$$OUT_PWD/../../libthebeat/ -lthebeat
 
-    target.path = $$[QT_INSTALL_LIBS]/thebeat/plugins
+    if (equals($$(CI), "true")) {
+        target.path = /usr/lib/thebeat/plugins
+    } else {
+        target.path = $$[QT_INSTALL_LIBS]/thebeat/plugins
+    }
     INSTALLS += target
 
     QMAKE_POST_LINK += $$QMAKE_COPY_DIR $$quote($$_PRO_FILE_PWD_/translations) $$shell_quote($$OUT_PWD) && \
