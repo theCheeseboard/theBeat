@@ -50,6 +50,8 @@ class CdChecker : public QWidget {
         Ui::CdChecker* ui;
         CdCheckerPrivate* d;
 
+        bool eventFilter(QObject* watched, QEvent* event);
+
         void updateTrackListing();
         void loadMusicbrainzData(QString discId);
         void selectMusicbrainzRelease(QString release);

@@ -18,10 +18,12 @@
  *
  * *************************************/
 #include "cdchecker.h"
+#include "ui_cdchecker.h"
 
-#include <ui_cdchecker.h>
 #include <QDBusInterface>
 #include <QDBusConnection>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <pluginmediasource.h>
 #include <statemanager.h>
 #include <sourcemanager.h>
@@ -36,6 +38,10 @@
 #include <phonon/MediaController>
 #include <phonon/MediaSource>
 #include <phonon/AudioDataOutput>
+#include <QPainter>
+#include <QGraphicsBlurEffect>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 
 #ifdef HAVE_MUSICBRAINZ
     #include <musicbrainz5/Query.h>
@@ -59,6 +65,11 @@ struct CdCheckerPrivate {
     QString albumName;
     QList<TrackInfoPtr> trackInfo;
 
+    QImage playlistBackground;
+    QNetworkAccessManager mgr;
+
+    int topPadding = 0;
+
 #ifdef HAVE_MUSICBRAINZ
     QString currentDiscId;
     QString currentReleaseId;
@@ -81,6 +92,8 @@ CdChecker::CdChecker(QString blockDevice, QWidget* parent) :
     QDBusInterface blockInterface("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2/block_devices/" + blockDevice, "org.freedesktop.UDisks2.Block", QDBusConnection::systemBus());
     d->cdDrivePath = blockInterface.property("Drive").value<QDBusObjectPath>();
     QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", d->cdDrivePath.path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(checkCd()));
+
+    ui->topWidget->installEventFilter(this);
 
     checkCd();
 }
@@ -143,6 +156,9 @@ void CdChecker::checkCd() {
             //No CD
             PhononCdMediaItem::blockDeviceGone(d->blockDevice);
             StateManager::instance()->sources()->removeSource(d->source);
+
+            d->playlistBackground = QImage();
+            ui->topWidget->update();
         } else {
             d->mbDiscIds = info.mbDiscId;
             d->trackInfo.clear();
@@ -201,6 +217,9 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
 #ifdef HAVE_MUSICBRAINZ
     d->currentReleaseId = release;
 
+    d->playlistBackground = QImage();
+    ui->topWidget->update();
+
     tPromise<MusicBrainz5::CRelease*>::runOnNewThread([ = ](tPromiseFunctions<MusicBrainz5::CRelease*>::SuccessFunction res, tPromiseFunctions<MusicBrainz5::CMetadata>::FailureFunction rej) {
         try {
             MusicBrainz5::CQuery query("thebeat-3.0");
@@ -212,6 +231,17 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
         d->albumName = QString::fromStdString(release->Title());
         ui->albumTitleLabel->setText(d->albumName);
         d->source->setName(d->albumName);
+
+        //Attempt to get album art for this release
+        QNetworkRequest req(QUrl("https://coverartarchive.org/release/" + QString::fromStdString(release->ID()) + "/front"));
+        req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+        QNetworkReply* artReply = d->mgr.get(req);
+        connect(artReply, &QNetworkReply::finished, this, [ = ] {
+            if (artReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
+                d->playlistBackground = QImage::fromData(artReply->readAll());
+                ui->topWidget->update();
+            }
+        });
 
         MusicBrainz5::CMediumList* mediumList = release->MediumList();
         for (int h = 0; h < mediumList->NumItems(); h++) {
@@ -278,4 +308,65 @@ void CdChecker::on_importCdButton_clicked() {
     connect(popover, &tPopover::dismissed, jp, &ImportCdPopover::deleteLater);
     popover->show(this->window());
 
+}
+
+bool CdChecker::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->topWidget && event->type() == QEvent::Paint) {
+        QPainter painter(ui->topWidget);
+
+        QColor backgroundCol = this->palette().color(QPalette::Window);
+        if ((backgroundCol.red() + backgroundCol.green() + backgroundCol.blue()) / 3 < 127) {
+            backgroundCol = QColor(0, 0, 0, 150);
+        } else {
+            backgroundCol = QColor(255, 255, 255, 150);
+        }
+
+        if (d->playlistBackground.isNull()) {
+//            QSvgRenderer renderer(QString(":/icons/coverimage.svg"));
+
+//            QRect rect;
+//            rect.setSize(renderer.defaultSize().scaled(ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
+//            rect.setLeft(ui->mediaLibraryInfoWidget->width() / 2 - rect.width() / 2);
+//            rect.setTop(ui->mediaLibraryInfoWidget->height() / 2 - rect.height() / 2);
+
+//            renderer.render(&painter, rect);
+
+//            painter.setBrush(backgroundCol);
+//            painter.setPen(Qt::transparent);
+//            painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
+            ui->buttonWidget->setContentsMargins(0, 0, 0, 0);
+        } else {
+            QRect rect;
+            rect.setSize(d->playlistBackground.size().scaled(ui->topWidget->width(), ui->topWidget->height(), Qt::KeepAspectRatioByExpanding));
+            rect.moveLeft(ui->topWidget->width() / 2 - rect.width() / 2);
+            rect.moveTop(ui->topWidget->height() / 2 - rect.height() / 2);
+
+            //Blur the background
+            int radius = 30;
+            QGraphicsBlurEffect* blur = new QGraphicsBlurEffect;
+            blur->setBlurRadius(radius);
+
+            QGraphicsScene scene;
+            QGraphicsPixmapItem item;
+            item.setPixmap(QPixmap::fromImage(d->playlistBackground));
+            item.setGraphicsEffect(blur);
+            scene.addItem(&item);
+
+            //scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
+            scene.render(&painter, rect.adjusted(-radius, -radius, radius, radius), QRectF(-radius, -radius, d->playlistBackground.width() + radius, d->playlistBackground.height() + radius));
+
+            painter.setBrush(backgroundCol);
+            painter.setPen(Qt::transparent);
+            painter.drawRect(0, 0, ui->topWidget->width(), ui->topWidget->height());
+
+            QRect rightRect;
+            rightRect.setSize(d->playlistBackground.size().scaled(0, ui->topWidget->height() - d->topPadding, Qt::KeepAspectRatioByExpanding));
+            rightRect.moveRight(ui->topWidget->width());
+            rightRect.moveTop(d->topPadding + (ui->topWidget->height() - d->topPadding) / 2 - rightRect.height() / 2);
+            painter.drawImage(rightRect, d->playlistBackground.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+
+            ui->buttonWidget->setContentsMargins(0, 0, rightRect.width(), 0);
+        }
+    }
+    return false;
 }
