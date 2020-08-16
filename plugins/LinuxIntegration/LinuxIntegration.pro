@@ -1,4 +1,4 @@
-QT += gui widgets dbus
+QT += gui widgets dbus thelib
 
 TEMPLATE = lib
 CONFIG += plugin
@@ -7,6 +7,10 @@ CONFIG += c++11
 
 unix {
     CONFIG += link_pkgconfig
+
+    translations.files = translations/*.qm
+    translations.path = /usr/share/thebeat/linuxintegration/translations
+    INSTALLS += translations
 
     packagesExist(x11) {
         message("Building with X11 support");

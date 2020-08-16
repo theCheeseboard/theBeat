@@ -24,6 +24,7 @@
 #include <sourcemanager.h>
 #include <pluginmediasource.h>
 #include <QIcon>
+#include <tapplication.h>
 #include "nativeevents.h"
 #include "mpriswrapper.h"
 
@@ -33,6 +34,8 @@ struct PluginPrivate {
 
 Plugin::Plugin() {
     d = new PluginPrivate();
+
+    tApplication::addPluginTranslator("linuxintegration");
 }
 
 Plugin::~Plugin() {

@@ -24,6 +24,7 @@
 #include <sourcemanager.h>
 #include <pluginmediasource.h>
 #include <QIcon>
+#include <tapplication.h>
 #include "burndevice.h"
 
 struct PluginPrivate {
@@ -32,6 +33,7 @@ struct PluginPrivate {
 
 Plugin::Plugin() {
     d = new PluginPrivate();
+    tApplication::addPluginTranslator("cdrdaoplugin");
 }
 
 Plugin::~Plugin() {

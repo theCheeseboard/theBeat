@@ -8,6 +8,10 @@ CONFIG += c++11
 unix {
     CONFIG += link_pkgconfig
     PKGCONFIG += taglib
+
+    translations.files = translations/*.qm
+    translations.path = /usr/share/thebeat/cdrdaoplugin/translations
+    INSTALLS += translations
 }
 
 # The following define makes your compiler emit warnings if you use

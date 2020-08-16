@@ -9,6 +9,10 @@ unix {
     CONFIG += link_pkgconfig
     PKGCONFIG += taglib
 
+    translations.files = translations/*.qm
+    translations.path = /usr/share/thebeat/phononplugin/translations
+    INSTALLS += translations
+
     packagesExist(libmusicbrainz5) {
         message("Building with libmusicbrainz5 support")
         PKGCONFIG += libmusicbrainz5

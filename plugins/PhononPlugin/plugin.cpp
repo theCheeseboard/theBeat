@@ -24,6 +24,8 @@
 #include <sourcemanager.h>
 #include <pluginmediasource.h>
 #include <QIcon>
+#include <tapplication.h>
+#include <QTranslator>
 #include "cdchecker.h"
 
 struct PluginPrivate {
@@ -32,6 +34,8 @@ struct PluginPrivate {
 
 Plugin::Plugin() {
     d = new PluginPrivate();
+
+    tApplication::addPluginTranslator("phononplugin");
 }
 
 Plugin::~Plugin() {

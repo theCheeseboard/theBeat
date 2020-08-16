@@ -37,6 +37,7 @@ int main(int argc, char* argv[]) {
     } else if (QDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/")).exists()) {
         a.setShareDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/"));
     }
+    a.setShareDir("/home/victor/Documents/Apps/build-theBeat-Chroot-Debug/install/usr/share/thebeat");
     a.installTranslators();
 
     a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
