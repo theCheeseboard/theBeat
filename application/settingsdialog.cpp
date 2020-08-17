@@ -41,6 +41,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     ui->resetLibraryButton->setProperty("type", "destructive");
 
     ui->trackChangeNotification->setChecked(d->settings.value("notifications/trackChange").toBool());
+    ui->listWidget->selectionModel()->setCurrentIndex(ui->listWidget->model()->index(0, 0), QItemSelectionModel::SelectCurrent);
 }
 
 SettingsDialog::~SettingsDialog() {
