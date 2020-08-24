@@ -19,11 +19,14 @@
  * *************************************/
 #include "trackinfo.h"
 
+#include <QImage>
+
 struct TrackInfoPrivate {
     QString title;
     QStringList artist;
     QString album;
     int track;
+    QImage albumArt;
 };
 
 TrackInfo::TrackInfo() : QObject(nullptr) {
@@ -58,10 +61,18 @@ int TrackInfo::track() {
     return d->track;
 }
 
+QImage TrackInfo::albumArt() {
+    return d->albumArt;
+}
+
 void TrackInfo::setData(QString title, QStringList artist, QString album) {
     d->title = title;
     d->artist = artist;
     d->album = album;
 
     emit dataChanged();
+}
+
+void TrackInfo::setAlbumArt(QImage albumArt) {
+    d->albumArt = albumArt;
 }

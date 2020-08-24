@@ -240,6 +240,10 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
             if (artReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
                 d->playlistBackground = QImage::fromData(artReply->readAll());
                 ui->topWidget->update();
+
+                for (TrackInfoPtr trackInfo : d->trackInfo) {
+                    trackInfo->setAlbumArt(d->playlistBackground);
+                }
             }
         });
 

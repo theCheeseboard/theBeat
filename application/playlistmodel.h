@@ -21,15 +21,26 @@
 #define PLAYLISTMODEL_H
 
 #include <QAbstractListModel>
+#include <QStyledItemDelegate>
 
+struct PlaylistModelPrivate;
 class PlaylistModel : public QAbstractListModel {
         Q_OBJECT
 
     public:
         explicit PlaylistModel(QObject* parent = nullptr);
+        ~PlaylistModel();
 
         enum Roles {
-            MediaItemRole = Qt::UserRole
+            MediaItemRole = Qt::UserRole,
+            DrawTypeRole,
+            PriorHeadersRole
+        };
+
+        enum DrawType {
+            GroupHeader,
+            GroupItem,
+            SingleItemGroup
         };
 
         // Basic functionality:
@@ -43,8 +54,24 @@ class PlaylistModel : public QAbstractListModel {
         Qt::DropActions supportedDropActions() const override;
         bool insertRows(int row, int count, const QModelIndex& parent) override;
 
-    private:
+        DrawType drawTypeForPlaylistIndex(int index) const;
 
+    private:
+        PlaylistModelPrivate* d;
+
+};
+Q_DECLARE_METATYPE(PlaylistModel::DrawType);
+
+class PlaylistDelegate : public QStyledItemDelegate {
+        Q_OBJECT
+
+    public:
+        PlaylistDelegate();
+
+        // QAbstractItemDelegate interface
+    public:
+        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };
 
 #endif // PLAYLISTMODEL_H

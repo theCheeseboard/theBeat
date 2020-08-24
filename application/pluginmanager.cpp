@@ -43,16 +43,19 @@ void PluginManager::load() {
     searchPaths.append(qApp->applicationDirPath() + "/plugins");
 #endif
 
-    QStringList seenUuids;
+    QStringList seenPlugins;
 
     for (QString searchPath : searchPaths) {
         QDirIterator iterator(searchPath, {"*.so", "*.dll"}, QDir::NoFilter, QDirIterator::Subdirectories);
         while (iterator.hasNext()) {
-            QPluginLoader loader(iterator.next());
+            iterator.next();
+            if (seenPlugins.contains(iterator.fileName())) continue;
+            QPluginLoader loader(iterator.filePath());
             QObject* instance = loader.instance();
             PluginInterface* plugin = qobject_cast<PluginInterface*>(instance);
             if (plugin) {
                 plugin->activate();
+                seenPlugins.append(iterator.fileName());
             }
         }
     }

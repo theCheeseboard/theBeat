@@ -123,5 +123,5 @@ QString PhononCdMediaItem::album() {
 }
 
 QImage PhononCdMediaItem::albumArt() {
-    return QImage();
+    return d->info->albumArt();
 }

@@ -144,6 +144,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->queueWidget->setFixedWidth(SC_DPI(300));
     ui->queueWidget->setAcceptDrops(true);
     ui->queueList->setModel(new PlaylistModel);
+    ui->queueList->setItemDelegate(new PlaylistDelegate());
 
     d->topBarLine = new QFrame(this);
     d->topBarLine->setFrameShape(QFrame::VLine);
@@ -363,6 +364,13 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
     QMenu* menu = new QMenu(this);
 
     QModelIndexList selected = ui->queueList->selectionModel()->selectedIndexes();
+    for (int i = 0; i != selected.count(); i++) {
+        if (selected.at(i).data(PlaylistModel::DrawTypeRole).value<PlaylistModel::DrawType>() == PlaylistModel::GroupHeader) {
+            selected.removeAt(i);
+            i--;
+        }
+    }
+
     if (!selected.isEmpty()) {
         if (selected.count() == 1) {
             menu->addSection(tr("For \"%1\"").arg(menu->fontMetrics().elidedText(selected.first().data(Qt::DisplayRole).toString(), Qt::ElideMiddle, SC_DPI(300))));
@@ -370,8 +378,14 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
             menu->addSection(tr("For %n items", nullptr, selected.count()));
         }
         menu->addAction(QIcon::fromTheme("list-remove"), tr("Remove from Queue"), [ = ] {
+            //Directly removing the items causes the list to change and invalidate itself
+            QList<MediaItem*> itemsToRemove;
             for (QModelIndex idx : selected) {
-                StateManager::instance()->playlist()->removeItem(idx.data(PlaylistModel::MediaItemRole).value<MediaItem*>());
+                itemsToRemove.append(idx.data(PlaylistModel::MediaItemRole).value<MediaItem*>());
+            }
+
+            for (MediaItem* item : itemsToRemove) {
+                StateManager::instance()->playlist()->removeItem(item);
             }
         });
     }
