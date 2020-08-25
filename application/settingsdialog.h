@@ -41,6 +41,8 @@ class SettingsDialog : public QDialog {
 
         void on_trackChangeNotification_toggled(bool checked);
 
+        void on_useSsdsCheckbox_toggled(bool checked);
+
     private:
         Ui::SettingsDialog* ui;
         SettingsDialogPrivate* d;

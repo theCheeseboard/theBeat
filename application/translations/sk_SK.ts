@@ -294,7 +294,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="450"/>
-        <location filename="../mainwindow.cpp" line="404"/>
+        <location filename="../mainwindow.cpp" line="407"/>
         <source>Open URL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -367,12 +367,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="376"/>
+        <location filename="../mainwindow.cpp" line="379"/>
         <source>For &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="378"/>
+        <location filename="../mainwindow.cpp" line="381"/>
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -381,22 +381,22 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="380"/>
+        <location filename="../mainwindow.cpp" line="383"/>
         <source>Remove from Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="393"/>
+        <location filename="../mainwindow.cpp" line="396"/>
         <source>For Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="394"/>
+        <location filename="../mainwindow.cpp" line="397"/>
         <source>Clear Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="404"/>
+        <location filename="../mainwindow.cpp" line="407"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -442,35 +442,51 @@
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="64"/>
-        <location filename="../settingsdialog.ui" line="112"/>
+        <location filename="../settingsdialog.ui" line="120"/>
         <source>Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="69"/>
-        <location filename="../settingsdialog.ui" line="239"/>
+        <location filename="../settingsdialog.ui" line="248"/>
+        <source>Appearance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="74"/>
+        <location filename="../settingsdialog.ui" line="363"/>
         <source>Notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="172"/>
+        <location filename="../settingsdialog.ui" line="180"/>
         <source>RESET</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="179"/>
+        <location filename="../settingsdialog.ui" line="187"/>
         <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="193"/>
+        <location filename="../settingsdialog.ui" line="201"/>
         <source>Reset theBeat Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="296"/>
+        <location filename="../settingsdialog.ui" line="311"/>
+        <source>TITLEBAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="318"/>
+        <source>Use System Titlebars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="420"/>
         <source>Send a notification when the track changes</source>
         <translation type="unfinished"></translation>
     </message>

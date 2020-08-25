@@ -66,6 +66,11 @@
         </item>
         <item>
          <property name="text">
+          <string>Appearance</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Notifications</string>
          </property>
         </item>
@@ -89,6 +94,9 @@
    </item>
    <item>
     <widget class="tStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
      <widget class="QWidget" name="page_2">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
@@ -126,7 +134,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>443</width>
+            <width>612</width>
             <height>444</height>
            </rect>
           </property>
@@ -193,7 +201,8 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
               <string>Reset theBeat Library</string>
              </property>
              <property name="icon">
-              <iconset theme="view-refresh"/>
+              <iconset theme="view-refresh">
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -206,6 +215,121 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
               <size>
                <width>20</width>
                <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_3">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="tTitleLabel" name="titleLabel_4">
+         <property name="text">
+          <string>Appearance</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QScrollArea" name="scrollArea_3">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_3">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>612</width>
+            <height>444</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <property name="leftMargin">
+              <number>9</number>
+             </property>
+             <property name="topMargin">
+              <number>9</number>
+             </property>
+             <property name="rightMargin">
+              <number>9</number>
+             </property>
+             <property name="bottomMargin">
+              <number>9</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>TITLEBAR</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="useSsdsCheckbox">
+               <property name="text">
+                <string>Use System Titlebars</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
@@ -253,8 +377,8 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>444</width>
-            <height>444</height>
+            <width>305</width>
+            <height>41</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_7">

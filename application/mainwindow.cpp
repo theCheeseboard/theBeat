@@ -236,9 +236,12 @@ MainWindow::MainWindow(QWidget* parent)
     connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
         if (key == "notifications/trackChange") {
             StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(value.toBool());
+        } else if (key == "appearance/useSsds") {
+            tCsdGlobal::setCsdsEnabled(!value.toBool());
         }
     });
     StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(d->settings.value("notifications/trackChange").toBool());
+    tCsdGlobal::setCsdsEnabled(!d->settings.value("appearance/useSsds").toBool());
 
     d->plugins.load();
 }
