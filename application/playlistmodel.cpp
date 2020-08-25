@@ -234,6 +234,7 @@ void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
             QImage artImage = currentItem->albumArt();
             if (artImage.isNull()) {
                 artImage = QIcon::fromTheme("media-album-cover").pixmap(artRect.size()).toImage();
+                theLibsGlobal::tintImage(artImage, option.palette.color(QPalette::WindowText));
             } else {
                 artImage = artImage.scaled(artRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             }
@@ -246,9 +247,9 @@ void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
 
                 if (StateManager::instance()->playlist()->currentItem() == currentItem) {
                     QPainter painter(&artImage);
-                    painter.setBrush(Qt::black);
+                    painter.setBrush(option.palette.color(QPalette::Window));
                     painter.setPen(Qt::transparent);
-                    painter.setOpacity(0.5);
+                    painter.setOpacity(0.75);
                     painter.drawRect(0, 0, artImage.width(), artImage.height());
 
                     painter.setOpacity(1);
@@ -256,7 +257,10 @@ void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
                     QRect playRect;
                     playRect.setSize(SC_DPI_T(QSize(16, 16), QSize));
                     playRect.moveCenter(QPoint(artImage.width() / 2, artImage.height() / 2));
-                    painter.drawPixmap(playRect, QIcon::fromTheme("media-playback-start").pixmap(playRect.size()));
+
+                    QImage playImage = QIcon::fromTheme("media-playback-start").pixmap(playRect.size()).toImage();
+                    theLibsGlobal::tintImage(playImage, option.palette.color(QPalette::WindowText));
+                    painter.drawImage(playRect, playImage);
                 }
             } else {
                 nameText = currentItem->album();

@@ -124,7 +124,7 @@ void CdChecker::checkCd() {
             MediaController* cdController = new MediaController(cdFinder);
             AudioDataOutput dummyOutput;
             createPath(cdFinder, &dummyOutput);
-            connect(cdController, &MediaController::availableTitlesChanged, [ =, &info](int tracks) {
+            connect(cdController, &MediaController::availableTitlesChanged, eventLoop, [ =, &info](int tracks) {
                 //New CD inserted
                 info.numberOfTracks = tracks;
 
@@ -143,6 +143,8 @@ void CdChecker::checkCd() {
             cdFinder->play();
             cdFinder->pause();
 
+            //Time out after 30 seconds
+            QTimer::singleShot(30000, eventLoop, &QEventLoop::quit);
             eventLoop->exec();
 
             eventLoop->deleteLater();

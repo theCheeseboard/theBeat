@@ -49,6 +49,7 @@ class PhononCdMediaItem : public MediaItem {
         QStringList authors();
         QString album();
         QImage albumArt();
+        QVariant metadata(QString key);
 };
 
 #endif // PHONONCDMEDIAITEM_H

@@ -1,4 +1,4 @@
-QT += gui widgets phonon4qt5 dbus thelib network
+QT += gui widgets phonon4qt5 dbus thelib network multimedia
 
 TEMPLATE = lib
 CONFIG += plugin

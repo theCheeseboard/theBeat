@@ -416,12 +416,12 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="245"/>
+        <location filename="../playlistmodel.cpp" line="246"/>
         <source>Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../playlistmodel.cpp" line="265"/>
+        <location filename="../playlistmodel.cpp" line="269"/>
         <source>Album</source>
         <translation type="unfinished"></translation>
     </message>

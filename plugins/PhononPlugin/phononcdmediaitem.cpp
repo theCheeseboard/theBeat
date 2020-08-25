@@ -20,6 +20,7 @@
 #include "phononcdmediaitem.h"
 
 #include <QImage>
+#include <QMediaMetaData>
 #include <phonon/MediaObject>
 #include <phonon/MediaController>
 #include <phonon/MediaSource>
@@ -124,4 +125,12 @@ QString PhononCdMediaItem::album() {
 
 QImage PhononCdMediaItem::albumArt() {
     return d->info->albumArt();
+}
+
+
+QVariant PhononCdMediaItem::metadata(QString key) {
+    if (key == QMediaMetaData::TrackNumber) {
+        return d->info->track() + 1;
+    }
+    return QVariant();
 }
