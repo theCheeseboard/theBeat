@@ -4,44 +4,60 @@
 <context>
     <name>BurnJob</name>
     <message>
-        <location filename="../burnjob.cpp" line="57"/>
-        <location filename="../burnjob.cpp" line="112"/>
+        <location filename="../burnjob.cpp" line="65"/>
+        <location filename="../burnjob.cpp" line="113"/>
         <source>Preparing to burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="86"/>
+        <location filename="../burnjob.cpp" line="94"/>
         <source>Preparing Track %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="98"/>
+        <location filename="../burnjob.cpp" line="103"/>
         <source>Couldn&apos;t transcode track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="174"/>
+        <location filename="../burnjob.cpp" line="175"/>
         <source>Burning Track %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="178"/>
+        <location filename="../burnjob.cpp" line="181"/>
         <source>Finalising CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="209"/>
+        <location filename="../burnjob.cpp" line="225"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="211"/>
+        <location filename="../burnjob.cpp" line="227"/>
         <source>Couldn&apos;t burn tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="238"/>
+        <location filename="../burnjob.cpp" line="253"/>
+        <location filename="../burnjob.cpp" line="259"/>
         <source>Burn Successful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnjob.cpp" line="259"/>
+        <source>Burned &quot;%1&quot; to disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnjob.cpp" line="274"/>
+        <source>Burn Failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnjob.cpp" line="274"/>
+        <source>Failed to burn &quot;%1&quot; to disc</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -58,7 +74,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobwidget.ui" line="52"/>
+        <location filename="../burnjobwidget.ui" line="55"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>

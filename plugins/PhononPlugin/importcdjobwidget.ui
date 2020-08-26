@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>89</height>
+    <height>91</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,6 +32,9 @@
      <property name="text">
       <string>Importing Track 3</string>
      </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
@@ -52,7 +55,8 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset theme="dialog-cancel"/>
+        <iconset theme="dialog-cancel">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>

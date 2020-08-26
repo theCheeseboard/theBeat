@@ -54,6 +54,22 @@
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imported &quot;%1&quot; successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to import &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportCdJobWidget</name>

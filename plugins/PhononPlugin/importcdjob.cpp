@@ -23,6 +23,7 @@
 #include <QTemporaryDir>
 #include "importcdjobwidget.h"
 #include <cdio/paranoia/paranoia.h>
+#include <tnotification.h>
 
 #include <taglib/fileref.h>
 #include <taglib/tpropertymap.h>
@@ -98,11 +99,7 @@ void ImportCdJob::performNextAction() {
         process->setWorkingDirectory(d->workDir.path());
         connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
             if (exitCode != 0) {
-                d->state = Failed;
-                emit stateChanged(Failed);
-
-                d->description = tr("Couldn't query disc info");
-                emit descriptionChanged(d->description);
+                fail(tr("Couldn't query disc info"));
                 return;
             }
 
@@ -146,11 +143,7 @@ void ImportCdJob::performNextAction() {
         });
         connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
             if (exitCode != 0) {
-                d->state = Failed;
-                emit stateChanged(Failed);
-
-                d->description = tr("Couldn't import track");
-                emit descriptionChanged(d->description);
+                fail(tr("Couldn't import track"));
                 return;
             }
 
@@ -203,7 +196,34 @@ void ImportCdJob::performNextAction() {
         emit descriptionChanged(d->description);
 
         d->workDir.remove();
+
+        QString album = tr("CD");
+        if (!d->trackInfo.isEmpty()) {
+            album = d->trackInfo.first()->album();
+        }
+
+        tNotification* notification = new tNotification(tr("Import Successful"), tr("Imported \"%1\" successfully").arg(album));
+        notification->post();
     }
+}
+
+void ImportCdJob::fail(QString description) {
+    d->state = Failed;
+    emit stateChanged(Failed);
+
+    d->description = description;
+    emit descriptionChanged(d->description);
+
+    d->workDir.remove();
+
+    QString album = tr("CD");
+    if (!d->trackInfo.isEmpty()) {
+        album = d->trackInfo.first()->album();
+    }
+
+    //Fire a notification
+    tNotification* notification = new tNotification(tr("Import Failure"), tr("Failed to import \"%1\"").arg(album));
+    notification->post();
 }
 
 quint64 ImportCdJob::progress() {

@@ -43,6 +43,7 @@ class ImportCdJob : public tJob {
         ImportCdJobPrivate* d;
 
         void performNextAction();
+        void fail(QString description);
 
         // tJob interface
     public:

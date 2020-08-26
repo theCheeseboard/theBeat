@@ -23,17 +23,25 @@
 #include <QTextStream>
 #include <QTemporaryDir>
 #include <QProcess>
+#include <tnotification.h>
 
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 
 struct BurnJobPrivate {
+    enum BurnState {
+        LeadIn,
+        Tracks,
+        LeadOut
+    };
+
     QStringList sourceFiles;
     QString blockDevice;
     QString albumTitle;
     int nextItem = 0;
 
     BurnJob::State state = BurnJob::Processing;
+    BurnState burnState = LeadIn;
 
     QString description;
     bool canCancel;
@@ -92,14 +100,7 @@ void BurnJob::performNextAction() {
         ffmpeg->setWorkingDirectory(d->workDir.path());
         connect(ffmpeg, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
             if (exitCode != 0) {
-                d->state = Failed;
-                emit stateChanged(Failed);
-
-                d->description = tr("Couldn't transcode track");
-                emit descriptionChanged(d->description);
-
-                d->workDir.remove();
-
+                fail(tr("Couldn't transcode track"));
                 return;
             }
 
@@ -173,6 +174,8 @@ void BurnJob::performNextAction() {
 
                     d->description = tr("Burning Track %1").arg(parts.at(2));
                     emit descriptionChanged(d->description);
+
+                    d->burnState = BurnJobPrivate::Tracks;
                 } else if (line.startsWith("Wrote ")) {
                     if (line.contains("blocks.")) {
                         d->description = tr("Finalising CD");
@@ -185,10 +188,28 @@ void BurnJob::performNextAction() {
 
                         d->canCancel = false;
                         emit canCancelChanged(false);
+
+                        d->burnState = BurnJobPrivate::LeadOut;
                     } else {
                         QStringList parts = line.split(" ");
-                        d->progress = parts.at(1).toInt();
-                        d->maxProgress = parts.at(3).toInt();
+                        quint64 partProgress = parts.at(1).toInt();
+                        quint64 partMaxProgress = parts.at(3).toInt();
+
+                        switch (d->burnState) {
+                            case BurnJobPrivate::LeadIn: //Take up 1/4 of the full progress
+                                d->progress = partProgress;
+                                d->maxProgress = partMaxProgress * 4;
+                                break;
+                            case BurnJobPrivate::Tracks: //Take up 1/2 of the full progress
+                                d->progress = partProgress + partMaxProgress / 2;
+                                d->maxProgress = partMaxProgress * 2;
+                                break;
+                            case BurnJobPrivate::LeadOut: //Take up 1/4 of the full progress
+                                d->progress = partProgress + partMaxProgress * 3;
+                                d->maxProgress = partMaxProgress * 4;
+                                break;
+
+                        }
 
                         emit totalProgressChanged(d->maxProgress);
                         emit progressChanged(d->progress);
@@ -200,17 +221,11 @@ void BurnJob::performNextAction() {
         });
         connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
             if (exitCode != 0) {
-                d->state = Failed;
-                emit stateChanged(Failed);
-
-                d->workDir.remove();
-
                 if (d->cancelNext) {
-                    d->description = tr("Cancelled");
+                    fail(tr("Cancelled"));
                 } else {
-                    d->description = tr("Couldn't burn tracks");
+                    fail(tr("Couldn't burn tracks"));
                 }
-                emit descriptionChanged(d->description);
                 return;
             }
 
@@ -239,7 +254,25 @@ void BurnJob::performNextAction() {
         emit descriptionChanged(d->description);
 
         d->workDir.remove();
+
+        //Fire a notification
+        tNotification* notification = new tNotification(tr("Burn Successful"), tr("Burned \"%1\" to disc").arg(d->albumTitle));
+        notification->post();
     }
+}
+
+void BurnJob::fail(QString description) {
+    d->state = Failed;
+    emit stateChanged(Failed);
+
+    d->description = description;
+    emit descriptionChanged(d->description);
+
+    d->workDir.remove();
+
+    //Fire a notification
+    tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn \"%1\" to disc").arg(d->albumTitle));
+    notification->post();
 }
 
 quint64 BurnJob::progress() {

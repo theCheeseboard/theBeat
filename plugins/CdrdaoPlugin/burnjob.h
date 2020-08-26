@@ -42,6 +42,7 @@ class BurnJob : public tJob {
         BurnJobPrivate* d;
 
         void performNextAction();
+        void fail(QString description);
 
         // tJob interface
     public:
