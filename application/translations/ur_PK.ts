@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="ur_PK">
 <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
@@ -12,7 +12,7 @@
         <location filename="../artistsalbumswidget.ui" line="65"/>
         <location filename="../artistsalbumswidget.ui" line="188"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>لائبریری میں پٹریوں</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="201"/>
@@ -22,37 +22,37 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="230"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>قطار میں تمام فائلیں ڈال دیں</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="241"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>سارے کھیلو</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="251"/>
         <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <translation>تمام شفل</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="274"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>برن ڈسک</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Albums in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>لائبریری میں البمز</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Artists in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>لائبریری میں فنکار</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="153"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 میں میوزک ٹریک</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="153"/>
