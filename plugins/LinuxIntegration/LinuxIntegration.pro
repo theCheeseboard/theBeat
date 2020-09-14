@@ -38,14 +38,14 @@ include(/usr/share/the-libs/pri/gentranslations.pri)
 
 SOURCES += \
     mprisinstance.cpp \
-    mprisplayerinterface.cpp \
+    mprisplayer.cpp \
     mpriswrapper.cpp \
     nativeevents.cpp \
     plugin.cpp
 
 HEADERS += \
     mprisinstance.h \
-    mprisplayerinterface.h \
+    mprisplayer.h \
     mpriswrapper.h \
     nativeevents.h \
     plugin.h

@@ -21,11 +21,11 @@
 
 #include <QDBusConnection>
 #include "mprisinstance.h"
-#include "mprisplayerinterface.h"
+#include "mprisplayer.h"
 
 MprisWrapper::MprisWrapper(QObject* parent) : QObject(parent) {
     new MprisInstance(this);
-    new MprisPlayerInterface(this);
+    new MprisPlayer(this);
 
     QDBusConnection::sessionBus().registerService("org.mpris.MediaPlayer2.theBeat");
     QDBusConnection::sessionBus().registerObject("/org/mpris/MediaPlayer2", this);

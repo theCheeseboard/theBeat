@@ -136,32 +136,32 @@ void LibraryManager::enumerateDirectory(QString path, bool ignoreBlacklist) {
         blacklistedPaths.append(blacklistQuery.value("path").toString());
     }
 
-    QVariantList paths, titles, artists, albums, durations, trackNumbers;
+    tPromise<void>::runOnNewThread([ = ](tPromiseFunctions<void>::SuccessFunction res, tPromiseFunctions<void>::FailureFunction rej) {
+        QVariantList paths, titles, artists, albums, durations, trackNumbers;
 
-    QDirIterator iterator(path, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-    while (iterator.hasNext()) {
-        QString path = iterator.next();
-        if (blacklistedPaths.contains(path) && !ignoreBlacklist) continue;
+        QDirIterator iterator(path, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        while (iterator.hasNext()) {
+            QString path = iterator.next();
+            if (blacklistedPaths.contains(path) && !ignoreBlacklist) continue;
 
 #ifdef Q_OS_WIN
-        TagLib::FileRef file(path.toUtf8().data());
+            TagLib::FileRef file(path.toUtf8().data());
 #else
-        TagLib::FileRef file(path.toUtf8());
+            TagLib::FileRef file(path.toUtf8());
 #endif
-        TagLib::Tag* tag = file.tag();
-        TagLib::AudioProperties* audioProperties = file.audioProperties();
+            TagLib::Tag* tag = file.tag();
+            TagLib::AudioProperties* audioProperties = file.audioProperties();
 
-        if (!tag) continue;
+            if (!tag) continue;
 
-        paths.append(path);
-        titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
-        artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
-        albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
-        durations.append(audioProperties->length() * 1000);
-        trackNumbers.append(tag->track());
-    }
+            paths.append(path);
+            titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
+            artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
+            albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
+            durations.append(audioProperties->length() * 1000);
+            trackNumbers.append(tag->track());
+        }
 
-    tPromise<void>::runOnNewThread([ = ](tPromiseFunctions<void>::SuccessFunction res, tPromiseFunctions<void>::FailureFunction rej) {
         TemporaryDatabase db;
 
         db.db.transaction();
