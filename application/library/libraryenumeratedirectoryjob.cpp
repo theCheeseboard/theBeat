@@ -26,7 +26,7 @@
 #include <QDirIterator>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
-#include <audioproperties.h>
+#include <taglib/audioproperties.h>
 #include "librarymanager.h"
 
 struct LibraryEnumerateDirectoryJobPrivate {
