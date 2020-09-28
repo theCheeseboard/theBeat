@@ -10,6 +10,8 @@ class LibraryListView : public QListView {
         explicit LibraryListView(QWidget* parent = nullptr);
         ~LibraryListView();
 
+        void setCurrentPlaylistId(int playlistId);
+
     signals:
 
     private:

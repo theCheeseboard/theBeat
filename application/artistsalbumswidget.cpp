@@ -186,6 +186,7 @@ void ArtistsAlbumsWidget::on_enqueueAllButton_clicked() {
 void ArtistsAlbumsWidget::on_shuffleButton_clicked() {
     ui->enqueueAllButton->click();
     StateManager::instance()->playlist()->setShuffle(true);
+    StateManager::instance()->playlist()->next();
 }
 
 void ArtistsAlbumsWidget::on_playAllButton_clicked() {

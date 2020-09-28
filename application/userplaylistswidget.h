@@ -48,6 +48,8 @@ class UserPlaylistsWidget : public QWidget {
 
         void on_burnButton_clicked();
 
+        void on_playlistsList_customContextMenuRequested(const QPoint& pos);
+
     private:
         Ui::UserPlaylistsWidget* ui;
         UserPlaylistsWidgetPrivate* d;

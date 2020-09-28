@@ -60,9 +60,13 @@ class LibraryManager : public QObject {
 
         int createPlaylist(QString playlistName);
         QList<QPair<int, QString>> playlists();
+        void removePlaylist(int playlist);
+        void renamePlaylist(int playlist, QString name);
 
         void addTrackToPlaylist(int playlist, QString path);
+        void removeTrackFromPlaylist(int playlist, int sort);
         LibraryModel* tracksByPlaylist(int playlist);
+        void normalisePlaylistSort(int playlist);
 
         bool isProcessing();
 

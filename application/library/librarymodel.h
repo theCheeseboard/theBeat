@@ -41,7 +41,8 @@ class LibraryModel : public QSqlQueryModel {
             DurationRole,
             TrackRole,
             AlbumArtRole,
-            ErrorRole
+            ErrorRole,
+            SortRole
         };
 
         enum Errors {

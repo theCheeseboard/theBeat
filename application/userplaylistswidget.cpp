@@ -34,6 +34,8 @@
 struct UserPlaylistsWidgetPrivate {
     int currentPlaylist = -1;
     QString currentPlaylistName;
+
+    QMenu* removeMenu;
 };
 
 UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent) :
@@ -54,6 +56,16 @@ UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent) :
     updateBurn();
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Lift);
+
+    d->removeMenu = new QMenu(this);
+    d->removeMenu->setIcon(QIcon::fromTheme("edit-delete"));
+    d->removeMenu->setTitle(tr("Remove"));
+    d->removeMenu->addSection(tr("Are you sure?"));
+    d->removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [ = ] {
+        for (QListWidgetItem* item : ui->playlistsList->selectedItems()) {
+            LibraryManager::instance()->removePlaylist(item->data(Qt::UserRole).toInt());
+        }
+    });
 }
 
 UserPlaylistsWidget::~UserPlaylistsWidget() {
@@ -88,6 +100,8 @@ void UserPlaylistsWidget::loadPlaylist(int id) {
     LibraryModel* model = LibraryManager::instance()->tracksByPlaylist(id);
     ui->tracksList->setModel(model);
     ui->stackedWidget->setCurrentWidget(ui->tracksPage);
+
+    ui->tracksList->setCurrentPlaylistId(id);
 
     d->currentPlaylist = id;
 }
@@ -127,4 +141,24 @@ void UserPlaylistsWidget::on_burnButton_clicked() {
     }
 
     Common::showBurnMenu(files, d->currentPlaylistName, ui->burnButton);
+}
+
+void UserPlaylistsWidget::on_playlistsList_customContextMenuRequested(const QPoint& pos) {
+    QMenu* menu = new QMenu();
+    if (ui->playlistsList->selectedItems().count() == 1) {
+        menu->addSection(tr("For %1").arg(ui->playlistsList->selectedItems().first()->text()));
+        menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, [ = ] {
+            bool ok;
+            QString name = QInputDialog::getText(this, tr("Rename Playlist"), tr("New Name"), QLineEdit::Normal, ui->playlistsList->selectedItems().first()->text(), &ok);
+            if (ok) {
+                LibraryManager::instance()->renamePlaylist(ui->playlistsList->selectedItems().first()->data(Qt::UserRole).toInt(), name);
+            }
+        });
+        menu->addMenu(d->removeMenu);
+    } else {
+        menu->addSection(tr("For %n playlists", nullptr, ui->playlistsList->selectedItems().count()));
+        menu->addMenu(d->removeMenu);
+    }
+    connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
+    menu->popup(ui->playlistsList->mapToGlobal(pos));
 }

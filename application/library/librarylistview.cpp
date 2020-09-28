@@ -14,7 +14,10 @@
 
 struct LibraryListViewPrivate {
     QMenu* addToPlaylistOptions;
+    QMenu* removeFromPlaylistMenu;
     QMenu* removeFromLibraryMenu;
+
+    int playlistId = -1;
 };
 
 LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
@@ -24,10 +27,21 @@ LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
     d->addToPlaylistOptions->setIcon(QIcon::fromTheme("list-add"));
     d->addToPlaylistOptions->setTitle(tr("Add to Playlist"));
 
+    d->removeFromPlaylistMenu = new QMenu(this);
+    d->removeFromPlaylistMenu->setIcon(QIcon::fromTheme("edit-delete"));
+    d->removeFromPlaylistMenu->setTitle(tr("Remove from Playlist"));
+    d->removeFromPlaylistMenu->addSection(tr("Are you sure?"));
+    d->removeFromPlaylistMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove from Playlist"), this, [ = ] {
+        for (QModelIndex index : this->selectedIndexes()) {
+            LibraryManager::instance()->removeTrackFromPlaylist(d->playlistId, index.data(LibraryModel::SortRole).toInt());
+        }
+        LibraryManager::instance()->normalisePlaylistSort(d->playlistId);
+    });
+
     d->removeFromLibraryMenu = new QMenu(this);
     d->removeFromLibraryMenu->setIcon(QIcon::fromTheme("edit-delete"));
     d->removeFromLibraryMenu->setTitle(tr("Remove from Library"));
-    d->removeFromLibraryMenu->addSection(tr("Remove from library?"));
+    d->removeFromLibraryMenu->addSection(tr("Are you sure?"));
     d->removeFromLibraryMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove from Library"), this, [ = ] {
         for (QModelIndex index : this->selectedIndexes()) {
             LibraryManager::instance()->blacklistTrack(index.data(LibraryModel::PathRole).toString());
@@ -77,6 +91,10 @@ LibraryListView::~LibraryListView() {
     delete d;
 }
 
+void LibraryListView::setCurrentPlaylistId(int playlistId) {
+    d->playlistId = playlistId;
+}
+
 void LibraryListView::updatePlaylists() {
     d->addToPlaylistOptions->clear();
     for (QPair<int, QString> playlist : LibraryManager::instance()->playlists()) {
@@ -86,6 +104,9 @@ void LibraryListView::updatePlaylists() {
             }
         });
     }
+
+    d->addToPlaylistOptions->addSeparator();
+
     d->addToPlaylistOptions->addAction(QIcon::fromTheme("list-add"), tr("New Playlist"), this, [ = ] {
         bool ok;
         QString playlistName = QInputDialog::getText(this, tr("Playlist Name"), tr("Playlist Name"), QLineEdit::Normal, "", &ok);
@@ -105,10 +126,12 @@ void LibraryListView::contextMenuEvent(QContextMenuEvent* event) {
     if (this->selectedIndexes().count() == 1) {
         menu->addSection(tr("For %1").arg(this->fontMetrics().elidedText(this->selectedIndexes().first().data().toString(), Qt::ElideMiddle, SC_DPI(300))));
         menu->addMenu(d->addToPlaylistOptions);
+        if (d->playlistId != -1) menu->addMenu(d->removeFromPlaylistMenu);
         menu->addMenu(d->removeFromLibraryMenu);
     } else {
         menu->addSection(tr("For %n items", nullptr, this->selectedIndexes().count()));
         menu->addMenu(d->addToPlaylistOptions);
+        if (d->playlistId != -1) menu->addMenu(d->removeFromPlaylistMenu);
         menu->addMenu(d->removeFromLibraryMenu);
     }
     menu->popup(event->globalPos());

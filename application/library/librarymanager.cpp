@@ -292,11 +292,36 @@ QList<QPair<int, QString>> LibraryManager::playlists() {
     return playlists;
 }
 
+void LibraryManager::removePlaylist(int playlist) {
+    {
+        TemporaryDatabase db;
+        QSqlQuery q(db.db);
+        q.prepare("DELETE FROM playlists WHERE id=:playlistid");
+        q.bindValue(":playlistid", playlist);
+        q.exec();
+    }
+
+    emit playlistsChanged();
+}
+
+void LibraryManager::renamePlaylist(int playlist, QString name) {
+    {
+        TemporaryDatabase db;
+        QSqlQuery q(db.db);
+        q.prepare("UPDATE playlists SET name=:name WHERE id=:playlistid");
+        q.bindValue(":name", name);
+        q.bindValue(":playlistid", playlist);
+        q.exec();
+    }
+
+    emit playlistsChanged();
+}
+
 void LibraryManager::addTrackToPlaylist(int playlist, QString path) {
     {
         TemporaryDatabase db;
         QSqlQuery q(db.db);
-        q.prepare("INSERT INTO playlistTracks(playlistid, trackid, sort) VALUES(:playlistid, (SELECT id FROM tracks WHERE path=:path), (SELECT COUNT(*) FROM playlistTracks WHERE playlistid=:playlistidcount))");
+        q.prepare("INSERT INTO playlistTracks(playlistid, trackid, sort) VALUES(:playlistid, (SELECT id FROM tracks WHERE path=:path), (SELECT COUNT(*) FROM playlistTracks WHERE playlistid=:playlistidcount) * 2)");
         q.bindValue(":playlistid", playlist);
         q.bindValue(":playlistidcount", playlist);
         q.bindValue(":path", path);
@@ -306,15 +331,57 @@ void LibraryManager::addTrackToPlaylist(int playlist, QString path) {
     emit playlistChanged(playlist);
 }
 
+void LibraryManager::removeTrackFromPlaylist(int playlist, int sort) {
+    {
+        TemporaryDatabase db;
+        QSqlQuery q(db.db);
+        q.prepare("DELETE FROM playlistTracks WHERE playlistid=:playlistid AND sort=:sort");
+        q.bindValue(":playlistid", playlist);
+        q.bindValue(":sort", sort);
+        q.exec();
+    }
+
+    emit playlistChanged(playlist);
+}
+
 LibraryModel* LibraryManager::tracksByPlaylist(int playlist) {
     LibraryModel* model = new LibraryModel();
     QSqlQuery q(model->database());
-    q.prepare("SELECT tracks.* FROM playlistTracks, tracks WHERE playlistTracks.trackid=tracks.id AND playlistTracks.playlistid=:playlist ORDER BY playlistTracks.sort ASC");
+    q.prepare("SELECT tracks.*, playlistTracks.sort FROM playlistTracks, tracks WHERE playlistTracks.trackid=tracks.id AND playlistTracks.playlistid=:playlist ORDER BY playlistTracks.sort ASC");
     q.bindValue(":playlist", playlist);
     q.exec();
 
     model->setQuery(q);
     return model;
+}
+
+void LibraryManager::normalisePlaylistSort(int playlist) {
+    TemporaryDatabase db;
+    QSqlQuery q(db.db);
+    q.prepare("SELECT * FROM playlistTracks WHERE playlistid=:playlistid ORDER BY sort ASC");
+    q.bindValue(":playlistid", playlist);
+    q.exec();
+
+    int i = 0;
+    QList<QPair<int, int>> sorts;
+    while (q.next()) {
+        sorts.append({q.value("sort").toInt(), i * 2});
+        i++;
+    }
+
+    for (QPair<int, int> sort : sorts) {
+        if (sort.first != sort.second) {
+            QSqlQuery q(db.db);
+            q.prepare("UPDATE playlistTracks SET sort=:newSort WHERE sort=:oldSort AND playlistid=:playlistid");
+            q.bindValue(":newSort", sort.second);
+            q.bindValue(":oldSort", sort.first);
+            q.bindValue(":playlistid", playlist);
+            q.exec();
+        }
+    }
+
+    db.db.transaction();
+    db.db.commit();
 }
 
 bool LibraryManager::isProcessing() {

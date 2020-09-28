@@ -58,6 +58,7 @@ QVariant LibraryModel::data(const QModelIndex& index, int role) const {
     // 4: Album
     // 5: Duration
     // 6: Track Number
+    // 7: Sort (valid only for playlists)
 
     switch (role) {
         case PathRole:
@@ -80,6 +81,8 @@ QVariant LibraryModel::data(const QModelIndex& index, int role) const {
                 return PathNotFoundError;
             }
             return NoError;
+        case SortRole:
+            return QSqlQueryModel::data(this->index(index.row(), 7));
     }
 
     return QVariant();

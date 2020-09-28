@@ -199,17 +199,17 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="171"/>
+        <location filename="../library/librarymodel.cpp" line="174"/>
         <source>by %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="172"/>
+        <location filename="../library/librarymodel.cpp" line="175"/>
         <source>on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="174"/>
+        <location filename="../library/librarymodel.cpp" line="177"/>
         <source>Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -217,38 +217,45 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="25"/>
+        <location filename="../library/librarylistview.cpp" line="28"/>
         <source>Add to Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="29"/>
-        <location filename="../library/librarylistview.cpp" line="31"/>
+        <location filename="../library/librarylistview.cpp" line="43"/>
+        <location filename="../library/librarylistview.cpp" line="45"/>
         <source>Remove from Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="30"/>
-        <source>Remove from library?</source>
+        <location filename="../library/librarylistview.cpp" line="33"/>
+        <location filename="../library/librarylistview.cpp" line="44"/>
+        <source>Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="89"/>
+        <location filename="../library/librarylistview.cpp" line="32"/>
+        <location filename="../library/librarylistview.cpp" line="34"/>
+        <source>Remove from Playlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/librarylistview.cpp" line="110"/>
         <source>New Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="91"/>
+        <location filename="../library/librarylistview.cpp" line="112"/>
         <source>Playlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="106"/>
+        <location filename="../library/librarylistview.cpp" line="127"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../library/librarylistview.cpp" line="110"/>
+        <location filename="../library/librarylistview.cpp" line="132"/>
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -586,29 +593,70 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="265"/>
+        <location filename="../userplaylistswidget.ui" line="271"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="216"/>
+        <location filename="../userplaylistswidget.ui" line="222"/>
         <source>Tracks in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="241"/>
+        <location filename="../userplaylistswidget.ui" line="247"/>
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="71"/>
+        <location filename="../userplaylistswidget.cpp" line="62"/>
+        <location filename="../userplaylistswidget.cpp" line="64"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="63"/>
+        <source>Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="83"/>
         <source>Playlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="100"/>
+        <location filename="../userplaylistswidget.cpp" line="114"/>
         <source>Tracks in %1</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="149"/>
+        <source>For %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="150"/>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="152"/>
+        <source>Rename Playlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="152"/>
+        <source>New Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../userplaylistswidget.cpp" line="159"/>
+        <source>For %n playlists</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
