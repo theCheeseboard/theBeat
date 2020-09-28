@@ -24,8 +24,8 @@
 #include <tnotification.h>
 #include <tpromise.h>
 #include <QDirIterator>
-#include <fileref.h>
-#include <tag.h>
+#include <taglib/fileref.h>
+#include <taglib/tag.h>
 #include <audioproperties.h>
 #include "librarymanager.h"
 
