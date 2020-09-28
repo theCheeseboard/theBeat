@@ -30,7 +30,7 @@
 #include "librarymanager.h"
 
 struct LibraryModelPrivate {
-
+    TemporaryDatabase db;
 };
 
 LibraryModel::LibraryModel(QObject* parent)
@@ -40,6 +40,10 @@ LibraryModel::LibraryModel(QObject* parent)
 
 LibraryModel::~LibraryModel() {
     delete d;
+}
+
+QSqlDatabase LibraryModel::database() {
+    return d->db.db;
 }
 
 QVariant LibraryModel::data(const QModelIndex& index, int role) const {

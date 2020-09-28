@@ -29,6 +29,7 @@ class LibraryManager : public QObject {
         Q_OBJECT
     public:
         explicit LibraryManager(QObject* parent = nullptr);
+        ~LibraryManager();
 
         struct LibraryTrack {
             QString path;
@@ -57,7 +58,7 @@ class LibraryManager : public QObject {
         LibraryModel* tracksByArtist(QString artist);
         LibraryModel* tracksByAlbum(QString album);
 
-        void createPlaylist(QString playlistName);
+        int createPlaylist(QString playlistName);
         QList<QPair<int, QString>> playlists();
 
         void addTrackToPlaylist(int playlist, QString path);

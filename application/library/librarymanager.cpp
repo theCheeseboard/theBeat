@@ -31,10 +31,11 @@
 #include <statemanager.h>
 #include <playlist.h>
 #include "qtmultimedia/qtmultimediamediaitem.h"
-#include <tpromise.h>
 #include <taglib/fileref.h>
 #include "libraryenumeratedirectoryjob.h"
 #include <tjobmanager.h>
+#include <QUrl>
+#include <QTimer>
 
 struct LibraryManagerPrivate {
     bool available = false;
@@ -91,6 +92,10 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
             this->enumerateDirectory(dir, false, false);
         }
     });
+}
+
+LibraryManager::~LibraryManager() {
+
 }
 
 LibraryManager* LibraryManager::instance() {
@@ -162,7 +167,8 @@ void LibraryManager::addTrack(QString path) {
 }
 
 void LibraryManager::removeTrack(QString path) {
-    QSqlQuery q;
+    TemporaryDatabase db;
+    QSqlQuery q(db.db);
     q.prepare("DELETE FROM tracks WHERE path=:path");
     q.bindValue(":path", path);
     q.exec();
@@ -173,14 +179,16 @@ void LibraryManager::removeTrack(QString path) {
 void LibraryManager::blacklistTrack(QString path) {
     removeTrack(path);
 
-    QSqlQuery q;
+    TemporaryDatabase db;
+    QSqlQuery q(db.db);
     q.prepare("INSERT INTO blacklist(path) VALUES(:path)");
     q.bindValue(":path", path);
     q.exec();
 }
 
 void LibraryManager::relocateTrack(QString oldPath, QString newPath) {
-    QSqlQuery q;
+    TemporaryDatabase db;
+    QSqlQuery q(db.db);
     q.prepare("UPDATE OR REPLACE tracks SET path=:newpath WHERE path=:oldpath");
     q.bindValue(":oldpath", oldPath);
     q.bindValue(":newpath", newPath);
@@ -191,31 +199,33 @@ void LibraryManager::relocateTrack(QString oldPath, QString newPath) {
 
 LibraryModel* LibraryManager::allTracks() {
     LibraryModel* model = new LibraryModel();
-    model->setQuery("SELECT * FROM tracks ORDER BY LOWER(title) ASC");
+    model->setQuery("SELECT * FROM tracks ORDER BY LOWER(title) ASC", model->database());
     return model;
 }
 
 LibraryModel* LibraryManager::searchTracks(QString query) {
-    QSqlQuery q;
+    LibraryModel* model = new LibraryModel();
+    QSqlQuery q(model->database());
     q.prepare("SELECT * FROM tracks WHERE title LIKE '%'||:query||'%' ORDER BY LOWER(title) ASC");
     q.bindValue(":query", query);
     q.exec();
 
-    LibraryModel* model = new LibraryModel();
     model->setQuery(q);
     return model;
 }
 
 int LibraryManager::countTracks() {
-    QSqlQuery q("SELECT COUNT(*) FROM tracks");
+    TemporaryDatabase db;
+    QSqlQuery q("SELECT COUNT(*) FROM tracks", db.db);
     q.next();
 
     return q.value(0).toInt();
 }
 
 QStringList LibraryManager::artists() {
+    TemporaryDatabase db;
     QStringList artists;
-    QSqlQuery q("SELECT DISTINCT artist FROM tracks WHERE artist IS NOT NULL AND artist != '' ORDER BY LOWER(artist) ASC");
+    QSqlQuery q("SELECT DISTINCT artist FROM tracks WHERE artist IS NOT NULL AND artist != '' ORDER BY LOWER(artist) ASC", db.db);
     while (q.next()) {
         artists.append(q.value("artist").toString());
     }
@@ -223,8 +233,9 @@ QStringList LibraryManager::artists() {
 }
 
 QStringList LibraryManager::albums() {
+    TemporaryDatabase db;
     QStringList albums;
-    QSqlQuery q("SELECT DISTINCT album FROM tracks WHERE album IS NOT NULL AND album != '' ORDER BY LOWER(album) ASC");
+    QSqlQuery q("SELECT DISTINCT album FROM tracks WHERE album IS NOT NULL AND album != '' ORDER BY LOWER(album) ASC", db.db);
     while (q.next()) {
         albums.append(q.value("album").toString());
     }
@@ -232,39 +243,48 @@ QStringList LibraryManager::albums() {
 }
 
 LibraryModel* LibraryManager::tracksByArtist(QString artist) {
-    QSqlQuery q;
+    LibraryModel* model = new LibraryModel();
+    QSqlQuery q(model->database());
     q.prepare("SELECT * FROM tracks WHERE artist=:artist ORDER BY LOWER(title) ASC");
     q.bindValue(":artist", artist);
     q.exec();
 
-    LibraryModel* model = new LibraryModel();
     model->setQuery(q);
     return model;
 }
 
 LibraryModel* LibraryManager::tracksByAlbum(QString album) {
-    QSqlQuery q;
+    LibraryModel* model = new LibraryModel();
+    QSqlQuery q(model->database());
     q.prepare("SELECT * FROM tracks WHERE album=:album ORDER BY trackNumber ASC");
     q.bindValue(":album", album);
     q.exec();
 
-    LibraryModel* model = new LibraryModel();
-    model->setQuery(q);//        if (connection != QSqlDatabase::defaultConnection) {
-
+    model->setQuery(q);
     return model;
 }
 
-void LibraryManager::createPlaylist(QString playlistName) {
-    QSqlQuery q;
-    q.prepare("INSERT INTO playlists(name) VALUES(:name)");
-    q.bindValue(":name", playlistName);
-    q.exec();
+int LibraryManager::createPlaylist(QString playlistName) {
+    int lastInsertId;
+
+    {
+        TemporaryDatabase db;
+        QSqlQuery q(db.db);
+        q.prepare("INSERT INTO playlists(name) VALUES(:name)");
+        q.bindValue(":name", playlistName);
+        q.exec();
+
+        lastInsertId = q.lastInsertId().toInt();
+    }
 
     emit playlistsChanged();
+
+    return lastInsertId;
 }
 
 QList<QPair<int, QString>> LibraryManager::playlists() {
-    QSqlQuery q("SELECT * FROM playlists ORDER BY LOWER(name) ASC");
+    TemporaryDatabase db;
+    QSqlQuery q("SELECT * FROM playlists ORDER BY LOWER(name) ASC", db.db);
     QList<QPair<int, QString>> playlists;
     while (q.next()) {
         playlists.append({q.value("id").toInt(), q.value("name").toString()});
@@ -273,23 +293,26 @@ QList<QPair<int, QString>> LibraryManager::playlists() {
 }
 
 void LibraryManager::addTrackToPlaylist(int playlist, QString path) {
-    QSqlQuery q;
-    q.prepare("INSERT INTO playlistTracks(playlistid, trackid, sort) VALUES(:playlistid, (SELECT id FROM tracks WHERE path=:path), (SELECT COUNT(*) FROM playlistTracks WHERE playlistid=:playlistidcount))");
-    q.bindValue(":playlistid", playlist);
-    q.bindValue(":playlistidcount", playlist);
-    q.bindValue(":path", path);
-    q.exec();
+    {
+        TemporaryDatabase db;
+        QSqlQuery q(db.db);
+        q.prepare("INSERT INTO playlistTracks(playlistid, trackid, sort) VALUES(:playlistid, (SELECT id FROM tracks WHERE path=:path), (SELECT COUNT(*) FROM playlistTracks WHERE playlistid=:playlistidcount))");
+        q.bindValue(":playlistid", playlist);
+        q.bindValue(":playlistidcount", playlist);
+        q.bindValue(":path", path);
+        q.exec();
+    }
 
     emit playlistChanged(playlist);
 }
 
 LibraryModel* LibraryManager::tracksByPlaylist(int playlist) {
-    QSqlQuery q;
+    LibraryModel* model = new LibraryModel();
+    QSqlQuery q(model->database());
     q.prepare("SELECT tracks.* FROM playlistTracks, tracks WHERE playlistTracks.trackid=tracks.id AND playlistTracks.playlistid=:playlist ORDER BY playlistTracks.sort ASC");
     q.bindValue(":playlist", playlist);
     q.exec();
 
-    LibraryModel* model = new LibraryModel();
     model->setQuery(q);
     return model;
 }
@@ -332,7 +355,6 @@ TemporaryDatabase::TemporaryDatabase() {
 }
 
 TemporaryDatabase::~TemporaryDatabase() {
-    db.exec("PRAGMA wal_checkpoint(TRUNCATE)");
     db.close();
     QSqlDatabase::removeDatabase(dbName);
 }

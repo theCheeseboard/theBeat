@@ -9,6 +9,7 @@
 #include <playlist.h>
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QInputDialog>
 #include <tpopover.h>
 
 struct LibraryListViewPrivate {
@@ -85,6 +86,16 @@ void LibraryListView::updatePlaylists() {
             }
         });
     }
+    d->addToPlaylistOptions->addAction(QIcon::fromTheme("list-add"), tr("New Playlist"), this, [ = ] {
+        bool ok;
+        QString playlistName = QInputDialog::getText(this, tr("Playlist Name"), tr("Playlist Name"), QLineEdit::Normal, "", &ok);
+        if (ok) {
+            int newPlaylistId = LibraryManager::instance()->createPlaylist(playlistName);
+            for (QModelIndex index : this->selectedIndexes()) {
+                LibraryManager::instance()->addTrackToPlaylist(newPlaylistId, index.data(LibraryModel::PathRole).toString());
+            }
+        }
+    });
 }
 
 void LibraryListView::contextMenuEvent(QContextMenuEvent* event) {

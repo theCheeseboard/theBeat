@@ -31,6 +31,8 @@ class LibraryModel : public QSqlQueryModel {
         explicit LibraryModel(QObject* parent = nullptr);
         ~LibraryModel();
 
+        QSqlDatabase database();
+
         enum Roles {
             PathRole = Qt::UserRole,
             TitleRole,

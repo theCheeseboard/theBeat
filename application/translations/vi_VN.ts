@@ -193,17 +193,17 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="167"/>
+        <location filename="../library/librarymodel.cpp" line="171"/>
         <source>by %1</source>
         <translation>bởi %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="168"/>
+        <location filename="../library/librarymodel.cpp" line="172"/>
         <source>on %1</source>
         <translation>trong %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="170"/>
+        <location filename="../library/librarymodel.cpp" line="174"/>
         <source>Track</source>
         <translation>Bài hát</translation>
     </message>
@@ -211,28 +211,38 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="24"/>
+        <location filename="../library/librarylistview.cpp" line="25"/>
         <source>Add to Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="28"/>
-        <location filename="../library/librarylistview.cpp" line="30"/>
+        <location filename="../library/librarylistview.cpp" line="29"/>
+        <location filename="../library/librarylistview.cpp" line="31"/>
         <source>Remove from Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="29"/>
+        <location filename="../library/librarylistview.cpp" line="30"/>
         <source>Remove from library?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="95"/>
+        <location filename="../library/librarylistview.cpp" line="89"/>
+        <source>New Playlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/librarylistview.cpp" line="91"/>
+        <source>Playlist Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/librarylistview.cpp" line="106"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../library/librarylistview.cpp" line="99"/>
+        <location filename="../library/librarylistview.cpp" line="110"/>
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform>Cho %n mục</numerusform>
@@ -592,7 +602,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="44"/>
+        <location filename="../main.cpp" line="45"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>
