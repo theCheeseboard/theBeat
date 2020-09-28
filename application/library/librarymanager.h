@@ -41,7 +41,7 @@ class LibraryManager : public QObject {
 
         static LibraryManager* instance();
 
-        void enumerateDirectory(QString path, bool ignoreBlacklist = true);
+        void enumerateDirectory(QString path, bool ignoreBlacklist = true, bool isUserAction = false);
         void addTrack(QString path);
         void removeTrack(QString path);
         void blacklistTrack(QString path);
@@ -75,6 +75,16 @@ class LibraryManager : public QObject {
 
     private:
         LibraryManagerPrivate* d;
+};
+
+
+
+struct TemporaryDatabase {
+    QString dbName;
+    QSqlDatabase db;
+
+    TemporaryDatabase();
+    ~TemporaryDatabase();
 };
 
 #endif // LIBRARYMANAGER_H

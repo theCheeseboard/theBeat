@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="ur_PK">
+<TS version="2.1" language="ur_PK" sourcelanguage="en_US">
 <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
@@ -64,6 +64,7 @@
         <source>%n tracks</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -126,6 +127,35 @@
     <message>
         <location filename="../currenttrackpopover.cpp" line="111"/>
         <source>Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LibraryEnumerateDirectoryJob</name>
+    <message>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="153"/>
+        <source>Folder Added</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="154"/>
+        <source>%n tracks added/updated</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>LibraryEnumerateDirectoryJobWidget</name>
+    <message>
+        <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="26"/>
+        <source>DISCOVERING AUDIO TRACKS</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -207,6 +237,7 @@
         <location filename="../library/librarylistview.cpp" line="99"/>
         <source>For %n items</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -372,6 +403,7 @@
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -495,12 +527,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../trackswidget.ui" line="65"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لائبریری میں پٹریوں</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="74"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">قطار میں تمام فائلیں ڈال دیں</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="119"/>
@@ -538,17 +570,17 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.ui" line="265"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">برن ڈسک</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="216"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لائبریری میں پٹریوں</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="241"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">قطار میں تمام فائلیں ڈال دیں</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="71"/>
@@ -558,7 +590,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.cpp" line="100"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 میں میوزک ٹریک</translation>
     </message>
 </context>
 <context>

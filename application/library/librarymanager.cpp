@@ -33,40 +33,12 @@
 #include "qtmultimedia/qtmultimediamediaitem.h"
 #include <tpromise.h>
 #include <taglib/fileref.h>
+#include "libraryenumeratedirectoryjob.h"
+#include <tjobmanager.h>
 
 struct LibraryManagerPrivate {
     bool available = false;
     int isProcessing = 0;
-};
-
-struct TemporaryDatabase {
-    QString dbName;
-    QSqlDatabase db;
-
-    TemporaryDatabase() {
-        QString chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnpopqrstuvwxyz";
-        for (int i = 0; i < 12; i++) {
-            dbName.append(chars.at(QRandomGenerator::global()->bounded(chars.length())));
-        }
-
-        QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-        QDir::root().mkpath(dataPath);
-        QString dbPath = QDir(dataPath).absoluteFilePath("library.db");
-
-        db = QSqlDatabase::addDatabase("QSQLITE", dbName);
-        if (!db.isValid()) return;
-        db.setDatabaseName(dbPath);
-        if (!db.open()) return;
-
-        db.exec("PRAGMA foreign_keys = ON");
-        db.exec("PRAGMA journal_mode = WAL");
-    }
-
-    ~TemporaryDatabase() {
-        db.exec("PRAGMA wal_checkpoint(TRUNCATE)");
-        db.close();
-        QSqlDatabase::removeDatabase(dbName);
-    }
 };
 
 LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
@@ -116,7 +88,7 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
     QTimer::singleShot(0, [ = ] {
         QStringList musicDirectories = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
         for (QString dir : musicDirectories) {
-            this->enumerateDirectory(dir, false);
+            this->enumerateDirectory(dir, false, false);
         }
     });
 }
@@ -126,76 +98,20 @@ LibraryManager* LibraryManager::instance() {
     return mgr;
 }
 
-void LibraryManager::enumerateDirectory(QString path, bool ignoreBlacklist) {
+void LibraryManager::enumerateDirectory(QString path, bool ignoreBlacklist, bool isUserAction) {
     d->isProcessing++;
     emit isProcessingChanged();
 
-    QString blacklistedPaths;
-    QSqlQuery blacklistQuery("SELECT * FROM blacklist");
-    while (blacklistQuery.next()) {
-        blacklistedPaths.append(blacklistQuery.value("path").toString());
-    }
+    LibraryEnumerateDirectoryJob* job = new LibraryEnumerateDirectoryJob(path, ignoreBlacklist, isUserAction);
+    connect(job, &LibraryEnumerateDirectoryJob::stateChanged, this, [ = ](tJob::State state) {
+        if (state == tJob::Finished) {
+            d->isProcessing--;
+            emit isProcessingChanged();
 
-    tPromise<void>::runOnNewThread([ = ](tPromiseFunctions<void>::SuccessFunction res, tPromiseFunctions<void>::FailureFunction rej) {
-        QVariantList paths, titles, artists, albums, durations, trackNumbers;
-
-        QDirIterator iterator(path, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-        while (iterator.hasNext()) {
-            QString path = iterator.next();
-            if (blacklistedPaths.contains(path) && !ignoreBlacklist) continue;
-
-#ifdef Q_OS_WIN
-            TagLib::FileRef file(path.toUtf8().data());
-#else
-            TagLib::FileRef file(path.toUtf8());
-#endif
-            TagLib::Tag* tag = file.tag();
-            TagLib::AudioProperties* audioProperties = file.audioProperties();
-
-            if (!tag) continue;
-
-            paths.append(path);
-            titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
-            artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
-            albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
-            durations.append(audioProperties->length() * 1000);
-            trackNumbers.append(tag->track());
+            emit libraryChanged();
         }
-
-        TemporaryDatabase db;
-
-        db.db.transaction();
-
-        QSqlQuery blacklistQ;
-        blacklistQ.prepare("DELETE FROM blacklist WHERE path=:path");
-        blacklistQ.bindValue(":path", paths);
-        blacklistQ.execBatch();
-
-        QSqlQuery q(db.db);
-        q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
-            "UPDATE SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd");
-        q.bindValue(":path", paths);
-        q.bindValue(":title", titles);
-        q.bindValue(":artist", artists);
-        q.bindValue(":album", albums);
-        q.bindValue(":duration", durations);
-        q.bindValue(":tracknumber", trackNumbers);
-        q.bindValue(":titleupd", titles);
-        q.bindValue(":artistupd", artists);
-        q.bindValue(":albumupd", albums);
-        q.bindValue(":durationupd", durations);
-        q.bindValue(":tracknumberupd", trackNumbers);
-        q.execBatch();
-
-        db.db.commit();
-
-        res();
-    })->then([ = ] {
-        d->isProcessing--;
-        emit isProcessingChanged();
-
-        emit libraryChanged();
     });
+    tJobManager::trackJob(job);
 }
 
 void LibraryManager::addTrack(QString path) {
@@ -394,4 +310,29 @@ void LibraryManager::erase() {
     QFile::remove(dataDir.absoluteFilePath("library.db"));
     QFile::remove(dataDir.absoluteFilePath("library.db-shm"));
     QFile::remove(dataDir.absoluteFilePath("library.db-wal"));
+}
+
+TemporaryDatabase::TemporaryDatabase() {
+    QString chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnpopqrstuvwxyz";
+    for (int i = 0; i < 12; i++) {
+        dbName.append(chars.at(QRandomGenerator::global()->bounded(chars.length())));
+    }
+
+    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QDir::root().mkpath(dataPath);
+    QString dbPath = QDir(dataPath).absoluteFilePath("library.db");
+
+    db = QSqlDatabase::addDatabase("QSQLITE", dbName);
+    if (!db.isValid()) return;
+    db.setDatabaseName(dbPath);
+    if (!db.open()) return;
+
+    db.exec("PRAGMA foreign_keys = ON");
+    db.exec("PRAGMA journal_mode = WAL");
+}
+
+TemporaryDatabase::~TemporaryDatabase() {
+    db.exec("PRAGMA wal_checkpoint(TRUNCATE)");
+    db.close();
+    QSqlDatabase::removeDatabase(dbName);
 }

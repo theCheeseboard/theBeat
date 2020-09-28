@@ -104,6 +104,8 @@ SOURCES += \
     common.cpp \
     controlstrip.cpp \
     currenttrackpopover.cpp \
+    library/libraryenumeratedirectoryjob.cpp \
+    library/libraryenumeratedirectoryjobwidget.cpp \
     library/librarylistview.cpp \
     library/librarymanager.cpp \
     library/librarymodel.cpp \
@@ -123,6 +125,8 @@ HEADERS += \
     common.h \
     controlstrip.h \
     currenttrackpopover.h \
+    library/libraryenumeratedirectoryjob.h \
+    library/libraryenumeratedirectoryjobwidget.h \
     library/librarylistview.h \
     library/librarymanager.h \
     library/librarymodel.h \
@@ -140,6 +144,7 @@ FORMS += \
     artistsalbumswidget.ui \
     controlstrip.ui \
     currenttrackpopover.ui \
+    library/libraryenumeratedirectoryjobwidget.ui \
     libraryerrorpopover.ui \
     mainwindow.ui \
     othersourceswidget.ui \

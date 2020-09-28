@@ -442,7 +442,7 @@ void MainWindow::on_actionAdd_to_Library_triggered() {
     dialog->setOption(QFileDialog::ShowDirsOnly);
     connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
         for (QString file : files) {
-            LibraryManager::instance()->enumerateDirectory(file);
+            LibraryManager::instance()->enumerateDirectory(file, true, true);
         }
     });
     connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);

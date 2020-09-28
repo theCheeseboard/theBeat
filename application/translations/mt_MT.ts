@@ -133,6 +133,37 @@
     </message>
 </context>
 <context>
+    <name>LibraryEnumerateDirectoryJob</name>
+    <message>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="153"/>
+        <source>Folder Added</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="154"/>
+        <source>%n tracks added/updated</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>LibraryEnumerateDirectoryJobWidget</name>
+    <message>
+        <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="26"/>
+        <source>DISCOVERING AUDIO TRACKS</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LibraryErrorPopover</name>
     <message>
         <location filename="../libraryerrorpopover.ui" line="14"/>
