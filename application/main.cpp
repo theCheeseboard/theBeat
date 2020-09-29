@@ -24,6 +24,11 @@
 #include "library/librarymanager.h"
 #include <tapplication.h>
 #include <tsettings.h>
+#include <QCommandLineParser>
+#include <QJsonArray>
+#include <statemanager.h>
+#include <playlist.h>
+#include "qtmultimedia/qtmultimediamediaitem.h"
 
 #ifdef HAVE_THEINSTALLER
     #include <updatechecker.h>
@@ -95,13 +100,60 @@ int main(int argc, char* argv[]) {
     a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
 #endif
 
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.addPositionalArgument(a.translate("main", "file"), a.translate("main", "File to open"), QStringLiteral("[%1]").arg(a.translate("main", "file")));
+    parser.process(a);
+
+    QObject::connect(&a, &tApplication::singleInstanceMessage, [ = ](QJsonObject launchMessage) {
+        qDebug() << launchMessage;
+        if (launchMessage.contains("files")) {
+            QJsonArray files = launchMessage.value("files").toArray();
+            QtMultimediaMediaItem* firstItem = nullptr;
+            for (QJsonValue file : files) {
+                QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl(file.toString()));
+                StateManager::instance()->playlist()->addItem(item);
+                if (!firstItem) firstItem = item;
+            }
+            if (firstItem) {
+                StateManager::instance()->playlist()->setCurrentItem(firstItem);
+                StateManager::instance()->playlist()->play();
+            }
+        }
+    });
+
+    QStringList files;
+    for (QString arg : parser.positionalArguments()) {
+        if (QUrl::fromLocalFile(arg).isValid()) {
+            files.append(QUrl::fromLocalFile(arg).toEncoded());
+        } else {
+            files.append(QUrl(arg).toEncoded());
+        }
+    }
+    a.ensureSingleInstance({
+        {"files", QJsonArray::fromStringList(files)}
+    });
+
 #ifdef HAVE_THEINSTALLER
-    UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 0, 0, 11);
+    UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 0, 0, 12);
     QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
 #endif
 
     MainWindow w;
     w.show();
+
+    QtMultimediaMediaItem* firstItem = nullptr;
+    for (QString file : files) {
+        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl(file));
+        StateManager::instance()->playlist()->addItem(item);
+        if (!firstItem) firstItem = item;
+    }
+    if (firstItem) {
+        StateManager::instance()->playlist()->setCurrentItem(firstItem);
+        StateManager::instance()->playlist()->play();
+    }
+
     int retval = a.exec();
 
     return retval;

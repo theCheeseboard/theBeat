@@ -50,6 +50,10 @@ class UserPlaylistsWidget : public QWidget {
 
         void on_playlistsList_customContextMenuRequested(const QPoint& pos);
 
+        void on_playAllButton_clicked();
+
+        void on_shuffleButton_clicked();
+
     private:
         Ui::UserPlaylistsWidget* ui;
         UserPlaylistsWidgetPrivate* d;
@@ -57,6 +61,8 @@ class UserPlaylistsWidget : public QWidget {
         void updatePlaylists();
         void loadPlaylist(int id);
         void updateBurn();
+
+        QMenu* playlistManagementMenu(QList<int> playlists);
 };
 
 #endif // USERPLAYLISTSWIDGET_H

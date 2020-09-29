@@ -34,8 +34,6 @@
 struct UserPlaylistsWidgetPrivate {
     int currentPlaylist = -1;
     QString currentPlaylistName;
-
-    QMenu* removeMenu;
 };
 
 UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent) :
@@ -56,16 +54,6 @@ UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent) :
     updateBurn();
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Lift);
-
-    d->removeMenu = new QMenu(this);
-    d->removeMenu->setIcon(QIcon::fromTheme("edit-delete"));
-    d->removeMenu->setTitle(tr("Remove"));
-    d->removeMenu->addSection(tr("Are you sure?"));
-    d->removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [ = ] {
-        for (QListWidgetItem* item : ui->playlistsList->selectedItems()) {
-            LibraryManager::instance()->removePlaylist(item->data(Qt::UserRole).toInt());
-        }
-    });
 }
 
 UserPlaylistsWidget::~UserPlaylistsWidget() {
@@ -102,12 +90,59 @@ void UserPlaylistsWidget::loadPlaylist(int id) {
     ui->stackedWidget->setCurrentWidget(ui->tracksPage);
 
     ui->tracksList->setCurrentPlaylistId(id);
+    ui->playlistMenuButton->setMenu(playlistManagementMenu({id}));
 
     d->currentPlaylist = id;
 }
 
 void UserPlaylistsWidget::updateBurn() {
     ui->burnButton->setVisible(!StateManager::instance()->burn()->availableBackends().isEmpty());
+}
+
+QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
+    QMenu* menu = new QMenu();
+    if (playlists.count() == 1) {
+        QString playlistName;
+        for (QPair<int, QString> playlist : LibraryManager::instance()->playlists()) {
+            if (playlist.first == playlists.first()) {
+                playlistName = playlist.second;
+                break;
+            }
+        }
+        menu->addSection(tr("For %1").arg(playlistName));
+        menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, [ = ] {
+            bool ok;
+            QString name = QInputDialog::getText(this, tr("Rename Playlist"), tr("New Name"), QLineEdit::Normal, playlistName, &ok);
+            if (ok) {
+                LibraryManager::instance()->renamePlaylist(playlists.first(), name);
+                if (d->currentPlaylist == playlists.first()) ui->tracksTitle->setText(tr("Tracks in %1").arg(name));
+            }
+        });
+
+        QMenu* removeMenu = new QMenu(this);
+        removeMenu->setIcon(QIcon::fromTheme("edit-delete"));
+        removeMenu->setTitle(tr("Remove"));
+        removeMenu->addSection(tr("Are you sure?"));
+        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [ = ] {
+            LibraryManager::instance()->removePlaylist(playlists.first());
+            if (d->currentPlaylist == playlists.first()) ui->stackedWidget->setCurrentWidget(ui->mainPage);
+        });
+        menu->addMenu(removeMenu);
+    } else {
+        menu->addSection(tr("For %n playlists", nullptr, ui->playlistsList->selectedItems().count()));
+
+        QMenu* removeMenu = new QMenu(this);
+        removeMenu->setIcon(QIcon::fromTheme("edit-delete"));
+        removeMenu->setTitle(tr("Remove"));
+        removeMenu->addSection(tr("Are you sure?"));
+        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [ = ] {
+            for (int playlist : playlists) {
+                LibraryManager::instance()->removePlaylist(playlist);
+            }
+        });
+        menu->addMenu(removeMenu);
+    }
+    return menu;
 }
 
 void UserPlaylistsWidget::on_playlistsList_itemActivated(QListWidgetItem* item) {
@@ -144,21 +179,23 @@ void UserPlaylistsWidget::on_burnButton_clicked() {
 }
 
 void UserPlaylistsWidget::on_playlistsList_customContextMenuRequested(const QPoint& pos) {
-    QMenu* menu = new QMenu();
-    if (ui->playlistsList->selectedItems().count() == 1) {
-        menu->addSection(tr("For %1").arg(ui->playlistsList->selectedItems().first()->text()));
-        menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, [ = ] {
-            bool ok;
-            QString name = QInputDialog::getText(this, tr("Rename Playlist"), tr("New Name"), QLineEdit::Normal, ui->playlistsList->selectedItems().first()->text(), &ok);
-            if (ok) {
-                LibraryManager::instance()->renamePlaylist(ui->playlistsList->selectedItems().first()->data(Qt::UserRole).toInt(), name);
-            }
-        });
-        menu->addMenu(d->removeMenu);
-    } else {
-        menu->addSection(tr("For %n playlists", nullptr, ui->playlistsList->selectedItems().count()));
-        menu->addMenu(d->removeMenu);
+    QList<int> selectedPlaylists;
+    for (QListWidgetItem* item : ui->playlistsList->selectedItems()) {
+        selectedPlaylists.append(item->data(Qt::UserRole).toInt());
     }
+
+    QMenu* menu = playlistManagementMenu(selectedPlaylists);
     connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
     menu->popup(ui->playlistsList->mapToGlobal(pos));
+}
+
+void UserPlaylistsWidget::on_playAllButton_clicked() {
+    StateManager::instance()->playlist()->clear();
+    ui->enqueueAllButton->click();
+}
+
+void UserPlaylistsWidget::on_shuffleButton_clicked() {
+    ui->enqueueAllButton->click();
+    StateManager::instance()->playlist()->setShuffle(true);
+    StateManager::instance()->playlist()->next();
 }

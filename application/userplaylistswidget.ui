@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>542</width>
+    <height>366</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -229,6 +229,9 @@
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
             <property name="leftMargin">
              <number>9</number>
             </property>
@@ -249,6 +252,47 @@
               <property name="icon">
                <iconset theme="view-media-playlist">
                 <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="playAllButton">
+              <property name="text">
+               <string>Play All</string>
+              </property>
+              <property name="icon">
+               <iconset theme="media-playback-start">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="shuffleButton">
+              <property name="text">
+               <string>Shufle All</string>
+              </property>
+              <property name="icon">
+               <iconset theme="media-playlist-shuffle">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="playlistMenuButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string notr="true">...</string>
+              </property>
+              <property name="icon">
+               <iconset theme="application-menu"/>
+              </property>
+              <property name="popupMode">
+               <enum>QToolButton::InstantPopup</enum>
               </property>
              </widget>
             </item>
