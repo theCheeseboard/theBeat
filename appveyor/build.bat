@@ -11,6 +11,16 @@ set QTDIR=C:\Qt\5.15\msvc2019_64
 set PATH=%PATH%;%QTDIR%\bin
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 
+git clone https://github.com/discordapp/discord-rpc.git
+cd discord-rpc
+mkdir build
+cd build
+cmake -G"NMake Makefiles" .. -DBUILD_EXAMPLES=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release
+cmake --build . --config Release
+cmake --build . --config Release --target install
+cd ..
+cd ..
+
 rem Remove symlinks from contemporary-icons
 cp appveyor\delink.ps1 application\icons\contemporary-icons
 cd application\icons\contemporary-icons
