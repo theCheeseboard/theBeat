@@ -35,6 +35,7 @@ class QtMultimediaMediaItem : public MediaItem {
         QtMultimediaMediaItemPrivate* d;
 
         void updateAlbumArt();
+        void updateTaglib() ;
 
         // MediaItem interface
     public:

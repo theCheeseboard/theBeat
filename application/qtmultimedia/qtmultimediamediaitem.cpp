@@ -28,11 +28,18 @@
 #include <statemanager.h>
 #include <playlist.h>
 #include <helpers.h>
+#include <taglib/fileref.h>
+#include <taglib/tag.h>
 
 struct QtMultimediaMediaItemPrivate {
     QMediaPlayer* player;
     QImage albumArt;
     QUrl url;
+
+    QString title;
+    QStringList artist;
+    QString album;
+    int trackNumber = 0;
 
     QNetworkAccessManager mgr;
 };
@@ -51,6 +58,12 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
     connect(d->player, &QMediaPlayer::positionChanged, this, &QtMultimediaMediaItem::elapsedChanged);
     connect(d->player, &QMediaPlayer::durationChanged, this, &QtMultimediaMediaItem::durationChanged);
     connect(d->player, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, [ = ](QMediaPlayer::Error error) {
+#ifdef Q_OS_WIN
+        if (error == QMediaPlayer::FormatError && d->url.isLocalFile() && QFileInfo(d->url.toLocalFile()).suffix() == "flac") {
+            //Ignore
+            return;
+        }
+#endif
         emit this->error();
     });
     updateAlbumArt();
@@ -59,6 +72,8 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
         d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
     });
     d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
+
+    updateTaglib();
 }
 
 QtMultimediaMediaItem::~QtMultimediaMediaItem() {
@@ -80,6 +95,27 @@ void QtMultimediaMediaItem::updateAlbumArt() {
     } else {
         d->albumArt = Helpers::albumArt(d->url);
     }
+}
+
+void QtMultimediaMediaItem::updateTaglib()
+{
+    if (!d->url.isLocalFile()) return;
+#ifdef Q_OS_WIN
+    TagLib::FileRef file(d->url.toLocalFile().toUtf8().data());
+#else
+    TagLib::FileRef file(d->url.toLocalFile().toUtf8());
+#endif
+    TagLib::Tag* tag = file.tag();
+
+    if (!tag) return;
+
+    d->artist.clear();
+    d->title = QString::fromStdString(tag->title().to8Bit());
+    d->artist.append(QString::fromStdString(tag->artist().to8Bit()));
+    d->album = QString::fromStdString(tag->album().to8Bit());
+    d->trackNumber = tag->track();
+
+    emit metadataChanged();
 }
 
 void QtMultimediaMediaItem::play() {
@@ -109,6 +145,8 @@ quint64 QtMultimediaMediaItem::duration() {
 QString QtMultimediaMediaItem::title() {
     if (d->player->availableMetaData().contains(QMediaMetaData::Title)) {
         return d->player->metaData(QMediaMetaData::Title).toString();
+    } else if (!d->title.isEmpty()) {
+        return d->title;
     }
     if (d->url.isLocalFile()) {
         QFileInfo file(d->url.toLocalFile());
@@ -119,16 +157,24 @@ QString QtMultimediaMediaItem::title() {
 }
 
 QStringList QtMultimediaMediaItem::authors() {
-    QStringList data = d->player->metaData(QMediaMetaData::Author).toStringList();
-    data.append(d->player->metaData(QMediaMetaData::AlbumArtist).toString());
-    data.append(d->player->metaData(QMediaMetaData::ContributingArtist).toString());
-    data.removeAll("");
-    data.removeDuplicates();
-    return data;
+    if (d->player->availableMetaData().contains(QMediaMetaData::Author)) {
+        QStringList data = d->player->metaData(QMediaMetaData::Author).toStringList();
+        data.append(d->player->metaData(QMediaMetaData::AlbumArtist).toString());
+        data.append(d->player->metaData(QMediaMetaData::ContributingArtist).toString());
+        data.removeAll("");
+        data.removeDuplicates();
+        return data;
+    } else {
+        return d->artist;
+    }
 }
 
 QString QtMultimediaMediaItem::album() {
-    return d->player->metaData(QMediaMetaData::AlbumTitle).toString();
+    if (d->player->availableMetaData().contains(QMediaMetaData::AlbumTitle)) {
+        return d->player->metaData(QMediaMetaData::AlbumTitle).toString();
+    } else {
+        return d->album;
+    }
 }
 
 QImage QtMultimediaMediaItem::albumArt() {
@@ -136,5 +182,11 @@ QImage QtMultimediaMediaItem::albumArt() {
 }
 
 QVariant QtMultimediaMediaItem::metadata(QString key) {
-    return d->player->metaData(key);
+    if (d->player->availableMetaData().contains(key)) {
+        return d->player->metaData(key);
+    } else if (key == QMediaMetaData::TrackNumber) {
+        return d->trackNumber;
+    } else {
+        return QVariant();
+    }
 }
