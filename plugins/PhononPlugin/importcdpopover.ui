@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -91,7 +91,8 @@
          <string>Import</string>
         </property>
         <property name="icon">
-         <iconset theme="media-cd-import"/>
+         <iconset theme="media-cd-import">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>

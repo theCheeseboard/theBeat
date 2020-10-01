@@ -64,11 +64,6 @@
 <context>
     <name>BurnJobWidget</name>
     <message>
-        <location filename="../burnjobwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../burnjobwidget.ui" line="26"/>
         <source>BURN CD</source>
         <translation type="unfinished"></translation>
@@ -81,11 +76,6 @@
 </context>
 <context>
     <name>BurnPopover</name>
-    <message>
-        <location filename="../burnpopover.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../burnpopover.ui" line="51"/>
         <source>BURN OPTIONS</source>

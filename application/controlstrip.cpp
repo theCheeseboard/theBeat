@@ -143,16 +143,10 @@ void ControlStrip::updateMetadata() {
             }
         }
 
-        int averageCol = (pal.color(QPalette::Window).red() + pal.color(QPalette::Window).green() + pal.color(QPalette::Window).blue()) / 3;
-        QColor c = QColor(red / totalPixels, green / totalPixels, blue / totalPixels);
-
-        if (averageCol < 127) {
-            c = c.darker(200);
-        } else {
-            c = c.lighter(200);
-        }
+        QColor c = QColor(red / totalPixels, green / totalPixels, blue / totalPixels).darker(200);
 
         pal.setColor(QPalette::Window, c);
+        pal.setColor(QPalette::WindowText, Qt::white);
         this->setPalette(pal);
     }
 }

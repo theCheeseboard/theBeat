@@ -88,6 +88,8 @@ MainWindow::MainWindow(QWidget* parent)
     QMenu* helpMenu = new QMenu(this);
     helpMenu->setTitle(tr("Help"));
     helpMenu->setIcon(QIcon::fromTheme("help-contents"));
+    helpMenu->addAction(ui->actionHelp);
+    helpMenu->addSeparator();
     helpMenu->addAction(ui->actionFileBug);
     helpMenu->addAction(ui->actionSources);
 
@@ -452,4 +454,8 @@ void MainWindow::on_actionAdd_to_Library_triggered() {
 void MainWindow::on_actionSettings_triggered() {
     SettingsDialog dialog;
     dialog.exec();
+}
+
+void MainWindow::on_actionHelp_triggered() {
+    QDesktopServices::openUrl(QUrl("https://help.vicr123.com/docs/thebeat/intro"));
 }

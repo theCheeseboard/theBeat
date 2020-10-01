@@ -4,11 +4,6 @@
 <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../artistsalbumswidget.ui" line="65"/>
         <location filename="../artistsalbumswidget.ui" line="188"/>
         <source>Tracks in Library</source>
@@ -79,28 +74,18 @@
 <context>
     <name>ControlStrip</name>
     <message>
-        <location filename="../controlstrip.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../controlstrip.ui" line="101"/>
+        <location filename="../controlstrip.ui" line="102"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="108"/>
+        <location filename="../controlstrip.ui" line="109"/>
         <source>Metadata</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CurrentTrackPopover</name>
-    <message>
-        <location filename="../currenttrackpopover.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="99"/>
         <source>Album</source>
@@ -149,11 +134,6 @@
 <context>
     <name>LibraryEnumerateDirectoryJobWidget</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="26"/>
         <source>DISCOVERING AUDIO TRACKS</source>
         <translation type="unfinished"></translation>
@@ -161,11 +141,6 @@
 </context>
 <context>
     <name>LibraryErrorPopover</name>
-    <message>
-        <location filename="../libraryerrorpopover.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="35"/>
         <source>Hmm</source>
@@ -338,13 +313,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="450"/>
-        <location filename="../mainwindow.cpp" line="407"/>
+        <location filename="../mainwindow.cpp" line="409"/>
         <source>Open URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="459"/>
-        <location filename="../mainwindow.cpp" line="195"/>
+        <location filename="../mainwindow.cpp" line="197"/>
         <source>Skip Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -374,6 +349,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="515"/>
+        <source>theBeat Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="518"/>
+        <source>F1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="471"/>
         <source>Skip Forward</source>
         <translation type="unfinished"></translation>
@@ -385,8 +370,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="483"/>
-        <location filename="../mainwindow.cpp" line="203"/>
-        <location filename="../mainwindow.cpp" line="217"/>
+        <location filename="../mainwindow.cpp" line="205"/>
+        <location filename="../mainwindow.cpp" line="219"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
@@ -401,22 +386,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="212"/>
+        <location filename="../mainwindow.cpp" line="214"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="224"/>
+        <location filename="../mainwindow.cpp" line="226"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="379"/>
+        <location filename="../mainwindow.cpp" line="381"/>
         <source>For &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="381"/>
+        <location filename="../mainwindow.cpp" line="383"/>
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -424,33 +409,28 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="383"/>
+        <location filename="../mainwindow.cpp" line="385"/>
         <source>Remove from Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="396"/>
+        <location filename="../mainwindow.cpp" line="398"/>
         <source>For Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="397"/>
+        <location filename="../mainwindow.cpp" line="399"/>
         <source>Clear Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="407"/>
+        <location filename="../mainwindow.cpp" line="409"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>OtherSourcesWidget</name>
-    <message>
-        <location filename="../othersourceswidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../othersourceswidget.ui" line="93"/>
         <source>No other sources available</source>
@@ -537,11 +517,6 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>TracksWidget</name>
     <message>
-        <location filename="../trackswidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../trackswidget.ui" line="65"/>
         <source>Tracks in Library</source>
         <translation type="unfinished"></translation>
@@ -570,11 +545,6 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>UserPlaylistsWidget</name>
     <message>
-        <location filename="../userplaylistswidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../userplaylistswidget.ui" line="62"/>
         <source>Playlists</source>
         <translation type="unfinished"></translation>
@@ -595,7 +565,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="315"/>
+        <location filename="../userplaylistswidget.ui" line="316"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>

@@ -4,10 +4,6 @@
 <context>
     <name>CdChecker</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>CD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -74,10 +70,6 @@
 <context>
     <name>ImportCdJobWidget</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>IMPORT CD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -92,10 +84,6 @@
 </context>
 <context>
     <name>ImportCdPopover</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Folder</source>
         <translation type="unfinished"></translation>
