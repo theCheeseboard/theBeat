@@ -52,7 +52,7 @@
      <item>
       <widget class="QToolButton" name="cancelButton">
        <property name="text">
-        <string>...</string>
+        <string notr="true">...</string>
        </property>
        <property name="icon">
         <iconset theme="dialog-cancel">

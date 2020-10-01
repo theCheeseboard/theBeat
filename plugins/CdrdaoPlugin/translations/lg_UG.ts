@@ -68,11 +68,6 @@
         <source>BURN CD</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../burnjobwidget.ui" line="55"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BurnPopover</name>

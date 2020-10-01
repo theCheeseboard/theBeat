@@ -73,14 +73,6 @@
         <source>IMPORT CD</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Importing Track 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ImportCdPopover</name>
