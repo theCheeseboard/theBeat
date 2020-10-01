@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="vi_VN">
 <context>
     <name>CdChecker</name>
     <message>
         <source>CD</source>
-        <translation type="unfinished"></translation>
+        <translation>CD</translation>
     </message>
     <message>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt tất cả vào hàng phát</translation>
     </message>
     <message>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhổ đĩa</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhập</translation>
     </message>
 </context>
 <context>
     <name>ImportCdJob</name>
     <message>
         <source>Preparing to import</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang chuẩn bị nhập</translation>
     </message>
     <message>
         <source>Couldn&apos;t query disc info</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể tìm thông tin về đĩa</translation>
     </message>
     <message>
         <source>Importing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang nhập %1</translation>
     </message>
     <message>
         <source>Import Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Việc nhập thành công</translation>
     </message>
     <message>
         <source>Couldn&apos;t import track</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể nhập bài</translation>
     </message>
     <message>
         <source>Cancelling</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang hủy</translation>
     </message>
     <message>
         <source>Cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Bị hủy</translation>
     </message>
     <message>
         <source>CD</source>
-        <translation type="unfinished"></translation>
+        <translation>CD</translation>
     </message>
     <message>
         <source>Imported &quot;%1&quot; successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Được nhập &quot;%1&quot; thành công</translation>
     </message>
     <message>
         <source>Import Failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Việc nhập không thành công</translation>
     </message>
     <message>
         <source>Failed to import &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể nhập &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>ImportCdJobWidget</name>
     <message>
         <source>IMPORT CD</source>
-        <translation type="unfinished"></translation>
+        <translation>NHẬP CD</translation>
     </message>
     <message>
         <source>Importing Track 3</source>
@@ -86,42 +86,42 @@
     <name>ImportCdPopover</name>
     <message>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Duyệt...</translation>
     </message>
     <message>
         <source>IMPORT OPTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>TÙY CHỌN NHẬP</translation>
     </message>
     <message>
         <source>Import %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhập %1</translation>
     </message>
     <message>
         <source>Ogg Vorbis</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogg Vorbis</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Định dạng</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhập</translation>
     </message>
 </context>
 <context>
     <name>TrackInfo</name>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Không xác định</translation>
     </message>
     <message>
         <source>Track %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài %1</translation>
     </message>
 </context>
 </TS>
