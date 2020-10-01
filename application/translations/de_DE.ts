@@ -10,11 +10,6 @@
         <translation>Titel in der Bibliothek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="201"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../artistsalbumswidget.ui" line="230"/>
         <source>Enqueue All</source>
         <translation>Alle einreihen</translation>

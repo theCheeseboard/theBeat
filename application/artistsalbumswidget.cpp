@@ -150,7 +150,7 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
 
 void ArtistsAlbumsWidget::on_initialList_itemActivated(QListWidgetItem* item) {
     d->listName = item->text();
-    ui->tracksTitle->setText(d->type == Albums ? tr("Tracks in %1").arg(item->text()) : tr("Tracks by %1").arg(item->text()));
+    ui->tracksTitle->setText(d->type == Albums ? tr("Tracks in %1").arg(QLocale().quoteString(item->text())) : tr("Tracks by %1").arg(QLocale().quoteString(item->text())));
     LibraryModel* model = d->type == Albums ? LibraryManager::instance()->tracksByAlbum(item->text()) : LibraryManager::instance()->tracksByArtist(item->text());
     ui->tracksList->setModel(model);
     ui->stackedWidget->setCurrentWidget(ui->tracksPage);

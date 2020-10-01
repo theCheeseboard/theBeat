@@ -124,7 +124,7 @@ void LibraryListView::contextMenuEvent(QContextMenuEvent* event) {
 
     QMenu* menu = new QMenu();
     if (this->selectedIndexes().count() == 1) {
-        menu->addSection(tr("For %1").arg(this->fontMetrics().elidedText(this->selectedIndexes().first().data().toString(), Qt::ElideMiddle, SC_DPI(300))));
+        menu->addSection(tr("For %1").arg(QLocale().quoteString(this->fontMetrics().elidedText(this->selectedIndexes().first().data().toString(), Qt::ElideMiddle, SC_DPI(300)))));
         menu->addMenu(d->addToPlaylistOptions);
         if (d->playlistId != -1) menu->addMenu(d->removeFromPlaylistMenu);
         menu->addMenu(d->removeFromLibraryMenu);

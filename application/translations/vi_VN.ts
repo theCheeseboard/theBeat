@@ -10,11 +10,6 @@
         <translation>Bài hát trong thư viện</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="201"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../artistsalbumswidget.ui" line="230"/>
         <source>Enqueue All</source>
         <translation>Đặt tất cả vào hàng phát</translation>

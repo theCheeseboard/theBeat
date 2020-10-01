@@ -109,7 +109,7 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
                 break;
             }
         }
-        menu->addSection(tr("For %1").arg(playlistName));
+        menu->addSection(tr("For %1").arg(QLocale().quoteString(playlistName)));
         menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, [ = ] {
             bool ok;
             QString name = QInputDialog::getText(this, tr("Rename Playlist"), tr("New Name"), QLineEdit::Normal, playlistName, &ok);
@@ -146,7 +146,7 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
 }
 
 void UserPlaylistsWidget::on_playlistsList_itemActivated(QListWidgetItem* item) {
-    ui->tracksTitle->setText(tr("Tracks in %1").arg(item->text()));
+    ui->tracksTitle->setText(tr("Tracks in %1").arg(QLocale().quoteString(item->text())));
     loadPlaylist(item->data(Qt::UserRole).toInt());
     d->currentPlaylistName = item->text();
 }
