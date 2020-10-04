@@ -52,7 +52,7 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
         void setRepeatOne(bool repeatOne);
         bool repeatOne();
 
-        bool setRepeatAll(bool repeatAll);
+        void setRepeatAll(bool repeatAll);
         bool repeatAll();
 
         void setShuffle(bool shuffle);

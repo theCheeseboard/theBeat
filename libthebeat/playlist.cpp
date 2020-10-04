@@ -303,7 +303,7 @@ bool Playlist::repeatOne() {
     return d->repeatOne;
 }
 
-bool Playlist::setRepeatAll(bool repeatAll) {
+void Playlist::setRepeatAll(bool repeatAll) {
     d->repeatAll = repeatAll;
     emit repeatAllChanged(repeatAll);
 }
