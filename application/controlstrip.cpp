@@ -24,6 +24,7 @@
 #include <playlist.h>
 #include <tvariantanimation.h>
 #include <tpopover.h>
+#include <QMenu>
 #include "currenttrackpopover.h"
 #include "common.h"
 
@@ -68,6 +69,18 @@ ControlStrip::ControlStrip(QWidget* parent) :
     connect(d->volumeBarAnim, &tVariantAnimation::finished, this, [ = ] {
         if (d->volumeBarAnim->endValue().toInt() != 0) this->setFixedHeight(QWIDGETSIZE_MAX);
     });
+
+    QMenu* repeatAllMenu = new QMenu();
+    repeatAllMenu->addSection(tr("Repeat Options"));
+    QAction* playQueueAction = repeatAllMenu->addAction(tr("Repeat Play Queue"), [ = ] {
+        StateManager::instance()->playlist()->setRepeatAll(!StateManager::instance()->playlist()->repeatAll());
+    });
+    playQueueAction->setCheckable(true);
+    connect(StateManager::instance()->playlist(), &Playlist::repeatAllChanged, this, [ = ](bool repeatAll) {
+        playQueueAction->setChecked(repeatAll);
+    });
+    playQueueAction->setChecked(StateManager::instance()->playlist()->repeatAll());
+    ui->repeatOneButton->setMenu(repeatAllMenu);
 
     updateCurrentItem();
 }

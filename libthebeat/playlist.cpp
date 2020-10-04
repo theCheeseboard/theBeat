@@ -30,6 +30,7 @@ struct PlaylistPrivate {
     MediaItem* currentItem = nullptr;
 
     bool repeatOne = false;
+    bool repeatAll = true;
     bool shuffle = false;
     double volume = 1;
 
@@ -157,7 +158,10 @@ void Playlist::next() {
     }
 
     int index = d->playOrder.indexOf(d->currentItem) + 1;
-    if (index == d->playOrder.count()) index = 0;
+    if (index == d->playOrder.count()) {
+        if (!d->repeatAll) pause();
+        index = 0;
+    }
     setCurrentItem(d->playOrder.at(index));
 }
 
@@ -297,6 +301,15 @@ void Playlist::setShuffle(bool shuffle) {
 
 bool Playlist::repeatOne() {
     return d->repeatOne;
+}
+
+bool Playlist::setRepeatAll(bool repeatAll) {
+    d->repeatAll = repeatAll;
+    emit repeatAllChanged(repeatAll);
+}
+
+bool Playlist::repeatAll() {
+    return d->repeatAll;
 }
 
 bool Playlist::shuffle() {

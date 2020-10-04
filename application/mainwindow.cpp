@@ -79,6 +79,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     ui->jobButtonLayout->addWidget(tJobManager::makeJobButton());
 
+    this->resize(SC_DPI_T(this->size(), QSize));
+
     ui->centralwidget->layout()->removeWidget(ui->topWidget);
     ui->topWidget->raise();
     ui->topWidget->move(0, 0);
