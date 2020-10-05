@@ -51,7 +51,9 @@ class ControlStrip : public QWidget {
 
         void on_upButton_clicked();
 
-private:
+        void on_repeatOneButton_customContextMenuRequested(const QPoint& pos);
+
+    private:
         Ui::ControlStrip* ui;
         ControlStripPrivate* d;
 

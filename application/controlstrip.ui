@@ -175,6 +175,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="repeatOneButton">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <property name="text">
           <string notr="true">...</string>
          </property>

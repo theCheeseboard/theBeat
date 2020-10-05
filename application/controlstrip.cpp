@@ -25,6 +25,7 @@
 #include <tvariantanimation.h>
 #include <tpopover.h>
 #include <QMenu>
+#include <tsettings.h>
 #include "currenttrackpopover.h"
 #include "common.h"
 
@@ -33,6 +34,8 @@ struct ControlStripPrivate {
     bool isCollapsed = true;
 
     QPalette standardPal;
+
+    tSettings settings;
 
     tVariantAnimation* volumeBarAnim;
 };
@@ -70,14 +73,22 @@ ControlStrip::ControlStrip(QWidget* parent) :
         if (d->volumeBarAnim->endValue().toInt() != 0) this->setFixedHeight(QWIDGETSIZE_MAX);
     });
 
+    StateManager::instance()->playlist()->setRepeatAll(d->settings.value("playback/repeatAll").toBool());
+
     QMenu* repeatAllMenu = new QMenu();
     repeatAllMenu->addSection(tr("Repeat Options"));
     QAction* playQueueAction = repeatAllMenu->addAction(tr("Repeat Play Queue"), [ = ] {
-        StateManager::instance()->playlist()->setRepeatAll(!StateManager::instance()->playlist()->repeatAll());
+        d->settings.setValue("playback/repeatAll", !StateManager::instance()->playlist()->repeatAll());
     });
     playQueueAction->setCheckable(true);
     connect(StateManager::instance()->playlist(), &Playlist::repeatAllChanged, this, [ = ](bool repeatAll) {
-        playQueueAction->setChecked(repeatAll);
+        d->settings.setValue("playback/repeatAll", repeatAll);
+    });
+    connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
+        if (key == "playback/repeatAll") {
+            playQueueAction->setChecked(value.toBool());
+            StateManager::instance()->playlist()->setRepeatAll(value.toBool());
+        }
     });
     playQueueAction->setChecked(StateManager::instance()->playlist()->repeatAll());
     ui->repeatOneButton->setMenu(repeatAllMenu);
@@ -256,4 +267,9 @@ void ControlStrip::on_upButton_clicked() {
     connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
     connect(popover, &tPopover::dismissed, track, &CurrentTrackPopover::deleteLater);
     popover->show(this->window());
+}
+
+void ControlStrip::on_repeatOneButton_customContextMenuRequested(const QPoint& pos) {
+    Q_UNUSED(pos);
+    ui->repeatOneButton->showMenu();
 }

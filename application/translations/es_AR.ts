@@ -83,12 +83,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="74"/>
+        <location filename="../controlstrip.cpp" line="79"/>
         <source>Repeat Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="75"/>
+        <location filename="../controlstrip.cpp" line="80"/>
         <source>Repeat Play Queue</source>
         <translation type="unfinished"></translation>
     </message>
