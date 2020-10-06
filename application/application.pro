@@ -36,7 +36,10 @@ unix:!macx {
     defaults.files = defaults.conf
     defaults.path = /etc/theSuite/theBeat/
 
-    INSTALLS += target desktop icon defaults
+    metainfo.files = com.vicr123.thebeat.metainfo.xml
+    metainfo.path = /usr/share/metainfo
+
+    INSTALLS += target desktop icon defaults metainfo
 }
 
 win32 {
