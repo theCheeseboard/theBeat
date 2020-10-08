@@ -4,5 +4,7 @@ git ls-files -s | Select-String -Pattern "120000 " | ForEach-Object {
     $z = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($filename), $target);
     if ([System.IO.File]::Exists($z)) {
         Copy-Item -Path $z -Destination $filename
+    } else {
+        Remove-Item -Path $filename
     }
 }
