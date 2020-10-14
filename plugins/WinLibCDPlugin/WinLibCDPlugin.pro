@@ -16,14 +16,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-# Link with CDLib
-LIBS += -L$$PWD/cdlib/x64/Release -lCDLib -lwindowsapp
-INCLUDEPATH += $$PWD/cdlib/include/
+# Link with CDLib and the-libs
+LIBS += -L"C:/Program Files/thelibs/lib" -L$$PWD/cdlib/x64/Debug -lthe-libs -lCDLib -lwindowsapp
+INCLUDEPATH += $$PWD/cdlib/include/  "C:/Program Files/thelibs/include"
 
 SOURCES += \
+    cdchecker.cpp \
     plugin.cpp
 
 HEADERS += \
+    cdchecker.h \
     plugin.h
 
 DISTFILES += WinLibCDPlugin.json
@@ -32,3 +34,6 @@ DISTFILES += WinLibCDPlugin.json
 include(C:/Program Files/thelibs/pri/buildmaster.pri)
 
 include(../plugins.pri)
+
+FORMS += \
+    cdchecker.ui

@@ -106,6 +106,8 @@ int main(int argc, char* argv[]) {
     parser.addPositionalArgument(a.translate("main", "file"), a.translate("main", "File to open"), QStringLiteral("[%1]").arg(a.translate("main", "file")));
     parser.process(a);
 
+    MainWindow* w = new MainWindow();
+
     QObject::connect(&a, &tApplication::singleInstanceMessage, [ = ](QJsonObject launchMessage) {
         qDebug() << launchMessage;
         if (launchMessage.contains("files")) {
@@ -119,6 +121,9 @@ int main(int argc, char* argv[]) {
             if (firstItem) {
                 StateManager::instance()->playlist()->setCurrentItem(firstItem);
                 StateManager::instance()->playlist()->play();
+            } else {
+                w->show();
+                w->activateWindow();
             }
         }
     });
@@ -140,8 +145,7 @@ int main(int argc, char* argv[]) {
     QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
 #endif
 
-    MainWindow w;
-    w.show();
+    w->show();
 
     QtMultimediaMediaItem* firstItem = nullptr;
     for (QString file : files) {

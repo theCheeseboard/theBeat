@@ -20,9 +20,8 @@
 #include "plugin.h"
 
 #include <QDebug>
-#include <QIcon>
 
-#include <winrt/CDLib.h>
+#include "cdchecker.h"
 
 struct PluginPrivate {
 
@@ -37,8 +36,7 @@ Plugin::~Plugin() {
 }
 
 void Plugin::activate() {
-//    auto player = winrt::CDLib::AudioCDPlayer::GetPlayer();
-    qDebug() << winrt::CDLib::AudioCDPlayer::GetPlayer().IsMetadataSupported();
+    new CdChecker();
 }
 
 void Plugin::deactivate() {
