@@ -28,7 +28,7 @@ void ThemeManager::updatePalette()
     if (d->settings.value("theme/mode").toString() == "light") {
         pal.setColor(QPalette::Button, accentCol.lighter(150));
         pal.setColor(QPalette::ButtonText, QColor(0, 0, 0));
-        pal.setColor(QPalette::Highlight, accentCol.darker(125));
+        pal.setColor(QPalette::Highlight, accentCol.lighter(125));
         pal.setColor(QPalette::HighlightedText, QColor(0, 0, 0));
         pal.setColor(QPalette::Disabled, QPalette::Button, accentCol.darker(200));
         pal.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(0, 0, 0));

@@ -85,7 +85,7 @@ ControlStrip::ControlStrip(QWidget* parent) :
         d->settings.setValue("playback/repeatAll", repeatAll);
     });
     connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
-        if (key == "playback/repeatAll") {
+        if (key == "playback/repeatAll" && StateManager::instance()->playlist()->repeatAll() != value.toBool()) {
             playQueueAction->setChecked(value.toBool());
             StateManager::instance()->playlist()->setRepeatAll(value.toBool());
         }
