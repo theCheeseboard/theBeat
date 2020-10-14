@@ -28,6 +28,7 @@
 #include <QJsonArray>
 #include <statemanager.h>
 #include <playlist.h>
+#include "thememanager.h"
 #include "qtmultimedia/qtmultimediamediaitem.h"
 
 #ifdef HAVE_THEINSTALLER
@@ -37,6 +38,8 @@
 int main(int argc, char* argv[]) {
     if (!qEnvironmentVariableIsSet("QT_MULTIMEDIA_PREFERRED_PLUGINS")) qputenv("QT_MULTIMEDIA_PREFERRED_PLUGINS", "windowsmediafoundation");
     tApplication a(argc, argv);
+
+    QLocale::setDefault(QLocale("vi_VN"));
 
     if (QDir("/usr/share/thebeat/").exists()) {
         a.setShareDir("/usr/share/thebeat/");
@@ -71,31 +74,7 @@ int main(int argc, char* argv[]) {
     QIcon::setThemeName("contemporary-icons");
     QIcon::setThemeSearchPaths({a.applicationDirPath() + "\\icons"});
 
-    //Get the accent colour
-    QSettings accentDetection("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM", QSettings::NativeFormat);
-    QColor accentCol(QRgb(accentDetection.value("ColorizationColor", 0xC4003296).toInt() & 0x00FFFFFF));
-
-    QPalette pal = a.palette();
-
-    pal.setColor(QPalette::Button, accentCol);
-    pal.setColor(QPalette::ButtonText, QColor(255, 255, 255));
-    pal.setColor(QPalette::Highlight, accentCol.lighter(125));
-    pal.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
-    pal.setColor(QPalette::Disabled, QPalette::Button, accentCol.darker(200));
-    pal.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(150, 150, 150));
-
-    pal.setColor(QPalette::Window, QColor(40, 40, 40));
-    pal.setColor(QPalette::Base, QColor(40, 40, 40));
-    pal.setColor(QPalette::AlternateBase, QColor(60, 60, 60));
-    pal.setColor(QPalette::WindowText, QColor(255, 255, 255));
-    pal.setColor(QPalette::Text, QColor(255, 255, 255));
-    pal.setColor(QPalette::ToolTipText, QColor(255, 255, 255));
-
-    pal.setColor(QPalette::Disabled, QPalette::WindowText, QColor(150, 150, 150));
-
-    a.setPalette(pal);
-    a.setPalette(pal, "QDockWidget");
-    a.setPalette(pal, "QToolBar");
+    new ThemeManager();
 
     a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
 #endif
@@ -141,7 +120,7 @@ int main(int argc, char* argv[]) {
     });
 
 #ifdef HAVE_THEINSTALLER
-    UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 0, 0, 15);
+    UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 0, 0, 16);
     QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
 #endif
 

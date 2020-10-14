@@ -120,6 +120,7 @@ SOURCES += \
     pluginmanager.cpp \
     qtmultimedia/qtmultimediamediaitem.cpp \
     settingsdialog.cpp \
+    thememanager.cpp \
     trackswidget.cpp \
     userplaylistswidget.cpp
 
@@ -140,6 +141,7 @@ HEADERS += \
     pluginmanager.h \
     qtmultimedia/qtmultimediamediaitem.h \
     settingsdialog.h \
+    thememanager.h \
     trackswidget.h \
     userplaylistswidget.h
 

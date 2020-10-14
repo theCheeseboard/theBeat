@@ -478,7 +478,7 @@
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="74"/>
-        <location filename="../settingsdialog.ui" line="363"/>
+        <location filename="../settingsdialog.ui" line="424"/>
         <source>Notifications</source>
         <translation>Thông báo</translation>
     </message>
@@ -512,7 +512,22 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>Sử dụng thanh tiêu đề của hệ thống</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="420"/>
+        <location filename="../settingsdialog.ui" line="364"/>
+        <source>COLOURS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="371"/>
+        <source>Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="378"/>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="481"/>
         <source>Send a notification when the track changes</source>
         <translation>Gửi thông báo khi bài hát hiện tại thay đổi</translation>
     </message>
@@ -643,17 +658,17 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="50"/>
+        <location filename="../main.cpp" line="53"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="106"/>
+        <location filename="../main.cpp" line="85"/>
         <source>file</source>
         <translation>tệp</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="106"/>
+        <location filename="../main.cpp" line="85"/>
         <source>File to open</source>
         <translation>Tệp đẻ mở</translation>
     </message>

@@ -43,7 +43,11 @@ class SettingsDialog : public QDialog {
 
         void on_useSsdsCheckbox_toggled(bool checked);
 
-    private:
+        void on_lightButton_toggled(bool checked);
+
+        void on_darkButton_toggled(bool checked);
+
+private:
         Ui::SettingsDialog* ui;
         SettingsDialogPrivate* d;
 };

@@ -44,6 +44,17 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     ui->trackChangeNotification->setChecked(d->settings.value("notifications/trackChange").toBool());
     ui->listWidget->selectionModel()->setCurrentIndex(ui->listWidget->model()->index(0, 0), QItemSelectionModel::SelectCurrent);
     ui->useSsdsCheckbox->setChecked(d->settings.value("appearance/useSsds").toBool());
+
+#ifdef Q_OS_WIN
+    if (d->settings.value("theme/mode").toString() == "light") {
+        ui->lightButton->setChecked(true);
+    } else {
+        ui->darkButton->setChecked(true);
+    }
+#else
+    ui->coloursWidget->setVisible(false);
+    ui->line_2->setVisible(false);
+#endif
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -66,4 +77,18 @@ void SettingsDialog::on_trackChangeNotification_toggled(bool checked) {
 
 void SettingsDialog::on_useSsdsCheckbox_toggled(bool checked) {
     d->settings.setValue("appearance/useSsds", checked);
+}
+
+void SettingsDialog::on_lightButton_toggled(bool checked)
+{
+    if (checked) {
+        d->settings.setValue("theme/mode", "light");
+    }
+}
+
+void SettingsDialog::on_darkButton_toggled(bool checked)
+{
+    if (checked) {
+        d->settings.setValue("theme/mode", "dark");
+    }
 }
