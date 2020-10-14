@@ -585,52 +585,57 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="124"/>
-        <location filename="../userplaylistswidget.cpp" line="126"/>
-        <location filename="../userplaylistswidget.cpp" line="136"/>
-        <location filename="../userplaylistswidget.cpp" line="138"/>
+        <location filename="../userplaylistswidget.cpp" line="149"/>
+        <location filename="../userplaylistswidget.cpp" line="151"/>
+        <location filename="../userplaylistswidget.cpp" line="161"/>
+        <location filename="../userplaylistswidget.cpp" line="163"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="125"/>
-        <location filename="../userplaylistswidget.cpp" line="137"/>
+        <location filename="../userplaylistswidget.cpp" line="150"/>
+        <location filename="../userplaylistswidget.cpp" line="162"/>
         <source>Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="71"/>
+        <location filename="../userplaylistswidget.cpp" line="73"/>
         <source>Playlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="118"/>
-        <location filename="../userplaylistswidget.cpp" line="149"/>
+        <location filename="../userplaylistswidget.cpp" line="120"/>
+        <location filename="../userplaylistswidget.cpp" line="174"/>
         <source>Tracks in %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="112"/>
+        <location filename="../userplaylistswidget.cpp" line="114"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="113"/>
+        <location filename="../userplaylistswidget.cpp" line="115"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="115"/>
+        <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>Rename Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="115"/>
+        <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>New Name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="123"/>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
-        <location filename="../userplaylistswidget.cpp" line="132"/>
+        <location filename="../userplaylistswidget.cpp" line="157"/>
         <source>For %n playlists</source>
         <translation type="unfinished">
             <numerusform></numerusform>
