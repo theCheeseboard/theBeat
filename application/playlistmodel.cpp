@@ -32,6 +32,7 @@
 
 struct PlaylistModelPrivate {
     QSet<MediaItem*> knownItems;
+    QMap<int, PlaylistModel::DrawType> drawTypes;
 };
 
 PlaylistModel::PlaylistModel(QObject* parent)
@@ -54,6 +55,10 @@ PlaylistModel::PlaylistModel(QObject* parent)
             }
         }
         emit dataChanged(index(0), index(rowCount()));
+    });
+
+    connect(this, &PlaylistModel::dataChanged, this, [ = ] {
+        d->drawTypes.clear();
     });
 }
 
@@ -169,6 +174,8 @@ bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent) {
 }
 
 PlaylistModel::DrawType PlaylistModel::drawTypeForPlaylistIndex(int index) const {
+    if (d->drawTypes.contains(index)) return d->drawTypes.value(index);
+
     QList<MediaItem*> items = StateManager::instance()->playlist()->items();
     MediaItem* item = items.at(index);
     MediaItem* previousItem = nullptr;
@@ -180,15 +187,18 @@ PlaylistModel::DrawType PlaylistModel::drawTypeForPlaylistIndex(int index) const
         nextItem = items.at(index + 1);
     }
 
+    PlaylistModel::DrawType drawType;
     if (item->album().isEmpty()) {
-        return SingleItemGroup;
+        drawType = SingleItemGroup;
     } else if (previousItem && previousItem->album() == item->album()) {
-        return GroupItem;
+        drawType =  GroupItem;
     } else if (!nextItem || nextItem->album() != item->album()) {
-        return SingleItemGroup;
+        drawType =  SingleItemGroup;
     } else {
-        return GroupHeader;
+        drawType =  GroupHeader;
     }
+    d->drawTypes.insert(index, drawType);
+    return drawType;
 }
 
 PlaylistDelegate::PlaylistDelegate() {
