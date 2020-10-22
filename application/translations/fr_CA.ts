@@ -534,12 +534,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../trackswidget.ui" line="65"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pistes dans la Biblio</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="74"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mettre à la Queue</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="119"/>
@@ -572,27 +572,27 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.ui" line="261"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jouer à Tous</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
         <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mélanger Tout</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Brûler</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="222"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pistes dans la Biblio</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="250"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mettre à la Queue</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="149"/>
@@ -617,7 +617,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <location filename="../userplaylistswidget.cpp" line="120"/>
         <location filename="../userplaylistswidget.cpp" line="174"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pistes dans %1</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="114"/>
