@@ -30,6 +30,7 @@
 #include <helpers.h>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
+#include <tlogger.h>
 
 struct QtMultimediaMediaItemPrivate {
     QMediaPlayer* player;
@@ -48,6 +49,8 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
     d = new QtMultimediaMediaItemPrivate();
     d->url = url;
 
+    tDebug("QtMultimediaMediaItem") << "Constructing Qt Multimedia backend item for URL" << url.toString();
+
     d->player = new QMediaPlayer(this);
     d->player->setMedia(QMediaContent(url));
     connect(d->player, &QMediaPlayer::mediaStatusChanged, this, [ = ](QMediaPlayer::MediaStatus status) {
@@ -61,9 +64,13 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
 #ifdef Q_OS_WIN
         if (error == QMediaPlayer::FormatError && d->url.isLocalFile() && QFileInfo(d->url.toLocalFile()).suffix() == "flac") {
             //Ignore
+            tWarn("QtMultimediaMediaItem") << "Qt Multimedia item apparently failed with error" << error << "but since we're on Windows and this is a FLAC file we'll try anyway...";
             return;
         }
 #endif
+
+
+        tWarn("QtMultimediaMediaItem") << "Qt Multimedia item" << url.toString() << "failed with error" << error;
         emit this->error();
     });
     updateAlbumArt();
@@ -97,8 +104,7 @@ void QtMultimediaMediaItem::updateAlbumArt() {
     }
 }
 
-void QtMultimediaMediaItem::updateTaglib()
-{
+void QtMultimediaMediaItem::updateTaglib() {
     if (!d->url.isLocalFile()) return;
 #ifdef Q_OS_WIN
     TagLib::FileRef file(d->url.toLocalFile().toUtf8().data());

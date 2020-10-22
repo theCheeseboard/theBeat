@@ -24,6 +24,7 @@
 #include <QTemporaryDir>
 #include <QProcess>
 #include <tnotification.h>
+#include <tlogger.h>
 
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
@@ -62,6 +63,9 @@ BurnJob::BurnJob(QStringList files, QString blockDevice, QString albumTitle, QOb
     d->blockDevice = blockDevice;
     d->albumTitle = albumTitle;
 
+    tInfo("cdrdao") << "Burn job starting";
+    tInfo("cdrdao") << "Working directory for burn job is" << d->workDir.path();
+
     d->description = tr("Preparing to burn");
     performNextAction();
 }
@@ -88,7 +92,6 @@ void BurnJob::cancel() {
     }
 }
 
-#include <QDebug>
 void BurnJob::performNextAction() {
     if (d->nextItem < d->sourceFiles.count()) {
         d->description = tr("Preparing Track %1").arg(d->nextItem + 1);
@@ -108,7 +111,10 @@ void BurnJob::performNextAction() {
             performNextAction();
             ffmpeg->deleteLater();
         });
-        ffmpeg->start("ffmpeg", {"-i", sourceFile, "-ar", "44100", d->workDir.filePath(QStringLiteral("Track%1.wav").arg(d->nextItem, 2, 10, QLatin1Char('0')))});
+
+        QStringList ffmpegArgs = {"-i", sourceFile, "-ar", "44100", d->workDir.filePath(QStringLiteral("Track%1.wav").arg(d->nextItem, 2, 10, QLatin1Char('0')))};
+        tDebug("cdrdao") << "Calling ffmpeg with arguments" << ffmpegArgs;
+        ffmpeg->start("ffmpeg", ffmpegArgs);
     } else if (d->nextItem == d->sourceFiles.count()) {
         d->description = tr("Preparing to burn").arg(d->nextItem + 1);
         emit descriptionChanged(d->description);
@@ -167,8 +173,8 @@ void BurnJob::performNextAction() {
                     line = process->read(peek.indexOf('\r') + 1);
                 }
                 line = line.trimmed();
-                qDebug() << line;
 
+                tDebug("cdrdao") << line;
                 if (line.startsWith("Writing track")) {
                     QStringList parts = line.split(" ");
 
@@ -235,6 +241,7 @@ void BurnJob::performNextAction() {
         });
 
         QStringList daoArgs = {"write", "-n", "--eject", "--device", "/dev/" + d->blockDevice, "--driver", "generic-mmc-raw", "contents.toc"};
+        tDebug("cdrdao") << "Calling cdrdao with arguments" << daoArgs;
         process->start("cdrdao", daoArgs);
 
         d->daoProcess = process;
@@ -254,6 +261,8 @@ void BurnJob::performNextAction() {
         emit descriptionChanged(d->description);
 
         d->workDir.remove();
+
+        tInfo("cdrdao") << "Burn job completed successfully";
 
         //Fire a notification
         tNotification* notification = new tNotification(tr("Burn Successful"), tr("Burned \"%1\" to disc").arg(d->albumTitle));

@@ -37,6 +37,7 @@
 #include <QDropEvent>
 #include <QMimeData>
 #include <QInputDialog>
+#include <thelpmenu.h>
 #include <tjobmanager.h>
 #include "pluginmanager.h"
 #include "settingsdialog.h"
@@ -87,17 +88,10 @@ MainWindow::MainWindow(QWidget* parent)
 
     QMenu* menu = new QMenu(this);
 
-    QMenu* helpMenu = new QMenu(this);
-    helpMenu->setTitle(tr("Help"));
-    helpMenu->setIcon(QIcon::fromTheme("help-contents"));
-    helpMenu->addAction(ui->actionHelp);
-    helpMenu->addSeparator();
-    helpMenu->addAction(ui->actionFileBug);
-    helpMenu->addAction(ui->actionSources);
+    tHelpMenu* helpMenu = new tHelpMenu(this);
 
 #ifdef HAVE_THEINSTALLER
     if (UpdateChecker::updatesSupported()) {
-        helpMenu->addSeparator();
         helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
 
         connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [ = ] {
@@ -111,9 +105,6 @@ MainWindow::MainWindow(QWidget* parent)
     }
 #endif
 
-    helpMenu->addSeparator();
-    helpMenu->addAction(ui->actionAbout);
-
     menu->addAction(ui->actionOpen_File);
     menu->addAction(ui->actionOpen_URL);
     menu->addAction(ui->actionAdd_to_Library);
@@ -123,6 +114,7 @@ MainWindow::MainWindow(QWidget* parent)
     menu->addAction(ui->actionSkip_Forward);
     menu->addSeparator();
     menu->addAction(ui->actionSettings);
+//    menu->addMenu(helpMenu);
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
 

@@ -56,6 +56,9 @@ int main(int argc, char* argv[]) {
     a.setCopyrightHolder("Victor Tran");
     a.setCopyrightYear("2020");
     a.setOrganizationName("theSuite");
+    a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thebeat/intro"));
+    a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theBeat"));
+    a.setApplicationUrl(tApplication::FileBug, QUrl("http://github.com/vicr123/theBeat/issues"));
 #ifdef T_BLUEPRINT_BUILD
     a.setApplicationName("theBeat Blueprint");
     a.setDesktopFileName("com.vicr123.thebeat-blueprint");
