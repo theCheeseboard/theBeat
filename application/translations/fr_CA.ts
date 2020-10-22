@@ -7,54 +7,54 @@
         <location filename="../artistsalbumswidget.ui" line="65"/>
         <location filename="../artistsalbumswidget.ui" line="188"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Pistes dans la Biblio</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="230"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Mettre à la Queue</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="241"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Jouer à Tous</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="252"/>
         <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Mélanger Tout</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="276"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Brûler</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Albums in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Albums dans la Biblio</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Artists in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Artistes dans la Biblio</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="153"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pistes dans %1</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="153"/>
         <source>Tracks by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pistes par %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../artistsalbumswidget.cpp" line="162"/>
         <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n piste</numerusform>
+            <numerusform>%n pistes</numerusform>
         </translation>
     </message>
 </context>
@@ -63,7 +63,7 @@
     <message>
         <location filename="../common.cpp" line="31"/>
         <source>Select Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisir un Appareil</translation>
     </message>
 </context>
 <context>
@@ -71,17 +71,17 @@
     <message>
         <location filename="../controlstrip.ui" line="102"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <location filename="../controlstrip.ui" line="109"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Métadonnée</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="79"/>
         <source>Repeat Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Options de Répétition</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="80"/>
