@@ -42,18 +42,19 @@
     <message>
         <location filename="../artistsalbumswidget.cpp" line="153"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 içindeki parçalar</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="153"/>
         <source>Tracks by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 şarkılar</translation>
     </message>
     <message numerus="yes">
         <location filename="../artistsalbumswidget.cpp" line="162"/>
         <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n şarkı</numerusform>
+            <numerusform>%n şarkılar</numerusform>
         </translation>
     </message>
 </context>
@@ -62,7 +63,7 @@
     <message>
         <location filename="../common.cpp" line="31"/>
         <source>Select Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Cihaz seç</translation>
     </message>
 </context>
 <context>
@@ -70,22 +71,22 @@
     <message>
         <location filename="../controlstrip.ui" line="102"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlık</translation>
     </message>
     <message>
         <location filename="../controlstrip.ui" line="109"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta veriler</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="79"/>
         <source>Repeat Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekrar Seçenekleri</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="80"/>
         <source>Repeat Play Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekrar Oynatma Sırası</translation>
     </message>
 </context>
 <context>
@@ -93,30 +94,30 @@
     <message>
         <location filename="../currenttrackpopover.cpp" line="99"/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
+        <translation>Albüm</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="100"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ad</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="105"/>
         <location filename="../currenttrackpopover.cpp" line="107"/>
         <location filename="../currenttrackpopover.cpp" line="110"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Şarkı</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="105"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 / %2</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="111"/>
         <source>Year</source>
-        <translation type="unfinished"></translation>
+        <translation>Yıl</translation>
     </message>
 </context>
 <context>
@@ -124,13 +125,14 @@
     <message>
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="153"/>
         <source>Folder Added</source>
-        <translation type="unfinished"></translation>
+        <translation>Klasör Eklendi</translation>
     </message>
     <message numerus="yes">
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="154"/>
         <source>%n tracks added/updated</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n şarkı eklendi / güncellendi</numerusform>
+            <numerusform>%n şarkılar eklendi / güncellendi</numerusform>
         </translation>
     </message>
 </context>
@@ -139,7 +141,7 @@
     <message>
         <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="26"/>
         <source>DISCOVERING AUDIO TRACKS</source>
-        <translation type="unfinished"></translation>
+        <translation>SESLİ ŞARKILARI KEŞFETMEK</translation>
     </message>
 </context>
 <context>
@@ -147,27 +149,27 @@
     <message>
         <location filename="../libraryerrorpopover.ui" line="35"/>
         <source>Hmm</source>
-        <translation type="unfinished"></translation>
+        <translation>Hmm</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="134"/>
         <source>ACTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>HAREKETLER</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="143"/>
         <source>Locate File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosyayı bul</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="150"/>
         <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Kitaplıktan Kaldır</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.cpp" line="39"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünüşe göre dosya saklanıyor. Nerede olduğunu biliyorsanız, parçayı çalabilmemiz için bize bildirin.</translation>
     </message>
 </context>
 <context>
@@ -175,17 +177,17 @@
     <message>
         <location filename="../library/librarymodel.cpp" line="174"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 tarafından</translation>
     </message>
     <message>
         <location filename="../library/librarymodel.cpp" line="175"/>
         <source>on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1&apos;de</translation>
     </message>
     <message>
         <location filename="../library/librarymodel.cpp" line="177"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Şarkı</translation>
     </message>
 </context>
 <context>
@@ -193,7 +195,7 @@
     <message>
         <location filename="../library/librarylistview.cpp" line="28"/>
         <source>Add to Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Oynatma listesine ekle</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="43"/>
