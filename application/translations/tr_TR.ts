@@ -7,37 +7,37 @@
         <location filename="../artistsalbumswidget.ui" line="65"/>
         <location filename="../artistsalbumswidget.ui" line="188"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Kitaplıktaki Şarkılar</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="230"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Sırala</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="241"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Hepsini Oynat</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="252"/>
         <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü karıştır</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="276"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Yan</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Albums in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Kitaplıktaki Albümler</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Artists in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Kitaplıktaki Sanatçılar</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="153"/>
