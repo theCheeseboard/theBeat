@@ -201,29 +201,29 @@
         <location filename="../library/librarylistview.cpp" line="43"/>
         <location filename="../library/librarylistview.cpp" line="45"/>
         <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Kitaplıktan Kaldır</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="33"/>
         <location filename="../library/librarylistview.cpp" line="44"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Emin misiniz?</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="32"/>
         <location filename="../library/librarylistview.cpp" line="34"/>
         <source>Remove from Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Oynatma Listesinden Kaldır</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="110"/>
         <source>New Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Oynatma Listesi</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="112"/>
         <source>Playlist Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Oynatma Listesi Adı</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="127"/>
