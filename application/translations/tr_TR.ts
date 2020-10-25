@@ -228,13 +228,14 @@
     <message>
         <location filename="../library/librarylistview.cpp" line="127"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 için</translation>
     </message>
     <message numerus="yes">
         <location filename="../library/librarylistview.cpp" line="132"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n öğe için</numerusform>
+            <numerusform>%n öğeleri için</numerusform>
         </translation>
     </message>
 </context>
@@ -243,22 +244,22 @@
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>theBeat</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="90"/>
         <source>Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Şarkılar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="116"/>
         <source>Artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Sanatçılar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="139"/>
         <source>Albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Albümler</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="162"/>
