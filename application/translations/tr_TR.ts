@@ -264,163 +264,164 @@
     <message>
         <location filename="../mainwindow.ui" line="162"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Oynatma listeleri</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="185"/>
         <source>Other Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer kaynaklar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="276"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuyruk</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="346"/>
         <source>Nothing Here!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiçbir şey var buraya!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="403"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Hatası</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="412"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaynaklar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Hakkında</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="430"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Vazgeç</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="433"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="442"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Aç</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="445"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="450"/>
         <location filename="../mainwindow.cpp" line="403"/>
         <source>Open URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Link Aç</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="459"/>
         <location filename="../mainwindow.cpp" line="191"/>
         <source>Skip Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Geriye Atla</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="462"/>
         <source>Shift+Left</source>
-        <translation type="unfinished"></translation>
+        <translation>ÜstKarakter+Sol</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="474"/>
         <source>Shift+Right</source>
-        <translation type="unfinished"></translation>
+        <translation>ÜstKarakter+Sağ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="495"/>
         <source>Add to Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Kütüphaneye ekle</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="504"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="507"/>
         <source>Ctrl+,</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+,</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="515"/>
         <source>theBeat Help</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat Yardım</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
         <source>F1</source>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="471"/>
         <source>Skip Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Ileri atlamak</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="356"/>
         <source>Select a track or drop something here!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir şarkı seçin ya da buraya bir şey bırakın!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="483"/>
         <location filename="../mainwindow.cpp" line="199"/>
         <location filename="../mainwindow.cpp" line="213"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Oyna</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="486"/>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Boşluk</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="208"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Duraklat</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="220"/>
         <source>Skip Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki at</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="375"/>
         <source>For &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; için</translation>
     </message>
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="377"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n öğe için</numerusform>
+            <numerusform>%n öğeleri için</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="379"/>
         <source>Remove from Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıradan Kaldır</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="392"/>
         <source>For Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıra için</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="393"/>
         <source>Clear Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuyruğu Temizle</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="403"/>
