@@ -85,18 +85,47 @@
       <item row="1" column="1">
        <widget class="QLineEdit" name="importFolderLocation"/>
       </item>
-      <item row="3" column="0" colspan="3">
-       <widget class="QPushButton" name="importButton">
-        <property name="text">
-         <string>Import</string>
+     </layout>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignHCenter">
+    <widget class="QWidget" name="importCopyrightWarning" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
         </property>
-        <property name="icon">
-         <iconset theme="media-cd-import">
-          <normaloff>.</normaloff>.</iconset>
+        <property name="text">
+         <string>PLAY NICE</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Imported tracks are still protected by copyright law.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignHCenter">
+    <widget class="QPushButton" name="importButton">
+     <property name="text">
+      <string>Import</string>
+     </property>
+     <property name="icon">
+      <iconset theme="media-cd-import">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
     </widget>
    </item>
    <item>

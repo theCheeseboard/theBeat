@@ -39,13 +39,12 @@ int main(int argc, char* argv[]) {
     if (!qEnvironmentVariableIsSet("QT_MULTIMEDIA_PREFERRED_PLUGINS")) qputenv("QT_MULTIMEDIA_PREFERRED_PLUGINS", "windowsmediafoundation");
     tApplication a(argc, argv);
 
-    QLocale::setDefault(QLocale("vi_VN"));
-
     if (QDir("/usr/share/thebeat/").exists()) {
         a.setShareDir("/usr/share/thebeat/");
     } else if (QDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/")).exists()) {
         a.setShareDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/"));
     }
+    a.setShareDir("/home/victor/Documents/Apps/theBeat/application");
     a.installTranslators();
 
     a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
@@ -66,6 +65,8 @@ int main(int argc, char* argv[]) {
     a.setApplicationName("theBeat");
     a.setDesktopFileName("com.vicr123.thebeat");
 #endif
+
+    a.registerCrashTrap();
 
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
     tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");

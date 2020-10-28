@@ -104,6 +104,14 @@
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>PLAY NICE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imported tracks are still protected by copyright law.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TrackInfo</name>

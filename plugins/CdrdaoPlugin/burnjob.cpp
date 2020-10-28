@@ -116,7 +116,7 @@ void BurnJob::performNextAction() {
         tDebug("cdrdao") << "Calling ffmpeg with arguments" << ffmpegArgs;
         ffmpeg->start("ffmpeg", ffmpegArgs);
     } else if (d->nextItem == d->sourceFiles.count()) {
-        d->description = tr("Preparing to burn").arg(d->nextItem + 1);
+        d->description = tr("Preparing to burn");
         emit descriptionChanged(d->description);
 
         //Generate the TOC file and call cdrdao
@@ -151,6 +151,8 @@ void BurnJob::performNextAction() {
                 tocStream << QStringLiteral(R"(TITLE "%1")" "\n").arg(file.tag()->title().toCString());
                 tocStream << QStringLiteral(R"(ARRANGER "%1")" "\n").arg(file.tag()->artist().toCString());
                 tocStream << QStringLiteral(R"(COMPOSER "%1")" "\n").arg(file.tag()->artist().toCString());
+                tocStream << QStringLiteral(R"(PERFORMER "%1")" "\n").arg(file.tag()->artist().toCString());
+                tocStream << QStringLiteral(R"(SONGWRITER "%1")" "\n").arg(file.tag()->artist().toCString());
                 tocStream << "}\n"; //LANGUAGE 0
                 tocStream << "}\n"; //CD_TEXT
             }
@@ -186,11 +188,6 @@ void BurnJob::performNextAction() {
                     if (line.contains("blocks.")) {
                         d->description = tr("Finalising CD");
                         emit descriptionChanged(d->description);
-                        d->progress = 0;
-                        d->maxProgress = 0;
-
-                        emit totalProgressChanged(d->progress);
-                        emit progressChanged(d->progress);
 
                         d->canCancel = false;
                         emit canCancelChanged(false);

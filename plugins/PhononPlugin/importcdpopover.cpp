@@ -42,6 +42,8 @@ ImportCdPopover::ImportCdPopover(QString blockDevice, QString albumName, QList<T
     ui->titleLabel->setText(tr("Import %1").arg(albumName));
     ui->titleLabel->setBackButtonShown(true);
     ui->importOptionsWidget->setFixedWidth(SC_DPI(600));
+    ui->importCopyrightWarning->setFixedWidth(SC_DPI(600));
+    ui->importButton->setFixedWidth(SC_DPI(600));
 
     ui->importFolderLocation->setText(QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/theBeat/" + albumName);
 }

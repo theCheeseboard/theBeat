@@ -20,43 +20,43 @@
         <translation>Không thể chuyển mã bài hát</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="181"/>
+        <location filename="../burnjob.cpp" line="183"/>
         <source>Burning Track %1</source>
         <translation>Đang ghi bài %1</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="187"/>
+        <location filename="../burnjob.cpp" line="189"/>
         <source>Finalising CD</source>
         <translation>Đang hoàn thiện CD</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="231"/>
+        <location filename="../burnjob.cpp" line="228"/>
         <source>Cancelled</source>
         <translation>Bị hủy</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="233"/>
+        <location filename="../burnjob.cpp" line="230"/>
         <source>Couldn&apos;t burn tracks</source>
         <translation>Không thể ghi bài</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="260"/>
-        <location filename="../burnjob.cpp" line="268"/>
+        <location filename="../burnjob.cpp" line="257"/>
+        <location filename="../burnjob.cpp" line="265"/>
         <source>Burn Successful</source>
         <translation>Ghi đĩa thành công</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="268"/>
+        <location filename="../burnjob.cpp" line="265"/>
         <source>Burned &quot;%1&quot; to disc</source>
         <translation>Được ghi &quot;%1&quot; vào đĩa</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="283"/>
+        <location filename="../burnjob.cpp" line="280"/>
         <source>Burn Failure</source>
         <translation>Ghi đĩa không thành công</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="283"/>
+        <location filename="../burnjob.cpp" line="280"/>
         <source>Failed to burn &quot;%1&quot; to disc</source>
         <translation>Không thể ghi &quot;%1&quot; vào đĩa</translation>
     </message>

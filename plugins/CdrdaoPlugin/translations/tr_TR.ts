@@ -20,43 +20,43 @@
         <translation>Parçanın kodu dönüştürülemedi</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="181"/>
+        <location filename="../burnjob.cpp" line="183"/>
         <source>Burning Track %1</source>
         <translation>Yazan Parça %1</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="187"/>
+        <location filename="../burnjob.cpp" line="189"/>
         <source>Finalising CD</source>
         <translation>CD tamamlanıyor</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="231"/>
+        <location filename="../burnjob.cpp" line="228"/>
         <source>Cancelled</source>
         <translation>İptal edildi</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="233"/>
+        <location filename="../burnjob.cpp" line="230"/>
         <source>Couldn&apos;t burn tracks</source>
         <translation>İzler yazılamadı</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="260"/>
-        <location filename="../burnjob.cpp" line="268"/>
+        <location filename="../burnjob.cpp" line="257"/>
+        <location filename="../burnjob.cpp" line="265"/>
         <source>Burn Successful</source>
         <translation>Başarılı Yandı</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="268"/>
+        <location filename="../burnjob.cpp" line="265"/>
         <source>Burned &quot;%1&quot; to disc</source>
         <translation>&quot;%1&quot; diske yazdırıldı</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="283"/>
+        <location filename="../burnjob.cpp" line="280"/>
         <source>Burn Failure</source>
         <translation>Başarısız Yanık</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="283"/>
+        <location filename="../burnjob.cpp" line="280"/>
         <source>Failed to burn &quot;%1&quot; to disc</source>
         <translation>&quot;%1&quot; diske yazılamadı</translation>
     </message>
