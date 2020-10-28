@@ -35,6 +35,7 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 #%make_install
+cd build
 make install INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
