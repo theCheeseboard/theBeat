@@ -1,4 +1,4 @@
-Name:           theBeat
+Name:           thebeat
 Version:        3.0.0
 Release:        1%{?dist}
 Summary:        Music Player
