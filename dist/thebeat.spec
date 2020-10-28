@@ -47,8 +47,10 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files
 %{_bindir}/thebeat
-%{_datadir}/applications/thebeat.desktop
+%{_libdir}/thebeat/*
+%{_datadir}/applications/com.vicr123.thebeat.desktop
 %{_datadir}/icons/thebeat.svg
+%{_datadir}/thebeat/*
 
 
 %changelog
