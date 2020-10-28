@@ -89,7 +89,7 @@
     <message>
         <location filename="../burnpopover.ui" line="97"/>
         <source>HEADS UP</source>
-        <translation>SEINTJE</translation>
+        <translation>LET OP</translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="45"/>
