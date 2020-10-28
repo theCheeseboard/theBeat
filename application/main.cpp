@@ -92,7 +92,6 @@ int main(int argc, char* argv[]) {
     MainWindow* w = new MainWindow();
 
     QObject::connect(&a, &tApplication::singleInstanceMessage, [ = ](QJsonObject launchMessage) {
-        qDebug() << launchMessage;
         if (launchMessage.contains("files")) {
             QJsonArray files = launchMessage.value("files").toArray();
             QtMultimediaMediaItem* firstItem = nullptr;
