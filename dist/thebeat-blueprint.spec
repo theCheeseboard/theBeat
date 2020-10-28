@@ -12,8 +12,8 @@ BuildRequires:  make qt5-devel qt5-qtmultimedia-devel the-libs-blueprint-devel p
 Requires:       qt5 qt5-qtmultimedia the-libs-blueprint phonon-qt5 taglib
 %endif
 
-%if 0%{?fedora} == 33
-BuildRequires:  make qt5-qtbase-devel qt5-qtmultimedia-devel the-libs-blueprint-devel phonon-qt5-devel taglib-devel
+%if 0%{?fedora} >= 33
+BuildRequires:  make qt5-qtbase-devel qt5-qtmultimedia-devel the-libs-blueprint-devel phonon-qt5-devel taglib-devel qt5-linguist
 Requires:       qt5-qtbase qt5-qtmultimedia the-libs-blueprint phonon-qt5 taglib
 %endif
 
