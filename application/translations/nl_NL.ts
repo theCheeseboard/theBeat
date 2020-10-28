@@ -7,54 +7,54 @@
         <location filename="../artistsalbumswidget.ui" line="65"/>
         <location filename="../artistsalbumswidget.ui" line="188"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummers in Bibliotheek</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="230"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles in Wachtrij Zetten</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="241"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles Spelen</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="252"/>
         <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles Willekeurig Afspelen</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="276"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Branden</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Albums in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Albums in Bibliotheek</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="67"/>
         <source>Artists in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Artiesten in Bibliotheek</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="153"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummers in %1</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="153"/>
         <source>Tracks by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummers van %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../artistsalbumswidget.cpp" line="162"/>
         <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nummer</numerusform>
+            <numerusform>%n nummers</numerusform>
         </translation>
     </message>
 </context>
@@ -63,7 +63,7 @@
     <message>
         <location filename="../common.cpp" line="31"/>
         <source>Select Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparaat Selecteren</translation>
     </message>
 </context>
 <context>
@@ -71,22 +71,22 @@
     <message>
         <location filename="../controlstrip.ui" line="102"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../controlstrip.ui" line="109"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadata</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="79"/>
         <source>Repeat Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Herhalingsopties</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="80"/>
         <source>Repeat Play Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Wachtrij Herhalen</translation>
     </message>
 </context>
 <context>
@@ -94,30 +94,30 @@
     <message>
         <location filename="../currenttrackpopover.cpp" line="99"/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
+        <translation>Album</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="100"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="105"/>
         <location filename="../currenttrackpopover.cpp" line="107"/>
         <location filename="../currenttrackpopover.cpp" line="110"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="105"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 van %2</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="111"/>
         <source>Year</source>
-        <translation type="unfinished"></translation>
+        <translation>Jaar</translation>
     </message>
 </context>
 <context>
@@ -125,14 +125,14 @@
     <message>
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="153"/>
         <source>Folder Added</source>
-        <translation type="unfinished"></translation>
+        <translation>Map Toegevoegd</translation>
     </message>
     <message numerus="yes">
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="154"/>
         <source>%n tracks added/updated</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nummer toegevoegd/bijgewerkt</numerusform>
+            <numerusform>%n nummers toegevoegd/bijgewerkt</numerusform>
         </translation>
     </message>
 </context>
@@ -141,7 +141,7 @@
     <message>
         <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="26"/>
         <source>DISCOVERING AUDIO TRACKS</source>
-        <translation type="unfinished"></translation>
+        <translation>GELUIDSFRAGMENTEN AAN HET ONTDEKKEN</translation>
     </message>
 </context>
 <context>
@@ -149,27 +149,27 @@
     <message>
         <location filename="../libraryerrorpopover.ui" line="35"/>
         <source>Hmm</source>
-        <translation type="unfinished"></translation>
+        <translation>Hmm</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="134"/>
         <source>ACTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>ACTIES</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="143"/>
         <source>Locate File</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand Zoeken</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="150"/>
         <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen uit Bibliotheek</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.cpp" line="39"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het lijkt erop dat het bestand zoek is geraakt. Als jij wel weet waar het is, laat het ons dan weten zodat we het nummer kunnen afspelen.</translation>
     </message>
 </context>
 <context>
@@ -177,17 +177,17 @@
     <message>
         <location filename="../library/librarymodel.cpp" line="174"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>door %1</translation>
     </message>
     <message>
         <location filename="../library/librarymodel.cpp" line="175"/>
         <source>on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>op %1</translation>
     </message>
     <message>
         <location filename="../library/librarymodel.cpp" line="177"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer</translation>
     </message>
 </context>
 <context>
@@ -195,47 +195,47 @@
     <message>
         <location filename="../library/librarylistview.cpp" line="28"/>
         <source>Add to Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Toevoegen aan Afspeellijst</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="43"/>
         <location filename="../library/librarylistview.cpp" line="45"/>
         <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen uit Bibliotheek</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="33"/>
         <location filename="../library/librarylistview.cpp" line="44"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Weet je het zeker?</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="32"/>
         <location filename="../library/librarylistview.cpp" line="34"/>
         <source>Remove from Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen uit Afspeellijst</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="110"/>
         <source>New Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe Afspeellijst</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="112"/>
         <source>Playlist Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Naam van de Afspeellijst</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="127"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Voor %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../library/librarylistview.cpp" line="132"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Voor %n ding</numerusform>
+            <numerusform>Voor %n dingen</numerusform>
         </translation>
     </message>
 </context>
@@ -244,189 +244,189 @@
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>theBeat</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="90"/>
         <source>Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummers</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="116"/>
         <source>Artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Artiesten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="139"/>
         <source>Albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Albums</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="162"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspeellijsten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="185"/>
         <source>Other Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Andere Bronnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="276"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Wachtrij</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="346"/>
         <source>Nothing Here!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hier is niks!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="403"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Een Bug Rapporteren</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="412"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Bronnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Over</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="430"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="433"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="442"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand Openen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="445"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="450"/>
         <location filename="../mainwindow.cpp" line="403"/>
         <source>Open URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL Openen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="459"/>
         <location filename="../mainwindow.cpp" line="191"/>
         <source>Skip Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Terug Springen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="462"/>
         <source>Shift+Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Links</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="474"/>
         <source>Shift+Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Rechts</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="495"/>
         <source>Add to Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Toevoegen aan Bibliotheek</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="504"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="507"/>
         <source>Ctrl+,</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+,</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="515"/>
         <source>theBeat Help</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat-hulp</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
         <source>F1</source>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="471"/>
         <source>Skip Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Vooruit Springen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="356"/>
         <source>Select a track or drop something here!</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een nummer of sleep hier iets heen!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="483"/>
         <location filename="../mainwindow.cpp" line="199"/>
         <location filename="../mainwindow.cpp" line="213"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="486"/>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Spatie</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="208"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pauzeren</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="220"/>
         <source>Skip Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Overslaan</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="375"/>
         <source>For &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Voor &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="377"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Voor %n ding</numerusform>
+            <numerusform>Voor %n dingen</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="379"/>
         <source>Remove from Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen uit Wachtrij</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="392"/>
         <source>For Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Voor Wachtrij</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="393"/>
         <source>Clear Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Wachtrij Legen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="403"/>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
@@ -434,12 +434,12 @@
     <message>
         <location filename="../othersourceswidget.ui" line="93"/>
         <source>No other sources available</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen andere bronnen beschikbaar</translation>
     </message>
     <message>
         <location filename="../othersourceswidget.ui" line="103"/>
         <source>There&apos;s nothing else to play right now</source>
-        <translation type="unfinished"></translation>
+        <translation>Er is niets anders om af te spelen</translation>
     </message>
 </context>
 <context>
@@ -447,12 +447,12 @@
     <message>
         <location filename="../playlistmodel.cpp" line="256"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer</translation>
     </message>
     <message>
         <location filename="../playlistmodel.cpp" line="279"/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
+        <translation>Album</translation>
     </message>
 </context>
 <context>
@@ -461,72 +461,74 @@
         <location filename="../settingsdialog.ui" line="14"/>
         <location filename="../settingsdialog.ui" line="53"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="64"/>
         <location filename="../settingsdialog.ui" line="120"/>
         <source>Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotheek</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="69"/>
         <location filename="../settingsdialog.ui" line="248"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Uiterlijk</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="74"/>
         <location filename="../settingsdialog.ui" line="424"/>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Meldingen</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="180"/>
         <source>RESET</source>
-        <translation type="unfinished"></translation>
+        <translation>RESETTEN</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="187"/>
         <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Herstelt de bibliotheek naar standaardwaarden. Dit zal alle nummers die aan theBeat zijn toegevoegd verwijderen, en theBeat zal je Muziek-map opnieuw scannen als het opstart.
+
+theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te draaien.</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="201"/>
         <source>Reset theBeat Library</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat-bibliotheek Resetten</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="311"/>
         <source>TITLEBAR</source>
-        <translation type="unfinished"></translation>
+        <translation>TITELBALK</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="318"/>
         <source>Use System Titlebars</source>
-        <translation type="unfinished"></translation>
+        <translation>Titelbalken van het Systeem Gebruiken</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="364"/>
         <source>COLOURS</source>
-        <translation type="unfinished"></translation>
+        <translation>KLEUREN</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="371"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>Licht</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="378"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Donker</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="481"/>
         <source>Send a notification when the track changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Een melding sturen als het nummer verandert</translation>
     </message>
 </context>
 <context>
@@ -534,27 +536,27 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../trackswidget.ui" line="65"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummers in Bibliotheek</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="74"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles in de Wachtrij Zetten</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="119"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="176"/>
         <source>Processing Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotheek aan het Verwerken</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="183"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Afhankelijk van het aantal nummers in je bibliotheek, kan dit even duren. Dit hoort alleen de eerste keer dat je theBeat start te gebeuren.</translation>
     </message>
 </context>
 <context>
@@ -562,37 +564,37 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.ui" line="62"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspeellijsten</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="71"/>
         <source>Create Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspeellijst Maken</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="261"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles Spelen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
         <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles Willekeurig Afspelen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Branden</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="222"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummers in Bibliotheek</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="250"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles in de Wachtrij Zetten</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="149"/>
@@ -600,56 +602,56 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <location filename="../userplaylistswidget.cpp" line="161"/>
         <location filename="../userplaylistswidget.cpp" line="163"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="150"/>
         <location filename="../userplaylistswidget.cpp" line="162"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Weet je het zeker?</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <source>Playlist Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Naam van de Afspeellijst</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="120"/>
         <location filename="../userplaylistswidget.cpp" line="174"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummers in %1</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="114"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Voor %1</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="115"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Hernoemen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>Rename Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspeellijst Hernoemen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>New Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe Naam</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="123"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteren</translation>
     </message>
     <message numerus="yes">
         <location filename="../userplaylistswidget.cpp" line="157"/>
         <source>For %n playlists</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Voor %n afspeellijst</numerusform>
+            <numerusform>Voor %n afspeellijsten</numerusform>
         </translation>
     </message>
 </context>
@@ -658,17 +660,17 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Audiospeler</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="89"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>bestand</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="89"/>
         <source>File to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand om te openen</translation>
     </message>
 </context>
 </TS>
