@@ -5,123 +5,123 @@
     <name>CdChecker</name>
     <message>
         <source>CD</source>
-        <translation type="unfinished"></translation>
+        <translation>CD</translation>
     </message>
     <message>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles Afspelen</translation>
     </message>
     <message>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitwerpen</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren</translation>
     </message>
 </context>
 <context>
     <name>ImportCdJob</name>
     <message>
         <source>Preparing to import</source>
-        <translation type="unfinished"></translation>
+        <translation>Aan het voorbereiden op importeren</translation>
     </message>
     <message>
         <source>Couldn&apos;t query disc info</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon schijfinformatie niet ophalen</translation>
     </message>
     <message>
         <source>Importing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 aan het importeren</translation>
     </message>
     <message>
         <source>Import Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren Gelukt</translation>
     </message>
     <message>
         <source>Couldn&apos;t import track</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon nummer niet importeren</translation>
     </message>
     <message>
         <source>Cancelling</source>
-        <translation type="unfinished"></translation>
+        <translation>Aan het annuleren</translation>
     </message>
     <message>
         <source>Cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Geannuleerd</translation>
     </message>
     <message>
         <source>CD</source>
-        <translation type="unfinished"></translation>
+        <translation>CD</translation>
     </message>
     <message>
         <source>Imported &quot;%1&quot; successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; Importeren Gelukt</translation>
     </message>
     <message>
         <source>Import Failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren Mislukt</translation>
     </message>
     <message>
         <source>Failed to import &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon &quot;%1&quot; niet importerern</translation>
     </message>
 </context>
 <context>
     <name>ImportCdJobWidget</name>
     <message>
         <source>IMPORT CD</source>
-        <translation type="unfinished"></translation>
+        <translation>CD IMPORTEREN</translation>
     </message>
 </context>
 <context>
     <name>ImportCdPopover</name>
     <message>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Map</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bladeren...</translation>
     </message>
     <message>
         <source>IMPORT OPTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>IMPORTEEROPTIES</translation>
     </message>
     <message>
         <source>Import %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Importeren</translation>
     </message>
     <message>
         <source>Ogg Vorbis</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogg Vorbis</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formaat</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren</translation>
     </message>
     <message>
         <source>PLAY NICE</source>
-        <translation type="unfinished"></translation>
+        <translation>SPEEL NETJES</translation>
     </message>
     <message>
         <source>Imported tracks are still protected by copyright law.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geïmporteerde nummers worden nog steeds door auteursrechten beschermd.</translation>
     </message>
 </context>
 <context>
     <name>TrackInfo</name>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekend</translation>
     </message>
     <message>
         <source>Track %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer %1</translation>
     </message>
 </context>
 </TS>
