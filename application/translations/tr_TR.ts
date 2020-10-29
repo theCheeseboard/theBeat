@@ -54,6 +54,7 @@
         <source>%n tracks</source>
         <translation>
             <numerusform>%n şarkı</numerusform>
+            <numerusform>%n şarkıları</numerusform>
         </translation>
     </message>
 </context>
@@ -131,6 +132,7 @@
         <source>%n tracks added/updated</source>
         <translation>
             <numerusform>%n şarkı eklendi / güncellendi</numerusform>
+            <numerusform>%n şarkıları eklendi / güncellendi</numerusform>
         </translation>
     </message>
 </context>
@@ -233,6 +235,7 @@
         <source>For %n items</source>
         <translation>
             <numerusform>%n öğe için</numerusform>
+            <numerusform>%n öğeleri için</numerusform>
         </translation>
     </message>
 </context>
@@ -402,6 +405,7 @@
         <source>For %n items</source>
         <translation>
             <numerusform>%n öğe için</numerusform>
+            <numerusform>%n öğeleri için</numerusform>
         </translation>
     </message>
     <message>
@@ -647,6 +651,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <source>For %n playlists</source>
         <translation>
             <numerusform>%n oynatma listesi için</numerusform>
+            <numerusform>%n oynatma listeleri için</numerusform>
         </translation>
     </message>
 </context>
