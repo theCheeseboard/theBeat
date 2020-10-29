@@ -106,11 +106,11 @@
     </message>
     <message>
         <source>PLAY NICE</source>
-        <translation type="unfinished"></translation>
+        <translation>CHƠI ĐÚNG LUẬT</translation>
     </message>
     <message>
         <source>Imported tracks are still protected by copyright law.</source>
-        <translation type="unfinished"></translation>
+        <translation>Các bài bị nhập cũng còn bảo vệ bởi luật bản quyền.</translation>
     </message>
 </context>
 <context>
@@ -121,7 +121,7 @@
     </message>
     <message>
         <source>Track %1</source>
-        <translation>Bài %1</translation>
+        <translation>Rãnh %1</translation>
     </message>
 </context>
 </TS>
