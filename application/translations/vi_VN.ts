@@ -80,12 +80,12 @@
     <message>
         <location filename="../controlstrip.cpp" line="79"/>
         <source>Repeat Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tùy chọn lặp lại</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="80"/>
         <source>Repeat Play Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Lặp lại hàng phát</translation>
     </message>
 </context>
 <context>
@@ -509,17 +509,17 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../settingsdialog.ui" line="364"/>
         <source>COLOURS</source>
-        <translation type="unfinished"></translation>
+        <translation>MẦU</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="371"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>Sáng</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="378"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Tối</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="481"/>
@@ -640,7 +640,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../userplaylistswidget.cpp" line="123"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Xuất</translation>
     </message>
     <message numerus="yes">
         <location filename="../userplaylistswidget.cpp" line="157"/>
