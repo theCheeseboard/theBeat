@@ -106,11 +106,11 @@
     </message>
     <message>
         <source>PLAY NICE</source>
-        <translation type="unfinished"></translation>
+        <translation>İYİ OYNA</translation>
     </message>
     <message>
         <source>Imported tracks are still protected by copyright law.</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktarılan şarkılar hala telif hakkı yasasıyla korunmaktadır.</translation>
     </message>
 </context>
 <context>
