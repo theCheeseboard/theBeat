@@ -12,7 +12,7 @@
     <message>
         <location filename="../burnjob.cpp" line="97"/>
         <source>Preparing Track %1</source>
-        <translation>Đang chuẩn bị bài %1</translation>
+        <translation>Đang chuẩn bị rãnh %1</translation>
     </message>
     <message>
         <location filename="../burnjob.cpp" line="106"/>
@@ -22,7 +22,7 @@
     <message>
         <location filename="../burnjob.cpp" line="183"/>
         <source>Burning Track %1</source>
-        <translation>Đang ghi bài %1</translation>
+        <translation>Đang ghi rãnh %1</translation>
     </message>
     <message>
         <location filename="../burnjob.cpp" line="189"/>
