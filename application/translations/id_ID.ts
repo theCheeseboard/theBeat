@@ -417,7 +417,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="393"/>
         <source>Clear Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Bersihkan Antrian</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="403"/>
@@ -430,12 +430,12 @@
     <message>
         <location filename="../othersourceswidget.ui" line="93"/>
         <source>No other sources available</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada sumber lain</translation>
     </message>
     <message>
         <location filename="../othersourceswidget.ui" line="103"/>
         <source>There&apos;s nothing else to play right now</source>
-        <translation type="unfinished"></translation>
+        <translation>Saat ini tidak ada lagi yang dapat dimainkan</translation>
     </message>
 </context>
 <context>
@@ -443,7 +443,7 @@
     <message>
         <location filename="../playlistmodel.cpp" line="256"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Trek</translation>
     </message>
     <message>
         <location filename="../playlistmodel.cpp" line="279"/>
@@ -457,42 +457,44 @@
         <location filename="../settingsdialog.ui" line="14"/>
         <location filename="../settingsdialog.ui" line="53"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengaturan</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="64"/>
         <location filename="../settingsdialog.ui" line="120"/>
         <source>Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Pustaka</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="69"/>
         <location filename="../settingsdialog.ui" line="248"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilan</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="74"/>
         <location filename="../settingsdialog.ui" line="424"/>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Notifikasi</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="180"/>
         <source>RESET</source>
-        <translation type="unfinished"></translation>
+        <translation>SETEL ULANG</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="187"/>
         <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyetel ulang pustaka. Aksi ini akan menghapus semua trek yang ditambahkan, dan theBeat akan memindai ulang folder musik saat dibuka kembali.
+
+theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="201"/>
         <source>Reset theBeat Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Setel ulang Pustaka</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="311"/>
@@ -502,27 +504,27 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../settingsdialog.ui" line="318"/>
         <source>Use System Titlebars</source>
-        <translation type="unfinished"></translation>
+        <translation>Gunakan Bawaan Sistem</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="364"/>
         <source>COLOURS</source>
-        <translation type="unfinished"></translation>
+        <translation>WARNA</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="371"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>Terang</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="378"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelap</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="481"/>
         <source>Send a notification when the track changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan notifikasi saat perubahan trek</translation>
     </message>
 </context>
 <context>
@@ -530,27 +532,27 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../trackswidget.ui" line="65"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Trek dalam Pustaka</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="74"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Antri Semua</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="119"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Cari</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="176"/>
         <source>Processing Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Memproses Pustaka</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="183"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lama pemrosesan tergantung banyaknya trek dalam pustaka. Pemrosesan ini seharusnya dilakukan saat theBeat dijalankan untuk kali pertama.</translation>
     </message>
 </context>
 <context>
@@ -558,22 +560,22 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.ui" line="62"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Playlist</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="71"/>
         <source>Create Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Buat Playlist</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="261"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Mainkan Semua</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
         <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Acak Semua</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
@@ -583,12 +585,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.ui" line="222"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Trek dalam Pustaka</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="250"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Antri Semua</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="149"/>
@@ -596,55 +598,55 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <location filename="../userplaylistswidget.cpp" line="161"/>
         <location filename="../userplaylistswidget.cpp" line="163"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="150"/>
         <location filename="../userplaylistswidget.cpp" line="162"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakin?</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <source>Playlist Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nama Playlist</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="120"/>
         <location filename="../userplaylistswidget.cpp" line="174"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trek dalam %1</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="114"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Untuk %1</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="115"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Ganti Nama</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>Rename Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Ganti Nama Playlist</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>New Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nama Baru</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="123"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekspor</translation>
     </message>
     <message numerus="yes">
         <location filename="../userplaylistswidget.cpp" line="157"/>
         <source>For %n playlists</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Untuk %n playlist</numerusform>
         </translation>
     </message>
 </context>
@@ -653,7 +655,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Pemutar Audio</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="88"/>
@@ -663,7 +665,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../main.cpp" line="88"/>
         <source>File to open</source>
-        <translation type="unfinished"></translation>
+        <translation>File untuk dibuka</translation>
     </message>
 </context>
 </TS>
