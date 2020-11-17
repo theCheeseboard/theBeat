@@ -5,123 +5,123 @@
     <name>CdChecker</name>
     <message>
         <source>CD</source>
-        <translation type="unfinished"></translation>
+        <translation>CD</translation>
     </message>
     <message>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle einreihen</translation>
     </message>
     <message>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswerfen</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importieren</translation>
     </message>
 </context>
 <context>
     <name>ImportCdJob</name>
     <message>
         <source>Preparing to import</source>
-        <translation type="unfinished"></translation>
+        <translation>Für den Import vorbereiten</translation>
     </message>
     <message>
         <source>Couldn&apos;t query disc info</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte Discinformationen nicht abfragen</translation>
     </message>
     <message>
         <source>Importing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Importiere %1</translation>
     </message>
     <message>
         <source>Import Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Import erfolgreich</translation>
     </message>
     <message>
         <source>Couldn&apos;t import track</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte Titel nicht importieren</translation>
     </message>
     <message>
         <source>Cancelling</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgebrochen</translation>
     </message>
     <message>
         <source>CD</source>
-        <translation type="unfinished"></translation>
+        <translation>CD</translation>
     </message>
     <message>
         <source>Imported &quot;%1&quot; successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; erfolgreich importiert</translation>
     </message>
     <message>
         <source>Import Failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Importfehler</translation>
     </message>
     <message>
         <source>Failed to import &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Import von &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>ImportCdJobWidget</name>
     <message>
         <source>IMPORT CD</source>
-        <translation type="unfinished"></translation>
+        <translation>CD IMPORTIEREN</translation>
     </message>
 </context>
 <context>
     <name>ImportCdPopover</name>
     <message>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordner</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchsuchen...</translation>
     </message>
     <message>
         <source>IMPORT OPTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>IMPORTOPTIONEN</translation>
     </message>
     <message>
         <source>Import %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 importieren</translation>
     </message>
     <message>
         <source>Ogg Vorbis</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogg Vorbis</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Format</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importieren</translation>
     </message>
     <message>
         <source>PLAY NICE</source>
-        <translation type="unfinished"></translation>
+        <translation>FAIR PLAY</translation>
     </message>
     <message>
         <source>Imported tracks are still protected by copyright law.</source>
-        <translation type="unfinished"></translation>
+        <translation>Importierte Titel stehen immernoch unter Copyrightschutz.</translation>
     </message>
 </context>
 <context>
     <name>TrackInfo</name>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <source>Track %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel %1</translation>
     </message>
 </context>
 </TS>
