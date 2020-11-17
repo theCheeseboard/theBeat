@@ -244,189 +244,189 @@
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>theBeat</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="90"/>
         <source>Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="116"/>
         <source>Artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Künstler</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="139"/>
         <source>Albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Alben</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="162"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Playlists</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="185"/>
         <source>Other Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Andere Quellen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="276"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Warteschlange</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="346"/>
         <source>Nothing Here!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hier ist nichts!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="403"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Bug melden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="412"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Quellen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Über</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="430"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="433"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+Q</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="442"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei öffnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="445"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+O</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="450"/>
         <location filename="../mainwindow.cpp" line="403"/>
         <source>Open URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL öffnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="459"/>
         <location filename="../mainwindow.cpp" line="191"/>
         <source>Skip Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurückspringen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="462"/>
         <source>Shift+Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Umschalt+Links</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="474"/>
         <source>Shift+Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Umschalt+Rechts</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="495"/>
         <source>Add to Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Zur Bibliothek hinzufügen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="504"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="507"/>
         <source>Ctrl+,</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+,</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="515"/>
         <source>theBeat Help</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat Hilfe</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
         <source>F1</source>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="471"/>
         <source>Skip Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorwärtsspringen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="356"/>
         <source>Select a track or drop something here!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle einen Title aus oder ziehe etwas hier hin!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="483"/>
         <location filename="../mainwindow.cpp" line="199"/>
         <location filename="../mainwindow.cpp" line="213"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Abspielen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="486"/>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Leer</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="208"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="220"/>
         <source>Skip Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächstes überspringen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="375"/>
         <source>For &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Für &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="377"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Für %n Item</numerusform>
+            <numerusform>Für %n Items</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="379"/>
         <source>Remove from Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus der Warteschlange entfernen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="392"/>
         <source>For Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Für die Warteschlange</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="393"/>
         <source>Clear Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Warteschlange leeren</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="403"/>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
@@ -434,12 +434,12 @@
     <message>
         <location filename="../othersourceswidget.ui" line="93"/>
         <source>No other sources available</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine anderen Quellen verfügbar</translation>
     </message>
     <message>
         <location filename="../othersourceswidget.ui" line="103"/>
         <source>There&apos;s nothing else to play right now</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt aktuell nichts anderes zum abspielen</translation>
     </message>
 </context>
 <context>
@@ -447,12 +447,12 @@
     <message>
         <location filename="../playlistmodel.cpp" line="256"/>
         <source>Track</source>
-        <translation type="unfinished">Titel</translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../playlistmodel.cpp" line="279"/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
+        <translation>Alben</translation>
     </message>
 </context>
 <context>
@@ -461,72 +461,74 @@
         <location filename="../settingsdialog.ui" line="14"/>
         <location filename="../settingsdialog.ui" line="53"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="64"/>
         <location filename="../settingsdialog.ui" line="120"/>
         <source>Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliothek</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="69"/>
         <location filename="../settingsdialog.ui" line="248"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Darstellung</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="74"/>
         <location filename="../settingsdialog.ui" line="424"/>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="180"/>
         <source>RESET</source>
-        <translation type="unfinished"></translation>
+        <translation>ZURÜCKSETZEN</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="187"/>
         <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Setze die Bibliothek auf Standardeinstellungen zurück. Dies wird alle Title die zu theBeat hinzugefügt wurden entfernen und theBeat wird den Musik-Ordner beim Start erneut scannen.
+
+theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irreversibel.</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="201"/>
         <source>Reset theBeat Library</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat Bibliothek zurücksetzen</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="311"/>
         <source>TITLEBAR</source>
-        <translation type="unfinished"></translation>
+        <translation>TITELLEISTE</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="318"/>
         <source>Use System Titlebars</source>
-        <translation type="unfinished"></translation>
+        <translation>System Titelleisten verwenden</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="364"/>
         <source>COLOURS</source>
-        <translation type="unfinished"></translation>
+        <translation>FARBEN</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="371"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>Hell</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="378"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Dunkel</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="481"/>
         <source>Send a notification when the track changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sende eine Benachrichtigung, wenn der Titel wechselt</translation>
     </message>
 </context>
 <context>
@@ -534,27 +536,27 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../trackswidget.ui" line="65"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished">Titel in der Bibliothek</translation>
+        <translation>Titel in der Bibliothek</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="74"/>
         <source>Enqueue All</source>
-        <translation type="unfinished">Alle einreihen</translation>
+        <translation>Alle einreihen</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="119"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="176"/>
         <source>Processing Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliothek wird verarbeitet</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="183"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Je nach der Anzahl der Titel in deiner Bibliothek könnte dies eine Weile dauern. Dies sollte nur passieren, wenn du theBeat zum ersten mal startest.</translation>
     </message>
 </context>
 <context>
@@ -562,37 +564,37 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.ui" line="62"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Playlists</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="71"/>
         <source>Create Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Playlist erstellen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="261"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle abspielen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
         <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle mischen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Brennen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="222"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished">Titel in der Bibliothek</translation>
+        <translation>Titel in der Bibliothek</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="250"/>
         <source>Enqueue All</source>
-        <translation type="unfinished">Alle einreihen</translation>
+        <translation>Alle einreihen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="149"/>
@@ -600,56 +602,56 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <location filename="../userplaylistswidget.cpp" line="161"/>
         <location filename="../userplaylistswidget.cpp" line="163"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="150"/>
         <location filename="../userplaylistswidget.cpp" line="162"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bist du sicher?</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <source>Playlist Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Playlist Name</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="120"/>
         <location filename="../userplaylistswidget.cpp" line="174"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished">Titel in %1</translation>
+        <translation>Titel in %1</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="114"/>
         <source>For %1</source>
-        <translation type="unfinished">Für %1</translation>
+        <translation>Für %1</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="115"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Umbenennen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>Rename Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Playlist umbenennen</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>New Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Name</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="123"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren</translation>
     </message>
     <message numerus="yes">
         <location filename="../userplaylistswidget.cpp" line="157"/>
         <source>For %n playlists</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Für %n Playlist</numerusform>
+            <numerusform>Für %n Playlists</numerusform>
         </translation>
     </message>
 </context>
@@ -658,17 +660,17 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio Player</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="88"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="88"/>
         <source>File to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei zum öffnen</translation>
     </message>
 </context>
 </TS>
