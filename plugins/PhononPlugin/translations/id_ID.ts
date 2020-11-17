@@ -9,46 +9,46 @@
     </message>
     <message>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Antri Semua</translation>
     </message>
     <message>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluarkan</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Impor</translation>
     </message>
 </context>
 <context>
     <name>ImportCdJob</name>
     <message>
         <source>Preparing to import</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyiapkan impor</translation>
     </message>
     <message>
         <source>Couldn&apos;t query disc info</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat mengambil info CD</translation>
     </message>
     <message>
         <source>Importing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengimpor %1</translation>
     </message>
     <message>
         <source>Import Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Impor Berhasil</translation>
     </message>
     <message>
         <source>Couldn&apos;t import track</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat mengimpor trek</translation>
     </message>
     <message>
         <source>Cancelling</source>
-        <translation type="unfinished"></translation>
+        <translation>Membatalkan</translation>
     </message>
     <message>
         <source>Cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <source>CD</source>
@@ -56,22 +56,22 @@
     </message>
     <message>
         <source>Imported &quot;%1&quot; successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Berhasil mengimpor &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Import Failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Impor Gagal</translation>
     </message>
     <message>
         <source>Failed to import &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal mengimpor &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>ImportCdJobWidget</name>
     <message>
         <source>IMPORT CD</source>
-        <translation type="unfinished"></translation>
+        <translation>IMPOR CD</translation>
     </message>
 </context>
 <context>
@@ -82,15 +82,15 @@
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelajah...</translation>
     </message>
     <message>
         <source>IMPORT OPTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>PENGATURAN IMPOR</translation>
     </message>
     <message>
         <source>Import %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impor %1</translation>
     </message>
     <message>
         <source>Ogg Vorbis</source>
@@ -106,22 +106,22 @@
     </message>
     <message>
         <source>PLAY NICE</source>
-        <translation type="unfinished"></translation>
+        <translation>PERHATIAN</translation>
     </message>
     <message>
         <source>Imported tracks are still protected by copyright law.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trek yang diimpor masih berada dalam lindungan hak cipta.</translation>
     </message>
 </context>
 <context>
     <name>TrackInfo</name>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak diketahui</translation>
     </message>
     <message>
         <source>Track %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trek %1</translation>
     </message>
 </context>
 </TS>
