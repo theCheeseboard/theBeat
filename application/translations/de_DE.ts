@@ -17,17 +17,17 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="241"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle abspielen</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="252"/>
         <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle mischen</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="276"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Brennen</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.cpp" line="67"/>
@@ -52,9 +52,9 @@
     <message numerus="yes">
         <location filename="../artistsalbumswidget.cpp" line="162"/>
         <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Song</numerusform>
+            <numerusform>%n Songs</numerusform>
         </translation>
     </message>
 </context>
@@ -63,7 +63,7 @@
     <message>
         <location filename="../common.cpp" line="31"/>
         <source>Select Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät auswählen</translation>
     </message>
 </context>
 <context>
@@ -81,12 +81,12 @@
     <message>
         <location filename="../controlstrip.cpp" line="79"/>
         <source>Repeat Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederholungseinstellungen</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="80"/>
         <source>Repeat Play Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste wiederholend abspielen</translation>
     </message>
 </context>
 <context>
@@ -94,30 +94,30 @@
     <message>
         <location filename="../currenttrackpopover.cpp" line="99"/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
+        <translation>Album</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="100"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="105"/>
         <location filename="../currenttrackpopover.cpp" line="107"/>
         <location filename="../currenttrackpopover.cpp" line="110"/>
         <source>Track</source>
-        <translation type="unfinished">Titel</translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="105"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 von %2</translation>
     </message>
     <message>
         <location filename="../currenttrackpopover.cpp" line="111"/>
         <source>Year</source>
-        <translation type="unfinished"></translation>
+        <translation>Jahr</translation>
     </message>
 </context>
 <context>
@@ -125,14 +125,14 @@
     <message>
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="153"/>
         <source>Folder Added</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordner hinzugefügt</translation>
     </message>
     <message numerus="yes">
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="154"/>
         <source>%n tracks added/updated</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Titel hinzugefügt/aktualisiert</numerusform>
+            <numerusform>%n Titel hinzugefügt/aktualisiert</numerusform>
         </translation>
     </message>
 </context>
@@ -141,7 +141,7 @@
     <message>
         <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="26"/>
         <source>DISCOVERING AUDIO TRACKS</source>
-        <translation type="unfinished"></translation>
+        <translation>SUCHE NACH AUDIO TITELN</translation>
     </message>
 </context>
 <context>
@@ -207,23 +207,23 @@
         <location filename="../library/librarylistview.cpp" line="33"/>
         <location filename="../library/librarylistview.cpp" line="44"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bist du sicher?</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="32"/>
         <location filename="../library/librarylistview.cpp" line="34"/>
         <source>Remove from Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus Playlist entfernen</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="110"/>
         <source>New Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Playlist</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="112"/>
         <source>Playlist Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Playlist Name</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="127"/>
@@ -233,9 +233,9 @@
     <message numerus="yes">
         <location filename="../library/librarylistview.cpp" line="132"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Für %n Item</numerusform>
+            <numerusform>Für %n Items</numerusform>
         </translation>
     </message>
 </context>
