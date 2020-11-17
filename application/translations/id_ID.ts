@@ -180,7 +180,7 @@
     <message>
         <location filename="../library/librarymodel.cpp" line="175"/>
         <source>on %1</source>
-        <translation>pada %1</translation>
+        <translation>dalam %1</translation>
     </message>
     <message>
         <location filename="../library/librarymodel.cpp" line="177"/>
