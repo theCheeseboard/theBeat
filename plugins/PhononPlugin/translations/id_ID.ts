@@ -102,7 +102,7 @@
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Impor</translation>
     </message>
     <message>
         <source>PLAY NICE</source>
