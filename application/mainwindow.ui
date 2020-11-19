@@ -69,10 +69,6 @@
          <property name="text">
           <string/>
          </property>
-         <property name="icon">
-          <iconset theme="thebeat" resource="resources.qrc">
-           <normaloff>:/icons/thebeat.svg</normaloff>:/icons/thebeat.svg</iconset>
-         </property>
          <property name="popupMode">
           <enum>QToolButton::InstantPopup</enum>
          </property>
@@ -509,7 +505,8 @@
   </action>
   <action name="actionHelp">
    <property name="icon">
-    <iconset theme="help-contents"/>
+    <iconset theme="help-contents">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>theBeat Help</string>
@@ -568,8 +565,6 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

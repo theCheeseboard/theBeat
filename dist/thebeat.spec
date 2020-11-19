@@ -1,5 +1,5 @@
 Name:           thebeat
-Version:        3.0.0
+Version:        3.0
 Release:        1%{?dist}
 Summary:        Music Player
 
@@ -24,7 +24,7 @@ Requires:       qt5-qtbase qt5-qtmultimedia qt5-qtx11extras the-libs phonon-qt5 
 Music Player
 
 %prep
-%setup
+%setup -n theBeat-%{version}
 
 %build
 mkdir build

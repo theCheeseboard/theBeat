@@ -46,8 +46,7 @@ int main(int argc, char* argv[]) {
     }
     a.installTranslators();
 
-    a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
-    a.setApplicationVersion("3.0");
+    a.setApplicationVersion("3.1");
     a.setGenericName(QApplication::translate("main", "Audio Player"));
     a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
@@ -58,9 +57,11 @@ int main(int argc, char* argv[]) {
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theBeat"));
     a.setApplicationUrl(tApplication::FileBug, QUrl("http://github.com/vicr123/theBeat/issues"));
 #ifdef T_BLUEPRINT_BUILD
+    a.setApplicationIcon(QIcon(":/icons/thebeat-blueprint.svg"));
     a.setApplicationName("theBeat Blueprint");
     a.setDesktopFileName("com.vicr123.thebeat-blueprint");
 #else
+    a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
     a.setApplicationName("theBeat");
     a.setDesktopFileName("com.vicr123.thebeat");
 #endif

@@ -4,5 +4,6 @@
         <file>icons/aboutsplash.svg</file>
         <file>resources/Silly.mp3</file>
         <file>resources/Silly.ogg</file>
+        <file>icons/thebeat-blueprint.svg</file>
     </qresource>
 </RCC>

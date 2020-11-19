@@ -118,10 +118,16 @@ MainWindow::MainWindow(QWidget* parent)
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
 
+#ifdef T_BLUEPRINT_BUILD
+    ui->menuButton->setIcon(QIcon(":/icons/thebeat-blueprint.svg"));
+#else
+    ui->menuButton->setIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
+#endif
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
     ui->queueStack->setCurrentAnimation(tStackedWidget::Fade);
+    this->setWindowIcon(ui->menuButton->windowIcon());
 
     connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [ = ] {
         ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);

@@ -21,7 +21,11 @@ unix:!macx {
     target.path = /usr/bin
 
     desktop.path = /usr/share/applications
-    desktop.files = com.vicr123.thebeat.desktop
+    blueprint {
+        desktop.files = com.vicr123.thebeat-blueprint.desktop
+    } else {
+        desktop.files = com.vicr123.thebeat.desktop
+    }
 
     icon.path = /usr/share/icons/hicolor/scalable/apps/
     icon.files = icons/thebeat.svg
@@ -157,6 +161,7 @@ INCLUDEPATH += $$PWD/../libthebeat
 DEPENDPATH += $$PWD/../libthebeat
 
 DISTFILES += \
+    com.vicr123.thebeat-blueprint.desktop \
     com.vicr123.thebeat.desktop \
     defaults.conf \
     icon.rc
