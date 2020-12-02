@@ -88,6 +88,16 @@
         <source>Repeat Play Queue</source>
         <translation>Wachtrij Herhalen</translation>
     </message>
+    <message>
+        <location filename="../controlstrip.cpp" line="97"/>
+        <source>Playback Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../controlstrip.cpp" line="98"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CurrentTrackPopover</name>

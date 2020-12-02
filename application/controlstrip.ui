@@ -203,6 +203,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="playPauseButton">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <property name="text">
           <string notr="true">...</string>
          </property>

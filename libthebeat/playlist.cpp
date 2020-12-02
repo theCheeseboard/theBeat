@@ -32,6 +32,7 @@ struct PlaylistPrivate {
     bool repeatOne = false;
     bool repeatAll = true;
     bool shuffle = false;
+    bool pauseAfterCurrentTrack = false;
     double volume = 1;
 
     bool trackChangeNotificationsEnabled = true;
@@ -157,12 +158,20 @@ void Playlist::next() {
         return;
     }
 
+    bool pauseAfterCurrentTrack = d->pauseAfterCurrentTrack;
+
     int index = d->playOrder.indexOf(d->currentItem) + 1;
     if (index == d->playOrder.count()) {
         if (!d->repeatAll) pause();
         index = 0;
     }
     setCurrentItem(d->playOrder.at(index));
+
+    //Pause now if pause after current track is enabled
+    if (pauseAfterCurrentTrack) {
+        pause();
+        //Will have been disabled in setCurrentItem()
+    }
 }
 
 void Playlist::previous() {
@@ -180,6 +189,9 @@ void Playlist::previous() {
     int index = d->playOrder.indexOf(d->currentItem) - 1;
     if (index == -1) index = d->playOrder.count() - 1;
     setCurrentItem(d->playOrder.at(index));
+
+    //Disable pause after current track
+    setPauseAfterCurrentTrack(false);
 }
 
 void Playlist::updateMetadata() {
@@ -268,6 +280,9 @@ void Playlist::setCurrentItem(MediaItem* item) {
     }
 
     updateMetadata();
+
+    //Disable pause after current track
+    setPauseAfterCurrentTrack(false);
 }
 
 QList<MediaItem*> Playlist::items() {
@@ -327,4 +342,13 @@ double Playlist::volume() {
 
 void Playlist::setTrachChangeNotificationsEnabled(bool notificationsEnabled) {
     d->trackChangeNotificationsEnabled = notificationsEnabled;
+}
+
+void Playlist::setPauseAfterCurrentTrack(bool pauseAfterCurrentTrack) {
+    d->pauseAfterCurrentTrack = pauseAfterCurrentTrack;
+    emit pauseAfterCurrentTrackChanged(pauseAfterCurrentTrack);
+}
+
+bool Playlist::pauseAfterCurrentTrack() {
+    return d->pauseAfterCurrentTrack;
 }

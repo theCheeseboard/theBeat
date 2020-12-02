@@ -54,7 +54,6 @@
         <source>%n tracks</source>
         <translation>
             <numerusform>%n şarkı</numerusform>
-            <numerusform>%n şarkılar</numerusform>
         </translation>
     </message>
 </context>
@@ -87,6 +86,16 @@
         <location filename="../controlstrip.cpp" line="80"/>
         <source>Repeat Play Queue</source>
         <translation>Tekrar Oynatma Sırası</translation>
+    </message>
+    <message>
+        <location filename="../controlstrip.cpp" line="97"/>
+        <source>Playback Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../controlstrip.cpp" line="98"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -132,7 +141,6 @@
         <source>%n tracks added/updated</source>
         <translation>
             <numerusform>%n şarkı eklendi/güncellendi</numerusform>
-            <numerusform>%n şarkılar eklendi/güncellendi</numerusform>
         </translation>
     </message>
 </context>
@@ -235,7 +243,6 @@
         <source>For %n items</source>
         <translation>
             <numerusform>%n öğe için</numerusform>
-            <numerusform>%n öğeler için</numerusform>
         </translation>
     </message>
 </context>
@@ -405,7 +412,6 @@
         <source>For %n items</source>
         <translation>
             <numerusform>%n öğe için</numerusform>
-            <numerusform>%n öğeleri için</numerusform>
         </translation>
     </message>
     <message>
@@ -651,7 +657,6 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <source>For %n playlists</source>
         <translation>
             <numerusform>%n oynatma listesi için</numerusform>
-            <numerusform>%n oynatma listesileri için</numerusform>
         </translation>
     </message>
 </context>

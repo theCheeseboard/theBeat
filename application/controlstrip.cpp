@@ -93,6 +93,19 @@ ControlStrip::ControlStrip(QWidget* parent) :
     playQueueAction->setChecked(StateManager::instance()->playlist()->repeatAll());
     ui->repeatOneButton->setMenu(repeatAllMenu);
 
+    QMenu* pauseMenu = new QMenu();
+    pauseMenu->addSection(tr("Playback Options"));
+    QAction* pauseAfterCurrentTrackAction = pauseMenu->addAction(QIcon::fromTheme("media-playback-pause"), tr("Pause after current track"));
+    connect(pauseAfterCurrentTrackAction, &QAction::toggled, this, [ = ](bool checked) {
+        StateManager::instance()->playlist()->setPauseAfterCurrentTrack(checked);
+    });
+    pauseAfterCurrentTrackAction->setCheckable(true);
+    pauseAfterCurrentTrackAction->setChecked(StateManager::instance()->playlist()->pauseAfterCurrentTrack());
+    connect(StateManager::instance()->playlist(), &Playlist::pauseAfterCurrentTrackChanged, this, [ = ](bool pauseAfterCurrentTrack) {
+        pauseAfterCurrentTrackAction->setChecked(pauseAfterCurrentTrack);
+    });
+    ui->playPauseButton->setMenu(pauseMenu);
+
     updateCurrentItem();
 }
 
@@ -272,4 +285,9 @@ void ControlStrip::on_upButton_clicked() {
 void ControlStrip::on_repeatOneButton_customContextMenuRequested(const QPoint& pos) {
     Q_UNUSED(pos);
     ui->repeatOneButton->showMenu();
+}
+
+void ControlStrip::on_playPauseButton_customContextMenuRequested(const QPoint& pos) {
+    Q_UNUSED(pos);
+    ui->playPauseButton->showMenu();
 }
