@@ -48,7 +48,7 @@
     <message>
         <location filename="../burnjob.cpp" line="265"/>
         <source>Burned %1 to disc</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 diske yazdırıldı</translation>
     </message>
     <message>
         <location filename="../burnjob.cpp" line="280"/>
