@@ -262,7 +262,7 @@ void BurnJob::performNextAction() {
         tInfo("cdrdao") << "Burn job completed successfully";
 
         //Fire a notification
-        tNotification* notification = new tNotification(tr("Burn Successful"), tr("Burned \"%1\" to disc").arg(d->albumTitle));
+        tNotification* notification = new tNotification(tr("Burn Successful"), tr("Burned %1 to disc").arg(QLocale().quoteString(d->albumTitle)));
         notification->post();
     }
 }
@@ -277,7 +277,7 @@ void BurnJob::fail(QString description) {
     d->workDir.remove();
 
     //Fire a notification
-    tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn \"%1\" to disc").arg(d->albumTitle));
+    tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn \"%1\" to disc").arg(QLocale().quoteString(d->albumTitle)));
     notification->post();
 }
 

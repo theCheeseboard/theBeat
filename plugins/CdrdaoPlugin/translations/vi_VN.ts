@@ -47,8 +47,8 @@
     </message>
     <message>
         <location filename="../burnjob.cpp" line="265"/>
-        <source>Burned &quot;%1&quot; to disc</source>
-        <translation>Được ghi &quot;%1&quot; vào đĩa</translation>
+        <source>Burned %1 to disc</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnjob.cpp" line="280"/>
