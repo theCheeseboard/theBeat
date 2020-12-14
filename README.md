@@ -35,6 +35,13 @@ make install
 
 ---
 
+**See these folks for some other audio players.** They're pretty cool folks:
+- [FRESHMusicPlayer](https://github.com/Royce551/FRESHMusicPlayer) by Royce551
+- [Firetail](https://github.com/kawuchuu/firetail) by Kat
+- [Alee Audio Player](https://github.com/aleeproductions/Alee-Audio-Player) by Alee
+
+---
+
 > © Victor Tran, 2020. This project is licensed under the GNU General Public License, version 3, or at your option, any later version.
 > 
 > Check the [LICENSE](LICENSE) file for more information.
