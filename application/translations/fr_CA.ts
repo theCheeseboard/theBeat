@@ -86,12 +86,12 @@
     <message>
         <location filename="../controlstrip.cpp" line="80"/>
         <source>Repeat Play Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Répéter La File Queue</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="97"/>
         <source>Playback Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Options De Relecture</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="98"/>
