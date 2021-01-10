@@ -54,6 +54,7 @@
         <source>%n tracks</source>
         <translation>
             <numerusform>%n şarkı</numerusform>
+            <numerusform>%n şarkı</numerusform>
         </translation>
     </message>
 </context>
@@ -140,6 +141,7 @@
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="154"/>
         <source>%n tracks added/updated</source>
         <translation>
+            <numerusform>%n şarkı eklendi/güncellendi</numerusform>
             <numerusform>%n şarkı eklendi/güncellendi</numerusform>
         </translation>
     </message>
@@ -242,6 +244,7 @@
         <location filename="../library/librarylistview.cpp" line="132"/>
         <source>For %n items</source>
         <translation>
+            <numerusform>%n öğe için</numerusform>
             <numerusform>%n öğe için</numerusform>
         </translation>
     </message>
@@ -411,6 +414,7 @@
         <location filename="../mainwindow.cpp" line="383"/>
         <source>For %n items</source>
         <translation>
+            <numerusform>%n öğe için</numerusform>
             <numerusform>%n öğe için</numerusform>
         </translation>
     </message>
@@ -656,6 +660,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <location filename="../userplaylistswidget.cpp" line="157"/>
         <source>For %n playlists</source>
         <translation>
+            <numerusform>%n oynatma listesi için</numerusform>
             <numerusform>%n oynatma listesi için</numerusform>
         </translation>
     </message>
