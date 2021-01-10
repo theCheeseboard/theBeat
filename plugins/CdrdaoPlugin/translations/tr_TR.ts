@@ -67,75 +67,76 @@
         <location filename="../burnjobmp3.cpp" line="68"/>
         <location filename="../burnjobmp3.cpp" line="155"/>
         <source>Preparing to burn</source>
-        <translation type="unfinished">Yanmaya hazırlanıyor</translation>
+        <translation>Yanmaya hazırlanıyor</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="96"/>
         <source>Preparing Track %1</source>
-        <translation type="unfinished">%1 Parçası hazırlanıyor</translation>
+        <translation>%1 Parçası hazırlanıyor</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="105"/>
         <source>Couldn&apos;t transcode track</source>
-        <translation type="unfinished">Parçanın kodu dönüştürülemedi</translation>
+        <translation>Parçanın kodu dönüştürülemedi</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="193"/>
         <source>Finalising CD</source>
-        <translation type="unfinished">CD tamamlanıyor</translation>
+        <translation>CD tamamlanıyor</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="139"/>
         <location filename="../burnjobmp3.cpp" line="235"/>
         <source>Cancelled</source>
-        <translation type="unfinished">İptal edildi</translation>
+        <translation>İptal edildi</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="129"/>
         <source>Generating Disc Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Disk Resim Oluşturuluyor</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="141"/>
         <source>Couldn&apos;t prepare ISO image</source>
-        <translation type="unfinished"></translation>
+        <translation>ISO resim hazırlanamadı</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="187"/>
         <source>Burning Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Diske Yazma</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="214"/>
         <source>Burning Disc
 %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Diske Yazma
+%1/%2</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="237"/>
         <source>Couldn&apos;t burn tracks</source>
-        <translation type="unfinished">İzler yazılamadı</translation>
+        <translation>İzler yazılamadı</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="264"/>
         <location filename="../burnjobmp3.cpp" line="272"/>
         <source>Burn Successful</source>
-        <translation type="unfinished">Başarılı Yandı</translation>
+        <translation>Başarılı Yandı</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="272"/>
         <source>Burned %1 to disc</source>
-        <translation type="unfinished">%1 diske yazdırıldı</translation>
+        <translation>%1 diske yazdırıldı</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="287"/>
         <source>Burn Failure</source>
-        <translation type="unfinished">Başarısız Yanık</translation>
+        <translation>Başarısız Yanık</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="287"/>
         <source>Failed to burn &quot;%1&quot; to disc</source>
-        <translation type="unfinished">&quot;%1&quot; diske yazılamadı</translation>
+        <translation>&quot;%1&quot; diske yazılamadı</translation>
     </message>
 </context>
 <context>
@@ -166,12 +167,12 @@
     <message>
         <location filename="../burnpopover.ui" line="45"/>
         <source>Audio CD</source>
-        <translation type="unfinished"></translation>
+        <translation>Ses CD&apos;si</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="58"/>
         <source>Disc Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Disk Tipi</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="114"/>
@@ -181,7 +182,7 @@
     <message>
         <location filename="../burnpopover.ui" line="134"/>
         <source>MP3 CD</source>
-        <translation type="unfinished"></translation>
+        <translation>MP3 CD&apos;si</translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="46"/>
