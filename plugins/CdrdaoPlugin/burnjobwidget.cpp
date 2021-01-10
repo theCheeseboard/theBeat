@@ -21,9 +21,10 @@
 #include "ui_burnjobwidget.h"
 
 #include "burnjob.h"
+#include "burnjobmp3.h"
 
 struct BurnJobWidgetPrivate {
-    BurnJob* parentJob;
+    tJob* parentJob;
 };
 
 BurnJobWidget::BurnJobWidget(BurnJob* parent) :
@@ -52,11 +53,41 @@ BurnJobWidget::BurnJobWidget(BurnJob* parent) :
     ui->cancelButton->setEnabled(parent->canCancel());
 }
 
+BurnJobWidget::BurnJobWidget(BurnJobMp3* parent) :
+    QWidget(nullptr),
+    ui(new Ui::BurnJobWidget) {
+    ui->setupUi(this);
+
+    d = new BurnJobWidgetPrivate();
+    d->parentJob = parent;
+
+    connect(parent, &BurnJobMp3::totalProgressChanged, this, [ = ](quint64 totalProgress) {
+        ui->progressBar->setMaximum(totalProgress);
+    });
+    connect(parent, &BurnJobMp3::progressChanged, this, [ = ](quint64 progress) {
+        ui->progressBar->setValue(progress);
+    });
+    connect(parent, &BurnJobMp3::descriptionChanged, this, [ = ](QString description) {
+        ui->statusLabel->setText(description);
+    });
+    connect(parent, &BurnJobMp3::canCancelChanged, this, [ = ](bool canCancel) {
+        ui->cancelButton->setEnabled(canCancel);
+    });
+    ui->progressBar->setMaximum(parent->totalProgress());
+    ui->progressBar->setValue(parent->progress());
+    ui->statusLabel->setText(parent->description());
+    ui->cancelButton->setEnabled(parent->canCancel());
+}
+
 BurnJobWidget::~BurnJobWidget() {
     delete d;
     delete ui;
 }
 
 void BurnJobWidget::on_cancelButton_clicked() {
-    d->parentJob->cancel();
+    if (qobject_cast<BurnJob*>(d->parentJob)) {
+        qobject_cast<BurnJob*>(d->parentJob)->cancel();
+    } else if (qobject_cast<BurnJobMp3*>(d->parentJob)) {
+        qobject_cast<BurnJobMp3*>(d->parentJob)->cancel();
+    }
 }

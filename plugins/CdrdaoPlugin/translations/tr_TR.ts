@@ -62,6 +62,83 @@
     </message>
 </context>
 <context>
+    <name>BurnJobMp3</name>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="68"/>
+        <location filename="../burnjobmp3.cpp" line="155"/>
+        <source>Preparing to burn</source>
+        <translation type="unfinished">Yanmaya hazırlanıyor</translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="96"/>
+        <source>Preparing Track %1</source>
+        <translation type="unfinished">%1 Parçası hazırlanıyor</translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="105"/>
+        <source>Couldn&apos;t transcode track</source>
+        <translation type="unfinished">Parçanın kodu dönüştürülemedi</translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="193"/>
+        <source>Finalising CD</source>
+        <translation type="unfinished">CD tamamlanıyor</translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="139"/>
+        <location filename="../burnjobmp3.cpp" line="235"/>
+        <source>Cancelled</source>
+        <translation type="unfinished">İptal edildi</translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="129"/>
+        <source>Generating Disc Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="141"/>
+        <source>Couldn&apos;t prepare ISO image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="187"/>
+        <source>Burning Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="214"/>
+        <source>Burning Disc
+%1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="237"/>
+        <source>Couldn&apos;t burn tracks</source>
+        <translation type="unfinished">İzler yazılamadı</translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="264"/>
+        <location filename="../burnjobmp3.cpp" line="272"/>
+        <source>Burn Successful</source>
+        <translation type="unfinished">Başarılı Yandı</translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="272"/>
+        <source>Burned %1 to disc</source>
+        <translation type="unfinished">%1 diske yazdırıldı</translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="287"/>
+        <source>Burn Failure</source>
+        <translation type="unfinished">Başarısız Yanık</translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="287"/>
+        <source>Failed to burn &quot;%1&quot; to disc</source>
+        <translation type="unfinished">&quot;%1&quot; diske yazılamadı</translation>
+    </message>
+</context>
+<context>
     <name>BurnJobWidget</name>
     <message>
         <location filename="../burnjobwidget.ui" line="26"/>
@@ -72,53 +149,68 @@
 <context>
     <name>BurnPopover</name>
     <message>
-        <location filename="../burnpopover.ui" line="51"/>
+        <location filename="../burnpopover.ui" line="71"/>
         <source>BURN OPTIONS</source>
         <translation>YAKMA SEÇENEKLERİ</translation>
     </message>
     <message>
-        <location filename="../burnpopover.ui" line="58"/>
+        <location filename="../burnpopover.ui" line="89"/>
         <source>Album Name</source>
         <translation>Albüm Adı</translation>
     </message>
     <message>
-        <location filename="../burnpopover.ui" line="65"/>
+        <location filename="../burnpopover.ui" line="78"/>
         <source>Burn</source>
         <translation>Yanmak</translation>
     </message>
     <message>
-        <location filename="../burnpopover.ui" line="97"/>
+        <location filename="../burnpopover.ui" line="45"/>
+        <source>Audio CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnpopover.ui" line="58"/>
+        <source>Disc Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnpopover.ui" line="114"/>
         <source>HEADS UP</source>
         <translation>DİKKAT ET</translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="45"/>
-        <location filename="../burnpopover.cpp" line="82"/>
+        <location filename="../burnpopover.ui" line="134"/>
+        <source>MP3 CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnpopover.cpp" line="46"/>
+        <location filename="../burnpopover.cpp" line="88"/>
         <source>Burn %1</source>
         <translation>%1 Yak</translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="94"/>
+        <location filename="../burnpopover.cpp" line="100"/>
         <source>Insert a CD-R or a CD-RW into the drive.</source>
         <translation>Sürücüye bir CD-R veya CD-RW yerleştirin.</translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="98"/>
+        <location filename="../burnpopover.cpp" line="104"/>
         <source>The CD in the drive is not blank. Erase the CD first.</source>
         <translation>Sürücüdeki CD boş değil. Önce CD&apos;yi silin.</translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="102"/>
+        <location filename="../burnpopover.cpp" line="108"/>
         <source>The CD-R in the drive has already been written.</source>
         <translation>Sürücüdeki CD-R zaten yazılmıştır.</translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="130"/>
+        <location filename="../burnpopover.cpp" line="138"/>
         <source>This playlist is too long to fit on the CD.</source>
         <translation>Bu çalma listesi CD&apos;ye sığmayacak kadar uzun.</translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="134"/>
+        <location filename="../burnpopover.cpp" line="142"/>
         <source>The CD in the drive is rewritable, so the burned CD may not work on older CD players.</source>
         <translation>Sürücüdeki CD yeniden yazılabilir, bu nedenle yazılan CD daha eski CD oynatıcılarda çalışmayabilir.</translation>
     </message>

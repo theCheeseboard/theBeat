@@ -31,6 +31,7 @@ include(/usr/share/the-libs/pri/gentranslations.pri)
 SOURCES += \
     burndevice.cpp \
     burnjob.cpp \
+    burnjobmp3.cpp \
     burnjobwidget.cpp \
     burnpopover.cpp \
     plugin.cpp
@@ -38,6 +39,7 @@ SOURCES += \
 HEADERS += \
     burndevice.h \
     burnjob.h \
+    burnjobmp3.h \
     burnjobwidget.h \
     burnpopover.h \
     plugin.h

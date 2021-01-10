@@ -26,6 +26,7 @@
 #include <taglib/audioproperties.h>
 #include <tjobmanager.h>
 #include "burnjob.h"
+#include "burnjobmp3.h"
 
 struct BurnPopoverPrivate {
     QStringList files;
@@ -73,8 +74,13 @@ void BurnPopover::on_titleLabel_backButtonClicked() {
 }
 
 void BurnPopover::on_burnButton_clicked() {
-    BurnJob* job = new BurnJob(d->files, d->blockDevice, ui->albumNameEdit->text());
-    tJobManager::trackJob(job);
+    if (ui->mp3CdButton->isChecked()) {
+        BurnJobMp3* job = new BurnJobMp3(d->files, d->blockDevice, ui->albumNameEdit->text());
+        tJobManager::trackJob(job);
+    } else {
+        BurnJob* job = new BurnJob(d->files, d->blockDevice, ui->albumNameEdit->text());
+        tJobManager::trackJob(job);
+    }
     emit done();
 }
 
@@ -103,30 +109,32 @@ void BurnPopover::updateCd() {
         ui->warningFrame->setVisible(true);
         ui->burnButton->setEnabled(false);
     } else {
-        //Call cdrdao to make sure this CD is large enough to fit the data
-        QProcess cdrdao;
-        cdrdao.start("cdrdao", {"disk-info"});
-        cdrdao.waitForFinished();
-
         quint64 capacity = 0;
-        while (cdrdao.canReadLine()) {
-            QString line = cdrdao.readLine().trimmed();
-            if (line.startsWith("Total Capacity")) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-                QStringList parts = line.split(" ", Qt::SkipEmptyParts);
-#else
-                QStringList parts = line.split(" ", QString::SkipEmptyParts);
-#endif
-                if (parts.count() < 4) continue;
-                QString duration = parts.at(3);
+        if (ui->audioCdButton->isChecked()) {
+            //Call cdrdao to make sure this CD is large enough to fit the data
+            QProcess cdrdao;
+            cdrdao.start("cdrdao", {"disk-info"});
+            cdrdao.waitForFinished();
 
-                QStringList durationParts = duration.split(":");
-                if (durationParts.count() < 3) continue;
-                capacity = durationParts.at(0).toInt() * 60 * 1000 + durationParts.at(1).toInt() * 1000 + durationParts.at(2).toInt() * 100;
+            while (cdrdao.canReadLine()) {
+                QString line = cdrdao.readLine().trimmed();
+                if (line.startsWith("Total Capacity")) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+                    QStringList parts = line.split(" ", Qt::SkipEmptyParts);
+#else
+                    QStringList parts = line.split(" ", QString::SkipEmptyParts);
+#endif
+                    if (parts.count() < 4) continue;
+                    QString duration = parts.at(3);
+
+                    QStringList durationParts = duration.split(":");
+                    if (durationParts.count() < 3) continue;
+                    capacity = durationParts.at(0).toInt() * 60 * 1000 + durationParts.at(1).toInt() * 1000 + durationParts.at(2).toInt() * 100;
+                }
             }
         }
 
-        if (capacity < d->playlistLength) {
+        if (capacity < d->playlistLength && capacity != 0) {
             ui->warningText->setText(tr("This playlist is too long to fit on the CD."));
             ui->warningFrame->setVisible(true);
             ui->burnButton->setEnabled(false);

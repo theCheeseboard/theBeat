@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2021 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,32 +17,39 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef BURNJOBWIDGET_H
-#define BURNJOBWIDGET_H
+#ifndef BURNJOBMP3_H
+#define BURNJOBMP3_H
 
-#include <QWidget>
+#include "tjob.h"
 
-namespace Ui {
-    class BurnJobWidget;
-}
-
-class BurnJob;
-class BurnJobMp3;
-struct BurnJobWidgetPrivate;
-class BurnJobWidget : public QWidget {
+struct BurnJobMp3Private;
+class BurnJobMp3 : public tJob {
         Q_OBJECT
-
     public:
-        explicit BurnJobWidget(BurnJob* parent = nullptr);
-        explicit BurnJobWidget(BurnJobMp3* parent = nullptr);
-        ~BurnJobWidget();
+        explicit BurnJobMp3(QStringList files, QString blockDevice, QString albumTitle, QObject* parent = nullptr);
+        ~BurnJobMp3();
 
-    private slots:
-        void on_cancelButton_clicked();
+        QString description();
+        bool canCancel();
+
+        void cancel();
+
+    signals:
+        void descriptionChanged(QString description);
+        void canCancelChanged(bool canCancel);
 
     private:
-        Ui::BurnJobWidget* ui;
-        BurnJobWidgetPrivate* d;
+        BurnJobMp3Private* d;
+
+        void performNextAction();
+        void fail(QString description);
+
+        // tJob interface
+    public:
+        quint64 progress();
+        quint64 totalProgress();
+        State state();
+        QWidget* makeProgressWidget();
 };
 
-#endif // BURNJOBWIDGET_H
+#endif // BURNJOBMP3_H

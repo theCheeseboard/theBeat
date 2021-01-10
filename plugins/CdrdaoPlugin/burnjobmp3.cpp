@@ -17,7 +17,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "burnjob.h"
+#include "burnjobmp3.h"
 #include "burnjobwidget.h"
 
 #include <QTextStream>
@@ -29,7 +29,7 @@
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 
-struct BurnJobPrivate {
+struct BurnJobMp3Private {
     enum BurnState {
         LeadIn,
         Tracks,
@@ -41,7 +41,7 @@ struct BurnJobPrivate {
     QString albumTitle;
     int nextItem = 0;
 
-    BurnJob::State state = BurnJob::Processing;
+    BurnJobMp3::State state = BurnJobMp3::Processing;
     BurnState burnState = LeadIn;
 
     QString description;
@@ -57,32 +57,31 @@ struct BurnJobPrivate {
     QTemporaryDir workDir;
 };
 
-BurnJob::BurnJob(QStringList files, QString blockDevice, QString albumTitle, QObject* parent) : tJob(parent) {
-    d = new BurnJobPrivate();
+BurnJobMp3::BurnJobMp3(QStringList files, QString blockDevice, QString albumTitle, QObject* parent) : tJob(parent) {
+    d = new BurnJobMp3Private();
     d->sourceFiles = files;
     d->blockDevice = blockDevice;
     d->albumTitle = albumTitle;
 
-    tInfo("cdrdao") << "Burn job starting";
-    tInfo("cdrdao") << "Working directory for burn job is" << d->workDir.path();
+    QDir(d->workDir.path()).mkdir("cd");
 
     d->description = tr("Preparing to burn");
     performNextAction();
 }
 
-BurnJob::~BurnJob() {
+BurnJobMp3::~BurnJobMp3() {
     delete d;
 }
 
-QString BurnJob::description() {
+QString BurnJobMp3::description() {
     return d->description;
 }
 
-bool BurnJob::canCancel() {
+bool BurnJobMp3::canCancel() {
     return d->canCancel;
 }
 
-void BurnJob::cancel() {
+void BurnJobMp3::cancel() {
     d->cancelNext = true;
     d->canCancel = false;
     emit canCancelChanged(false);
@@ -92,7 +91,7 @@ void BurnJob::cancel() {
     }
 }
 
-void BurnJob::performNextAction() {
+void BurnJobMp3::performNextAction() {
     if (d->nextItem < d->sourceFiles.count()) {
         d->description = tr("Preparing Track %1").arg(d->nextItem + 1);
         emit descriptionChanged(d->description);
@@ -112,10 +111,47 @@ void BurnJob::performNextAction() {
             ffmpeg->deleteLater();
         });
 
-        QStringList ffmpegArgs = {"-i", sourceFile, "-ar", "44100", d->workDir.filePath(QStringLiteral("Track%1.wav").arg(d->nextItem + 1, 2, 10, QLatin1Char('0')))};
+        TagLib::FileRef file(d->sourceFiles.at(d->nextItem).toStdString().data());
+
+        QString trackName;
+        if (file.tag()->title().isEmpty()) {
+            trackName = QFileInfo(d->sourceFiles.at(d->nextItem)).baseName();
+        } else {
+            trackName = QString::fromStdString(file.tag()->title().to8Bit());
+        }
+
+        //Name the file starting at track 1
+        QStringList ffmpegArgs = {"-i", sourceFile, d->workDir.filePath(QStringLiteral("cd/%1 %2.mp3").arg(d->nextItem, 2, 10, QLatin1Char('0')).arg(trackName))};
         tDebug("cdrdao") << "Calling ffmpeg with arguments" << ffmpegArgs;
         ffmpeg->start("ffmpeg", ffmpegArgs);
     } else if (d->nextItem == d->sourceFiles.count()) {
+        //Generate ISO file
+        d->description = tr("Generating Disc Image");
+        emit descriptionChanged(d->description);
+
+        //Call mkisofs to create an ISO file
+        QProcess* process = new QProcess();
+        process->setProcessChannelMode(QProcess::MergedChannels);
+        process->setWorkingDirectory(d->workDir.path());
+        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
+            if (exitCode != 0) {
+                if (d->cancelNext) {
+                    fail(tr("Cancelled"));
+                } else {
+                    fail(tr("Couldn't prepare ISO image"));
+                }
+                return;
+            }
+
+            d->nextItem++;
+            performNextAction();
+            process->deleteLater();
+        });
+
+        QStringList mkisofsargs = {"-o", d->workDir.filePath(QStringLiteral("cd.iso")), "-V", d->albumTitle.left(32), "-r", d->workDir.filePath(QStringLiteral("cd"))};
+        tDebug("cdrdao") << "Calling mkisofs with arguments" << mkisofsargs;
+        process->start("mkisofs", mkisofsargs);
+    } else if (d->nextItem == d->sourceFiles.count() + 1) {
         d->description = tr("Preparing to burn");
         emit descriptionChanged(d->description);
 
@@ -124,41 +160,9 @@ void BurnJob::performNextAction() {
         tocFile.open(QFile::WriteOnly);
 
         QTextStream tocStream(&tocFile);
-        tocStream << "CD_DA\n";
-        //Write CD Text
-        tocStream << "CD_TEXT {\n";
-        tocStream << "LANGUAGE_MAP {\n";
-        tocStream << "0:EN\n";
-        tocStream << "}\n"; //LANGUAGE_MAP
-        tocStream << "LANGUAGE 0 {\n";
-        tocStream << QStringLiteral(R"(TITLE "%1")" "\n").arg(d->albumTitle);
-        tocStream << R"(PERFORMER "")" "\n";
-        tocStream << R"(DISC_ID "")" "\n";
-        tocStream << R"(UPC_EAN "")" "\n";
-        tocStream << R"(ARRANGER "")" "\n";
-        tocStream << R"(COMPOSER "")" "\n";
-        tocStream << "}\n"; //LANGUAGE 0
-        tocStream << "}\n"; //CD_TEXT
-
-        for (int i = 0; i < d->sourceFiles.count(); i++) {
-            tocStream << "TRACK AUDIO\n";
-
-            TagLib::FileRef file(d->sourceFiles.at(i).toStdString().data());
-            if (file.tag()) {
-                //Write CD Text
-                tocStream << "CD_TEXT {\n";
-                tocStream << "LANGUAGE 0 {\n";
-                tocStream << QStringLiteral(R"(TITLE "%1")" "\n").arg(file.tag()->title().toCString());
-                tocStream << QStringLiteral(R"(ARRANGER "%1")" "\n").arg(file.tag()->artist().toCString());
-                tocStream << QStringLiteral(R"(COMPOSER "%1")" "\n").arg(file.tag()->artist().toCString());
-                tocStream << QStringLiteral(R"(PERFORMER "%1")" "\n").arg(file.tag()->artist().toCString());
-                tocStream << QStringLiteral(R"(SONGWRITER "%1")" "\n").arg(file.tag()->artist().toCString());
-                tocStream << "}\n"; //LANGUAGE 0
-                tocStream << "}\n"; //CD_TEXT
-            }
-
-            tocStream << QStringLiteral(R"(FILE "Track%1.wav" 0)" "\n").arg(i, 2, 10, QLatin1Char('0'));
-        }
+        tocStream << "CD_ROM\n";
+        tocStream << "TRACK MODE1\n";
+        tocStream << "DATAFILE \"cd.iso\"\n";
         tocFile.close();
 
         //Call cdrdao to write to the disc
@@ -180,10 +184,10 @@ void BurnJob::performNextAction() {
                 if (line.startsWith("Writing track")) {
                     QStringList parts = line.split(" ");
 
-                    d->description = tr("Burning Track %1").arg(parts.at(2));
+                    d->description = tr("Burning Disc");
                     emit descriptionChanged(d->description);
 
-                    d->burnState = BurnJobPrivate::Tracks;
+                    d->burnState = BurnJobMp3Private::Tracks;
                 } else if (line.startsWith("Wrote ")) {
                     if (line.contains("blocks.")) {
                         d->description = tr("Finalising CD");
@@ -192,22 +196,25 @@ void BurnJob::performNextAction() {
                         d->canCancel = false;
                         emit canCancelChanged(false);
 
-                        d->burnState = BurnJobPrivate::LeadOut;
+                        d->burnState = BurnJobMp3Private::LeadOut;
                     } else {
                         QStringList parts = line.split(" ");
                         quint64 partProgress = parts.at(1).toInt();
                         quint64 partMaxProgress = parts.at(3).toInt();
 
                         switch (d->burnState) {
-                            case BurnJobPrivate::LeadIn: //Take up 1/4 of the full progress
+                            case BurnJobMp3Private::LeadIn: //Take up 1/4 of the full progress
                                 d->progress = partProgress;
                                 d->maxProgress = partMaxProgress * 4;
                                 break;
-                            case BurnJobPrivate::Tracks: //Take up 1/2 of the full progress
+                            case BurnJobMp3Private::Tracks: //Take up 1/2 of the full progress
                                 d->progress = partProgress + partMaxProgress / 2;
                                 d->maxProgress = partMaxProgress * 2;
+
+                                d->description = tr("Burning Disc\n%1 of %2").arg(QLocale().formattedDataSize(parts.at(1).toULongLong() * 1048576)).arg(QLocale().formattedDataSize(parts.at(3).toULongLong() * 1048576));
+                                emit descriptionChanged(d->description);
                                 break;
-                            case BurnJobPrivate::LeadOut: //Take up 1/4 of the full progress
+                            case BurnJobMp3Private::LeadOut: //Take up 1/4 of the full progress
                                 d->progress = partProgress + partMaxProgress * 3;
                                 d->maxProgress = partMaxProgress * 4;
                                 break;
@@ -267,7 +274,7 @@ void BurnJob::performNextAction() {
     }
 }
 
-void BurnJob::fail(QString description) {
+void BurnJobMp3::fail(QString description) {
     d->state = Failed;
     emit stateChanged(Failed);
 
@@ -281,18 +288,18 @@ void BurnJob::fail(QString description) {
     notification->post();
 }
 
-quint64 BurnJob::progress() {
+quint64 BurnJobMp3::progress() {
     return d->progress;
 }
 
-quint64 BurnJob::totalProgress() {
+quint64 BurnJobMp3::totalProgress() {
     return d->maxProgress;
 }
 
-BurnJob::State BurnJob::state() {
+BurnJobMp3::State BurnJobMp3::state() {
     return d->state;
 }
 
-QWidget* BurnJob::makeProgressWidget() {
+QWidget* BurnJobMp3::makeProgressWidget() {
     return new BurnJobWidget(this);
 }
