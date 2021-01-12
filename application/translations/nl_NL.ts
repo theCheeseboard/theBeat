@@ -257,141 +257,141 @@
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="86"/>
+        <location filename="../mainwindow.ui" line="90"/>
         <source>Tracks</source>
         <translation>Nummers</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="112"/>
+        <location filename="../mainwindow.ui" line="116"/>
         <source>Artists</source>
         <translation>Artiesten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="135"/>
+        <location filename="../mainwindow.ui" line="139"/>
         <source>Albums</source>
         <translation>Albums</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="158"/>
+        <location filename="../mainwindow.ui" line="162"/>
         <source>Playlists</source>
         <translation>Afspeellijsten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="181"/>
+        <location filename="../mainwindow.ui" line="185"/>
         <source>Other Sources</source>
         <translation>Andere Bronnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="272"/>
+        <location filename="../mainwindow.ui" line="276"/>
         <source>Queue</source>
         <translation>Wachtrij</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="342"/>
+        <location filename="../mainwindow.ui" line="346"/>
         <source>Nothing Here!</source>
         <translation>Hier is niks!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="399"/>
+        <location filename="../mainwindow.ui" line="403"/>
         <source>File Bug</source>
         <translation>Een Bug Rapporteren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="408"/>
+        <location filename="../mainwindow.ui" line="412"/>
         <source>Sources</source>
         <translation>Bronnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="417"/>
+        <location filename="../mainwindow.ui" line="421"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="426"/>
+        <location filename="../mainwindow.ui" line="430"/>
         <source>Exit</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="429"/>
+        <location filename="../mainwindow.ui" line="433"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="438"/>
+        <location filename="../mainwindow.ui" line="442"/>
         <source>Open File</source>
         <translation>Bestand Openen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="441"/>
+        <location filename="../mainwindow.ui" line="445"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="446"/>
+        <location filename="../mainwindow.ui" line="450"/>
         <location filename="../mainwindow.cpp" line="409"/>
         <source>Open URL</source>
         <translation>URL Openen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="455"/>
+        <location filename="../mainwindow.ui" line="459"/>
         <location filename="../mainwindow.cpp" line="197"/>
         <source>Skip Back</source>
         <translation>Terug Springen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="458"/>
+        <location filename="../mainwindow.ui" line="462"/>
         <source>Shift+Left</source>
         <translation>Shift+Links</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="470"/>
+        <location filename="../mainwindow.ui" line="474"/>
         <source>Shift+Right</source>
         <translation>Shift+Rechts</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="491"/>
+        <location filename="../mainwindow.ui" line="495"/>
         <source>Add to Library</source>
         <translation>Toevoegen aan Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="500"/>
+        <location filename="../mainwindow.ui" line="504"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="503"/>
+        <location filename="../mainwindow.ui" line="507"/>
         <source>Ctrl+,</source>
         <translation>Ctrl+,</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="512"/>
+        <location filename="../mainwindow.ui" line="516"/>
         <source>theBeat Help</source>
         <translation>theBeat-hulp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="515"/>
+        <location filename="../mainwindow.ui" line="519"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="467"/>
+        <location filename="../mainwindow.ui" line="471"/>
         <source>Skip Forward</source>
         <translation>Vooruit Springen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="352"/>
+        <location filename="../mainwindow.ui" line="356"/>
         <source>Select a track or drop something here!</source>
         <translation>Selecteer een nummer of sleep hier iets heen!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="479"/>
+        <location filename="../mainwindow.ui" line="483"/>
         <location filename="../mainwindow.cpp" line="205"/>
         <location filename="../mainwindow.cpp" line="219"/>
         <source>Play</source>
         <translation>Afspelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="482"/>
+        <location filename="../mainwindow.ui" line="486"/>
         <source>Space</source>
         <translation>Spatie</translation>
     </message>

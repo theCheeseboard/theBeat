@@ -21,12 +21,12 @@
 #define BURNJOBWIDGET_H
 
 #include <QWidget>
+#include <burnjob.h>
 
 namespace Ui {
     class BurnJobWidget;
 }
 
-class BurnJob;
 class BurnJobMp3;
 struct BurnJobWidgetPrivate;
 class BurnJobWidget : public QWidget {
@@ -43,6 +43,8 @@ class BurnJobWidget : public QWidget {
     private:
         Ui::BurnJobWidget* ui;
         BurnJobWidgetPrivate* d;
+
+        void updateState(BurnJob::State state);
 };
 
 #endif // BURNJOBWIDGET_H

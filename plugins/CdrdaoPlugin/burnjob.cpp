@@ -82,6 +82,10 @@ bool BurnJob::canCancel() {
     return d->canCancel;
 }
 
+bool BurnJob::warnCancel() {
+    return true;
+}
+
 void BurnJob::cancel() {
     d->cancelNext = true;
     d->canCancel = false;
@@ -94,7 +98,7 @@ void BurnJob::cancel() {
 
 void BurnJob::performNextAction() {
     if (d->nextItem < d->sourceFiles.count()) {
-        d->description = tr("Preparing Track %1").arg(d->nextItem + 1);
+        d->description = tr("Preparing Track %1 to be burned").arg(d->nextItem + 1);
         emit descriptionChanged(d->description);
 
         //Transcode the file with ffmpeg
@@ -112,7 +116,7 @@ void BurnJob::performNextAction() {
             ffmpeg->deleteLater();
         });
 
-        QStringList ffmpegArgs = {"-i", sourceFile, "-ar", "44100", d->workDir.filePath(QStringLiteral("Track%1.wav").arg(d->nextItem + 1, 2, 10, QLatin1Char('0')))};
+        QStringList ffmpegArgs = {"-i", sourceFile, "-ar", "44100", d->workDir.filePath(QStringLiteral("Track%1.wav").arg(d->nextItem, 2, 10, QLatin1Char('0')))};
         tDebug("cdrdao") << "Calling ffmpeg with arguments" << ffmpegArgs;
         ffmpeg->start("ffmpeg", ffmpegArgs);
     } else if (d->nextItem == d->sourceFiles.count()) {
@@ -277,7 +281,7 @@ void BurnJob::fail(QString description) {
     d->workDir.remove();
 
     //Fire a notification
-    tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn \"%1\" to disc").arg(QLocale().quoteString(d->albumTitle)));
+    tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn %1 to disc").arg(QLocale().quoteString(d->albumTitle)));
     notification->post();
 }
 

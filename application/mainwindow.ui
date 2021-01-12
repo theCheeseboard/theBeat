@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>theBeat</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme="thebeat">
+    <normaloff>:/icons/thebeat.svg</normaloff>:/icons/thebeat.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="autoFillBackground">
     <bool>true</bool>

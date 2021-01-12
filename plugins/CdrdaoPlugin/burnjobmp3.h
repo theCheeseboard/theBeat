@@ -31,6 +31,7 @@ class BurnJobMp3 : public tJob {
 
         QString description();
         bool canCancel();
+        bool warnCancel();
 
         void cancel();
 

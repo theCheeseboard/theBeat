@@ -47,6 +47,7 @@ struct BurnJobMp3Private {
     QString description;
     bool canCancel;
     bool cancelNext;
+    bool warnCancel = false;
     QProcess* daoProcess = nullptr;
 
     quint64 progress;
@@ -81,6 +82,10 @@ bool BurnJobMp3::canCancel() {
     return d->canCancel;
 }
 
+bool BurnJobMp3::warnCancel() {
+    return d->warnCancel;
+}
+
 void BurnJobMp3::cancel() {
     d->cancelNext = true;
     d->canCancel = false;
@@ -93,7 +98,16 @@ void BurnJobMp3::cancel() {
 
 void BurnJobMp3::performNextAction() {
     if (d->nextItem < d->sourceFiles.count()) {
-        d->description = tr("Preparing Track %1").arg(d->nextItem + 1);
+        TagLib::FileRef file(d->sourceFiles.at(d->nextItem).toStdString().data());
+
+        QString trackName;
+        if (file.tag()->title().isEmpty()) {
+            trackName = QFileInfo(d->sourceFiles.at(d->nextItem)).baseName();
+        } else {
+            trackName = QString::fromStdString(file.tag()->title().to8Bit());
+        }
+
+        d->description = tr("Preparing %1 to be burned").arg(QLocale().quoteString(trackName));
         emit descriptionChanged(d->description);
 
         //Transcode the file with ffmpeg
@@ -101,6 +115,11 @@ void BurnJobMp3::performNextAction() {
         QProcess* ffmpeg = new QProcess();
         ffmpeg->setWorkingDirectory(d->workDir.path());
         connect(ffmpeg, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
+            if (d->cancelNext) {
+                fail(tr("Cancelled"));
+                return;
+            }
+
             if (exitCode != 0) {
                 fail(tr("Couldn't transcode track"));
                 return;
@@ -111,19 +130,19 @@ void BurnJobMp3::performNextAction() {
             ffmpeg->deleteLater();
         });
 
-        TagLib::FileRef file(d->sourceFiles.at(d->nextItem).toStdString().data());
-
-        QString trackName;
-        if (file.tag()->title().isEmpty()) {
-            trackName = QFileInfo(d->sourceFiles.at(d->nextItem)).baseName();
-        } else {
-            trackName = QString::fromStdString(file.tag()->title().to8Bit());
-        }
-
         //Name the file starting at track 1
-        QStringList ffmpegArgs = {"-i", sourceFile, d->workDir.filePath(QStringLiteral("cd/%1 %2.mp3").arg(d->nextItem, 2, 10, QLatin1Char('0')).arg(trackName))};
+        QStringList ffmpegArgs = {"-i", sourceFile, d->workDir.filePath(QStringLiteral("cd/%1 %2.mp3").arg(d->nextItem + 1, 2, 10, QLatin1Char('0')).arg(trackName))};
         tDebug("cdrdao") << "Calling ffmpeg with arguments" << ffmpegArgs;
         ffmpeg->start("ffmpeg", ffmpegArgs);
+
+        //Make this part the first half of the total progress
+        d->maxProgress = d->sourceFiles.count() * 2;
+        d->progress = d->nextItem;
+        emit totalProgressChanged(d->maxProgress);
+        emit progressChanged(d->progress);
+
+        d->canCancel = true;
+        emit canCancelChanged(d->canCancel);
     } else if (d->nextItem == d->sourceFiles.count()) {
         //Generate ISO file
         d->description = tr("Generating Disc Image");
@@ -154,6 +173,9 @@ void BurnJobMp3::performNextAction() {
     } else if (d->nextItem == d->sourceFiles.count() + 1) {
         d->description = tr("Preparing to burn");
         emit descriptionChanged(d->description);
+
+        //After this point, cancelling may damage the CD
+        d->warnCancel = true;
 
         //Generate the TOC file and call cdrdao
         QFile tocFile(d->workDir.filePath("contents.toc"));
@@ -203,23 +225,27 @@ void BurnJobMp3::performNextAction() {
                         quint64 partMaxProgress = parts.at(3).toInt();
 
                         switch (d->burnState) {
-                            case BurnJobMp3Private::LeadIn: //Take up 1/4 of the full progress
+                            case BurnJobMp3Private::LeadIn: //Take up 1/4 of the part progress
                                 d->progress = partProgress;
                                 d->maxProgress = partMaxProgress * 4;
                                 break;
-                            case BurnJobMp3Private::Tracks: //Take up 1/2 of the full progress
+                            case BurnJobMp3Private::Tracks: //Take up 1/2 of the part progress
                                 d->progress = partProgress + partMaxProgress / 2;
                                 d->maxProgress = partMaxProgress * 2;
 
-                                d->description = tr("Burning Disc\n%1 of %2").arg(QLocale().formattedDataSize(parts.at(1).toULongLong() * 1048576)).arg(QLocale().formattedDataSize(parts.at(3).toULongLong() * 1048576));
+                                d->description = tr("Burning %1\n%2 of %3").arg(QLocale().quoteString(d->albumTitle), QLocale().formattedDataSize(parts.at(1).toULongLong() * 1048576), QLocale().formattedDataSize(parts.at(3).toULongLong() * 1048576));
                                 emit descriptionChanged(d->description);
                                 break;
-                            case BurnJobMp3Private::LeadOut: //Take up 1/4 of the full progress
+                            case BurnJobMp3Private::LeadOut: //Take up 1/4 of the part progress
                                 d->progress = partProgress + partMaxProgress * 3;
                                 d->maxProgress = partMaxProgress * 4;
                                 break;
 
                         }
+
+                        //Make this stage the second half of the total progress
+                        d->progress += d->maxProgress;
+                        d->maxProgress *= 2;
 
                         emit totalProgressChanged(d->maxProgress);
                         emit progressChanged(d->progress);
@@ -284,7 +310,7 @@ void BurnJobMp3::fail(QString description) {
     d->workDir.remove();
 
     //Fire a notification
-    tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn \"%1\" to disc").arg(QLocale().quoteString(d->albumTitle)));
+    tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn %1 to disc").arg(QLocale().quoteString(d->albumTitle)));
     notification->post();
 }
 

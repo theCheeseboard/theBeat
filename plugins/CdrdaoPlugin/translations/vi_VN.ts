@@ -5,137 +5,138 @@
     <name>BurnJob</name>
     <message>
         <location filename="../burnjob.cpp" line="69"/>
-        <location filename="../burnjob.cpp" line="119"/>
+        <location filename="../burnjob.cpp" line="123"/>
         <source>Preparing to burn</source>
         <translation>Đang chuẩn bị ghi đĩa</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="97"/>
-        <source>Preparing Track %1</source>
-        <translation>Đang chuẩn bị rãnh %1</translation>
+        <location filename="../burnjob.cpp" line="101"/>
+        <source>Preparing Track %1 to be burned</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="106"/>
+        <location filename="../burnjob.cpp" line="110"/>
         <source>Couldn&apos;t transcode track</source>
         <translation>Không thể chuyển mã bài hát</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="183"/>
+        <location filename="../burnjob.cpp" line="187"/>
         <source>Burning Track %1</source>
         <translation>Đang ghi rãnh %1</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="189"/>
+        <location filename="../burnjob.cpp" line="193"/>
         <source>Finalising CD</source>
         <translation>Đang hoàn thiện CD</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="228"/>
+        <location filename="../burnjob.cpp" line="232"/>
         <source>Cancelled</source>
         <translation>Bị hủy</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="230"/>
+        <location filename="../burnjob.cpp" line="234"/>
         <source>Couldn&apos;t burn tracks</source>
         <translation>Không thể ghi bài</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="257"/>
-        <location filename="../burnjob.cpp" line="265"/>
+        <location filename="../burnjob.cpp" line="261"/>
+        <location filename="../burnjob.cpp" line="269"/>
         <source>Burn Successful</source>
         <translation>Ghi đĩa thành công</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="265"/>
+        <location filename="../burnjob.cpp" line="269"/>
         <source>Burned %1 to disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="280"/>
+        <location filename="../burnjob.cpp" line="284"/>
         <source>Burn Failure</source>
         <translation>Ghi đĩa không thành công</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="280"/>
-        <source>Failed to burn &quot;%1&quot; to disc</source>
-        <translation>Không thể ghi &quot;%1&quot; vào đĩa</translation>
+        <location filename="../burnjob.cpp" line="284"/>
+        <source>Failed to burn %1 to disc</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BurnJobMp3</name>
     <message>
-        <location filename="../burnjobmp3.cpp" line="68"/>
-        <location filename="../burnjobmp3.cpp" line="155"/>
+        <location filename="../burnjobmp3.cpp" line="69"/>
+        <location filename="../burnjobmp3.cpp" line="174"/>
         <source>Preparing to burn</source>
         <translation type="unfinished">Đang chuẩn bị ghi đĩa</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="96"/>
-        <source>Preparing Track %1</source>
-        <translation type="unfinished">Đang chuẩn bị rãnh %1</translation>
+        <location filename="../burnjobmp3.cpp" line="110"/>
+        <source>Preparing %1 to be burned</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="105"/>
+        <location filename="../burnjobmp3.cpp" line="124"/>
         <source>Couldn&apos;t transcode track</source>
         <translation type="unfinished">Không thể chuyển mã bài hát</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="193"/>
+        <location filename="../burnjobmp3.cpp" line="215"/>
         <source>Finalising CD</source>
         <translation type="unfinished">Đang hoàn thiện CD</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="139"/>
-        <location filename="../burnjobmp3.cpp" line="235"/>
+        <location filename="../burnjobmp3.cpp" line="119"/>
+        <location filename="../burnjobmp3.cpp" line="158"/>
+        <location filename="../burnjobmp3.cpp" line="261"/>
         <source>Cancelled</source>
         <translation type="unfinished">Bị hủy</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="129"/>
+        <location filename="../burnjobmp3.cpp" line="148"/>
         <source>Generating Disc Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="141"/>
+        <location filename="../burnjobmp3.cpp" line="160"/>
         <source>Couldn&apos;t prepare ISO image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="187"/>
+        <location filename="../burnjobmp3.cpp" line="209"/>
         <source>Burning Disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="214"/>
-        <source>Burning Disc
-%1 of %2</source>
+        <location filename="../burnjobmp3.cpp" line="236"/>
+        <source>Burning %1
+%2 of %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="237"/>
+        <location filename="../burnjobmp3.cpp" line="263"/>
         <source>Couldn&apos;t burn tracks</source>
         <translation type="unfinished">Không thể ghi bài</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="264"/>
-        <location filename="../burnjobmp3.cpp" line="272"/>
+        <location filename="../burnjobmp3.cpp" line="290"/>
+        <location filename="../burnjobmp3.cpp" line="298"/>
         <source>Burn Successful</source>
         <translation type="unfinished">Ghi đĩa thành công</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="272"/>
+        <location filename="../burnjobmp3.cpp" line="298"/>
         <source>Burned %1 to disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="287"/>
+        <location filename="../burnjobmp3.cpp" line="313"/>
         <source>Burn Failure</source>
         <translation type="unfinished">Ghi đĩa không thành công</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="287"/>
-        <source>Failed to burn &quot;%1&quot; to disc</source>
-        <translation type="unfinished">Không thể ghi &quot;%1&quot; vào đĩa</translation>
+        <location filename="../burnjobmp3.cpp" line="313"/>
+        <source>Failed to burn %1 to disc</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -192,17 +193,17 @@
     <message>
         <location filename="../burnpopover.cpp" line="100"/>
         <source>Insert a CD-R or a CD-RW into the drive.</source>
-        <translation>Hãy chèn một đĩa CD-R hoặc CD-RW vào.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="104"/>
         <source>The CD in the drive is not blank. Erase the CD first.</source>
-        <translation>Đĩa CD trong ổ đĩa không có trống. Xóa đĩa CD trước.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="108"/>
         <source>The CD-R in the drive has already been written.</source>
-        <translation>Đĩa CD-R trong ổ đĩa đã bị ghi vào.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="138"/>

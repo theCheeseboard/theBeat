@@ -46,6 +46,10 @@ class BurnPopover : public QWidget {
 
         void updateCd();
 
+        void on_audioCdButton_toggled(bool checked);
+
+        void on_mp3CdButton_toggled(bool checked);
+
     private:
         Ui::BurnPopover* ui;
         BurnPopoverPrivate* d;

@@ -5,137 +5,138 @@
     <name>BurnJob</name>
     <message>
         <location filename="../burnjob.cpp" line="69"/>
-        <location filename="../burnjob.cpp" line="119"/>
+        <location filename="../burnjob.cpp" line="123"/>
         <source>Preparing to burn</source>
         <translation>Preparing to burn</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="97"/>
-        <source>Preparing Track %1</source>
-        <translation>Preparing Track %1</translation>
+        <location filename="../burnjob.cpp" line="101"/>
+        <source>Preparing Track %1 to be burned</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="106"/>
+        <location filename="../burnjob.cpp" line="110"/>
         <source>Couldn&apos;t transcode track</source>
         <translation>Couldn&apos;t transcode track</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="183"/>
+        <location filename="../burnjob.cpp" line="187"/>
         <source>Burning Track %1</source>
         <translation>Burning Track %1</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="189"/>
+        <location filename="../burnjob.cpp" line="193"/>
         <source>Finalising CD</source>
         <translation>Finalising CD</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="228"/>
+        <location filename="../burnjob.cpp" line="232"/>
         <source>Cancelled</source>
         <translation>Cancelled</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="230"/>
+        <location filename="../burnjob.cpp" line="234"/>
         <source>Couldn&apos;t burn tracks</source>
         <translation>Couldn&apos;t burn tracks</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="257"/>
-        <location filename="../burnjob.cpp" line="265"/>
+        <location filename="../burnjob.cpp" line="261"/>
+        <location filename="../burnjob.cpp" line="269"/>
         <source>Burn Successful</source>
         <translation>Burn Successful</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="265"/>
+        <location filename="../burnjob.cpp" line="269"/>
         <source>Burned %1 to disc</source>
         <translation>Burned %1 to disc</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="280"/>
+        <location filename="../burnjob.cpp" line="284"/>
         <source>Burn Failure</source>
         <translation>Burn Failure</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="280"/>
-        <source>Failed to burn &quot;%1&quot; to disc</source>
-        <translation>Failed to burn &quot;%1&quot; to disc</translation>
+        <location filename="../burnjob.cpp" line="284"/>
+        <source>Failed to burn %1 to disc</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BurnJobMp3</name>
     <message>
-        <location filename="../burnjobmp3.cpp" line="68"/>
-        <location filename="../burnjobmp3.cpp" line="155"/>
+        <location filename="../burnjobmp3.cpp" line="69"/>
+        <location filename="../burnjobmp3.cpp" line="174"/>
         <source>Preparing to burn</source>
         <translation type="unfinished">Preparing to burn</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="96"/>
-        <source>Preparing Track %1</source>
-        <translation type="unfinished">Preparing Track %1</translation>
+        <location filename="../burnjobmp3.cpp" line="110"/>
+        <source>Preparing %1 to be burned</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="105"/>
+        <location filename="../burnjobmp3.cpp" line="124"/>
         <source>Couldn&apos;t transcode track</source>
         <translation type="unfinished">Couldn&apos;t transcode track</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="193"/>
+        <location filename="../burnjobmp3.cpp" line="215"/>
         <source>Finalising CD</source>
         <translation type="unfinished">Finalising CD</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="139"/>
-        <location filename="../burnjobmp3.cpp" line="235"/>
+        <location filename="../burnjobmp3.cpp" line="119"/>
+        <location filename="../burnjobmp3.cpp" line="158"/>
+        <location filename="../burnjobmp3.cpp" line="261"/>
         <source>Cancelled</source>
         <translation type="unfinished">Cancelled</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="129"/>
+        <location filename="../burnjobmp3.cpp" line="148"/>
         <source>Generating Disc Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="141"/>
+        <location filename="../burnjobmp3.cpp" line="160"/>
         <source>Couldn&apos;t prepare ISO image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="187"/>
+        <location filename="../burnjobmp3.cpp" line="209"/>
         <source>Burning Disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="214"/>
-        <source>Burning Disc
-%1 of %2</source>
+        <location filename="../burnjobmp3.cpp" line="236"/>
+        <source>Burning %1
+%2 of %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="237"/>
+        <location filename="../burnjobmp3.cpp" line="263"/>
         <source>Couldn&apos;t burn tracks</source>
         <translation type="unfinished">Couldn&apos;t burn tracks</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="264"/>
-        <location filename="../burnjobmp3.cpp" line="272"/>
+        <location filename="../burnjobmp3.cpp" line="290"/>
+        <location filename="../burnjobmp3.cpp" line="298"/>
         <source>Burn Successful</source>
         <translation type="unfinished">Burn Successful</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="272"/>
+        <location filename="../burnjobmp3.cpp" line="298"/>
         <source>Burned %1 to disc</source>
         <translation type="unfinished">Burned %1 to disc</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="287"/>
+        <location filename="../burnjobmp3.cpp" line="313"/>
         <source>Burn Failure</source>
         <translation type="unfinished">Burn Failure</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="287"/>
-        <source>Failed to burn &quot;%1&quot; to disc</source>
-        <translation type="unfinished">Failed to burn &quot;%1&quot; to disc</translation>
+        <location filename="../burnjobmp3.cpp" line="313"/>
+        <source>Failed to burn %1 to disc</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -192,17 +193,17 @@
     <message>
         <location filename="../burnpopover.cpp" line="100"/>
         <source>Insert a CD-R or a CD-RW into the drive.</source>
-        <translation>Insert a CD-R or a CD-RW into the drive.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="104"/>
         <source>The CD in the drive is not blank. Erase the CD first.</source>
-        <translation>The CD in the drive is not blank. Erase the CD first.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="108"/>
         <source>The CD-R in the drive has already been written.</source>
-        <translation>The CD-R in the drive has already been written.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="138"/>

@@ -149,3 +149,11 @@ void BurnPopover::updateCd() {
     }
 }
 
+
+void BurnPopover::on_audioCdButton_toggled(bool checked) {
+    if (checked) updateCd();
+}
+
+void BurnPopover::on_mp3CdButton_toggled(bool checked) {
+    if (checked) updateCd();
+}

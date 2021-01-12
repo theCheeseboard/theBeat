@@ -38,29 +38,49 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QProgressBar" name="progressBar">
-       <property name="value">
-        <number>24</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="cancelButton">
-       <property name="text">
-        <string notr="true">...</string>
-       </property>
-       <property name="icon">
-        <iconset theme="dialog-cancel">
-         <normaloff>../PhononPlugin</normaloff>../PhononPlugin</iconset>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QWidget" name="progressWidget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="cancelButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string notr="true">...</string>
+        </property>
+        <property name="icon">
+         <iconset theme="dialog-cancel">
+          <normaloff>../PhononPlugin</normaloff>../PhononPlugin</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>

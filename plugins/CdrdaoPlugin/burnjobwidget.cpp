@@ -47,10 +47,12 @@ BurnJobWidget::BurnJobWidget(BurnJob* parent) :
     connect(parent, &BurnJob::canCancelChanged, this, [ = ](bool canCancel) {
         ui->cancelButton->setEnabled(canCancel);
     });
+    connect(parent, &BurnJob::stateChanged, this, &BurnJobWidget::updateState);
     ui->progressBar->setMaximum(parent->totalProgress());
     ui->progressBar->setValue(parent->progress());
     ui->statusLabel->setText(parent->description());
     ui->cancelButton->setEnabled(parent->canCancel());
+    this->updateState(parent->state());
 }
 
 BurnJobWidget::BurnJobWidget(BurnJobMp3* parent) :
@@ -73,10 +75,12 @@ BurnJobWidget::BurnJobWidget(BurnJobMp3* parent) :
     connect(parent, &BurnJobMp3::canCancelChanged, this, [ = ](bool canCancel) {
         ui->cancelButton->setEnabled(canCancel);
     });
+    connect(parent, &BurnJobMp3::stateChanged, this, &BurnJobWidget::updateState);
     ui->progressBar->setMaximum(parent->totalProgress());
     ui->progressBar->setValue(parent->progress());
     ui->statusLabel->setText(parent->description());
     ui->cancelButton->setEnabled(parent->canCancel());
+    this->updateState(parent->state());
 }
 
 BurnJobWidget::~BurnJobWidget() {
@@ -89,5 +93,13 @@ void BurnJobWidget::on_cancelButton_clicked() {
         qobject_cast<BurnJob*>(d->parentJob)->cancel();
     } else if (qobject_cast<BurnJobMp3*>(d->parentJob)) {
         qobject_cast<BurnJobMp3*>(d->parentJob)->cancel();
+    }
+}
+
+void BurnJobWidget::updateState(tJob::State state) {
+    if (state == tJob::Processing || state == tJob::RequiresAttention) {
+        ui->progressWidget->setVisible(true);
+    } else {
+        ui->progressWidget->setVisible(false);
     }
 }
