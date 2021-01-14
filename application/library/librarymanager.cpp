@@ -127,7 +127,7 @@ void LibraryManager::addTrack(QString path) {
     blacklistQuery.exec();
 
 #ifdef Q_OS_WIN
-    TagLib::FileRef file(path.toUtf8().data());
+    TagLib::FileRef file(reinterpret_cast<const wchar_t*>(path.constData()));
 #else
     TagLib::FileRef file(path.toUtf8());
 #endif

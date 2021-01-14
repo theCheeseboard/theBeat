@@ -107,7 +107,7 @@ void QtMultimediaMediaItem::updateAlbumArt() {
 void QtMultimediaMediaItem::updateTaglib() {
     if (!d->url.isLocalFile()) return;
 #ifdef Q_OS_WIN
-    TagLib::FileRef file(d->url.toLocalFile().toUtf8().data());
+    TagLib::FileRef file(reinterpret_cast<const wchar_t*>(d->url.toLocalFile().constData()));
 #else
     TagLib::FileRef file(d->url.toLocalFile().toUtf8());
 #endif
