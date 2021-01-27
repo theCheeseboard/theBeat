@@ -167,7 +167,7 @@ void BurnJobMp3::performNextAction() {
             process->deleteLater();
         });
 
-        QStringList mkisofsargs = {"-o", d->workDir.filePath(QStringLiteral("cd.iso")), "-V", d->albumTitle.left(32), "-r", d->workDir.filePath(QStringLiteral("cd"))};
+        QStringList mkisofsargs = {"-o", d->workDir.filePath(QStringLiteral("cd.iso")), "-V", d->albumTitle.left(32), "-r", "-J", d->workDir.filePath(QStringLiteral("cd"))};
         tDebug("cdrdao") << "Calling mkisofs with arguments" << mkisofsargs;
         process->start("mkisofs", mkisofsargs);
     } else if (d->nextItem == d->sourceFiles.count() + 1) {

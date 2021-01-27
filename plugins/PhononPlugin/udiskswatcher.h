@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2021 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,36 +17,26 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "plugin.h"
+#ifndef UDISKSWATCHER_H
+#define UDISKSWATCHER_H
 
-#include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
-#include <QIcon>
-#include <tapplication.h>
-#include <QTranslator>
-#include "udiskswatcher.h"
+#include <QObject>
 
-struct PluginPrivate {
-    UdisksWatcher* udisks;
+struct UdisksWatcherPrivate;
+class UdisksWatcher : public QObject {
+        Q_OBJECT
+    public:
+        explicit UdisksWatcher(QObject* parent = nullptr);
+        ~UdisksWatcher();
+
+    private slots:
+        void updateInterfaces();
+
+    signals:
+
+
+    private:
+        UdisksWatcherPrivate* d;
 };
 
-Plugin::Plugin() {
-    d = new PluginPrivate();
-
-    tApplication::addPluginTranslator("phononplugin");
-}
-
-Plugin::~Plugin() {
-    delete d;
-}
-
-
-void Plugin::activate() {
-    d->udisks = new UdisksWatcher();
-}
-
-void Plugin::deactivate() {
-    delete d->udisks;
-}
+#endif // UDISKSWATCHER_H

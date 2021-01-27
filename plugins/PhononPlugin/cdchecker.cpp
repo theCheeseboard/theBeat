@@ -57,6 +57,7 @@
 using namespace Phonon;
 
 struct CdCheckerPrivate {
+    QDBusObjectPath blockPath;
     QString blockDevice;
     QDBusObjectPath cdDrivePath;
 
@@ -77,20 +78,21 @@ struct CdCheckerPrivate {
 #endif
 };
 
-CdChecker::CdChecker(QString blockDevice, QWidget* parent) :
+CdChecker::CdChecker(QDBusObjectPath blockPath, QWidget* parent) :
     QWidget(parent),
     ui(new Ui::CdChecker) {
     ui->setupUi(this);
 
     d = new CdCheckerPrivate();
-    d->blockDevice = blockDevice;
+    d->blockPath = blockPath;
     d->source = new PluginMediaSource(this);
     d->source->setName(tr("CD"));
     d->source->setIcon(QIcon::fromTheme("media-optical-audio"));
 
     //Get CD drive and attach to CD information
-    QDBusInterface blockInterface("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2/block_devices/" + blockDevice, "org.freedesktop.UDisks2.Block", QDBusConnection::systemBus());
+    QDBusInterface blockInterface("org.freedesktop.UDisks2", blockPath.path(), "org.freedesktop.UDisks2.Block", QDBusConnection::systemBus());
     d->cdDrivePath = blockInterface.property("Drive").value<QDBusObjectPath>();
+    d->blockDevice = blockInterface.property("Device").toByteArray();
     QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", d->cdDrivePath.path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(checkCd()));
 
     ui->topWidget->installEventFilter(this);
@@ -99,6 +101,10 @@ CdChecker::CdChecker(QString blockDevice, QWidget* parent) :
 }
 
 CdChecker::~CdChecker() {
+    //Deregister this source
+    PhononCdMediaItem::blockDeviceGone(d->blockDevice);
+    StateManager::instance()->sources()->removeSource(d->source);
+
     delete d;
 }
 
@@ -139,7 +145,7 @@ void CdChecker::checkCd() {
                 }
             });
 
-            cdFinder->setCurrentSource(MediaSource(Phonon::Cd, "/dev/" + d->blockDevice));
+            cdFinder->setCurrentSource(MediaSource(Phonon::Cd, d->blockDevice));
             cdFinder->play();
             cdFinder->pause();
 
@@ -204,14 +210,19 @@ void CdChecker::loadMusicbrainzData(QString discId) {
 #ifdef HAVE_MUSICBRAINZ
     d->currentDiscId = discId;
 
-    MusicBrainz5::CQuery query("thebeat-3.0");
-    try {
-        d->releases = query.LookupDiscID(discId.toStdString());
+    TPROMISE_CREATE_NEW_THREAD(MusicBrainz5::CReleaseList, {
+        MusicBrainz5::CQuery query("thebeat-3.0");
+        try {
+            res(query.LookupDiscID(discId.toStdString()));
+        }  catch (...) {
+            rej("Error");
+        }
+    })->then([ = ](MusicBrainz5::CReleaseList releases) {
+        d->releases = releases;
         if (d->releases.Count() > 0) {
             selectMusicbrainzRelease(QString::fromStdString(d->releases.Item(0)->ID()));
         }
-    }  catch (...) {
-    }
+    });
 #endif
 }
 

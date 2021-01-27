@@ -53,7 +53,7 @@ PhononCdMediaItem::PhononCdMediaItem(QString blockDevice, TrackInfoPtr info) : M
     d->controller = new MediaController(d->player);
     createPath(d->player, output);
 
-    d->player->setCurrentSource(MediaSource(Phonon::Cd, "/dev/" + d->blockDevice));
+    d->player->setCurrentSource(MediaSource(Phonon::Cd, d->blockDevice));
     d->controller->setCurrentTitle(info->track());
 
     connect(d->player, &MediaObject::tick, this, &PhononCdMediaItem::elapsedChanged);

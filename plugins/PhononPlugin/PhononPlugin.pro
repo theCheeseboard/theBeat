@@ -43,7 +43,8 @@ SOURCES += \
     importcdpopover.cpp \
     phononcdmediaitem.cpp \
     plugin.cpp \
-    trackinfo.cpp
+    trackinfo.cpp \
+    udiskswatcher.cpp
 
 HEADERS += \
     cdchecker.h \
@@ -52,7 +53,8 @@ HEADERS += \
     importcdpopover.h \
     phononcdmediaitem.h \
     plugin.h \
-    trackinfo.h
+    trackinfo.h \
+    udiskswatcher.h
 
 DISTFILES += PhononPlugin.json
 

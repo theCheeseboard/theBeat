@@ -21,6 +21,7 @@
 #define CDCHECKER_H
 
 #include <QWidget>
+#include <QDBusObjectPath>
 
 namespace Ui {
     class CdChecker;
@@ -31,7 +32,7 @@ struct CdCheckerPrivate;
 class CdChecker : public QWidget {
         Q_OBJECT
     public:
-        explicit CdChecker(QString blockDevice, QWidget* parent = nullptr);
+        explicit CdChecker(QDBusObjectPath blockDevice, QWidget* parent = nullptr);
         ~CdChecker();
 
     signals:
