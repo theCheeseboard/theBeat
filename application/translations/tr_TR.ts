@@ -466,7 +466,7 @@
     <message>
         <location filename="../visualisations/scopevisualisation.cpp" line="38"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapsama</translation>
     </message>
 </context>
 <context>
