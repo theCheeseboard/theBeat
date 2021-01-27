@@ -46,7 +46,9 @@ SOURCES += \
     playlist.cpp \
     pluginmediasource.cpp \
     sourcemanager.cpp \
-    statemanager.cpp
+    statemanager.cpp \
+    visualisationengine.cpp \
+    visualisationmanager.cpp
 
 HEADERS += \
     burnbackend.h \
@@ -58,5 +60,7 @@ HEADERS += \
     plugininterface.h \
     pluginmediasource.h \
     sourcemanager.h \
-    statemanager.h
+    statemanager.h \
+    visualisationengine.h \
+    visualisationmanager.h
 

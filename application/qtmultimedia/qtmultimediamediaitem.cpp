@@ -25,15 +25,18 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QFileInfo>
+#include <QAudioProbe>
 #include <statemanager.h>
 #include <playlist.h>
 #include <helpers.h>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 #include <tlogger.h>
+#include <visualisationmanager.h>
 
 struct QtMultimediaMediaItemPrivate {
     QMediaPlayer* player;
+    QAudioProbe* probe;
     QImage albumArt;
     QUrl url;
 
@@ -79,6 +82,27 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
         d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
     });
     d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
+
+    d->probe = new QAudioProbe(this);
+    d->probe->setSource(d->player);
+    connect(d->probe, &QAudioProbe::audioBufferProbed, this, [ = ](QAudioBuffer buffer) {
+        QAudioFormat format = buffer.format();
+        if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::SignedInt) {
+            QVector<qint16> bufferData;
+            if (format.channelCount() == 2) {
+                bufferData.reserve(buffer.sampleCount());
+                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
+                    qint16 sample = static_cast<qint16*>(buffer.data())[i] / 2 + static_cast<qint16*>(buffer.data())[i + 1] / 2;
+                    bufferData.append(sample);
+                }
+            } else {
+                bufferData.fill(0, buffer.sampleCount());
+                memcpy(bufferData.data(), buffer.constData(), buffer.byteCount());
+            }
+
+            VisualisationManager::instance()->provideSamples(bufferData.toList());
+        }
+    });
 
     updateTaglib();
 }

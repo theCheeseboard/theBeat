@@ -101,30 +101,30 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="99"/>
+        <location filename="../currenttrackpopover.cpp" line="135"/>
         <source>Album</source>
         <translation>Đĩa nhạc</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="100"/>
+        <location filename="../currenttrackpopover.cpp" line="136"/>
         <source>Name</source>
         <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="105"/>
-        <location filename="../currenttrackpopover.cpp" line="107"/>
-        <location filename="../currenttrackpopover.cpp" line="110"/>
+        <location filename="../currenttrackpopover.cpp" line="141"/>
+        <location filename="../currenttrackpopover.cpp" line="143"/>
+        <location filename="../currenttrackpopover.cpp" line="146"/>
         <source>Track</source>
         <translation>Số bài</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="105"/>
+        <location filename="../currenttrackpopover.cpp" line="141"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
         <translation>%1 trên %2</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="111"/>
+        <location filename="../currenttrackpopover.cpp" line="147"/>
         <source>Year</source>
         <translation>Năm</translation>
     </message>
@@ -462,6 +462,14 @@
     </message>
 </context>
 <context>
+    <name>ScopeVisualisation</name>
+    <message>
+        <location filename="../visualisations/scopevisualisation.cpp" line="38"/>
+        <source>Scope</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsDialog</name>
     <message>
         <location filename="../settingsdialog.ui" line="14"/>
@@ -663,17 +671,17 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="50"/>
+        <location filename="../main.cpp" line="53"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="89"/>
+        <location filename="../main.cpp" line="95"/>
         <source>file</source>
         <translation>tệp</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="89"/>
+        <location filename="../main.cpp" line="95"/>
         <source>File to open</source>
         <translation>Tệp đẻ mở</translation>
     </message>

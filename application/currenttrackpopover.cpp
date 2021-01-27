@@ -8,10 +8,15 @@
 #include <playlist.h>
 #include <mediaitem.h>
 #include <the-libs_global.h>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <visualisationmanager.h>
+#include "common.h"
 
 struct CurrentTrackPopoverPrivate {
     MediaItem* currentItem = nullptr;
-    QLabel* artBackground;
+//    QLabel* artBackground;
+    QImage artBackground;
 
     QList<QLabel*> metadataInfo;
     QString pendingMetadataTitle;
@@ -24,13 +29,13 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
     ui->setupUi(this);
     d = new CurrentTrackPopoverPrivate();
 
-    d->artBackground = new QLabel(this);
-    d->artBackground->setScaledContents(true);
-    d->artBackground->lower();
+//    d->artBackground = new QLabel(this);
+//    d->artBackground->setScaledContents(true);
+//    d->artBackground->lower();
 
-    QGraphicsBlurEffect* effect = new QGraphicsBlurEffect(d->artBackground);
-    effect->setBlurRadius(50);
-    d->artBackground->setGraphicsEffect(effect);
+//    QGraphicsBlurEffect* effect = new QGraphicsBlurEffect(d->artBackground);
+//    effect->setBlurRadius(50);
+//    d->artBackground->setGraphicsEffect(effect);
 
     ui->titleLabel->setFixedWidth(SC_DPI(300));
 
@@ -45,6 +50,10 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
     ui->skipBackButton->setIconSize(iconSize);
     ui->playButton->setIconSize(bigIconSize);
     ui->skipNextButton->setIconSize(iconSize);
+
+    connect(VisualisationManager::instance(), &VisualisationManager::visualisationUpdated, this, [ = ] {
+        this->update();
+    });
 }
 
 CurrentTrackPopover::~CurrentTrackPopover() {
@@ -60,7 +69,10 @@ void CurrentTrackPopover::updateCurrentItem() {
     d->currentItem = StateManager::instance()->playlist()->currentItem();
     if (d->currentItem) {
         connect(d->currentItem, &MediaItem::metadataChanged, this, &CurrentTrackPopover::updateMetadata);
+        connect(d->currentItem, &MediaItem::elapsedChanged, this, &CurrentTrackPopover::updateBar);
+        connect(d->currentItem, &MediaItem::durationChanged, this, &CurrentTrackPopover::updateBar);
         updateMetadata();
+        updateBar();
     }
 }
 
@@ -78,20 +90,44 @@ void CurrentTrackPopover::updateMetadata() {
     QImage image = d->currentItem->albumArt();
     if (image.isNull()) {
         ui->artLabel->setVisible(false);
-        d->artBackground->setVisible(false);
+//        d->artBackground->setVisible(false);
     } else {
         QPixmap art = QPixmap::fromImage(image).scaledToWidth(SC_DPI(300), Qt::SmoothTransformation);
         ui->artLabel->setPixmap(art);
         ui->artLabel->setVisible(true);
 
-        QPixmap transparentArt = art;
-        QPainter painter(&transparentArt);
-        painter.setOpacity(0.7);
-        painter.setPen(Qt::transparent);
-        painter.setBrush(this->palette().color(QPalette::Window));
-        painter.drawRect(0, 0, art.width(), art.height());
-        d->artBackground->setPixmap(transparentArt);
-        d->artBackground->setVisible(true);
+//        QRect rect;
+//        rect.setSize(d->playlistBackground.size().scaled(ui->topWidget->width(), ui->topWidget->height(), Qt::KeepAspectRatioByExpanding));
+//        rect.moveLeft(ui->topWidget->width() / 2 - rect.width() / 2);
+//        rect.moveTop(ui->topWidget->height() / 2 - rect.height() / 2);
+
+        //Blur the background
+        int radius = 30;
+        QGraphicsBlurEffect* blur = new QGraphicsBlurEffect;
+        blur->setBlurRadius(radius);
+
+        d->artBackground = QImage(image.size(), QImage::Format_ARGB32);
+        d->artBackground.fill(this->palette().color(QPalette::Window));
+        QPainter painter(&d->artBackground);
+
+        QGraphicsScene scene;
+        QGraphicsPixmapItem item;
+        item.setPixmap(QPixmap::fromImage(image));
+        item.setGraphicsEffect(blur);
+        scene.addItem(&item);
+
+        //scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
+//        scene.render(&painter, QRect(-radius, -radius, image.width() + radius * 2, image.height() + radius * 2), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
+        scene.render(&painter);
+
+//        QPixmap transparentArt = art;
+//        QPainter painter(&transparentArt);
+//        painter.setOpacity(0.7);
+//        painter.setPen(Qt::transparent);
+//        painter.setBrush(this->palette().color(QPalette::Window));
+//        painter.drawRect(0, 0, art.width(), art.height());
+//        d->artBackground->setPixmap(transparentArt);
+//        d->artBackground->setVisible(true);
     }
 
     QLocale locale;
@@ -109,6 +145,8 @@ void CurrentTrackPopover::updateMetadata() {
 
     addMetadataTitle(tr("Track"));
     if (d->currentItem->metadata(QMediaMetaData::Year).toInt() > 0) addMetadataEntry(tr("Year"), QString::number(d->currentItem->metadata(QMediaMetaData::Year).toInt()));
+
+    this->update();
 }
 
 void CurrentTrackPopover::addMetadataTitle(QString title) {
@@ -136,17 +174,19 @@ void CurrentTrackPopover::addMetadataEntry(QString entry, QString value) {
     entryLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     entryLabel->setText(entry);
     ui->metadataEntryLayout->addWidget(entryLabel, d->currentRow, 0);
+    d->metadataInfo.append(entryLabel);
 
     QLabel* valueLabel = new QLabel(this);
     valueLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     valueLabel->setText(value);
     ui->metadataEntryLayout->addWidget(valueLabel, d->currentRow, 1);
+    d->metadataInfo.append(valueLabel);
 
     d->currentRow++;
 }
 
 void CurrentTrackPopover::clearMetadataInfo() {
-    for (QLabel* label : d->metadataInfo) {
+    for (QLabel* label : qAsConst(d->metadataInfo)) {
         ui->metadataEntryLayout->removeWidget(label);
         label->deleteLater();
     }
@@ -166,13 +206,42 @@ void CurrentTrackPopover::updateState() {
     }
 }
 
+void CurrentTrackPopover::updateBar() {
+    QSignalBlocker blocker(ui->progressSlider);
+    ui->progressSlider->setMaximum(d->currentItem->duration());
+    ui->progressSlider->setValue(d->currentItem->elapsed());
+
+    ui->durationLabel->setText(Common::durationToString(d->currentItem->duration(), true));
+    ui->elapsedLabel->setText(Common::durationToString(d->currentItem->elapsed()));
+}
+
 void CurrentTrackPopover::resizeEvent(QResizeEvent* event) {
     updateMetadata();
 
     QRect geometry;
     geometry.setSize(QSize(1, 1).scaled(this->width(), this->height(), Qt::KeepAspectRatioByExpanding));
     geometry.moveCenter(QPoint(this->width() / 2, this->height() / 2));
-    d->artBackground->setGeometry(geometry);
+//    d->artBackground->setGeometry(geometry);
+}
+
+void CurrentTrackPopover::paintEvent(QPaintEvent* event) {
+    QPainter painter(this);
+    painter.setOpacity(0.7);
+
+    //Draw art background
+    QRect geometry;
+    geometry.setSize(d->artBackground.size().scaled(this->width(), this->height(), Qt::KeepAspectRatioByExpanding));
+    geometry.moveCenter(QPoint(this->width() / 2, this->height() / 2));
+    painter.drawImage(geometry, d->artBackground);
+
+    painter.setOpacity(1);
+
+    //Draw visualisations
+    QRect visRect;
+    visRect.setSize(QSize(this->width(), this->height() * 0.6));
+    visRect.moveLeft(0);
+    visRect.moveBottom(this->height());
+    VisualisationManager::instance()->paint(&painter, this->palette().color(QPalette::WindowText), visRect);
 }
 
 void CurrentTrackPopover::on_skipBackButton_clicked() {
@@ -185,5 +254,8 @@ void CurrentTrackPopover::on_playButton_clicked() {
 
 void CurrentTrackPopover::on_skipNextButton_clicked() {
     StateManager::instance()->playlist()->next();
+}
 
+void CurrentTrackPopover::on_progressSlider_valueChanged(int value) {
+    d->currentItem->seek(value);
 }

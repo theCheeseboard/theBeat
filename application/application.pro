@@ -119,7 +119,8 @@ SOURCES += \
     settingsdialog.cpp \
     thememanager.cpp \
     trackswidget.cpp \
-    userplaylistswidget.cpp
+    userplaylistswidget.cpp \
+    visualisations/scopevisualisation.cpp
 
 HEADERS += \
     artistsalbumswidget.h \
@@ -140,7 +141,8 @@ HEADERS += \
     settingsdialog.h \
     thememanager.h \
     trackswidget.h \
-    userplaylistswidget.h
+    userplaylistswidget.h \
+    visualisations/scopevisualisation.h
 
 FORMS += \
     artistsalbumswidget.ui \
