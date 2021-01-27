@@ -20,12 +20,13 @@
 #ifndef VISUALISATIONENGINE_H
 #define VISUALISATIONENGINE_H
 
+#include "libthebeat_global.h"
 #include <QObject>
 
 class QPainter;
 class VisualisationManager;
 struct VisualisationEnginePrivate;
-class VisualisationEngine : public QObject {
+class LIBTHEBEAT_EXPORT VisualisationEngine : public QObject {
         Q_OBJECT
     public:
         explicit VisualisationEngine(QObject* parent = nullptr);

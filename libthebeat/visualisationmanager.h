@@ -20,12 +20,13 @@
 #ifndef VISUALISATIONMANAGER_H
 #define VISUALISATIONMANAGER_H
 
+#include "libthebeat_global.h"
 #include <QObject>
 
 class QPainter;
 struct VisualisationManagerPrivate;
 struct VisualisationEngine;
-class VisualisationManager : public QObject {
+class LIBTHEBEAT_EXPORT VisualisationManager : public QObject {
         Q_OBJECT
     public:
         static VisualisationManager* instance();

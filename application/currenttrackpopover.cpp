@@ -15,7 +15,6 @@
 
 struct CurrentTrackPopoverPrivate {
     MediaItem* currentItem = nullptr;
-//    QLabel* artBackground;
     QImage artBackground;
 
     QList<QLabel*> metadataInfo;
@@ -28,14 +27,6 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
     ui(new Ui::CurrentTrackPopover) {
     ui->setupUi(this);
     d = new CurrentTrackPopoverPrivate();
-
-//    d->artBackground = new QLabel(this);
-//    d->artBackground->setScaledContents(true);
-//    d->artBackground->lower();
-
-//    QGraphicsBlurEffect* effect = new QGraphicsBlurEffect(d->artBackground);
-//    effect->setBlurRadius(50);
-//    d->artBackground->setGraphicsEffect(effect);
 
     ui->titleLabel->setFixedWidth(SC_DPI(300));
 
@@ -90,16 +81,11 @@ void CurrentTrackPopover::updateMetadata() {
     QImage image = d->currentItem->albumArt();
     if (image.isNull()) {
         ui->artLabel->setVisible(false);
-//        d->artBackground->setVisible(false);
+        d->artBackground.fill(this->palette().color(QPalette::Window));
     } else {
         QPixmap art = QPixmap::fromImage(image).scaledToWidth(SC_DPI(300), Qt::SmoothTransformation);
         ui->artLabel->setPixmap(art);
         ui->artLabel->setVisible(true);
-
-//        QRect rect;
-//        rect.setSize(d->playlistBackground.size().scaled(ui->topWidget->width(), ui->topWidget->height(), Qt::KeepAspectRatioByExpanding));
-//        rect.moveLeft(ui->topWidget->width() / 2 - rect.width() / 2);
-//        rect.moveTop(ui->topWidget->height() / 2 - rect.height() / 2);
 
         //Blur the background
         int radius = 30;
@@ -116,18 +102,7 @@ void CurrentTrackPopover::updateMetadata() {
         item.setGraphicsEffect(blur);
         scene.addItem(&item);
 
-        //scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
-//        scene.render(&painter, QRect(-radius, -radius, image.width() + radius * 2, image.height() + radius * 2), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
         scene.render(&painter);
-
-//        QPixmap transparentArt = art;
-//        QPainter painter(&transparentArt);
-//        painter.setOpacity(0.7);
-//        painter.setPen(Qt::transparent);
-//        painter.setBrush(this->palette().color(QPalette::Window));
-//        painter.drawRect(0, 0, art.width(), art.height());
-//        d->artBackground->setPixmap(transparentArt);
-//        d->artBackground->setVisible(true);
     }
 
     QLocale locale;

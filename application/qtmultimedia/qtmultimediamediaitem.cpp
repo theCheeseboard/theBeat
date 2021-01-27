@@ -101,6 +101,32 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
             }
 
             VisualisationManager::instance()->provideSamples(bufferData.toList());
+        } else if (format.sampleSize() == 32 && format.sampleType() == QAudioFormat::Float) {
+            QVector<qint16> bufferData;
+            bufferData.reserve(buffer.sampleCount());
+            if (format.channelCount() == 2) {
+                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
+                    float sample = static_cast<float*>(buffer.data())[i] / 2 + static_cast<float*>(buffer.data())[i + 1] / 2;
+                    sample = sample * 32768;
+                    if (sample > 32767) sample = 32767;
+                    if (sample < -32768) sample = -32768;
+                    bufferData.append(static_cast<qint16>(sample));
+                    bufferData.append(sample);
+                }
+            } else {
+                for (qint64 i = 0; i < buffer.sampleCount(); i++) {
+                    float sample = static_cast<float*>(buffer.data())[i];
+                    sample = sample * 32768;
+                    if (sample > 32767) sample = 32767;
+                    if (sample < -32768) sample = -32768;
+                    bufferData.append(static_cast<qint16>(sample));
+                }
+            }
+
+            VisualisationManager::instance()->provideSamples(bufferData.toList());
+        } else {
+            tDebug("QtMultimediaMediaItem") << "Weird format:";
+            tDebug("QtMultimediaMediaItem") << "Sample size " << format.sampleSize() << "; Sample type " << format.sampleType() << "; Channels " << format.channelCount();
         }
     });
 

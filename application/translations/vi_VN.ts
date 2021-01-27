@@ -101,30 +101,30 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="135"/>
+        <location filename="../currenttrackpopover.cpp" line="110"/>
         <source>Album</source>
         <translation>Đĩa nhạc</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="136"/>
+        <location filename="../currenttrackpopover.cpp" line="111"/>
         <source>Name</source>
         <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="141"/>
-        <location filename="../currenttrackpopover.cpp" line="143"/>
-        <location filename="../currenttrackpopover.cpp" line="146"/>
+        <location filename="../currenttrackpopover.cpp" line="116"/>
+        <location filename="../currenttrackpopover.cpp" line="118"/>
+        <location filename="../currenttrackpopover.cpp" line="121"/>
         <source>Track</source>
         <translation>Số bài</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="141"/>
+        <location filename="../currenttrackpopover.cpp" line="116"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
         <translation>%1 trên %2</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="147"/>
+        <location filename="../currenttrackpopover.cpp" line="122"/>
         <source>Year</source>
         <translation>Năm</translation>
     </message>
