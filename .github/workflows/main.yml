@@ -30,7 +30,7 @@ jobs:
       with:
         extra-plugins-linux: "styles/libContemporary.so"
         image-name-linux: theBeat-linux.AppImage
-        app-bundle-mac: "theBeat Blueprint.app"
+        app-bundle-mac: "application/theBeat Blueprint.app"
     - uses: actions/upload-artifact@v1
       name: Upload Artifact to GitHub Actions
       with:
