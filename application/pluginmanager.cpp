@@ -20,7 +20,7 @@
 #include "pluginmanager.h"
 
 #include <QDir>
-#include <QApplication>
+#include <tapplication.h>
 #include <QDirIterator>
 #include <QPluginLoader>
 #include <plugininterface.h>
@@ -41,12 +41,15 @@ void PluginManager::load() {
 #elif defined(Q_OS_WIN)
     searchPaths.append(qApp->applicationDirPath() + "/../../plugins");
     searchPaths.append(qApp->applicationDirPath() + "/plugins");
+#elif defined(Q_OS_MAC)
+    searchPaths.append(tApplication::macOSBundlePath() + "/Contents/plugins");
+    searchPaths.append(tApplication::macOSBundlePath() + "/../../plugins");
 #endif
 
     QStringList seenPlugins;
 
     for (QString searchPath : searchPaths) {
-        QDirIterator iterator(searchPath, {"*.so", "*.dll"}, QDir::NoFilter, QDirIterator::Subdirectories);
+        QDirIterator iterator(searchPath, {"*.so", "*.dll", "*.dylib"}, QDir::NoFilter, QDirIterator::Subdirectories);
         while (iterator.hasNext()) {
             iterator.next();
             if (seenPlugins.contains(iterator.fileName())) continue;

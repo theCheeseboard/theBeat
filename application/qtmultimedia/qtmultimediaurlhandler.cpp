@@ -28,8 +28,11 @@ QtMultimediaUrlHandler::QtMultimediaUrlHandler(QObject* parent) : UrlHandler(par
 
 
 MediaItem* QtMultimediaUrlHandler::itemForUrl(QUrl url) {
+    if (url.scheme() == "http" || url.scheme() == "https") {
+        return new QtMultimediaMediaItem(url);
+    }
 #ifndef Q_OS_MAC
-    if (url.scheme() == "file" || url.scheme() == "http" || url.scheme() == "https") {
+    if (url.scheme() == "file") {
         return new QtMultimediaMediaItem(url);
     }
 #endif

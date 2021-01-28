@@ -47,3 +47,7 @@ qtHaveModule(phonon4qt5) {
 DISTFILES += \
     plugins.pri
 
+macx {
+    SUBDIRS += \
+        AvFoundationPlugin
+}

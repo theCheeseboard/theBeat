@@ -38,6 +38,11 @@ win32 {
     LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -L"C:\Program Files (x86)\taglib\lib" -ltag
 }
 
+macx {
+    INCLUDEPATH += "/usr/local/include/the-libs" "/usr/local/include"
+    LIBS += -L/usr/local/lib -lthe-libs -ltag
+}
+
 SOURCES += \
     burnbackend.cpp \
     burnmanager.cpp \

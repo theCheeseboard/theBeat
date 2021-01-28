@@ -25,3 +25,7 @@ win32 {
         CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libthebeat/debug/ -lthebeat
     }
 }
+
+macx {
+    LIBS += -L$$OUT_PWD/../../libthebeat/ -lthebeat
+}

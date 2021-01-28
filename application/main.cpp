@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
     tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     //Set up the theming
     a.setStyle(QStyleFactory::create("contemporary"));
 
@@ -83,7 +83,9 @@ int main(int argc, char* argv[]) {
     QIcon::setThemeSearchPaths({a.applicationDirPath() + "\\icons"});
 
     new ThemeManager();
+#endif
 
+#ifdef Q_OS_WIN
     a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
 #endif
 
