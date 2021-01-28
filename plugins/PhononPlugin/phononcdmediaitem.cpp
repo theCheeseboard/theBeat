@@ -25,6 +25,8 @@
 #include <phonon/MediaController>
 #include <phonon/MediaSource>
 #include <phonon/AudioOutput>
+#include <phonon/AudioDataOutput>
+#include <visualisationmanager.h>
 
 #include <statemanager.h>
 #include <playlist.h>
@@ -52,6 +54,24 @@ PhononCdMediaItem::PhononCdMediaItem(QString blockDevice, TrackInfoPtr info) : M
     d->player = new MediaObject(this);
     d->controller = new MediaController(d->player);
     createPath(d->player, output);
+
+    AudioDataOutput* dataOut = new AudioDataOutput(this);
+    dataOut->setDataSize(2048);
+    connect(dataOut, &AudioDataOutput::dataReady, this, [ = ](QMap<Phonon::AudioDataOutput::Channel, QVector<qint16>> data) {
+        //Merge all the data
+        QVector<qint16> samples;
+        const int channelCount = data.values().count();
+        samples.reserve(data.first().count());
+        for (int i = 0; i < data.first().count(); i++) {
+            qint16 sample = 0;
+            for (int j = 0; j < channelCount; j++) {
+                sample += data.values().at(j).at(i) / channelCount;
+            }
+            samples.append(sample);
+        }
+        VisualisationManager::instance()->provideSamples(samples.toList());
+    });
+    createPath(d->player, dataOut);
 
     d->player->setCurrentSource(MediaSource(Phonon::Cd, d->blockDevice));
     d->controller->setCurrentTitle(info->track());

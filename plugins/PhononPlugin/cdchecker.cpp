@@ -31,6 +31,7 @@
 #include <tpromise.h>
 #include "importcdpopover.h"
 #include <tpopover.h>
+#include <tlogger.h>
 #include "phononcdmediaitem.h"
 #include "trackinfo.h"
 
@@ -220,8 +221,13 @@ void CdChecker::loadMusicbrainzData(QString discId) {
     })->then([ = ](MusicBrainz5::CReleaseList releases) {
         d->releases = releases;
         if (d->releases.Count() > 0) {
+            tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " succeded";
             selectMusicbrainzRelease(QString::fromStdString(d->releases.Item(0)->ID()));
+        } else {
+            tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " succeded with no results";
         }
+    })->error([ = ](QString error) {
+        tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " failed";
     });
 #endif
 }
@@ -236,7 +242,15 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
     tPromise<MusicBrainz5::CRelease*>::runOnNewThread([ = ](tPromiseFunctions<MusicBrainz5::CRelease*>::SuccessFunction res, tPromiseFunctions<MusicBrainz5::CMetadata>::FailureFunction rej) {
         try {
             MusicBrainz5::CQuery query("thebeat-3.0");
-            res(query.LookupRelease(release.toStdString()).Clone());
+//            res(query.LookupRelease(release.toStdString()).Clone());
+            MusicBrainz5::CQuery::tParamMap params;
+            params["inc"] = "artists labels recordings release-groups url-rels discids artist-credits";
+            MusicBrainz5::CMetadata fullData = query.Query("release", release.toStdString(), "", params);
+            if (fullData.Release()) {
+                res(new MusicBrainz5::CRelease(*fullData.Release()));
+            } else {
+                rej("No data");
+            }
         } catch (...) {
             rej("Failure");
         }
@@ -272,8 +286,8 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
                     MusicBrainz5::CRecording* recording = track->Recording();
                     if (recording) {
                         QStringList artists;
-                        MusicBrainz5::CNameCreditList* nameCreditList = release->ArtistCredit()->NameCreditList();
-                        for (int j = 0; j < nameCreditList->Count(); j++) {
+                        MusicBrainz5::CNameCreditList* nameCreditList = recording->ArtistCredit()->NameCreditList();
+                        for (int j = 0; j < nameCreditList->NumItems(); j++) {
                             MusicBrainz5::CNameCredit* credit = nameCreditList->Item(j);
                             artists.append(QString::fromStdString(credit->Artist()->Name()));
                         }
