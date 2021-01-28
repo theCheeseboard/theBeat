@@ -676,17 +676,17 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="53"/>
+        <location filename="../main.cpp" line="54"/>
         <source>Audio Player</source>
         <translation>Audio Player</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="95"/>
+        <location filename="../main.cpp" line="98"/>
         <source>file</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="95"/>
+        <location filename="../main.cpp" line="98"/>
         <source>File to open</source>
         <translation>Datei zum öffnen</translation>
     </message>

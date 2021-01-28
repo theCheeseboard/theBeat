@@ -4,12 +4,12 @@
 #include "libraryerrorpopover.h"
 #include "librarymodel.h"
 #include "librarymanager.h"
-#include "qtmultimedia/qtmultimediamediaitem.h"
 #include <statemanager.h>
 #include <playlist.h>
 #include <QMenu>
 #include <QContextMenuEvent>
 #include <QInputDialog>
+#include <urlmanager.h>
 #include <tpopover.h>
 
 struct LibraryListViewPrivate {
@@ -62,7 +62,7 @@ LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
             popover->setPopoverWidth(SC_DPI(400));
             connect(p, &LibraryErrorPopover::rejected, popover, &tPopover::dismiss);
             connect(p, &LibraryErrorPopover::accepted, popover, [ = ](QString newPath) {
-                QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(newPath));
+                MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(newPath));
                 StateManager::instance()->playlist()->addItem(item);
                 StateManager::instance()->playlist()->setCurrentItem(item);
 
@@ -74,7 +74,7 @@ LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
             return;
         }
 
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
         StateManager::instance()->playlist()->setCurrentItem(item);
     });

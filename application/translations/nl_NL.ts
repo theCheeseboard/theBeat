@@ -676,17 +676,17 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="53"/>
+        <location filename="../main.cpp" line="54"/>
         <source>Audio Player</source>
         <translation>Audiospeler</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="95"/>
+        <location filename="../main.cpp" line="98"/>
         <source>file</source>
         <translation>bestand</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="95"/>
+        <location filename="../main.cpp" line="98"/>
         <source>File to open</source>
         <translation>Bestand om te openen</translation>
     </message>

@@ -29,7 +29,8 @@
 #include <statemanager.h>
 #include <playlist.h>
 #include "thememanager.h"
-#include "qtmultimedia/qtmultimediamediaitem.h"
+#include "qtmultimedia/qtmultimediaurlhandler.h"
+#include <urlmanager.h>
 
 #include <visualisationmanager.h>
 #include "visualisations/scopevisualisation.h"
@@ -86,8 +87,10 @@ int main(int argc, char* argv[]) {
     a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
 #endif
 
-    VisualisationManager::instance()->registerEngine("scope", new ScopeVisualisation());
-    VisualisationManager::instance()->setCurrentEngine("scope");
+    StateManager::instance()->url()->registerHandler(new QtMultimediaUrlHandler());
+
+    StateManager::instance()->visualisation()->registerEngine("scope", new ScopeVisualisation());
+    StateManager::instance()->visualisation()->setCurrentEngine("scope");
 
     QCommandLineParser parser;
     parser.addHelpOption();
@@ -100,9 +103,9 @@ int main(int argc, char* argv[]) {
     QObject::connect(&a, &tApplication::singleInstanceMessage, [ = ](QJsonObject launchMessage) {
         if (launchMessage.contains("files")) {
             QJsonArray files = launchMessage.value("files").toArray();
-            QtMultimediaMediaItem* firstItem = nullptr;
+            MediaItem* firstItem = nullptr;
             for (QJsonValue file : files) {
-                QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl(file.toString()));
+                MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(file.toString()));
                 StateManager::instance()->playlist()->addItem(item);
                 if (!firstItem) firstItem = item;
             }
@@ -135,9 +138,9 @@ int main(int argc, char* argv[]) {
 
     w->show();
 
-    QtMultimediaMediaItem* firstItem = nullptr;
+    MediaItem* firstItem = nullptr;
     for (QString file : files) {
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl(file));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(file));
         StateManager::instance()->playlist()->addItem(item);
         if (!firstItem) firstItem = item;
     }

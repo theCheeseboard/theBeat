@@ -47,7 +47,7 @@
     #include "updatechecker.h"
 #endif
 
-#include <qtmultimedia/qtmultimediamediaitem.h>
+#include <urlmanager.h>
 
 #ifdef Q_OS_WIN
     #include <QWinThumbnailToolBar>
@@ -261,7 +261,7 @@ void MainWindow::on_actionOpen_File_triggered() {
     dialog->setFileMode(QFileDialog::ExistingFiles);
     connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
         for (QString file : files) {
-            QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(file));
+            MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
             StateManager::instance()->playlist()->addItem(item);
         }
     });
@@ -332,7 +332,7 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
             e->setDropAction(Qt::CopyAction);
             if (e->mimeData()->hasUrls()) {
                 for (QUrl url : e->mimeData()->urls()) {
-                    StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(url));
+                    StateManager::instance()->playlist()->addItem(StateManager::instance()->url()->itemForUrl(url));
                 }
                 e->acceptProposedAction();
             }
@@ -412,7 +412,7 @@ void MainWindow::on_actionOpen_URL_triggered() {
     QString url = QInputDialog::getText(this, tr("Open URL"), tr("URL"), QLineEdit::Normal, "", &ok);
 
     if (ok) {
-        StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl(url)));
+        StateManager::instance()->playlist()->addItem(StateManager::instance()->url()->itemForUrl(QUrl(url)));
     }
 }
 

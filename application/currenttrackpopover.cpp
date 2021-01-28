@@ -42,7 +42,7 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
     ui->playButton->setIconSize(bigIconSize);
     ui->skipNextButton->setIconSize(iconSize);
 
-    connect(VisualisationManager::instance(), &VisualisationManager::visualisationUpdated, this, [ = ] {
+    connect(StateManager::instance()->visualisation(), &VisualisationManager::visualisationUpdated, this, [ = ] {
         this->update();
     });
 }
@@ -216,7 +216,7 @@ void CurrentTrackPopover::paintEvent(QPaintEvent* event) {
     visRect.setSize(QSize(this->width(), this->height() * 0.6));
     visRect.moveLeft(0);
     visRect.moveBottom(this->height());
-    VisualisationManager::instance()->paint(&painter, this->palette().color(QPalette::WindowText), visRect);
+    StateManager::instance()->visualisation()->paint(&painter, this->palette().color(QPalette::WindowText), visRect);
 }
 
 void CurrentTrackPopover::on_skipBackButton_clicked() {

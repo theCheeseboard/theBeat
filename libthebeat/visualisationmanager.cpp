@@ -31,11 +31,6 @@ struct VisualisationManagerPrivate {
     QList<qint16> samples;
 };
 
-VisualisationManager* VisualisationManager::instance() {
-    static VisualisationManager* instance = new VisualisationManager();
-    return instance;
-}
-
 QStringList VisualisationManager::engines() {
     return d->engines.keys();
 }

@@ -29,7 +29,7 @@ struct VisualisationEngine;
 class LIBTHEBEAT_EXPORT VisualisationManager : public QObject {
         Q_OBJECT
     public:
-        static VisualisationManager* instance();
+        explicit VisualisationManager(QObject* parent = nullptr);
         void setCurrentEngine(QString engine);
 
         QStringList engines();
@@ -44,7 +44,6 @@ class LIBTHEBEAT_EXPORT VisualisationManager : public QObject {
         void visualisationUpdated();
 
     private:
-        explicit VisualisationManager(QObject* parent = nullptr);
         VisualisationManagerPrivate* d;
 
 };

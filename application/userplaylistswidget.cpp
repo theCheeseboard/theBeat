@@ -29,7 +29,7 @@
 #include <burnbackend.h>
 #include <QFileDialog>
 #include <QMediaPlaylist>
-#include "qtmultimedia/qtmultimediamediaitem.h"
+#include <urlmanager.h>
 #include "library/librarymanager.h"
 #include "common.h"
 
@@ -184,7 +184,7 @@ void UserPlaylistsWidget::on_enqueueAllButton_clicked() {
     for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
         if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) continue;
 
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
     }
 }

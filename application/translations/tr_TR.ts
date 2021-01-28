@@ -671,17 +671,17 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="53"/>
+        <location filename="../main.cpp" line="54"/>
         <source>Audio Player</source>
         <translation>Ses oynatıcı</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="95"/>
+        <location filename="../main.cpp" line="98"/>
         <source>file</source>
         <translation>dosya</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="95"/>
+        <location filename="../main.cpp" line="98"/>
         <source>File to open</source>
         <translation>Açılacak dosya</translation>
     </message>

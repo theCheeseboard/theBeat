@@ -47,6 +47,8 @@ SOURCES += \
     pluginmediasource.cpp \
     sourcemanager.cpp \
     statemanager.cpp \
+    urlhandler.cpp \
+    urlmanager.cpp \
     visualisationengine.cpp \
     visualisationmanager.cpp
 
@@ -61,6 +63,8 @@ HEADERS += \
     pluginmediasource.h \
     sourcemanager.h \
     statemanager.h \
+    urlhandler.h \
+    urlmanager.h \
     visualisationengine.h \
     visualisationmanager.h
 

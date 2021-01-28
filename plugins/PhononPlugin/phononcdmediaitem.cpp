@@ -69,7 +69,7 @@ PhononCdMediaItem::PhononCdMediaItem(QString blockDevice, TrackInfoPtr info) : M
             }
             samples.append(sample);
         }
-        VisualisationManager::instance()->provideSamples(samples.toList());
+        StateManager::instance()->visualisation()->provideSamples(samples.toList());
     });
     createPath(d->player, dataOut);
 

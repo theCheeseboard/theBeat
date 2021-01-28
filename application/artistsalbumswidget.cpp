@@ -20,7 +20,6 @@
 #include "artistsalbumswidget.h"
 #include "ui_artistsalbumswidget.h"
 
-#include "qtmultimedia/qtmultimediamediaitem.h"
 #include <statemanager.h>
 #include <playlist.h>
 #include <QUrl>
@@ -30,6 +29,7 @@
 #include <burnbackend.h>
 #include <burnmanager.h>
 #include <QMenu>
+#include <urlmanager.h>
 #include "common.h"
 #include "library/librarymanager.h"
 
@@ -178,7 +178,7 @@ void ArtistsAlbumsWidget::on_enqueueAllButton_clicked() {
     for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
         if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) continue;
 
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
     }
 }

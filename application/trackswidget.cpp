@@ -25,7 +25,7 @@
 #include <playlist.h>
 #include <tpopover.h>
 #include "libraryerrorpopover.h"
-#include "qtmultimedia/qtmultimediamediaitem.h"
+#include <urlmanager.h>
 #include "library/librarymanager.h"
 
 struct TracksWidgetPrivate {
@@ -87,7 +87,7 @@ void TracksWidget::on_enqueueAllButton_clicked() {
     for (int i = 0; i < d->model->rowCount(); i++) {
         if (d->model->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) continue;
 
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(d->model->index(i, 0).data(LibraryModel::PathRole).toString()));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(d->model->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
     }
 }
