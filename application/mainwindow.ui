@@ -14,7 +14,7 @@
    <string>theBeat</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="thebeat">
+   <iconset theme="thebeat" resource="resources.qrc">
     <normaloff>:/icons/thebeat.svg</normaloff>:/icons/thebeat.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -394,6 +394,39 @@
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>990</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen_File"/>
+    <addaction name="actionOpen_URL"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdd_to_Library"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuPlayback">
+    <property name="title">
+     <string>Playback</string>
+    </property>
+    <addaction name="actionPlayPause"/>
+    <addaction name="actionSkip_Back"/>
+    <addaction name="actionSkip_Forward"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuPlayback"/>
+  </widget>
   <action name="actionFileBug">
    <property name="icon">
     <iconset theme="tools-report-bug">
@@ -431,6 +464,9 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
    </property>
   </action>
   <action name="actionOpen_File">
@@ -506,6 +542,9 @@
    <property name="shortcut">
     <string>Ctrl+,</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
+   </property>
   </action>
   <action name="actionHelp">
    <property name="icon">
@@ -569,6 +608,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

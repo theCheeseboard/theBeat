@@ -87,6 +87,9 @@ MainWindow::MainWindow(QWidget* parent)
     ui->topWidget->raise();
     ui->topWidget->move(0, 0);
 
+    ui->menuBar->setVisible(false);
+    ui->menuBar->addMenu(new tHelpMenu(this));
+
     QMenu* menu = new QMenu(this);
 
     tHelpMenu* helpMenu = new tHelpMenu(this);
