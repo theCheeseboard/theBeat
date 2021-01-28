@@ -45,7 +45,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     ui->listWidget->selectionModel()->setCurrentIndex(ui->listWidget->model()->index(0, 0), QItemSelectionModel::SelectCurrent);
     ui->useSsdsCheckbox->setChecked(d->settings.value("appearance/useSsds").toBool());
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     if (d->settings.value("theme/mode").toString() == "light") {
         ui->lightButton->setChecked(true);
     } else {

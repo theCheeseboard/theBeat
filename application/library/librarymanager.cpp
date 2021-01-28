@@ -75,7 +75,7 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
         db.exec("INSERT INTO version(version) VALUES(1)");
 
         //Also add Silly to the playlist
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
         StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.mp3")));
 #else
         StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.ogg")));
