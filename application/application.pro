@@ -88,7 +88,13 @@ macx {
     plugins.files = ../plugins/AvFoundationPlugin/libAvFoundationPlugin.dylib
     plugins.path = Contents/AppPlugins/
 
-    QMAKE_BUNDLE_DATA += plugins
+    icons.files = icons/contemporary-icons
+    icons.path = Contents/Resources/icons
+
+    defaults.files = defaults.conf
+    defaults.path = Contents/Resources
+
+    QMAKE_BUNDLE_DATA += plugins icons defaults
 
     QMAKE_POST_LINK += $$quote(cp $${PWD}/dmgicon.icns $${PWD}/app-dmg-background.png $${PWD}/node-appdmg-config*.json $${OUT_PWD}/..)
 }

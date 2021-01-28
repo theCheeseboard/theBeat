@@ -72,21 +72,29 @@ int main(int argc, char* argv[]) {
 
     a.registerCrashTrap();
 
-    tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
-    tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
-
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    //Set up the theming
+#if defined(Q_OS_WIN)
     a.setStyle(QStyleFactory::create("contemporary"));
+    a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
 
     QIcon::setThemeName("contemporary-icons");
     QIcon::setThemeSearchPaths({a.applicationDirPath() + "\\icons"});
 
-    new ThemeManager();
-#endif
+    tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
 
-#ifdef Q_OS_WIN
-    a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
+    new ThemeManager();
+#elif defined(Q_OS_MAC)
+    a.setStyle(QStyleFactory::create("contemporary"));
+
+    QIcon::setThemeName("contemporary-icons");
+    QIcon::setThemeSearchPaths({a.macOSBundlePath() + "/Contents/Resources/icons"});
+
+    tSettings::registerDefaults(a.macOSBundlePath() + "/Contents/Resources/defaults.conf");
+
+    new ThemeManager();
+//    a.setQuitOnLastWindowClosed(false);
+#else
+    tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
+    tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
 #endif
 
     StateManager::instance()->url()->registerHandler(new QtMultimediaUrlHandler());
