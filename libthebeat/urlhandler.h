@@ -20,10 +20,11 @@
 #ifndef URLHANDLER_H
 #define URLHANDLER_H
 
+#include "libthebeat_global.h"
 #include <QObject>
 
 class MediaItem;
-class UrlHandler : public QObject {
+class LIBTHEBEAT_EXPORT UrlHandler : public QObject {
         Q_OBJECT
     public:
         explicit UrlHandler(QObject* parent = nullptr);

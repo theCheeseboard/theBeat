@@ -20,12 +20,13 @@
 #ifndef URLMANAGER_H
 #define URLMANAGER_H
 
+#include "libthebeat_global.h"
 #include <QObject>
 
 class UrlHandler;
 class MediaItem;
 struct UrlManagerPrivate;
-class UrlManager : public QObject {
+class LIBTHEBEAT_EXPORT UrlManager : public QObject {
         Q_OBJECT
     public:
         explicit UrlManager(QObject* parent = nullptr);
