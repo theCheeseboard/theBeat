@@ -52,21 +52,24 @@ AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem()
 
     d->responder = [[AvFoundationResponder alloc] init:this];
 
-    NSError* error;
-    d->player = [[AVAudioPlayer alloc] initWithContentsOfURL:url.toNSURL() error:&error];
-    [d->player setDelegate:d->responder];
-
-    if (error) {
-        QTimer::singleShot(0, this, &AvFoundationMediaItem::error);
-        return;
-    }
-
     d->durationTimer = new QTimer();
     d->durationTimer->setInterval(50);
     connect(d->durationTimer, &QTimer::timeout, this, [=] {
         emit durationChanged();
         emit elapsedChanged();
     });
+
+    NSError* error;
+    d->player = [[AVAudioPlayer alloc] initWithContentsOfURL:url.toNSURL() error:&error];
+    [d->player setDelegate:d->responder];
+
+    if (error) {
+        tDebug("AvFoundationMediaItem") << "Playback error!";
+        tDebug("AvFoundationMediaItem") << QString::fromNSString([error localizedDescription]);
+        tDebug("AvFoundationMediaItem") << QString::fromNSString([error localizedFailureReason]);
+        QTimer::singleShot(0, this, &AvFoundationMediaItem::error);
+        return;
+    }
 
     [d->player prepareToPlay];
 

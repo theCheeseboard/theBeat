@@ -11,6 +11,11 @@ win32 {
         #WinLibCDPlugin
 }
 
+macx {
+#    SUBDIRS += \
+#        AvFoundationPlugin
+}
+
 
 #Determine whether to build Discord
 no-discord {
@@ -47,7 +52,3 @@ qtHaveModule(phonon4qt5) {
 DISTFILES += \
     plugins.pri
 
-macx {
-    SUBDIRS += \
-        AvFoundationPlugin
-}
