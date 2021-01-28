@@ -165,6 +165,7 @@ INCLUDEPATH += $$PWD/../libthebeat
 DEPENDPATH += $$PWD/../libthebeat
 
 DISTFILES += \
+    Info.plist \
     com.vicr123.thebeat-blueprint.desktop \
     com.vicr123.thebeat.desktop \
     defaults.conf \

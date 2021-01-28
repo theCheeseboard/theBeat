@@ -87,9 +87,11 @@ MainWindow::MainWindow(QWidget* parent)
     ui->topWidget->raise();
     ui->topWidget->move(0, 0);
 
-    ui->menuBar->setVisible(false);
+#ifdef Q_OS_MAC
     ui->menuBar->addMenu(new tHelpMenu(this));
-
+    ui->menuButton->setVisible(false);
+#else
+    ui->menuBar->setVisible(false);
     QMenu* menu = new QMenu(this);
 
     tHelpMenu* helpMenu = new tHelpMenu(this);
@@ -129,6 +131,9 @@ MainWindow::MainWindow(QWidget* parent)
 #endif
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
+#endif
+
+
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
     ui->queueStack->setCurrentAnimation(tStackedWidget::Fade);
     this->setWindowIcon(ui->menuButton->windowIcon());
