@@ -42,7 +42,7 @@ void PluginManager::load() {
     searchPaths.append(qApp->applicationDirPath() + "/../../plugins");
     searchPaths.append(qApp->applicationDirPath() + "/plugins");
 #elif defined(Q_OS_MAC)
-    searchPaths.append(tApplication::macOSBundlePath() + "/Contents/plugins");
+    searchPaths.append(tApplication::macOSBundlePath() + "/Contents/AppPlugins");
     searchPaths.append(tApplication::macOSBundlePath() + "/../../plugins");
 #endif
 

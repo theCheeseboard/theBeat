@@ -31,6 +31,7 @@ jobs:
         extra-plugins-linux: "styles/libContemporary.so"
         image-name-linux: theBeat-linux.AppImage
         app-bundle-mac: "application/theBeat.app"
+        embed-libraries-mac: "tag"
     - uses: actions/upload-artifact@v1
       name: Upload Artifact to GitHub Actions
       with:

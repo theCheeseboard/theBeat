@@ -85,6 +85,11 @@ macx {
     INCLUDEPATH += "/usr/local/include/the-libs" "/usr/local/include"
     LIBS += -L/usr/local/lib -lthe-libs -ltag
 
+    plugins.files = ../plugins/AvFoundationPlugin/libAvFoundationPlugin.dylib
+    plugins.path = Contents/AppPlugins/
+
+    QMAKE_BUNDLE_DATA += plugins
+
     QMAKE_POST_LINK += $$quote(cp $${PWD}/dmgicon.icns $${PWD}/app-dmg-background.png $${PWD}/node-appdmg-config*.json $${OUT_PWD}/..)
 }
 
