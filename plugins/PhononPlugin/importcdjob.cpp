@@ -21,6 +21,7 @@
 
 #include <QProcess>
 #include <QTemporaryDir>
+#include <tlogger.h>
 #include "importcdjobwidget.h"
 #include <cdio/paranoia/paranoia.h>
 #include <tnotification.h>
@@ -128,6 +129,9 @@ void ImportCdJob::performNextAction() {
         connect(process, &QProcess::readyRead, this, [ = ] {
             while (process->canReadLine()) {
                 QString line = process->readLine();
+
+                tDebug("ImportCdJob") << line;
+
                 QStringList parts = line.split(" ", Qt::SkipEmptyParts);
                 if (parts.first() != "##:") continue;
                 if (parts.at(2) != "[read]") continue;
@@ -148,7 +152,15 @@ void ImportCdJob::performNextAction() {
             }
 
             //Invoke ffmpeg to convert the audio files
-            QString endFile = d->outputDir.filePath(QStringLiteral("%1 %2.%3").arg(trackInfo->track() + 1, 2, 10, QLatin1Char('0')).arg(trackInfo->title()).arg("ogg"));
+            QString filename = QStringLiteral("%1 %2.%3").arg(trackInfo->track() + 1, 2, 10, QLatin1Char('0')).arg(trackInfo->title()).arg("ogg");
+
+            //Make sure the filename does not contain special characters
+            for (QChar& c : filename) {
+                if (!c.isLetterOrNumber() && c != "." && c != " ") c = '_';
+            }
+
+            QString endFile = d->outputDir.filePath(filename);
+
             QProcess* ffmpeg = new QProcess();
             ffmpeg->setWorkingDirectory(d->workDir.path());
             connect(ffmpeg, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
@@ -165,8 +177,12 @@ void ImportCdJob::performNextAction() {
                 map.insert("TRACKNUMBER", TagLib::StringList(QString::number(trackInfo->track() + 1).toStdString().data()));
 
                 TagLib::FileRef file(endFile.toStdString().data());
-                file.file()->setProperties(map);
-                file.save();
+                if (file.file()) {
+                    file.file()->setProperties(map);
+                    file.save();
+                } else {
+                    //Hmm, something is wrong...
+                }
 
                 //TODO: Add the file to the library
 
@@ -183,7 +199,7 @@ void ImportCdJob::performNextAction() {
         if (d->readSpeed != -1) {
             paranoiaArgs.append({"-S", QString::number(d->readSpeed)});
         }
-        paranoiaArgs.append({"--force-cdrom-device", "/dev/" + d->blockDevice, "--", QString::number(d->nextTrack), "track.wav"});
+        paranoiaArgs.append({"--force-cdrom-device", d->blockDevice, "--", QString::number(d->nextTrack), "track.wav"});
         process->start("cdparanoia", paranoiaArgs);
     } else {
         d->state = Finished;
