@@ -4,7 +4,7 @@ on:
   push:
     branches: 
       - master
-      - rewrite
+      - blueprint
 
 jobs:
   build:
