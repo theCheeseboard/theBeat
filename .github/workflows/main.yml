@@ -22,6 +22,8 @@ jobs:
     - uses: vicr123/contemporary-theme/actions/build@master
       name: Build Contemporary
     - uses: actions/checkout@v1
+      with:
+        submodules: 'recursive'
     - uses: vicr123/the-libs/build@actions
       name: "Build Project"
     - name: "Prepackage Project (macOS)"
