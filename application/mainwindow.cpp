@@ -39,6 +39,7 @@
 #include <QInputDialog>
 #include <thelpmenu.h>
 #include <tjobmanager.h>
+#include <sourcemanager.h>
 #include "pluginmanager.h"
 #include "settingsdialog.h"
 
@@ -244,6 +245,8 @@ MainWindow::MainWindow(QWidget* parent)
     });
     StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(d->settings.value("notifications/trackChange").toBool());
     tCsdGlobal::setCsdsEnabled(!d->settings.value("appearance/useSsds").toBool());
+
+    StateManager::instance()->sources()->setPadTop(ui->topWidget->sizeHint().height());
 
     d->plugins.load();
 }

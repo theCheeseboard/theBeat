@@ -23,6 +23,7 @@
 
 struct SourceManagerPrivate {
     QList<PluginMediaSource*> sources;
+    int padTop;
 };
 
 SourceManager::SourceManager(QObject* parent) : QObject(parent) {
@@ -42,4 +43,12 @@ void SourceManager::removeSource(PluginMediaSource* source) {
     if (!d->sources.contains(source)) return;
     d->sources.removeOne(source);
     emit sourceRemoved(source);
+}
+
+int SourceManager::padTop() {
+    return d->padTop;
+}
+
+void SourceManager::setPadTop(int padTop) {
+    d->padTop = padTop;
 }

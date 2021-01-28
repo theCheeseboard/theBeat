@@ -75,7 +75,7 @@ OtherSourcesWidget::~OtherSourcesWidget() {
 }
 
 void OtherSourcesWidget::setTopPadding(int padding) {
-    this->layout()->setContentsMargins(0, padding, 0, 0);
+    ui->sourcesLayout->setContentsMargins(0, padding, 0, 0);
 }
 
 void OtherSourcesWidget::on_sourcesList_currentRowChanged(int currentRow) {

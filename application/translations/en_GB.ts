@@ -328,13 +328,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="450"/>
-        <location filename="../mainwindow.cpp" line="409"/>
+        <location filename="../mainwindow.cpp" line="412"/>
         <source>Open URL</source>
         <translation>Open URL</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="459"/>
-        <location filename="../mainwindow.cpp" line="197"/>
+        <location filename="../mainwindow.cpp" line="198"/>
         <source>Skip Back</source>
         <translation>Skip Back</translation>
     </message>
@@ -385,8 +385,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="483"/>
-        <location filename="../mainwindow.cpp" line="205"/>
-        <location filename="../mainwindow.cpp" line="219"/>
+        <location filename="../mainwindow.cpp" line="206"/>
+        <location filename="../mainwindow.cpp" line="220"/>
         <source>Play</source>
         <translation>Play</translation>
     </message>
@@ -396,22 +396,22 @@
         <translation>Space</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="214"/>
+        <location filename="../mainwindow.cpp" line="215"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="226"/>
+        <location filename="../mainwindow.cpp" line="227"/>
         <source>Skip Next</source>
         <translation>Skip Next</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="381"/>
+        <location filename="../mainwindow.cpp" line="384"/>
         <source>For &quot;%1&quot;</source>
         <translation>For &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="383"/>
+        <location filename="../mainwindow.cpp" line="386"/>
         <source>For %n items</source>
         <translation>
             <numerusform>For %n item</numerusform>
@@ -419,22 +419,22 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="385"/>
+        <location filename="../mainwindow.cpp" line="388"/>
         <source>Remove from Queue</source>
         <translation>Remove from Queue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="398"/>
+        <location filename="../mainwindow.cpp" line="401"/>
         <source>For Queue</source>
         <translation>For Queue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="399"/>
+        <location filename="../mainwindow.cpp" line="402"/>
         <source>Clear Queue</source>
         <translation>Clear Queue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="409"/>
+        <location filename="../mainwindow.cpp" line="412"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
@@ -442,12 +442,12 @@
 <context>
     <name>OtherSourcesWidget</name>
     <message>
-        <location filename="../othersourceswidget.ui" line="93"/>
+        <location filename="../othersourceswidget.ui" line="103"/>
         <source>No other sources available</source>
         <translation>No other sources available</translation>
     </message>
     <message>
-        <location filename="../othersourceswidget.ui" line="103"/>
+        <location filename="../othersourceswidget.ui" line="113"/>
         <source>There&apos;s nothing else to play right now</source>
         <translation>There&apos;s nothing else to play right now</translation>
     </message>

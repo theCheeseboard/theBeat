@@ -47,10 +47,19 @@ class CdChecker : public QWidget {
 
         void on_importCdButton_clicked();
 
+        void on_musicBrainzStack_currentChanged(int arg1);
+
+        void on_releaseBox_currentIndexChanged(int index);
+
+        void on_playAllButton_clicked();
+
+        void on_shuffleAllButton_clicked();
+
     private:
         Ui::CdChecker* ui;
         CdCheckerPrivate* d;
 
+        void resizeEvent(QResizeEvent* event);
         bool eventFilter(QObject* watched, QEvent* event);
 
         void updateTrackListing();

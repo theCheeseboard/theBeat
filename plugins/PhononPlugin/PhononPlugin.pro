@@ -17,6 +17,9 @@ unix {
         message("Building with libmusicbrainz5 support")
         PKGCONFIG += libmusicbrainz5
         DEFINES += HAVE_MUSICBRAINZ
+
+        SOURCES += musicbrainzreleasemodel.cpp
+        HEADERS += musicbrainzreleasemodel.h
     } else {
         message("libmusicbrainz5 not found on this system");
     }
