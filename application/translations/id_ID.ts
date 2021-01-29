@@ -21,8 +21,8 @@
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="252"/>
-        <source>Shufle All</source>
-        <translation>Acak Semua</translation>
+        <source>Shuffle All</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="276"/>
@@ -289,89 +289,99 @@
         <translation>Tidak Ada!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="403"/>
+        <location filename="../mainwindow.ui" line="408"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="421"/>
+        <source>Playback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="436"/>
         <source>File Bug</source>
         <translation>Laporkan Bug</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="412"/>
+        <location filename="../mainwindow.ui" line="445"/>
         <source>Sources</source>
         <translation>Kode Sumber</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="421"/>
+        <location filename="../mainwindow.ui" line="454"/>
         <source>About</source>
         <translation>Tentang</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="430"/>
+        <location filename="../mainwindow.ui" line="463"/>
         <source>Exit</source>
         <translation>Keluar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="433"/>
+        <location filename="../mainwindow.ui" line="466"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="442"/>
+        <location filename="../mainwindow.ui" line="478"/>
         <source>Open File</source>
         <translation>Buka File</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="445"/>
+        <location filename="../mainwindow.ui" line="481"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="450"/>
-        <location filename="../mainwindow.cpp" line="412"/>
+        <location filename="../mainwindow.ui" line="486"/>
+        <location filename="../mainwindow.cpp" line="420"/>
         <source>Open URL</source>
         <translation>Buka URL</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="459"/>
-        <location filename="../mainwindow.cpp" line="198"/>
+        <location filename="../mainwindow.ui" line="495"/>
+        <location filename="../mainwindow.cpp" line="206"/>
         <source>Skip Back</source>
         <translation>Lompat Mundur</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="462"/>
+        <location filename="../mainwindow.ui" line="498"/>
         <source>Shift+Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="474"/>
+        <location filename="../mainwindow.ui" line="510"/>
         <source>Shift+Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="495"/>
+        <location filename="../mainwindow.ui" line="531"/>
         <source>Add to Library</source>
         <translation>Tambahkan ke Pustaka</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="504"/>
+        <location filename="../mainwindow.ui" line="540"/>
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="507"/>
+        <location filename="../mainwindow.ui" line="543"/>
         <source>Ctrl+,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="516"/>
+        <location filename="../mainwindow.ui" line="555"/>
         <source>theBeat Help</source>
         <translation>Bantuan theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="519"/>
+        <location filename="../mainwindow.ui" line="558"/>
         <source>F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="471"/>
+        <location filename="../mainwindow.ui" line="507"/>
         <source>Skip Forward</source>
         <translation>Lompat Maju</translation>
     </message>
@@ -381,56 +391,56 @@
         <translation>Pilih trek atau drop file di sini!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="483"/>
-        <location filename="../mainwindow.cpp" line="206"/>
-        <location filename="../mainwindow.cpp" line="220"/>
+        <location filename="../mainwindow.ui" line="519"/>
+        <location filename="../mainwindow.cpp" line="214"/>
+        <location filename="../mainwindow.cpp" line="228"/>
         <source>Play</source>
         <translation>Mainkan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="486"/>
+        <location filename="../mainwindow.ui" line="522"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="215"/>
+        <location filename="../mainwindow.cpp" line="223"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="227"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Skip Next</source>
         <translation>Lewati</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="384"/>
+        <location filename="../mainwindow.cpp" line="392"/>
         <source>For &quot;%1&quot;</source>
         <translation>Untuk &quot;%n&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="386"/>
+        <location filename="../mainwindow.cpp" line="394"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Untuk %n item</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="388"/>
+        <location filename="../mainwindow.cpp" line="396"/>
         <source>Remove from Queue</source>
         <translation>Hapus dari Antrian</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="401"/>
+        <location filename="../mainwindow.cpp" line="409"/>
         <source>For Queue</source>
         <translation>Untuk Antrian</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="402"/>
+        <location filename="../mainwindow.cpp" line="410"/>
         <source>Clear Queue</source>
         <translation>Bersihkan Antrian</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="412"/>
+        <location filename="../mainwindow.cpp" line="420"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -592,8 +602,8 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
-        <source>Shufle All</source>
-        <translation>Acak Semua</translation>
+        <source>Shuffle All</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
@@ -676,12 +686,17 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation>Pemutar Audio</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="98"/>
+        <location filename="../main.cpp" line="110"/>
+        <source>Force theBeat to use the Contemporary colour palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="111"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="98"/>
+        <location filename="../main.cpp" line="111"/>
         <source>File to open</source>
         <translation>File untuk dibuka</translation>
     </message>

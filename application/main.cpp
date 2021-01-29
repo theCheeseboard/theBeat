@@ -72,6 +72,8 @@ int main(int argc, char* argv[]) {
 
     a.registerCrashTrap();
 
+    bool shouldLoadThemeManager = false;
+
 #if defined(Q_OS_WIN)
     a.setStyle(QStyleFactory::create("contemporary"));
     a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
@@ -81,7 +83,7 @@ int main(int argc, char* argv[]) {
 
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
 
-    new ThemeManager();
+    shouldLoadThemeManager = true;
 #elif defined(Q_OS_MAC)
     a.setStyle(QStyleFactory::create("contemporary"));
 
@@ -90,7 +92,7 @@ int main(int argc, char* argv[]) {
 
     tSettings::registerDefaults(a.macOSBundlePath() + "/Contents/Resources/defaults.conf");
 
-    new ThemeManager();
+    shouldLoadThemeManager = true;
 //    a.setQuitOnLastWindowClosed(false);
 #else
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
@@ -105,8 +107,17 @@ int main(int argc, char* argv[]) {
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addVersionOption();
+    parser.addOption({"force-contemporary-palette", a.translate("main", "Force theBeat to use the Contemporary colour palette")});
     parser.addPositionalArgument(a.translate("main", "file"), a.translate("main", "File to open"), QStringLiteral("[%1]").arg(a.translate("main", "file")));
     parser.process(a);
+
+    if (parser.isSet("force-contemporary-palette")) {
+        shouldLoadThemeManager = true;
+    }
+
+    if (shouldLoadThemeManager) {
+        new ThemeManager();
+    }
 
     MainWindow* w = new MainWindow();
 

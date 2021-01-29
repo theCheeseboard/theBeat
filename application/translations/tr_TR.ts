@@ -21,8 +21,8 @@
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="252"/>
-        <source>Shufle All</source>
-        <translation>Tümünü karıştır</translation>
+        <source>Shuffle All</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="276"/>
@@ -289,89 +289,99 @@
         <translation>Hiçbir şey var buraya!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="403"/>
+        <location filename="../mainwindow.ui" line="408"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="421"/>
+        <source>Playback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="436"/>
         <source>File Bug</source>
         <translation>Dosya Hatası</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="412"/>
+        <location filename="../mainwindow.ui" line="445"/>
         <source>Sources</source>
         <translation>Kaynaklar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="421"/>
+        <location filename="../mainwindow.ui" line="454"/>
         <source>About</source>
         <translation>Hakkında</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="430"/>
+        <location filename="../mainwindow.ui" line="463"/>
         <source>Exit</source>
         <translation>Vazgeç</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="433"/>
+        <location filename="../mainwindow.ui" line="466"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="442"/>
+        <location filename="../mainwindow.ui" line="478"/>
         <source>Open File</source>
         <translation>Dosya Aç</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="445"/>
+        <location filename="../mainwindow.ui" line="481"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="450"/>
-        <location filename="../mainwindow.cpp" line="412"/>
+        <location filename="../mainwindow.ui" line="486"/>
+        <location filename="../mainwindow.cpp" line="420"/>
         <source>Open URL</source>
         <translation>Link Aç</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="459"/>
-        <location filename="../mainwindow.cpp" line="198"/>
+        <location filename="../mainwindow.ui" line="495"/>
+        <location filename="../mainwindow.cpp" line="206"/>
         <source>Skip Back</source>
         <translation>Geriye Atla</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="462"/>
+        <location filename="../mainwindow.ui" line="498"/>
         <source>Shift+Left</source>
         <translation>ÜstKarakter+Sol</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="474"/>
+        <location filename="../mainwindow.ui" line="510"/>
         <source>Shift+Right</source>
         <translation>ÜstKarakter+Sağ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="495"/>
+        <location filename="../mainwindow.ui" line="531"/>
         <source>Add to Library</source>
         <translation>Kütüphaneye ekle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="504"/>
+        <location filename="../mainwindow.ui" line="540"/>
         <source>Settings</source>
         <translation>Ayarlar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="507"/>
+        <location filename="../mainwindow.ui" line="543"/>
         <source>Ctrl+,</source>
         <translation>Ctrl+,</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="516"/>
+        <location filename="../mainwindow.ui" line="555"/>
         <source>theBeat Help</source>
         <translation>theBeat Yardım</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="519"/>
+        <location filename="../mainwindow.ui" line="558"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="471"/>
+        <location filename="../mainwindow.ui" line="507"/>
         <source>Skip Forward</source>
         <translation>Ileri atlamak</translation>
     </message>
@@ -381,56 +391,56 @@
         <translation>Bir şarkı seçin ya da buraya bir şey bırakın!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="483"/>
-        <location filename="../mainwindow.cpp" line="206"/>
-        <location filename="../mainwindow.cpp" line="220"/>
+        <location filename="../mainwindow.ui" line="519"/>
+        <location filename="../mainwindow.cpp" line="214"/>
+        <location filename="../mainwindow.cpp" line="228"/>
         <source>Play</source>
         <translation>Oyna</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="486"/>
+        <location filename="../mainwindow.ui" line="522"/>
         <source>Space</source>
         <translation>Boşluk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="215"/>
+        <location filename="../mainwindow.cpp" line="223"/>
         <source>Pause</source>
         <translation>Duraklat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="227"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Skip Next</source>
         <translation>Sonraki at</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="384"/>
+        <location filename="../mainwindow.cpp" line="392"/>
         <source>For &quot;%1&quot;</source>
         <translation>&quot;%1&quot; için</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="386"/>
+        <location filename="../mainwindow.cpp" line="394"/>
         <source>For %n items</source>
         <translation>
             <numerusform>%n öğe için</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="388"/>
+        <location filename="../mainwindow.cpp" line="396"/>
         <source>Remove from Queue</source>
         <translation>Sıradan Kaldır</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="401"/>
+        <location filename="../mainwindow.cpp" line="409"/>
         <source>For Queue</source>
         <translation>Sıra için</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="402"/>
+        <location filename="../mainwindow.cpp" line="410"/>
         <source>Clear Queue</source>
         <translation>Kuyruğu Temizle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="412"/>
+        <location filename="../mainwindow.cpp" line="420"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
@@ -592,8 +602,8 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
-        <source>Shufle All</source>
-        <translation>Tümünü karıştır</translation>
+        <source>Shuffle All</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
@@ -676,12 +686,17 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>Ses oynatıcı</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="98"/>
+        <location filename="../main.cpp" line="110"/>
+        <source>Force theBeat to use the Contemporary colour palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="111"/>
         <source>file</source>
         <translation>dosya</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="98"/>
+        <location filename="../main.cpp" line="111"/>
         <source>File to open</source>
         <translation>Açılacak dosya</translation>
     </message>
