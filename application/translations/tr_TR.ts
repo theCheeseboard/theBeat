@@ -22,7 +22,7 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="252"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Karıştır</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="276"/>
@@ -291,12 +291,12 @@
     <message>
         <location filename="../mainwindow.ui" line="408"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri çalma</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="436"/>
@@ -603,7 +603,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Karıştır</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
@@ -688,7 +688,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     <message>
         <location filename="../main.cpp" line="110"/>
         <source>Force theBeat to use the Contemporary colour palette</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat&apos;i çağdaş renk paletini kullanmaya zorlayın</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="111"/>
