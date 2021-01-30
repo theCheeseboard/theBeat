@@ -328,6 +328,14 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     ui->queueWidget->setContentsMargins(0, ui->topWidget->height(), 0, 0);
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+#ifdef Q_OS_MAC
+    this->hide();
+    event->accept();
+#endif
+}
+
 bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
     if (watched == ui->queueWidget) {
         if (event->type() == QEvent::DragEnter) {

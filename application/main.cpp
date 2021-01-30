@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
     tSettings::registerDefaults(a.macOSBundlePath() + "/Contents/Resources/defaults.conf");
 
     shouldLoadThemeManager = true;
-//    a.setQuitOnLastWindowClosed(false);
+    a.setQuitOnLastWindowClosed(false);
 #else
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
     tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
@@ -138,6 +138,10 @@ int main(int argc, char* argv[]) {
                 w->activateWindow();
             }
         }
+    });
+    QObject::connect(&a, &tApplication::dockIconClicked, [=] {
+        w->show();
+        w->activateWindow();
     });
 
     QStringList files;
