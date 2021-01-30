@@ -21,31 +21,31 @@
     </message>
     <message>
         <source>Accessing MusicBrainz...</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang truy cập vào MusicBrainz...</translation>
     </message>
     <message>
         <source>CD NOT FOUND</source>
-        <translation type="unfinished"></translation>
+        <translation>KHÔNG TÌM THẤY ĐĨA CD</translation>
     </message>
     <message>
         <source>This CD was not found on the MusicBrainz CD Database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Đĩa CD này không thể tìm được trong cơ sở dữ liệu MusicBrainz.</translation>
     </message>
     <message>
         <source>SELECT CORRECT ALBUM</source>
-        <translation type="unfinished"></translation>
+        <translation>CHỌN ALBUM ĐÚNG</translation>
     </message>
     <message>
         <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Được tìm hơn một kết quả trên MusicBrainz cho dĩa CD này. Chọn CD đúng để có thông tin chính xác về bản nhạc.</translation>
     </message>
     <message>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Phát tất cả</translation>
     </message>
     <message>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Phát ngẫu nhiên</translation>
     </message>
 </context>
 <context>
@@ -145,15 +145,15 @@
     <name>MusicBrainzReleaseModel</name>
     <message>
         <source>Released: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Phát hành: %1</translation>
     </message>
     <message>
         <source>Barcode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mã vạch: %1</translation>
     </message>
     <message>
         <source>Country: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Quốc gia: %1</translation>
     </message>
 </context>
 <context>
