@@ -17,43 +17,34 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef STATEMANAGER_H
-#define STATEMANAGER_H
+#include "plugin.h"
 
-#include "libthebeat_global.h"
-#include <QObject>
+#include <QDebug>
+#include <statemanager.h>
+#include <sourcemanager.h>
+#include <pluginmediasource.h>
+#include <QIcon>
+#include <tapplication.h>
+#include "mainwindowtouchbar.h"
 
-class Playlist;
-class SourceManager;
-class BurnManager;
-class VisualisationManager;
-class UrlManager;
+struct PluginPrivate {
 
-struct StateManagerPrivate;
-class MainWindow;
-class LIBTHEBEAT_EXPORT StateManager : public QObject {
-        Q_OBJECT
-    public:
-        explicit StateManager(QObject* parent = nullptr);
-
-        static StateManager* instance();
-
-        Playlist* playlist();
-        SourceManager* sources();
-        BurnManager* burn();
-        VisualisationManager* visualisation();
-        UrlManager* url();
-
-        QWidget* mainWindow();
-
-    signals:
-
-    protected:
-        friend MainWindow;
-        void setMainWindow(QWidget* mainWindow);
-
-    private:
-        StateManagerPrivate* d;
 };
 
-#endif // STATEMANAGER_H
+Plugin::Plugin() {
+    d = new PluginPrivate();
+    tApplication::addPluginTranslator("macintegration");
+}
+
+Plugin::~Plugin() {
+    delete d;
+}
+
+
+void Plugin::activate() {
+    new MainWindowTouchBar(StateManager::instance()->mainWindow());
+}
+
+void Plugin::deactivate() {
+
+}

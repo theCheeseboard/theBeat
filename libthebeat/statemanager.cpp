@@ -31,6 +31,8 @@ struct StateManagerPrivate {
     BurnManager* burn;
     VisualisationManager* visualisation;
     UrlManager* url;
+
+    QWidget* mainWindow;
 };
 
 StateManager::StateManager(QObject* parent) : QObject(parent) {
@@ -65,4 +67,14 @@ VisualisationManager* StateManager::visualisation() {
 
 UrlManager* StateManager::url() {
     return d->url;
+}
+
+QWidget *StateManager::mainWindow()
+{
+    return d->mainWindow;
+}
+
+void StateManager::setMainWindow(QWidget *mainWindow)
+{
+    d->mainWindow = mainWindow;
 }

@@ -12,8 +12,8 @@ win32 {
 }
 
 macx {
-#    SUBDIRS += \
-#        AvFoundationPlugin
+    SUBDIRS += \
+        MacIntegration
 }
 
 

@@ -6,11 +6,13 @@
 #include <QMediaMetaData>
 #include <statemanager.h>
 #include <playlist.h>
+#include <sourcemanager.h>
 #include <mediaitem.h>
-#include <the-libs_global.h>
+#include <tvariantanimation.h>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <visualisationmanager.h>
+#include <tcsdtools.h>
 #include "common.h"
 
 struct CurrentTrackPopoverPrivate {
@@ -20,6 +22,10 @@ struct CurrentTrackPopoverPrivate {
     QList<QLabel*> metadataInfo;
     QString pendingMetadataTitle;
     int currentRow = 0;
+
+    tCsdTools csd;
+    QWidget* backing = nullptr;
+    QWidget* windowDragWidget = nullptr;
 };
 
 CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
@@ -50,6 +56,20 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
 CurrentTrackPopover::~CurrentTrackPopover() {
     delete d;
     delete ui;
+}
+
+void CurrentTrackPopover::setBacking(QWidget *backing)
+{
+    d->backing = backing;
+    this->window()->installEventFilter(this);
+
+    d->windowDragWidget = new QWidget();
+    d->windowDragWidget->setParent(this);
+    d->windowDragWidget->move(0, 0);
+    d->windowDragWidget->resize(d->backing->width(), StateManager::instance()->sources()->padTop());
+    d->windowDragWidget->show();
+
+    d->csd.installMoveAction(d->windowDragWidget);
 }
 
 void CurrentTrackPopover::updateCurrentItem() {
@@ -217,6 +237,38 @@ void CurrentTrackPopover::paintEvent(QPaintEvent* event) {
     visRect.moveLeft(0);
     visRect.moveBottom(this->height());
     StateManager::instance()->visualisation()->paint(&painter, this->palette().color(QPalette::WindowText), visRect);
+}
+
+bool CurrentTrackPopover::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == this->window()) {
+        if (event->type() == QEvent::Resize) {
+            d->backing->resize(d->backing->parentWidget()->size());
+            d->windowDragWidget->resize(d->backing->width(), StateManager::instance()->sources()->padTop());
+        } else if (event->type() == QEvent::Close) {
+            //Close zen mode
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(d->backing);
+            effect->setOpacity(1);
+            d->backing->setGraphicsEffect(effect);
+
+            tVariantAnimation* opacityAnim = new tVariantAnimation(d->backing);
+            opacityAnim->setStartValue(1.0);
+            opacityAnim->setEndValue(0.0);
+            opacityAnim->setDuration(500);
+            opacityAnim->setEasingCurve(QEasingCurve::OutCubic);
+            connect(opacityAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+                effect->setOpacity(value.toReal());
+            });
+            connect(opacityAnim, &tVariantAnimation::finished, this, [=] {
+                d->backing->deleteLater();
+            });
+            opacityAnim->start();
+
+            event->ignore();
+            return true;
+        }
+    }
+    return false;
 }
 
 void CurrentTrackPopover::on_skipBackButton_clicked() {

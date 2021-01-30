@@ -25,6 +25,8 @@
 #include <tvariantanimation.h>
 #include <tpopover.h>
 #include <QMenu>
+#include <QMainWindow>
+#include <QGraphicsOpacityEffect>
 #include <tsettings.h>
 #include "currenttrackpopover.h"
 #include "common.h"
@@ -274,12 +276,52 @@ bool ControlStrip::eventFilter(QObject* watched, QEvent* event) {
 
 void ControlStrip::on_upButton_clicked() {
     CurrentTrackPopover* track = new CurrentTrackPopover();
+
+#ifdef Q_OS_MAC
+    QMainWindow* parentWindow = static_cast<QMainWindow*>(this->window());
+
+    QWidget* backing = new QWidget();
+
+    QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(backing);
+    effect->setOpacity(0);
+    backing->setGraphicsEffect(effect);
+
+    tVariantAnimation* opacityAnim = new tVariantAnimation(backing);
+    opacityAnim->setStartValue(0.0);
+    opacityAnim->setEndValue(1.0);
+    opacityAnim->setDuration(500);
+    opacityAnim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(opacityAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+        effect->setOpacity(value.toReal());
+    });
+    connect(opacityAnim, &tVariantAnimation::finished, this, [=] {
+        opacityAnim->deleteLater();
+        effect->deleteLater();
+    });
+    opacityAnim->start();
+
+    QBoxLayout* backingLayout = new QBoxLayout(QBoxLayout::LeftToRight);
+    backingLayout->setContentsMargins(0, 0, 0, 0);
+    backingLayout->addWidget(track);
+    backing->setLayout(backingLayout);
+
+    track->setParent(backing);
+
+    backing->setParent(parentWindow->centralWidget());
+    backing->resize(parentWindow->centralWidget()->size());
+    backing->move(0, 0);
+    backing->setAutoFillBackground(true);
+    backing->show();
+
+    track->setBacking(backing);
+#else
     tPopover* popover = new tPopover(track);
     popover->setPopoverSide(tPopover::Bottom);
     popover->setPopoverWidth(SC_DPI(-100));
     connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
     connect(popover, &tPopover::dismissed, track, &CurrentTrackPopover::deleteLater);
     popover->show(this->window());
+#endif
 }
 
 void ControlStrip::on_repeatOneButton_customContextMenuRequested(const QPoint& pos) {

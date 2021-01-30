@@ -17,43 +17,28 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef STATEMANAGER_H
-#define STATEMANAGER_H
+#ifndef PLUGIN_H
+#define PLUGIN_H
 
-#include "libthebeat_global.h"
-#include <QObject>
+#include <plugininterface.h>
 
-class Playlist;
-class SourceManager;
-class BurnManager;
-class VisualisationManager;
-class UrlManager;
-
-struct StateManagerPrivate;
-class MainWindow;
-class LIBTHEBEAT_EXPORT StateManager : public QObject {
+struct PluginPrivate;
+class Plugin : public QObject, public PluginInterface {
         Q_OBJECT
+        Q_PLUGIN_METADATA(IID PluginInterface_iid FILE "MacIntegration.json")
+        Q_INTERFACES(PluginInterface)
+
     public:
-        explicit StateManager(QObject* parent = nullptr);
-
-        static StateManager* instance();
-
-        Playlist* playlist();
-        SourceManager* sources();
-        BurnManager* burn();
-        VisualisationManager* visualisation();
-        UrlManager* url();
-
-        QWidget* mainWindow();
-
-    signals:
-
-    protected:
-        friend MainWindow;
-        void setMainWindow(QWidget* mainWindow);
+        Plugin();
+        ~Plugin();
 
     private:
-        StateManagerPrivate* d;
+        PluginPrivate* d;
+
+        // PluginInterface interface
+    public:
+        void activate();
+        void deactivate();
 };
 
-#endif // STATEMANAGER_H
+#endif // PLUGIN_H

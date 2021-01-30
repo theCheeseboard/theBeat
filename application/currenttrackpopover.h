@@ -15,6 +15,8 @@ class CurrentTrackPopover : public QWidget {
         explicit CurrentTrackPopover(QWidget* parent = nullptr);
         ~CurrentTrackPopover();
 
+        void setBacking(QWidget* backing);
+
     private slots:
         void on_skipBackButton_clicked();
 
@@ -40,6 +42,7 @@ class CurrentTrackPopover : public QWidget {
 
         void resizeEvent(QResizeEvent* event);
         void paintEvent(QPaintEvent* event);
+        bool eventFilter(QObject* watched, QEvent* event);
 };
 
 #endif // CURRENTTRACKPOPOVER_H
