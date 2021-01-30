@@ -22,7 +22,7 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="252"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Phát ngẫu nhiên</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="276"/>
@@ -90,12 +90,12 @@
     <message>
         <location filename="../controlstrip.cpp" line="99"/>
         <source>Playback Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tùy chọn phát</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="100"/>
         <source>Pause after current track</source>
-        <translation type="unfinished"></translation>
+        <translation>Tạm dừng sau bài hát này</translation>
     </message>
 </context>
 <context>
@@ -291,12 +291,12 @@
     <message>
         <location filename="../mainwindow.ui" line="408"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Tệp</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Phát lại</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="436"/>
@@ -476,7 +476,7 @@
     <message>
         <location filename="../visualisations/scopevisualisation.cpp" line="38"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Sóng</translation>
     </message>
 </context>
 <context>
@@ -603,7 +603,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Phát ngẫu nhiên</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
@@ -688,7 +688,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../main.cpp" line="110"/>
         <source>Force theBeat to use the Contemporary colour palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Bắt buộc theBeat phải sử dụng bảng màu Contemporary</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="111"/>
