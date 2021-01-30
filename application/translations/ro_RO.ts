@@ -80,22 +80,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="79"/>
+        <location filename="../controlstrip.cpp" line="81"/>
         <source>Repeat Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="80"/>
+        <location filename="../controlstrip.cpp" line="82"/>
         <source>Repeat Play Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="97"/>
+        <location filename="../controlstrip.cpp" line="99"/>
         <source>Playback Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="98"/>
+        <location filename="../controlstrip.cpp" line="100"/>
         <source>Pause after current track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -103,30 +103,30 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="110"/>
+        <location filename="../currenttrackpopover.cpp" line="130"/>
         <source>Album</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="111"/>
+        <location filename="../currenttrackpopover.cpp" line="131"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="116"/>
-        <location filename="../currenttrackpopover.cpp" line="118"/>
-        <location filename="../currenttrackpopover.cpp" line="121"/>
+        <location filename="../currenttrackpopover.cpp" line="136"/>
+        <location filename="../currenttrackpopover.cpp" line="138"/>
+        <location filename="../currenttrackpopover.cpp" line="141"/>
         <source>Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="116"/>
+        <location filename="../currenttrackpopover.cpp" line="136"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="122"/>
+        <location filename="../currenttrackpopover.cpp" line="142"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -341,13 +341,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="486"/>
-        <location filename="../mainwindow.cpp" line="420"/>
+        <location filename="../mainwindow.cpp" line="430"/>
         <source>Open URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="495"/>
-        <location filename="../mainwindow.cpp" line="206"/>
+        <location filename="../mainwindow.cpp" line="208"/>
         <source>Skip Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -398,8 +398,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="519"/>
-        <location filename="../mainwindow.cpp" line="214"/>
-        <location filename="../mainwindow.cpp" line="228"/>
+        <location filename="../mainwindow.cpp" line="216"/>
+        <location filename="../mainwindow.cpp" line="230"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
@@ -409,22 +409,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="223"/>
+        <location filename="../mainwindow.cpp" line="225"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="235"/>
+        <location filename="../mainwindow.cpp" line="237"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="392"/>
+        <location filename="../mainwindow.cpp" line="402"/>
         <source>For &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="394"/>
+        <location filename="../mainwindow.cpp" line="404"/>
         <source>For %n items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -433,22 +433,22 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="396"/>
+        <location filename="../mainwindow.cpp" line="406"/>
         <source>Remove from Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="409"/>
+        <location filename="../mainwindow.cpp" line="419"/>
         <source>For Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="410"/>
+        <location filename="../mainwindow.cpp" line="420"/>
         <source>Clear Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="420"/>
+        <location filename="../mainwindow.cpp" line="430"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
