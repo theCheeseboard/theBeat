@@ -18,7 +18,7 @@ jobs:
       name: "Bootstrap Build"
       with:
         extra-deps-linux: "libtag1-dev"
-        extra-deps-mac: "taglib"
+        extra-deps-mac: "taglib libmusicbrainz"
     - uses: vicr123/contemporary-theme/actions/build@master
       name: Build Contemporary
     - uses: actions/checkout@v1
