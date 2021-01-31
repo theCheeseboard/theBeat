@@ -17,12 +17,15 @@ struct MainWindowTouchBarItem {
     ~MainWindowTouchBarItem();
 
     void prepareTouchBarItem(MainWindowTouchBarProvider* provider);
+    void setImage(NSImageName image);
 
     QString identifier;
     QAction* action;
 
     bool haveImage = false;;
     NSImageName image;
+
+    NSButton* button;
 
     NSTouchBarItem* touchBarItem;
 };
@@ -45,6 +48,8 @@ typedef QSharedPointer<MainWindowTouchBarItem> TouchBarItemPtr;
 
 // Create identifiers for button items.
 static NSTouchBarItemIdentifier playIdentifier = @"com.vicr123.thebeat.play";
+static NSTouchBarItemIdentifier skipBackIdentifier = @"com.vicr123.thebeat.skipback";
+static NSTouchBarItemIdentifier skipNextIdentifier = @"com.vicr123.thebeat.skipforward";
 
 @implementation MainWindowTouchBarProvider
 
@@ -57,8 +62,41 @@ static NSTouchBarItemIdentifier playIdentifier = @"com.vicr123.thebeat.play";
 
         //Initialise the action mapping
         QAction* playAction = new QAction(self.parentQObject);
+        playAction->setEnabled(false);
         QObject::connect(playAction, &QAction::triggered, self.parentQObject, [=] {
             StateManager::instance()->playlist()->playPause();
+        });
+
+        QAction* skipBackAction = new QAction(self.parentQObject);
+        skipBackAction->setEnabled(false);
+        QObject::connect(skipBackAction, &QAction::triggered, self.parentQObject, [=] {
+            StateManager::instance()->playlist()->previous();
+        });
+
+        QAction* skipNextAction = new QAction(self.parentQObject);
+        skipNextAction->setEnabled(false);
+        QObject::connect(skipNextAction, &QAction::triggered, self.parentQObject, [=] {
+            StateManager::instance()->playlist()->next();
+        });
+
+        TouchBarItemPtr playTouchBarItem(new MainWindowTouchBarItem(QString::fromNSString(playIdentifier), playAction, NSImageNameTouchBarPlayTemplate));
+        QObject::connect(StateManager::instance()->playlist(), &Playlist::stateChanged, self.parentQObject, [=](Playlist::State newState, Playlist::State oldState) {
+            bool enableActions = newState != Playlist::Stopped;
+            playAction->setEnabled(enableActions);
+            skipBackAction->setEnabled(enableActions);
+            skipNextAction->setEnabled(enableActions);
+
+            switch (newState) {
+                case Playlist::Playing:
+                    playTouchBarItem->setImage(NSImageNameTouchBarPauseTemplate);
+                    break;
+                case Playlist::Paused:
+                    playTouchBarItem->setImage(NSImageNameTouchBarPlayTemplate);
+                    break;
+                case Playlist::Stopped:
+                    playTouchBarItem->setImage(NSImageNameTouchBarPlayTemplate);
+                    break;
+            }
         });
 
         self.touchBarActionMapping = {
@@ -70,7 +108,9 @@ static NSTouchBarItemIdentifier playIdentifier = @"com.vicr123.thebeat.play";
 //            TouchBarItemPtr(new MainWindowTouchBarItem(QString::fromNSString(outpointIdentifier), ui->actionSet_Out_Point)),
 //            TouchBarItemPtr(new MainWindowTouchBarItem(QString::fromNSString(timelineIdentifier))),
 //            TouchBarItemPtr(new MainWindowTouchBarItem(QString::fromNSString(timelineBarIdentifier)))
-            TouchBarItemPtr(new MainWindowTouchBarItem(QString::fromNSString(playIdentifier), playAction, NSImageNameTouchBarPlayTemplate))
+            playTouchBarItem,
+            TouchBarItemPtr(new MainWindowTouchBarItem(QString::fromNSString(skipBackIdentifier), skipBackAction, NSImageNameTouchBarSkipBackTemplate)),
+            TouchBarItemPtr(new MainWindowTouchBarItem(QString::fromNSString(skipNextIdentifier), skipNextAction, NSImageNameTouchBarSkipAheadTemplate))
         };
 
         for (TouchBarItemPtr item : self.touchBarActionMapping) {
@@ -86,7 +126,7 @@ static NSTouchBarItemIdentifier playIdentifier = @"com.vicr123.thebeat.play";
     NSTouchBar *bar = [[NSTouchBar alloc] init];
     bar.delegate = self;
 
-    bar.defaultItemIdentifiers = @[playIdentifier];
+    bar.defaultItemIdentifiers = @[skipBackIdentifier, playIdentifier, skipNextIdentifier];
     bar.customizationRequiredItemIdentifiers = @[];
 //    bar.customizationAllowedItemIdentifiers = @[firstFrameIdentifier, lastFrameIdentifier, playIdentifier, inPointIdentifier, outpointIdentifier, renderIdentifier, timelineIdentifier, NSTouchBarItemIdentifierFlexibleSpace];
     [bar setCustomizationIdentifier:@"com.vicr123.thebeat.touchbar"];
@@ -216,7 +256,7 @@ void MainWindowTouchBarItem::prepareTouchBarItem(MainWindowTouchBarProvider* pro
         NSCustomTouchBarItem* item = [[NSCustomTouchBarItem alloc] initWithIdentifier:identifier.toNSString()];
         [item setCustomizationLabel:action->text().toNSString()];
 
-        NSButton* button = [NSButton buttonWithTitle:action->text().toNSString() target:provider action:@selector(touchBarActionClicked:)];
+        button = [NSButton buttonWithTitle:action->text().toNSString() target:provider action:@selector(touchBarActionClicked:)];
         [button setIdentifier:identifier.toNSString()];
 
         auto setState = [=] {
@@ -237,11 +277,16 @@ void MainWindowTouchBarItem::prepareTouchBarItem(MainWindowTouchBarProvider* pro
 
         item.view = button;
 
-//        QObject::connect(action, &QAction::changed, [provider getMainWindow], setState);
-//        QObject::connect([provider getMainWindowUi]->stackedWidget, &tStackedWidget::currentChanged, setState);
+        QObject::connect(action, &QAction::changed, action, setState);
 
         this->touchBarItem = item;
-//    }
+        //    }
+}
+
+void MainWindowTouchBarItem::setImage(NSImageName image)
+{
+    this->image = image;
+    [button setImage:[NSImage imageNamed:image]];
 }
 
 void MainWindowTouchBar::setupTouchBar() {
