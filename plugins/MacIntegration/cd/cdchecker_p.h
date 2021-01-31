@@ -5,11 +5,15 @@
 #include "trackinfo.h"
 #include <QNetworkAccessManager>
 
+#ifdef HAVE_MUSICBRAINZ
+    #include <musicbrainz5/ReleaseList.h>
+#endif
+
 struct CdCheckerPrivate {
     QString directory;
 
     PluginMediaSource* source;
-    QStringList mbDiscIds;
+    QString mbDiscId;
     QString albumName;
     QList<TrackInfoPtr> trackInfo;
 

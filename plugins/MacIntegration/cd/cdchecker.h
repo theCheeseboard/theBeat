@@ -61,6 +61,8 @@ class CdChecker : public QWidget {
         void resizeEvent(QResizeEvent* event);
         bool eventFilter(QObject* watched, QEvent* event);
 
+        QString calculateMbDiscId();
+
         void updateTrackListing();
         void loadMusicbrainzData(QString discId);
         void selectMusicbrainzRelease(QString release);

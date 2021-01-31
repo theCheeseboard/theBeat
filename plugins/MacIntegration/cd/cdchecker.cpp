@@ -23,6 +23,7 @@
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QCryptographicHash>
 #include <pluginmediasource.h>
 #include <statemanager.h>
 #include <sourcemanager.h>
@@ -47,7 +48,7 @@
     #include <musicbrainz5/ArtistCredit.h>
     #include <musicbrainz5/NameCredit.h>
     #include <musicbrainz5/Artist.h>
-    #include "musicbrainzreleasemodel.h"
+    #include "../../PhononPlugin/musicbrainzreleasemodel.h"
 #endif
 
 CdChecker::CdChecker(QString directory, QWidget* parent) :
@@ -89,7 +90,7 @@ void CdChecker::checkCd() {
     struct CdInformation {
         bool available = false;
         int numberOfTracks = 0;
-        QStringList mbDiscId;
+        QString mbDiscId;
     };
 
     tPromise<CdInformation>::runOnNewThread([ = ](tPromiseFunctions<CdInformation>::SuccessFunction res, tPromiseFunctions<CdInformation>::FailureFunction rej) {
@@ -100,6 +101,7 @@ void CdChecker::checkCd() {
         info.numberOfTracks = dir.entryList(QDir::Files).count();
 
         //TODO: Calculate MusicBrainz Disc ID
+        info.mbDiscId = calculateMbDiscId();
 
         res(info);
     })->then([ = ](CdInformation info) {
@@ -110,7 +112,7 @@ void CdChecker::checkCd() {
             d->playlistBackground = QImage();
             ui->topWidget->update();
         } else {
-            d->mbDiscIds = info.mbDiscId;
+            d->mbDiscId = info.mbDiscId;
             d->trackInfo.clear();
 
 #ifdef HAVE_MUSICBRAINZ
@@ -131,7 +133,7 @@ void CdChecker::checkCd() {
             updateTrackListing();
 
             if (!info.mbDiscId.isEmpty()) {
-                loadMusicbrainzData(info.mbDiscId.first());
+                loadMusicbrainzData(info.mbDiscId);
             }
         }
     });
