@@ -26,9 +26,9 @@ jobs:
         submodules: 'recursive'
     - uses: vicr123/the-libs/build@actions
       name: "Build Project"
-#    - name: "Prepackage Project (macOS)"
-#      run: ./ci/extra-steps-mac.sh
-#      if: runner.os == 'macOS'
+    - name: "Prepackage Project (macOS)"
+      run: ./ci/extra-steps-mac.sh
+      if: runner.os == 'macOS'
     - uses: vicr123/the-libs/image@actions
       name: "Package Project"
       id: image
