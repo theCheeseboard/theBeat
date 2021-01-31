@@ -17,36 +17,39 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "plugin.h"
+#ifndef MACCDMEDIAITEM_H
+#define MACCDMEDIAITEM_H
 
-#include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
-#include <QIcon>
-#include <tapplication.h>
-#include "mainwindowtouchbar.h"
-#include "cd/diskwatcher.h"
+#include <mediaitem.h>
+#include "trackinfo.h"
 
-struct PluginPrivate {
+struct MacCdMediaItemPrivate;
+class MacCdMediaItem : public MediaItem {
+        Q_OBJECT
+    public:
+        explicit MacCdMediaItem(QString volume, TrackInfoPtr info);
+        ~MacCdMediaItem();
 
+        static void volumeGone(QString volume);
+
+    signals:
+
+    private:
+        MacCdMediaItemPrivate* d;
+
+        // MediaItem interface
+    public:
+        void play();
+        void pause();
+        void stop();
+        void seek(quint64 ms);
+        quint64 elapsed();
+        quint64 duration();
+        QString title();
+        QStringList authors();
+        QString album();
+        QImage albumArt();
+        QVariant metadata(QString key);
 };
 
-Plugin::Plugin() {
-    d = new PluginPrivate();
-    tApplication::addPluginTranslator("macintegration");
-}
-
-Plugin::~Plugin() {
-    delete d;
-}
-
-
-void Plugin::activate() {
-    new MainWindowTouchBar(StateManager::instance()->mainWindow());
-    new DiskWatcher();
-}
-
-void Plugin::deactivate() {
-
-}
+#endif // PHONONCDMEDIAITEM_H

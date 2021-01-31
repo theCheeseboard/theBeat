@@ -17,36 +17,35 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "plugin.h"
+#ifndef TRACKINFO_H
+#define TRACKINFO_H
 
-#include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
-#include <QIcon>
-#include <tapplication.h>
-#include "mainwindowtouchbar.h"
-#include "cd/diskwatcher.h"
+#include <QObject>
 
-struct PluginPrivate {
+struct TrackInfoPrivate;
+class TrackInfo : public QObject {
+        Q_OBJECT
+    public:
+        explicit TrackInfo();
+        explicit TrackInfo(int track);
+        ~TrackInfo();
 
+        QString title();
+        QStringList artist();
+        QString album();
+        int track();
+        QImage albumArt();
+
+        void setData(QString title, QStringList artist, QString album);
+        void setAlbumArt(QImage albumArt);
+
+    signals:
+        void dataChanged();
+
+    private:
+        TrackInfoPrivate* d;
 };
 
-Plugin::Plugin() {
-    d = new PluginPrivate();
-    tApplication::addPluginTranslator("macintegration");
-}
+typedef QSharedPointer<TrackInfo> TrackInfoPtr;
 
-Plugin::~Plugin() {
-    delete d;
-}
-
-
-void Plugin::activate() {
-    new MainWindowTouchBar(StateManager::instance()->mainWindow());
-    new DiskWatcher();
-}
-
-void Plugin::deactivate() {
-
-}
+#endif // TRACKINFO_H
