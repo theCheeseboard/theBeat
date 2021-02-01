@@ -70,14 +70,17 @@ struct MacBurnProducerPrivate {
         tDebug("MacBurnProducer") << "Audio file read error";
     }
 
-    uint32_t written = 0;
-    int16_t* data = [pcmBuffer int16ChannelData][0];
-    for (AVAudioFrameCount i = 0; i < [pcmBuffer frameLength] * 2; i++) {
-        int16_t leData = qToLittleEndian(data[i]);
-        reinterpret_cast<int16_t*>(buffer)[i] = leData;
-        written += sizeof(int16_t);
-    }
-    return written;
+//    uint32_t written = 0;
+//    int16_t* data = [pcmBuffer int16ChannelData][0];
+//    for (AVAudioFrameCount i = 0; i < [pcmBuffer frameLength] * 2; i++) {
+//        int16_t leData = qToLittleEndian(data[i]);
+//        reinterpret_cast<int16_t*>(buffer)[i] = leData;
+//        written += sizeof(int16_t);
+//    }
+//    return written;
+
+    qToLittleEndian<qint16>([pcmBuffer int16ChannelData][0], [pcmBuffer frameLength] * 2, buffer);
+    return [pcmBuffer frameLength] * 2 * sizeof(int16_t);
 }
 
 - (void)cleanupTrackAfterBurn:(DRTrack*)track {

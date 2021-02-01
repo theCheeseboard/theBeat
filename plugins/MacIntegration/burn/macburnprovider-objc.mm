@@ -3,7 +3,9 @@
 #import <DiscRecording/DiscRecording.h>
 #import <DiscRecordingUI/DiscRecordingUI.h>
 
+#include <tjobmanager.h>
 #include "macburntrack.h"
+#include "macburnjob.h"
 
 struct BurnDetails {
     QStringList files;
@@ -49,9 +51,10 @@ struct BurnDetails {
         [tracks addObject:track];
     }
 
-    DRBurnProgressPanel* progress = [DRBurnProgressPanel progressPanel];
-//    [progress beginProgressSheetForBurn:burn layout:tracks modalForWindow: self.details.parentWindow];
-    [progress beginProgressPanelForBurn:burn layout:tracks];
+    MacBurnJob* job = new MacBurnJob(burn, self.details.albumName);
+    tJobManager::trackJob(job);
+
+    [burn writeLayout:tracks];
 }
 
 - (BOOL)setupPanel:(DRSetupPanel*)aPanel deviceContainsSuitableMedia:(DRDevice*)device promptString:(NSString**)prompt {

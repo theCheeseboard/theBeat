@@ -23,6 +23,8 @@ include(/usr/local/share/the-libs/pri/gentranslations.pri)
 
 SOURCES += \
     ../PhononPlugin/musicbrainzreleasemodel.cpp \
+    burn/macburnjob.mm \
+    burn/macburnjobwidget.cpp \
     burn/macburnprovider-objc.mm \
     burn/macburnprovider.cpp \
     burn/macburntrack.mm \
@@ -37,6 +39,8 @@ SOURCES += \
 
 HEADERS += \
     ../PhononPlugin/musicbrainzreleasemodel.h \
+    burn/macburnjob.h \
+    burn/macburnjobwidget.h \
     burn/macburnprovider.h \
     burn/macburntrack.h \
     cd/cdchecker.h \
@@ -56,4 +60,5 @@ INCLUDEPATH += "/usr/local/include/the-libs"
 LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation -framework DiscRecording -framework DiscRecordingUI
 
 FORMS += \
+    burn/macburnjobwidget.ui \
     cd/cdchecker.ui
