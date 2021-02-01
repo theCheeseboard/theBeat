@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>Play All</source>
-        <translation>Tüm Oyna</translation>
+        <translation>Hepsini Oynat</translation>
     </message>
     <message>
         <source>Shuffle All</source>
