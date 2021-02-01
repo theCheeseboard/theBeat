@@ -113,10 +113,6 @@
 <context>
     <name>MacBurnJobWidget</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>BURN CD</source>
         <translation type="unfinished"></translation>
     </message>
