@@ -88,13 +88,16 @@ macx {
     plugins.files = ../plugins/MacIntegration/libMacIntegration.dylib
     plugins.path = Contents/AppPlugins/
 
+    macintegrationplugintranslations.files = $${PWD}/../plugins/MacIntegration/translations
+    macintegrationplugintranslations.path = Contents/Resources/Plugins/macintegration/
+
     icons.files = icons/contemporary-icons
     icons.path = Contents/Resources/icons
 
     defaults.files = defaults.conf
     defaults.path = Contents/Resources
 
-    QMAKE_BUNDLE_DATA += icons defaults plugins
+    QMAKE_BUNDLE_DATA += icons defaults plugins macintegrationplugintranslations
 
     QMAKE_POST_LINK += $$quote(cp $${PWD}/dmgicon.icns $${PWD}/app-dmg-background.png $${PWD}/node-appdmg-config*.json $${OUT_PWD}/..)
 }
