@@ -27,6 +27,7 @@
 #include <tapplication.h>
 #include "mainwindowtouchbar.h"
 #include "cd/diskwatcher.h"
+#include "burn/macburnprovider.h"
 
 struct PluginPrivate {
 
@@ -45,6 +46,7 @@ Plugin::~Plugin() {
 void Plugin::activate() {
     new MainWindowTouchBar(StateManager::instance()->mainWindow());
     new DiskWatcher();
+    new MacBurnProvider();
 }
 
 void Plugin::deactivate() {

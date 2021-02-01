@@ -158,6 +158,8 @@ void CdChecker::loadMusicbrainzData(QString discId) {
 
     ui->releaseBox->clear();
 
+    QPointer<QObject> context = this;
+
     TPROMISE_CREATE_NEW_THREAD(MusicBrainz5::CReleaseList, {
         MusicBrainz5::CQuery query("thebeat-3.0");
         try {
@@ -166,6 +168,7 @@ void CdChecker::loadMusicbrainzData(QString discId) {
             rej("Error");
         }
     })->then([ = ](MusicBrainz5::CReleaseList releases) {
+        if (!context) return;
         d->releases = releases;
         if (d->releases.Count() > 0) {
             tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " succeded";
@@ -183,6 +186,7 @@ void CdChecker::loadMusicbrainzData(QString discId) {
             tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " succeded with no results";
         }
     })->error([ = ](QString error) {
+        if (!context) return;
         tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " failed";
         ui->musicBrainzStack->setCurrentWidget(ui->notFoundPage);
     });

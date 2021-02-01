@@ -23,6 +23,9 @@ include(/usr/local/share/the-libs/pri/gentranslations.pri)
 
 SOURCES += \
     ../PhononPlugin/musicbrainzreleasemodel.cpp \
+    burn/macburnprovider-objc.mm \
+    burn/macburnprovider.cpp \
+    burn/macburntrack.mm \
     cd/cdchecker-objc.mm \
     cd/cdchecker.cpp \
     cd/diskwatcher.cpp \
@@ -34,6 +37,8 @@ SOURCES += \
 
 HEADERS += \
     ../PhononPlugin/musicbrainzreleasemodel.h \
+    burn/macburnprovider.h \
+    burn/macburntrack.h \
     cd/cdchecker.h \
     cd/cdchecker_p.h \
     cd/diskwatcher.h \
@@ -48,7 +53,7 @@ include(../plugins.pri)
 DISTFILES += MacIntegration.json
 
 INCLUDEPATH += "/usr/local/include/the-libs"
-LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation
+LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation -framework DiscRecording -framework DiscRecordingUI
 
 FORMS += \
     cd/cdchecker.ui
