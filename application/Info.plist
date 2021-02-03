@@ -20,5 +20,7 @@
         <string>NSApplication</string>
         <key>NSSupportsAutomaticGraphicsSwitching</key>
         <true/>
+        <key>NSRemovableVolumesUsageDescription</key>
+        <string>In order to discover media on connected devices and to play CDs, theBeat needs permission to access removable storage.</string>
 </dict>
 </plist>
