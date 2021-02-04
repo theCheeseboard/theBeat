@@ -73,7 +73,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     d = new MainWindowPrivate();
     d->csd.installMoveAction(ui->topWidget);
-    d->csd.installResizeAction(this);
 
     if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
         ui->leftCsdLayout->addWidget(d->csd.csdBoxForWidget(this));
@@ -265,6 +264,11 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+void MainWindow::show() {
+    QMainWindow::show();
+    d->csd.installResizeAction(this);
+}
+
 void MainWindow::on_actionOpen_File_triggered() {
     QFileDialog* dialog = new QFileDialog(this);
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
@@ -328,9 +332,9 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     ui->queueWidget->setContentsMargins(0, ui->topWidget->height(), 0, 0);
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
+void MainWindow::closeEvent(QCloseEvent* event) {
 #ifdef Q_OS_MAC
+    d->csd.removeResizeAction(this);
     this->hide();
     event->accept();
 #endif

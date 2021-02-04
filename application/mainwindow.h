@@ -36,6 +36,8 @@ class MainWindow : public QMainWindow {
         MainWindow(QWidget* parent = nullptr);
         ~MainWindow();
 
+        void show();
+
     private slots:
         void on_actionOpen_File_triggered();
 
