@@ -35,6 +35,7 @@ SOURCES += \
     cd/trackinfo.cpp \
     mainwindowtouchbar-objc.mm \
     mainwindowtouchbar.cpp \
+    nowplayingintegration.mm \
     plugin.cpp
 
 HEADERS += \
@@ -50,6 +51,7 @@ HEADERS += \
     cd/trackinfo.h \
     mainwindowtouchbar.h \
     mainwindowtouchbar_p.h \
+    nowplayingintegration.h \
     plugin.h
 
 include(../plugins.pri)
@@ -57,7 +59,7 @@ include(../plugins.pri)
 DISTFILES += MacIntegration.json
 
 INCLUDEPATH += "/usr/local/include/the-libs"
-LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation -framework DiscRecording -framework DiscRecordingUI
+LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation -framework DiscRecording -framework DiscRecordingUI -framework MediaPlayer
 
 FORMS += \
     burn/macburnjobwidget.ui \

@@ -46,6 +46,7 @@ macx {
 SOURCES += \
     burnbackend.cpp \
     burnmanager.cpp \
+    controlstripmanager.cpp \
     helpers.cpp \
     mediaitem.cpp \
     playlist.cpp \
@@ -60,6 +61,7 @@ SOURCES += \
 HEADERS += \
     burnbackend.h \
     burnmanager.h \
+    controlstripmanager.h \
     helpers.h \
     libthebeat_global.h \
     mediaitem.h \

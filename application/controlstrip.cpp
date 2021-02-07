@@ -22,6 +22,7 @@
 
 #include <statemanager.h>
 #include <playlist.h>
+#include <controlstripmanager.h>
 #include <tvariantanimation.h>
 #include <tpopover.h>
 #include <QMenu>
@@ -107,6 +108,10 @@ ControlStrip::ControlStrip(QWidget* parent) :
         pauseAfterCurrentTrackAction->setChecked(pauseAfterCurrentTrack);
     });
     ui->playPauseButton->setMenu(pauseMenu);
+
+    connect(StateManager::instance()->controlStrip(), &ControlStripManager::buttonAdded, this, [ = ](QWidget * button) {
+        ui->customButtonsLayout->addWidget(button);
+    });
 
     updateCurrentItem();
 }
@@ -291,10 +296,10 @@ void ControlStrip::on_upButton_clicked() {
     opacityAnim->setEndValue(1.0);
     opacityAnim->setDuration(500);
     opacityAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(opacityAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(opacityAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
         effect->setOpacity(value.toReal());
     });
-    connect(opacityAnim, &tVariantAnimation::finished, this, [=] {
+    connect(opacityAnim, &tVariantAnimation::finished, this, [ = ] {
         opacityAnim->deleteLater();
         effect->deleteLater();
     });

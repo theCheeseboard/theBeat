@@ -160,6 +160,13 @@
         </widget>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="customButtonsLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+        </layout>
+       </item>
+       <item>
         <widget class="QToolButton" name="shuffleButton">
          <property name="text">
           <string notr="true">...</string>
