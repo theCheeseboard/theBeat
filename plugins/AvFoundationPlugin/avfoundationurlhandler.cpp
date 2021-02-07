@@ -3,14 +3,12 @@
 #include "avfoundationmediaitem.h"
 #include <QUrl>
 
-AvFoundationUrlHandler::AvFoundationUrlHandler(QObject *parent) : UrlHandler(parent)
-{
+AvFoundationUrlHandler::AvFoundationUrlHandler(QObject* parent) : UrlHandler(parent) {
 
 }
 
 
-MediaItem *AvFoundationUrlHandler::itemForUrl(QUrl url)
-{
+MediaItem* AvFoundationUrlHandler::itemForUrl(QUrl url) {
     if (url.scheme() == "file") {
         return new AvFoundationMediaItem(url);
     }

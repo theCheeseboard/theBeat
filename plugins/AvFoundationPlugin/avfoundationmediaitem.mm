@@ -7,10 +7,11 @@
 #include <QFileInfo>
 #include <QMediaMetaData>
 #include <tlogger.h>
-#include <AppKit/AppKit.h>
+#include "avplayerinstance.h"
+#import <AppKit/AppKit.h>
 #import <AvFoundation/AVFoundation.h>
 
-@interface AvFoundationResponder: NSResponder<AVAudioPlayerDelegate>
+@interface AvFoundationResponder : NSResponder<AVAudioPlayerDelegate>
 @property AvFoundationMediaItem* mediaItem;
 @end
 
@@ -23,30 +24,30 @@
     return self;
 }
 
-- (void)audioPlayerDidFinishPlaying: (AVAudioPlayer*)player successfully:(BOOL) success {
-    if (success) {
-        emit self.mediaItem->done();
-    }
-
-    [player setCurrentTime:0];
-    [player prepareToPlay];
+- (void)playerDidFinishPlaying:(NSNotification*)notification {
+    emit self.mediaItem->done();
 }
+
 @end
 
 
 struct AvFoundationMediaItemPrivate {
     QUrl url;
     AvFoundationResponder* responder;
-    AVAudioPlayer* player;
+//    AVAudioPlayer* player;
+//    static AVPlayer* player;
     AVAsset* asset;
     AVMetadataFormat primaryFormat;
+
+    quint64 duration = 0;
 
     QTimer* durationTimer;
     QVariantMap metadata;
 };
 
-AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem()
-{
+//AVPlayer* AvFoundationMediaItemPrivate::player = nil;
+
+AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem() {
     d = new AvFoundationMediaItemPrivate();
     d->url = url;
 
@@ -54,36 +55,39 @@ AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem()
 
     d->durationTimer = new QTimer();
     d->durationTimer->setInterval(50);
-    connect(d->durationTimer, &QTimer::timeout, this, [=] {
+    connect(d->durationTimer, &QTimer::timeout, this, [ = ] {
         emit durationChanged();
         emit elapsedChanged();
     });
 
     NSError* error;
-    d->player = [[AVAudioPlayer alloc] initWithContentsOfURL:url.toNSURL() error:&error];
-    [d->player setDelegate:d->responder];
+//    d->player = [[AVAudioPlayer alloc] initWithContentsOfURL:url.toNSURL() error:&error];
+//    [d->player setDelegate:d->responder];
 
-    if (error) {
-        tDebug("AvFoundationMediaItem") << "Playback error!";
-        tDebug("AvFoundationMediaItem") << QString::fromNSString([error localizedDescription]);
-        tDebug("AvFoundationMediaItem") << QString::fromNSString([error localizedFailureReason]);
-        QTimer::singleShot(0, this, &AvFoundationMediaItem::error);
-        return;
-    }
+//    if (error) {
+//        tDebug("AvFoundationMediaItem") << "Playback error!";
+//        tDebug("AvFoundationMediaItem") << QString::fromNSString([error localizedDescription]);
+//        tDebug("AvFoundationMediaItem") << QString::fromNSString([error localizedFailureReason]);
+//        QTimer::singleShot(0, this, &AvFoundationMediaItem::error);
+//        return;
+//    }
 
-    [d->player prepareToPlay];
+    tDebug("AvFoundationMediaItem") << "Created AVFoundation item for " << url.toString();
+
+//    [d->player prepareToPlay];
 
     //Retrieve the item's metadata
     d->asset = [AVAsset assetWithURL:url.toNSURL()];
-    [d->asset loadValuesAsynchronouslyForKeys:@[@"availableMetadataFormats"] completionHandler: ^{
-        NSError* error = nil;
+    d->duration = CMTimeGetSeconds([d->asset duration]) * 1000;
+    [d->asset loadValuesAsynchronouslyForKeys:@[@"availableMetadataFormats"] completionHandler: ^ {
+                 NSError* error = nil;
 
         AVKeyValueStatus status = [d->asset statusOfValueForKey:@"availableMetadataFormats" error:&error];
         if (status == AVKeyValueStatusLoaded) {
             for (AVMetadataFormat format : [d->asset availableMetadataFormats]) {
                 NSArray<AVMetadataItem*>* metadata = [d->asset metadataForFormat:format];
 
-                auto extractOneString = [=](AVMetadataIdentifier identifier) {
+                auto extractOneString = [ = ](AVMetadataIdentifier identifier) {
                     NSArray<AVMetadataItem*>* items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
                     AVMetadataItem* item = [items firstObject];
                     if (item) {
@@ -92,7 +96,7 @@ AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem()
                         return QStringLiteral("");
                     }
                 };
-                auto extractStrings = [=](AVMetadataIdentifier identifier) {
+                auto extractStrings = [ = ](AVMetadataIdentifier identifier) {
                     NSArray<AVMetadataItem*>* items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
                     QStringList strings;
                     for (AVMetadataItem* item : items) {
@@ -100,7 +104,7 @@ AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem()
                     }
                     return strings;
                 };
-                auto extractOneInt = [=](AVMetadataIdentifier identifier, int defaultValue = -1) {
+                auto extractOneInt = [ = ](AVMetadataIdentifier identifier, int defaultValue = -1) {
                     NSArray<AVMetadataItem*>* items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
                     AVMetadataItem* item = [items firstObject];
                     if (item) {
@@ -109,7 +113,7 @@ AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem()
                         return defaultValue;
                     }
                 };
-                auto extractImage = [=](AVMetadataIdentifier identifier) {
+                auto extractImage = [ = ](AVMetadataIdentifier identifier) {
                     NSArray<AVMetadataItem*>* items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
                     AVMetadataItem* item = [items firstObject];
                     if (item) {
@@ -130,48 +134,50 @@ AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem()
             }
         }
     }];
+
+//[AvPlayerInstance::instance() addObserver:d->responder selector:SEL("playerDidFinishPlaying:") name:AVPlayerItemDidPlayToEndTimeNotification ]
+
 }
 
-AvFoundationMediaItem::~AvFoundationMediaItem()
-{
+AvFoundationMediaItem::~AvFoundationMediaItem() {
     delete d;
 }
 
-void AvFoundationMediaItem::play()
-{
-    [d->player play];
+void AvFoundationMediaItem::play() {
+//    [d->player play];
+    AvPlayerInstance::setCurrentItem(d->url, d->responder);
+    [AvPlayerInstance::instance() play];
     d->durationTimer->start();
 }
 
-void AvFoundationMediaItem::pause()
-{
+void AvFoundationMediaItem::pause() {
     d->durationTimer->stop();
-    [d->player pause];
+    [AvPlayerInstance::instance() pause];
+//    [d->player pause];
 }
 
-void AvFoundationMediaItem::stop()
-{
+void AvFoundationMediaItem::stop() {
     d->durationTimer->stop();
-    [d->player stop];
+    [AvPlayerInstance::instance() pause];
+//    [d->player stop];
 }
 
-void AvFoundationMediaItem::seek(quint64 ms)
-{
-    [d->player setCurrentTime:static_cast<NSTimeInterval>(ms) / 1000];
+void AvFoundationMediaItem::seek(quint64 ms) {
+    [AvPlayerInstance::instance() seekToTime:CMTimeMake(ms, 1000)];
+//    [d->player setCurrentTime:static_cast<NSTimeInterval>(ms) / 1000];
 }
 
-quint64 AvFoundationMediaItem::elapsed()
-{
-    return [d->player currentTime] * 1000;
+quint64 AvFoundationMediaItem::elapsed() {
+    return CMTimeGetSeconds([AvPlayerInstance::instance() currentTime]) * 1000;
+//    return [d->player currentTime] * 1000;
 }
 
-quint64 AvFoundationMediaItem::duration()
-{
-    return [d->player duration] * 1000;
+quint64 AvFoundationMediaItem::duration() {
+    return d->duration;
+//    return [d->player duration] * 1000;
 }
 
-QString AvFoundationMediaItem::title()
-{
+QString AvFoundationMediaItem::title() {
     if (!d->metadata.value("title").toString().isEmpty()) {
         return d->metadata.value("title").toString();
     }
@@ -184,23 +190,19 @@ QString AvFoundationMediaItem::title()
     }
 }
 
-QStringList AvFoundationMediaItem::authors()
-{
+QStringList AvFoundationMediaItem::authors() {
     return d->metadata.value("artist").toStringList();
 }
 
-QString AvFoundationMediaItem::album()
-{
+QString AvFoundationMediaItem::album() {
     return d->metadata.value("album").toString();
 }
 
-QImage AvFoundationMediaItem::albumArt()
-{
+QImage AvFoundationMediaItem::albumArt() {
     return d->metadata.value("albumart").value<QImage>();
 }
 
-QVariant AvFoundationMediaItem::metadata(QString key)
-{
+QVariant AvFoundationMediaItem::metadata(QString key) {
     if (key == QMediaMetaData::AlbumTitle) {
         return album();
     } else if (key == QMediaMetaData::Title) {

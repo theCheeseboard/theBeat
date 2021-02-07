@@ -15,11 +15,13 @@ include(/usr/local/share/the-libs/pri/gentranslations.pri)
 SOURCES += \
     avfoundationmediaitem.mm \
     avfoundationurlhandler.cpp \
+    avplayerinstance.mm \
     plugin.cpp
 
 HEADERS += \
     avfoundationmediaitem.h \
     avfoundationurlhandler.h \
+    avplayerinstance.h \
     plugin.h
 
 
@@ -29,4 +31,4 @@ DISTFILES += \
     AvFoundationPlugin.json
 
 INCLUDEPATH += "/usr/local/include/the-libs"
-LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation
+LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation -framework CoreMedia
