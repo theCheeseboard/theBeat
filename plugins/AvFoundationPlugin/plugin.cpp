@@ -24,6 +24,7 @@
 #include <urlmanager.h>
 #include "avfoundationurlhandler.h"
 #include <tlogger.h>
+#include "airplaymanager.h"
 
 struct PluginPrivate {
 
@@ -40,6 +41,8 @@ Plugin::~Plugin() {
 void Plugin::activate() {
     tDebug("AvFoundationPlugin") << "Plugin loaded";
     StateManager::instance()->url()->registerHandler(new AvFoundationUrlHandler());
+
+    new AirPlayManager();
 }
 
 void Plugin::deactivate() {

@@ -13,12 +13,14 @@ CONFIG += c++11
 include(/usr/local/share/the-libs/pri/gentranslations.pri)
 
 SOURCES += \
+    airplaymanager.mm \
     avfoundationmediaitem.mm \
     avfoundationurlhandler.cpp \
     avplayerinstance.mm \
     plugin.cpp
 
 HEADERS += \
+    airplaymanager.h \
     avfoundationmediaitem.h \
     avfoundationurlhandler.h \
     avplayerinstance.h \
@@ -31,4 +33,4 @@ DISTFILES += \
     AvFoundationPlugin.json
 
 INCLUDEPATH += "/usr/local/include/the-libs"
-LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation -framework CoreMedia
+LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation -framework CoreMedia -framework AVKit

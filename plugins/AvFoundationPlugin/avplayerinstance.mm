@@ -2,6 +2,7 @@
 
 #include <statemanager.h>
 #include <playlist.h>
+#include <tlogger.h>
 
 struct AvPlayerInstancePrivate {
     static QUrl currentUrl;
@@ -13,6 +14,7 @@ AvPlayerInstance::AvPlayerInstance() {
 
 }
 
+#include <QTimer>
 AVPlayer* AvPlayerInstance::instance() {
     static AVPlayer* player = [[AVPlayer alloc] init];
 
@@ -20,6 +22,8 @@ AVPlayer* AvPlayerInstance::instance() {
         [player setVolume:volume];
     });
     [player setVolume:StateManager::instance()->playlist()->volume()];
+
+    [player setAllowsExternalPlayback:YES];
 
     return player;
 }
@@ -41,6 +45,7 @@ void AvPlayerInstance::setCurrentItem(QUrl url, NSObject* selector) {
         [instance() replaceCurrentItemWithPlayerItem:item];
 
         [[NSNotificationCenter defaultCenter] addObserver:selector selector:@selector(playerDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
+        [[NSNotificationCenter defaultCenter] addObserver:selector selector:@selector(playerFailedToPlay:) name:AVPlayerItemFailedToPlayToEndTimeNotification object:item];
     }
 }
 

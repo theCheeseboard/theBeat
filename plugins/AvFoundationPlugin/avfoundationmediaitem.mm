@@ -28,6 +28,10 @@
     emit self.mediaItem->done();
 }
 
+- (void)playerFailedToPlay:(NSNotification*)notification {
+    emit self.mediaItem->error();
+}
+
 @end
 
 
@@ -134,9 +138,6 @@ AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem() {
             }
         }
     }];
-
-//[AvPlayerInstance::instance() addObserver:d->responder selector:SEL("playerDidFinishPlaying:") name:AVPlayerItemDidPlayToEndTimeNotification ]
-
 }
 
 AvFoundationMediaItem::~AvFoundationMediaItem() {
@@ -144,7 +145,6 @@ AvFoundationMediaItem::~AvFoundationMediaItem() {
 }
 
 void AvFoundationMediaItem::play() {
-//    [d->player play];
     AvPlayerInstance::setCurrentItem(d->url, d->responder);
     [AvPlayerInstance::instance() play];
     d->durationTimer->start();
@@ -153,28 +153,23 @@ void AvFoundationMediaItem::play() {
 void AvFoundationMediaItem::pause() {
     d->durationTimer->stop();
     [AvPlayerInstance::instance() pause];
-//    [d->player pause];
 }
 
 void AvFoundationMediaItem::stop() {
     d->durationTimer->stop();
     [AvPlayerInstance::instance() pause];
-//    [d->player stop];
 }
 
 void AvFoundationMediaItem::seek(quint64 ms) {
     [AvPlayerInstance::instance() seekToTime:CMTimeMake(ms, 1000)];
-//    [d->player setCurrentTime:static_cast<NSTimeInterval>(ms) / 1000];
 }
 
 quint64 AvFoundationMediaItem::elapsed() {
     return CMTimeGetSeconds([AvPlayerInstance::instance() currentTime]) * 1000;
-//    return [d->player currentTime] * 1000;
 }
 
 quint64 AvFoundationMediaItem::duration() {
     return d->duration;
-//    return [d->player duration] * 1000;
 }
 
 QString AvFoundationMediaItem::title() {
