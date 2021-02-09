@@ -335,13 +335,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="486"/>
-        <location filename="../mainwindow.cpp" line="434"/>
+        <location filename="../mainwindow.cpp" line="439"/>
         <source>Open URL</source>
         <translation>Mở liên kết</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="495"/>
-        <location filename="../mainwindow.cpp" line="207"/>
+        <location filename="../mainwindow.cpp" line="210"/>
         <source>Skip Back</source>
         <translation>Nhảy lại</translation>
     </message>
@@ -392,8 +392,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="519"/>
-        <location filename="../mainwindow.cpp" line="215"/>
-        <location filename="../mainwindow.cpp" line="229"/>
+        <location filename="../mainwindow.cpp" line="218"/>
+        <location filename="../mainwindow.cpp" line="232"/>
         <source>Play</source>
         <translation>Phát</translation>
     </message>
@@ -403,44 +403,44 @@
         <translation>Space</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="224"/>
+        <location filename="../mainwindow.cpp" line="227"/>
         <source>Pause</source>
         <translation>Tạm dừng</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="236"/>
+        <location filename="../mainwindow.cpp" line="239"/>
         <source>Skip Next</source>
         <translation>Nhảy tiếp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="406"/>
+        <location filename="../mainwindow.cpp" line="411"/>
         <source>For &quot;%1&quot;</source>
         <translation>Cho &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="408"/>
+        <location filename="../mainwindow.cpp" line="413"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Cho %n mục</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="410"/>
+        <location filename="../mainwindow.cpp" line="415"/>
         <source>Remove from Queue</source>
         <translation>Xóa khỏi hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="423"/>
+        <location filename="../mainwindow.cpp" line="428"/>
         <source>For Queue</source>
         <translation>Cho hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="424"/>
+        <location filename="../mainwindow.cpp" line="429"/>
         <source>Clear Queue</source>
         <translation>Xóa các mục</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="434"/>
+        <location filename="../mainwindow.cpp" line="439"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>

@@ -73,6 +73,9 @@ MainWindow::MainWindow(QWidget* parent)
 
     d = new MainWindowPrivate();
     d->csd.installMoveAction(ui->topWidget);
+#ifndef Q_OS_MAC
+    d->csd.installResizeAction(this);
+#endif
 
     if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
         ui->leftCsdLayout->addWidget(d->csd.csdBoxForWidget(this));
@@ -266,7 +269,9 @@ MainWindow::~MainWindow() {
 
 void MainWindow::show() {
     QMainWindow::show();
+#ifdef Q_OS_MAC
     d->csd.installResizeAction(this);
+#endif
 }
 
 void MainWindow::on_actionOpen_File_triggered() {

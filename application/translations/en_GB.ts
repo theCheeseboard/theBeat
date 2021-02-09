@@ -338,13 +338,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="486"/>
-        <location filename="../mainwindow.cpp" line="434"/>
+        <location filename="../mainwindow.cpp" line="439"/>
         <source>Open URL</source>
         <translation>Open URL</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="495"/>
-        <location filename="../mainwindow.cpp" line="207"/>
+        <location filename="../mainwindow.cpp" line="210"/>
         <source>Skip Back</source>
         <translation>Skip Back</translation>
     </message>
@@ -395,8 +395,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="519"/>
-        <location filename="../mainwindow.cpp" line="215"/>
-        <location filename="../mainwindow.cpp" line="229"/>
+        <location filename="../mainwindow.cpp" line="218"/>
+        <location filename="../mainwindow.cpp" line="232"/>
         <source>Play</source>
         <translation>Play</translation>
     </message>
@@ -406,22 +406,22 @@
         <translation>Space</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="224"/>
+        <location filename="../mainwindow.cpp" line="227"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="236"/>
+        <location filename="../mainwindow.cpp" line="239"/>
         <source>Skip Next</source>
         <translation>Skip Next</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="406"/>
+        <location filename="../mainwindow.cpp" line="411"/>
         <source>For &quot;%1&quot;</source>
         <translation>For &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="408"/>
+        <location filename="../mainwindow.cpp" line="413"/>
         <source>For %n items</source>
         <translation>
             <numerusform>For %n item</numerusform>
@@ -429,22 +429,22 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="410"/>
+        <location filename="../mainwindow.cpp" line="415"/>
         <source>Remove from Queue</source>
         <translation>Remove from Queue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="423"/>
+        <location filename="../mainwindow.cpp" line="428"/>
         <source>For Queue</source>
         <translation>For Queue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="424"/>
+        <location filename="../mainwindow.cpp" line="429"/>
         <source>Clear Queue</source>
         <translation>Clear Queue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="434"/>
+        <location filename="../mainwindow.cpp" line="439"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
