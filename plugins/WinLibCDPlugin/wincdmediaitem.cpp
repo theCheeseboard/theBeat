@@ -29,7 +29,7 @@ WinCdMediaItem::WinCdMediaItem(QChar driveLetter, winrt::CDLib::IAudioCDTrack tr
     d->track = track;
 
     d->driveLetter = driveLetter;
-    d->driveMapping.insertMulti(driveLetter, this);
+    d->driveMapping.insert(driveLetter, this);
 
     d->timer = new QTimer(this);
     d->timer->setInterval(100);
@@ -98,15 +98,15 @@ quint64 WinCdMediaItem::duration() {
 }
 
 QString WinCdMediaItem::title() {
-    return QString::fromUtf16(reinterpret_cast<const ushort*>(d->track.Name().c_str()));
+    return QString::fromUtf16(reinterpret_cast<const ushort*>(d->track.Title().c_str()));
 }
 
 QStringList WinCdMediaItem::authors() {
-    return {};
+    return {QString::fromUtf16(reinterpret_cast<const ushort*>(d->track.Artist().c_str()))};
 }
 
 QString WinCdMediaItem::album() {
-    return "CD";
+    return QString::fromUtf16(reinterpret_cast<const ushort*>(d->track.AlbumTitle().c_str()));
 }
 
 QImage WinCdMediaItem::albumArt() {

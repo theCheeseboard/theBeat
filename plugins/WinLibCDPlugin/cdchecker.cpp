@@ -11,11 +11,16 @@
 #include <winrt/CDLib.h>
 #include "audiocdplayerthread.h"
 #include <winrt/Windows.Foundation.Collections.h>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 struct CdCheckerPrivate {
     PluginMediaSource* source;
     winrt::CDLib::IAudioCDDrive drive;
     QList<TrackInfoPtr> trackInfo;
+
+    QImage playlistBackground;
+    QNetworkAccessManager mgr;
 };
 
 CdChecker::CdChecker(QChar driveLetter, QWidget* parent) :
@@ -36,14 +41,14 @@ CdChecker::CdChecker(QChar driveLetter, QWidget* parent) :
         }
     }
 
+    d->source->setName(tr("CD"));
+    d->source->setIcon(QIcon::fromTheme("media-optical-audio"));
+
     d->drive.MediaChanged([ = ](winrt::CDLib::IAudioCDDrive drive) {
         Q_UNUSED(drive);
         checkCd();
     });
     checkCd();
-
-    d->source->setName(tr("CD"));
-    d->source->setIcon(QIcon::fromTheme("media-optical-audio"));
 
     ui->topWidget->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
     ui->importCdButton->setVisible(false);
@@ -73,13 +78,52 @@ void CdChecker::checkCd() {
 
         d->trackInfo.clear();
         for (uint i = 0; i < media.Tracks().Size(); i++) {
-            d->trackInfo.append(TrackInfoPtr(new TrackInfo(i)));
+            TrackInfoPtr trackInfo = TrackInfoPtr(new TrackInfo(i));
+            winrt::CDLib::IAudioCDTrack cdTrack = media.Tracks().GetAt(i);
+            trackInfo->setData(QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.Title().c_str())),
+            {QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.Artist().c_str()))},
+            QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.AlbumTitle().c_str())));
+            d->trackInfo.append(trackInfo);
         }
+
+        winrt::CDLib::IAudioCDTrack firstTrack = media.Tracks().GetAt(0);
+        QString album = QString::fromUtf16(reinterpret_cast<const ushort*>(firstTrack.AlbumTitle().c_str()));
+        d->source->setName(album);
+        ui->albumTitleLabel->setText(album);
+
+//        QString albumArt = QString::fromUtf16(reinterpret_cast<const ushort*>(firstTrack.AlbumCoverUrl().c_str()));
+//        tDebug("CdChecker") << albumArt;
+
+//        //Attempt to get album art for this release
+//        QNetworkRequest req((QUrl(albumArt)));
+//        req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+//        QNetworkReply* artReply = d->mgr.get(req);
+//        connect(artReply, &QNetworkReply::finished, this, [ = ] {
+//            //TODO: Make sure the user hasn't changed releases
+////            if (d->currentReleaseId != release) return;
+
+//            if (artReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
+//                d->playlistBackground = QImage::fromData(artReply->readAll());
+//                ui->topWidget->update();
+
+//                for (TrackInfoPtr trackInfo : d->trackInfo) {
+//                    trackInfo->setAlbumArt(d->playlistBackground);
+//                }
+//            }
+
+//            ui->topWidget->update();
+//        });
 
         updateTrackListing();
     } else {
         WinCdMediaItem::driveGone(d->drive.DriveLetter().Value());
         StateManager::instance()->sources()->removeSource(d->source);
+
+        d->playlistBackground = QImage();
+        ui->topWidget->update();
+
+        d->source->setName(tr("CD"));
+        ui->albumTitleLabel->setText(tr("CD"));
     }
 }
 

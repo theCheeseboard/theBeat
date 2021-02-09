@@ -1,4 +1,4 @@
-QT += gui widgets multimedia
+QT += gui widgets multimedia network
 
 TEMPLATE = lib
 CONFIG += plugin
@@ -17,7 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Link with CDLib and the-libs
-CONFIG(release, debug|release): LIBS += -L$$PWD/cdlib/x64/Release
+CONFIG(release, debug|release): LIBS += -L$$PWD/cdlib/x64/Debug
 CONFIG(debug, debug|release): LIBS += -L$$PWD/cdlib/x64/Debug
 
 LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -lCDLib -lUser32 -lwindowsapp
