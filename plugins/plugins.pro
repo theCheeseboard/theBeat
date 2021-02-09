@@ -7,8 +7,8 @@ unix:!macx {
 }
 
 win32 {
-    #SUBDIRS += \
-        #WinLibCDPlugin
+    SUBDIRS += \
+        WinLibCDPlugin
 }
 
 macx {

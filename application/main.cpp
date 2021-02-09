@@ -139,7 +139,7 @@ int main(int argc, char* argv[]) {
             }
         }
     });
-    QObject::connect(&a, &tApplication::dockIconClicked, [=] {
+    QObject::connect(&a, &tApplication::dockIconClicked, [ = ] {
         w->show();
         w->activateWindow();
     });
@@ -157,7 +157,7 @@ int main(int argc, char* argv[]) {
     });
 
 #ifdef HAVE_THEINSTALLER
-    UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 1, 0, 21);
+    UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 1, 0, 22);
     QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
 #endif
 

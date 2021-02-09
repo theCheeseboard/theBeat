@@ -19,9 +19,9 @@
  * *************************************/
 #include "plugin.h"
 
-#include <QDebug>
+#include <tlogger.h>
 
-#include "cdchecker.h"
+#include "diskwatcher.h"
 
 struct PluginPrivate {
 
@@ -29,6 +29,7 @@ struct PluginPrivate {
 
 Plugin::Plugin() {
     d = new PluginPrivate();
+    tDebug("WinLibCdPlugin") << "CDLib plugin loaded:";
 }
 
 Plugin::~Plugin() {
@@ -36,7 +37,7 @@ Plugin::~Plugin() {
 }
 
 void Plugin::activate() {
-    new CdChecker();
+    new DiskWatcher();
 }
 
 void Plugin::deactivate() {
