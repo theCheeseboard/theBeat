@@ -79,22 +79,22 @@
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="81"/>
+        <location filename="../controlstrip.cpp" line="82"/>
         <source>Repeat Options</source>
         <translation>Repeat Options</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="82"/>
+        <location filename="../controlstrip.cpp" line="83"/>
         <source>Repeat Play Queue</source>
         <translation>Repeat Play Queue</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="99"/>
+        <location filename="../controlstrip.cpp" line="100"/>
         <source>Playback Options</source>
         <translation>Playback Options</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="100"/>
+        <location filename="../controlstrip.cpp" line="101"/>
         <source>Pause after current track</source>
         <translation>Pause after current track</translation>
     </message>
@@ -338,13 +338,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="486"/>
-        <location filename="../mainwindow.cpp" line="430"/>
+        <location filename="../mainwindow.cpp" line="434"/>
         <source>Open URL</source>
         <translation>Open URL</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="495"/>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.cpp" line="207"/>
         <source>Skip Back</source>
         <translation>Skip Back</translation>
     </message>
@@ -395,8 +395,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="519"/>
-        <location filename="../mainwindow.cpp" line="216"/>
-        <location filename="../mainwindow.cpp" line="230"/>
+        <location filename="../mainwindow.cpp" line="215"/>
+        <location filename="../mainwindow.cpp" line="229"/>
         <source>Play</source>
         <translation>Play</translation>
     </message>
@@ -406,22 +406,22 @@
         <translation>Space</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="225"/>
+        <location filename="../mainwindow.cpp" line="224"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="237"/>
+        <location filename="../mainwindow.cpp" line="236"/>
         <source>Skip Next</source>
         <translation>Skip Next</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="402"/>
+        <location filename="../mainwindow.cpp" line="406"/>
         <source>For &quot;%1&quot;</source>
         <translation>For &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="404"/>
+        <location filename="../mainwindow.cpp" line="408"/>
         <source>For %n items</source>
         <translation>
             <numerusform>For %n item</numerusform>
@@ -429,22 +429,22 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="406"/>
+        <location filename="../mainwindow.cpp" line="410"/>
         <source>Remove from Queue</source>
         <translation>Remove from Queue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="419"/>
+        <location filename="../mainwindow.cpp" line="423"/>
         <source>For Queue</source>
         <translation>For Queue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="420"/>
+        <location filename="../mainwindow.cpp" line="424"/>
         <source>Clear Queue</source>
         <translation>Clear Queue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="430"/>
+        <location filename="../mainwindow.cpp" line="434"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
