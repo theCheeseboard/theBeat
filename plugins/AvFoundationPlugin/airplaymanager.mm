@@ -5,6 +5,8 @@
 #include <statemanager.h>
 #include <controlstripmanager.h>
 #include "avplayerinstance.h"
+#include <QToolButton>
+#include <QBoxLayout>
 #import <AppKit/AppKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
@@ -21,7 +23,7 @@ struct AirPlayManagerPrivate {
     RoutePickerDelegate* delegate;
 };
 
-#include <QUrl>
+#include <QTimer>
 AirPlayManager::AirPlayManager(QObject* parent) : QObject(parent) {
     d = new AirPlayManagerPrivate();
 
@@ -32,9 +34,21 @@ AirPlayManager::AirPlayManager(QObject* parent) : QObject(parent) {
         [d->picker setDelegate:d->delegate];
         [d->picker setPlayer:AvPlayerInstance::instance()];
 
+        QWidget* container = new QWidget();
+        QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
+        layout->setContentsMargins(0, 0, 0, 0);
+        container->setLayout(layout);
+
+        QToolButton btn;
+        btn.setIcon(QIcon::fromTheme("document-save"));
+
         QWidget* widget = QWidget::createWindowContainer(QWindow::fromWinId(reinterpret_cast<WId>(d->picker)));
-        widget->setFixedSize(24, 24);
-        StateManager::instance()->controlStrip()->addButton(widget);
+        widget->setFixedSize(btn.sizeHint());
+        widget->setParent(container);
+        widget->show();
+        layout->addWidget(widget);
+
+        StateManager::instance()->controlStrip()->addButton(container);
     }
 }
 
