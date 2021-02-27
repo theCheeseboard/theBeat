@@ -22,7 +22,7 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="252"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Bland alle</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="276"/>
@@ -91,12 +91,12 @@
     <message>
         <location filename="../controlstrip.cpp" line="100"/>
         <source>Playback Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspilningsindstillinger</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="101"/>
         <source>Pause after current track</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause efter nuværende spor</translation>
     </message>
 </context>
 <context>
@@ -294,12 +294,12 @@
     <message>
         <location filename="../mainwindow.ui" line="408"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspilning</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="436"/>
