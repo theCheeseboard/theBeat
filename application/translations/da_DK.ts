@@ -607,7 +607,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Bland alle</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
@@ -693,7 +693,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     <message>
         <location filename="../main.cpp" line="110"/>
         <source>Force theBeat to use the Contemporary colour palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Tving theBeat til at bruge Contemporary-farver</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="111"/>
