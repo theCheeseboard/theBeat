@@ -10,7 +10,7 @@ unix {
     PKGCONFIG += taglib
 
     translations.files = translations/*.qm
-    translations.path = $$[QT_INSTALL_PREFIX]/share/thebeat/cdrdaoplugin/translations
+    translations.path = $$THELIBS_INSTALL_PREFIX/share/thebeat/cdrdaoplugin/translations
     INSTALLS += translations
 }
 

@@ -9,7 +9,7 @@ unix {
     CONFIG += link_pkgconfig
 
     translations.files = translations/*.qm
-    translations.path = $$[QT_INSTALL_PREFIX]/share/thebeat/linuxintegration/translations
+    translations.path = $$THELIBS_INSTALL_PREFIX/share/thebeat/linuxintegration/translations
     INSTALLS += translations
 
     packagesExist(x11) {
@@ -34,7 +34,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Include the-libs build tools
-include($$[QT_INSTALL_PREFIX]/share/the-libs/pri/gentranslations.pri)
+include($$THELIBS_INSTALL_PREFIX/share/the-libs/pri/gentranslations.pri)
 
 SOURCES += \
     mprisinstance.cpp \
