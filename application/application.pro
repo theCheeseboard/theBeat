@@ -6,7 +6,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 unix:!macx {
     # Include the-libs build tools
-    include($$THELIBS_INSTALL_PREFIX/share/the-libs/pri/buildmaster.pri)
+    isEmpty(THELIBS_BUILDTOOLS_PATH) {
+        $$THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+    }
+    include($$THELIBS_BUILDTOOLS_PATH/buildmaster.pri)
 
     DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$THELIBS_INSTALL_LIB\\\"
     DEFINES += SYSTEM_PREFIX_DIRECTORY=\\\"$$THELIBS_INSTALL_PREFIX\\\"
