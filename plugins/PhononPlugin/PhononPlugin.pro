@@ -9,7 +9,7 @@ CONFIG += c++11
 equals(THELIBS_BUILDTOOLS_PATH, "") {
     THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
 }
-include($$THELIBS_BUILDTOOLS_PATH/buildmaster.pri)
+include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
 
 unix {
     CONFIG += link_pkgconfig
