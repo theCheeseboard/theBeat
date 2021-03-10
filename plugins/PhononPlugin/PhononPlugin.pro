@@ -60,8 +60,6 @@ HEADERS += \
 
 DISTFILES += PhononPlugin.json
 
-include(../plugins.pri)
-
 FORMS += \
     cdchecker.ui \
     importcdjobwidget.ui \
