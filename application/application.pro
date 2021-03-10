@@ -34,7 +34,7 @@ unix:!macx {
     icon.files = icons/thebeat.svg
 
     defaults.files = defaults.conf
-    defaults.path = /etc/theSuite/theBeat/
+    defaults.path = $$THELIBS_INSTALL_SETTINGS/theSuite/theBeat/
 
     metainfo.files = com.vicr123.thebeat.metainfo.xml
     metainfo.path = $$THELIBS_INSTALL_PREFIX/share/metainfo
