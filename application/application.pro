@@ -6,35 +6,35 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 unix:!macx {
     # Include the-libs build tools
-    include(/usr/share/the-libs/pri/buildmaster.pri)
+    include($$[QT_INSTALL_PREFIX]/share/the-libs/pri/buildmaster.pri)
 
     DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$[QT_INSTALL_LIBS]\\\"
+    DEFINES += SYSTEM_PREFIX_DIRECTORY=\\\"$$[QT_INSTALL_PREFIX]\\\"
 
     QT += thelib
     TARGET = thebeat
-
     CONFIG += link_pkgconfig
     PKGCONFIG += taglib
 
     LIBS += -L$$OUT_PWD/../libthebeat/ -lthebeat
 
-    target.path = /usr/bin
+    target.path = $$[QT_INSTALL_PREFIX]/bin
 
-    desktop.path = /usr/share/applications
+    desktop.path = $$[QT_INSTALL_PREFIX]/share/applications
     blueprint {
         desktop.files = com.vicr123.thebeat-blueprint.desktop
     } else {
         desktop.files = com.vicr123.thebeat.desktop
     }
 
-    icon.path = /usr/share/icons/hicolor/scalable/apps/
+    icon.path = $$[QT_INSTALL_PREFIX]/share/icons/hicolor/scalable/apps/
     icon.files = icons/thebeat.svg
 
     defaults.files = defaults.conf
     defaults.path = /etc/theSuite/theBeat/
 
     metainfo.files = com.vicr123.thebeat.metainfo.xml
-    metainfo.path = /usr/share/metainfo
+    metainfo.path = $$[QT_INSTALL_PREFIX]/share/metainfo
 
     INSTALLS += target desktop icon defaults metainfo
 }

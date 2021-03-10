@@ -11,11 +11,11 @@ CONFIG += c++11
 
 unix:!macx {
     # Include the-libs build tools
-    include(/usr/share/the-libs/pri/gentranslations.pri)
+    include($$[QT_INSTALL_PREFIX]/share/the-libs/pri/gentranslations.pri)
     QT += thelib
 
-    DISCORD_PATH = /usr/lib/libdiscord-rpc.so
-    DISCORD_STATIC_PATH = /usr/lib/libdiscord-rpc.a
+    DISCORD_PATH = $$[QT_INSTALL_PREFIX]/lib/libdiscord-rpc.so
+    DISCORD_STATIC_PATH = $$[QT_INSTALL_PREFIX]/lib/libdiscord-rpc.a
 
     DISCORD_LIBS = -ldiscord-rpc
 }

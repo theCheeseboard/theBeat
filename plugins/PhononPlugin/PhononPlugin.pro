@@ -10,7 +10,7 @@ unix {
     PKGCONFIG += taglib
 
     translations.files = translations/*.qm
-    translations.path = /usr/share/thebeat/phononplugin/translations
+    translations.path = $$[QT_INSTALL_PREFIX]/share/thebeat/phononplugin/translations
     INSTALLS += translations
 
     packagesExist(libmusicbrainz5) {
@@ -37,7 +37,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Include the-libs build tools
-include(/usr/share/the-libs/pri/gentranslations.pri)
+include($$[QT_INSTALL_PREFIX]/share/the-libs/pri/gentranslations.pri)
 
 SOURCES += \
     cdchecker.cpp \

@@ -85,7 +85,7 @@ void BurnPopover::on_burnButton_clicked() {
 }
 
 void BurnPopover::on_albumNameEdit_textChanged(const QString& arg1) {
-    ui->titleLabel->setText(tr("Burn %1").arg(arg1));
+    ui->titleLabel->setText(tr("Burn %1").arg(QLocale().quoteString(arg1)));
 }
 
 void BurnPopover::updateCd() {

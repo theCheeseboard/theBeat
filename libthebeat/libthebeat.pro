@@ -27,7 +27,7 @@ unix:!macx {
     if (isEmpty(CI)) {
         target.path = $$[QT_INSTALL_LIBS]
     } else {
-        target.path = /usr/lib
+        target.path = $$[QT_INSTALL_PREFIX]/lib
     }
 
     INSTALLS += target

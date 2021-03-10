@@ -8,6 +8,6 @@ GenericName[nl]=Audiospeler
 GenericName[pt]=Tocador de Áudio
 GenericName[vi]=Bộ nghe nhạc
 Categories=Audio;Music;Player;AudioVideo;X-Multimedia;
-Exec=thebeat
+Exec=thebeat %U
 Icon=thebeat-blueprint
 MimeType=audio/mp3;audio/mpeg;audio/mpeg3;audio/wav;audio/ogg;audio/mp4;video/avi;video/msvideo;video/mpeg;video/quicktime;video/x-ms-wmv;

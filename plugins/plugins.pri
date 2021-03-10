@@ -10,7 +10,7 @@ unix:!macx: {
     if (isEmpty(CI)) {
         target.path = $$[QT_INSTALL_LIBS]/thebeat/plugins
     } else {
-        target.path = /usr/lib/thebeat/plugins
+        target.path = $$[QT_INSTALL_PREFIX]/lib/thebeat/plugins
     }
     INSTALLS += target translations
 
