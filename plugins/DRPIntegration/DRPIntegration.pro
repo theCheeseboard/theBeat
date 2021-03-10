@@ -11,7 +11,11 @@ CONFIG += c++11
 
 unix:!macx {
     # Include the-libs build tools
-    include($$THELIBS_INSTALL_PREFIX/share/the-libs/pri/gentranslations.pri)
+    isEmpty(THELIBS_BUILDTOOLS_PATH) {
+        THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+    }
+    include($$THELIBS_BUILDTOOLS_PATH/buildmaster.pri)
+
     QT += thelib
 
     DISCORD_PATH = $$THELIBS_INSTALL_PREFIX/lib/libdiscord-rpc.so

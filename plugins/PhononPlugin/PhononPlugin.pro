@@ -5,6 +5,12 @@ CONFIG += plugin
 
 CONFIG += c++11
 
+# Include the-libs build tools
+isEmpty(THELIBS_BUILDTOOLS_PATH) {
+    THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+}
+include($$THELIBS_BUILDTOOLS_PATH/buildmaster.pri)
+
 unix {
     CONFIG += link_pkgconfig
     PKGCONFIG += taglib
@@ -35,9 +41,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-# Include the-libs build tools
-include($$THELIBS_INSTALL_PREFIX/share/the-libs/pri/gentranslations.pri)
 
 SOURCES += \
     cdchecker.cpp \
