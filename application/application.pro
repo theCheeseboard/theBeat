@@ -18,7 +18,7 @@ unix:!macx {
 
     LIBS += -L$$OUT_PWD/../libthebeat/ -lthebeat
 
-    target.path = $$THELIBS_INSTALL_PREFIX/bin
+    target.path = $$THELIBS_INSTALL_BIN
 
     desktop.path = $$THELIBS_INSTALL_PREFIX/share/applications
     blueprint {
