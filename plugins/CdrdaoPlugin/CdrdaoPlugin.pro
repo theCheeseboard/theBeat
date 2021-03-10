@@ -5,11 +5,7 @@ CONFIG += plugin
 
 CONFIG += c++11
 
-# Include the-libs build tools
-equals(THELIBS_BUILDTOOLS_PATH, "") {
-    THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
-}
-include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
+include(../plugins.pri)
 
 unix {
     CONFIG += link_pkgconfig
@@ -49,8 +45,6 @@ HEADERS += \
 
 DISTFILES += CdrdaoPlugin.json \
     defaults.conf
-
-include(../plugins.pri)
 
 FORMS += \
     burnjobwidget.ui \

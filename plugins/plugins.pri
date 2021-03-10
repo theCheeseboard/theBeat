@@ -3,15 +3,16 @@ CONFIG += plugin
 INCLUDEPATH += $$PWD/../libthebeat
 DEPENDPATH += $$PWD/../libthebeat
 
+# Include the-libs build tools
+equals(THELIBS_BUILDTOOLS_PATH, "") {
+    THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+}
+include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
+
 unix:!macx: {
     LIBS += -L$$OUT_PWD/../../libthebeat/ -lthebeat
 
-    CI = $$(CI)
-    if (isEmpty(CI)) {
-        target.path = $$[QT_INSTALL_LIBS]/thebeat/plugins
-    } else {
-        target.path = $$[QT_INSTALL_PREFIX]/lib/thebeat/plugins
-    }
+    target.path = $$THELIBS_INSTALL_LIBS/thebeat/plugins
     INSTALLS += target translations
 
     QMAKE_POST_LINK += $$QMAKE_COPY_DIR $$quote($$_PRO_FILE_PWD_/translations) $$shell_quote($$OUT_PWD) && \
