@@ -8,7 +8,7 @@ unix:!macx {
     # Include the-libs build tools
     include($$THELIBS_INSTALL_PREFIX/share/the-libs/pri/buildmaster.pri)
 
-    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$[QT_INSTALL_LIBS]\\\"
+    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$THELIBS_INSTALL_LIB\\\"
     DEFINES += SYSTEM_PREFIX_DIRECTORY=\\\"$$THELIBS_INSTALL_PREFIX\\\"
 
     QT += thelib

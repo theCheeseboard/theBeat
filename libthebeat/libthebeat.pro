@@ -25,7 +25,7 @@ unix:!macx {
 
     CI = $$(CI)
     if (isEmpty(CI)) {
-        target.path = $$[QT_INSTALL_LIBS]
+        target.path = $$THELIBS_INSTALL_LIB
     } else {
         target.path = $$THELIBS_INSTALL_PREFIX/lib
     }
