@@ -18,7 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Include the-libs build tools
-isEmpty(THELIBS_BUILDTOOLS_PATH) {
+equals(THELIBS_BUILDTOOLS_PATH, "") {
     THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
 }
 include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
