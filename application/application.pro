@@ -23,16 +23,21 @@ unix:!macx {
 
     target.path = $$THELIBS_INSTALL_BIN
 
-DESKTOP_FILE = com.vicr123.thebeat.desktop
-DESKTOP_FILE_BLUEPRINT = com.vicr123.thebeat_blueprint.desktop
-
-    icon.path = $$THELIBS_INSTALL_PREFIX/share/icons/hicolor/scalable/apps/
-    icon.files = icons/thebeat.svg
+    DESKTOP_FILE = com.vicr123.thebeat.desktop
+    DESKTOP_FILE_BLUEPRINT = com.vicr123.thebeat_blueprint.desktop
 
     defaults.files = defaults.conf
     defaults.path = $$THELIBS_INSTALL_SETTINGS/theSuite/theBeat/
 
-    metainfo.files = com.vicr123.thebeat.metainfo.xml
+    blueprint {
+        metainfo.files = com.vicr123.thebeat_blueprint.metainfo.xml
+        icon.files = icons/com.vicr123.thebeat_blueprint.svg
+    } else {
+        metainfo.files = com.vicr123.thebeat.metainfo.xml
+        icon.files = icons/com.vicr123.thebeat.svg
+    }
+
+    icon.path = $$THELIBS_INSTALL_PREFIX/share/icons/hicolor/scalable/apps/
     metainfo.path = $$THELIBS_INSTALL_PREFIX/share/metainfo
 
     INSTALLS += target icon defaults metainfo
@@ -182,7 +187,7 @@ DEPENDPATH += $$PWD/../libthebeat
 
 DISTFILES += \
     Info.plist \
-    com.vicr123.thebeat.desktop \
-    com.vicr123.thebeat_blueprint.desktop \
+    com.vicr123.thebeat.metainfo.xml \
+    com.vicr123.thebeat_blueprint.metainfo.xml \
     defaults.conf \
     icon.rc

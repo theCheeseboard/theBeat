@@ -131,7 +131,7 @@ MainWindow::MainWindow(QWidget* parent)
 #ifdef T_BLUEPRINT_BUILD
     ui->menuButton->setIcon(QIcon(":/icons/thebeat-blueprint.svg"));
 #else
-    ui->menuButton->setIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
+    ui->menuButton->setIcon(QIcon::fromTheme("com.vicr123.thebeat", QIcon(":/icons/thebeat.svg")));
 #endif
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
