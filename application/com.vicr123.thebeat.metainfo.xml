@@ -19,12 +19,12 @@
     <p>
       Play and organise your music. theBeat automatically discovers music on your computer and presents it in an easy-to-use interface.
     </p>
-    <p>
-      - Automatically categorise your music
-      - Blazing fast search
-      - Quickly find tracks by author and artist
-      - Create playlists to quickly access the music you love
-    </p>
+    <ul>
+      <li>Automatically categorise your music</li>
+      <li>Blazing fast search</li>
+      <li>Quickly find tracks by author and artist</li>
+      <li>Create playlists to quickly access the music you love</li>
+    </ul>
   </description>
     
   <launchable type="desktop-id">com.vicr123.thebeat.desktop</launchable>
