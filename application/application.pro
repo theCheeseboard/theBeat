@@ -25,7 +25,7 @@ unix:!macx {
 
     desktop.path = $$THELIBS_INSTALL_PREFIX/share/applications
     blueprint {
-        desktop.files = com.vicr123.thebeat-blueprint.desktop
+        desktop.files = com.vicr123.thebeat_blueprint.desktop
     } else {
         desktop.files = com.vicr123.thebeat.desktop
     }
@@ -186,7 +186,7 @@ DEPENDPATH += $$PWD/../libthebeat
 
 DISTFILES += \
     Info.plist \
-    com.vicr123.thebeat-blueprint.desktop \
     com.vicr123.thebeat.desktop \
+    com.vicr123.thebeat_blueprint.desktop \
     defaults.conf \
     icon.rc

@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 #ifdef T_BLUEPRINT_BUILD
     a.setApplicationIcon(QIcon(":/icons/thebeat-blueprint.svg"));
     a.setApplicationName("theBeat Blueprint");
-    a.setDesktopFileName("com.vicr123.thebeat-blueprint");
+    a.setDesktopFileName("com.vicr123.thebeat_blueprint");
 #else
     a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
     a.setApplicationName("theBeat");
