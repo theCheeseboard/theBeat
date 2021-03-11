@@ -1,0 +1,18 @@
+on:
+  push:
+    branches: [blueprint]
+  pull_request:
+name: Build Flatpak
+jobs:
+  flatpak-builder:
+    name: "Flatpak Builder"
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:kde-5.15
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v2
+    - uses: bilelmoussaoui/flatpak-github-actions@v2
+      with:
+        bundle: "thebeat.flatpak"
+        manifest-path: "application/com.vicr123.thebeat_blueprint.yml"
