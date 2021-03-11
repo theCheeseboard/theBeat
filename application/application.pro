@@ -5,6 +5,9 @@ CONFIG += c++17
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 unix:!macx {
+    DESKTOP_FILE = com.vicr123.thebeat.desktop
+    DESKTOP_FILE_BLUEPRINT = com.vicr123.thebeat_blueprint.desktop
+
     # Include the-libs build tools
     equals(THELIBS_BUILDTOOLS_PATH, "") {
         THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
@@ -22,9 +25,6 @@ unix:!macx {
     LIBS += -L$$OUT_PWD/../libthebeat/ -lthebeat
 
     target.path = $$THELIBS_INSTALL_BIN
-
-    DESKTOP_FILE = com.vicr123.thebeat.desktop
-    DESKTOP_FILE_BLUEPRINT = com.vicr123.thebeat_blueprint.desktop
 
     defaults.files = defaults.conf
     defaults.path = $$THELIBS_INSTALL_SETTINGS/theSuite/theBeat/
