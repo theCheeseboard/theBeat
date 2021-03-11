@@ -2,12 +2,11 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=theBeat
-GenericName=Audio Player
-GenericName[nl]=Audiospeler
-GenericName[pt]=Tocador de Áudio
-GenericName[vi]=Bộ nghe nhạc
+Name[]=theBeat
+GenericName[]=Audio Player
 Categories=Audio;Music;Player;AudioVideo;X-Multimedia;
 Exec=thebeat %U
 Icon=thebeat
 MimeType=audio/mp3;audio/mpeg;audio/mpeg3;audio/wav;audio/ogg;audio/mp4;video/avi;video/msvideo;video/mpeg;video/quicktime;video/x-ms-wmv;
+#T:A list of words that can be searched for. Please ensure that the list also ends with a semicolon!
+Keywords[]=audio;music;cd;player;
