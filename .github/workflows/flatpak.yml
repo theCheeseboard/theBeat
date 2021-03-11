@@ -15,4 +15,4 @@ jobs:
     - uses: bilelmoussaoui/flatpak-github-actions@v2
       with:
         bundle: "thebeat.flatpak"
-        manifest-path: "application/com.vicr123.thebeat_blueprint.yml"
+        manifest-path: "dist/com.vicr123.thebeat_blueprint.yml"
