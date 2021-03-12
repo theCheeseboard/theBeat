@@ -7,7 +7,8 @@ finish-args:
   - --socket=wayland
   - --socket=fallback-x11
   - --socket=pulseaudio
-  - --talk-name=org.mpris.MediaPlayer2.theBeat
+  - --share=network
+  - --own-name=org.mpris.MediaPlayer2.theBeat
   - --filesystem=home
   - --filesystem=/run/media
 cleanup:
