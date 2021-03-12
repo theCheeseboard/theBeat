@@ -23,6 +23,6 @@ jobs:
         REPO_NAME: blueprint
       run: |
         sudo dnf install -y python3-aiohttp python3-tenacity
-        curl https://github.com/flatpak/flat-manager/releases/download/0.3.7/flat-manager-client > flat-manager-client
+        curl https://github.com/flatpak/flat-manager/releases/download/0.3.7/flat-manager-client -L > flat-manager-client
         chmod +x flat-manager-client
         ./flat-manager-client push --commit --publish $(./flat-manager-client create $REPO_LOCATION $REPO_NAME) repo

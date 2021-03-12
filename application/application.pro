@@ -14,9 +14,6 @@ unix:!macx {
     }
     include($$THELIBS_BUILDTOOLS_PATH/buildmaster.pri)
 
-    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$THELIBS_INSTALL_LIB\\\"
-    DEFINES += SYSTEM_PREFIX_DIRECTORY=\\\"$$THELIBS_INSTALL_PREFIX\\\"
-
     QT += thelib
     TARGET = thebeat
     CONFIG += link_pkgconfig
