@@ -17,13 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-# Include the-libs build tools
-equals(THELIBS_BUILDTOOLS_PATH, "") {
-    THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
-}
-include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
-
 unix:!macx {
+    # Include the-libs build tools
+    equals(THELIBS_BUILDTOOLS_PATH, "") {
+        THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+    }
+    include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
+
     QT += thelib
 
     CONFIG += link_pkgconfig
@@ -35,11 +35,17 @@ unix:!macx {
 }
 
 win32 {
+    # Include the-libs build tools
+    include(C:/Program Files/thelibs/pri/varset.pri)
+
     INCLUDEPATH += "C:/Program Files/thelibs/include" "C:/Program Files (x86)/taglib/include"
     LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -L"C:\Program Files (x86)\taglib\lib" -ltag
 }
 
 macx {
+    # Include the-libs build tools
+    include(/usr/local/share/the-libs/pri/varset.pri)
+
     INCLUDEPATH += "/usr/local/include/the-libs" "/usr/local/include"
     LIBS += -L/usr/local/lib -lthe-libs -ltag
 }

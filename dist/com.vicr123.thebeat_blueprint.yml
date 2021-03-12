@@ -4,9 +4,10 @@ runtime-version: '5.15'
 sdk: org.kde.Sdk
 command: thebeat
 finish-args:
-  - --socket=x11
+  - --socket=wayland
+  - --socket=fallback-x11
   - --socket=pulseaudio
-  - --talk-name=org.mpris.MediaPlayer2.thebeat
+  - --talk-name=org.mpris.MediaPlayer2.theBeat
   - --filesystem=home
   - --filesystem=/run/media
 cleanup:
