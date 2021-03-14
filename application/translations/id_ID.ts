@@ -681,22 +681,17 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="54"/>
+        <location filename="../main.cpp" line="55"/>
         <source>Audio Player</source>
         <translation>Pemutar Audio</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="110"/>
-        <source>Force theBeat to use the Contemporary colour palette</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="111"/>
+        <location filename="../main.cpp" line="98"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="111"/>
+        <location filename="../main.cpp" line="98"/>
         <source>File to open</source>
         <translation>File untuk dibuka</translation>
     </message>

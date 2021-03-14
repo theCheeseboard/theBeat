@@ -23,6 +23,7 @@
 #include <tsettings.h>
 #include <tapplication.h>
 #include <tcsdtools.h>
+#include <tstylemanager.h>
 #include "library/librarymanager.h"
 
 struct SettingsDialogPrivate {
@@ -45,16 +46,16 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     ui->listWidget->selectionModel()->setCurrentIndex(ui->listWidget->model()->index(0, 0), QItemSelectionModel::SelectCurrent);
     ui->useSsdsCheckbox->setChecked(d->settings.value("appearance/useSsds").toBool());
 
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    if (d->settings.value("theme/mode").toString() == "light") {
-        ui->lightButton->setChecked(true);
+    if (tStyleManager::isOverridingStyle()) {
+        if (d->settings.value("theme/mode").toString() == "light") {
+            ui->lightButton->setChecked(true);
+        } else {
+            ui->darkButton->setChecked(true);
+        }
     } else {
-        ui->darkButton->setChecked(true);
+        ui->coloursWidget->setVisible(false);
+        ui->line_2->setVisible(false);
     }
-#else
-    ui->coloursWidget->setVisible(false);
-    ui->line_2->setVisible(false);
-#endif
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -79,15 +80,13 @@ void SettingsDialog::on_useSsdsCheckbox_toggled(bool checked) {
     d->settings.setValue("appearance/useSsds", checked);
 }
 
-void SettingsDialog::on_lightButton_toggled(bool checked)
-{
+void SettingsDialog::on_lightButton_toggled(bool checked) {
     if (checked) {
         d->settings.setValue("theme/mode", "light");
     }
 }
 
-void SettingsDialog::on_darkButton_toggled(bool checked)
-{
+void SettingsDialog::on_darkButton_toggled(bool checked) {
     if (checked) {
         d->settings.setValue("theme/mode", "dark");
     }

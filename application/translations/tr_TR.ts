@@ -681,22 +681,17 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="54"/>
+        <location filename="../main.cpp" line="55"/>
         <source>Audio Player</source>
         <translation>Ses oynatıcı</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="110"/>
-        <source>Force theBeat to use the Contemporary colour palette</source>
-        <translation>theBeat&apos;i çağdaş renk paletini kullanmaya zorlayın</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="111"/>
+        <location filename="../main.cpp" line="98"/>
         <source>file</source>
         <translation>dosya</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="111"/>
+        <location filename="../main.cpp" line="98"/>
         <source>File to open</source>
         <translation>Açılacak dosya</translation>
     </message>

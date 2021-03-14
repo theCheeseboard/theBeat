@@ -686,22 +686,17 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="54"/>
+        <location filename="../main.cpp" line="55"/>
         <source>Audio Player</source>
         <translation>Musikafspiller</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="110"/>
-        <source>Force theBeat to use the Contemporary colour palette</source>
-        <translation>Tving theBeat til at bruge Contemporary-farver</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="111"/>
+        <location filename="../main.cpp" line="98"/>
         <source>file</source>
         <translation>fil</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="111"/>
+        <location filename="../main.cpp" line="98"/>
         <source>File to open</source>
         <translation>Fil der skal åbnes</translation>
     </message>

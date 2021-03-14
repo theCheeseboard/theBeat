@@ -50,6 +50,28 @@ modules:
       - type: git
         url: https://github.com/vicr123/the-libs
         branch: blueprint
+  - name: contemporary
+    buildsystem: qmake
+    config-opts:
+      - THELIBS_INSTALL_QT_PLUGINS = /app/lib/qt/plugins
+      - '-after'
+      - QT -= thelib
+      - QT += dbus
+      - LIBS += -L/app/lib -lthe-libs
+      - INCLUDEPATH += /app/include/the-libs
+    sources:
+      - type: git
+        url: https://github.com/vicr123/contemporary-theme
+        branch: master
+  - name: contemporary-icons
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/share/icons/contemporary
+      - cp -r * /app/share/icons/contemporary/
+    sources:
+      - type: git
+        url: https://github.com/vicr123/contemporary-icons
+        branch: blueprint
   - name: thebeat
     buildsystem: qmake
     builddir: true

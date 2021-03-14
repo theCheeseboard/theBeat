@@ -681,22 +681,17 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="54"/>
+        <location filename="../main.cpp" line="55"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="110"/>
-        <source>Force theBeat to use the Contemporary colour palette</source>
-        <translation>Bắt buộc theBeat phải sử dụng bảng màu Contemporary</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="111"/>
+        <location filename="../main.cpp" line="98"/>
         <source>file</source>
         <translation>tệp</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="111"/>
+        <location filename="../main.cpp" line="98"/>
         <source>File to open</source>
         <translation>Tệp đẻ mở</translation>
     </message>

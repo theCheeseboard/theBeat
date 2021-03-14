@@ -25,6 +25,7 @@
 #include <tapplication.h>
 #include <tsettings.h>
 #include <QCommandLineParser>
+#include <tstylemanager.h>
 #include <QJsonArray>
 #include <statemanager.h>
 #include <playlist.h>
@@ -72,32 +73,18 @@ int main(int argc, char* argv[]) {
 
     a.registerCrashTrap();
 
-    bool shouldLoadThemeManager = false;
-
 #if defined(Q_OS_WIN)
-    a.setStyle(QStyleFactory::create("contemporary"));
     a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
-
-    QIcon::setThemeName("contemporary-icons");
-    QIcon::setThemeSearchPaths({a.applicationDirPath() + "\\icons"});
-
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
-
-    shouldLoadThemeManager = true;
 #elif defined(Q_OS_MAC)
-    a.setStyle(QStyleFactory::create("contemporary"));
-
-    QIcon::setThemeName("contemporary-icons");
-    QIcon::setThemeSearchPaths({a.macOSBundlePath() + "/Contents/Resources/icons"});
-
     tSettings::registerDefaults(a.macOSBundlePath() + "/Contents/Resources/defaults.conf");
-
-    shouldLoadThemeManager = true;
     a.setQuitOnLastWindowClosed(false);
 #else
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
     tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
 #endif
+
+    tSettings settings;
 
     StateManager::instance()->url()->registerHandler(new QtMultimediaUrlHandler());
 
@@ -107,17 +94,24 @@ int main(int argc, char* argv[]) {
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.addOption({"force-contemporary-palette", a.translate("main", "Force theBeat to use the Contemporary colour palette")});
+//    parser.addOption({"force-contemporary-palette", a.translate("main", "Force theBeat to use the Contemporary colour palette")});
     parser.addPositionalArgument(a.translate("main", "file"), a.translate("main", "File to open"), QStringLiteral("[%1]").arg(a.translate("main", "file")));
     parser.process(a);
 
-    if (parser.isSet("force-contemporary-palette")) {
-        shouldLoadThemeManager = true;
-    }
+//    if (parser.isSet("force-contemporary-palette")) {
+//        shouldLoadThemeManager = true;
+//    }
 
-    if (shouldLoadThemeManager) {
-        new ThemeManager();
-    }
+//    if (shouldLoadThemeManager) {
+//        new ThemeManager();
+//    }
+
+    QObject::connect(&settings, &tSettings::settingChanged, [ = ](QString key, QVariant value) {
+        if (key == "theme/mode") {
+            tStyleManager::setOverrideStyleForApplication(value.toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
+        }
+    });
+    tStyleManager::setOverrideStyleForApplication(settings.value("theme/mode").toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
 
     MainWindow* w = new MainWindow();
 
