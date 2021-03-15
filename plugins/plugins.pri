@@ -12,7 +12,7 @@ include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
 unix:!macx: {
     LIBS += -L$$OUT_PWD/../../libthebeat/ -lthebeat
 
-    target.path = $$THELIBS_INSTALL_LIBS/thebeat/plugins
+    target.path = $$THELIBS_INSTALL_LIB/thebeat/plugins
     INSTALLS += target translations
 
     QMAKE_POST_LINK += $$QMAKE_COPY_DIR $$quote($$_PRO_FILE_PWD_/translations) $$shell_quote($$OUT_PWD) && \
