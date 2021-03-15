@@ -92,6 +92,7 @@ QVariant PlaylistModel::data(const QModelIndex& index, int role) const {
 
     int playlistIndex = index.row() - priorHeaders;
     MediaItem* item = StateManager::instance()->playlist()->items().at(playlistIndex);
+    if (!item) return QVariant();
 
     switch (role) {
         case Qt::DisplayRole:
@@ -178,6 +179,8 @@ PlaylistModel::DrawType PlaylistModel::drawTypeForPlaylistIndex(int index) const
 
     QList<MediaItem*> items = StateManager::instance()->playlist()->items();
     MediaItem* item = items.at(index);
+    if (!item) return SingleItemGroup;
+
     MediaItem* previousItem = nullptr;
     MediaItem* nextItem = nullptr;
     if (index != 0) {

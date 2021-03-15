@@ -36,7 +36,8 @@
 #include <QDragLeaveEvent>
 #include <QDropEvent>
 #include <QMimeData>
-#include <QInputDialog>
+#include <tmessagebox.h>
+#include <tinputdialog.h>
 #include <thelpmenu.h>
 #include <tjobmanager.h>
 #include <sourcemanager.h>
@@ -436,10 +437,15 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
 
 void MainWindow::on_actionOpen_URL_triggered() {
     bool ok;
-    QString url = QInputDialog::getText(this, tr("Open URL"), tr("URL"), QLineEdit::Normal, "", &ok);
+    QString url = tInputDialog::getText(this, tr("Open URL"), tr("Enter the URL you'd like to open"), QLineEdit::Normal, "", &ok);
 
     if (ok) {
-        StateManager::instance()->playlist()->addItem(StateManager::instance()->url()->itemForUrl(QUrl(url)));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(url));
+        if (!item) {
+            tMessageBox::information(this, tr("Can't open that URL"), tr("Sorry, that URL isn't supported by theBeat."));
+        } else {
+            StateManager::instance()->playlist()->addItem(item);
+        }
     }
 }
 
