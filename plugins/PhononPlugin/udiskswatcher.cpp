@@ -55,7 +55,9 @@ UdisksWatcher::~UdisksWatcher() {
 void UdisksWatcher::updateInterfaces() {
     QDBusMessage managedObjects = QDBusMessage::createMethodCall("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager", "GetManagedObjects");
     QMap<QDBusObjectPath, QMap<QString, QVariantMap>> reply;
-    QDBusArgument arg = QDBusConnection::systemBus().call(managedObjects).arguments().first().value<QDBusArgument>();
+    QDBusMessage managedObjectsReply = QDBusConnection::systemBus().call(managedObjects);
+    if (managedObjectsReply.type() == QDBusMessage::ErrorMessage) return;
+    QDBusArgument arg = managedObjectsReply.arguments().first().value<QDBusArgument>();
 
     arg >> reply;
 
