@@ -53,6 +53,7 @@ modules:
   - name: contemporary
     buildsystem: qmake
     config-opts:
+      - THELIBS_BUILDTOOLS_PATH = /app/share/the-libs/pri
       - THELIBS_INSTALL_QT_PLUGINS = /app/lib/qt/plugins
       - '-after'
       - QT -= thelib
