@@ -442,17 +442,17 @@
     <message>
         <location filename="../mainwindow.cpp" line="440"/>
         <source>Enter the URL you&apos;d like to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Açmak istediğiniz URL&apos;yi girin</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="445"/>
         <source>Can&apos;t open that URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu URL açılamıyor</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="445"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne yazık ki, bu URL theBeat tarafından desteklenmiyor.</translation>
     </message>
 </context>
 <context>
@@ -658,13 +658,13 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <source>New Playlist</source>
-        <translation type="unfinished">Yeni Oynatma Listesi</translation>
+        <translation>Yeni Oynatma Listesi</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>What name do you want to give to this playlist?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu çalma listesine ne isim vermek istiyorsun?</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="115"/>
