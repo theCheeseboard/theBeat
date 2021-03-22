@@ -50,7 +50,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/thebeat/*
 %{_libdir}/libthebeat.so*
 %{_datadir}/applications/com.vicr123.thebeat.desktop
-%{_datadir}/icons/hicolor/scalable/apps/thebeat.svg
+%{_datadir}/icons/hicolor/scalable/apps/com.vicr123.thebeat.svg
 %{_datadir}/thebeat/*
 
 
