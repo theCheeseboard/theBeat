@@ -1,4 +1,4 @@
-QT += gui widgets thelib network
+QT += gui widgets network
 
 TEMPLATE = lib
 CONFIG += plugin
@@ -9,6 +9,8 @@ include(../plugins.pri)
 
 unix {
     include($$THELIBS_BUILDTOOLS_PATH/gentranslations.pri)
+
+    QT += thelib
 
     translations.files = translations/*.qm
     translations.path = $$THELIBS_INSTALL_PREFIX/share/thebeat/internetradioplugin/translations
