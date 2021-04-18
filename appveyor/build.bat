@@ -81,6 +81,7 @@ copy "C:\Program Files\thelibs\lib\the-libs.dll" deploy
 copy plugins\WinLibCDPlugin\cdlib\x64\Release\CDLib.dll deploy
 copy plugins\WinLibCDPlugin\release\WinLibCDPlugin.dll deploy\plugins
 copy plugins\DRPIntegration\release\DRPIntegration.dll deploy\plugins
+copy plugins\DRPIntegration\release\InternetRadioPlugin.dll deploy\plugins
 copy "C:\OpenSSL-v111-Win64\bin\libssl-1_1-x64.dll" deploy
 copy "C:\OpenSSL-v111-Win64\bin\libcrypto-1_1-x64.dll" deploy
 copy taglib\build\taglib\tag.dll deploy
