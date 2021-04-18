@@ -86,7 +86,7 @@ macx {
     INCLUDEPATH += "/usr/local/include/the-libs" "/usr/local/include"
     LIBS += -L/usr/local/lib -lthe-libs -ltag
 
-    plugins.files = ../plugins/MacIntegration/libMacIntegration.dylib ../plugins/AvFoundationPlugin/libAvFoundationPlugin.dylib
+    plugins.files = ../plugins/MacIntegration/libMacIntegration.dylib ../plugins/AvFoundationPlugin/libAvFoundationPlugin.dylib  ../plugins/InternetRadioPlugin/libInternetRadioPlugin.dylib
     plugins.path = Contents/AppPlugins/
 
     macintegrationplugintranslations.files = $$files($${PWD}/../plugins/MacIntegration/translations/*.qm)

@@ -8,6 +8,8 @@ CONFIG += c++11
 include(../plugins.pri)
 
 unix {
+    include($$THELIBS_BUILDTOOLS_PATH/gentranslations.pri)
+
     CONFIG += link_pkgconfig
     PKGCONFIG += taglib
 

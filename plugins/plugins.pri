@@ -3,13 +3,14 @@ CONFIG += plugin
 INCLUDEPATH += $$PWD/../libthebeat
 DEPENDPATH += $$PWD/../libthebeat
 
-# Include the-libs build tools
-equals(THELIBS_BUILDTOOLS_PATH, "") {
-    THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
-}
-include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
-
 unix:!macx: {
+    # Include the-libs build tools
+    equals(THELIBS_BUILDTOOLS_PATH, "") {
+        THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+    }
+    include($$THELIBS_BUILDTOOLS_PATH/gentranslations.pri)
+    include($$THELIBS_BUILDTOOLS_PATH/varset.pri)
+
     LIBS += -L$$OUT_PWD/../../libthebeat/ -lthebeat
 
     target.path = $$THELIBS_INSTALL_LIB/thebeat/plugins

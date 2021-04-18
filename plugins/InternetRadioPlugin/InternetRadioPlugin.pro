@@ -8,9 +8,19 @@ CONFIG += c++11
 include(../plugins.pri)
 
 unix {
+    include($$THELIBS_BUILDTOOLS_PATH/gentranslations.pri)
+
     translations.files = translations/*.qm
     translations.path = $$THELIBS_INSTALL_PREFIX/share/thebeat/internetradioplugin/translations
     INSTALLS += translations
+}
+
+win32 {
+    # Include the-libs build tools
+    include(C:/Program Files/thelibs/pri/gentranslations.pri)
+
+    INCLUDEPATH += "C:/Program Files/thelibs/include"
+    LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs
 }
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -35,12 +45,6 @@ HEADERS += \
 
 DISTFILES += InternetRadioPlugin.json \
     defaults.conf
-
-# Default rules for deployment.
-unix {
-    target.path = $$[QT_INSTALL_PLUGINS]/generic
-}
-!isEmpty(target.path): INSTALLS += target
 
 FORMS += \
     favouritestationswidget.ui \
