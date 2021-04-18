@@ -53,3 +53,6 @@ qtHaveModule(phonon4qt5) {
 DISTFILES += \
     plugins.pri
 
+SUBDIRS += \
+    InternetRadioPlugin
+

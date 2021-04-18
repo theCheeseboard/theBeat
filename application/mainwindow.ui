@@ -14,7 +14,7 @@
    <string>theBeat</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="com.vicr123.thebeat" resource="resources.qrc">
+   <iconset theme="com.vicr123.thebeat">
     <normaloff>:/icons/thebeat.svg</normaloff>:/icons/thebeat.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -400,7 +400,7 @@
      <x>0</x>
      <y>0</y>
      <width>990</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -608,8 +608,6 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
