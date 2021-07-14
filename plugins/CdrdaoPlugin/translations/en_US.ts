@@ -75,20 +75,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="124"/>
-        <source>Couldn&apos;t transcode track</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burnjobmp3.cpp" line="215"/>
-        <source>Finalising CD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../burnjobmp3.cpp" line="119"/>
         <location filename="../burnjobmp3.cpp" line="158"/>
         <location filename="../burnjobmp3.cpp" line="261"/>
         <source>Cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="124"/>
+        <source>Couldn&apos;t transcode track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -104,6 +99,11 @@
     <message>
         <location filename="../burnjobmp3.cpp" line="209"/>
         <source>Burning Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnjobmp3.cpp" line="215"/>
+        <source>Finalising CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -150,13 +150,18 @@
 <context>
     <name>BurnPopover</name>
     <message>
-        <location filename="../burnpopover.ui" line="71"/>
-        <source>BURN OPTIONS</source>
+        <location filename="../burnpopover.ui" line="45"/>
+        <source>Audio CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnpopover.ui" line="89"/>
-        <source>Album Name</source>
+        <location filename="../burnpopover.ui" line="58"/>
+        <source>Disc Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnpopover.ui" line="71"/>
+        <source>BURN OPTIONS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -165,13 +170,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnpopover.ui" line="45"/>
-        <source>Audio CD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burnpopover.ui" line="58"/>
-        <source>Disc Type</source>
+        <location filename="../burnpopover.ui" line="89"/>
+        <source>Album Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

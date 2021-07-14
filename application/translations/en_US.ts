@@ -206,9 +206,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="43"/>
-        <location filename="../library/librarylistview.cpp" line="45"/>
-        <source>Remove from Library</source>
+        <location filename="../library/librarylistview.cpp" line="32"/>
+        <location filename="../library/librarylistview.cpp" line="34"/>
+        <source>Remove from Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -218,9 +218,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="32"/>
-        <location filename="../library/librarylistview.cpp" line="34"/>
-        <source>Remove from Playlist</source>
+        <location filename="../library/librarylistview.cpp" line="43"/>
+        <location filename="../library/librarylistview.cpp" line="45"/>
+        <source>Remove from Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -289,6 +289,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="356"/>
+        <source>Select a track or drop something here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="408"/>
         <source>File</source>
         <translation type="unfinished"></translation>
@@ -351,8 +356,25 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="507"/>
+        <source>Skip Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="510"/>
         <source>Shift+Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="519"/>
+        <location filename="../mainwindow.cpp" line="218"/>
+        <location filename="../mainwindow.cpp" line="232"/>
+        <source>Play</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="522"/>
+        <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -378,28 +400,6 @@
     <message>
         <location filename="../mainwindow.ui" line="558"/>
         <source>F1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="507"/>
-        <source>Skip Forward</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="356"/>
-        <source>Select a track or drop something here!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="519"/>
-        <location filename="../mainwindow.cpp" line="218"/>
-        <location filename="../mainwindow.cpp" line="232"/>
-        <source>Play</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="522"/>
-        <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -604,6 +604,16 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../userplaylistswidget.ui" line="222"/>
+        <source>Tracks in Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.ui" line="250"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../userplaylistswidget.ui" line="261"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
@@ -619,13 +629,36 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="222"/>
-        <source>Tracks in Library</source>
+        <location filename="../userplaylistswidget.cpp" line="73"/>
+        <source>New Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="250"/>
-        <source>Enqueue All</source>
+        <location filename="../userplaylistswidget.cpp" line="73"/>
+        <location filename="../userplaylistswidget.cpp" line="117"/>
+        <source>What name do you want to give to this playlist?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="114"/>
+        <source>For %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="115"/>
+        <location filename="../userplaylistswidget.cpp" line="117"/>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="120"/>
+        <location filename="../userplaylistswidget.cpp" line="174"/>
+        <source>Tracks in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="123"/>
+        <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -640,39 +673,6 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <location filename="../userplaylistswidget.cpp" line="150"/>
         <location filename="../userplaylistswidget.cpp" line="162"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="120"/>
-        <location filename="../userplaylistswidget.cpp" line="174"/>
-        <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="114"/>
-        <source>For %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="73"/>
-        <source>New Playlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="73"/>
-        <location filename="../userplaylistswidget.cpp" line="117"/>
-        <source>What name do you want to give to this playlist?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="115"/>
-        <location filename="../userplaylistswidget.cpp" line="117"/>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="123"/>
-        <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
