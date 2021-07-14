@@ -113,6 +113,10 @@ ControlStrip::ControlStrip(QWidget* parent) :
         ui->customButtonsLayout->addWidget(button);
     });
 
+    //Ensure that the seeker and transport controls are always LTR
+    ui->transportControlsWidget->setLayoutDirection(Qt::LeftToRight);
+    ui->seekerWidget->setLayoutDirection(Qt::LeftToRight);
+
     updateCurrentItem();
 }
 

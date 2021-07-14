@@ -44,6 +44,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
+#include <tapplication.h>
+
 #ifdef HAVE_MUSICBRAINZ
     #include <musicbrainz5/Query.h>
     #include <musicbrainz5/Release.h>
@@ -133,10 +135,12 @@ void CdChecker::checkCd() {
         CdInformation info;
         QDBusInterface cdDriveInterface("org.freedesktop.UDisks2", d->cdDrivePath.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
         if (cdDriveInterface.property("MediaAvailable").toBool()) {
+            Qt::LayoutDirection oldDirection = tApplication::layoutDirection();
 
             QEventLoop* eventLoop = new QEventLoop();
             MediaObject* cdFinder = new MediaObject();
             MediaController* cdController = new MediaController(cdFinder);
+
             AudioDataOutput dummyOutput;
             createPath(cdFinder, &dummyOutput);
             connect(cdController, &MediaController::availableTitlesChanged, eventLoop, [ =, &info](int tracks) {
@@ -157,6 +161,8 @@ void CdChecker::checkCd() {
             cdFinder->setCurrentSource(MediaSource(Phonon::Cd, d->blockDevice));
             cdFinder->play();
             cdFinder->pause();
+
+            tApplication::setLayoutDirection(oldDirection);
 
             //Time out after 30 seconds
             QTimer::singleShot(30000, eventLoop, &QEventLoop::quit);

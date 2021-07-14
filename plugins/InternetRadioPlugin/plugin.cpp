@@ -25,7 +25,6 @@
 #include <pluginmediasource.h>
 #include <QIcon>
 #include <tapplication.h>
-#include <QTranslator>
 #include "radiopane.h"
 
 struct PluginPrivate {

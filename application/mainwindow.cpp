@@ -125,7 +125,6 @@ MainWindow::MainWindow(QWidget* parent)
     menu->addAction(ui->actionSkip_Forward);
     menu->addSeparator();
     menu->addAction(ui->actionSettings);
-//    menu->addMenu(helpMenu);
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
 

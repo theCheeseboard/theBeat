@@ -24,6 +24,7 @@
 #include <QMimeData>
 #include <QUrl>
 #include <QFileInfo>
+#include <tpaintcalculator.h>
 #include <the-libs_global.h>
 #include <helpers.h>
 #include "common.h"
@@ -93,26 +94,35 @@ LibraryItemDelegate::LibraryItemDelegate(QObject* parent) {
 }
 
 void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
+    tPaintCalculator paintCalculator;
+    paintCalculator.setPainter(painter);
+    paintCalculator.setDrawBounds(option.rect);
+
     QPen transientColor = option.palette.color(QPalette::Disabled, QPalette::WindowText);
 
     bool drawAsError = index.data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError;
 
-    painter->setPen(Qt::transparent);
     QPen textPen;
+    QBrush brush;
     if (option.state & QStyle::State_Selected) {
-        painter->setBrush(option.palette.brush(QPalette::Highlight));
+        brush = option.palette.brush(QPalette::Highlight);
         textPen = option.palette.color(QPalette::HighlightedText);
         transientColor = textPen;
     } else if (option.state & QStyle::State_MouseOver) {
         QColor col = option.palette.color(QPalette::Highlight);
         col.setAlpha(127);
-        painter->setBrush(col);
+        brush = col;
         textPen = option.palette.color(QPalette::HighlightedText);
     } else {
-        painter->setBrush(option.palette.brush(QPalette::Window));
+        brush = option.palette.brush(QPalette::Window);
         textPen = option.palette.color(QPalette::WindowText);
     }
-    painter->drawRect(option.rect);
+
+    paintCalculator.addRect(option.rect, [ = ](QRectF paintBounds) {
+        painter->setPen(Qt::transparent);
+        painter->setBrush(brush);
+        painter->drawRect(paintBounds);
+    });
 
     QRect textRect = option.rect;
 
@@ -133,27 +143,36 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
 
     //Draw the track number
     if (drawAsError) {
-        painter->setFont(trackFont);
-        painter->setPen(transientColor);
-        painter->drawText(trackRect, Qt::AlignCenter, "!");
+        paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+            painter->setFont(trackFont);
+            painter->setPen(transientColor);
+            painter->drawText(paintBounds, Qt::AlignCenter, "!");
+        });
     } else if (index.data(LibraryModel::TrackRole).toInt() != -1) {
-        painter->setFont(trackFont);
-        painter->setPen(transientColor);
-
         int trackNumber = index.data(LibraryModel::TrackRole).toInt();
         if (trackNumber == 0) {
-            painter->drawText(trackRect, Qt::AlignCenter, "-");
+            paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+                painter->setFont(trackFont);
+                painter->setPen(transientColor);
+                painter->drawText(paintBounds, Qt::AlignCenter, "-");
+            });
         } else if (trackNumber < 99) {
-            painter->drawText(trackRect, Qt::AlignCenter, QString::number(trackNumber));
+            paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+                painter->setFont(trackFont);
+                painter->setPen(transientColor);
+                painter->drawText(paintBounds, Qt::AlignCenter, QLocale().toString(trackNumber));
+            });
         } else {
             //Squash the text
-            qreal factor = painter->fontMetrics().horizontalAdvance("00") / static_cast<qreal>(painter->fontMetrics().horizontalAdvance(QString::number(trackNumber)));
+            qreal factor = painter->fontMetrics().horizontalAdvance("00") / static_cast<qreal>(painter->fontMetrics().horizontalAdvance(QLocale().toString(trackNumber)));
             trackRect.setWidth(trackRect.width() / factor);
             trackRect.moveLeft(trackRect.left() / factor);
-            painter->save();
-            painter->scale(factor, 1);
-            painter->drawText(trackRect, Qt::AlignCenter, QString::number(trackNumber));
-            painter->restore();
+            paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+                painter->save();
+                painter->scale(factor, 1);
+                painter->drawText(paintBounds, Qt::AlignCenter, QLocale().toString(trackNumber));
+                painter->restore();
+            });
         }
     }
 
@@ -162,9 +181,11 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     nameRect.setWidth(option.fontMetrics.horizontalAdvance(index.data().toString()) + 1);
     textRect.setLeft(nameRect.right() + SC_DPI(6));
 
-    painter->setFont(option.font);
-    painter->setPen(drawAsError ? transientColor : option.palette.color(QPalette::WindowText));
-    painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());
+    paintCalculator.addRect(nameRect, [ = ](QRectF paintBounds) {
+        painter->setFont(option.font);
+        painter->setPen(drawAsError ? transientColor : option.palette.color(QPalette::WindowText));
+        painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());
+    });
 
     //Draw the extra details
     QString artist = index.data(LibraryModel::ArtistRole).toString();
@@ -180,15 +201,21 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     detailsRect.setWidth(option.fontMetrics.horizontalAdvance(detailsText) + 1);
     detailsRect.moveTop(nameRect.bottom());
 
-    painter->setPen(transientColor);
-    painter->drawText(detailsRect, Qt::AlignLeft | Qt::AlignVCenter, detailsText);
+    paintCalculator.addRect(detailsRect, [ = ](QRectF paintBounds) {
+        painter->setPen(transientColor);
+        painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, detailsText);
+    });
 
     //Draw the track duration
     int duration = index.data(LibraryModel::DurationRole).toInt();
     if (duration != 0) {
-        painter->setPen(transientColor);
-        painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, "· " + Common::durationToString(duration));
+        paintCalculator.addRect(textRect, [ = ](QRectF paintBounds) {
+            painter->setPen(transientColor);
+            painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, "· " + Common::durationToString(duration));
+        });
     }
+
+    paintCalculator.performPaint();
 }
 
 QSize LibraryItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const {

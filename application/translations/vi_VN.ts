@@ -10,47 +10,47 @@
         <translation>Bài hát trong thư viện</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="230"/>
+        <location filename="../artistsalbumswidget.ui" line="237"/>
         <source>Enqueue All</source>
         <translation>Đặt tất cả vào hàng phát</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="241"/>
+        <location filename="../artistsalbumswidget.ui" line="248"/>
         <source>Play All</source>
         <translation>Phát tất cả</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="252"/>
+        <location filename="../artistsalbumswidget.ui" line="259"/>
         <source>Shuffle All</source>
         <translation>Phát ngẫu nhiên</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="276"/>
+        <location filename="../artistsalbumswidget.ui" line="283"/>
         <source>Burn</source>
         <translation>Ghi đĩa</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="67"/>
+        <location filename="../artistsalbumswidget.cpp" line="68"/>
         <source>Albums in Library</source>
         <translation>Đĩa nhạc trong thư viện</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="67"/>
+        <location filename="../artistsalbumswidget.cpp" line="68"/>
         <source>Artists in Library</source>
         <translation>Nghệ sĩ trong thư viện</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="153"/>
+        <location filename="../artistsalbumswidget.cpp" line="167"/>
         <source>Tracks in %1</source>
         <translation>Bài hát trong %1</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="153"/>
+        <location filename="../artistsalbumswidget.cpp" line="167"/>
         <source>Tracks by %1</source>
         <translation>Bài hát bởi %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../artistsalbumswidget.cpp" line="162"/>
+        <location filename="../artistsalbumswidget.cpp" line="176"/>
         <source>%n tracks</source>
         <translation>
             <numerusform>%n bài hát</numerusform>
@@ -68,12 +68,12 @@
 <context>
     <name>ControlStrip</name>
     <message>
-        <location filename="../controlstrip.ui" line="102"/>
+        <location filename="../controlstrip.ui" line="101"/>
         <source>Title</source>
         <translation>Tiêu đề</translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="109"/>
+        <location filename="../controlstrip.ui" line="128"/>
         <source>Metadata</source>
         <translation>Siêu dữ liệu</translation>
     </message>
@@ -183,17 +183,17 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="174"/>
+        <location filename="../library/librarymodel.cpp" line="195"/>
         <source>by %1</source>
         <translation>bởi %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="175"/>
+        <location filename="../library/librarymodel.cpp" line="196"/>
         <source>on %1</source>
         <translation>trên %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="177"/>
+        <location filename="../library/librarymodel.cpp" line="198"/>
         <source>Track</source>
         <translation>Bài hát</translation>
     </message>
@@ -335,13 +335,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="486"/>
-        <location filename="../mainwindow.cpp" line="440"/>
+        <location filename="../mainwindow.cpp" line="439"/>
         <source>Open URL</source>
         <translation>Mở liên kết</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="495"/>
-        <location filename="../mainwindow.cpp" line="211"/>
+        <location filename="../mainwindow.cpp" line="210"/>
         <source>Skip Back</source>
         <translation>Nhảy lại</translation>
     </message>
@@ -392,8 +392,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="519"/>
-        <location filename="../mainwindow.cpp" line="219"/>
-        <location filename="../mainwindow.cpp" line="233"/>
+        <location filename="../mainwindow.cpp" line="218"/>
+        <location filename="../mainwindow.cpp" line="232"/>
         <source>Play</source>
         <translation>Phát</translation>
     </message>
@@ -403,54 +403,54 @@
         <translation>Space</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="228"/>
+        <location filename="../mainwindow.cpp" line="227"/>
         <source>Pause</source>
         <translation>Tạm dừng</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="240"/>
+        <location filename="../mainwindow.cpp" line="239"/>
         <source>Skip Next</source>
         <translation>Nhảy tiếp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="412"/>
+        <location filename="../mainwindow.cpp" line="411"/>
         <source>For &quot;%1&quot;</source>
         <translation>Cho &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="414"/>
+        <location filename="../mainwindow.cpp" line="413"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Cho %n mục</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="416"/>
+        <location filename="../mainwindow.cpp" line="415"/>
         <source>Remove from Queue</source>
         <translation>Xóa khỏi hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="429"/>
+        <location filename="../mainwindow.cpp" line="428"/>
         <source>For Queue</source>
         <translation>Cho hàng phát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="430"/>
+        <location filename="../mainwindow.cpp" line="429"/>
         <source>Clear Queue</source>
         <translation>Xóa các mục</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="440"/>
+        <location filename="../mainwindow.cpp" line="439"/>
         <source>Enter the URL you&apos;d like to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="445"/>
+        <location filename="../mainwindow.cpp" line="444"/>
         <source>Can&apos;t open that URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="445"/>
+        <location filename="../mainwindow.cpp" line="444"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -471,12 +471,12 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="259"/>
+        <location filename="../playlistmodel.cpp" line="265"/>
         <source>Track</source>
         <translation>Bài hát</translation>
     </message>
     <message>
-        <location filename="../playlistmodel.cpp" line="282"/>
+        <location filename="../playlistmodel.cpp" line="288"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
