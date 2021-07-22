@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="ar_SA">
+<TS version="2.1" language="ar_SA" sourcelanguage="en_US">
 <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
@@ -713,17 +713,17 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="55"/>
+        <location filename="../main.cpp" line="57"/>
         <source>Audio Player</source>
         <translation>مشغل الصوت</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="98"/>
+        <location filename="../main.cpp" line="100"/>
         <source>file</source>
         <translation>ملف</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="98"/>
+        <location filename="../main.cpp" line="100"/>
         <source>File to open</source>
         <translation>ملف للفتح</translation>
     </message>

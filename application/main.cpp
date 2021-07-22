@@ -44,6 +44,8 @@ int main(int argc, char* argv[]) {
     if (!qEnvironmentVariableIsSet("QT_MULTIMEDIA_PREFERRED_PLUGINS")) qputenv("QT_MULTIMEDIA_PREFERRED_PLUGINS", "windowsmediafoundation");
     tApplication a(argc, argv);
 
+    QString dir = SYSTEM_PREFIX_DIRECTORY;
+
     if (QDir(QStringLiteral("%1/share/thebeat/").arg(SYSTEM_PREFIX_DIRECTORY)).exists()) {
         a.setShareDir(QStringLiteral("%1/share/thebeat/").arg(SYSTEM_PREFIX_DIRECTORY));
     } else if (QDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/")).exists()) {
@@ -56,7 +58,7 @@ int main(int argc, char* argv[]) {
     a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
     a.setCopyrightHolder("Victor Tran");
-    a.setCopyrightYear("2020");
+    a.setCopyrightYear("2021");
     a.setOrganizationName("theSuite");
     a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thebeat/intro"));
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theBeat"));

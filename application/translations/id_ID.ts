@@ -688,17 +688,17 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="55"/>
+        <location filename="../main.cpp" line="57"/>
         <source>Audio Player</source>
         <translation>Pemutar Audio</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="98"/>
+        <location filename="../main.cpp" line="100"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="98"/>
+        <location filename="../main.cpp" line="100"/>
         <source>File to open</source>
         <translation>File untuk dibuka</translation>
     </message>
