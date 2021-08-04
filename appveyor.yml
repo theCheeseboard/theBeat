@@ -27,6 +27,8 @@ test: off
 artifacts:
 - path: deploy
   name: theBeat-Windows
+- path: deployAppx\theBeat.msix
+  name: theBeat-appx
   
   
 before_deploy:

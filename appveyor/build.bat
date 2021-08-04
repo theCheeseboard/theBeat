@@ -88,3 +88,12 @@ copy taglib\build\taglib\tag.dll deploy
 copy application\defaults.conf deploy
 cd deploy
 windeployqt theBeat.exe -network -quickwidgets -sql -multimedia
+
+cd ..
+robocopy deploy deployAppx /mir
+cd deployAppx
+
+copy ..\dist\win-pack\* .
+makepri createconfig /cf priconfig.xml /dq en-US
+makepri new /pr . /cf priconfig.xml
+makeappx pack /d . /p theBeat.msix
