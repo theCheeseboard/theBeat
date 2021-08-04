@@ -10,9 +10,9 @@
     </message>
     <message>
         <location filename="../cdchecker.ui" line="43"/>
-        <location filename="../cdchecker.cpp" line="44"/>
-        <location filename="../cdchecker.cpp" line="125"/>
+        <location filename="../cdchecker.cpp" line="51"/>
         <location filename="../cdchecker.cpp" line="126"/>
+        <location filename="../cdchecker.cpp" line="127"/>
         <source>CD</source>
         <translation type="unfinished"></translation>
     </message>
