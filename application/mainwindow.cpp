@@ -22,6 +22,7 @@
 
 #include <tcsdtools.h>
 #include <QMenu>
+#include <tapplication.h>
 #include <tsettings.h>
 #include <QDesktopServices>
 #include <taboutdialog.h>
@@ -102,7 +103,7 @@ MainWindow::MainWindow(QWidget* parent)
     tHelpMenu* helpMenu = new tHelpMenu(this);
 
 #ifdef HAVE_THEINSTALLER
-    if (UpdateChecker::updatesSupported()) {
+    if (tApplication::currentPlatform() != tApplication::WindowsAppPackage && UpdateChecker::updatesSupported()) {
         helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
 
         connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [ = ] {

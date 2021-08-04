@@ -355,13 +355,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="486"/>
-        <location filename="../mainwindow.cpp" line="439"/>
+        <location filename="../mainwindow.cpp" line="440"/>
         <source>Open URL</source>
         <translation>أفتح الرابط</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="495"/>
-        <location filename="../mainwindow.cpp" line="210"/>
+        <location filename="../mainwindow.cpp" line="211"/>
         <source>Skip Back</source>
         <translation>أعد للخلف</translation>
     </message>
@@ -382,8 +382,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="519"/>
-        <location filename="../mainwindow.cpp" line="218"/>
-        <location filename="../mainwindow.cpp" line="232"/>
+        <location filename="../mainwindow.cpp" line="219"/>
+        <location filename="../mainwindow.cpp" line="233"/>
         <source>Play</source>
         <translation>ألعب</translation>
     </message>
@@ -418,22 +418,22 @@
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="227"/>
+        <location filename="../mainwindow.cpp" line="228"/>
         <source>Pause</source>
         <translation>أقف</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="239"/>
+        <location filename="../mainwindow.cpp" line="240"/>
         <source>Skip Next</source>
         <translation>القفز إلى المقبل</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="411"/>
+        <location filename="../mainwindow.cpp" line="412"/>
         <source>For &quot;%1&quot;</source>
         <translation>ل &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="413"/>
+        <location filename="../mainwindow.cpp" line="414"/>
         <source>For %n items</source>
         <translation>
             <numerusform>لي صفر عناصر</numerusform>
@@ -445,32 +445,32 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="415"/>
+        <location filename="../mainwindow.cpp" line="416"/>
         <source>Remove from Queue</source>
         <translation>إزالة من قائمة الانتظار</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="428"/>
+        <location filename="../mainwindow.cpp" line="429"/>
         <source>For Queue</source>
         <translation>لقائمة الانتظار</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="429"/>
+        <location filename="../mainwindow.cpp" line="430"/>
         <source>Clear Queue</source>
         <translation>مسح قائمة الانتظار</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="439"/>
+        <location filename="../mainwindow.cpp" line="440"/>
         <source>Enter the URL you&apos;d like to open</source>
         <translation>أدخل العنوان (URL) الذي تريد فتحه</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="444"/>
+        <location filename="../mainwindow.cpp" line="445"/>
         <source>Can&apos;t open that URL</source>
         <translation>لا يمكن فتح العنوان (URL) هذا</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="444"/>
+        <location filename="../mainwindow.cpp" line="445"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
         <translation>عذرًا ، العنوان (URL) هذا لا يدعمه theBeat.</translation>
     </message>
