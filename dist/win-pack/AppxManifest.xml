@@ -13,7 +13,7 @@
   IgnorableNamespaces="uap uap2 uap3 rescap desktop desktop4 desktop5 uap10 com">
   <Identity Name="35258VictorTran.theBeatAudioPlayer" Publisher="CN=9DF264BB-CC81-436C-BAAA-0CC89B464F60" Version="3.0.0.0" ProcessorArchitecture="x64" />
   <Properties>
-    <DisplayName>theBeat</DisplayName>
+    <DisplayName>theBeat Audio Player</DisplayName>
     <PublisherDisplayName>Victor Tran</PublisherDisplayName>
     <Logo>Assets\storelogo.png</Logo>
   </Properties>
