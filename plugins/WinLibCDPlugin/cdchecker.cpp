@@ -13,6 +13,7 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QTimer>
 
 struct CdCheckerPrivate {
     PluginMediaSource* source;
@@ -21,6 +22,8 @@ struct CdCheckerPrivate {
 
     QImage playlistBackground;
     QNetworkAccessManager mgr;
+
+    QTimer* metadataTimer;
 };
 
 CdChecker::CdChecker(QChar driveLetter, QWidget* parent) :
@@ -29,6 +32,10 @@ CdChecker::CdChecker(QChar driveLetter, QWidget* parent) :
     ui->setupUi(this);
     d = new CdCheckerPrivate();
     d->source = new PluginMediaSource(this);
+
+    d->metadataTimer = new QTimer(this);
+    d->metadataTimer->setInterval(1000);
+    connect(d->metadataTimer, &QTimer::timeout, this, &CdChecker::getMetadata);
 
     winrt::CDLib::IAudioCDPlayer audioCdPlayer = AudioCdPlayerThread::instance()->player();
     auto drives = audioCdPlayer.GetDrives();
@@ -79,17 +86,11 @@ void CdChecker::checkCd() {
         d->trackInfo.clear();
         for (uint i = 0; i < media.Tracks().Size(); i++) {
             TrackInfoPtr trackInfo = TrackInfoPtr(new TrackInfo(i));
-            winrt::CDLib::IAudioCDTrack cdTrack = media.Tracks().GetAt(i);
-            trackInfo->setData(QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.Title().c_str())),
-            {QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.Artist().c_str()))},
-            QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.AlbumTitle().c_str())));
             d->trackInfo.append(trackInfo);
         }
 
-        winrt::CDLib::IAudioCDTrack firstTrack = media.Tracks().GetAt(0);
-        QString album = QString::fromUtf16(reinterpret_cast<const ushort*>(firstTrack.AlbumTitle().c_str()));
-        d->source->setName(album);
-        ui->albumTitleLabel->setText(album);
+        d->metadataTimer->start();
+        getMetadata();
 
 //        QString albumArt = QString::fromUtf16(reinterpret_cast<const ushort*>(firstTrack.AlbumCoverUrl().c_str()));
 //        tDebug("CdChecker") << albumArt;
@@ -124,16 +125,43 @@ void CdChecker::checkCd() {
 
         d->source->setName(tr("CD"));
         ui->albumTitleLabel->setText(tr("CD"));
+
+        d->metadataTimer->stop();
     }
 }
 
+void CdChecker::getMetadata() {
+    auto media = d->drive.InsertedMedia();
+    for (uint i = 0; i < media.Tracks().Size(); i++) {
+        TrackInfoPtr trackInfo = d->trackInfo.at(i);
+        winrt::CDLib::IAudioCDTrack cdTrack = media.Tracks().GetAt(i);
+        trackInfo->setData(QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.Title().c_str())),
+        {QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.Artist().c_str()))},
+        QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.AlbumTitle().c_str())));
+    }
+
+    winrt::CDLib::IAudioCDTrack firstTrack = media.Tracks().GetAt(0);
+    QString album = QString::fromUtf16(reinterpret_cast<const ushort*>(firstTrack.AlbumTitle().c_str()));
+    d->source->setName(album);
+    ui->albumTitleLabel->setText(album);
+
+    updateTrackListing();
+}
+
 void CdChecker::updateTrackListing() {
-    ui->tracksWidget->clear();
-    for (TrackInfoPtr info : d->trackInfo) {
-        QListWidgetItem* item = new QListWidgetItem();
-        item->setText(info->title());
-        item->setData(Qt::UserRole, info->track());
-        ui->tracksWidget->addItem(item);
+    if (ui->tracksWidget->count() == d->trackInfo.count()) {
+        for (TrackInfoPtr info : d->trackInfo) {
+            QListWidgetItem* item = ui->tracksWidget->item(info->track());
+            item->setText(info->title());
+        }
+    } else {
+        ui->tracksWidget->clear();
+        for (TrackInfoPtr info : d->trackInfo) {
+            QListWidgetItem* item = new QListWidgetItem();
+            item->setText(info->title());
+            item->setData(Qt::UserRole, info->track());
+            ui->tracksWidget->addItem(item);
+        }
     }
 }
 

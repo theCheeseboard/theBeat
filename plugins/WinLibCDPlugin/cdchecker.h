@@ -35,6 +35,7 @@ class CdChecker : public QWidget {
         CdCheckerPrivate* d;
 
         void checkCd();
+        void getMetadata();
         void updateTrackListing();
 };
 
