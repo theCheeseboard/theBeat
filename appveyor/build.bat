@@ -93,7 +93,7 @@ cd ..
 robocopy deploy deployAppx /mir
 cd deployAppx
 
-robocopy ..\dist\win-pack\* . /mir
+robocopy ..\dist\win-pack\ .
 makepri createconfig /cf priconfig.xml /dq en-US
 makepri new /pr . /cf priconfig.xml
 makeappx pack /d . /p theBeat.msix
