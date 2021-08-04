@@ -153,8 +153,10 @@ int main(int argc, char* argv[]) {
     });
 
 #ifdef HAVE_THEINSTALLER
-    UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 1, 0, 24);
-    QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
+    if (a.currentPlatform() != tApplication::WindowsAppPackage) {
+        UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 1, 0, 24);
+        QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
+    }
 #endif
 
     w->show();

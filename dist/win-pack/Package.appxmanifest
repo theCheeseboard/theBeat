@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4"
+  xmlns:desktop5="http://schemas.microsoft.com/appx/manifest/desktop/windows10/5"
+  xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+  IgnorableNamespaces="uap uap2 uap3 rescap desktop desktop4 desktop5 uap10 com">
+  <Identity Name="theBeat" ProcessorArchitecture="neutral" Publisher="CN=Contoso" Version="1.0.0.0" />
+  <Properties>
+    <DisplayName>theBeat</DisplayName>
+    <PublisherDisplayName>Victor Tran</PublisherDisplayName>
+    <Logo>Assets\storelogo.png</Logo>
+    <uap10:AllowExternalContent>true</uap10:AllowExternalContent>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.18950.0" MaxVersionTested="10.0.19000.0" />
+  </Dependencies>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+    <rescap:Capability Name="unvirtualizedResources"/>
+  </Capabilities>
+  <Applications>
+    <Application Id="theBeat" Executable="theBeat.exe" uap10:TrustLevel="mediumIL" uap10:RuntimeBehavior="win32App">
+      <uap:VisualElements DisplayName="theBeat" Square44x44Logo="Assets\Square44x44Logo.png" Square150x150Logo="Assets\Square150x150Logo.png" BackgroundColor="transparent" Description="theBeat Audio Player" >
+        <uap:DefaultTile Square71x71Logo="Assets\SmallTile.png" Wide310x150Logo="Assets\WideTile.png" Square310x310Logo="Assets\LargeTile.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png"/>
+      </uap:VisualElements>
+      <Extensions>
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:ExeServer Executable="theBeat.exe" Arguments="-ToastActivated" DisplayName="Toast activator">
+              <com:Class Id="98fd3bc5-b39c-4c97-b483-4c95b90a7c39" DisplayName="Toast activator"/>
+            </com:ExeServer>
+          </com:ComServer>
+        </com:Extension>
+        <desktop:Extension Category="windows.toastNotificationActivation">
+          <desktop:ToastNotificationActivation ToastActivatorCLSID="98fd3bc5-b39c-4c97-b483-4c95b90a7c39"/>
+        </desktop:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+</Package>
