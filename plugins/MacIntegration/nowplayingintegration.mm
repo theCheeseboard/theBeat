@@ -54,6 +54,41 @@ NowPlayingIntegration::NowPlayingIntegration(QObject* parent) : QObject(parent) 
         d->currentItem->seek([positionEvent positionTime] * 1000);
         return MPRemoteCommandHandlerStatusSuccess;
     }];
+
+    [[commandCenter changeShuffleModeCommand] addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * event) {
+                                                 if (!d->currentItem || [event isKindOfClass:[MPChangeShuffleModeCommandEvent class]] == NO) {
+                                                     return MPRemoteCommandHandlerStatusCommandFailed;
+                                                 }
+                                                 MPChangeShuffleModeCommandEvent* shuffleEvent = static_cast<MPChangeShuffleModeCommandEvent*>(event);
+        switch ([shuffleEvent shuffleType]) {
+            case MPShuffleTypeOff:
+                StateManager::instance()->playlist()->setShuffle(false);
+                break;
+            case MPShuffleTypeItems:
+                StateManager::instance()->playlist()->setShuffle(true);
+                break;
+            default:
+                return MPRemoteCommandHandlerStatusCommandFailed;
+        }
+
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+    [[commandCenter changeRepeatModeCommand] addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * event) {
+                                                if (!d->currentItem || [event isKindOfClass:[MPChangeRepeatModeCommandEvent class]] == NO) {
+                                                    return MPRemoteCommandHandlerStatusCommandFailed;
+                                                }
+                                                MPChangeRepeatModeCommandEvent* repeatEvent = static_cast<MPChangeRepeatModeCommandEvent*>(event);
+        switch ([repeatEvent repeatType]) {
+            case MPRepeatTypeOff:
+                StateManager::instance()->playlist()->setRepeatOne(false);
+                break;
+            case MPRepeatTypeOne:
+            case MPRepeatTypeAll:
+                StateManager::instance()->playlist()->setRepeatOne(true);
+        }
+
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
 }
 
 NowPlayingIntegration::~NowPlayingIntegration() {

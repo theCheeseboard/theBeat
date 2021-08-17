@@ -80,5 +80,7 @@ void MacBurnProvider::burn(QStringList files, QString albumName, QWidget* parent
     BurnPanelDelegate* delegate = [[BurnPanelDelegate alloc] init:details];
 
     [setupPanel setDelegate:delegate];
+    [setupPanel setCanSelectTestBurn:YES];
+    [setupPanel setCanSelectAppendableMedia:NO];
     [setupPanel beginSetupSheetForWindow:details.parentWindow modalDelegate:delegate didEndSelector:@selector(burnSetupPanelDidEnd:returnCode:contextInfo:) contextInfo:nullptr];
 }
