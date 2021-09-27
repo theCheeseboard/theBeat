@@ -25,7 +25,7 @@
 
 class QPainter;
 struct VisualisationManagerPrivate;
-struct VisualisationEngine;
+class VisualisationEngine;
 class LIBTHEBEAT_EXPORT VisualisationManager : public QObject {
         Q_OBJECT
     public:

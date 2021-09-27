@@ -77,6 +77,10 @@ class MainWindow : public QMainWindow {
 
         void on_actionHelp_triggered();
 
+        void on_actionRepeat_One_triggered(bool checked);
+
+        void on_actionShuffle_triggered(bool checked);
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;

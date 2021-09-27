@@ -125,6 +125,9 @@ MainWindow::MainWindow(QWidget* parent)
     menu->addAction(ui->actionSkip_Back);
     menu->addAction(ui->actionSkip_Forward);
     menu->addSeparator();
+    menu->addAction(ui->actionRepeat_One);
+    menu->addAction(ui->actionShuffle);
+    menu->addSeparator();
     menu->addAction(ui->actionSettings);
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
@@ -260,6 +263,13 @@ MainWindow::MainWindow(QWidget* parent)
     tCsdGlobal::setCsdsEnabled(!d->settings.value("appearance/useSsds").toBool());
 
     StateManager::instance()->sources()->setPadTop(ui->topWidget->sizeHint().height());
+
+    connect(StateManager::instance()->playlist(), &Playlist::repeatOneChanged, this, [ = ](bool repeatOne) {
+        ui->actionRepeat_One->setChecked(repeatOne);
+    });
+    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, this, [ = ](bool shuffle) {
+        ui->actionShuffle->setChecked(shuffle);
+    });
 
     d->plugins.load();
 }
@@ -494,4 +504,12 @@ void MainWindow::on_actionSettings_triggered() {
 
 void MainWindow::on_actionHelp_triggered() {
     QDesktopServices::openUrl(QUrl("https://help.vicr123.com/docs/thebeat/intro"));
+}
+
+void MainWindow::on_actionRepeat_One_triggered(bool checked) {
+    StateManager::instance()->playlist()->setRepeatOne(checked);
+}
+
+void MainWindow::on_actionShuffle_triggered(bool checked) {
+    StateManager::instance()->playlist()->setShuffle(checked);
 }
