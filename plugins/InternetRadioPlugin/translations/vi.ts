@@ -11,17 +11,17 @@
     <message>
         <location filename="../favouritestationswidget.ui" line="57"/>
         <source>Internet Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Đài trực tuyến</translation>
     </message>
     <message>
         <location filename="../favouritestationswidget.ui" line="80"/>
         <source>Jam out to your favourite radio stations and radio stations all around the world</source>
-        <translation type="unfinished"></translation>
+        <translation>Nghe các đài phát thanh yêu thích của bạn trên toàn thế giới</translation>
     </message>
     <message>
         <location filename="../favouritestationswidget.ui" line="93"/>
         <source>Go Searching</source>
-        <translation type="unfinished"></translation>
+        <translation>Đi tìm kiếm</translation>
     </message>
 </context>
 <context>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../radiopane.cpp" line="38"/>
         <source>Internet Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Đài trực tuyến</translation>
     </message>
 </context>
 <context>
@@ -47,17 +47,17 @@
     <message>
         <location filename="../stationsearchwidget.ui" line="35"/>
         <source>Internet Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Đài trực tuyến</translation>
     </message>
     <message>
         <location filename="../stationsearchwidget.ui" line="45"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tìm kiếm...</translation>
     </message>
     <message>
         <location filename="../stationsearchwidget.ui" line="111"/>
         <source>TOP VOTED</source>
-        <translation type="unfinished"></translation>
+        <translation>XẾP HẠNG CAO NHẤT</translation>
     </message>
 </context>
 <context>
