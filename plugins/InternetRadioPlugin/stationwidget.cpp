@@ -50,6 +50,11 @@ StationWidget::StationWidget(RadioInfoClient::Station station, QWidget* parent) 
 
         ui->iconLabel->setVisible(false);
     });
+
+    if (this->layoutDirection() == Qt::RightToLeft) {
+        ui->nameLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        ui->secondaryLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    }
 }
 
 StationWidget::~StationWidget() {

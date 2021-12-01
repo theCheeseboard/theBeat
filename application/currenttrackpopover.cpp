@@ -51,6 +51,15 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
     connect(StateManager::instance()->visualisation(), &VisualisationManager::visualisationUpdated, this, [ = ] {
         this->update();
     });
+
+    //Ensure that the seeker and transport controls are always LTR
+    ui->transportControlsWidget->setLayoutDirection(Qt::LeftToRight);
+    ui->seekerWidget->setLayoutDirection(Qt::LeftToRight);
+
+    if (this->layoutDirection() == Qt::RightToLeft) {
+        ui->titleLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        ui->metadataLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    }
 }
 
 CurrentTrackPopover::~CurrentTrackPopover() {
@@ -58,8 +67,7 @@ CurrentTrackPopover::~CurrentTrackPopover() {
     delete ui;
 }
 
-void CurrentTrackPopover::setBacking(QWidget *backing)
-{
+void CurrentTrackPopover::setBacking(QWidget* backing) {
     d->backing = backing;
     this->window()->installEventFilter(this);
 
@@ -177,6 +185,11 @@ void CurrentTrackPopover::addMetadataEntry(QString entry, QString value) {
     ui->metadataEntryLayout->addWidget(valueLabel, d->currentRow, 1);
     d->metadataInfo.append(valueLabel);
 
+    if (this->layoutDirection() == Qt::RightToLeft) {
+        entryLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        valueLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    }
+
     d->currentRow++;
 }
 
@@ -239,8 +252,7 @@ void CurrentTrackPopover::paintEvent(QPaintEvent* event) {
     StateManager::instance()->visualisation()->paint(&painter, this->palette().color(QPalette::WindowText), visRect);
 }
 
-bool CurrentTrackPopover::eventFilter(QObject *watched, QEvent *event)
-{
+bool CurrentTrackPopover::eventFilter(QObject* watched, QEvent* event) {
     if (watched == this->window()) {
         if (event->type() == QEvent::Resize) {
             d->backing->resize(d->backing->parentWidget()->size());
@@ -256,10 +268,10 @@ bool CurrentTrackPopover::eventFilter(QObject *watched, QEvent *event)
             opacityAnim->setEndValue(0.0);
             opacityAnim->setDuration(500);
             opacityAnim->setEasingCurve(QEasingCurve::OutCubic);
-            connect(opacityAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+            connect(opacityAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
                 effect->setOpacity(value.toReal());
             });
-            connect(opacityAnim, &tVariantAnimation::finished, this, [=] {
+            connect(opacityAnim, &tVariantAnimation::finished, this, [ = ] {
                 d->backing->deleteLater();
             });
             opacityAnim->start();

@@ -25,6 +25,7 @@
 #include <tapplication.h>
 #include <tsettings.h>
 #include <QDesktopServices>
+#include <ticon.h>
 #include <taboutdialog.h>
 #include <QFileDialog>
 #include <statemanager.h>
@@ -272,6 +273,8 @@ MainWindow::MainWindow(QWidget* parent)
     });
 
     d->plugins.load();
+
+    tIcon::processWidget(this);
 }
 
 MainWindow::~MainWindow() {
