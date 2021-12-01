@@ -22,7 +22,7 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="259"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Acak Semua</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="283"/>
@@ -90,12 +90,12 @@
     <message>
         <location filename="../controlstrip.cpp" line="100"/>
         <source>Playback Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opsi Pemutaran</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="101"/>
         <source>Pause after current track</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause setelah trek saat ini</translation>
     </message>
 </context>
 <context>
@@ -177,7 +177,7 @@
     <message>
         <location filename="../libraryerrorpopover.cpp" line="39"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
-        <translation>Sepertinya file-nya hilang. Jika Anda tahu file-nya berada di mana, silahkan ditambahkan ulang untuk dimainkan.</translation>
+        <translation>Sepertinya file-nya hilang. Jika Anda tahu file-nya berada di mana, silahkan ditambahkan ulang untuk diputar.</translation>
     </message>
 </context>
 <context>
@@ -232,7 +232,7 @@
     <message>
         <location filename="../library/librarylistview.cpp" line="113"/>
         <source>What do you want to call this playlist?</source>
-        <translation type="unfinished"></translation>
+        <translation>Judul apa yang ingin Anda berikan pada playlist ini?</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="128"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Pemutaran</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="439"/>
@@ -384,7 +384,7 @@
     <message>
         <location filename="../mainwindow.ui" line="569"/>
         <source>Repeat One</source>
-        <translation type="unfinished"></translation>
+        <translation>Ulangi Satu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="572"/>
@@ -394,7 +394,7 @@
     <message>
         <location filename="../mainwindow.ui" line="580"/>
         <source>Shuffle</source>
-        <translation type="unfinished"></translation>
+        <translation>Acak</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="583"/>
@@ -436,7 +436,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="425"/>
         <source>For &quot;%1&quot;</source>
-        <translation>Untuk &quot;%n&quot;</translation>
+        <translation>Untuk &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="427"/>
@@ -463,17 +463,17 @@
     <message>
         <location filename="../mainwindow.cpp" line="453"/>
         <source>Enter the URL you&apos;d like to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan URL yang ingin diputar</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="458"/>
         <source>Can&apos;t open that URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat membuka URL ini</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="458"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maaf, URL itu tidak dapat diputar oleh theBeat.</translation>
     </message>
 </context>
 <context>
@@ -558,7 +558,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     <message>
         <location filename="../settingsdialog.ui" line="311"/>
         <source>TITLEBAR</source>
-        <translation type="unfinished"></translation>
+        <translation>BAR JUDUL</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="318"/>
@@ -634,7 +634,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Acak Semua</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
@@ -685,7 +685,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>What name do you want to give to this playlist?</source>
-        <translation type="unfinished"></translation>
+        <translation>Judul apa yang ingin Anda berikan pada playlist ini?</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="115"/>
