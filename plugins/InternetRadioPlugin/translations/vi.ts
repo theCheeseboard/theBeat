@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="vi">
+<TS version="2.1" language="vi" sourcelanguage="en_US">
 <context>
     <name>FavouriteStationsWidget</name>
-    <message>
-        <location filename="../favouritestationswidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../favouritestationswidget.ui" line="57"/>
         <source>Internet Radio</source>
@@ -27,11 +22,6 @@
 <context>
     <name>RadioPane</name>
     <message>
-        <location filename="../radiopane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../radiopane.cpp" line="38"/>
         <source>Internet Radio</source>
         <translation>Đài trực tuyến</translation>
@@ -39,11 +29,6 @@
 </context>
 <context>
     <name>StationSearchWidget</name>
-    <message>
-        <location filename="../stationsearchwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../stationsearchwidget.ui" line="35"/>
         <source>Internet Radio</source>
@@ -58,20 +43,6 @@
         <location filename="../stationsearchwidget.ui" line="111"/>
         <source>TOP VOTED</source>
         <translation>XẾP HẠNG CAO NHẤT</translation>
-    </message>
-</context>
-<context>
-    <name>StationWidget</name>
-    <message>
-        <location filename="../stationwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../stationwidget.ui" line="100"/>
-        <location filename="../stationwidget.ui" line="116"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
