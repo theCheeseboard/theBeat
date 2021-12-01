@@ -194,7 +194,7 @@
     <message>
         <location filename="../burnpopover.cpp" line="100"/>
         <source>Insert a CD-R or a CD-RW into the drive.</source>
-        <translation>Vui lòng chèn một đĩa CD-R hoặc CD-RW vào ổ đĩa</translation>
+        <translation>Vui lòng chèn một đĩa CD-R hoặc CD-RW vào ổ đĩa.</translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="104"/>
