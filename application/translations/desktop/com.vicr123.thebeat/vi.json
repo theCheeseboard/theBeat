@@ -1,0 +1,12 @@
+{
+    "GenericName": {
+        "message": ""
+    },
+    "Keywords": {
+        "message": "",
+        "description": "A list of words that can be searched for. Please ensure that the list also ends with a semicolon!"
+    },
+    "Name": {
+        "message": ""
+    }
+}
