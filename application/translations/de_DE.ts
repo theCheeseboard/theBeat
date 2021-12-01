@@ -22,7 +22,7 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="259"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle in Zufallswiedergabe</translation>
     </message>
     <message>
         <location filename="../artistsalbumswidget.ui" line="283"/>
@@ -91,12 +91,12 @@
     <message>
         <location filename="../controlstrip.cpp" line="100"/>
         <source>Playback Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiedergabeeinstellungen</translation>
     </message>
     <message>
         <location filename="../controlstrip.cpp" line="101"/>
         <source>Pause after current track</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach diesem Titel pausieren</translation>
     </message>
 </context>
 <context>
@@ -179,7 +179,7 @@
     <message>
         <location filename="../libraryerrorpopover.cpp" line="39"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
-        <translation>Sieht so aus als wäre die Datei untergetaucht. Wenn du weißt wo sie ist, sag uns bescheid, damit wir den Title spielen können.</translation>
+        <translation>Sieht so aus als wäre die Datei untergetaucht. Wenn du weißt wo sie ist, sag uns bescheid, damit wir den Titel spielen können.</translation>
     </message>
 </context>
 <context>
@@ -234,7 +234,7 @@
     <message>
         <location filename="../library/librarylistview.cpp" line="113"/>
         <source>What do you want to call this playlist?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie willst du diese Playlist nennen?</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="128"/>
@@ -295,12 +295,12 @@
     <message>
         <location filename="../mainwindow.ui" line="408"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiedergabe</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="439"/>
@@ -387,22 +387,22 @@
     <message>
         <location filename="../mainwindow.ui" line="569"/>
         <source>Repeat One</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Titel wiederholen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="572"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+R</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="580"/>
         <source>Shuffle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zufallswiedergabe</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="583"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+S</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="510"/>
@@ -467,17 +467,17 @@
     <message>
         <location filename="../mainwindow.cpp" line="453"/>
         <source>Enter the URL you&apos;d like to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Gib die URL ein, die du öffnen willst</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="458"/>
         <source>Can&apos;t open that URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann diese URL nicht öffnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="458"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entschuldigung, diese URL unterstützt theBeat nicht.</translation>
     </message>
 </context>
 <context>
@@ -638,7 +638,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle in Zufallswiedergabe</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
@@ -683,13 +683,13 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <source>New Playlist</source>
-        <translation type="unfinished">Neue Playlist</translation>
+        <translation>Neue Playlist</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>What name do you want to give to this playlist?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie willst du diese Playlist nennen?</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="115"/>
