@@ -15,62 +15,62 @@
     <message>
         <location filename="../cd/cdchecker.ui" line="68"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>Antri Semua</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker.ui" line="79"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Putar Semua</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker.ui" line="89"/>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Acak Semua</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker.ui" line="112"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Impor</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker.ui" line="123"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluarkan</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker.ui" line="213"/>
         <source>Accessing MusicBrainz...</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengakses MusicBrainz...</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker.ui" line="230"/>
         <source>CD NOT FOUND</source>
-        <translation type="unfinished"></translation>
+        <translation>CD TIDAK DITEMUKAN</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker.ui" line="237"/>
         <source>This CD was not found on the MusicBrainz CD Database.</source>
-        <translation type="unfinished"></translation>
+        <translation>CD ini tidak ditemukan dalam database MusicBrainz.</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker.ui" line="257"/>
         <source>SELECT CORRECT ALBUM</source>
-        <translation type="unfinished"></translation>
+        <translation>PILIH ALBUM YANG TEPAT</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker.ui" line="264"/>
         <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lebih dari satu hasil ditemukan dalam MusicBrainz untuk CD ini. Silahkan pilih CD yang tepat untuk informasi akurat.</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker-objc.mm" line="31"/>
         <source>Couldn&apos;t eject the disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat mengeluarkan disc</translation>
     </message>
     <message>
         <location filename="../cd/cdchecker-objc.mm" line="32"/>
         <source>Make sure no other applications are accessing the disc, and then try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pastikan tidak ada aplikasi lain yang mengakses disc ini, kemudian coba lagi.</translation>
     </message>
 </context>
 <context>
@@ -78,43 +78,43 @@
     <message>
         <location filename="../burn/macburnjob.mm" line="79"/>
         <source>Burn Complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Burn Selesai</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="82"/>
         <source>Burn cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Burn dibatalkan</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="84"/>
         <source>Failed to burn: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal melakukan burn: %1</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="87"/>
         <source>Erasing disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Menghapus disc</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="91"/>
         <source>Finalising disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyelesaikan burning</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="95"/>
         <location filename="../burn/macburnjob.mm" line="97"/>
         <source>Preparing to burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyiapkan burning</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="99"/>
         <source>Burning track %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sedang burning trek %1</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="101"/>
         <source>Burning</source>
-        <translation type="unfinished"></translation>
+        <translation>Burning</translation>
     </message>
 </context>
 <context>
@@ -122,22 +122,22 @@
     <message>
         <location filename="../burn/macburnjob.mm" line="69"/>
         <source>Burn Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Burn Berhasil</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="69"/>
         <source>Burned %1 to disc</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 telah diburn ke disc</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="72"/>
         <source>Burn Failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Burn Gagal</translation>
     </message>
     <message>
         <location filename="../burn/macburnjob.mm" line="72"/>
         <source>Failed to burn %1 to disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal melakukan burning %1 ke disc</translation>
     </message>
 </context>
 <context>
@@ -145,7 +145,7 @@
     <message>
         <location filename="../burn/macburnjobwidget.ui" line="26"/>
         <source>BURN CD</source>
-        <translation type="unfinished"></translation>
+        <translation>BURN CD</translation>
     </message>
 </context>
 <context>
@@ -153,12 +153,12 @@
     <message>
         <location filename="../burn/macburnprovider-objc.mm" line="64"/>
         <source>Insert a CD-R or CD-RW</source>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan CD-R atau CD-RW</translation>
     </message>
     <message>
         <location filename="../burn/macburnprovider.cpp" line="11"/>
         <source>Burn on macOS</source>
-        <translation type="unfinished"></translation>
+        <translation>Burn pada macOS</translation>
     </message>
 </context>
 <context>
@@ -166,17 +166,17 @@
     <message>
         <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="71"/>
         <source>Released: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rilis: %1</translation>
     </message>
     <message>
         <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="73"/>
         <source>Barcode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Barcode: %1</translation>
     </message>
     <message>
         <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="75"/>
         <source>Country: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Negara: %1</translation>
     </message>
 </context>
 <context>
@@ -184,12 +184,12 @@
     <message>
         <location filename="../cd/trackinfo.cpp" line="39"/>
         <source>Track %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trek %1</translation>
     </message>
     <message>
         <location filename="../cd/trackinfo.cpp" line="40"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak Diketahui</translation>
     </message>
 </context>
 </TS>
