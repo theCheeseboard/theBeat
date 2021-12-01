@@ -232,7 +232,7 @@
     <message>
         <location filename="../library/librarylistview.cpp" line="113"/>
         <source>What do you want to call this playlist?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn muốn gọi danh sách phát này tên gì?</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="128"/>
@@ -384,22 +384,22 @@
     <message>
         <location filename="../mainwindow.ui" line="569"/>
         <source>Repeat One</source>
-        <translation type="unfinished"></translation>
+        <translation>Lặp lại một bài</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="572"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+R</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="580"/>
         <source>Shuffle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ngẫu nhiên</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="583"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+S</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="510"/>
@@ -463,17 +463,17 @@
     <message>
         <location filename="../mainwindow.cpp" line="453"/>
         <source>Enter the URL you&apos;d like to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Điền vào URL bạn muốn mở</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="458"/>
         <source>Can&apos;t open that URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể mở URL đó</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="458"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rất tiếc, URL đó không hỗ trợ với theBeat.</translation>
     </message>
 </context>
 <context>
@@ -679,13 +679,13 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <source>New Playlist</source>
-        <translation type="unfinished">Danh sách mới</translation>
+        <translation>Danh sách mới</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>What name do you want to give to this playlist?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn muốn gọi danh sách phát này tên gì?</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="115"/>
