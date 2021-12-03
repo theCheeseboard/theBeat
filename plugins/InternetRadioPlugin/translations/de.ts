@@ -6,12 +6,12 @@
     <message>
         <location filename="../favouritestationswidget.ui" line="57"/>
         <source>Internet Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Internetradio</translation>
     </message>
     <message>
         <location filename="../favouritestationswidget.ui" line="80"/>
         <source>Jam out to your favourite radio stations and radio stations all around the world</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jamme zu deinen Lieblingsradiostationen und Radiostationen auf der ganzen Welt</translation>
     </message>
     <message>
         <location filename="../favouritestationswidget.ui" line="93"/>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../radiopane.cpp" line="38"/>
         <source>Internet Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Internetradio</translation>
     </message>
 </context>
 <context>
@@ -32,12 +32,12 @@
     <message>
         <location filename="../stationsearchwidget.ui" line="35"/>
         <source>Internet Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Internetradio</translation>
     </message>
     <message>
         <location filename="../stationsearchwidget.ui" line="45"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen...</translation>
     </message>
     <message>
         <location filename="../stationsearchwidget.ui" line="111"/>
