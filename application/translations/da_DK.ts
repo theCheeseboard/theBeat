@@ -234,7 +234,7 @@
     <message>
         <location filename="../library/librarylistview.cpp" line="113"/>
         <source>What do you want to call this playlist?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hvad ønsker du at kalde denne playliste?</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="128"/>
@@ -387,22 +387,22 @@
     <message>
         <location filename="../mainwindow.ui" line="569"/>
         <source>Repeat One</source>
-        <translation type="unfinished"></translation>
+        <translation>Gentag en</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="572"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="580"/>
         <source>Shuffle</source>
-        <translation type="unfinished"></translation>
+        <translation>Bland</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="583"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="510"/>
@@ -467,17 +467,17 @@
     <message>
         <location filename="../mainwindow.cpp" line="453"/>
         <source>Enter the URL you&apos;d like to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv den URL du ønsker at åbne</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="458"/>
         <source>Can&apos;t open that URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke åbne den URL</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="458"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Beklager, den URL understøttes ikke af theBeat.</translation>
     </message>
 </context>
 <context>
@@ -511,7 +511,7 @@
     <message>
         <location filename="../visualisations/scopevisualisation.cpp" line="38"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Lydskop</translation>
     </message>
 </context>
 <context>
@@ -683,13 +683,13 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <source>New Playlist</source>
-        <translation type="unfinished">Ny playliste</translation>
+        <translation>Ny playliste</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="73"/>
         <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>What name do you want to give to this playlist?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hvad ønsker du at kalde denne playliste?</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="115"/>
