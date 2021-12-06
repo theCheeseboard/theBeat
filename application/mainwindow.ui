@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset theme="com.vicr123.thebeat" resource="resources.qrc">
-    <normaloff>:/icons/thebeat.svg</normaloff>:/icons/thebeat.svg</iconset>
+    <normaloff>:/icons/com.vicr123.thebeat.svg</normaloff>:/icons/com.vicr123.thebeat.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="autoFillBackground">

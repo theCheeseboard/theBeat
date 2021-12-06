@@ -64,11 +64,11 @@ int main(int argc, char* argv[]) {
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theBeat"));
     a.setApplicationUrl(tApplication::FileBug, QUrl("http://github.com/vicr123/theBeat/issues"));
 #ifdef T_BLUEPRINT_BUILD
-    a.setApplicationIcon(QIcon(":/icons/thebeat-blueprint.svg"));
+    a.setApplicationIcon(QIcon(":/icons/com.vicr123.thebeat_blueprint.svg"));
     a.setApplicationName("theBeat Blueprint");
     a.setDesktopFileName("com.vicr123.thebeat_blueprint");
 #else
-    a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
+    a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/com.vicr123.thebeat.svg")));
     a.setApplicationName("theBeat");
     a.setDesktopFileName("com.vicr123.thebeat");
 #endif
