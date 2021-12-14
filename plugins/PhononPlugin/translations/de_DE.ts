@@ -21,31 +21,31 @@
     </message>
     <message>
         <source>Accessing MusicBrainz...</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf MusicBrainz zugreifen...</translation>
     </message>
     <message>
         <source>CD NOT FOUND</source>
-        <translation type="unfinished"></translation>
+        <translation>CD NICHT GEFUNDEN</translation>
     </message>
     <message>
         <source>This CD was not found on the MusicBrainz CD Database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese CD wurde nicht in der MusicBrainz CD-Datenbank gefunden.</translation>
     </message>
     <message>
         <source>SELECT CORRECT ALBUM</source>
-        <translation type="unfinished"></translation>
+        <translation>WÄHLE RICHTIGES ALBUM AUS</translation>
     </message>
     <message>
         <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Für diese CD wurde mehr als ein Ergebnis auf MusicBrainz gefuden. Wähle für genaue Information die korrekte CD aus.</translation>
     </message>
     <message>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle abspielen</translation>
     </message>
     <message>
         <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle in Zufallswiedergabe</translation>
     </message>
 </context>
 <context>
@@ -145,15 +145,15 @@
     <name>MusicBrainzReleaseModel</name>
     <message>
         <source>Released: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Veröffentlicht: %1</translation>
     </message>
     <message>
         <source>Barcode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Barcode: %1</translation>
     </message>
     <message>
         <source>Country: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Land: %1</translation>
     </message>
 </context>
 <context>
