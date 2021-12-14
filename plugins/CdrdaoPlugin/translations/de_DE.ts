@@ -12,7 +12,7 @@
     <message>
         <location filename="../burnjob.cpp" line="101"/>
         <source>Preparing Track %1 to be burned</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereite Titel %1 zum Brennen vor</translation>
     </message>
     <message>
         <location filename="../burnjob.cpp" line="110"/>
@@ -48,17 +48,17 @@
     <message>
         <location filename="../burnjob.cpp" line="269"/>
         <source>Burned %1 to disc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 gebrannt</translation>
     </message>
     <message>
         <location filename="../burnjob.cpp" line="284"/>
         <source>Burn Failure</source>
-        <translation>Fehler beim brennen</translation>
+        <translation>Fehler beim Brennen</translation>
     </message>
     <message>
         <location filename="../burnjob.cpp" line="284"/>
         <source>Failed to burn %1 to disc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beim Brennen von %1 gescheitert</translation>
     </message>
 </context>
 <context>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../burnjobmp3.cpp" line="110"/>
         <source>Preparing %1 to be burned</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bereite Titel %1 zum Brennen vor</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="124"/>
@@ -82,7 +82,7 @@
     <message>
         <location filename="../burnjobmp3.cpp" line="215"/>
         <source>Finalising CD</source>
-        <translation type="unfinished">Beende CD</translation>
+        <translation>Finalisiere CD</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="119"/>
@@ -94,23 +94,24 @@
     <message>
         <location filename="../burnjobmp3.cpp" line="148"/>
         <source>Generating Disc Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CD-Bild generieren</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="160"/>
         <source>Couldn&apos;t prepare ISO image</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte ISO-Image nicht vorbereiten</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="209"/>
         <source>Burning Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Brenne CD</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="236"/>
         <source>Burning %1
 %2 of %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Brennt %1
+%2 von %3</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="263"/>
@@ -126,17 +127,17 @@
     <message>
         <location filename="../burnjobmp3.cpp" line="298"/>
         <source>Burned %1 to disc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 gebrannt</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="313"/>
         <source>Burn Failure</source>
-        <translation type="unfinished">Fehler beim brennen</translation>
+        <translation>Fehler beim Brennen</translation>
     </message>
     <message>
         <location filename="../burnjobmp3.cpp" line="313"/>
         <source>Failed to burn %1 to disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Gescheitert beim Brennen von %1</translation>
     </message>
 </context>
 <context>
@@ -167,7 +168,7 @@
     <message>
         <location filename="../burnpopover.ui" line="45"/>
         <source>Audio CD</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio CD</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="58"/>
@@ -182,7 +183,7 @@
     <message>
         <location filename="../burnpopover.ui" line="134"/>
         <source>MP3 CD</source>
-        <translation type="unfinished"></translation>
+        <translation>MP3 CD</translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="46"/>
@@ -193,17 +194,17 @@
     <message>
         <location filename="../burnpopover.cpp" line="100"/>
         <source>Insert a CD-R or a CD-RW into the drive.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lege eine CD-R oder CD-RW in das Laufwerk.</translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="104"/>
         <source>The CD in the drive is not blank. Erase the CD first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die CD im Laufwerk ist nicht leer. Lösche die CD zuerst.</translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="108"/>
         <source>The CD-R in the drive has already been written.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die CD-R im Laufwerk wurde bereits gebrannt.</translation>
     </message>
     <message>
         <location filename="../burnpopover.cpp" line="138"/>
