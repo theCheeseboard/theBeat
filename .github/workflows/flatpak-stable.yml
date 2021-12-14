@@ -21,7 +21,7 @@ jobs:
       env:
         REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         REPO_LOCATION: https://flatpak.vicr123.com
-        REPO_NAME: master
+        REPO_NAME: stable
       run: |
         sudo dnf install -y python3-aiohttp python3-tenacity python3-gobject
         curl https://github.com/flatpak/flat-manager/releases/download/0.3.7/flat-manager-client -L > flat-manager-client

@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
     }
     a.installTranslators();
 
-    a.setApplicationVersion("3.1");
+    a.setApplicationVersion("3.1.1");
     a.setGenericName(QApplication::translate("main", "Audio Player"));
     a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
@@ -154,7 +154,7 @@ int main(int argc, char* argv[]) {
 
 #ifdef HAVE_THEINSTALLER
     if (a.currentPlatform() != tApplication::WindowsAppPackage) {
-        UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 1, 0, 25);
+        UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 1, 1, 0);
         QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
     }
 #endif
