@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.vicr123.thebeat_blueprint</id>
+
+  <name>theBeat Blueprint</name>
+  <summary>Audio Player</summary>
+
+  <metadata_license>CC-BY-SA-4.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <developer_name>Victor Tran</developer_name>
+
+  <recommends>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </recommends>
+
+  <description>
+    <p>
+      WARNING: This is prerelease software. Features are subject to change at any time, and stability is not guaranteed.
+    </p>
+    <p>
+      Play and organise your music. theBeat automatically discovers music on your computer and presents it in an easy-to-use interface.
+    </p>
+    <ul>
+      <li>Automatically categorise your music</li>
+      <li>Blazing fast search</li>
+      <li>Quickly find tracks by author and artist</li>
+      <li>Create playlists to quickly access the music you love</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">com.vicr123.thebeat_blueprint.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://vicr123.com/thebeat/screenshots/screenshot1.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://vicr123.com/thebeat/screenshots/screenshot2.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-info">mild</content_attribute>
+  </content_rating>
+
+  <provides>
+    <binary>thebeat-blueprint</binary>
+  </provides>
+</component>

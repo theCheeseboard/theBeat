@@ -63,6 +63,9 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
 
         void setTrachChangeNotificationsEnabled(bool notificationsEnabled);
 
+        void setPauseAfterCurrentTrack(bool pauseAfterCurrentTrack);
+        bool pauseAfterCurrentTrack();
+
     public slots:
         void play();
         void playPause();
@@ -79,6 +82,7 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
         void repeatAllChanged(bool repeatAll);
         void shuffleChanged(bool shuffle);
         void volumeChanged(double volume);
+        void pauseAfterCurrentTrackChanged(bool pauseAfterCurrentTrack);
 
     private:
         PlaylistPrivate* d;

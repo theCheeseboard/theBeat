@@ -1,4 +1,4 @@
-QT += gui widgets
+QT += gui widgets multimedia network
 
 TEMPLATE = lib
 CONFIG += plugin
@@ -17,16 +17,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Link with CDLib and the-libs
-LIBS += -L"C:/Program Files/thelibs/lib" -L$$PWD/cdlib/x64/Debug -lthe-libs -lCDLib -lwindowsapp
+CONFIG(release, debug|release): LIBS += -L$$PWD/cdlib/x64/Release
+CONFIG(debug, debug|release): LIBS += -L$$PWD/cdlib/x64/Debug
+
+LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -lCDLib -lUser32 -lwindowsapp
 INCLUDEPATH += $$PWD/cdlib/include/  "C:/Program Files/thelibs/include"
 
 SOURCES += \
+    audiocdplayerthread.cpp \
     cdchecker.cpp \
-    plugin.cpp
+    diskwatcher.cpp \
+    plugin.cpp \
+    trackinfo.cpp \
+    wincdmediaitem.cpp
 
 HEADERS += \
+    audiocdplayerthread.h \
     cdchecker.h \
-    plugin.h
+    diskwatcher.h \
+    plugin.h \
+    trackinfo.h \
+    wincdmediaitem.h
 
 DISTFILES += WinLibCDPlugin.json
 

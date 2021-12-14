@@ -22,8 +22,10 @@
 
 #include <tcsdtools.h>
 #include <QMenu>
+#include <tapplication.h>
 #include <tsettings.h>
 #include <QDesktopServices>
+#include <ticon.h>
 #include <taboutdialog.h>
 #include <QFileDialog>
 #include <statemanager.h>
@@ -36,9 +38,11 @@
 #include <QDragLeaveEvent>
 #include <QDropEvent>
 #include <QMimeData>
-#include <QInputDialog>
+#include <tmessagebox.h>
+#include <tinputdialog.h>
 #include <thelpmenu.h>
 #include <tjobmanager.h>
+#include <sourcemanager.h>
 #include "pluginmanager.h"
 #include "settingsdialog.h"
 
@@ -46,7 +50,7 @@
     #include "updatechecker.h"
 #endif
 
-#include <qtmultimedia/qtmultimediamediaitem.h>
+#include <urlmanager.h>
 
 #ifdef Q_OS_WIN
     #include <QWinThumbnailToolBar>
@@ -68,9 +72,13 @@ MainWindow::MainWindow(QWidget* parent)
     , ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    StateManager::instance()->setMainWindow(this);
+
     d = new MainWindowPrivate();
     d->csd.installMoveAction(ui->topWidget);
+#ifndef Q_OS_MAC
     d->csd.installResizeAction(this);
+#endif
 
     if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
         ui->leftCsdLayout->addWidget(d->csd.csdBoxForWidget(this));
@@ -86,12 +94,17 @@ MainWindow::MainWindow(QWidget* parent)
     ui->topWidget->raise();
     ui->topWidget->move(0, 0);
 
+#ifdef Q_OS_MAC
+    ui->menuBar->addMenu(new tHelpMenu(this));
+    ui->menuButton->setVisible(false);
+#else
+    ui->menuBar->setVisible(false);
     QMenu* menu = new QMenu(this);
 
     tHelpMenu* helpMenu = new tHelpMenu(this);
 
 #ifdef HAVE_THEINSTALLER
-    if (UpdateChecker::updatesSupported()) {
+    if (tApplication::currentPlatform() != tApplication::WindowsAppPackage && UpdateChecker::updatesSupported()) {
         helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
 
         connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [ = ] {
@@ -113,15 +126,26 @@ MainWindow::MainWindow(QWidget* parent)
     menu->addAction(ui->actionSkip_Back);
     menu->addAction(ui->actionSkip_Forward);
     menu->addSeparator();
+    menu->addAction(ui->actionRepeat_One);
+    menu->addAction(ui->actionShuffle);
+    menu->addSeparator();
     menu->addAction(ui->actionSettings);
-//    menu->addMenu(helpMenu);
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
 
+#ifdef T_BLUEPRINT_BUILD
+    ui->menuButton->setIcon(QIcon(":/icons/com.vicr123.thebeat_blueprint.svg"));
+#else
+    ui->menuButton->setIcon(QIcon::fromTheme("com.vicr123.thebeat", QIcon(":/icons/com.vicr123.thebeat.svg")));
+#endif
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
+#endif
+
+
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
     ui->queueStack->setCurrentAnimation(tStackedWidget::Fade);
+    this->setWindowIcon(ui->menuButton->windowIcon());
 
     connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [ = ] {
         ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
@@ -239,11 +263,29 @@ MainWindow::MainWindow(QWidget* parent)
     StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(d->settings.value("notifications/trackChange").toBool());
     tCsdGlobal::setCsdsEnabled(!d->settings.value("appearance/useSsds").toBool());
 
+    StateManager::instance()->sources()->setPadTop(ui->topWidget->sizeHint().height());
+
+    connect(StateManager::instance()->playlist(), &Playlist::repeatOneChanged, this, [ = ](bool repeatOne) {
+        ui->actionRepeat_One->setChecked(repeatOne);
+    });
+    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, this, [ = ](bool shuffle) {
+        ui->actionShuffle->setChecked(shuffle);
+    });
+
     d->plugins.load();
+
+    tIcon::processWidget(this);
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::show() {
+    QMainWindow::show();
+#ifdef Q_OS_MAC
+    d->csd.installResizeAction(this);
+#endif
 }
 
 void MainWindow::on_actionOpen_File_triggered() {
@@ -252,7 +294,7 @@ void MainWindow::on_actionOpen_File_triggered() {
     dialog->setFileMode(QFileDialog::ExistingFiles);
     connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
         for (QString file : files) {
-            QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(file));
+            MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
             StateManager::instance()->playlist()->addItem(item);
         }
     });
@@ -309,6 +351,14 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     ui->queueWidget->setContentsMargins(0, ui->topWidget->height(), 0, 0);
 }
 
+void MainWindow::closeEvent(QCloseEvent* event) {
+#ifdef Q_OS_MAC
+    d->csd.removeResizeAction(this);
+    this->hide();
+    event->accept();
+#endif
+}
+
 bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
     if (watched == ui->queueWidget) {
         if (event->type() == QEvent::DragEnter) {
@@ -323,7 +373,7 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
             e->setDropAction(Qt::CopyAction);
             if (e->mimeData()->hasUrls()) {
                 for (QUrl url : e->mimeData()->urls()) {
-                    StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(url));
+                    StateManager::instance()->playlist()->addItem(StateManager::instance()->url()->itemForUrl(url));
                 }
                 e->acceptProposedAction();
             }
@@ -400,10 +450,15 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
 
 void MainWindow::on_actionOpen_URL_triggered() {
     bool ok;
-    QString url = QInputDialog::getText(this, tr("Open URL"), tr("URL"), QLineEdit::Normal, "", &ok);
+    QString url = tInputDialog::getText(this, tr("Open URL"), tr("Enter the URL you'd like to open"), QLineEdit::Normal, "", &ok);
 
     if (ok) {
-        StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl(url)));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(url));
+        if (!item) {
+            tMessageBox::information(this, tr("Can't open that URL"), tr("Sorry, that URL isn't supported by theBeat."));
+        } else {
+            StateManager::instance()->playlist()->addItem(item);
+        }
     }
 }
 
@@ -452,4 +507,12 @@ void MainWindow::on_actionSettings_triggered() {
 
 void MainWindow::on_actionHelp_triggered() {
     QDesktopServices::openUrl(QUrl("https://help.vicr123.com/docs/thebeat/intro"));
+}
+
+void MainWindow::on_actionRepeat_One_triggered(bool checked) {
+    StateManager::instance()->playlist()->setRepeatOne(checked);
+}
+
+void MainWindow::on_actionShuffle_triggered(bool checked) {
+    StateManager::instance()->playlist()->setShuffle(checked);
 }

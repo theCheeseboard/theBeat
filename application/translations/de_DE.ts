@@ -10,47 +10,47 @@
         <translation>Titel in der Bibliothek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="230"/>
+        <location filename="../artistsalbumswidget.ui" line="237"/>
         <source>Enqueue All</source>
         <translation>Alle einreihen</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="241"/>
+        <location filename="../artistsalbumswidget.ui" line="248"/>
         <source>Play All</source>
         <translation>Alle abspielen</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="252"/>
-        <source>Shufle All</source>
-        <translation>Alle mischen</translation>
+        <location filename="../artistsalbumswidget.ui" line="259"/>
+        <source>Shuffle All</source>
+        <translation>Alle in Zufallswiedergabe</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="276"/>
+        <location filename="../artistsalbumswidget.ui" line="283"/>
         <source>Burn</source>
         <translation>Brennen</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="67"/>
+        <location filename="../artistsalbumswidget.cpp" line="68"/>
         <source>Albums in Library</source>
         <translation>Alben in der Bibliothek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="67"/>
+        <location filename="../artistsalbumswidget.cpp" line="68"/>
         <source>Artists in Library</source>
         <translation>Künstler in der Bibliothek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="153"/>
+        <location filename="../artistsalbumswidget.cpp" line="167"/>
         <source>Tracks in %1</source>
         <translation>Titel in %1</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="153"/>
+        <location filename="../artistsalbumswidget.cpp" line="167"/>
         <source>Tracks by %1</source>
         <translation>Titel von %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../artistsalbumswidget.cpp" line="162"/>
+        <location filename="../artistsalbumswidget.cpp" line="176"/>
         <source>%n tracks</source>
         <translation>
             <numerusform>%n Song</numerusform>
@@ -69,53 +69,63 @@
 <context>
     <name>ControlStrip</name>
     <message>
-        <location filename="../controlstrip.ui" line="102"/>
+        <location filename="../controlstrip.ui" line="101"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="109"/>
+        <location filename="../controlstrip.ui" line="128"/>
         <source>Metadata</source>
         <translation>Metadaten</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="79"/>
+        <location filename="../controlstrip.cpp" line="82"/>
         <source>Repeat Options</source>
         <translation>Wiederholungseinstellungen</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="80"/>
+        <location filename="../controlstrip.cpp" line="83"/>
         <source>Repeat Play Queue</source>
         <translation>Liste wiederholend abspielen</translation>
+    </message>
+    <message>
+        <location filename="../controlstrip.cpp" line="100"/>
+        <source>Playback Options</source>
+        <translation>Wiedergabeeinstellungen</translation>
+    </message>
+    <message>
+        <location filename="../controlstrip.cpp" line="101"/>
+        <source>Pause after current track</source>
+        <translation>Nach diesem Titel pausieren</translation>
     </message>
 </context>
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="99"/>
+        <location filename="../currenttrackpopover.cpp" line="138"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="100"/>
+        <location filename="../currenttrackpopover.cpp" line="139"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="105"/>
-        <location filename="../currenttrackpopover.cpp" line="107"/>
-        <location filename="../currenttrackpopover.cpp" line="110"/>
+        <location filename="../currenttrackpopover.cpp" line="144"/>
+        <location filename="../currenttrackpopover.cpp" line="146"/>
+        <location filename="../currenttrackpopover.cpp" line="149"/>
         <source>Track</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="105"/>
+        <location filename="../currenttrackpopover.cpp" line="144"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
         <translation>%1 von %2</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="111"/>
+        <location filename="../currenttrackpopover.cpp" line="150"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
@@ -169,23 +179,23 @@
     <message>
         <location filename="../libraryerrorpopover.cpp" line="39"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
-        <translation>Sieht so aus als wäre die Datei untergetaucht. Wenn du weißt wo sie ist, sag uns bescheid, damit wir den Title spielen können.</translation>
+        <translation>Sieht so aus als wäre die Datei untergetaucht. Wenn du weißt wo sie ist, sag uns bescheid, damit wir den Titel spielen können.</translation>
     </message>
 </context>
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="174"/>
+        <location filename="../library/librarymodel.cpp" line="195"/>
         <source>by %1</source>
         <translation>von %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="175"/>
+        <location filename="../library/librarymodel.cpp" line="196"/>
         <source>on %1</source>
         <translation>auf %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="177"/>
+        <location filename="../library/librarymodel.cpp" line="198"/>
         <source>Track</source>
         <translation>Titel</translation>
     </message>
@@ -193,45 +203,46 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="28"/>
+        <location filename="../library/librarylistview.cpp" line="29"/>
         <source>Add to Playlist</source>
         <translation>Zur Playlist hinzufügen</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="43"/>
-        <location filename="../library/librarylistview.cpp" line="45"/>
+        <location filename="../library/librarylistview.cpp" line="44"/>
+        <location filename="../library/librarylistview.cpp" line="46"/>
         <source>Remove from Library</source>
         <translation>Aus Bibliothek entfernen</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="33"/>
-        <location filename="../library/librarylistview.cpp" line="44"/>
+        <location filename="../library/librarylistview.cpp" line="34"/>
+        <location filename="../library/librarylistview.cpp" line="45"/>
         <source>Are you sure?</source>
         <translation>Bist du sicher?</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="32"/>
-        <location filename="../library/librarylistview.cpp" line="34"/>
+        <location filename="../library/librarylistview.cpp" line="33"/>
+        <location filename="../library/librarylistview.cpp" line="35"/>
         <source>Remove from Playlist</source>
         <translation>Aus Playlist entfernen</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="110"/>
+        <location filename="../library/librarylistview.cpp" line="111"/>
+        <location filename="../library/librarylistview.cpp" line="113"/>
         <source>New Playlist</source>
         <translation>Neue Playlist</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="112"/>
-        <source>Playlist Name</source>
-        <translation>Playlist Name</translation>
+        <location filename="../library/librarylistview.cpp" line="113"/>
+        <source>What do you want to call this playlist?</source>
+        <translation>Wie willst du diese Playlist nennen?</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="127"/>
+        <location filename="../library/librarylistview.cpp" line="128"/>
         <source>For %1</source>
         <translation>Für %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../library/librarylistview.cpp" line="132"/>
+        <location filename="../library/librarylistview.cpp" line="133"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Für %n Item</numerusform>
@@ -282,89 +293,119 @@
         <translation>Hier ist nichts!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="403"/>
+        <location filename="../mainwindow.ui" line="408"/>
+        <source>File</source>
+        <translation>Datei</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="421"/>
+        <source>Playback</source>
+        <translation>Wiedergabe</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="439"/>
         <source>File Bug</source>
         <translation>Bug melden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="412"/>
+        <location filename="../mainwindow.ui" line="448"/>
         <source>Sources</source>
         <translation>Quellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="421"/>
+        <location filename="../mainwindow.ui" line="457"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="430"/>
+        <location filename="../mainwindow.ui" line="466"/>
         <source>Exit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="433"/>
+        <location filename="../mainwindow.ui" line="469"/>
         <source>Ctrl+Q</source>
         <translation>Strg+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="442"/>
+        <location filename="../mainwindow.ui" line="481"/>
         <source>Open File</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="445"/>
+        <location filename="../mainwindow.ui" line="484"/>
         <source>Ctrl+O</source>
         <translation>Strg+O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="450"/>
-        <location filename="../mainwindow.cpp" line="403"/>
+        <location filename="../mainwindow.ui" line="489"/>
+        <location filename="../mainwindow.cpp" line="453"/>
         <source>Open URL</source>
         <translation>URL öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="459"/>
-        <location filename="../mainwindow.cpp" line="191"/>
+        <location filename="../mainwindow.ui" line="498"/>
+        <location filename="../mainwindow.cpp" line="215"/>
         <source>Skip Back</source>
         <translation>Zurückspringen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="462"/>
+        <location filename="../mainwindow.ui" line="501"/>
         <source>Shift+Left</source>
         <translation>Umschalt+Links</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="474"/>
+        <location filename="../mainwindow.ui" line="513"/>
         <source>Shift+Right</source>
         <translation>Umschalt+Rechts</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="495"/>
+        <location filename="../mainwindow.ui" line="534"/>
         <source>Add to Library</source>
         <translation>Zur Bibliothek hinzufügen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="504"/>
+        <location filename="../mainwindow.ui" line="543"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="507"/>
+        <location filename="../mainwindow.ui" line="546"/>
         <source>Ctrl+,</source>
         <translation>Strg+,</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="515"/>
+        <location filename="../mainwindow.ui" line="558"/>
         <source>theBeat Help</source>
         <translation>theBeat Hilfe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="518"/>
+        <location filename="../mainwindow.ui" line="561"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="471"/>
+        <location filename="../mainwindow.ui" line="569"/>
+        <source>Repeat One</source>
+        <translation type="unfinished">Titel wiederholen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="572"/>
+        <source>Ctrl+R</source>
+        <translation>Strg+R</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="580"/>
+        <source>Shuffle</source>
+        <translation>Zufallswiedergabe</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="583"/>
+        <source>Ctrl+S</source>
+        <translation>Strg+S</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="510"/>
         <source>Skip Forward</source>
         <translation>Vorwärtsspringen</translation>
     </message>
@@ -374,34 +415,34 @@
         <translation>Wähle einen Title aus oder ziehe etwas hier hin!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="483"/>
-        <location filename="../mainwindow.cpp" line="199"/>
-        <location filename="../mainwindow.cpp" line="213"/>
+        <location filename="../mainwindow.ui" line="522"/>
+        <location filename="../mainwindow.cpp" line="223"/>
+        <location filename="../mainwindow.cpp" line="237"/>
         <source>Play</source>
         <translation>Abspielen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="486"/>
+        <location filename="../mainwindow.ui" line="525"/>
         <source>Space</source>
         <translation>Leer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.cpp" line="232"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="220"/>
+        <location filename="../mainwindow.cpp" line="244"/>
         <source>Skip Next</source>
         <translation>Nächstes überspringen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="375"/>
+        <location filename="../mainwindow.cpp" line="425"/>
         <source>For &quot;%1&quot;</source>
         <translation>Für &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="377"/>
+        <location filename="../mainwindow.cpp" line="427"/>
         <source>For %n items</source>
         <translation>
             <numerusform>Für %n Item</numerusform>
@@ -409,35 +450,45 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="379"/>
+        <location filename="../mainwindow.cpp" line="429"/>
         <source>Remove from Queue</source>
         <translation>Aus der Warteschlange entfernen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="392"/>
+        <location filename="../mainwindow.cpp" line="442"/>
         <source>For Queue</source>
         <translation>Für die Warteschlange</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="393"/>
+        <location filename="../mainwindow.cpp" line="443"/>
         <source>Clear Queue</source>
         <translation>Warteschlange leeren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="403"/>
-        <source>URL</source>
-        <translation>URL</translation>
+        <location filename="../mainwindow.cpp" line="453"/>
+        <source>Enter the URL you&apos;d like to open</source>
+        <translation>Gib die URL ein, die du öffnen willst</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="458"/>
+        <source>Can&apos;t open that URL</source>
+        <translation>Kann diese URL nicht öffnen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="458"/>
+        <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
+        <translation>Entschuldigung, diese URL unterstützt theBeat nicht.</translation>
     </message>
 </context>
 <context>
     <name>OtherSourcesWidget</name>
     <message>
-        <location filename="../othersourceswidget.ui" line="93"/>
+        <location filename="../othersourceswidget.ui" line="103"/>
         <source>No other sources available</source>
         <translation>Keine anderen Quellen verfügbar</translation>
     </message>
     <message>
-        <location filename="../othersourceswidget.ui" line="103"/>
+        <location filename="../othersourceswidget.ui" line="113"/>
         <source>There&apos;s nothing else to play right now</source>
         <translation>Es gibt aktuell nichts anderes zum abspielen</translation>
     </message>
@@ -445,14 +496,22 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="256"/>
+        <location filename="../playlistmodel.cpp" line="265"/>
         <source>Track</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../playlistmodel.cpp" line="279"/>
+        <location filename="../playlistmodel.cpp" line="288"/>
         <source>Album</source>
         <translation>Alben</translation>
+    </message>
+</context>
+<context>
+    <name>ScopeVisualisation</name>
+    <message>
+        <location filename="../visualisations/scopevisualisation.cpp" line="38"/>
+        <source>Scope</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -578,8 +637,8 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="272"/>
-        <source>Shufle All</source>
-        <translation>Alle mischen</translation>
+        <source>Shuffle All</source>
+        <translation>Alle in Zufallswiedergabe</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="316"/>
@@ -611,11 +670,6 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Bist du sicher?</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="73"/>
-        <source>Playlist Name</source>
-        <translation>Playlist Name</translation>
-    </message>
-    <message>
         <location filename="../userplaylistswidget.cpp" line="120"/>
         <location filename="../userplaylistswidget.cpp" line="174"/>
         <source>Tracks in %1</source>
@@ -627,19 +681,21 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Für %1</translation>
     </message>
     <message>
+        <location filename="../userplaylistswidget.cpp" line="73"/>
+        <source>New Playlist</source>
+        <translation>Neue Playlist</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="73"/>
+        <location filename="../userplaylistswidget.cpp" line="117"/>
+        <source>What name do you want to give to this playlist?</source>
+        <translation>Wie willst du diese Playlist nennen?</translation>
+    </message>
+    <message>
         <location filename="../userplaylistswidget.cpp" line="115"/>
+        <location filename="../userplaylistswidget.cpp" line="117"/>
         <source>Rename</source>
         <translation>Umbenennen</translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="117"/>
-        <source>Rename Playlist</source>
-        <translation>Playlist umbenennen</translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="117"/>
-        <source>New Name</source>
-        <translation>Neuer Name</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="123"/>
@@ -658,17 +714,17 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="51"/>
+        <location filename="../main.cpp" line="57"/>
         <source>Audio Player</source>
         <translation>Audio Player</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="88"/>
+        <location filename="../main.cpp" line="100"/>
         <source>file</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="88"/>
+        <location filename="../main.cpp" line="100"/>
         <source>File to open</source>
         <translation>Datei zum öffnen</translation>
     </message>

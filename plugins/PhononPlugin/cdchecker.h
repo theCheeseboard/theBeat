@@ -21,6 +21,7 @@
 #define CDCHECKER_H
 
 #include <QWidget>
+#include <QDBusObjectPath>
 
 namespace Ui {
     class CdChecker;
@@ -31,7 +32,7 @@ struct CdCheckerPrivate;
 class CdChecker : public QWidget {
         Q_OBJECT
     public:
-        explicit CdChecker(QString blockDevice, QWidget* parent = nullptr);
+        explicit CdChecker(QDBusObjectPath blockDevice, QWidget* parent = nullptr);
         ~CdChecker();
 
     signals:
@@ -46,10 +47,19 @@ class CdChecker : public QWidget {
 
         void on_importCdButton_clicked();
 
+        void on_musicBrainzStack_currentChanged(int arg1);
+
+        void on_releaseBox_currentIndexChanged(int index);
+
+        void on_playAllButton_clicked();
+
+        void on_shuffleAllButton_clicked();
+
     private:
         Ui::CdChecker* ui;
         CdCheckerPrivate* d;
 
+        void resizeEvent(QResizeEvent* event);
         bool eventFilter(QObject* watched, QEvent* event);
 
         void updateTrackListing();

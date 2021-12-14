@@ -7,8 +7,14 @@ unix:!macx {
 }
 
 win32 {
-    #SUBDIRS += \
-        #WinLibCDPlugin
+    SUBDIRS += \
+        WinLibCDPlugin
+}
+
+macx {
+    SUBDIRS += \
+        MacIntegration \
+        AvFoundationPlugin
 }
 
 
@@ -46,4 +52,7 @@ qtHaveModule(phonon4qt5) {
 
 DISTFILES += \
     plugins.pri
+
+SUBDIRS += \
+    InternetRadioPlugin
 

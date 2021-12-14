@@ -1,0 +1,28 @@
+on:
+  push:
+    branches: [blueprint]
+  pull_request:
+name: Build Flatpak
+jobs:
+  flatpak-builder:
+    name: "Flatpak Builder"
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:kde-5.15
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v2
+    - uses: bilelmoussaoui/flatpak-github-actions@v2
+      with:
+        bundle: "thebeat.flatpak"
+        manifest-path: "dist/com.vicr123.thebeat_blueprint.yml"
+    - shell: bash
+      env:
+        REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+        REPO_LOCATION: https://flatpak.vicr123.com
+        REPO_NAME: blueprint
+      run: |
+        sudo dnf install -y python3-aiohttp python3-tenacity python3-gobject
+        curl https://github.com/flatpak/flat-manager/releases/download/0.3.7/flat-manager-client -L > flat-manager-client
+        chmod +x flat-manager-client
+        ./flat-manager-client push --commit --publish $(./flat-manager-client create $REPO_LOCATION $REPO_NAME) repo

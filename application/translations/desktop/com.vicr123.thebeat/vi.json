@@ -1,0 +1,12 @@
+{
+    "GenericName": {
+        "message": "Bộ nghe nhạc"
+    },
+    "Keywords": {
+        "message": "nhac;cd;am;thanh;am thanh;phat;nghe;",
+        "description": "A list of words that can be searched for. Please ensure that the list also ends with a semicolon!"
+    },
+    "Name": {
+        "message": "theBeat"
+    }
+}

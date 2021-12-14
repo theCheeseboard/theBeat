@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/thebeat.svg</file>
         <file>icons/aboutsplash.svg</file>
         <file>resources/Silly.mp3</file>
         <file>resources/Silly.ogg</file>
+        <file>icons/com.vicr123.thebeat_blueprint.svg</file>
+        <file>icons/com.vicr123.thebeat.svg</file>
     </qresource>
 </RCC>

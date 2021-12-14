@@ -25,15 +25,18 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QFileInfo>
+#include <QAudioProbe>
 #include <statemanager.h>
 #include <playlist.h>
 #include <helpers.h>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 #include <tlogger.h>
+#include <visualisationmanager.h>
 
 struct QtMultimediaMediaItemPrivate {
     QMediaPlayer* player;
+    QAudioProbe* probe;
     QImage albumArt;
     QUrl url;
 
@@ -80,6 +83,53 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
     });
     d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
 
+    d->probe = new QAudioProbe(this);
+    d->probe->setSource(d->player);
+    connect(d->probe, &QAudioProbe::audioBufferProbed, this, [ = ](QAudioBuffer buffer) {
+        QAudioFormat format = buffer.format();
+        if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::SignedInt) {
+            QVector<qint16> bufferData;
+            if (format.channelCount() == 2) {
+                bufferData.reserve(buffer.sampleCount());
+                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
+                    qint16 sample = static_cast<qint16*>(buffer.data())[i] / 2 + static_cast<qint16*>(buffer.data())[i + 1] / 2;
+                    bufferData.append(sample);
+                }
+            } else {
+                bufferData.fill(0, buffer.sampleCount());
+                memcpy(bufferData.data(), buffer.constData(), buffer.byteCount());
+            }
+
+            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
+        } else if (format.sampleSize() == 32 && format.sampleType() == QAudioFormat::Float) {
+            QVector<qint16> bufferData;
+            bufferData.reserve(buffer.sampleCount());
+            if (format.channelCount() == 2) {
+                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
+                    float sample = static_cast<float*>(buffer.data())[i] / 2 + static_cast<float*>(buffer.data())[i + 1] / 2;
+                    sample = sample * 32768;
+                    if (sample > 32767) sample = 32767;
+                    if (sample < -32768) sample = -32768;
+                    bufferData.append(static_cast<qint16>(sample));
+                    bufferData.append(sample);
+                }
+            } else {
+                for (qint64 i = 0; i < buffer.sampleCount(); i++) {
+                    float sample = static_cast<float*>(buffer.data())[i];
+                    sample = sample * 32768;
+                    if (sample > 32767) sample = 32767;
+                    if (sample < -32768) sample = -32768;
+                    bufferData.append(static_cast<qint16>(sample));
+                }
+            }
+
+            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
+        } else {
+            tDebug("QtMultimediaMediaItem") << "Weird format:";
+            tDebug("QtMultimediaMediaItem") << "Sample size " << format.sampleSize() << "; Sample type " << format.sampleType() << "; Channels " << format.channelCount();
+        }
+    });
+
     updateTaglib();
 }
 
@@ -107,7 +157,7 @@ void QtMultimediaMediaItem::updateAlbumArt() {
 void QtMultimediaMediaItem::updateTaglib() {
     if (!d->url.isLocalFile()) return;
 #ifdef Q_OS_WIN
-    TagLib::FileRef file(d->url.toLocalFile().toUtf8().data());
+    TagLib::FileRef file(reinterpret_cast<const wchar_t*>(d->url.toLocalFile().constData()));
 #else
     TagLib::FileRef file(d->url.toLocalFile().toUtf8());
 #endif

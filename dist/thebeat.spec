@@ -1,5 +1,5 @@
 Name:           thebeat
-Version:        3.0.0
+Version:        3.0
 Release:        1%{?dist}
 Summary:        Music Player
 
@@ -24,7 +24,7 @@ Requires:       qt5-qtbase qt5-qtmultimedia qt5-qtx11extras the-libs phonon-qt5 
 Music Player
 
 %prep
-%setup
+%setup -n theBeat-%{version}
 
 %build
 mkdir build
@@ -50,7 +50,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/thebeat/*
 %{_libdir}/libthebeat.so*
 %{_datadir}/applications/com.vicr123.thebeat.desktop
-%{_datadir}/icons/hicolor/scalable/apps/thebeat.svg
+%{_datadir}/icons/hicolor/scalable/apps/com.vicr123.thebeat.svg
 %{_datadir}/thebeat/*
 
 

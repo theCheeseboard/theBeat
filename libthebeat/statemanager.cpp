@@ -22,11 +22,19 @@
 #include "playlist.h"
 #include "sourcemanager.h"
 #include "burnmanager.h"
+#include "visualisationmanager.h"
+#include "controlstripmanager.h"
+#include "urlmanager.h"
 
 struct StateManagerPrivate {
     Playlist* playlist;
     SourceManager* sources;
     BurnManager* burn;
+    VisualisationManager* visualisation;
+    ControlStripManager* controlStrip;
+    UrlManager* url;
+
+    QWidget* mainWindow;
 };
 
 StateManager::StateManager(QObject* parent) : QObject(parent) {
@@ -34,6 +42,9 @@ StateManager::StateManager(QObject* parent) : QObject(parent) {
     d->playlist = new Playlist();
     d->sources = new SourceManager();
     d->burn = new BurnManager();
+    d->visualisation = new VisualisationManager();
+    d->controlStrip = new ControlStripManager();
+    d->url = new UrlManager();
 }
 
 StateManager* StateManager::instance() {
@@ -51,4 +62,24 @@ SourceManager* StateManager::sources() {
 
 BurnManager* StateManager::burn() {
     return d->burn;
+}
+
+VisualisationManager* StateManager::visualisation() {
+    return d->visualisation;
+}
+
+UrlManager* StateManager::url() {
+    return d->url;
+}
+
+ControlStripManager* StateManager::controlStrip() {
+    return d->controlStrip;
+}
+
+QWidget* StateManager::mainWindow() {
+    return d->mainWindow;
+}
+
+void StateManager::setMainWindow(QWidget* mainWindow) {
+    d->mainWindow = mainWindow;
 }

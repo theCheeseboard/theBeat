@@ -36,6 +36,8 @@ class MainWindow : public QMainWindow {
         MainWindow(QWidget* parent = nullptr);
         ~MainWindow();
 
+        void show();
+
     private slots:
         void on_actionOpen_File_triggered();
 
@@ -75,11 +77,16 @@ class MainWindow : public QMainWindow {
 
         void on_actionHelp_triggered();
 
+        void on_actionRepeat_One_triggered(bool checked);
+
+        void on_actionShuffle_triggered(bool checked);
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;
 
         void resizeEvent(QResizeEvent* event);
+        void closeEvent(QCloseEvent* event);
         bool eventFilter(QObject* watched, QEvent* event);
 
         void rewind10();

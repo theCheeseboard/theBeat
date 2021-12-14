@@ -27,6 +27,7 @@
 #include <QPainter>
 #include <QMediaMetaData>
 #include <QSet>
+#include <tpaintcalculator.h>
 #include <the-libs_global.h>
 #include "qtmultimedia/qtmultimediamediaitem.h"
 
@@ -92,6 +93,7 @@ QVariant PlaylistModel::data(const QModelIndex& index, int role) const {
 
     int playlistIndex = index.row() - priorHeaders;
     MediaItem* item = StateManager::instance()->playlist()->items().at(playlistIndex);
+    if (!item) return QVariant();
 
     switch (role) {
         case Qt::DisplayRole:
@@ -178,6 +180,8 @@ PlaylistModel::DrawType PlaylistModel::drawTypeForPlaylistIndex(int index) const
 
     QList<MediaItem*> items = StateManager::instance()->playlist()->items();
     MediaItem* item = items.at(index);
+    if (!item) return SingleItemGroup;
+
     MediaItem* previousItem = nullptr;
     MediaItem* nextItem = nullptr;
     if (index != 0) {
@@ -206,30 +210,35 @@ PlaylistDelegate::PlaylistDelegate() {
 }
 
 void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
+    tPaintCalculator paintCalculator;
+    paintCalculator.setPainter(painter);
+    paintCalculator.setDrawBounds(option.rect);
+
     MediaItem* currentItem = index.data(PlaylistModel::MediaItemRole).value<MediaItem*>();
-    MediaItem* previousItem = nullptr;
-    if (index.row() != 0) {
-        previousItem = index.model()->index(index.row() - 1, index.column()).data(PlaylistModel::MediaItemRole).value<MediaItem*>();
-    }
 
     QPen transientColor = option.palette.color(QPalette::Disabled, QPalette::WindowText);
     QPen textPen;
+    QBrush brush;
 
-    painter->setPen(Qt::transparent);
     if (option.state & QStyle::State_Selected) {
-        painter->setBrush(option.palette.brush(QPalette::Highlight));
+        brush = option.palette.brush(QPalette::Highlight);
         textPen = option.palette.color(QPalette::HighlightedText);
         transientColor = textPen;
     } else if (option.state & QStyle::State_MouseOver) {
         QColor col = option.palette.color(QPalette::Highlight);
         col.setAlpha(127);
-        painter->setBrush(col);
+        brush = col;
         textPen = option.palette.color(QPalette::HighlightedText);
     } else {
-        painter->setBrush(option.palette.brush(QPalette::Window));
+        brush = option.palette.brush(QPalette::Window);
         textPen = option.palette.color(QPalette::WindowText);
     }
-    painter->drawRect(option.rect);
+
+    paintCalculator.addRect(option.rect, [ = ](QRectF paintBounds) {
+        painter->setPen(Qt::transparent);
+        painter->setBrush(brush);
+        painter->drawRect(paintBounds);
+    });
 
     PlaylistModel::DrawType drawType = index.data(PlaylistModel::DrawTypeRole).value<PlaylistModel::DrawType>();
     switch (drawType) {
@@ -279,7 +288,9 @@ void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
                 if (descriptionText.isEmpty()) descriptionText = tr("Album");
             }
 
-            painter->drawImage(artRect, artImage);
+            paintCalculator.addRect(artRect, [ = ](QRectF paintBounds) {
+                painter->drawImage(paintBounds, artImage);
+            });
 
             QRect nameRect = option.rect;
             nameRect.setHeight(option.fontMetrics.height());
@@ -287,17 +298,21 @@ void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
             nameRect.moveLeft(artRect.right() + 6);
             nameRect.setWidth(option.fontMetrics.horizontalAdvance(nameText) + 1);
 
-            painter->setFont(option.font);
-            painter->setPen(option.palette.color(QPalette::WindowText));
-            painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, nameText);
+            paintCalculator.addRect(nameRect, [ = ](QRectF paintBounds) {
+                painter->setFont(option.font);
+                painter->setPen(option.palette.color(QPalette::WindowText));
+                painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, nameText);
+            });
 
             //Draw the extra details
             QRect detailsRect = nameRect;
             detailsRect.setWidth(option.fontMetrics.horizontalAdvance(descriptionText) + 1);
             detailsRect.moveTop(nameRect.bottom());
 
-            painter->setPen(transientColor);
-            painter->drawText(detailsRect, Qt::AlignLeft | Qt::AlignVCenter, descriptionText);
+            paintCalculator.addRect(detailsRect, [ = ](QRectF paintBounds) {
+                painter->setPen(transientColor);
+                painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, descriptionText);
+            });
             break;
         }
         case PlaylistModel::GroupItem: {
@@ -312,28 +327,40 @@ void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
             trackRect.setWidth(option.fontMetrics.horizontalAdvance("99") + 1);
             textRect.setLeft(trackRect.right() + SC_DPI(6));
 
-            painter->setPen(transientColor);
 
             int trackNumber = currentItem->metadata(QMediaMetaData::TrackNumber).toInt();
             if (StateManager::instance()->playlist()->currentItem() == currentItem) {
                 QRect iconRect;
                 iconRect.setSize(SC_DPI_T(QSize(16, 16), QSize));
                 iconRect.moveCenter(trackRect.center());
-                painter->drawPixmap(iconRect, QIcon::fromTheme("media-playback-start").pixmap(iconRect.size()));
+
+                paintCalculator.addRect(iconRect, [ = ](QRectF paintBounds) {
+                    painter->drawPixmap(paintBounds.toRect(), QIcon::fromTheme("media-playback-start").pixmap(iconRect.size()));
+                });
             } else if (trackNumber == 0) {
-                painter->drawText(trackRect, Qt::AlignCenter, "-");
+                paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+                    painter->setPen(transientColor);
+                    painter->drawText(paintBounds, Qt::AlignCenter, "-");
+                });
             } else if (trackNumber < 99) {
-                painter->drawText(trackRect, Qt::AlignCenter, QString::number(trackNumber));
+                paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+                    painter->setPen(transientColor);
+                    painter->drawText(paintBounds, Qt::AlignCenter, QString::number(trackNumber));
+                });
             }
 
-            painter->setPen(textPen);
-            painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, currentItem->title());
+            paintCalculator.addRect(textRect, [ = ](QRectF paintBounds) {
+                painter->setPen(textPen);
+                painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, currentItem->title());
+            });
             break;
         }
-        QStyledItemDelegate::paint(painter, option, index);
-        break;
+        default:
+            QStyledItemDelegate::paint(painter, option, index);
+            break;
     }
 
+    paintCalculator.performPaint();
 }
 
 QSize PlaylistDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const {

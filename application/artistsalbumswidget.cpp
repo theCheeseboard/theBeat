@@ -20,7 +20,6 @@
 #include "artistsalbumswidget.h"
 #include "ui_artistsalbumswidget.h"
 
-#include "qtmultimedia/qtmultimediamediaitem.h"
 #include <statemanager.h>
 #include <playlist.h>
 #include <QUrl>
@@ -30,6 +29,8 @@
 #include <burnbackend.h>
 #include <burnmanager.h>
 #include <QMenu>
+#include <tpaintcalculator.h>
+#include <urlmanager.h>
 #include "common.h"
 #include "library/librarymanager.h"
 
@@ -89,7 +90,11 @@ void ArtistsAlbumsWidget::updateBurn() {
 
 bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
     if (watched == ui->topWidget && event->type() == QEvent::Paint) {
-        QPainter painter(ui->topWidget);
+        QPainter* painter = new QPainter(ui->topWidget);
+
+        tPaintCalculator paintCalculator;
+        paintCalculator.setPainter(painter);
+        paintCalculator.setDrawBounds(ui->topWidget->size());
 
         QColor backgroundCol = this->palette().color(QPalette::Window);
         if ((backgroundCol.red() + backgroundCol.green() + backgroundCol.blue()) / 3 < 127) {
@@ -111,7 +116,8 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
 //            painter.setBrush(backgroundCol);
 //            painter.setPen(Qt::transparent);
 //            painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
-            ui->buttonWidget->setContentsMargins(0, 0, 0, 0);
+//            ui->buttonSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Preferred);
+            ui->buttonSpacer->setFixedWidth(0);
         } else {
             QRect rect;
             rect.setSize(d->playlistBackground.size().scaled(ui->topWidget->width(), ui->topWidget->height(), Qt::KeepAspectRatioByExpanding));
@@ -119,31 +125,39 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
             rect.moveTop(ui->topWidget->height() / 2 - rect.height() / 2);
 
             //Blur the background
-            int radius = 30;
-            QGraphicsBlurEffect* blur = new QGraphicsBlurEffect;
-            blur->setBlurRadius(radius);
+            paintCalculator.addRect(rect, [ = ](QRectF paintBounds) {
+                int radius = 30;
+                QGraphicsBlurEffect* blur = new QGraphicsBlurEffect;
+                blur->setBlurRadius(radius);
 
-            QGraphicsScene scene;
-            QGraphicsPixmapItem item;
-            item.setPixmap(QPixmap::fromImage(d->playlistBackground));
-            item.setGraphicsEffect(blur);
-            scene.addItem(&item);
+                QGraphicsScene scene;
+                QGraphicsPixmapItem item;
+                item.setPixmap(QPixmap::fromImage(d->playlistBackground));
+                item.setGraphicsEffect(blur);
+                scene.addItem(&item);
 
-            //scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
-            scene.render(&painter, rect.adjusted(-radius, -radius, radius, radius), QRectF(-radius, -radius, d->playlistBackground.width() + radius, d->playlistBackground.height() + radius));
+                scene.render(painter, paintBounds.adjusted(-radius, -radius, radius, radius), QRectF(-radius, -radius, d->playlistBackground.width() + radius, d->playlistBackground.height() + radius));
+            });
 
-            painter.setBrush(backgroundCol);
-            painter.setPen(Qt::transparent);
-            painter.drawRect(0, 0, ui->topWidget->width(), ui->topWidget->height());
 
             QRect rightRect;
             rightRect.setSize(d->playlistBackground.size().scaled(0, ui->topWidget->height() - d->topPadding, Qt::KeepAspectRatioByExpanding));
             rightRect.moveRight(ui->topWidget->width());
             rightRect.moveTop(d->topPadding + (ui->topWidget->height() - d->topPadding) / 2 - rightRect.height() / 2);
-            painter.drawImage(rightRect, d->playlistBackground.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
-            ui->buttonWidget->setContentsMargins(0, 0, rightRect.width(), 0);
+            paintCalculator.addRect(rightRect, [ = ](QRectF paintBounds) {
+                painter->setBrush(backgroundCol);
+                painter->setPen(Qt::transparent);
+                painter->drawRect(0, 0, ui->topWidget->width(), ui->topWidget->height());
+                painter->drawImage(paintBounds, d->playlistBackground.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+            });
+
+            ui->buttonSpacer->setFixedWidth(rightRect.width());
         }
+
+        paintCalculator.performPaint();
+
+        delete painter;
     }
     return false;
 }
@@ -178,7 +192,7 @@ void ArtistsAlbumsWidget::on_enqueueAllButton_clicked() {
     for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
         if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) continue;
 
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
     }
 }

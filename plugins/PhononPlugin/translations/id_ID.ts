@@ -19,6 +19,34 @@
         <source>Import</source>
         <translation>Impor</translation>
     </message>
+    <message>
+        <source>Accessing MusicBrainz...</source>
+        <translation>Mengakses MusicBrainz...</translation>
+    </message>
+    <message>
+        <source>CD NOT FOUND</source>
+        <translation>CD TIDAK DITEMUKAN</translation>
+    </message>
+    <message>
+        <source>This CD was not found on the MusicBrainz CD Database.</source>
+        <translation>CD ini tidak ditemukan dalam database MusicBrainz.</translation>
+    </message>
+    <message>
+        <source>SELECT CORRECT ALBUM</source>
+        <translation>PILIH ALBUM YANG TEPAT</translation>
+    </message>
+    <message>
+        <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
+        <translation>Lebih dari satu hasil ditemukan dalam MusicBrainz untuk CD ini. Silahkan pilih CD yang tepat untuk informasi akurat.</translation>
+    </message>
+    <message>
+        <source>Play All</source>
+        <translation>Putar Semua</translation>
+    </message>
+    <message>
+        <source>Shuffle All</source>
+        <translation>Acak Semua</translation>
+    </message>
 </context>
 <context>
     <name>ImportCdJob</name>
@@ -114,10 +142,25 @@
     </message>
 </context>
 <context>
+    <name>MusicBrainzReleaseModel</name>
+    <message>
+        <source>Released: %1</source>
+        <translation>Rilis: %1</translation>
+    </message>
+    <message>
+        <source>Barcode: %1</source>
+        <translation>Barcode: %1</translation>
+    </message>
+    <message>
+        <source>Country: %1</source>
+        <translation>Negara: %1</translation>
+    </message>
+</context>
+<context>
     <name>TrackInfo</name>
     <message>
         <source>Unknown</source>
-        <translation>Tidak diketahui</translation>
+        <translation>Tidak Diketahui</translation>
     </message>
     <message>
         <source>Track %1</source>

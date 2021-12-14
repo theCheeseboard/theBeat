@@ -5,11 +5,13 @@ CONFIG += plugin
 
 CONFIG += c++11
 
+include(../plugins.pri)
+
 unix {
     CONFIG += link_pkgconfig
 
     translations.files = translations/*.qm
-    translations.path = /usr/share/thebeat/linuxintegration/translations
+    translations.path = $$THELIBS_INSTALL_PREFIX/share/thebeat/linuxintegration/translations
     INSTALLS += translations
 
     packagesExist(x11) {
@@ -33,9 +35,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-# Include the-libs build tools
-include(/usr/share/the-libs/pri/gentranslations.pri)
-
 SOURCES += \
     mprisinstance.cpp \
     mprisplayer.cpp \
@@ -52,5 +51,3 @@ HEADERS += \
 
 DISTFILES += LinuxIntegration.json \
     defaults.conf
-
-include(../plugins.pri)

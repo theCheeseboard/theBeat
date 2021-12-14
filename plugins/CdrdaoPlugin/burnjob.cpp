@@ -82,6 +82,10 @@ bool BurnJob::canCancel() {
     return d->canCancel;
 }
 
+bool BurnJob::warnCancel() {
+    return true;
+}
+
 void BurnJob::cancel() {
     d->cancelNext = true;
     d->canCancel = false;
@@ -94,7 +98,7 @@ void BurnJob::cancel() {
 
 void BurnJob::performNextAction() {
     if (d->nextItem < d->sourceFiles.count()) {
-        d->description = tr("Preparing Track %1").arg(d->nextItem + 1);
+        d->description = tr("Preparing Track %1 to be burned").arg(d->nextItem + 1);
         emit descriptionChanged(d->description);
 
         //Transcode the file with ffmpeg
@@ -262,7 +266,7 @@ void BurnJob::performNextAction() {
         tInfo("cdrdao") << "Burn job completed successfully";
 
         //Fire a notification
-        tNotification* notification = new tNotification(tr("Burn Successful"), tr("Burned \"%1\" to disc").arg(d->albumTitle));
+        tNotification* notification = new tNotification(tr("Burn Successful"), tr("Burned %1 to disc").arg(QLocale().quoteString(d->albumTitle)));
         notification->post();
     }
 }
@@ -277,7 +281,7 @@ void BurnJob::fail(QString description) {
     d->workDir.remove();
 
     //Fire a notification
-    tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn \"%1\" to disc").arg(d->albumTitle));
+    tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn %1 to disc").arg(QLocale().quoteString(d->albumTitle)));
     notification->post();
 }
 

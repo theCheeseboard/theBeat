@@ -26,8 +26,12 @@
 class Playlist;
 class SourceManager;
 class BurnManager;
+class VisualisationManager;
+class ControlStripManager;
+class UrlManager;
 
 struct StateManagerPrivate;
+class MainWindow;
 class LIBTHEBEAT_EXPORT StateManager : public QObject {
         Q_OBJECT
     public:
@@ -38,8 +42,17 @@ class LIBTHEBEAT_EXPORT StateManager : public QObject {
         Playlist* playlist();
         SourceManager* sources();
         BurnManager* burn();
+        VisualisationManager* visualisation();
+        UrlManager* url();
+        ControlStripManager* controlStrip();
+
+        QWidget* mainWindow();
 
     signals:
+
+    protected:
+        friend MainWindow;
+        void setMainWindow(QWidget* mainWindow);
 
     private:
         StateManagerPrivate* d;

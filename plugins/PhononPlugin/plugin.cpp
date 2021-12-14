@@ -25,11 +25,10 @@
 #include <pluginmediasource.h>
 #include <QIcon>
 #include <tapplication.h>
-#include <QTranslator>
-#include "cdchecker.h"
+#include "udiskswatcher.h"
 
 struct PluginPrivate {
-
+    UdisksWatcher* udisks;
 };
 
 Plugin::Plugin() {
@@ -44,11 +43,9 @@ Plugin::~Plugin() {
 
 
 void Plugin::activate() {
-    new CdChecker("sr0");
-    new CdChecker("sr1");
-    new CdChecker("sr2");
+    d->udisks = new UdisksWatcher();
 }
 
 void Plugin::deactivate() {
-
+    delete d->udisks;
 }

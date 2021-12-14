@@ -21,7 +21,7 @@
 #include "ui_userplaylistswidget.h"
 
 #include <QMenu>
-#include <QInputDialog>
+#include <tinputdialog.h>
 #include <QUrl>
 #include <statemanager.h>
 #include <playlist.h>
@@ -29,7 +29,7 @@
 #include <burnbackend.h>
 #include <QFileDialog>
 #include <QMediaPlaylist>
-#include "qtmultimedia/qtmultimediamediaitem.h"
+#include <urlmanager.h>
 #include "library/librarymanager.h"
 #include "common.h"
 
@@ -70,7 +70,7 @@ void UserPlaylistsWidget::setTopPadding(int padding) {
 
 void UserPlaylistsWidget::on_createButton_clicked() {
     bool ok;
-    QString playlistName = QInputDialog::getText(this, tr("Playlist Name"), tr("Playlist Name"), QLineEdit::Normal, "", &ok);
+    QString playlistName = tInputDialog::getText(this->window(), tr("New Playlist"), tr("What name do you want to give to this playlist?"), QLineEdit::Normal, "", &ok);
     if (ok) {
         LibraryManager::instance()->createPlaylist(playlistName);
     }
@@ -114,7 +114,7 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
         menu->addSection(tr("For %1").arg(QLocale().quoteString(playlistName)));
         menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, [ = ] {
             bool ok;
-            QString name = QInputDialog::getText(this, tr("Rename Playlist"), tr("New Name"), QLineEdit::Normal, playlistName, &ok);
+            QString name = tInputDialog::getText(this->window(), tr("Rename"), tr("What name do you want to give to this playlist?"), QLineEdit::Normal, playlistName, &ok);
             if (ok) {
                 LibraryManager::instance()->renamePlaylist(playlists.first(), name);
                 if (d->currentPlaylist == playlists.first()) ui->tracksTitle->setText(tr("Tracks in %1").arg(name));
@@ -184,7 +184,7 @@ void UserPlaylistsWidget::on_enqueueAllButton_clicked() {
     for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
         if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) continue;
 
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
     }
 }

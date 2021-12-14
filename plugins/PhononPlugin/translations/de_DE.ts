@@ -19,6 +19,34 @@
         <source>Import</source>
         <translation>Importieren</translation>
     </message>
+    <message>
+        <source>Accessing MusicBrainz...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CD NOT FOUND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This CD was not found on the MusicBrainz CD Database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SELECT CORRECT ALBUM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shuffle All</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportCdJob</name>
@@ -111,6 +139,21 @@
     <message>
         <source>Imported tracks are still protected by copyright law.</source>
         <translation>Importierte Titel stehen immernoch unter Copyrightschutz.</translation>
+    </message>
+</context>
+<context>
+    <name>MusicBrainzReleaseModel</name>
+    <message>
+        <source>Released: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Barcode: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Country: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

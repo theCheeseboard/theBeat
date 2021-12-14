@@ -75,7 +75,7 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
         db.exec("INSERT INTO version(version) VALUES(1)");
 
         //Also add Silly to the playlist
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
         StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.mp3")));
 #else
         StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.ogg")));
@@ -127,7 +127,7 @@ void LibraryManager::addTrack(QString path) {
     blacklistQuery.exec();
 
 #ifdef Q_OS_WIN
-    TagLib::FileRef file(path.toUtf8().data());
+    TagLib::FileRef file(reinterpret_cast<const wchar_t*>(path.constData()));
 #else
     TagLib::FileRef file(path.toUtf8());
 #endif

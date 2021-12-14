@@ -4,13 +4,14 @@
 #include "libraryerrorpopover.h"
 #include "librarymodel.h"
 #include "librarymanager.h"
-#include "qtmultimedia/qtmultimediamediaitem.h"
 #include <statemanager.h>
 #include <playlist.h>
 #include <QMenu>
 #include <QContextMenuEvent>
 #include <QInputDialog>
+#include <urlmanager.h>
 #include <tpopover.h>
+#include <tinputdialog.h>
 
 struct LibraryListViewPrivate {
     QMenu* addToPlaylistOptions;
@@ -62,7 +63,7 @@ LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
             popover->setPopoverWidth(SC_DPI(400));
             connect(p, &LibraryErrorPopover::rejected, popover, &tPopover::dismiss);
             connect(p, &LibraryErrorPopover::accepted, popover, [ = ](QString newPath) {
-                QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(newPath));
+                MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(newPath));
                 StateManager::instance()->playlist()->addItem(item);
                 StateManager::instance()->playlist()->setCurrentItem(item);
 
@@ -74,7 +75,7 @@ LibraryListView::LibraryListView(QWidget* parent) : QListView(parent) {
             return;
         }
 
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
         StateManager::instance()->playlist()->setCurrentItem(item);
     });
@@ -109,7 +110,7 @@ void LibraryListView::updatePlaylists() {
 
     d->addToPlaylistOptions->addAction(QIcon::fromTheme("list-add"), tr("New Playlist"), this, [ = ] {
         bool ok;
-        QString playlistName = QInputDialog::getText(this, tr("Playlist Name"), tr("Playlist Name"), QLineEdit::Normal, "", &ok);
+        QString playlistName = tInputDialog::getText(this->window(), tr("New Playlist"), tr("What do you want to call this playlist?"), QLineEdit::Normal, "", &ok);
         if (ok) {
             int newPlaylistId = LibraryManager::instance()->createPlaylist(playlistName);
             for (QModelIndex index : this->selectedIndexes()) {

@@ -71,19 +71,30 @@ mkdir deploy
 mkdir deploy\styles
 mkdir deploy\translations
 mkdir deploy\icons
+mkdir deploy\icons\contemporary
 mkdir deploy\plugins
 copy "contemporary-theme\release\Contemporary.dll" deploy\styles
 copy application\release\thebeat.exe deploy
 copy libthebeat\release\thebeat.dll deploy
 copy application\translations\*.qm deploy\translations
-robocopy application\icons\contemporary-icons deploy\icons\ /mir
+robocopy application\icons\contemporary-icons deploy\icons\contemporary /mir
 copy "C:\Program Files\thelibs\lib\the-libs.dll" deploy
 copy plugins\WinLibCDPlugin\cdlib\x64\Release\CDLib.dll deploy
 copy plugins\WinLibCDPlugin\release\WinLibCDPlugin.dll deploy\plugins
 copy plugins\DRPIntegration\release\DRPIntegration.dll deploy\plugins
+copy plugins\InternetRadioPlugin\release\InternetRadioPlugin.dll deploy\plugins
 copy "C:\OpenSSL-v111-Win64\bin\libssl-1_1-x64.dll" deploy
 copy "C:\OpenSSL-v111-Win64\bin\libcrypto-1_1-x64.dll" deploy
 copy taglib\build\taglib\tag.dll deploy
 copy application\defaults.conf deploy
 cd deploy
 windeployqt theBeat.exe -network -quickwidgets -sql -multimedia
+
+cd ..
+robocopy deploy deployAppx /mir
+cd deployAppx
+
+robocopy ..\dist\win-pack\ . /e
+makepri createconfig /cf priconfig.xml /dq en-US
+makepri new /pr . /cf priconfig.xml
+makeappx pack /d . /p theBeat.msix

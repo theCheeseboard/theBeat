@@ -269,7 +269,7 @@
             <item>
              <widget class="QPushButton" name="shuffleButton">
               <property name="text">
-               <string>Shufle All</string>
+               <string>Shuffle All</string>
               </property>
               <property name="icon">
                <iconset theme="media-playlist-shuffle">

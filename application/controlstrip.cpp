@@ -22,9 +22,12 @@
 
 #include <statemanager.h>
 #include <playlist.h>
+#include <controlstripmanager.h>
 #include <tvariantanimation.h>
 #include <tpopover.h>
 #include <QMenu>
+#include <QMainWindow>
+#include <QGraphicsOpacityEffect>
 #include <tsettings.h>
 #include "currenttrackpopover.h"
 #include "common.h"
@@ -92,6 +95,27 @@ ControlStrip::ControlStrip(QWidget* parent) :
     });
     playQueueAction->setChecked(StateManager::instance()->playlist()->repeatAll());
     ui->repeatOneButton->setMenu(repeatAllMenu);
+
+    QMenu* pauseMenu = new QMenu();
+    pauseMenu->addSection(tr("Playback Options"));
+    QAction* pauseAfterCurrentTrackAction = pauseMenu->addAction(QIcon::fromTheme("media-playback-pause"), tr("Pause after current track"));
+    connect(pauseAfterCurrentTrackAction, &QAction::toggled, this, [ = ](bool checked) {
+        StateManager::instance()->playlist()->setPauseAfterCurrentTrack(checked);
+    });
+    pauseAfterCurrentTrackAction->setCheckable(true);
+    pauseAfterCurrentTrackAction->setChecked(StateManager::instance()->playlist()->pauseAfterCurrentTrack());
+    connect(StateManager::instance()->playlist(), &Playlist::pauseAfterCurrentTrackChanged, this, [ = ](bool pauseAfterCurrentTrack) {
+        pauseAfterCurrentTrackAction->setChecked(pauseAfterCurrentTrack);
+    });
+    ui->playPauseButton->setMenu(pauseMenu);
+
+    connect(StateManager::instance()->controlStrip(), &ControlStripManager::buttonAdded, this, [ = ](QWidget * button) {
+        ui->customButtonsLayout->addWidget(button);
+    });
+
+    //Ensure that the seeker and transport controls are always LTR
+    ui->transportControlsWidget->setLayoutDirection(Qt::LeftToRight);
+    ui->seekerWidget->setLayoutDirection(Qt::LeftToRight);
 
     updateCurrentItem();
 }
@@ -261,15 +285,60 @@ bool ControlStrip::eventFilter(QObject* watched, QEvent* event) {
 
 void ControlStrip::on_upButton_clicked() {
     CurrentTrackPopover* track = new CurrentTrackPopover();
+
+#ifdef Q_OS_MAC
+    QMainWindow* parentWindow = static_cast<QMainWindow*>(this->window());
+
+    QWidget* backing = new QWidget();
+
+    QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(backing);
+    effect->setOpacity(0);
+    backing->setGraphicsEffect(effect);
+
+    tVariantAnimation* opacityAnim = new tVariantAnimation(backing);
+    opacityAnim->setStartValue(0.0);
+    opacityAnim->setEndValue(1.0);
+    opacityAnim->setDuration(500);
+    opacityAnim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(opacityAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
+        effect->setOpacity(value.toReal());
+    });
+    connect(opacityAnim, &tVariantAnimation::finished, this, [ = ] {
+        opacityAnim->deleteLater();
+        effect->deleteLater();
+    });
+    opacityAnim->start();
+
+    QBoxLayout* backingLayout = new QBoxLayout(QBoxLayout::LeftToRight);
+    backingLayout->setContentsMargins(0, 0, 0, 0);
+    backingLayout->addWidget(track);
+    backing->setLayout(backingLayout);
+
+    track->setParent(backing);
+
+    backing->setParent(parentWindow->centralWidget());
+    backing->resize(parentWindow->centralWidget()->size());
+    backing->move(0, 0);
+    backing->setAutoFillBackground(true);
+    backing->show();
+
+    track->setBacking(backing);
+#else
     tPopover* popover = new tPopover(track);
     popover->setPopoverSide(tPopover::Bottom);
     popover->setPopoverWidth(SC_DPI(-100));
     connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
     connect(popover, &tPopover::dismissed, track, &CurrentTrackPopover::deleteLater);
     popover->show(this->window());
+#endif
 }
 
 void ControlStrip::on_repeatOneButton_customContextMenuRequested(const QPoint& pos) {
     Q_UNUSED(pos);
     ui->repeatOneButton->showMenu();
+}
+
+void ControlStrip::on_playPauseButton_customContextMenuRequested(const QPoint& pos) {
+    Q_UNUSED(pos);
+    ui->playPauseButton->showMenu();
 }

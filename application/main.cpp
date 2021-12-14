@@ -25,11 +25,16 @@
 #include <tapplication.h>
 #include <tsettings.h>
 #include <QCommandLineParser>
+#include <tstylemanager.h>
 #include <QJsonArray>
 #include <statemanager.h>
 #include <playlist.h>
 #include "thememanager.h"
-#include "qtmultimedia/qtmultimediamediaitem.h"
+#include "qtmultimedia/qtmultimediaurlhandler.h"
+#include <urlmanager.h>
+
+#include <visualisationmanager.h>
+#include "visualisations/scopevisualisation.h"
 
 #ifdef HAVE_THEINSTALLER
     #include <updatechecker.h>
@@ -39,63 +44,85 @@ int main(int argc, char* argv[]) {
     if (!qEnvironmentVariableIsSet("QT_MULTIMEDIA_PREFERRED_PLUGINS")) qputenv("QT_MULTIMEDIA_PREFERRED_PLUGINS", "windowsmediafoundation");
     tApplication a(argc, argv);
 
-    if (QDir("/usr/share/thebeat/").exists()) {
-        a.setShareDir("/usr/share/thebeat/");
+    QString dir = SYSTEM_PREFIX_DIRECTORY;
+
+    if (QDir(QStringLiteral("%1/share/thebeat/").arg(SYSTEM_PREFIX_DIRECTORY)).exists()) {
+        a.setShareDir(QStringLiteral("%1/share/thebeat/").arg(SYSTEM_PREFIX_DIRECTORY));
     } else if (QDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/")).exists()) {
         a.setShareDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/"));
     }
     a.installTranslators();
 
-    a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/thebeat.svg")));
-    a.setApplicationVersion("3.0");
+    a.setApplicationVersion("3.1");
     a.setGenericName(QApplication::translate("main", "Audio Player"));
     a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
     a.setCopyrightHolder("Victor Tran");
-    a.setCopyrightYear("2020");
+    a.setCopyrightYear("2021");
     a.setOrganizationName("theSuite");
     a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thebeat/intro"));
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theBeat"));
     a.setApplicationUrl(tApplication::FileBug, QUrl("http://github.com/vicr123/theBeat/issues"));
 #ifdef T_BLUEPRINT_BUILD
+    a.setApplicationIcon(QIcon(":/icons/com.vicr123.thebeat_blueprint.svg"));
     a.setApplicationName("theBeat Blueprint");
-    a.setDesktopFileName("com.vicr123.thebeat-blueprint");
+    a.setDesktopFileName("com.vicr123.thebeat_blueprint");
 #else
+    a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/com.vicr123.thebeat.svg")));
     a.setApplicationName("theBeat");
     a.setDesktopFileName("com.vicr123.thebeat");
 #endif
 
     a.registerCrashTrap();
 
+#if defined(Q_OS_WIN)
+    a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
+    tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
+#elif defined(Q_OS_MAC)
+    tSettings::registerDefaults(a.macOSBundlePath() + "/Contents/Resources/defaults.conf");
+    a.setQuitOnLastWindowClosed(false);
+#else
     tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
     tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
-
-#if defined(Q_OS_WIN)
-    //Set up the theming
-    a.setStyle(QStyleFactory::create("contemporary"));
-
-    QIcon::setThemeName("contemporary-icons");
-    QIcon::setThemeSearchPaths({a.applicationDirPath() + "\\icons"});
-
-    new ThemeManager();
-
-    a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
 #endif
+
+    tSettings settings;
+
+    StateManager::instance()->url()->registerHandler(new QtMultimediaUrlHandler());
+
+    StateManager::instance()->visualisation()->registerEngine("scope", new ScopeVisualisation());
+    StateManager::instance()->visualisation()->setCurrentEngine("scope");
 
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addVersionOption();
+//    parser.addOption({"force-contemporary-palette", a.translate("main", "Force theBeat to use the Contemporary colour palette")});
     parser.addPositionalArgument(a.translate("main", "file"), a.translate("main", "File to open"), QStringLiteral("[%1]").arg(a.translate("main", "file")));
     parser.process(a);
+
+//    if (parser.isSet("force-contemporary-palette")) {
+//        shouldLoadThemeManager = true;
+//    }
+
+//    if (shouldLoadThemeManager) {
+//        new ThemeManager();
+//    }
+
+    QObject::connect(&settings, &tSettings::settingChanged, [ = ](QString key, QVariant value) {
+        if (key == "theme/mode") {
+            tStyleManager::setOverrideStyleForApplication(value.toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
+        }
+    });
+    tStyleManager::setOverrideStyleForApplication(settings.value("theme/mode").toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
 
     MainWindow* w = new MainWindow();
 
     QObject::connect(&a, &tApplication::singleInstanceMessage, [ = ](QJsonObject launchMessage) {
         if (launchMessage.contains("files")) {
             QJsonArray files = launchMessage.value("files").toArray();
-            QtMultimediaMediaItem* firstItem = nullptr;
+            MediaItem* firstItem = nullptr;
             for (QJsonValue file : files) {
-                QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl(file.toString()));
+                MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(file.toString()));
                 StateManager::instance()->playlist()->addItem(item);
                 if (!firstItem) firstItem = item;
             }
@@ -107,6 +134,10 @@ int main(int argc, char* argv[]) {
                 w->activateWindow();
             }
         }
+    });
+    QObject::connect(&a, &tApplication::dockIconClicked, [ = ] {
+        w->show();
+        w->activateWindow();
     });
 
     QStringList files;
@@ -122,15 +153,17 @@ int main(int argc, char* argv[]) {
     });
 
 #ifdef HAVE_THEINSTALLER
-    UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 0, 0, 17);
-    QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
+    if (a.currentPlatform() != tApplication::WindowsAppPackage) {
+        UpdateChecker::initialise(QUrl("https://vicr123.com/thebeat/theinstaller/installer.json"), QUrl("https://github.com/vicr123/theBeat/releases"), 3, 1, 0, 25);
+        QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
+    }
 #endif
 
     w->show();
 
-    QtMultimediaMediaItem* firstItem = nullptr;
+    MediaItem* firstItem = nullptr;
     for (QString file : files) {
-        QtMultimediaMediaItem* item = new QtMultimediaMediaItem(QUrl(file));
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(file));
         StateManager::instance()->playlist()->addItem(item);
         if (!firstItem) firstItem = item;
     }

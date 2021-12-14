@@ -2,11 +2,11 @@ TEMPLATE = subdirs
 
 libproj.subdir = libthebeat
 
-applicationproj.subdir = application
-applicationproj.depends = libproj
-
 pluginsproj.subdir = plugins
 pluginsproj.depends = libproj
+
+applicationproj.subdir = application
+applicationproj.depends = libproj pluginsproj
 
 SUBDIRS += \
     libproj \

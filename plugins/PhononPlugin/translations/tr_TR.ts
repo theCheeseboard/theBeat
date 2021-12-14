@@ -19,6 +19,34 @@
         <source>Import</source>
         <translation>İthalat</translation>
     </message>
+    <message>
+        <source>Accessing MusicBrainz...</source>
+        <translation>Musicbrainz&apos;e Erişiliyor...</translation>
+    </message>
+    <message>
+        <source>CD NOT FOUND</source>
+        <translation>CD BULUNAMADI</translation>
+    </message>
+    <message>
+        <source>This CD was not found on the MusicBrainz CD Database.</source>
+        <translation>Bu CD MusicBrainz CD veritabanında bulunamadı.</translation>
+    </message>
+    <message>
+        <source>SELECT CORRECT ALBUM</source>
+        <translation>DOĞRU ALBÜMÜ SEÇ</translation>
+    </message>
+    <message>
+        <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
+        <translation>Bu CD için Musicbrainz&apos;de birden fazla sonuç bulundu. Doğru şarkı bilgisi için doğru CD&apos;yi seçin.</translation>
+    </message>
+    <message>
+        <source>Play All</source>
+        <translation>Hepsini Oynat</translation>
+    </message>
+    <message>
+        <source>Shuffle All</source>
+        <translation>Tümünü Karıştır</translation>
+    </message>
 </context>
 <context>
     <name>ImportCdJob</name>
@@ -111,6 +139,21 @@
     <message>
         <source>Imported tracks are still protected by copyright law.</source>
         <translation>İçe aktarılan şarkılar hala telif hakkı yasasıyla korunmaktadır.</translation>
+    </message>
+</context>
+<context>
+    <name>MusicBrainzReleaseModel</name>
+    <message>
+        <source>Released: %1</source>
+        <translation>%1 çıktı</translation>
+    </message>
+    <message>
+        <source>Barcode: %1</source>
+        <translation>Barkod: %1</translation>
+    </message>
+    <message>
+        <source>Country: %1</source>
+        <translation>Ülke: %1</translation>
     </message>
 </context>
 <context>

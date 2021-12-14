@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sa_IN" sourcelanguage="en_US">
+<TS version="2.1" language="ar_SA" sourcelanguage="en_US">
 <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
         <location filename="../artistsalbumswidget.ui" line="65"/>
         <location filename="../artistsalbumswidget.ui" line="188"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>المسارات في المكتبة</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="230"/>
+        <location filename="../artistsalbumswidget.ui" line="237"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>طابور الكل</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="241"/>
+        <location filename="../artistsalbumswidget.ui" line="248"/>
         <source>Play All</source>
-        <translation type="unfinished"></translation>
+        <translation>لعب الكل</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="252"/>
-        <source>Shufle All</source>
-        <translation type="unfinished"></translation>
+        <location filename="../artistsalbumswidget.ui" line="259"/>
+        <source>Shuffle All</source>
+        <translation>خلط الكل</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="276"/>
+        <location filename="../artistsalbumswidget.ui" line="283"/>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>حرق</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="67"/>
+        <location filename="../artistsalbumswidget.cpp" line="68"/>
         <source>Albums in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>ألبومات في المكتبة</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="67"/>
+        <location filename="../artistsalbumswidget.cpp" line="68"/>
         <source>Artists in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>الفنانين في المكتبة</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="153"/>
+        <location filename="../artistsalbumswidget.cpp" line="167"/>
         <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>المسارات في %1</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="153"/>
+        <location filename="../artistsalbumswidget.cpp" line="167"/>
         <source>Tracks by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>المسارات الي يتتبع %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../artistsalbumswidget.cpp" line="162"/>
+        <location filename="../artistsalbumswidget.cpp" line="176"/>
         <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>صفر مسارات</numerusform>
+            <numerusform>واحد مسار</numerusform>
+            <numerusform>مسارات اثنين</numerusform>
+            <numerusform>عدد قليل من المسارات</numerusform>
+            <numerusform>عديد من المسارات</numerusform>
+            <numerusform>مسارات آخرة</numerusform>
         </translation>
     </message>
 </context>
@@ -64,61 +67,71 @@
     <message>
         <location filename="../common.cpp" line="31"/>
         <source>Select Device</source>
-        <translation type="unfinished"></translation>
+        <translation>اختر جهاز</translation>
     </message>
 </context>
 <context>
     <name>ControlStrip</name>
     <message>
-        <location filename="../controlstrip.ui" line="102"/>
+        <location filename="../controlstrip.ui" line="101"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>لقب</translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="109"/>
+        <location filename="../controlstrip.ui" line="128"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>البيانات الوصفية</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="79"/>
+        <location filename="../controlstrip.cpp" line="82"/>
         <source>Repeat Options</source>
-        <translation type="unfinished"></translation>
+        <translation>خيارات التكرير</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="80"/>
+        <location filename="../controlstrip.cpp" line="83"/>
         <source>Repeat Play Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>كرر تشغيل قائمة الطابور</translation>
+    </message>
+    <message>
+        <location filename="../controlstrip.cpp" line="100"/>
+        <source>Playback Options</source>
+        <translation>خيارات اللعب</translation>
+    </message>
+    <message>
+        <location filename="../controlstrip.cpp" line="101"/>
+        <source>Pause after current track</source>
+        <translation>وقفة بعد المسار الحالي</translation>
     </message>
 </context>
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="99"/>
+        <location filename="../currenttrackpopover.cpp" line="138"/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
+        <translation>ألبوم</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="100"/>
+        <location filename="../currenttrackpopover.cpp" line="139"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>أسم</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="105"/>
-        <location filename="../currenttrackpopover.cpp" line="107"/>
-        <location filename="../currenttrackpopover.cpp" line="110"/>
+        <location filename="../currenttrackpopover.cpp" line="144"/>
+        <location filename="../currenttrackpopover.cpp" line="146"/>
+        <location filename="../currenttrackpopover.cpp" line="149"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>مسار</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="105"/>
+        <location filename="../currenttrackpopover.cpp" line="144"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>1% من %2</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="111"/>
+        <location filename="../currenttrackpopover.cpp" line="150"/>
         <source>Year</source>
-        <translation type="unfinished"></translation>
+        <translation>السنة</translation>
     </message>
 </context>
 <context>
@@ -126,15 +139,18 @@
     <message>
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="153"/>
         <source>Folder Added</source>
-        <translation type="unfinished"></translation>
+        <translation>تم إضافة مجلد</translation>
     </message>
     <message numerus="yes">
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="154"/>
         <source>%n tracks added/updated</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>صفر مسارات مضافة أو المحدثة</numerusform>
+            <numerusform>واحد مسار مضاف أو محدث</numerusform>
+            <numerusform>مسارات اثنين مضافة أو محدثة</numerusform>
+            <numerusform>عدد قليل من مسارات المضافة أو المحدثة</numerusform>
+            <numerusform>عديدة من مسارات المضافة أو المحدثة</numerusform>
+            <numerusform>مسارات آخر مضافة أو محدثة</numerusform>
         </translation>
     </message>
 </context>
@@ -143,7 +159,7 @@
     <message>
         <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="26"/>
         <source>DISCOVERING AUDIO TRACKS</source>
-        <translation type="unfinished"></translation>
+        <translation>قيأم باكتشاف مسارات الصوطية</translation>
     </message>
 </context>
 <context>
@@ -151,94 +167,98 @@
     <message>
         <location filename="../libraryerrorpopover.ui" line="35"/>
         <source>Hmm</source>
-        <translation type="unfinished"></translation>
+        <translation>Hmm</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="134"/>
         <source>ACTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>أجراءات</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="143"/>
         <source>Locate File</source>
-        <translation type="unfinished"></translation>
+        <translation>حدد الملف</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.ui" line="150"/>
         <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+        <translation>إزالة من المكتبة</translation>
     </message>
     <message>
         <location filename="../libraryerrorpopover.cpp" line="39"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
-        <translation type="unfinished"></translation>
+        <translation>يبدو أن الملف قد اختفى. إذا كنت تعرف مكانه ، فأخبرنا حتى ينمكنة من تشغيل المسار.</translation>
     </message>
 </context>
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="174"/>
+        <location filename="../library/librarymodel.cpp" line="195"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>من %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="175"/>
+        <location filename="../library/librarymodel.cpp" line="196"/>
         <source>on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>على %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="177"/>
+        <location filename="../library/librarymodel.cpp" line="198"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>مسار</translation>
     </message>
 </context>
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="28"/>
+        <location filename="../library/librarylistview.cpp" line="29"/>
         <source>Add to Playlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../library/librarylistview.cpp" line="43"/>
-        <location filename="../library/librarylistview.cpp" line="45"/>
-        <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+        <translation>أضف إلى قائمة التشغيل</translation>
     </message>
     <message>
         <location filename="../library/librarylistview.cpp" line="33"/>
-        <location filename="../library/librarylistview.cpp" line="44"/>
-        <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../library/librarylistview.cpp" line="32"/>
-        <location filename="../library/librarylistview.cpp" line="34"/>
+        <location filename="../library/librarylistview.cpp" line="35"/>
         <source>Remove from Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>إزالة من قائمة التشغيل</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="110"/>
+        <location filename="../library/librarylistview.cpp" line="34"/>
+        <location filename="../library/librarylistview.cpp" line="45"/>
+        <source>Are you sure?</source>
+        <translation>هل أنت واثق في هذة العملية؟</translation>
+    </message>
+    <message>
+        <location filename="../library/librarylistview.cpp" line="44"/>
+        <location filename="../library/librarylistview.cpp" line="46"/>
+        <source>Remove from Library</source>
+        <translation>إزالة من المكتبة</translation>
+    </message>
+    <message>
+        <location filename="../library/librarylistview.cpp" line="111"/>
+        <location filename="../library/librarylistview.cpp" line="113"/>
         <source>New Playlist</source>
+        <translation>قائمة تشغيل جديدة</translation>
+    </message>
+    <message>
+        <location filename="../library/librarylistview.cpp" line="113"/>
+        <source>What do you want to call this playlist?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="112"/>
-        <source>Playlist Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../library/librarylistview.cpp" line="127"/>
+        <location filename="../library/librarylistview.cpp" line="128"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ل %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../library/librarylistview.cpp" line="132"/>
+        <location filename="../library/librarylistview.cpp" line="133"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>لي صفر عناصر</numerusform>
+            <numerusform>لي واحد عنصر</numerusform>
+            <numerusform>لي اثنين عنصار</numerusform>
+            <numerusform>لعدد قليل من العنصار</numerusform>
+            <numerusform>لعديدة من العنصار</numerusform>
+            <numerusform>لعدد آخر من العنصار</numerusform>
         </translation>
     </message>
 </context>
@@ -247,216 +267,267 @@
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>theBeat</source>
-        <translation type="unfinished"></translation>
+        <translation>theBeat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="90"/>
         <source>Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>المسارات</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="116"/>
         <source>Artists</source>
-        <translation type="unfinished"></translation>
+        <translation>الفنانين</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="139"/>
         <source>Albums</source>
-        <translation type="unfinished"></translation>
+        <translation>ألبومات</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="162"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>قوائم التشغيل</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="185"/>
         <source>Other Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>مصادر أخرى</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="276"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>أنتظر</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="346"/>
         <source>Nothing Here!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="403"/>
-        <source>File Bug</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="412"/>
-        <source>Sources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="421"/>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="430"/>
-        <source>Exit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="433"/>
-        <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="442"/>
-        <source>Open File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="445"/>
-        <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="450"/>
-        <location filename="../mainwindow.cpp" line="403"/>
-        <source>Open URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="459"/>
-        <location filename="../mainwindow.cpp" line="191"/>
-        <source>Skip Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="462"/>
-        <source>Shift+Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="474"/>
-        <source>Shift+Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="495"/>
-        <source>Add to Library</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="504"/>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="507"/>
-        <source>Ctrl+,</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="515"/>
-        <source>theBeat Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="518"/>
-        <source>F1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="471"/>
-        <source>Skip Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>لا شيء هنا!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="356"/>
         <source>Select a track or drop something here!</source>
-        <translation type="unfinished"></translation>
+        <translation>حدد مسارًا أو أرمي شيئًا هنا!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="483"/>
-        <location filename="../mainwindow.cpp" line="199"/>
-        <location filename="../mainwindow.cpp" line="213"/>
+        <location filename="../mainwindow.ui" line="408"/>
+        <source>File</source>
+        <translation>ملف</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="421"/>
+        <source>Playback</source>
+        <translation>تشغيل</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="439"/>
+        <source>File Bug</source>
+        <translation>أرسل مشكلة</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="448"/>
+        <source>Sources</source>
+        <translation>مصادر</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="457"/>
+        <source>About</source>
+        <translation>حول</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="466"/>
+        <source>Exit</source>
+        <translation>أخرج</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="469"/>
+        <source>Ctrl+Q</source>
+        <translation>Ctrl+Q</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="481"/>
+        <source>Open File</source>
+        <translation>افتح ملف</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="484"/>
+        <source>Ctrl+O</source>
+        <translation>Ctrl+O</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="489"/>
+        <location filename="../mainwindow.cpp" line="453"/>
+        <source>Open URL</source>
+        <translation>أفتح الرابط</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="498"/>
+        <location filename="../mainwindow.cpp" line="215"/>
+        <source>Skip Back</source>
+        <translation>أعد للخلف</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="501"/>
+        <source>Shift+Left</source>
+        <translation>Shift+Left</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="510"/>
+        <source>Skip Forward</source>
+        <translation>القفز إلى الأمام</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="513"/>
+        <source>Shift+Right</source>
+        <translation>Shift+Right</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="522"/>
+        <location filename="../mainwindow.cpp" line="223"/>
+        <location filename="../mainwindow.cpp" line="237"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>ألعب</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="486"/>
+        <location filename="../mainwindow.ui" line="525"/>
         <source>Space</source>
+        <translation>مساحة</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="534"/>
+        <source>Add to Library</source>
+        <translation>إضافة إلى المكتبة</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="543"/>
+        <source>Settings</source>
+        <translation>إعدادات</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="546"/>
+        <source>Ctrl+,</source>
+        <translation>Ctrl+,</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="558"/>
+        <source>theBeat Help</source>
+        <translation>مساعدة theBeat</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="561"/>
+        <source>F1</source>
+        <translation>F1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="569"/>
+        <source>Repeat One</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.ui" line="572"/>
+        <source>Ctrl+R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="580"/>
+        <source>Shuffle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="583"/>
+        <source>Ctrl+S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="232"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>أقف</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="220"/>
+        <location filename="../mainwindow.cpp" line="244"/>
         <source>Skip Next</source>
-        <translation type="unfinished"></translation>
+        <translation>القفز إلى المقبل</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="375"/>
+        <location filename="../mainwindow.cpp" line="425"/>
         <source>For &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>ل &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="377"/>
+        <location filename="../mainwindow.cpp" line="427"/>
         <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>لي صفر عناصر</numerusform>
+            <numerusform>لي واحد عنصر</numerusform>
+            <numerusform>لي اثنين عنصار</numerusform>
+            <numerusform>لعدد قليل من العنصار</numerusform>
+            <numerusform>لعديدة من العنصار</numerusform>
+            <numerusform>لعدد آخر من العنصار</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="379"/>
+        <location filename="../mainwindow.cpp" line="429"/>
         <source>Remove from Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>إزالة من قائمة الانتظار</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="392"/>
+        <location filename="../mainwindow.cpp" line="442"/>
         <source>For Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>لقائمة الانتظار</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="393"/>
+        <location filename="../mainwindow.cpp" line="443"/>
         <source>Clear Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>مسح قائمة الانتظار</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="403"/>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.cpp" line="453"/>
+        <source>Enter the URL you&apos;d like to open</source>
+        <translation>أدخل العنوان (URL) الذي تريد فتحه</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="458"/>
+        <source>Can&apos;t open that URL</source>
+        <translation>لا يمكن فتح العنوان (URL) هذا</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="458"/>
+        <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
+        <translation>عذرًا ، العنوان (URL) هذا لا يدعمه theBeat.</translation>
     </message>
 </context>
 <context>
     <name>OtherSourcesWidget</name>
     <message>
-        <location filename="../othersourceswidget.ui" line="93"/>
+        <location filename="../othersourceswidget.ui" line="103"/>
         <source>No other sources available</source>
-        <translation type="unfinished"></translation>
+        <translation>لا توجد مصادر أخرى</translation>
     </message>
     <message>
-        <location filename="../othersourceswidget.ui" line="103"/>
+        <location filename="../othersourceswidget.ui" line="113"/>
         <source>There&apos;s nothing else to play right now</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يوجد شيء آخر للعب الآن</translation>
     </message>
 </context>
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="256"/>
+        <location filename="../playlistmodel.cpp" line="265"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>مسار</translation>
     </message>
     <message>
-        <location filename="../playlistmodel.cpp" line="279"/>
+        <location filename="../playlistmodel.cpp" line="288"/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
+        <translation>ألبوم</translation>
+    </message>
+</context>
+<context>
+    <name>ScopeVisualisation</name>
+    <message>
+        <location filename="../visualisations/scopevisualisation.cpp" line="38"/>
+        <source>Scope</source>
+        <translation>نطاق</translation>
     </message>
 </context>
 <context>
@@ -465,72 +536,74 @@
         <location filename="../settingsdialog.ui" line="14"/>
         <location filename="../settingsdialog.ui" line="53"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>إعدادات</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="64"/>
         <location filename="../settingsdialog.ui" line="120"/>
         <source>Library</source>
-        <translation type="unfinished"></translation>
+        <translation>المكتبة</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="69"/>
         <location filename="../settingsdialog.ui" line="248"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>المظهر</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="74"/>
         <location filename="../settingsdialog.ui" line="424"/>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>الإشعارات</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="180"/>
         <source>RESET</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة التعيين</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="187"/>
         <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة تعيين المكتبة إلى الإعدادات الأصلية. سؤدي هذا إلى مسح كافة المسارات التي تمت إضافتها إلى theBeat، وسيقوم theBeat بإعادة فحص المجلد الموسيقى عند بدء التشغيل.
+
+theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة التعيين إلى الإعدادات الأصلية. لا يمكنك العودة من هذا بعد الانتهاء.</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="201"/>
         <source>Reset theBeat Library</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة تعيين مكتبة theBeat</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="311"/>
         <source>TITLEBAR</source>
-        <translation type="unfinished"></translation>
+        <translation>شريط العنوان</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="318"/>
         <source>Use System Titlebars</source>
-        <translation type="unfinished"></translation>
+        <translation>استخدم شراءط العنوان النظام</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="364"/>
         <source>COLOURS</source>
-        <translation type="unfinished"></translation>
+        <translation>الألوان</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="371"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>أبيض</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="378"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>أسود</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="481"/>
         <source>Send a notification when the track changes</source>
-        <translation type="unfinished"></translation>
+        <translation>أرسال إشعار عندما يتغير المسار</translation>
     </message>
 </context>
 <context>
@@ -538,27 +611,27 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../trackswidget.ui" line="65"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>المسارات في المكتبة</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="74"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>طابور الكل</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="119"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>بحث</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="176"/>
         <source>Processing Library</source>
-        <translation type="unfinished"></translation>
+        <translation>قأم بمعالجة المكتبة</translation>
     </message>
     <message>
         <location filename="../trackswidget.ui" line="183"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>اعتمادًا على عدد المسارات في مكتبتك، قد يستغرق ذلك بعض الوقت. يجب أن يحدث هذا فقط في مرة الأولى لتشغيل theBeat.</translation>
     </message>
 </context>
 <context>
@@ -566,37 +639,70 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <message>
         <location filename="../userplaylistswidget.ui" line="62"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>قوائم التشغيل</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="71"/>
         <source>Create Playlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.ui" line="261"/>
-        <source>Play All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.ui" line="272"/>
-        <source>Shufle All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.ui" line="316"/>
-        <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء قائمة التشغيل</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="222"/>
         <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+        <translation>المسارات في المكتبة</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.ui" line="250"/>
         <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+        <translation>طابور الكل</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.ui" line="261"/>
+        <source>Play All</source>
+        <translation>لعب الكل</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.ui" line="272"/>
+        <source>Shuffle All</source>
+        <translation>خلط الكل</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.ui" line="316"/>
+        <source>Burn</source>
+        <translation>حرق</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="73"/>
+        <source>New Playlist</source>
+        <translation>قائمة تشغيل جديدة</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="73"/>
+        <location filename="../userplaylistswidget.cpp" line="117"/>
+        <source>What name do you want to give to this playlist?</source>
+        <translation>ما الاسم الذي تريد أن تسمي عليه هذة قائمة التشغيل؟</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="114"/>
+        <source>For %1</source>
+        <translation>ل %1</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="115"/>
+        <location filename="../userplaylistswidget.cpp" line="117"/>
+        <source>Rename</source>
+        <translation>إعادة تسمية</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="120"/>
+        <location filename="../userplaylistswidget.cpp" line="174"/>
+        <source>Tracks in %1</source>
+        <translation>المسارات في %1</translation>
+    </message>
+    <message>
+        <location filename="../userplaylistswidget.cpp" line="123"/>
+        <source>Export</source>
+        <translation>صدر</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="149"/>
@@ -604,76 +710,43 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <location filename="../userplaylistswidget.cpp" line="161"/>
         <location filename="../userplaylistswidget.cpp" line="163"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>إزالة</translation>
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="150"/>
         <location filename="../userplaylistswidget.cpp" line="162"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="73"/>
-        <source>Playlist Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="120"/>
-        <location filename="../userplaylistswidget.cpp" line="174"/>
-        <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="114"/>
-        <source>For %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="115"/>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="117"/>
-        <source>Rename Playlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="117"/>
-        <source>New Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="123"/>
-        <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>هل أنت واثق في هذة العملية؟</translation>
     </message>
     <message numerus="yes">
         <location filename="../userplaylistswidget.cpp" line="157"/>
         <source>For %n playlists</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>لصفر مسارات</numerusform>
+            <numerusform>لواحد مسارات</numerusform>
+            <numerusform>لمسارات اثنين</numerusform>
+            <numerusform>لعدد قليل من مسارات</numerusform>
+            <numerusform>لعديد من مسارات</numerusform>
+            <numerusform>لعدد آخر من مسارات</numerusform>
         </translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="51"/>
+        <location filename="../main.cpp" line="57"/>
         <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+        <translation>مشغل الصوت</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="88"/>
+        <location filename="../main.cpp" line="100"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="88"/>
+        <location filename="../main.cpp" line="100"/>
         <source>File to open</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف للفتح</translation>
     </message>
 </context>
 </TS>

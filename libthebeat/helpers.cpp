@@ -62,7 +62,7 @@ QImage Helpers::albumArt(QUrl url) {
     //Try using Taglib
     if (url.isLocalFile()) {
 #ifdef Q_OS_WIN
-        TagLib::FileName filename = url.toLocalFile().toUtf8().data();
+        TagLib::FileName filename = reinterpret_cast<const wchar_t*>(url.toLocalFile().constData());
 #else
         TagLib::FileName filename = url.toLocalFile().toUtf8();
 #endif

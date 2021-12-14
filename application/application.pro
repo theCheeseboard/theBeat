@@ -5,34 +5,39 @@ CONFIG += c++17
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 unix:!macx {
-    # Include the-libs build tools
-    include(/usr/share/the-libs/pri/buildmaster.pri)
+    DESKTOP_FILE = com.vicr123.thebeat.desktop
+    DESKTOP_FILE_BLUEPRINT = com.vicr123.thebeat_blueprint.desktop
 
-    DEFINES += SYSTEM_LIBRARY_DIRECTORY=\\\"$$[QT_INSTALL_LIBS]\\\"
+    # Include the-libs build tools
+    equals(THELIBS_BUILDTOOLS_PATH, "") {
+        THELIBS_BUILDTOOLS_PATH = $$[QT_INSTALL_PREFIX]/share/the-libs/pri
+    }
+    include($$THELIBS_BUILDTOOLS_PATH/buildmaster.pri)
 
     QT += thelib
     TARGET = thebeat
-
     CONFIG += link_pkgconfig
     PKGCONFIG += taglib
 
     LIBS += -L$$OUT_PWD/../libthebeat/ -lthebeat
 
-    target.path = /usr/bin
-
-    desktop.path = /usr/share/applications
-    desktop.files = com.vicr123.thebeat.desktop
-
-    icon.path = /usr/share/icons/hicolor/scalable/apps/
-    icon.files = icons/thebeat.svg
+    target.path = $$THELIBS_INSTALL_BIN
 
     defaults.files = defaults.conf
-    defaults.path = /etc/theSuite/theBeat/
+    defaults.path = $$THELIBS_INSTALL_SETTINGS/theSuite/theBeat/
 
-    metainfo.files = com.vicr123.thebeat.metainfo.xml
-    metainfo.path = /usr/share/metainfo
+    blueprint {
+        metainfo.files = com.vicr123.thebeat_blueprint.metainfo.xml
+        icon.files = icons/com.vicr123.thebeat_blueprint.svg
+    } else {
+        metainfo.files = com.vicr123.thebeat.metainfo.xml
+        icon.files = icons/com.vicr123.thebeat.svg
+    }
 
-    INSTALLS += target desktop icon defaults metainfo
+    icon.path = $$THELIBS_INSTALL_PREFIX/share/icons/hicolor/scalable/apps/
+    metainfo.path = $$THELIBS_INSTALL_PREFIX/share/metainfo
+
+    INSTALLS += target icon defaults metainfo
 }
 
 win32 {
@@ -78,8 +83,25 @@ macx {
         ICON = icon.icns
     }
 
-    INCLUDEPATH += "/usr/local/include/the-libs"
-    LIBS += -L/usr/local/lib -lthe-libs
+    INCLUDEPATH += "/usr/local/include/the-libs" "/usr/local/include"
+    LIBS += -L/usr/local/lib -lthe-libs -ltag
+
+    plugins.files = ../plugins/MacIntegration/libMacIntegration.dylib ../plugins/AvFoundationPlugin/libAvFoundationPlugin.dylib  ../plugins/InternetRadioPlugin/libInternetRadioPlugin.dylib
+    plugins.path = Contents/AppPlugins/
+
+    macintegrationplugintranslations.files = $$files($${PWD}/../plugins/MacIntegration/translations/*.qm)
+    macintegrationplugintranslations.path = Contents/Resources/Plugins/macintegration/
+
+    icons.files = icons/contemporary-icons
+    icons.path = Contents/Resources/icons
+
+    defaults.files = defaults.conf
+    defaults.path = Contents/Resources
+
+    lproj.files = $$files(translations/apple-lproj/*)
+    lproj.path = Contents/Resources
+
+    QMAKE_BUNDLE_DATA += icons defaults lproj plugins macintegrationplugintranslations
 
     QMAKE_POST_LINK += $$quote(cp $${PWD}/dmgicon.icns $${PWD}/app-dmg-background.png $${PWD}/node-appdmg-config*.json $${OUT_PWD}/..)
 }
@@ -112,10 +134,12 @@ SOURCES += \
     playlistmodel.cpp \
     pluginmanager.cpp \
     qtmultimedia/qtmultimediamediaitem.cpp \
+    qtmultimedia/qtmultimediaurlhandler.cpp \
     settingsdialog.cpp \
     thememanager.cpp \
     trackswidget.cpp \
-    userplaylistswidget.cpp
+    userplaylistswidget.cpp \
+    visualisations/scopevisualisation.cpp
 
 HEADERS += \
     artistsalbumswidget.h \
@@ -133,10 +157,12 @@ HEADERS += \
     playlistmodel.h \
     pluginmanager.h \
     qtmultimedia/qtmultimediamediaitem.h \
+    qtmultimedia/qtmultimediaurlhandler.h \
     settingsdialog.h \
     thememanager.h \
     trackswidget.h \
-    userplaylistswidget.h
+    userplaylistswidget.h \
+    visualisations/scopevisualisation.h
 
 FORMS += \
     artistsalbumswidget.ui \
@@ -157,6 +183,8 @@ INCLUDEPATH += $$PWD/../libthebeat
 DEPENDPATH += $$PWD/../libthebeat
 
 DISTFILES += \
-    com.vicr123.thebeat.desktop \
+    Info.plist \
+    com.vicr123.thebeat.metainfo.xml \
+    com.vicr123.thebeat_blueprint.metainfo.xml \
     defaults.conf \
     icon.rc
