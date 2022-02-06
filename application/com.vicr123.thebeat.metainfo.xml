@@ -40,7 +40,28 @@
     <content_attribute id="social-info">mild</content_attribute>
   </content_rating>
   
+  <url type="homepage">http://vicr123.com/</url>
+  <url type="help">https://help.vicr123.com/docs/thebeat/intro</url>
+  <url type="translate">https://translate.vicr123.com/projects/thebeat/</url>
+  
   <provides>
     <binary>thebeat</binary>
   </provides>
+  
+  <releases>
+    <release version="3.0.1" date="2021-12-15">
+      <description>
+        <p>Contains updated translations and fixes</p>
+      </description>
+    </release>
+    <release version="3.0" date="2021-12-15">
+      <description>
+        <p>theBeat 3.1 brings some new improvements to the table:</p>
+        <ul>
+          <li>Visualisations in Zen Mode</li>
+          <li>Internet Radio support</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
 </component>
