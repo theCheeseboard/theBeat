@@ -128,6 +128,9 @@ SOURCES += \
     library/librarymanager.cpp \
     library/librarymodel.cpp \
     libraryerrorpopover.cpp \
+    lyrics/abstractlyricformat.cpp \
+    lyrics/basiclrcfilelyricformat.cpp \
+    lyrics/lyricsdisplaywidget.cpp \
     main.cpp \
     mainwindow.cpp \
     othersourceswidget.cpp \
@@ -152,6 +155,9 @@ HEADERS += \
     library/librarymanager.h \
     library/librarymodel.h \
     libraryerrorpopover.h \
+    lyrics/abstractlyricformat.h \
+    lyrics/basiclrcfilelyricformat.h \
+    lyrics/lyricsdisplaywidget.h \
     mainwindow.h \
     othersourceswidget.h \
     playlistmodel.h \
@@ -170,6 +176,7 @@ FORMS += \
     currenttrackpopover.ui \
     library/libraryenumeratedirectoryjobwidget.ui \
     libraryerrorpopover.ui \
+    lyrics/lyricsdisplaywidget.ui \
     mainwindow.ui \
     othersourceswidget.ui \
     settingsdialog.ui \

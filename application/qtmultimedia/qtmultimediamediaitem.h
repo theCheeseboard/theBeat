@@ -35,7 +35,8 @@ class QtMultimediaMediaItem : public MediaItem {
         QtMultimediaMediaItemPrivate* d;
 
         void updateAlbumArt();
-        void updateTaglib() ;
+        void updateTaglib();
+        void loadLyrics();
 
         // MediaItem interface
     public:
@@ -50,6 +51,8 @@ class QtMultimediaMediaItem : public MediaItem {
         QString album();
         QImage albumArt();
         QVariant metadata(QString key);
+        QString lyrics();
+        QString lyricFormat();
 };
 
 #endif // QTMULTIMEDIAMEDIAITEM_H

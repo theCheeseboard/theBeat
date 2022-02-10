@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2022 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,41 +17,41 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef PHONONCDMEDIAITEM_H
-#define PHONONCDMEDIAITEM_H
+#ifndef LYRICSDISPLAYWIDGET_H
+#define LYRICSDISPLAYWIDGET_H
 
-#include <mediaitem.h>
-#include "trackinfo.h"
+#include <QWidget>
 
-struct PhononCdMediaItemPrivate;
-class PhononCdMediaItem : public MediaItem {
+namespace Ui {
+    class LyricsDisplayWidget;
+}
+
+class AbstractLyricFormat;
+struct LyricsDisplayWidgetPrivate;
+class LyricsDisplayWidget : public QWidget
+{
         Q_OBJECT
+
     public:
-        explicit PhononCdMediaItem(QString blockDevice, TrackInfoPtr info);
-        ~PhononCdMediaItem();
+        explicit LyricsDisplayWidget(QWidget *parent = nullptr);
+        ~LyricsDisplayWidget();
 
-        static void blockDeviceGone(QString blockDevice);
-
-    signals:
+        void setLyrics(AbstractLyricFormat* lyrics);
+        void setTime(quint64 time);
 
     private:
-        PhononCdMediaItemPrivate* d;
+        Ui::LyricsDisplayWidget *ui;
+        LyricsDisplayWidgetPrivate* d;
 
-        // MediaItem interface
+        void updateLyrics();
+
+        // QWidget interface
     public:
-        void play();
-        void pause();
-        void stop();
-        void seek(quint64 ms);
-        quint64 elapsed();
-        quint64 duration();
-        QString title();
-        QStringList authors();
-        QString album();
-        QImage albumArt();
-        QVariant metadata(QString key);
-        QString lyrics();
-        QString lyricFormat();
+        QSize sizeHint() const;
+        QSize minimumSizeHint() const;
+
+    protected:
+        void paintEvent(QPaintEvent*event);
 };
 
-#endif // PHONONCDMEDIAITEM_H
+#endif // LYRICSDISPLAYWIDGET_H

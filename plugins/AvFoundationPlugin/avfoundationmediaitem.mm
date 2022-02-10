@@ -209,3 +209,14 @@ QVariant AvFoundationMediaItem::metadata(QString key) {
     }
     return QVariant();
 }
+
+QString AvFoundationMediaItem::lyrics() {
+    //TODO
+    return "";
+}
+
+QString AvFoundationMediaItem::lyricFormat()
+{
+    //TODO
+    return "";
+}

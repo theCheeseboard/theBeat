@@ -29,6 +29,8 @@ public:
     QString album();
     QImage albumArt();
     QVariant metadata(QString key);
+    QString lyrics();
+    QString lyricFormat();
 };
 
 #endif // AVFOUNDATIONMEDIAITEM_H

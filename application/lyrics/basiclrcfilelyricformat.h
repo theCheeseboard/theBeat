@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2022 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,41 +17,28 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef PHONONCDMEDIAITEM_H
-#define PHONONCDMEDIAITEM_H
+#ifndef BASICLRCFILELYRICFORMAT_H
+#define BASICLRCFILELYRICFORMAT_H
 
-#include <mediaitem.h>
-#include "trackinfo.h"
+#include "abstractlyricformat.h"
 
-struct PhononCdMediaItemPrivate;
-class PhononCdMediaItem : public MediaItem {
+struct BasicLrcFileLyricFormatPrivate;
+class BasicLrcFileLyricFormat : public AbstractLyricFormat
+{
         Q_OBJECT
     public:
-        explicit PhononCdMediaItem(QString blockDevice, TrackInfoPtr info);
-        ~PhononCdMediaItem();
+        ~BasicLrcFileLyricFormat();
 
-        static void blockDeviceGone(QString blockDevice);
+        static BasicLrcFileLyricFormat* create(QString contents);
+
+        QString lyricsForTime(quint64 time, int offset = 0);
+        quint64 timePointForTime(quint64 time, int offset = 0);
 
     signals:
 
     private:
-        PhononCdMediaItemPrivate* d;
-
-        // MediaItem interface
-    public:
-        void play();
-        void pause();
-        void stop();
-        void seek(quint64 ms);
-        quint64 elapsed();
-        quint64 duration();
-        QString title();
-        QStringList authors();
-        QString album();
-        QImage albumArt();
-        QVariant metadata(QString key);
-        QString lyrics();
-        QString lyricFormat();
+        explicit BasicLrcFileLyricFormat();
+        BasicLrcFileLyricFormatPrivate* d;
 };
 
-#endif // PHONONCDMEDIAITEM_H
+#endif // BASICLRCFILELYRICFORMAT_H

@@ -14,6 +14,7 @@
 #include <visualisationmanager.h>
 #include <tcsdtools.h>
 #include "common.h"
+#include "lyrics/abstractlyricformat.h"
 
 struct CurrentTrackPopoverPrivate {
     MediaItem* currentItem = nullptr;
@@ -35,11 +36,13 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
     d = new CurrentTrackPopoverPrivate();
 
     ui->titleLabel->setFixedWidth(SC_DPI(300));
+    ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
 
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &CurrentTrackPopover::updateCurrentItem);
     connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, &CurrentTrackPopover::updateState);
     updateCurrentItem();
     updateState();
+    updateRightPane(true);
 
     QSize iconSize = SC_DPI_T(QSize(32, 32), QSize);
     QSize bigIconSize = SC_DPI_T(QSize(64, 64), QSize);
@@ -60,6 +63,10 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
         ui->titleLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         ui->metadataLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     }
+
+    QPalette pal = ui->stackedWidget->palette();
+    pal.setColor(QPalette::Window, Qt::transparent);
+    ui->stackedWidget->setPalette(pal);
 }
 
 CurrentTrackPopover::~CurrentTrackPopover() {
@@ -89,7 +96,13 @@ void CurrentTrackPopover::updateCurrentItem() {
     if (d->currentItem) {
         connect(d->currentItem, &MediaItem::metadataChanged, this, &CurrentTrackPopover::updateMetadata);
         connect(d->currentItem, &MediaItem::elapsedChanged, this, &CurrentTrackPopover::updateBar);
+        connect(d->currentItem, &MediaItem::elapsedChanged, this, [=] {
+            this->updateRightPane(false);
+        });
         connect(d->currentItem, &MediaItem::durationChanged, this, &CurrentTrackPopover::updateBar);
+
+        ui->lyricsWidget->setLyrics(AbstractLyricFormat::loadLyricFile(d->currentItem->lyricFormat(), d->currentItem->lyrics()));
+
         updateMetadata();
         updateBar();
     }
@@ -221,6 +234,19 @@ void CurrentTrackPopover::updateBar() {
 
     ui->durationLabel->setText(Common::durationToString(d->currentItem->duration(), true));
     ui->elapsedLabel->setText(Common::durationToString(d->currentItem->elapsed()));
+}
+
+void CurrentTrackPopover::updateRightPane(bool initial)
+{
+    if (d->currentItem) {
+        if (d->currentItem->elapsed() > 5000 && !d->currentItem->lyrics().isEmpty()) {
+            if (ui->stackedWidget->currentWidget() != ui->lyricsPage) ui->stackedWidget->setCurrentWidget(ui->lyricsPage, !initial);
+
+            ui->lyricsWidget->setTime(d->currentItem->elapsed());
+        } else if (ui->stackedWidget->currentWidget() != ui->trackInfoPage) {
+            ui->stackedWidget->setCurrentWidget(ui->trackInfoPage, !initial);
+        }
+    }
 }
 
 void CurrentTrackPopover::resizeEvent(QResizeEvent* event) {

@@ -106,30 +106,30 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="138"/>
+        <location filename="../currenttrackpopover.cpp" line="151"/>
         <source>Album</source>
         <translation>ألبوم</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="139"/>
+        <location filename="../currenttrackpopover.cpp" line="152"/>
         <source>Name</source>
         <translation>أسم</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="144"/>
-        <location filename="../currenttrackpopover.cpp" line="146"/>
-        <location filename="../currenttrackpopover.cpp" line="149"/>
+        <location filename="../currenttrackpopover.cpp" line="157"/>
+        <location filename="../currenttrackpopover.cpp" line="159"/>
+        <location filename="../currenttrackpopover.cpp" line="162"/>
         <source>Track</source>
         <translation>مسار</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="144"/>
+        <location filename="../currenttrackpopover.cpp" line="157"/>
         <source>%1 of %2</source>
         <comment>Track 1 of 12</comment>
         <translation>1% من %2</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="150"/>
+        <location filename="../currenttrackpopover.cpp" line="163"/>
         <source>Year</source>
         <translation>السنة</translation>
     </message>
@@ -260,6 +260,14 @@
             <numerusform>لعديدة من العنصار</numerusform>
             <numerusform>لعدد آخر من العنصار</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>LyricsDisplayWidget</name>
+    <message>
+        <location filename="../lyrics/lyricsdisplaywidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

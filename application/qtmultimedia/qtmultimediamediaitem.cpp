@@ -33,6 +33,7 @@
 #include <taglib/tag.h>
 #include <tlogger.h>
 #include <visualisationmanager.h>
+#include <QDir>
 
 struct QtMultimediaMediaItemPrivate {
     QMediaPlayer* player;
@@ -44,6 +45,7 @@ struct QtMultimediaMediaItemPrivate {
     QStringList artist;
     QString album;
     int trackNumber = 0;
+    QString lyrics;
 
     QNetworkAccessManager mgr;
 };
@@ -131,6 +133,7 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
     });
 
     updateTaglib();
+    loadLyrics();
 }
 
 QtMultimediaMediaItem::~QtMultimediaMediaItem() {
@@ -172,6 +175,19 @@ void QtMultimediaMediaItem::updateTaglib() {
     d->trackNumber = tag->track();
 
     emit metadataChanged();
+}
+
+void QtMultimediaMediaItem::loadLyrics()
+{
+    if (!d->url.isLocalFile()) return;
+
+    QFileInfo file(d->url.toLocalFile());
+    QFile lyricFile(file.dir().absoluteFilePath(file.completeBaseName() + ".lrc"));
+    if (lyricFile.exists()) {
+        lyricFile.open(QFile::ReadOnly);
+        d->lyrics = lyricFile.readAll();
+        lyricFile.close();
+    }
 }
 
 void QtMultimediaMediaItem::play() {
@@ -245,4 +261,15 @@ QVariant QtMultimediaMediaItem::metadata(QString key) {
     } else {
         return QVariant();
     }
+}
+
+QString QtMultimediaMediaItem::lyrics()
+{
+    return d->lyrics;
+}
+
+QString QtMultimediaMediaItem::lyricFormat()
+{
+if (d->lyrics.isEmpty()) return "";
+return "lrc";
 }

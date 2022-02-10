@@ -39,6 +39,7 @@ class CurrentTrackPopover : public QWidget {
 
         void updateState();
         void updateBar();
+        void updateRightPane(bool initial);
 
         void resizeEvent(QResizeEvent* event);
         void paintEvent(QPaintEvent* event);
