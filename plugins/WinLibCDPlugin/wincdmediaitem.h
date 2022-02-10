@@ -32,7 +32,7 @@ class WinCdMediaItem : public MediaItem {
         QImage albumArt();
         QVariant metadata(QString key);
         QString lyrics();
-        QString lyricProvider();
+        QString lyricFormat();
 };
 
 #endif // WINCDMEDIAITEM_H

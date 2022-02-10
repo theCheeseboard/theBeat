@@ -124,6 +124,6 @@ QString WinCdMediaItem::lyrics() {
     return "";
 }
 
-QString WinCdMediaItem::lyricProvider() {
+QString WinCdMediaItem::lyricFormat() {
     return "";
 }
