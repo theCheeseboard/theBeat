@@ -119,3 +119,11 @@ QVariant WinCdMediaItem::metadata(QString key) {
     }
     return QVariant();
 }
+
+QString WinCdMediaItem::lyrics() {
+    return "";
+}
+
+QString WinCdMediaItem::lyricProvider() {
+    return "";
+}

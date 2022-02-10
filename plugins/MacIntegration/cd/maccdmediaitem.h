@@ -50,6 +50,8 @@ class MacCdMediaItem : public MediaItem {
         QString album();
         QImage albumArt();
         QVariant metadata(QString key);
+        QString lyrics();
+        QString lyricFormat();
 };
 
 #endif // PHONONCDMEDIAITEM_H

@@ -197,3 +197,13 @@ QVariant MacCdMediaItem::metadata(QString key) {
     }
     return QVariant();
 }
+
+QString MacCdMediaItem::lyrics()
+{
+return "";
+}
+
+QString MacCdMediaItem::lyricFormat()
+{
+return "";
+}
