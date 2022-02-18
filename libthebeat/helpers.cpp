@@ -32,6 +32,7 @@
 #include <taglib/id3v2header.h>
 #include <taglib/id3v2tag.h>
 #include <taglib/attachedpictureframe.h>
+#include <taglib/synchronizedlyricsframe.h>
 #include <taglib/tbytevectorstream.h>
 
 QImage Helpers::albumArt(QUrl url) {

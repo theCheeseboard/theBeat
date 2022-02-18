@@ -72,6 +72,8 @@ void LyricsDisplayWidget::setTime(quint64 time)
 
 void LyricsDisplayWidget::updateLyrics()
 {
+    if (!d->lyrics) return;
+
     quint64 currentTimePoint = d->lyrics->timePointForTime(d->time);
     if (currentTimePoint == d->currentTimePoint) return;
 

@@ -30,3 +30,13 @@ MprisWrapper::MprisWrapper(QObject* parent) : QObject(parent) {
     QDBusConnection::sessionBus().registerService("org.mpris.MediaPlayer2.theBeat");
     QDBusConnection::sessionBus().registerObject("/org/mpris/MediaPlayer2", this);
 }
+
+void MprisWrapper::Raisee()
+{
+
+}
+
+void MprisWrapper::Quitt()
+{
+
+}

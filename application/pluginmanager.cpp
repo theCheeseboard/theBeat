@@ -24,6 +24,7 @@
 #include <QDirIterator>
 #include <QPluginLoader>
 #include <plugininterface.h>
+#include <tlogger.h>
 #include <the-libs_global.h>
 
 PluginManager::PluginManager(QObject* parent) : QObject(parent) {
@@ -38,6 +39,7 @@ void PluginManager::load() {
 
 #ifdef T_OS_UNIX_NOT_MAC
     searchPaths.append(QString(SYSTEM_LIBRARY_DIRECTORY).append("/thebeat/plugins"));
+//    searchPaths.append(QString("/usr/lib/thebeat/plugins"));
 #elif defined(Q_OS_WIN)
     searchPaths.append(qApp->applicationDirPath() + "/../../plugins");
     searchPaths.append(qApp->applicationDirPath() + "/plugins");
@@ -59,6 +61,9 @@ void PluginManager::load() {
             if (plugin) {
                 plugin->activate();
                 seenPlugins.append(iterator.fileName());
+            } else {
+                tWarn("PluginManager") << "Could not load plugin " << iterator.filePath();
+                tWarn("PluginManager") << loader.errorString();
             }
         }
     }
