@@ -20,20 +20,21 @@
 #ifndef TRACKSWIDGET_H
 #define TRACKSWIDGET_H
 
-#include <QWidget>
+#include <abstractlibrarybrowser.h>
 
 namespace Ui {
     class TracksWidget;
 }
 
 struct TracksWidgetPrivate;
-class TracksWidget : public QWidget {
+class TracksWidget : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
         explicit TracksWidget(QWidget* parent = nullptr);
         ~TracksWidget();
 
+        ListInformation currentListInformation();
         void setTopPadding(int padding);
 
     private slots:

@@ -20,12 +20,12 @@
 #include "pluginmediasource.h"
 
 struct PluginMediaSourcePrivate {
-    QWidget* widget;
+    AbstractLibraryBrowser* widget;
     QString name;
     QIcon icon;
 };
 
-PluginMediaSource::PluginMediaSource(QWidget* widget, QObject* parent) : QObject(parent) {
+PluginMediaSource::PluginMediaSource(AbstractLibraryBrowser* widget, QObject* parent) : QObject(parent) {
     d = new PluginMediaSourcePrivate();
     d->widget = widget;
 }
@@ -52,6 +52,6 @@ QIcon PluginMediaSource::icon() const {
     return d->icon;
 }
 
-QWidget* PluginMediaSource::widget() const {
+AbstractLibraryBrowser* PluginMediaSource::widget() const {
     return d->widget;
 }

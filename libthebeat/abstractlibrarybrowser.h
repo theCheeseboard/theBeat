@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2022 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,32 +17,34 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef OTHERSOURCESWIDGET_H
-#define OTHERSOURCESWIDGET_H
+#ifndef ABSTRACTLIBRARYBROWSER_H
+#define ABSTRACTLIBRARYBROWSER_H
 
-#include <abstractlibrarybrowser.h>
+#include "libthebeat_global.h"
+#include <QWidget>
 
-namespace Ui {
-    class OtherSourcesWidget;
-}
-
-struct OtherSourcesWidgetPrivate;
-class OtherSourcesWidget : public AbstractLibraryBrowser {
+class LIBTHEBEAT_EXPORT AbstractLibraryBrowser : public QWidget
+{
         Q_OBJECT
-
     public:
-        explicit OtherSourcesWidget(QWidget* parent = nullptr);
-        ~OtherSourcesWidget();
+        AbstractLibraryBrowser(QWidget* parent = nullptr) : QWidget(parent) {}
+        virtual ~AbstractLibraryBrowser() {}
 
-        void setTopPadding(int padding);
-        ListInformation currentListInformation();
+        struct TrackInformation {
+                QString title;
+                QString artist;
+                QString album;
+                int trackNumber;
+                quint64 duration;
+        };
 
-    private slots:
-        void on_sourcesList_currentRowChanged(int currentRow);
+        struct ListInformation {
+                QString name;
+                QImage graphic;
+                QList<TrackInformation> tracks;
+        };
 
-    private:
-        Ui::OtherSourcesWidget* ui;
-        OtherSourcesWidgetPrivate* d;
+        virtual ListInformation currentListInformation() = 0;
 };
 
-#endif // OTHERSOURCESWIDGET_H
+#endif // ABSTRACTLIBRARYBROWSER_H

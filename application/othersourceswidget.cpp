@@ -20,16 +20,16 @@
 #include "othersourceswidget.h"
 #include "ui_othersourceswidget.h"
 
-#include <statemanager.h>
-#include <sourcemanager.h>
 #include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
 
 struct OtherSourcesWidgetPrivate {
-    QMap<QListWidgetItem*, PluginMediaSource*> listItems;
+        QMap<QListWidgetItem*, PluginMediaSource*> listItems;
 };
 
 OtherSourcesWidget::OtherSourcesWidget(QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::OtherSourcesWidget) {
     ui->setupUi(this);
 
@@ -37,14 +37,14 @@ OtherSourcesWidget::OtherSourcesWidget(QWidget* parent) :
     ui->sourcesList->setFixedWidth(SC_DPI(300));
     ui->sourcesList->setIconSize(SC_DPI_T(QSize(32, 32), QSize));
 
-    connect(StateManager::instance()->sources(), &SourceManager::sourceAdded, this, [ = ](PluginMediaSource * source) {
+    connect(StateManager::instance()->sources(), &SourceManager::sourceAdded, this, [=](PluginMediaSource* source) {
         QListWidgetItem* item = new QListWidgetItem();
         ui->sourcesList->addItem(item);
 
-        connect(source, &PluginMediaSource::nameChanged, this, [ = ](QString text) {
+        connect(source, &PluginMediaSource::nameChanged, this, [=](QString text) {
             item->setText(text);
         });
-        connect(source, &PluginMediaSource::iconChanged, this, [ = ](QIcon icon) {
+        connect(source, &PluginMediaSource::iconChanged, this, [=](QIcon icon) {
             item->setIcon(icon);
         });
         item->setText(source->name());
@@ -55,7 +55,7 @@ OtherSourcesWidget::OtherSourcesWidget(QWidget* parent) :
 
         ui->mainStack->setCurrentWidget(ui->sourcesPage);
     });
-    connect(StateManager::instance()->sources(), &SourceManager::sourceRemoved, this, [ = ](PluginMediaSource * source) {
+    connect(StateManager::instance()->sources(), &SourceManager::sourceRemoved, this, [=](PluginMediaSource* source) {
         QListWidgetItem* item = ui->sourcesList->takeItem(ui->sourcesList->row(d->listItems.key(source)));
         d->listItems.remove(item);
         ui->stackedWidget->removeWidget(source->widget());
@@ -76,6 +76,15 @@ OtherSourcesWidget::~OtherSourcesWidget() {
 
 void OtherSourcesWidget::setTopPadding(int padding) {
     ui->sourcesLayout->setContentsMargins(0, padding, 0, 0);
+}
+
+AbstractLibraryBrowser::ListInformation OtherSourcesWidget::currentListInformation() {
+    AbstractLibraryBrowser* currentBrowser = qobject_cast<AbstractLibraryBrowser*>(ui->stackedWidget->currentWidget());
+    if (!currentBrowser || currentBrowser->currentListInformation().tracks.isEmpty()) {
+        return ListInformation();
+    } else {
+        return currentBrowser->currentListInformation();
+    }
 }
 
 void OtherSourcesWidget::on_sourcesList_currentRowChanged(int currentRow) {

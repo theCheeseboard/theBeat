@@ -27,7 +27,7 @@ struct CdCheckerPrivate {
 };
 
 CdChecker::CdChecker(QChar driveLetter, QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::CdChecker) {
     ui->setupUi(this);
     d = new CdCheckerPrivate();
@@ -76,6 +76,11 @@ CdChecker::CdChecker(QChar driveLetter, QWidget* parent) :
 CdChecker::~CdChecker() {
     delete d;
     delete ui;
+}
+
+AbstractLibraryBrowser::ListInformation CdChecker::currentListInformation()
+{
+    return ListInformation();
 }
 
 void CdChecker::checkCd() {

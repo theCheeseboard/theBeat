@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2022 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,32 +17,17 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef OTHERSOURCESWIDGET_H
-#define OTHERSOURCESWIDGET_H
+#ifndef ABSTRACTLIBRARYBROWSER_H
+#define ABSTRACTLIBRARYBROWSER_H
 
-#include <abstractlibrarybrowser.h>
+#include <QWidget>
 
-namespace Ui {
-    class OtherSourcesWidget;
-}
-
-struct OtherSourcesWidgetPrivate;
-class OtherSourcesWidget : public AbstractLibraryBrowser {
+class AbstractLibraryBrowser : public QWidget
+{
         Q_OBJECT
-
     public:
-        explicit OtherSourcesWidget(QWidget* parent = nullptr);
-        ~OtherSourcesWidget();
-
-        void setTopPadding(int padding);
-        ListInformation currentListInformation();
-
-    private slots:
-        void on_sourcesList_currentRowChanged(int currentRow);
-
-    private:
-        Ui::OtherSourcesWidget* ui;
-        OtherSourcesWidgetPrivate* d;
+        AbstractLibraryBrowser() {}
+        virtual ~AbstractLibraryBrowser() {}
 };
 
-#endif // OTHERSOURCESWIDGET_H
+#endif // ABSTRACTLIBRARYBROWSER_H

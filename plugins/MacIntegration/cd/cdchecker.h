@@ -20,7 +20,7 @@
 #ifndef CDCHECKER_H
 #define CDCHECKER_H
 
-#include <QWidget>
+#include <abstractlibrarybrowser.h>
 
 namespace Ui {
     class CdChecker;
@@ -28,11 +28,13 @@ namespace Ui {
 
 class QListWidgetItem;
 struct CdCheckerPrivate;
-class CdChecker : public QWidget {
+class CdChecker : public AbstractLibraryBrowser {
         Q_OBJECT
     public:
         explicit CdChecker(QString directory, QWidget* parent = nullptr);
         ~CdChecker();
+
+        ListInformation currentListInformation();
 
     signals:
 

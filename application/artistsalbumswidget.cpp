@@ -43,7 +43,7 @@ struct ArtistsAlbumsWidgetPrivate {
 };
 
 ArtistsAlbumsWidget::ArtistsAlbumsWidget(QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::ArtistsAlbumsWidget) {
     ui->setupUi(this);
 
@@ -74,6 +74,28 @@ void ArtistsAlbumsWidget::setTopPadding(int padding) {
     ui->topWidget->setContentsMargins(0, padding, 0, 0);
 
     d->topPadding = padding;
+}
+
+AbstractLibraryBrowser::ListInformation ArtistsAlbumsWidget::currentListInformation()
+{
+    if (ui->stackedWidget->currentWidget() == ui->mainPage) return ListInformation();
+
+    ListInformation info;
+    info.name = d->listName;
+    info.graphic = d->playlistBackground;
+
+    for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
+        QModelIndex index = ui->tracksList->model()->index(i, 0);
+        TrackInformation trackInfo;
+        trackInfo.title = index.data(LibraryModel::TitleRole).toString();
+        trackInfo.artist = index.data(LibraryModel::ArtistRole).toString();
+        trackInfo.album = index.data(LibraryModel::AlbumRole).toString();
+        trackInfo.trackNumber = index.data(LibraryModel::TrackRole).toInt();
+        trackInfo.duration = index.data(LibraryModel::DurationRole).toULongLong();
+        info.tracks.append(trackInfo);
+    }
+
+    return info;
 }
 
 void ArtistsAlbumsWidget::updateData() {

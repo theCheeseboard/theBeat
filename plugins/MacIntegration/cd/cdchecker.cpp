@@ -52,7 +52,7 @@
 #endif
 
 CdChecker::CdChecker(QString directory, QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::CdChecker) {
     ui->setupUi(this);
 
@@ -84,6 +84,11 @@ CdChecker::~CdChecker() {
     StateManager::instance()->sources()->removeSource(d->source);
 
     delete d;
+}
+
+AbstractLibraryBrowser::ListInformation CdChecker::currentListInformation()
+{
+return ListInformation();
 }
 
 void CdChecker::checkCd() {

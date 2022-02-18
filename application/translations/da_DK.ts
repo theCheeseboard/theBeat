@@ -40,17 +40,17 @@
         <translation>Kunstnere i bibliotek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="167"/>
+        <location filename="../artistsalbumswidget.cpp" line="189"/>
         <source>Tracks in %1</source>
         <translation>Sange i %1</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="167"/>
+        <location filename="../artistsalbumswidget.cpp" line="189"/>
         <source>Tracks by %1</source>
         <translation>Sange efter %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../artistsalbumswidget.cpp" line="176"/>
+        <location filename="../artistsalbumswidget.cpp" line="198"/>
         <source>%n tracks</source>
         <translation>
             <numerusform>%n sang</numerusform>
@@ -306,114 +306,125 @@
         <translation>Fil</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="421"/>
+        <location filename="../mainwindow.ui" line="423"/>
         <source>Playback</source>
         <translation>Afspilning</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="439"/>
+        <location filename="../mainwindow.ui" line="441"/>
         <source>File Bug</source>
         <translation>Filfejl</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="448"/>
+        <location filename="../mainwindow.ui" line="450"/>
         <source>Sources</source>
         <translation>Kilder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="457"/>
+        <location filename="../mainwindow.ui" line="459"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="466"/>
+        <location filename="../mainwindow.ui" line="468"/>
         <source>Exit</source>
         <translation>Luk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="469"/>
+        <location filename="../mainwindow.ui" line="471"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="481"/>
+        <location filename="../mainwindow.ui" line="483"/>
         <source>Open File</source>
         <translation>Åben fil</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="484"/>
+        <location filename="../mainwindow.ui" line="486"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="489"/>
-        <location filename="../mainwindow.cpp" line="453"/>
+        <location filename="../mainwindow.ui" line="491"/>
+        <location filename="../mainwindow.cpp" line="456"/>
         <source>Open URL</source>
         <translation>Åben URL</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="498"/>
-        <location filename="../mainwindow.cpp" line="215"/>
+        <location filename="../mainwindow.ui" line="500"/>
+        <location filename="../mainwindow.cpp" line="218"/>
         <source>Skip Back</source>
         <translation>Spring tilbage</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="501"/>
+        <location filename="../mainwindow.ui" line="503"/>
         <source>Shift+Left</source>
         <translation>Skift+Venstre</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="513"/>
+        <location filename="../mainwindow.ui" line="515"/>
         <source>Shift+Right</source>
         <translation>Skift+Højre</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="534"/>
+        <location filename="../mainwindow.ui" line="536"/>
         <source>Add to Library</source>
         <translation>Tilføj til bibliotek</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="543"/>
+        <location filename="../mainwindow.ui" line="545"/>
         <source>Settings</source>
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="546"/>
+        <location filename="../mainwindow.ui" line="548"/>
         <source>Ctrl+,</source>
         <translation>Ctrl+,</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="558"/>
+        <location filename="../mainwindow.ui" line="560"/>
         <source>theBeat Help</source>
         <translation>theBeat Hjælp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="561"/>
+        <location filename="../mainwindow.ui" line="563"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="569"/>
+        <location filename="../mainwindow.ui" line="571"/>
         <source>Repeat One</source>
         <translation>Gentag en</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="572"/>
+        <location filename="../mainwindow.ui" line="574"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="580"/>
+        <location filename="../mainwindow.ui" line="582"/>
         <source>Shuffle</source>
         <translation>Bland</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="583"/>
+        <location filename="../mainwindow.ui" line="585"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="510"/>
+        <location filename="../mainwindow.ui" line="594"/>
+        <location filename="../mainwindow.cpp" line="543"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="597"/>
+        <source>Ctrl+P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="512"/>
         <source>Skip Forward</source>
         <translation>Spring over</translation>
     </message>
@@ -423,34 +434,34 @@
         <translation>Vælg en sang eller smid noget her!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="522"/>
-        <location filename="../mainwindow.cpp" line="223"/>
-        <location filename="../mainwindow.cpp" line="237"/>
+        <location filename="../mainwindow.ui" line="524"/>
+        <location filename="../mainwindow.cpp" line="226"/>
+        <location filename="../mainwindow.cpp" line="240"/>
         <source>Play</source>
         <translation>Afspil</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="525"/>
+        <location filename="../mainwindow.ui" line="527"/>
         <source>Space</source>
         <translation>Mellemrum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="232"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="244"/>
+        <location filename="../mainwindow.cpp" line="247"/>
         <source>Skip Next</source>
         <translation>Spring over næste</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="425"/>
+        <location filename="../mainwindow.cpp" line="428"/>
         <source>For &quot;%1&quot;</source>
         <translation>For &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="427"/>
+        <location filename="../mainwindow.cpp" line="430"/>
         <source>For %n items</source>
         <translation>
             <numerusform>For %1 ting</numerusform>
@@ -458,34 +469,39 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="429"/>
+        <location filename="../mainwindow.cpp" line="432"/>
         <source>Remove from Queue</source>
         <translation>Fjern fra kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="442"/>
+        <location filename="../mainwindow.cpp" line="445"/>
         <source>For Queue</source>
         <translation>For kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="443"/>
+        <location filename="../mainwindow.cpp" line="446"/>
         <source>Clear Queue</source>
         <translation>Ryd kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="453"/>
+        <location filename="../mainwindow.cpp" line="456"/>
         <source>Enter the URL you&apos;d like to open</source>
         <translation>Skriv den URL du ønsker at åbne</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="458"/>
+        <location filename="../mainwindow.cpp" line="461"/>
         <source>Can&apos;t open that URL</source>
         <translation>Kan ikke åbne den URL</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="458"/>
+        <location filename="../mainwindow.cpp" line="461"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
         <translation>Beklager, den URL understøttes ikke af theBeat.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="544"/>
+        <source>Open a list of tracks (for example, a playlist) to print it.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -512,6 +528,87 @@
         <location filename="../playlistmodel.cpp" line="288"/>
         <source>Album</source>
         <translation>Album</translation>
+    </message>
+</context>
+<context>
+    <name>PrintPopover</name>
+    <message>
+        <location filename="../print/printpopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="133"/>
+        <source>Printer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="75"/>
+        <source>PRINT OPTIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="63"/>
+        <source>Copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="87"/>
+        <source>PRINT TYPE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="147"/>
+        <source>Page Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="154"/>
+        <source>Print in Grayscale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="161"/>
+        <source>Double Sided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="50"/>
+        <source>Track Listing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="107"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="120"/>
+        <source>Jewel Case Insert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.cpp" line="51"/>
+        <source>Print %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../print/printpopover.cpp" line="122"/>
+        <source>%n tracks</source>
+        <translation type="unfinished">
+            <numerusform>%n sang</numerusform>
+            <numerusform>%n sange</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.cpp" line="194"/>
+        <source>by %1</source>
+        <translation type="unfinished">af %1</translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.cpp" line="195"/>
+        <source>on %1</source>
+        <translation type="unfinished">i %1</translation>
     </message>
 </context>
 <context>
@@ -602,6 +699,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     <name>TracksWidget</name>
     <message>
         <location filename="../trackswidget.ui" line="65"/>
+        <location filename="../trackswidget.cpp" line="59"/>
         <source>Tracks in Library</source>
         <translation>Sange i bibliotek</translation>
     </message>
@@ -624,6 +722,11 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <location filename="../trackswidget.ui" line="183"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
         <translation>Dette kan tage lang tid hvis du har mange sange. Dette sker kun første gang du starter theBeat.</translation>
+    </message>
+    <message>
+        <location filename="../trackswidget.cpp" line="61"/>
+        <source>Search for %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -664,54 +767,54 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>Sæt alle i kø</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="149"/>
-        <location filename="../userplaylistswidget.cpp" line="151"/>
-        <location filename="../userplaylistswidget.cpp" line="161"/>
-        <location filename="../userplaylistswidget.cpp" line="163"/>
+        <location filename="../userplaylistswidget.cpp" line="168"/>
+        <location filename="../userplaylistswidget.cpp" line="170"/>
+        <location filename="../userplaylistswidget.cpp" line="180"/>
+        <location filename="../userplaylistswidget.cpp" line="182"/>
         <source>Remove</source>
         <translation>Fjern</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="150"/>
-        <location filename="../userplaylistswidget.cpp" line="162"/>
+        <location filename="../userplaylistswidget.cpp" line="169"/>
+        <location filename="../userplaylistswidget.cpp" line="181"/>
         <source>Are you sure?</source>
         <translation>Er du sikker?</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="120"/>
-        <location filename="../userplaylistswidget.cpp" line="174"/>
+        <location filename="../userplaylistswidget.cpp" line="140"/>
+        <location filename="../userplaylistswidget.cpp" line="193"/>
         <source>Tracks in %1</source>
         <translation>Sange i %1</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="114"/>
+        <location filename="../userplaylistswidget.cpp" line="134"/>
         <source>For %1</source>
         <translation>For %1</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="73"/>
+        <location filename="../userplaylistswidget.cpp" line="93"/>
         <source>New Playlist</source>
         <translation>Ny playliste</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="73"/>
-        <location filename="../userplaylistswidget.cpp" line="117"/>
+        <location filename="../userplaylistswidget.cpp" line="93"/>
+        <location filename="../userplaylistswidget.cpp" line="137"/>
         <source>What name do you want to give to this playlist?</source>
         <translation>Hvad ønsker du at kalde denne playliste?</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="115"/>
-        <location filename="../userplaylistswidget.cpp" line="117"/>
+        <location filename="../userplaylistswidget.cpp" line="135"/>
+        <location filename="../userplaylistswidget.cpp" line="137"/>
         <source>Rename</source>
         <translation>Omdøb</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="123"/>
+        <location filename="../userplaylistswidget.cpp" line="143"/>
         <source>Export</source>
         <translation>Eksporter</translation>
     </message>
     <message numerus="yes">
-        <location filename="../userplaylistswidget.cpp" line="157"/>
+        <location filename="../userplaylistswidget.cpp" line="176"/>
         <source>For %n playlists</source>
         <translation>
             <numerusform>For %n playliste</numerusform>

@@ -66,6 +66,7 @@ SOURCES += \
     visualisationmanager.cpp
 
 HEADERS += \
+    abstractlibrarybrowser.h \
     burnbackend.h \
     burnmanager.h \
     controlstripmanager.h \

@@ -1,7 +1,7 @@
 #ifndef CDCHECKER_H
 #define CDCHECKER_H
 
-#include <QWidget>
+#include <abstractlibrarybrowser.h>
 #include <QListWidgetItem>
 #include <winrt/CDLib.h>
 
@@ -10,14 +10,14 @@ namespace Ui {
 }
 
 struct CdCheckerPrivate;
-class CdChecker : public QWidget {
+class CdChecker : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
         explicit CdChecker(QChar driveLetter, QWidget* parent = nullptr);
         ~CdChecker();
 
-
+        ListInformation currentListInformation();
 
     private slots:
         void on_ejectButton_clicked();

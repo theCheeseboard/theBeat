@@ -29,7 +29,7 @@ struct RadioPanePrivate {
 };
 
 RadioPane::RadioPane(QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::RadioPane) {
     ui->setupUi(this);
 
@@ -58,4 +58,9 @@ RadioPane::~RadioPane() {
 
     delete ui;
     delete d;
+}
+
+AbstractLibraryBrowser::ListInformation RadioPane::currentListInformation()
+{
+    return ListInformation();
 }

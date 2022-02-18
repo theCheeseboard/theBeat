@@ -1,4 +1,4 @@
-QT       += core gui multimedia sql
+QT       += core gui multimedia sql printsupport
 SHARE_APP_NAME = thebeat
 CONFIG += c++17
 
@@ -136,6 +136,7 @@ SOURCES += \
     othersourceswidget.cpp \
     playlistmodel.cpp \
     pluginmanager.cpp \
+    print/printpopover.cpp \
     qtmultimedia/qtmultimediamediaitem.cpp \
     qtmultimedia/qtmultimediaurlhandler.cpp \
     settingsdialog.cpp \
@@ -162,6 +163,7 @@ HEADERS += \
     othersourceswidget.h \
     playlistmodel.h \
     pluginmanager.h \
+    print/printpopover.h \
     qtmultimedia/qtmultimediamediaitem.h \
     qtmultimedia/qtmultimediaurlhandler.h \
     settingsdialog.h \
@@ -179,6 +181,7 @@ FORMS += \
     lyrics/lyricsdisplaywidget.ui \
     mainwindow.ui \
     othersourceswidget.ui \
+    print/printpopover.ui \
     settingsdialog.ui \
     trackswidget.ui \
     userplaylistswidget.ui

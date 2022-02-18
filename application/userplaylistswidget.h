@@ -20,7 +20,7 @@
 #ifndef USERPLAYLISTSWIDGET_H
 #define USERPLAYLISTSWIDGET_H
 
-#include <QWidget>
+#include <abstractlibrarybrowser.h>
 #include <QListWidgetItem>
 
 namespace Ui {
@@ -28,7 +28,7 @@ namespace Ui {
 }
 
 struct UserPlaylistsWidgetPrivate;
-class UserPlaylistsWidget : public QWidget {
+class UserPlaylistsWidget : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
@@ -36,6 +36,7 @@ class UserPlaylistsWidget : public QWidget {
         ~UserPlaylistsWidget();
 
         void setTopPadding(int padding);
+        ListInformation currentListInformation();
 
     private slots:
         void on_createButton_clicked();

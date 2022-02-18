@@ -81,6 +81,8 @@ class MainWindow : public QMainWindow {
 
         void on_actionShuffle_triggered(bool checked);
 
+        void on_actionPrint_triggered();
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;
