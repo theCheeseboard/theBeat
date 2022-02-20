@@ -17,63 +17,66 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#include "printpopover.h"
-#include "ui_printpopover.h"
+#include "printcontroller.h"
 
-#include "common.h"
+#include "printsettings.h"
 #include <QPainter>
-#include <QPrintPreviewWidget>
-#include <QPrinterInfo>
+#include <QPrinter>
+#include <common.h>
 #include <tpaintcalculator.h>
+#include <tpopover.h>
+#include <tprintpopover.h>
 
-struct PrintPopoverPrivate {
+struct PrintControllerPrivate {
         QPrinter* printer;
-        QPrintPreviewWidget* printPreview;
         AbstractLibraryBrowser::ListInformation listInformation;
+        PrintSettings* printSettings;
+
+        QWidget* parentWindow;
 };
 
-PrintPopover::PrintPopover(AbstractLibraryBrowser::ListInformation listInformation, QWidget* parent) :
-    QWidget(parent),
-    ui(new Ui::PrintPopover) {
-    ui->setupUi(this);
-    d = new PrintPopoverPrivate();
+PrintController::PrintController(AbstractLibraryBrowser::ListInformation listInformation, QWidget* parent) :
+    QObject{parent} {
+    d = new PrintControllerPrivate();
     d->listInformation = listInformation;
+    d->parentWindow = parent;
+
+    d->printSettings = new PrintSettings();
 
     d->printer = new QPrinter(QPrinter::HighResolution);
     d->printer->setPageMargins(QMarginsF(1, 1, 1, 1), QPageLayout::Inch);
     d->printer->setDocName(listInformation.name);
-
-    d->printPreview = new QPrintPreviewWidget(d->printer);
-    connect(d->printPreview, &QPrintPreviewWidget::paintRequested, this, &PrintPopover::paintPrinter);
-    ui->printerLayout->addWidget(d->printPreview);
-
-    ui->containerWidget->setFixedWidth(SC_DPI(600));
-
-    ui->titleLabel->setText(tr("Print %1").arg(QLocale().quoteString(listInformation.name)));
-    ui->titleLabel->setBackButtonShown(true);
-
-    ui->printerBox->addItems(QPrinterInfo::availablePrinterNames());
-    ui->printerBox->setCurrentIndex(QPrinterInfo::availablePrinterNames().indexOf(QPrinterInfo::defaultPrinterName()));
-    updatePageSizes();
 }
 
-PrintPopover::~PrintPopover() {
+PrintController::~PrintController() {
     delete d;
-    delete ui;
 }
 
-void PrintPopover::on_titleLabel_backButtonClicked() {
-    emit done();
+void PrintController::confirmAndPerformPrint() {
+    tPrintPopover* jp = new tPrintPopover(d->printer);
+    connect(jp, &tPrintPopover::paintRequested, this, &PrintController::paintPrinter);
+    jp->setTitle(tr("Print %1").arg(QLocale().quoteString(d->listInformation.name)));
+    jp->setCustomPrintSettingsWidget(d->printSettings);
+
+    tPopover* popover = new tPopover(jp);
+    popover->setPopoverWidth(SC_DPI(-200));
+    popover->setPopoverSide(tPopover::Bottom);
+    connect(jp, &tPrintPopover::done, popover, &tPopover::dismiss);
+    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+    connect(popover, &tPopover::dismissed, jp, &tPrintPopover::deleteLater);
+    connect(popover, &tPopover::dismissed, this, &PrintController::deleteLater);
+    popover->show(d->parentWindow->window());
 }
 
-void PrintPopover::paintPrinter(QPrinter* printer) {
-    if (ui->trackListingButton->isChecked()) {
+void PrintController::paintPrinter(QPrinter* printer) {
+    if (d->printSettings->printTrackListing()) {
         paintTrackListing(printer);
-    } else if (ui->jewelCaseButton->isChecked()) {
+    } else {
+        paintJewelCase(printer);
     }
 }
 
-void PrintPopover::paintTrackListing(QPrinter* printer) {
+void PrintController::paintTrackListing(QPrinter* printer) {
     QPainter painter(printer);
 
     QRectF pageBounds = printer->pageLayout().paintRectPixels(printer->resolution());
@@ -82,14 +85,14 @@ void PrintPopover::paintTrackListing(QPrinter* printer) {
 
     tPaintCalculator calculator;
     calculator.setPainter(&painter);
-    calculator.setLayoutDirection(this->layoutDirection());
+    calculator.setLayoutDirection(QApplication::layoutDirection());
     calculator.setDrawBounds(pageBounds);
 
-    QFont titleFont(this->font(), printer);
+    QFont titleFont(QApplication::font(), printer);
     titleFont.setPointSize(25);
     QFontMetrics titleFontMetrics(titleFont);
 
-    QFont bodyFont(this->font(), printer);
+    QFont bodyFont(QApplication::font(), printer);
     bodyFont.setPointSize(11);
     QFontMetrics bodyFontMetrics(bodyFont);
 
@@ -210,50 +213,41 @@ void PrintPopover::paintTrackListing(QPrinter* printer) {
     painter.end();
 }
 
-void PrintPopover::on_trackListingButton_toggled(bool checked) {
-    if (checked) d->printPreview->updatePreview();
-}
+void PrintController::paintJewelCase(QPrinter* printer) {
+    QPainter painter(printer);
 
-void PrintPopover::on_jewelCaseButton_toggled(bool checked) {
-    if (checked) d->printPreview->updatePreview();
-}
+    QRectF pageBounds = printer->pageLayout().paintRectPixels(printer->resolution());
+    pageBounds.moveTo(0, 0);
+    double scale = printer->resolution() / 96.0;
 
-void PrintPopover::on_printerBox_currentIndexChanged(int index) {
-    d->printer->setPrinterName(ui->printerBox->itemText(index));
-    updatePageSizes();
-    d->printPreview->updatePreview();
-}
+    tPaintCalculator calculator;
+    calculator.setPainter(&painter);
+    calculator.setLayoutDirection(QApplication::layoutDirection());
+    calculator.setDrawBounds(pageBounds);
 
-void PrintPopover::on_printButton_clicked() {
-    paintPrinter(d->printer);
-    emit done();
-}
+    QFont titleFont(QApplication::font(), printer);
+    titleFont.setPointSize(25);
+    QFontMetrics titleFontMetrics(titleFont);
 
-void PrintPopover::on_pageSizeBox_currentIndexChanged(int index) {
-    d->printer->setPageSize(QPrinterInfo::printerInfo(d->printer->printerName()).supportedPageSizes().at(index));
-    d->printPreview->updatePreview();
-}
+    QFont bodyFont(QApplication::font(), printer);
+    bodyFont.setPointSize(11);
+    QFontMetrics bodyFontMetrics(bodyFont);
 
-void PrintPopover::updatePageSizes() {
-    QSignalBlocker blocker(ui->pageSizeBox);
-    ui->pageSizeBox->clear();
+    QFont trackFont(bodyFont, printer);
+    trackFont.setPointSize(bodyFont.pointSize() * 2);
+    QFontMetrics trackFontMetrics(trackFont);
 
-    QPrinterInfo printerInfo = QPrinterInfo::printerInfo(d->printer->printerName());
-    for (QPageSize pageSize : printerInfo.supportedPageSizes()) {
-        ui->pageSizeBox->addItem(pageSize.name());
-        if (printerInfo.defaultPageSize() == pageSize) {
-            d->printer->setPageSize(pageSize);
-            ui->pageSizeBox->setCurrentIndex(ui->pageSizeBox->count() - 1);
-        }
-    }
-}
+    QRectF caseRect;
+    caseRect.setSize(QSizeF(5.59, 4.92) * printer->resolution());
+    caseRect.moveTopLeft(pageBounds.topLeft());
+    calculator.addRect(caseRect, [&](QRectF drawBounds) {
+        //        if (d->listInformation.graphic.isNull()) {
+        painter.fillRect(drawBounds, QColor(200, 200, 200));
+        //        } else {
+        //            painter.drawImage(drawBounds, d->listInformation.graphic);
+        //        }
+    });
 
-void PrintPopover::on_grayscaleBox_toggled(bool checked) {
-    d->printer->setColorMode(checked ? QPrinter::GrayScale : QPrinter::Color);
-    d->printPreview->updatePreview();
-}
-
-void PrintPopover::on_duplexBox_toggled(bool checked) {
-    d->printer->setDuplex(checked ? QPrinter::DuplexLongSide : QPrinter::DuplexNone);
-    d->printPreview->updatePreview();
+    calculator.performPaint();
+    painter.end();
 }

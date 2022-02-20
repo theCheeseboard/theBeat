@@ -136,7 +136,8 @@ SOURCES += \
     othersourceswidget.cpp \
     playlistmodel.cpp \
     pluginmanager.cpp \
-    print/printpopover.cpp \
+    print/printcontroller.cpp \
+    print/printsettings.cpp \
     qtmultimedia/qtmultimediamediaitem.cpp \
     qtmultimedia/qtmultimediaurlhandler.cpp \
     settingsdialog.cpp \
@@ -163,7 +164,8 @@ HEADERS += \
     othersourceswidget.h \
     playlistmodel.h \
     pluginmanager.h \
-    print/printpopover.h \
+    print/printcontroller.h \
+    print/printsettings.h \
     qtmultimedia/qtmultimediamediaitem.h \
     qtmultimedia/qtmultimediaurlhandler.h \
     settingsdialog.h \
@@ -181,7 +183,7 @@ FORMS += \
     lyrics/lyricsdisplaywidget.ui \
     mainwindow.ui \
     othersourceswidget.ui \
-    print/printpopover.ui \
+    print/printsettings.ui \
     settingsdialog.ui \
     trackswidget.ui \
     userplaylistswidget.ui

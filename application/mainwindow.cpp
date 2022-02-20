@@ -23,6 +23,7 @@
 #include "library/librarymanager.h"
 #include "playlistmodel.h"
 #include "pluginmanager.h"
+#include "print/printcontroller.h"
 #include "print/printpopover.h"
 #include "settingsdialog.h"
 #include <QDesktopServices>
@@ -545,13 +546,7 @@ void MainWindow::on_actionPrint_triggered() {
         connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
         box->open();
     } else {
-        PrintPopover* jp = new PrintPopover(currentBrowser->currentListInformation());
-        tPopover* popover = new tPopover(jp);
-        popover->setPopoverWidth(SC_DPI(-200));
-        popover->setPopoverSide(tPopover::Bottom);
-        connect(jp, &PrintPopover::done, popover, &tPopover::dismiss);
-        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
-        connect(popover, &tPopover::dismissed, jp, &PrintPopover::deleteLater);
-        popover->show(this->window());
+        PrintController* controller = new PrintController(currentBrowser->currentListInformation(), this);
+        controller->confirmAndPerformPrint();
     }
 }

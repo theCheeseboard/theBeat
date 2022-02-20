@@ -347,13 +347,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="491"/>
-        <location filename="../mainwindow.cpp" line="456"/>
+        <location filename="../mainwindow.cpp" line="457"/>
         <source>Open URL</source>
         <translation>Åben URL</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="500"/>
-        <location filename="../mainwindow.cpp" line="218"/>
+        <location filename="../mainwindow.cpp" line="219"/>
         <source>Skip Back</source>
         <translation>Spring tilbage</translation>
     </message>
@@ -414,7 +414,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="594"/>
-        <location filename="../mainwindow.cpp" line="543"/>
+        <location filename="../mainwindow.cpp" line="544"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -435,8 +435,8 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="524"/>
-        <location filename="../mainwindow.cpp" line="226"/>
-        <location filename="../mainwindow.cpp" line="240"/>
+        <location filename="../mainwindow.cpp" line="227"/>
+        <location filename="../mainwindow.cpp" line="241"/>
         <source>Play</source>
         <translation>Afspil</translation>
     </message>
@@ -446,22 +446,22 @@
         <translation>Mellemrum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="235"/>
+        <location filename="../mainwindow.cpp" line="236"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="247"/>
+        <location filename="../mainwindow.cpp" line="248"/>
         <source>Skip Next</source>
         <translation>Spring over næste</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="428"/>
+        <location filename="../mainwindow.cpp" line="429"/>
         <source>For &quot;%1&quot;</source>
         <translation>For &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="430"/>
+        <location filename="../mainwindow.cpp" line="431"/>
         <source>For %n items</source>
         <translation>
             <numerusform>For %1 ting</numerusform>
@@ -469,37 +469,37 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="432"/>
+        <location filename="../mainwindow.cpp" line="433"/>
         <source>Remove from Queue</source>
         <translation>Fjern fra kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="445"/>
+        <location filename="../mainwindow.cpp" line="446"/>
         <source>For Queue</source>
         <translation>For kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="446"/>
+        <location filename="../mainwindow.cpp" line="447"/>
         <source>Clear Queue</source>
         <translation>Ryd kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="456"/>
+        <location filename="../mainwindow.cpp" line="457"/>
         <source>Enter the URL you&apos;d like to open</source>
         <translation>Skriv den URL du ønsker at åbne</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="461"/>
+        <location filename="../mainwindow.cpp" line="462"/>
         <source>Can&apos;t open that URL</source>
         <translation>Kan ikke åbne den URL</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="461"/>
+        <location filename="../mainwindow.cpp" line="462"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
         <translation>Beklager, den URL understøttes ikke af theBeat.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="544"/>
+        <location filename="../mainwindow.cpp" line="545"/>
         <source>Open a list of tracks (for example, a playlist) to print it.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -531,69 +531,14 @@
     </message>
 </context>
 <context>
-    <name>PrintPopover</name>
+    <name>PrintController</name>
     <message>
-        <location filename="../print/printpopover.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="133"/>
-        <source>Printer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="75"/>
-        <source>PRINT OPTIONS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="63"/>
-        <source>Copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="87"/>
-        <source>PRINT TYPE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="147"/>
-        <source>Page Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="154"/>
-        <source>Print in Grayscale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="161"/>
-        <source>Double Sided</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="50"/>
-        <source>Track Listing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="107"/>
-        <source>Print</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="120"/>
-        <source>Jewel Case Insert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.cpp" line="51"/>
+        <location filename="../print/printcontroller.cpp" line="58"/>
         <source>Print %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../print/printpopover.cpp" line="122"/>
+        <location filename="../print/printcontroller.cpp" line="124"/>
         <source>%n tracks</source>
         <translation type="unfinished">
             <numerusform>%n sang</numerusform>
@@ -601,14 +546,32 @@
         </translation>
     </message>
     <message>
-        <location filename="../print/printpopover.cpp" line="194"/>
+        <location filename="../print/printcontroller.cpp" line="196"/>
         <source>by %1</source>
         <translation type="unfinished">af %1</translation>
     </message>
     <message>
-        <location filename="../print/printpopover.cpp" line="195"/>
+        <location filename="../print/printcontroller.cpp" line="197"/>
         <source>on %1</source>
         <translation type="unfinished">i %1</translation>
+    </message>
+</context>
+<context>
+    <name>PrintSettings</name>
+    <message>
+        <location filename="../print/printsettings.ui" line="25"/>
+        <source>PRINT TYPE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printsettings.ui" line="32"/>
+        <source>Track Listing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printsettings.ui" line="42"/>
+        <source>Jewel Case Insert</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
