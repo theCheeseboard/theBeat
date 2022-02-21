@@ -22,9 +22,10 @@
 #include <tlogger.h>
 
 #include "diskwatcher.h"
+#include "burn/winburnmanager.h"
 
 struct PluginPrivate {
-
+    WinBurnManager* burnManager;
 };
 
 Plugin::Plugin() {
@@ -38,8 +39,9 @@ Plugin::~Plugin() {
 
 void Plugin::activate() {
     new DiskWatcher();
+    d->burnManager = new WinBurnManager();
 }
 
 void Plugin::deactivate() {
-
+    d->burnManager->deleteLater();
 }

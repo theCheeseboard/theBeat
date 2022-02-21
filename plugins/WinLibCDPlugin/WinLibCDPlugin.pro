@@ -20,11 +20,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG(release, debug|release): LIBS += -L$$PWD/cdlib/x64/Release
 CONFIG(debug, debug|release): LIBS += -L$$PWD/cdlib/x64/Debug
 
-LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -lCDLib -lUser32 -lwindowsapp
+LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -lCDLib -lUser32 -lwindowsapp -lcomsuppwd -lshlwapi
 INCLUDEPATH += $$PWD/cdlib/include/  "C:/Program Files/thelibs/include"
 
 SOURCES += \
     audiocdplayerthread.cpp \
+    burn/winburnjob.cpp \
+    burn/winburnjobwidget.cpp \
+    burn/winburnmanager.cpp \
+    burn/winburnpopover.cpp \
+    burn/winburnprovider.cpp \
     cdchecker.cpp \
     diskwatcher.cpp \
     plugin.cpp \
@@ -33,6 +38,11 @@ SOURCES += \
 
 HEADERS += \
     audiocdplayerthread.h \
+    burn/winburnjob.h \
+    burn/winburnjobwidget.h \
+    burn/winburnmanager.h \
+    burn/winburnpopover.h \
+    burn/winburnprovider.h \
     cdchecker.h \
     diskwatcher.h \
     plugin.h \
@@ -47,4 +57,6 @@ include(C:/Program Files/thelibs/pri/buildmaster.pri)
 include(../plugins.pri)
 
 FORMS += \
+    burn/winburnjobwidget.ui \
+    burn/winburnpopover.ui \
     cdchecker.ui
