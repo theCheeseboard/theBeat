@@ -58,56 +58,56 @@
 <context>
     <name>WinBurnJob</name>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="145"/>
+        <location filename="../burn/winburnjob.cpp" line="142"/>
         <source>Burn %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="148"/>
-        <location filename="../burn/winburnjob.cpp" line="320"/>
-        <location filename="../burn/winburnjob.cpp" line="365"/>
+        <location filename="../burn/winburnjob.cpp" line="145"/>
+        <location filename="../burn/winburnjob.cpp" line="245"/>
+        <location filename="../burn/winburnjob.cpp" line="282"/>
         <source>Preparing to burn...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="270"/>
-        <location filename="../burn/winburnjob.cpp" line="278"/>
+        <location filename="../burn/winburnjob.cpp" line="195"/>
+        <location filename="../burn/winburnjob.cpp" line="203"/>
         <source>Burn Successful</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="278"/>
+        <location filename="../burn/winburnjob.cpp" line="203"/>
         <source>Burned %1 to disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="287"/>
+        <location filename="../burn/winburnjob.cpp" line="212"/>
         <source>Burn Failure: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="295"/>
+        <location filename="../burn/winburnjob.cpp" line="220"/>
         <source>Burn Failure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="295"/>
+        <location filename="../burn/winburnjob.cpp" line="220"/>
         <source>Failed to burn %1 to disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="367"/>
+        <location filename="../burn/winburnjob.cpp" line="284"/>
         <source>Burning track %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="370"/>
+        <location filename="../burn/winburnjob.cpp" line="287"/>
         <source>About %1 remaining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnjob.cpp" line="354"/>
-        <location filename="../burn/winburnjob.cpp" line="377"/>
+        <location filename="../burn/winburnjob.cpp" line="280"/>
+        <location filename="../burn/winburnjob.cpp" line="294"/>
         <source>Finalising disc...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -128,43 +128,73 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="45"/>
+        <location filename="../burn/winburnpopover.ui" line="105"/>
+        <source>Getting ready to burn...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burn/winburnpopover.ui" line="144"/>
         <source>Audio CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="58"/>
+        <location filename="../burn/winburnpopover.ui" line="157"/>
         <source>Disc Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="71"/>
+        <location filename="../burn/winburnpopover.ui" line="170"/>
         <source>BURN OPTIONS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="78"/>
+        <location filename="../burn/winburnpopover.ui" line="177"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="89"/>
+        <location filename="../burn/winburnpopover.ui" line="188"/>
         <source>Album Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="114"/>
-        <source>HEADS UP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/winburnpopover.ui" line="137"/>
+        <location filename="../burn/winburnpopover.ui" line="212"/>
         <source>MP3 CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.cpp" line="23"/>
+        <location filename="../burn/winburnpopover.cpp" line="40"/>
         <source>Burn %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burn/winburnpopover.cpp" line="58"/>
+        <source>Heads up!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burn/winburnpopover.cpp" line="101"/>
+        <source>This playlist is too long to fit on the CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burn/winburnpopover.cpp" line="108"/>
+        <source>The CD is not blank.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burn/winburnpopover.cpp" line="117"/>
+        <source>Insert a CD-R or CD-RW into the drive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burn/winburnpopover.cpp" line="122"/>
+        <source>The drive is busy. Please wait for other disc operations to complete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burn/winburnpopover.cpp" line="125"/>
+        <source>Can&apos;t burn to this disc. Try again with a different disc.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2,6 +2,7 @@
 #define WINBURNPOPOVER_H
 
 #include <QWidget>
+#include <QAbstractNativeEventFilter>
 
 namespace Ui {
     class WinBurnPopover;
@@ -9,7 +10,7 @@ namespace Ui {
 
 class _bstr_t;
 struct WinBurnPopoverPrivate;
-class WinBurnPopover : public QWidget {
+class WinBurnPopover : public QWidget, public QAbstractNativeEventFilter {
         Q_OBJECT
 
     public:
@@ -27,6 +28,16 @@ class WinBurnPopover : public QWidget {
     private:
         Ui::WinBurnPopover* ui;
         WinBurnPopoverPrivate* d;
+
+        void updateCd();
+
+        void setOkState();
+        void setWarningState(QString warning);
+        void setErrorState(QString error);
+
+        // QAbstractNativeEventFilter interface
+    public:
+        bool nativeEventFilter(const QByteArray& eventType, void* message, long* result);
 };
 
 #endif // WINBURNPOPOVER_H

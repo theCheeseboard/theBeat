@@ -1,9 +1,11 @@
-#ifndef BURNMANAGER_H
-#define BURNMANAGER_H
+#ifndef WINBURNMANAGER_H
+#define WINBURNMANAGER_H
 
 #include <QObject>
 
+class _bstr_t;
 struct BurnManagerPrivate;
+struct DiscMasterEvents;
 class WinBurnManager : public QObject {
         Q_OBJECT
     public:
@@ -12,10 +14,15 @@ class WinBurnManager : public QObject {
 
     signals:
 
+    protected:
+        friend DiscMasterEvents;
+        void updateBurnDevices();
+        void registerBurnDevice(_bstr_t device);
+        void deregisterBurnDevice(_bstr_t device);
+
     private:
         BurnManagerPrivate* d;
 
-        void updateBurnDevices();
 };
 
-#endif // BURNMANAGER_H
+#endif // WINBURNMANAGER_H

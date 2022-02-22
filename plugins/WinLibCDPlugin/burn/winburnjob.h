@@ -7,10 +7,13 @@ class _bstr_t;
 struct IDispatch;
 struct DAOBurnEvents;
 struct WinBurnJobPrivate;
+class WinBurnDaoImage;
+typedef QSharedPointer<WinBurnDaoImage> WinBurnDaoImagePtr;
+
 class WinBurnJob : public tJob {
         Q_OBJECT
     public:
-        explicit WinBurnJob(QStringList files, _bstr_t driveId, QString albumTitle, QObject* parent = nullptr);
+        explicit WinBurnJob(WinBurnDaoImagePtr daoImage, _bstr_t driveId, QString albumTitle, QObject* parent = nullptr);
         ~WinBurnJob();
 
         void run();

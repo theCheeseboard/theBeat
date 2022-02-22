@@ -8,6 +8,17 @@
 #include <winrt/Windows.Foundation.h>
 #include <tlogger.h>
 
+#include <statemanager.h>
+#include <burnmanager.h>
+
+namespace winrt {
+    template<>
+    inline bool is_guid_of<DDiscMaster2Events>(guid const& id) noexcept {
+        return is_guid_of<DDiscMaster2Events, IDispatch>(id);
+    }
+}
+
+
 struct DiscMasterEvents : winrt::implements<DiscMasterEvents, DDiscMaster2Events, winrt::non_agile> {
     DiscMasterEvents(WinBurnManager* parent) {
         this->parent = parent;
@@ -22,8 +33,43 @@ struct DiscMasterEvents : winrt::implements<DiscMasterEvents, DDiscMaster2Events
         [[maybe_unused]] VARIANT* pVarResult,
         [[maybe_unused]] EXCEPINFO* pExcepInfo,
         [[maybe_unused]] UINT* puArgErr) noexcept final {
-        tDebug("DiscMasterEvents") << "Stuff invoked";
-        return S_OK;
+
+        if (!pDispParams)
+            return E_POINTER;
+
+        if (pDispParams->cNamedArgs != 0)
+            return DISP_E_NONAMEDARGS;
+
+        HRESULT hr = S_OK;
+
+        try {
+            switch (dispIdMember) {
+                case DISPID_DDISCMASTER2EVENTS_DEVICEADDED: {
+                    Q_ASSERT(pDispParams->cArgs == 2);
+                    Q_ASSERT(pDispParams->rgvarg[0].vt == VT_BSTR);
+                    Q_ASSERT(pDispParams->rgvarg[1].vt == VT_DISPATCH);
+                    NotifyDeviceAdded(pDispParams->rgvarg[1].pdispVal, pDispParams->rgvarg[0].bstrVal);
+                    break;
+                }
+                case DISPID_DDISCMASTER2EVENTS_DEVICEREMOVED: {
+                    Q_ASSERT(pDispParams->cArgs == 2);
+                    Q_ASSERT(pDispParams->rgvarg[0].vt == VT_BSTR);
+                    Q_ASSERT(pDispParams->rgvarg[1].vt == VT_DISPATCH);
+                    NotifyDeviceRemoved(pDispParams->rgvarg[1].pdispVal, pDispParams->rgvarg[0].bstrVal);
+                    break;
+                }
+                default: {
+                    hr = DISP_E_MEMBERNOTFOUND;
+                    break;
+                }
+            }
+
+            return hr;
+        } catch (...) {
+            return winrt::to_hresult();
+        }
+
+        return hr;
     }
 
     HRESULT __stdcall GetTypeInfoCount([[maybe_unused]] UINT* pctinfo) noexcept final {
@@ -51,6 +97,7 @@ struct DiscMasterEvents : winrt::implements<DiscMasterEvents, DDiscMaster2Events
         BSTR uniqueId
     ) noexcept final {
         tDebug("DiscMasterEvents") << "Device added: " << reinterpret_cast<char*>(uniqueId);
+        parent->registerBurnDevice(_bstr_t(uniqueId, true));
         return S_OK;
     }
 
@@ -59,6 +106,9 @@ struct DiscMasterEvents : winrt::implements<DiscMasterEvents, DDiscMaster2Events
         BSTR uniqueId
     ) noexcept final {
         tDebug("DiscMasterEvents") << "Device removed: " << reinterpret_cast<char*>(uniqueId);
+
+        //Don't use deregisterBurnDevice because the unique ID that is sent in is invalid by now
+        parent->updateBurnDevices();
         return S_OK;
     }
 
@@ -104,10 +154,7 @@ void WinBurnManager::updateBurnDevices() {
         winrt::check_hresult(d->discMaster->get_Item(i, &id));
         _bstr_t wrappedId(id, false);
 
-        if (!d->burnProviders.contains(wrappedId)) {
-            WinBurnProvider* burnProvider = new WinBurnProvider(wrappedId);
-            d->burnProviders.insert(wrappedId, burnProvider);
-        }
+        registerBurnDevice(wrappedId);
         availableDriveIds.append(wrappedId);
     }
 
@@ -117,7 +164,21 @@ void WinBurnManager::updateBurnDevices() {
     }
 
     for (_bstr_t driveId : driveIdsToRemove) {
-        WinBurnProvider* burnProvider = d->burnProviders.take(driveId);
+        deregisterBurnDevice(driveId);
+    }
+}
+
+void WinBurnManager::registerBurnDevice(_bstr_t device) {
+    if (!d->burnProviders.contains(device)) {
+        WinBurnProvider* burnProvider = new WinBurnProvider(device);
+        d->burnProviders.insert(device, burnProvider);
+    }
+}
+
+void WinBurnManager::deregisterBurnDevice(_bstr_t device) {
+    if (d->burnProviders.contains(device)) {
+        WinBurnProvider* burnProvider = d->burnProviders.take(device);
+        StateManager::instance()->burn()->deregisterBackend(burnProvider);
         burnProvider->deleteLater();
     }
 }

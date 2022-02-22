@@ -1,4 +1,4 @@
-QT += gui widgets multimedia network
+QT += gui widgets multimedia network concurrent
 
 TEMPLATE = lib
 CONFIG += plugin
@@ -25,6 +25,7 @@ INCLUDEPATH += $$PWD/cdlib/include/  "C:/Program Files/thelibs/include"
 
 SOURCES += \
     audiocdplayerthread.cpp \
+    burn/winburndaoimage.cpp \
     burn/winburnjob.cpp \
     burn/winburnjobwidget.cpp \
     burn/winburnmanager.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
 
 HEADERS += \
     audiocdplayerthread.h \
+    burn/winburndaoimage.h \
     burn/winburnjob.h \
     burn/winburnjobwidget.h \
     burn/winburnmanager.h \

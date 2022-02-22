@@ -44,9 +44,6 @@ WinBurnProvider::WinBurnProvider(_bstr_t driveId, QObject* parent) : BurnBackend
     winrt::check_hresult(SafeArrayGetLBound(driveLetters, 1, &lBound));
     winrt::check_hresult(SafeArrayGetUBound(driveLetters, 1, &uBound));
 
-    tDebug("WinBurnProvider") << "lbound: " << (int) lBound;
-    tDebug("WinBurnProvider") << "hbound: " << (int) uBound;
-
     for (LONG i = lBound; i < uBound; i++) {
         VARIANT variant;
         VariantInit(&variant);
@@ -60,11 +57,11 @@ WinBurnProvider::WinBurnProvider(_bstr_t driveId, QObject* parent) : BurnBackend
 
     SafeArrayDestroy(driveLetters);
 
-    tDebug("WinBurnProvider") << "Created burn provider: " << static_cast<const char*>(driveId);
     StateManager::instance()->burn()->registerBackend(this);
 }
 
 WinBurnProvider::~WinBurnProvider() {
+    if (StateManager::instance()->burn()->availableBackends().contains(this)) StateManager::instance()->burn()->deregisterBackend(this);
     delete d;
 }
 

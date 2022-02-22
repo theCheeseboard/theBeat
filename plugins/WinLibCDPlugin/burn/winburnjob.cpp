@@ -10,17 +10,14 @@
 #include <tnotification.h>
 #include <tlogger.h>
 #include <Shlwapi.h>
-#include <winrt/Windows.Media.Transcoding.h>
 #include <shcore.h>
-#include <winrt/Windows.Media.MediaProperties.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <Windows.Storage.Streams.h>
 
 #include <QAudioDecoder>
+#include "winburndaoimage.h"
 
 namespace winrt {
-    using namespace winrt::Windows::Media::MediaProperties;
-    using namespace winrt::Windows::Media::Transcoding;
     using namespace winrt::Windows::Storage::Streams;
     using namespace winrt::Windows::Storage;
 
@@ -114,7 +111,7 @@ struct DAOBurnEvents : winrt::implements<DAOBurnEvents, DDiscFormat2RawCDEvents,
 };
 
 struct WinBurnJobPrivate {
-    QStringList files;
+    WinBurnDaoImagePtr daoImage;
     _bstr_t driveId;
     QString albumTitle;
 
@@ -134,9 +131,9 @@ struct WinBurnJobPrivate {
     DWORD eventToken;
 };
 
-WinBurnJob::WinBurnJob(QStringList files, _bstr_t driveId, QString albumTitle, QObject* parent) : tJob(parent) {
+WinBurnJob::WinBurnJob(WinBurnDaoImagePtr daoImage, _bstr_t driveId, QString albumTitle, QObject* parent) : tJob(parent) {
     d = new WinBurnJobPrivate();
-    d->files = files;
+    d->daoImage = daoImage;
     d->driveId = driveId;
     d->albumTitle = albumTitle;
 
@@ -161,7 +158,6 @@ void WinBurnJob::run() {
         try {
             auto discMaster = winrt::create_instance<IDiscMaster2>(CLSID_MsftDiscMaster2);
             auto discRecorder = winrt::create_instance<IDiscRecorder2>(CLSID_MsftDiscRecorder2);
-            auto daoImage = winrt::create_instance<IRawCDImageCreator>(CLSID_MsftRawCDImageCreator);
             winrt::check_hresult(discRecorder->InitializeDiscRecorder(d->driveId.GetBSTR()));
 
             auto discFormatDAO = winrt::create_instance<IDiscFormat2RawCD>(CLSID_MsftDiscFormat2RawCD);
@@ -172,85 +168,14 @@ void WinBurnJob::run() {
             winrt::check_hresult(container->FindConnectionPoint(winrt::guid_of<DDiscFormat2RawCDEvents>(), d->connectionPoint.put()));
             winrt::check_hresult(d->connectionPoint->Advise(d->burnEvents.get().get(), &d->eventToken));
 
-
-
-            auto profile = winrt::MediaEncodingProfile::CreateWav(winrt::AudioEncodingQuality::High);
-            profile.Audio(winrt::AudioEncodingProperties::CreatePcm(44100, 2, 16));
-
-            for (int i = 0; i < d->files.count(); i++) {
-                QString file = d->files.at(i);
-//                file = file.replace("/", "\\");
-                tDebug("WinBurnJob") << "Transcoding file " << file;
-
-
-                tPromiseResults<QByteArray> decodeResults = TPROMISE_CREATE_SAME_THREAD(QByteArray, {
-                    QAudioFormat format;
-                    format.setCodec("audio/pcm");
-                    format.setByteOrder(QAudioFormat::LittleEndian);
-                    format.setSampleSize(16);
-                    format.setSampleRate(44100);
-                    format.setChannelCount(2);
-
-                    QAudioDecoder* decoder = new QAudioDecoder();
-
-                    decoder->setAudioFormat(format);
-                    decoder->setSourceFilename(file);
-
-                    QByteArray* audioData = new QByteArray();
-
-                    connect(decoder, &QAudioDecoder::finished, this, [ = ] {
-                        int extraBytes = audioData->size() % 2352;
-                        int paddingBytes = 2352 - extraBytes;
-                        audioData->append(QByteArray(paddingBytes, 0));
-
-                        decoder->deleteLater();
-
-                        res(QByteArray(*audioData));
-                        delete audioData;
-                    });
-                    connect(decoder, &QAudioDecoder::bufferReady, this, [ = ] {
-                        QAudioBuffer buf = decoder->read();
-                        audioData->append(QByteArray(buf.data<char>(), buf.byteCount()));
-                    });
-                    connect(decoder, QOverload<QAudioDecoder::Error>::of(&QAudioDecoder::error), this, [ = ](QAudioDecoder::Error error) {
-                        delete audioData;
-                        rej(decoder->errorString());
-                    });
-                    decoder->start();
-                })->await();
-
-                if (!decodeResults.error.isEmpty()) {
-                    rej("Decoder Error");
-                    return;
-                }
-
-                winrt::com_ptr<IStream> stream;
-                stream.attach(SHCreateMemStream(reinterpret_cast<const uchar*>(decodeResults.result.constData()), decodeResults.result.count()));
-
-                LONG resultantTrack;
-                winrt::check_hresult(daoImage->AddTrack(IMAPI_CD_SECTOR_AUDIO, stream.get(), &resultantTrack));
-
-                winrt::com_ptr<IRawCDImageTrackInfo> trackInfo;
-                winrt::check_hresult(daoImage->get_TrackInfo(resultantTrack, trackInfo.put()));
-
-                LONG startingLba;
-                winrt::check_hresult(trackInfo->get_StartingLba(&startingLba));
-
-                d->trackOffsets.append(startingLba);
-            }
-
-            LONG startOfLeadout;
-            winrt::check_hresult(daoImage->get_StartOfLeadout(&startOfLeadout));
-            d->leadout = startOfLeadout;
-
             tDebug("WinBurnJob") << "Preparing media for burn";
             winrt::check_hresult(discFormatDAO->PrepareMedia());
             winrt::check_hresult(discFormatDAO->put_BufferUnderrunFreeDisabled(true));
 
             tDebug("WinBurnJob") << "Burning disc";
             winrt::com_ptr<IStream> daoImageStream;
-            winrt::check_hresult(daoImage->CreateResultImage(daoImageStream.put()));
-            discFormatDAO->WriteMedia(daoImageStream.get());
+            winrt::check_hresult(d->daoImage->daoImage()->CreateResultImage(daoImageStream.put()));
+            winrt::check_hresult(discFormatDAO->WriteMedia(daoImageStream.get()));
 
             tDebug("WinBurnJob") << "Fixating media";
             winrt::check_hresult(discFormatDAO->ReleaseMedia());
@@ -350,23 +275,15 @@ void WinBurnJob::notifyUpdate(IDispatch* progress) {
                 QStringList descriptionLines;
 
                 //Figure out which track we are on
-                if (lastWriteLba >= d->leadout) {
+                int track = d->daoImage->trackNumberFromLba(lastWriteLba);
+                if (track == -2) {
                     descriptionLines.append(tr("Finalising disc..."));
+                } else if (track == -1) {
+                    descriptionLines.append(tr("Preparing to burn..."));
                 } else {
-                    int track = -1;
-                    for (int i = d->trackOffsets.count() - 1; i >= 0; i--) {
-                        if (lastWriteLba >= d->trackOffsets.at(i)) {
-                            track = i;
-                            break;
-                        }
-                    }
-
-                    if (track == -1) {
-                        descriptionLines.append(tr("Preparing to burn..."));
-                    } else {
-                        descriptionLines.append(tr("Burning track %1").arg(track + 1));
-                    }
+                    descriptionLines.append(tr("Burning track %1").arg(track));
                 }
+
                 descriptionLines.append(tr("About %1 remaining").arg(remainingDuration.toString("mm:ss")));
 
                 d->description = descriptionLines.join("\n");

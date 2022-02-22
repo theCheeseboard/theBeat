@@ -20,6 +20,7 @@
 #include "burnmanager.h"
 
 #include "burnbackend.h"
+#include <tlogger.h>
 
 struct BurnManagerPrivate {
     QList<BurnBackend*> backends;
