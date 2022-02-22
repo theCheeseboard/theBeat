@@ -16,6 +16,7 @@
 
 #include <QAudioDecoder>
 #include "winburndaoimage.h"
+#include "daoformatlocker.h"
 
 namespace winrt {
     using namespace winrt::Windows::Storage::Streams;
@@ -169,16 +170,13 @@ void WinBurnJob::run() {
             winrt::check_hresult(d->connectionPoint->Advise(d->burnEvents.get().get(), &d->eventToken));
 
             tDebug("WinBurnJob") << "Preparing media for burn";
-            winrt::check_hresult(discFormatDAO->PrepareMedia());
+            DaoFormatLocker locker(discFormatDAO);
             winrt::check_hresult(discFormatDAO->put_BufferUnderrunFreeDisabled(true));
 
             tDebug("WinBurnJob") << "Burning disc";
             winrt::com_ptr<IStream> daoImageStream;
             winrt::check_hresult(d->daoImage->daoImage()->CreateResultImage(daoImageStream.put()));
             winrt::check_hresult(discFormatDAO->WriteMedia(daoImageStream.get()));
-
-            tDebug("WinBurnJob") << "Fixating media";
-            winrt::check_hresult(discFormatDAO->ReleaseMedia());
 
             res();
         } catch (...) {
@@ -264,7 +262,7 @@ void WinBurnJob::notifyUpdate(IDispatch* progress) {
                 eventArgs->get_RemainingTime(&remainingTime);
 
                 QTime remainingDuration = QTime::fromMSecsSinceStartOfDay(0);
-                remainingDuration.addSecs(remainingTime);
+                remainingDuration = remainingDuration.addSecs(remainingTime);
 
                 d->progress = lastWriteLba - startLba;
                 emit progressChanged(d->progress);

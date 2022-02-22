@@ -39,6 +39,7 @@ SOURCES += \
 
 HEADERS += \
     audiocdplayerthread.h \
+    burn/daoformatlocker.h \
     burn/winburndaoimage.h \
     burn/winburnjob.h \
     burn/winburnjobwidget.h \

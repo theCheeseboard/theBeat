@@ -9,6 +9,7 @@
 #include <Dbt.h>
 #include <imapi2error.h>
 #include "winburndaoimage.h"
+#include "daoformatlocker.h"
 
 struct WinBurnPopoverPrivate {
     QStringList files;
@@ -78,20 +79,6 @@ void WinBurnPopover::updateCd() {
         auto discFormatDAO = winrt::create_instance<IDiscFormat2RawCD>(CLSID_MsftDiscFormat2RawCD);
         discFormatDAO->put_ClientName(_bstr_t("theBeat"));
         winrt::check_hresult(discFormatDAO->put_Recorder(d->discRecorder.get()));
-
-        class DaoFormatLocker {
-                winrt::com_ptr<IDiscFormat2RawCD> discFormatDAO;
-
-            public:
-                DaoFormatLocker(winrt::com_ptr<IDiscFormat2RawCD> discFormatDAO) {
-                    winrt::check_hresult(discFormatDAO->PrepareMedia());
-                    this->discFormatDAO = discFormatDAO;
-                }
-
-                ~DaoFormatLocker() {
-                    discFormatDAO->ReleaseMedia();
-                }
-        };
 
         DaoFormatLocker locker(discFormatDAO);
 
