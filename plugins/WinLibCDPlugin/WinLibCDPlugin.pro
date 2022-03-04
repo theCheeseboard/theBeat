@@ -20,11 +20,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG(release, debug|release): LIBS += -L$$PWD/cdlib/x64/Release
 CONFIG(debug, debug|release): LIBS += -L$$PWD/cdlib/x64/Debug
 
-LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -lCDLib -lUser32 -lwindowsapp -lcomsuppwd -lshlwapi
-INCLUDEPATH += $$PWD/cdlib/include/  "C:/Program Files/thelibs/include"
+LIBS += -L"C:/Program Files/thelibs/lib" -lthe-libs -lCDLib -lUser32 -lwindowsapp -lcomsuppwd -lshlwapi -L"C:\Program Files (x86)\taglib\lib" -ltag
+INCLUDEPATH += $$PWD/cdlib/include/  "C:/Program Files/thelibs/include" "C:/Program Files (x86)/taglib/include"
 
 SOURCES += \
     audiocdplayerthread.cpp \
+    burn/cdtextcrcgenerator.cpp \
+    burn/cdtextgenerator.cpp \
     burn/winburndaoimage.cpp \
     burn/winburnjob.cpp \
     burn/winburnjobwidget.cpp \
@@ -39,6 +41,8 @@ SOURCES += \
 
 HEADERS += \
     audiocdplayerthread.h \
+    burn/cdtextcrcgenerator.h \
+    burn/cdtextgenerator.h \
     burn/daoformatlocker.h \
     burn/winburndaoimage.h \
     burn/winburnjob.h \

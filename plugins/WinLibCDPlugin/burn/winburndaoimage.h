@@ -19,6 +19,8 @@ class WinBurnDaoImage : public QObject {
         int trackNumberFromLba(qint64 lba);
         qint64 leadoutLba();
 
+        void setAlbumName(QString albumName);
+
     signals:
 
     private:

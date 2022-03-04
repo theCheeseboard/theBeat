@@ -11,6 +11,9 @@
 #include "winburndaoimage.h"
 #include "daoformatlocker.h"
 
+#include <QMessageBox>
+#include "cdtextgenerator.h"
+
 struct WinBurnPopoverPrivate {
     QStringList files;
     _bstr_t driveId;
@@ -57,6 +60,34 @@ WinBurnPopover::WinBurnPopover(QStringList files, _bstr_t driveId, QString album
     });
 
     ui->warningFrame->setTitle(tr("Heads up!").toUpper());
+
+//    CDTextGenerator cdtgen;
+//    cdtgen.addTrack({
+//        "burn",
+//        "",
+//        "",
+//        "",
+//        ""
+//    });
+//    cdtgen.addTrack({
+//        "DiscoVision",
+//        "Anders Enger Jensen",
+//        "Anders Enger Jensen",
+//        "Anders Enger Jensen",
+//        "Anders Enger Jensen"
+//    });
+//    cdtgen.addTrack({
+//        "Greener Grass",
+//        "Silverimage",
+//        "Silverimage",
+//        "Silverimage",
+//        "Silverimage"
+//    });
+
+//    QMessageBox box;
+//    box.setText("Here is your information");
+//    box.setDetailedText(cdtgen.generate().toHex());
+//    box.exec();
 }
 
 WinBurnPopover::~WinBurnPopover() {
@@ -65,6 +96,8 @@ WinBurnPopover::~WinBurnPopover() {
 }
 
 void WinBurnPopover::on_burnButton_clicked() {
+    d->burnImage->setAlbumName(ui->albumNameEdit->text());
+
     WinBurnJob* burnJob = new WinBurnJob(d->burnImage, d->driveId, ui->albumNameEdit->text());
     tJobManager::trackJob(burnJob);
     emit done();

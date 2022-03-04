@@ -163,37 +163,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.cpp" line="41"/>
+        <location filename="../burn/winburnpopover.cpp" line="44"/>
         <source>Burn %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.cpp" line="59"/>
+        <location filename="../burn/winburnpopover.cpp" line="62"/>
         <source>Heads up!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.cpp" line="88"/>
+        <location filename="../burn/winburnpopover.cpp" line="121"/>
         <source>This playlist is too long to fit on the CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.cpp" line="95"/>
+        <location filename="../burn/winburnpopover.cpp" line="128"/>
         <source>The CD is not blank.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.cpp" line="104"/>
+        <location filename="../burn/winburnpopover.cpp" line="137"/>
         <source>Insert a CD-R or CD-RW into the drive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.cpp" line="109"/>
+        <location filename="../burn/winburnpopover.cpp" line="142"/>
         <source>The drive is busy. Please wait for other disc operations to complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.cpp" line="112"/>
+        <location filename="../burn/winburnpopover.cpp" line="145"/>
         <source>Can&apos;t burn to this disc. Try again with a different disc.</source>
         <translation type="unfinished"></translation>
     </message>

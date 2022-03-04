@@ -6,11 +6,16 @@
 #include <QAudioFormat>
 #include <QAudioDecoder>
 #include <QtConcurrent>
+#include "cdtextgenerator.h"
+
+#include <taglib/fileref.h>
 
 struct WinBurnDaoImagePrivate {
     QList<qint64> trackOffsets;
     qint64 leadout;
 
+    QString albumName;
+    QStringList files;
     winrt::com_ptr<IRawCDImageCreator> daoImage;
 };
 
@@ -103,6 +108,7 @@ tPromise<void>* WinBurnDaoImage::createImageFromFiles(QStringList files) {
         d->daoImage = daoImage;
         d->trackOffsets = trackOffsets;
         d->leadout = startOfLeadout;
+        d->files = files;
 
         res();
     });
@@ -135,4 +141,39 @@ int WinBurnDaoImage::trackNumberFromLba(qint64 lba) {
 
 qint64 WinBurnDaoImage::leadoutLba() {
     return d->leadout;
+}
+
+void WinBurnDaoImage::setAlbumName(QString albumName) {
+    d->albumName = albumName;
+
+    CDTextGeneratorPtr cdtgen(new CDTextGenerator());
+    cdtgen->addTrack({ //Disc Information
+        d->albumName,
+        "", "", "", ""
+    });
+
+    for (int i = 0; i < d->files.count(); i++) {
+        TagLib::FileRef file(d->files.at(i).toStdString().data());
+        if (file.tag()) {
+            cdtgen->addTrack({
+                file.tag()->title().toCString(),
+                file.tag()->artist().toCString(),
+                file.tag()->artist().toCString(),
+                file.tag()->artist().toCString(),
+                file.tag()->artist().toCString()
+            });
+        } else {
+            cdtgen->addTrack({"", "", "", "", ""});
+        }
+    }
+
+    LONG lastSector;
+    winrt::check_hresult(d->daoImage->get_LastUsedUserSectorInImage(&lastSector));
+
+    QByteArray cdTextBytes = cdtgen->generate();
+    cdTextBytes.resize(lastSector * 96);
+
+    winrt::com_ptr<IStream> stream;
+    stream.attach(SHCreateMemStream(reinterpret_cast<const uchar*>(cdTextBytes.constData()), cdTextBytes.count()));
+    winrt::check_hresult(d->daoImage->AddSubcodeRWGenerator(stream.get()));
 }
