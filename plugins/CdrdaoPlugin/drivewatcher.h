@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2022 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,38 +17,25 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef BURNJOB_H
-#define BURNJOB_H
+#ifndef DRIVEWATCHER_H
+#define DRIVEWATCHER_H
 
-#include "abstractburnjob.h"
+#include <QObject>
 
-class DiskObject;
-struct BurnJobPrivate;
-class BurnJob : public AbstractBurnJob {
+struct DriveWatcherPrivate;
+class DriveWatcher : public QObject
+{
         Q_OBJECT
     public:
-        explicit BurnJob(QStringList files, DiskObject* diskObject, QString albumTitle, QObject* parent = nullptr);
-        ~BurnJob();
+        explicit DriveWatcher(QObject *parent = nullptr);
+        ~DriveWatcher();
 
-        void start();
-
-        QString description();
-        bool canCancel();
-        bool warnCancel();
-
-        void cancel();
+    signals:
 
     private:
-        BurnJobPrivate* d;
+        DriveWatcherPrivate* d;
 
-        void performNextAction();
-        void fail(QString description);
-
-        // tJob interface
-    public:
-        quint64 progress();
-        quint64 totalProgress();
-        State state();
+        void update();
 };
 
-#endif // BURNJOB_H
+#endif // DRIVEWATCHER_H

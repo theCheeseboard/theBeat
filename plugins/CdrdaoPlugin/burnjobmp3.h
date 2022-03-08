@@ -20,24 +20,23 @@
 #ifndef BURNJOBMP3_H
 #define BURNJOBMP3_H
 
-#include "tjob.h"
+#include "abstractburnjob.h"
 
+class DiskObject;
 struct BurnJobMp3Private;
-class BurnJobMp3 : public tJob {
+class BurnJobMp3 : public AbstractBurnJob {
         Q_OBJECT
     public:
-        explicit BurnJobMp3(QStringList files, QString blockDevice, QString albumTitle, QObject* parent = nullptr);
+        explicit BurnJobMp3(QStringList files, DiskObject* diskObject, QString albumTitle, QObject* parent = nullptr);
         ~BurnJobMp3();
+
+        void start();
 
         QString description();
         bool canCancel();
         bool warnCancel();
 
         void cancel();
-
-    signals:
-        void descriptionChanged(QString description);
-        void canCancelChanged(bool canCancel);
 
     private:
         BurnJobMp3Private* d;
@@ -50,7 +49,6 @@ class BurnJobMp3 : public tJob {
         quint64 progress();
         quint64 totalProgress();
         State state();
-        QWidget* makeProgressWidget();
 };
 
 #endif // BURNJOBMP3_H

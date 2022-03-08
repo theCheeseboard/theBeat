@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2022 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,38 +17,39 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef BURNJOB_H
-#define BURNJOB_H
+#ifndef FULLBURNJOB_H
+#define FULLBURNJOB_H
 
 #include "abstractburnjob.h"
 
 class DiskObject;
-struct BurnJobPrivate;
-class BurnJob : public AbstractBurnJob {
+struct FullBurnJobPrivate;
+class FullBurnJob : public AbstractBurnJob {
         Q_OBJECT
     public:
-        explicit BurnJob(QStringList files, DiskObject* diskObject, QString albumTitle, QObject* parent = nullptr);
-        ~BurnJob();
+        explicit FullBurnJob(DiskObject* diskObject, AbstractBurnJob* mainBurnJob, QObject* parent = nullptr);
+        ~FullBurnJob();
 
-        void start();
-
-        QString description();
-        bool canCancel();
-        bool warnCancel();
-
-        void cancel();
+    signals:
 
     private:
-        BurnJobPrivate* d;
+        FullBurnJobPrivate* d;
 
-        void performNextAction();
-        void fail(QString description);
+        void unmountAndEraseDisc();
+        void eraseDisc();
 
         // tJob interface
     public:
         quint64 progress();
         quint64 totalProgress();
         State state();
+
+        // AbstractBurnJob interface
+    public:
+        void start();
+        QString description();
+        bool canCancel();
+        void cancel();
 };
 
-#endif // BURNJOB_H
+#endif // FULLBURNJOB_H

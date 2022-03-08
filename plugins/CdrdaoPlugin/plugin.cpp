@@ -25,7 +25,7 @@
 #include <pluginmediasource.h>
 #include <QIcon>
 #include <tapplication.h>
-#include "burndevice.h"
+#include "drivewatcher.h"
 
 struct PluginPrivate {
 
@@ -42,9 +42,7 @@ Plugin::~Plugin() {
 
 
 void Plugin::activate() {
-    new BurnDevice("sr0");
-    new BurnDevice("sr1");
-    new BurnDevice("sr2");
+    new DriveWatcher();
 }
 
 void Plugin::deactivate() {

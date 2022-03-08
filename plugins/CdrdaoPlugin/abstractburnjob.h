@@ -1,7 +1,7 @@
 /****************************************
  *
  *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
- *   Copyright (C) 2020 Victor Tran
+ *   Copyright (C) 2022 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,38 +17,26 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef BURNJOB_H
-#define BURNJOB_H
+#ifndef ABSTRACTBURNJOB_H
+#define ABSTRACTBURNJOB_H
 
-#include "abstractburnjob.h"
+#include <tjob.h>
 
-class DiskObject;
-struct BurnJobPrivate;
-class BurnJob : public AbstractBurnJob {
+class AbstractBurnJob : public tJob {
         Q_OBJECT
     public:
-        explicit BurnJob(QStringList files, DiskObject* diskObject, QString albumTitle, QObject* parent = nullptr);
-        ~BurnJob();
+        explicit AbstractBurnJob(QObject* parent = nullptr);
 
-        void start();
+        virtual void start() = 0;
+        virtual QString description() = 0;
+        virtual bool canCancel() = 0;
+        virtual void cancel() = 0;
 
-        QString description();
-        bool canCancel();
-        bool warnCancel();
+        QWidget* makeProgressWidget();
 
-        void cancel();
-
-    private:
-        BurnJobPrivate* d;
-
-        void performNextAction();
-        void fail(QString description);
-
-        // tJob interface
-    public:
-        quint64 progress();
-        quint64 totalProgress();
-        State state();
+    signals:
+        void descriptionChanged(QString description);
+        void canCancelChanged(bool canCancel);
 };
 
-#endif // BURNJOB_H
+#endif // ABSTRACTBURNJOB_H

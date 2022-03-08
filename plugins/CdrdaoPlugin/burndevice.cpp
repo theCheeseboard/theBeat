@@ -19,77 +19,60 @@
  * *************************************/
 #include "burndevice.h"
 
+#include "burnpopover.h"
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusObjectPath>
-#include <statemanager.h>
 #include <burnmanager.h>
-#include <tpromise.h>
+#include <statemanager.h>
 #include <tpopover.h>
-#include "burnpopover.h"
+#include <tpromise.h>
+
+#include <DriveObjects/blockinterface.h>
+#include <DriveObjects/diskobject.h>
+#include <DriveObjects/driveinterface.h>
 
 struct BurnDevicePrivate {
-    QDBusObjectPath cdDrivePath;
-    bool registered = false;
+        bool registered = false;
 
-    QString displayName;
-    QString blockDevice;
+        QString displayName;
+        DiskObject* diskObject;
 };
 
-BurnDevice::BurnDevice(QString blockDevice, QObject* parent) : BurnBackend(parent) {
+BurnDevice::BurnDevice(DiskObject* diskObject, QObject* parent) :
+    BurnBackend(parent) {
     d = new BurnDevicePrivate();
-    d->blockDevice = blockDevice;
+    d->diskObject = diskObject;
 
-    //Get CD drive and attach to CD information
-    QDBusInterface blockInterface("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2/block_devices/" + blockDevice, "org.freedesktop.UDisks2.Block", QDBusConnection::systemBus());
-    d->cdDrivePath = blockInterface.property("Drive").value<QDBusObjectPath>();
-    QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", d->cdDrivePath.path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(checkCd()));
+    // Get CD drive and attach to CD information
+    connect(d->diskObject->interface<BlockInterface>()->drive(), &DriveInterface::changed, this, &BurnDevice::checkCd);
 
     checkCd();
 }
 
 BurnDevice::~BurnDevice() {
+    if (d->registered) StateManager::instance()->burn()->deregisterBackend(this);
     delete d;
 }
 
 void BurnDevice::checkCd() {
-    struct CdInformation {
-        bool available = false;
-        QString displayName;
-    };
+    DriveInterface* drive = d->diskObject->interface<BlockInterface>()->drive();
+    d->displayName = QStringLiteral("%1 %2").arg(drive->vendor()).arg(drive->model());
 
-    tPromise<CdInformation>::runOnNewThread([ = ](tPromiseFunctions<CdInformation>::SuccessFunction res, tPromiseFunctions<CdInformation>::FailureFunction rej) {
-        if (d->cdDrivePath.path() == "") {
-            res(CdInformation());
-            return;
-        }
-
-        QDBusInterface cdDriveInterface("org.freedesktop.UDisks2", d->cdDrivePath.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
-        QString media = cdDriveInterface.property("Media").toString();
-        if (cdDriveInterface.property("MediaAvailable").toBool() && cdDriveInterface.property("Optical").toBool() && QStringList({"optical_cd_r", "optical_cd_rw"}).contains(media)) {
-            CdInformation info;
-            info.available = true;
-            info.displayName = QStringLiteral("%1 %2").arg(cdDriveInterface.property("Vendor").toString()).arg(cdDriveInterface.property("Model").toString());
-            res(info);
-        } else {
-            res(CdInformation());
-        }
-    })->then([ = ](CdInformation info) {
-        d->displayName = info.displayName;
-        if (info.available && !d->registered) {
-            //Register
-            StateManager::instance()->burn()->registerBackend(this);
-            d->registered = true;
-        } else if (!info.available && d->registered) {
-            //Deregister
-            StateManager::instance()->burn()->deregisterBackend(this);
-            d->registered = false;
-        }
-    });
+    bool available = drive->mediaAvailable() && drive->isOpticalDrive() && QList<DriveInterface::MediaFormat>({DriveInterface::CdR, DriveInterface::CdRw}).contains(drive->media());
+    if (available && !d->registered) {
+        // Register
+        StateManager::instance()->burn()->registerBackend(this);
+        d->registered = true;
+    } else if (!available && d->registered) {
+        // Deregister
+        StateManager::instance()->burn()->deregisterBackend(this);
+        d->registered = false;
+    }
 }
 
 void BurnDevice::burn(QStringList files, QString albumName, QWidget* parentWindow) {
-    BurnPopover* jp = new BurnPopover(files, d->blockDevice, albumName);
+    BurnPopover* jp = new BurnPopover(files, d->diskObject, albumName);
     tPopover* popover = new tPopover(jp);
     popover->setPopoverWidth(SC_DPI(-200));
     popover->setPopoverSide(tPopover::Bottom);

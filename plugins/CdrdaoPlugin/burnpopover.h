@@ -26,12 +26,13 @@ namespace Ui {
     class BurnPopover;
 }
 
+class DiskObject;
 struct BurnPopoverPrivate;
 class BurnPopover : public QWidget {
         Q_OBJECT
 
     public:
-        explicit BurnPopover(QStringList files, QString blockDevice, QString albumName, QWidget* parent = nullptr);
+        explicit BurnPopover(QStringList files, DiskObject* diskObject, QString albumName, QWidget* parent = nullptr);
         ~BurnPopover();
 
     signals:
@@ -50,10 +51,15 @@ class BurnPopover : public QWidget {
 
         void on_mp3CdButton_toggled(bool checked);
 
+        void on_titleLabel_2_backButtonClicked();
+
+        void on_doBurnButton_clicked();
+
     private:
         Ui::BurnPopover* ui;
         BurnPopoverPrivate* d;
 
+        void doBurn();
 };
 
 #endif // BURNPOPOVER_H

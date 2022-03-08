@@ -20,8 +20,8 @@
 #ifndef BURNJOBWIDGET_H
 #define BURNJOBWIDGET_H
 
+#include "abstractburnjob.h"
 #include <QWidget>
-#include <burnjob.h>
 
 namespace Ui {
     class BurnJobWidget;
@@ -33,8 +33,7 @@ class BurnJobWidget : public QWidget {
         Q_OBJECT
 
     public:
-        explicit BurnJobWidget(BurnJob* parent = nullptr);
-        explicit BurnJobWidget(BurnJobMp3* parent = nullptr);
+        explicit BurnJobWidget(AbstractBurnJob* parent = nullptr);
         ~BurnJobWidget();
 
     private slots:
@@ -44,7 +43,7 @@ class BurnJobWidget : public QWidget {
         Ui::BurnJobWidget* ui;
         BurnJobWidgetPrivate* d;
 
-        void updateState(BurnJob::State state);
+        void updateState(tJob::State state);
 };
 
 #endif // BURNJOBWIDGET_H
