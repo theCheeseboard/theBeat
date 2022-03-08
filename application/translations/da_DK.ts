@@ -251,6 +251,19 @@
     </message>
 </context>
 <context>
+    <name>LibraryManager</name>
+    <message>
+        <location filename="../library/librarymanager.cpp" line="449"/>
+        <source>20 Most Played Tracks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../library/librarymanager.cpp" line="451"/>
+        <source>20 Random Tracks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LyricsDisplayWidget</name>
     <message>
         <location filename="../lyrics/lyricsdisplaywidget.ui" line="14"/>
@@ -730,27 +743,27 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>Sæt alle i kø</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="168"/>
-        <location filename="../userplaylistswidget.cpp" line="170"/>
-        <location filename="../userplaylistswidget.cpp" line="180"/>
-        <location filename="../userplaylistswidget.cpp" line="182"/>
+        <location filename="../userplaylistswidget.cpp" line="190"/>
+        <location filename="../userplaylistswidget.cpp" line="192"/>
+        <location filename="../userplaylistswidget.cpp" line="202"/>
+        <location filename="../userplaylistswidget.cpp" line="204"/>
         <source>Remove</source>
         <translation>Fjern</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="169"/>
-        <location filename="../userplaylistswidget.cpp" line="181"/>
+        <location filename="../userplaylistswidget.cpp" line="191"/>
+        <location filename="../userplaylistswidget.cpp" line="203"/>
         <source>Are you sure?</source>
         <translation>Er du sikker?</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="140"/>
-        <location filename="../userplaylistswidget.cpp" line="193"/>
+        <location filename="../userplaylistswidget.cpp" line="162"/>
+        <location filename="../userplaylistswidget.cpp" line="222"/>
         <source>Tracks in %1</source>
         <translation>Sange i %1</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="134"/>
+        <location filename="../userplaylistswidget.cpp" line="156"/>
         <source>For %1</source>
         <translation>For %1</translation>
     </message>
@@ -761,23 +774,23 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location filename="../userplaylistswidget.cpp" line="93"/>
-        <location filename="../userplaylistswidget.cpp" line="137"/>
+        <location filename="../userplaylistswidget.cpp" line="159"/>
         <source>What name do you want to give to this playlist?</source>
         <translation>Hvad ønsker du at kalde denne playliste?</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="135"/>
-        <location filename="../userplaylistswidget.cpp" line="137"/>
+        <location filename="../userplaylistswidget.cpp" line="157"/>
+        <location filename="../userplaylistswidget.cpp" line="159"/>
         <source>Rename</source>
         <translation>Omdøb</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="143"/>
+        <location filename="../userplaylistswidget.cpp" line="165"/>
         <source>Export</source>
         <translation>Eksporter</translation>
     </message>
     <message numerus="yes">
-        <location filename="../userplaylistswidget.cpp" line="176"/>
+        <location filename="../userplaylistswidget.cpp" line="198"/>
         <source>For %n playlists</source>
         <translation>
             <numerusform>For %n playliste</numerusform>

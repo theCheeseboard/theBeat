@@ -20,18 +20,18 @@
 #include "burnpopover.h"
 #include "ui_burnpopover.h"
 
-#include <QDBusInterface>
-#include <QProcess>
-#include <taglib/fileref.h>
-#include <taglib/audioproperties.h>
-#include <tjobmanager.h>
 #include "burnjob.h"
 #include "burnjobmp3.h"
+#include <QDBusInterface>
+#include <QProcess>
+#include <taglib/audioproperties.h>
+#include <taglib/fileref.h>
+#include <tjobmanager.h>
 
 struct BurnPopoverPrivate {
-    QStringList files;
-    QString blockDevice;
-    quint64 playlistLength = 0;
+        QStringList files;
+        QString blockDevice;
+        quint64 playlistLength = 0;
 };
 
 BurnPopover::BurnPopover(QStringList files, QString blockDevice, QString albumName, QWidget* parent) :
@@ -111,9 +111,9 @@ void BurnPopover::updateCd() {
     } else {
         quint64 capacity = 0;
         if (ui->audioCdButton->isChecked()) {
-            //Call cdrdao to make sure this CD is large enough to fit the data
+            // Call cdrdao to make sure this CD is large enough to fit the data
             QProcess cdrdao;
-            cdrdao.start("cdrdao", {"disk-info"});
+            cdrdao.start("cdrdao", {"--device", d->blockDevice, "disk-info"});
             cdrdao.waitForFinished();
 
             while (cdrdao.canReadLine()) {
@@ -148,7 +148,6 @@ void BurnPopover::updateCd() {
         }
     }
 }
-
 
 void BurnPopover::on_audioCdButton_toggled(bool checked) {
     if (checked) updateCd();

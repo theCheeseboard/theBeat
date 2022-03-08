@@ -98,10 +98,20 @@ void UserPlaylistsWidget::on_createButton_clicked() {
 
 void UserPlaylistsWidget::updatePlaylists() {
     ui->playlistsList->clear();
+
+    for (int i = 0; i < LibraryManager::LastSmartPlaylist; i++) {
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(LibraryManager::instance()->smartPlaylistName(static_cast<LibraryManager::SmartPlaylist>(i)));
+        item->setData(Qt::UserRole, i);
+        item->setData(Qt::UserRole + 1, true);
+        ui->playlistsList->addItem(item);
+    }
+
     for (QPair<int, QString> playlist : LibraryManager::instance()->playlists()) {
         QListWidgetItem* item = new QListWidgetItem();
         item->setText(playlist.second);
         item->setData(Qt::UserRole, playlist.first);
+        item->setData(Qt::UserRole + 1, false);
         ui->playlistsList->addItem(item);
     }
 }
@@ -113,8 +123,20 @@ void UserPlaylistsWidget::loadPlaylist(int id) {
 
     ui->tracksList->setCurrentPlaylistId(id);
     ui->playlistMenuButton->setMenu(playlistManagementMenu({id}));
+    ui->playlistMenuButton->setVisible(true);
 
     d->currentPlaylist = id;
+}
+
+void UserPlaylistsWidget::loadSmartPlaylist(LibraryManager::SmartPlaylist smartPlaylist) {
+    LibraryModel* model = LibraryManager::instance()->smartPlaylist(smartPlaylist);
+    ui->tracksList->setModel(model);
+    ui->stackedWidget->setCurrentWidget(ui->tracksPage);
+
+    ui->tracksList->setCurrentPlaylistId(smartPlaylist);
+    ui->playlistMenuButton->setVisible(false);
+
+    d->currentPlaylist = smartPlaylist;
 }
 
 void UserPlaylistsWidget::updateBurn() {
@@ -190,9 +212,17 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
 }
 
 void UserPlaylistsWidget::on_playlistsList_itemActivated(QListWidgetItem* item) {
-    ui->tracksTitle->setText(tr("Tracks in %1").arg(QLocale().quoteString(item->text())));
-    loadPlaylist(item->data(Qt::UserRole).toInt());
-    d->currentPlaylistName = item->text();
+    if (item->data(Qt::UserRole + 1) == true) {
+        // Smart playlist
+        LibraryManager::SmartPlaylist smartPlaylist = static_cast<LibraryManager::SmartPlaylist>(item->data(Qt::UserRole).toInt());
+        ui->tracksTitle->setText(LibraryManager::instance()->smartPlaylistName(smartPlaylist));
+        loadSmartPlaylist(smartPlaylist);
+        d->currentPlaylistName = LibraryManager::instance()->smartPlaylistName(smartPlaylist);
+    } else {
+        ui->tracksTitle->setText(tr("Tracks in %1").arg(QLocale().quoteString(item->text())));
+        loadPlaylist(item->data(Qt::UserRole).toInt());
+        d->currentPlaylistName = item->text();
+    }
 }
 
 void UserPlaylistsWidget::on_backButton_clicked() {
@@ -225,6 +255,7 @@ void UserPlaylistsWidget::on_burnButton_clicked() {
 void UserPlaylistsWidget::on_playlistsList_customContextMenuRequested(const QPoint& pos) {
     QList<int> selectedPlaylists;
     for (QListWidgetItem* item : ui->playlistsList->selectedItems()) {
+        if (item->data(Qt::UserRole + 1).toBool()) return;
         selectedPlaylists.append(item->data(Qt::UserRole).toInt());
     }
 

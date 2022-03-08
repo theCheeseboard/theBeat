@@ -19,38 +19,42 @@
  * *************************************/
 #include "qtmultimediamediaitem.h"
 
-#include <QMediaPlayer>
-#include <QMediaMetaData>
+#include "library/librarymanager.h"
+#include <QAudioProbe>
+#include <QDir>
+#include <QFileInfo>
 #include <QImage>
+#include <QMediaMetaData>
+#include <QMediaPlayer>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QFileInfo>
-#include <QAudioProbe>
-#include <statemanager.h>
-#include <playlist.h>
 #include <helpers.h>
+#include <playlist.h>
+#include <statemanager.h>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 #include <tlogger.h>
 #include <visualisationmanager.h>
-#include <QDir>
 
 struct QtMultimediaMediaItemPrivate {
-    QMediaPlayer* player;
-    QAudioProbe* probe;
-    QImage albumArt;
-    QUrl url;
+        QMediaPlayer* player;
+        QAudioProbe* probe;
+        QImage albumArt;
+        QUrl url;
 
-    QString title;
-    QStringList artist;
-    QString album;
-    int trackNumber = 0;
-    QString lyrics;
+        QString title;
+        QStringList artist;
+        QString album;
+        int trackNumber = 0;
+        QString lyrics;
 
-    QNetworkAccessManager mgr;
+        bool firstPlay = true;
+
+        QNetworkAccessManager mgr;
 };
 
-QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
+QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) :
+    MediaItem() {
     d = new QtMultimediaMediaItemPrivate();
     d->url = url;
 
@@ -58,36 +62,35 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) : MediaItem() {
 
     d->player = new QMediaPlayer(this);
     d->player->setMedia(QMediaContent(url));
-    connect(d->player, &QMediaPlayer::mediaStatusChanged, this, [ = ](QMediaPlayer::MediaStatus status) {
+    connect(d->player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::EndOfMedia) emit done();
     });
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::metadataChanged);
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::updateAlbumArt);
     connect(d->player, &QMediaPlayer::positionChanged, this, &QtMultimediaMediaItem::elapsedChanged);
     connect(d->player, &QMediaPlayer::durationChanged, this, &QtMultimediaMediaItem::durationChanged);
-    connect(d->player, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, [ = ](QMediaPlayer::Error error) {
+    connect(d->player, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, [=](QMediaPlayer::Error error) {
 #ifdef Q_OS_WIN
         if (error == QMediaPlayer::FormatError && d->url.isLocalFile() && QFileInfo(d->url.toLocalFile()).suffix() == "flac") {
-            //Ignore
+            // Ignore
             tWarn("QtMultimediaMediaItem") << "Qt Multimedia item apparently failed with error" << error << "but since we're on Windows and this is a FLAC file we'll try anyway...";
             return;
         }
 #endif
-
 
         tWarn("QtMultimediaMediaItem") << "Qt Multimedia item" << url.toString() << "failed with error" << error;
         emit this->error();
     });
     updateAlbumArt();
 
-    connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [ = ] {
+    connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [=] {
         d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
     });
     d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
 
     d->probe = new QAudioProbe(this);
     d->probe->setSource(d->player);
-    connect(d->probe, &QAudioProbe::audioBufferProbed, this, [ = ](QAudioBuffer buffer) {
+    connect(d->probe, &QAudioProbe::audioBufferProbed, this, [=](QAudioBuffer buffer) {
         QAudioFormat format = buffer.format();
         if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::SignedInt) {
             QVector<qint16> bufferData;
@@ -146,7 +149,7 @@ void QtMultimediaMediaItem::updateAlbumArt() {
     } else if (d->player->availableMetaData().contains(QMediaMetaData::CoverArtUrlLarge)) {
         QUrl url = d->player->metaData(QMediaMetaData::CoverArtUrlLarge).toUrl();
         QNetworkReply* reply = d->mgr.get(QNetworkRequest(url));
-        connect(reply, &QNetworkReply::finished, this, [ = ] {
+        connect(reply, &QNetworkReply::finished, this, [=] {
             d->albumArt = QImage::fromData(reply->readAll());
             reply->deleteLater();
 
@@ -177,8 +180,7 @@ void QtMultimediaMediaItem::updateTaglib() {
     emit metadataChanged();
 }
 
-void QtMultimediaMediaItem::loadLyrics()
-{
+void QtMultimediaMediaItem::loadLyrics() {
     if (!d->url.isLocalFile()) return;
 
     QFileInfo file(d->url.toLocalFile());
@@ -203,6 +205,10 @@ void QtMultimediaMediaItem::stop() {
 }
 
 void QtMultimediaMediaItem::seek(quint64 ms) {
+    if (ms == 0 && d->url.isLocalFile() && (d->player->position() != 0 || d->firstPlay)) {
+        LibraryManager::instance()->bumpTrackPlayCount(d->url.toLocalFile());
+        d->firstPlay = false;
+    }
     d->player->setPosition(ms);
 }
 
@@ -263,13 +269,11 @@ QVariant QtMultimediaMediaItem::metadata(QString key) {
     }
 }
 
-QString QtMultimediaMediaItem::lyrics()
-{
+QString QtMultimediaMediaItem::lyrics() {
     return d->lyrics;
 }
 
-QString QtMultimediaMediaItem::lyricFormat()
-{
-if (d->lyrics.isEmpty()) return "";
-return "lrc";
+QString QtMultimediaMediaItem::lyricFormat() {
+    if (d->lyrics.isEmpty()) return "";
+    return "lrc";
 }

@@ -20,8 +20,8 @@
 #ifndef LIBRARYMANAGER_H
 #define LIBRARYMANAGER_H
 
-#include <QObject>
 #include "librarymodel.h"
+#include <QObject>
 
 class QSqlQuery;
 struct LibraryManagerPrivate;
@@ -31,13 +31,19 @@ class LibraryManager : public QObject {
         explicit LibraryManager(QObject* parent = nullptr);
         ~LibraryManager();
 
+        enum SmartPlaylist : int {
+            Frequents = 0,
+            Random,
+            LastSmartPlaylist
+        };
+
         struct LibraryTrack {
-            QString path;
-            QString title;
-            QString artist;
-            QString album;
-            qint64 duration;
-            int trackNumber;
+                QString path;
+                QString title;
+                QString artist;
+                QString album;
+                qint64 duration;
+                int trackNumber;
         };
 
         static LibraryManager* instance();
@@ -47,6 +53,9 @@ class LibraryManager : public QObject {
         void removeTrack(QString path);
         void blacklistTrack(QString path);
         void relocateTrack(QString oldPath, QString newPath);
+
+        void bumpTrackPlayCount(QString path);
+        int trackPlayCount(QString path);
 
         LibraryModel* allTracks();
         LibraryModel* searchTracks(QString query);
@@ -68,6 +77,9 @@ class LibraryManager : public QObject {
         LibraryModel* tracksByPlaylist(int playlist);
         void normalisePlaylistSort(int playlist);
 
+        LibraryModel* smartPlaylist(SmartPlaylist smartPlaylist);
+        QString smartPlaylistName(SmartPlaylist smartPlaylist);
+
         bool isProcessing();
 
         void erase();
@@ -80,16 +92,16 @@ class LibraryManager : public QObject {
 
     private:
         LibraryManagerPrivate* d;
+
+        int trackId(QString path);
 };
 
-
-
 struct TemporaryDatabase {
-    QString dbName;
-    QSqlDatabase db;
+        QString dbName;
+        QSqlDatabase db;
 
-    TemporaryDatabase();
-    ~TemporaryDatabase();
+        TemporaryDatabase();
+        ~TemporaryDatabase();
 };
 
 #endif // LIBRARYMANAGER_H
