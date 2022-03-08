@@ -19,24 +19,27 @@
  * *************************************/
 #include "helpers.h"
 
-#include <QImage>
 #include <QFile>
+#include <QImage>
 #include <QUrl>
 
+#include <taglib/attachedpictureframe.h>
 #include <taglib/fileref.h>
-#include <taglib/mpegfile.h>
 #include <taglib/flacfile.h>
-#include <taglib/xiphcomment.h>
-#include <taglib/id3v2framefactory.h>
 #include <taglib/id3v2frame.h>
+#include <taglib/id3v2framefactory.h>
 #include <taglib/id3v2header.h>
 #include <taglib/id3v2tag.h>
-#include <taglib/attachedpictureframe.h>
+#include <taglib/mpegfile.h>
 #include <taglib/synchronizedlyricsframe.h>
 #include <taglib/tbytevectorstream.h>
+#include <taglib/xiphcomment.h>
+
+#include <QDir>
+#include <QFileInfo>
 
 QImage Helpers::albumArt(QUrl url) {
-    auto extractID3v2 = [ = ](TagLib::ID3v2::Tag * tag) {
+    auto extractID3v2 = [=](TagLib::ID3v2::Tag* tag) {
         TagLib::ID3v2::FrameList frameList = tag->frameListMap()["APIC"];
         if (frameList.isEmpty()) return QImage();
 
@@ -51,7 +54,7 @@ QImage Helpers::albumArt(QUrl url) {
         return QImage();
     };
 
-    auto extractXiph = [ = ](TagLib::Ogg::XiphComment * xiph) {
+    auto extractXiph = [=](TagLib::Ogg::XiphComment* xiph) {
         for (TagLib::FLAC::Picture* picture : xiph->pictureList()) {
             if (picture->type() == TagLib::FLAC::Picture::FrontCover) {
                 return QImage::fromData(reinterpret_cast<const uchar*>(picture->data().data()), picture->data().size());
@@ -60,7 +63,7 @@ QImage Helpers::albumArt(QUrl url) {
         return QImage();
     };
 
-    //Try using Taglib
+    // Try using Taglib
     if (url.isLocalFile()) {
 #ifdef Q_OS_WIN
         TagLib::FileName filename = reinterpret_cast<const wchar_t*>(url.toLocalFile().constData());
@@ -69,11 +72,28 @@ QImage Helpers::albumArt(QUrl url) {
 #endif
 
         TagLib::MPEG::File mpegFile(filename);
-        if (mpegFile.hasID3v2Tag()) return extractID3v2(mpegFile.ID3v2Tag());
+        if (mpegFile.hasID3v2Tag()) {
+            QImage image = extractID3v2(mpegFile.ID3v2Tag());
+            if (!image.isNull()) return image;
+        }
 
         TagLib::FLAC::File flacFile(filename);
-        if (flacFile.hasID3v2Tag()) return extractID3v2(flacFile.ID3v2Tag());
-        if (flacFile.hasXiphComment()) return extractXiph(flacFile.xiphComment());
+        if (flacFile.hasID3v2Tag()) {
+            QImage image = extractID3v2(flacFile.ID3v2Tag());
+            if (!image.isNull()) return image;
+        }
+        if (flacFile.hasXiphComment()) {
+            QImage image = extractXiph(flacFile.xiphComment());
+            if (!image.isNull()) return image;
+        }
+
+        // See if there is a cover file in the same directory
+        QDir parentDir = QFileInfo(url.toLocalFile()).dir();
+        for (const QFileInfo& coverPath : parentDir.entryInfoList({"cover.*"})) {
+            QImage image;
+            image.load(coverPath.absoluteFilePath());
+            if (!image.isNull()) return image;
+        }
     } else if (url.scheme() == "qrc") {
         QFile qrc(url.path());
         qrc.open(QFile::ReadOnly);

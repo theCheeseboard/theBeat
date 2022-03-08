@@ -201,46 +201,51 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="29"/>
+        <location filename="../library/librarylistview.cpp" line="31"/>
         <source>Add to Playlist</source>
         <translation>Oynatma listesine ekle</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="44"/>
         <location filename="../library/librarylistview.cpp" line="46"/>
+        <location filename="../library/librarylistview.cpp" line="48"/>
         <source>Remove from Library</source>
         <translation>Kitaplıktan Kaldır</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="34"/>
-        <location filename="../library/librarylistview.cpp" line="45"/>
+        <location filename="../library/librarylistview.cpp" line="36"/>
+        <location filename="../library/librarylistview.cpp" line="47"/>
         <source>Are you sure?</source>
         <translation>Emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="33"/>
         <location filename="../library/librarylistview.cpp" line="35"/>
+        <location filename="../library/librarylistview.cpp" line="37"/>
         <source>Remove from Playlist</source>
         <translation>Oynatma Listesinden Kaldır</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="111"/>
         <location filename="../library/librarylistview.cpp" line="113"/>
+        <location filename="../library/librarylistview.cpp" line="115"/>
         <source>New Playlist</source>
         <translation>Yeni Oynatma Listesi</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="113"/>
+        <location filename="../library/librarylistview.cpp" line="115"/>
         <source>What do you want to call this playlist?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="128"/>
+        <location filename="../library/librarylistview.cpp" line="130"/>
         <source>For %1</source>
         <translation>%1 için</translation>
     </message>
+    <message>
+        <location filename="../library/librarylistview.cpp" line="135"/>
+        <source>Track Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
-        <location filename="../library/librarylistview.cpp" line="133"/>
+        <location filename="../library/librarylistview.cpp" line="146"/>
         <source>For %n items</source>
         <translation>
             <numerusform>%n öğe için</numerusform>
@@ -250,12 +255,12 @@
 <context>
     <name>LibraryManager</name>
     <message>
-        <location filename="../library/librarymanager.cpp" line="449"/>
+        <location filename="../library/librarymanager.cpp" line="455"/>
         <source>20 Most Played Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarymanager.cpp" line="451"/>
+        <location filename="../library/librarymanager.cpp" line="457"/>
         <source>20 Random Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -664,6 +669,74 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <location filename="../settingsdialog.ui" line="481"/>
         <source>Send a notification when the track changes</source>
         <translation>Şarkı değiştiğinde bir bildirim gönder</translation>
+    </message>
+</context>
+<context>
+    <name>TagEditor</name>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="35"/>
+        <source>Track Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="85"/>
+        <source>DETAILS MODIFIED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="92"/>
+        <source>Save your changes to this track to keep them saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="117"/>
+        <source>Revert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="127"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="209"/>
+        <source>Track #</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="242"/>
+        <source>Title</source>
+        <translation type="unfinished">Başlık</translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="249"/>
+        <source>Genre</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="262"/>
+        <source>Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="195"/>
+        <source>Artist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="202"/>
+        <source>Disc #</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="178"/>
+        <source>Year</source>
+        <translation type="unfinished">Yıl</translation>
+    </message>
+    <message>
+        <location filename="../tageditor/tageditor.ui" line="188"/>
+        <source>Album</source>
+        <translation type="unfinished">Albüm</translation>
     </message>
 </context>
 <context>

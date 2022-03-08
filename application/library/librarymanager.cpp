@@ -129,12 +129,14 @@ void LibraryManager::enumerateDirectory(QString path, bool ignoreBlacklist, bool
     tJobManager::trackJob(job);
 }
 
-void LibraryManager::addTrack(QString path) {
-    // Remove the path from the blacklist if it exists
-    QSqlQuery blacklistQuery;
-    blacklistQuery.prepare("DELETE FROM blacklist WHERE path=:path");
-    blacklistQuery.bindValue(":path", path);
-    blacklistQuery.exec();
+void LibraryManager::addTrack(QString path, bool updateOnly) {
+    if (!updateOnly) {
+        // Remove the path from the blacklist if it exists
+        QSqlQuery blacklistQuery;
+        blacklistQuery.prepare("DELETE FROM blacklist WHERE path=:path");
+        blacklistQuery.bindValue(":path", path);
+        blacklistQuery.exec();
+    }
 
 #ifdef Q_OS_WIN
     TagLib::FileRef file(reinterpret_cast<const wchar_t*>(path.constData()));
@@ -158,14 +160,18 @@ void LibraryManager::addTrack(QString path) {
     trackNumbers.append(tag->track());
 
     QSqlQuery q;
-    q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
-              "UPDATE SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd");
+    if (updateOnly) {
+        q.prepare("UPDATE tracks SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd WHERE path=:path");
+    } else {
+        q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
+                  "UPDATE SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd");
+        q.bindValue(":title", titles);
+        q.bindValue(":artist", artists);
+        q.bindValue(":album", albums);
+        q.bindValue(":duration", durations);
+        q.bindValue(":tracknumber", trackNumbers);
+    }
     q.bindValue(":path", paths);
-    q.bindValue(":title", titles);
-    q.bindValue(":artist", artists);
-    q.bindValue(":album", albums);
-    q.bindValue(":duration", durations);
-    q.bindValue(":tracknumber", trackNumbers);
     q.bindValue(":titleupd", titles);
     q.bindValue(":artistupd", artists);
     q.bindValue(":albumupd", albums);

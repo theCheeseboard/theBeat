@@ -133,7 +133,7 @@ void UserPlaylistsWidget::loadSmartPlaylist(LibraryManager::SmartPlaylist smartP
     ui->tracksList->setModel(model);
     ui->stackedWidget->setCurrentWidget(ui->tracksPage);
 
-    ui->tracksList->setCurrentPlaylistId(smartPlaylist);
+    ui->tracksList->setCurrentPlaylistId(-1);
     ui->playlistMenuButton->setVisible(false);
 
     d->currentPlaylist = smartPlaylist;

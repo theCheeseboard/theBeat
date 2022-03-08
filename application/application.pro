@@ -141,6 +141,7 @@ SOURCES += \
     qtmultimedia/qtmultimediamediaitem.cpp \
     qtmultimedia/qtmultimediaurlhandler.cpp \
     settingsdialog.cpp \
+    tageditor/tageditor.cpp \
     thememanager.cpp \
     trackswidget.cpp \
     userplaylistswidget.cpp \
@@ -169,6 +170,7 @@ HEADERS += \
     qtmultimedia/qtmultimediamediaitem.h \
     qtmultimedia/qtmultimediaurlhandler.h \
     settingsdialog.h \
+    tageditor/tageditor.h \
     thememanager.h \
     trackswidget.h \
     userplaylistswidget.h \
@@ -185,6 +187,7 @@ FORMS += \
     othersourceswidget.ui \
     print/printsettings.ui \
     settingsdialog.ui \
+    tageditor/tageditor.ui \
     trackswidget.ui \
     userplaylistswidget.ui
 

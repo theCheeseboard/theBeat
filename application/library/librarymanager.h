@@ -49,7 +49,7 @@ class LibraryManager : public QObject {
         static LibraryManager* instance();
 
         void enumerateDirectory(QString path, bool ignoreBlacklist = true, bool isUserAction = false);
-        void addTrack(QString path);
+        void addTrack(QString path, bool updateOnly = false);
         void removeTrack(QString path);
         void blacklistTrack(QString path);
         void relocateTrack(QString oldPath, QString newPath);
