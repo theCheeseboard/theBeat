@@ -73,22 +73,22 @@ modules:
       - type: git
         url: https://github.com/vicr123/contemporary-icons
         branch: blueprint
-- name: thefrisbee
-  buildsystem: qmake
-  builddir: true
-  config-opts:
-    - THELIBS_BUILDTOOLS_PATH = /app/share/the-libs/pri
-    - THELIBS_INSTALL_SETTINGS = /app/etc
-    - '-after'
-    - QT -= thelib
-    - QT += dbus
-    - CONFIG += blueprint
-    - LIBS += -L/app/lib -lthe-libs
-    - INCLUDEPATH += /app/include/the-libs
-  sources:
-    - type: git
-      url: https://github.com/vicr123/thefrisbee
-      branch: blueprint
+  - name: thefrisbee
+    buildsystem: qmake
+    builddir: true
+    config-opts:
+      - THELIBS_BUILDTOOLS_PATH = /app/share/the-libs/pri
+      - THELIBS_INSTALL_SETTINGS = /app/etc
+      - '-after'
+      - QT -= thelib
+      - QT += dbus
+      - CONFIG += blueprint
+      - LIBS += -L/app/lib -lthe-libs
+      - INCLUDEPATH += /app/include/the-libs
+    sources:
+      - type: git
+        url: https://github.com/vicr123/thefrisbee
+        branch: blueprint
   - name: thebeat
     buildsystem: qmake
     builddir: true
