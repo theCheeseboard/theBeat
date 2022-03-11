@@ -19,16 +19,18 @@
  * *************************************/
 #include "plugin.h"
 
-#include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
-#include <QIcon>
-#include <tapplication.h>
 #include "drivewatcher.h"
+#include <QDebug>
+#include <QIcon>
+#include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
+#include <tapplication.h>
+
+#include <QAudioDeviceInfo>
+#include <tlogger.h>
 
 struct PluginPrivate {
-
 };
 
 Plugin::Plugin() {
@@ -40,11 +42,11 @@ Plugin::~Plugin() {
     delete d;
 }
 
-
 void Plugin::activate() {
+    tDebug("Plugin") << QAudioDeviceInfo::defaultOutputDevice().supportedCodecs();
+
     new DriveWatcher();
 }
 
 void Plugin::deactivate() {
-
 }

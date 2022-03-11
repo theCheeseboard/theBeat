@@ -20,8 +20,8 @@
 #ifndef CDCHECKER_H
 #define CDCHECKER_H
 
-#include <abstractlibrarybrowser.h>
 #include <QDBusObjectPath>
+#include <abstractlibrarybrowser.h>
 
 namespace Ui {
     class CdChecker;
@@ -67,6 +67,7 @@ class CdChecker : public AbstractLibraryBrowser {
         void updateTrackListing();
         void loadMusicbrainzData(QString discId);
         void selectMusicbrainzRelease(QString release);
+        void useCdText();
 };
 
 #endif // CDCHECKER_H

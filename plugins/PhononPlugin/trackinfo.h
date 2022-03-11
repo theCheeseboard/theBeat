@@ -37,6 +37,7 @@ class TrackInfo : public QObject {
         QImage albumArt();
 
         void setData(QString title, QStringList artist, QString album);
+        void setData(TrackInfo* trackInfo);
         void setAlbumArt(QImage albumArt);
 
     signals:

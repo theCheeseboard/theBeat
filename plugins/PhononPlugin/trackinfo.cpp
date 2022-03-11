@@ -22,16 +22,16 @@
 #include <QImage>
 
 struct TrackInfoPrivate {
-    QString title;
-    QStringList artist;
-    QString album;
-    int track;
-    QImage albumArt;
+        QString title;
+        QStringList artist;
+        QString album;
+        int track;
+        QImage albumArt;
 };
 
-TrackInfo::TrackInfo() : QObject(nullptr) {
+TrackInfo::TrackInfo() :
+    QObject(nullptr) {
     d = new TrackInfoPrivate();
-
 }
 
 TrackInfo::TrackInfo(int track) {
@@ -69,6 +69,14 @@ void TrackInfo::setData(QString title, QStringList artist, QString album) {
     d->title = title;
     d->artist = artist;
     d->album = album;
+
+    emit dataChanged();
+}
+
+void TrackInfo::setData(TrackInfo* trackInfo) {
+    d->title = trackInfo->title();
+    d->artist = trackInfo->artist();
+    d->album = trackInfo->album();
 
     emit dataChanged();
 }

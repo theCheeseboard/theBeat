@@ -58,6 +58,8 @@
     #include <musicbrainz5/Track.h>
 #endif
 
+#include "cdio++/cdio.hpp"
+
 using namespace Phonon;
 
 struct CdCheckerPrivate {
@@ -69,6 +71,7 @@ struct CdCheckerPrivate {
         QStringList mbDiscIds;
         QString albumName;
         QList<TrackInfoPtr> trackInfo;
+        QList<TrackInfoPtr> cdText;
 
         QImage playlistBackground;
         QNetworkAccessManager mgr;
@@ -128,6 +131,9 @@ void CdChecker::checkCd() {
             bool available = false;
             int numberOfTracks = 0;
             QStringList mbDiscId;
+
+            QString cdTextAlbum;
+            QList<TrackInfoPtr> cdText;
     };
 
     TPROMISE_CREATE_NEW_THREAD(CdInformation, {
@@ -174,6 +180,27 @@ void CdChecker::checkCd() {
             QTimer::singleShot(30000, eventLoop, &QEventLoop::quit);
             eventLoop->exec();
 
+            CdioDevice device;
+            device.open(d->blockDevice.toUtf8());
+            track_t firstTrack = device.getFirstTrackNum();
+            track_t tracks = device.getNumTracks();
+            discmode_t discMode = device.getDiscmode();
+            CdioCDText* cdText = device.getCdtext();
+
+            if (cdText) {
+                cdText->setLanguageIndex(0);
+
+                info.cdTextAlbum = QString::fromLocal8Bit(cdText->getConst(CDTEXT_FIELD_TITLE, 0));
+                for (int i = firstTrack; i < tracks + firstTrack; i++) {
+                    TrackInfoPtr trackInfo(new TrackInfo());
+                    trackInfo->setData(QString::fromLocal8Bit(cdText->getConst(CDTEXT_FIELD_TITLE, i)),
+                        {QString::fromLocal8Bit(cdText->getConst(CDTEXT_FIELD_SONGWRITER, i))},
+                        info.cdTextAlbum);
+                    info.cdText.append(trackInfo);
+                }
+            }
+            device.close();
+
             eventLoop->deleteLater();
             cdFinder->deleteLater();
             cdController->deleteLater();
@@ -190,6 +217,7 @@ void CdChecker::checkCd() {
             ui->topWidget->update();
         } else {
             d->mbDiscIds = info.mbDiscId;
+            d->cdText = info.cdText;
             d->trackInfo.clear();
 
 #ifdef HAVE_MUSICBRAINZ
@@ -202,16 +230,23 @@ void CdChecker::checkCd() {
                 d->trackInfo.append(TrackInfoPtr(new TrackInfo(i)));
             }
 
-            d->source->setName(tr("CD"));
-            ui->albumTitleLabel->setText(tr("CD"));
-            d->albumName = tr("CD");
+            if (info.cdTextAlbum.isEmpty()) {
+                d->source->setName(tr("CD"));
+                ui->albumTitleLabel->setText(tr("CD"));
+                d->albumName = tr("CD");
+            } else {
+                d->source->setName(info.cdTextAlbum);
+                ui->albumTitleLabel->setText(info.cdTextAlbum);
+                d->albumName = info.cdTextAlbum;
+            }
             StateManager::instance()->sources()->addSource(d->source);
-
-            updateTrackListing();
 
             if (!info.mbDiscId.isEmpty()) {
                 loadMusicbrainzData(info.mbDiscId.first());
+            } else {
+                useCdText();
             }
+            updateTrackListing();
         }
     });
 }
@@ -262,6 +297,7 @@ void CdChecker::loadMusicbrainzData(QString discId) {
       })->error([=](QString error) {
         tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " failed";
         ui->musicBrainzStack->setCurrentWidget(ui->notFoundPage);
+        useCdText();
     });
 #endif
 }
@@ -352,6 +388,14 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
         if (artReply->isFinished()) ui->albumSelectionSpinner->setVisible(false);
     });
 #endif
+}
+
+void CdChecker::useCdText() {
+    for (int i = 0; i < d->trackInfo.length(); i++) {
+        d->trackInfo.at(i)->setData(d->cdText.at(i).data());
+    }
+
+    updateTrackListing();
 }
 
 void CdChecker::on_tracksWidget_itemActivated(QListWidgetItem* item) {

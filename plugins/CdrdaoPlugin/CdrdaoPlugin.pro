@@ -1,4 +1,4 @@
-QT += widgets gui dbus thelib frisbee
+QT += widgets gui dbus thelib frisbee multimedia
 
 TEMPLATE = lib
 CONFIG += plugin

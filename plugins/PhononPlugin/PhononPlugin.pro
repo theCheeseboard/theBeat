@@ -9,7 +9,7 @@ include(../plugins.pri)
 
 unix {
     CONFIG += link_pkgconfig
-    PKGCONFIG += taglib
+    PKGCONFIG += taglib libcdio++
 
     translations.files = translations/*.qm
     translations.path = $$THELIBS_INSTALL_PREFIX/share/thebeat/phononplugin/translations
