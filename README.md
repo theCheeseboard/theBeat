@@ -10,7 +10,7 @@ theBeat is an audio player.
 
 ---
 
-# Dependencies
+## Dependencies
 - Qt 5
   - Qt Core
   - Qt GUI
@@ -18,6 +18,15 @@ theBeat is an audio player.
   - Qt Multimedia
   - Qt SVG
 - [the-libs](https://github.com/vicr123/the-libs)
+- [taglib](https://taglib.org/)
+
+### Additional macOS Dependencies
+- (optional) [libmusicbrainz](https://musicbrainz.org/doc/libmusicbrainz) for CDDB queries
+
+### Additional Linux Dependencies
+- (optional) [phonon4qt5](https://invent.kde.org/libraries/phonon) for playing CDs
+- (optional) [cdrdao](http://cdrdao.sourceforge.net/) for burning CDs
+- (optional) [libmusicbrainz](https://musicbrainz.org/doc/libmusicbrainz) for CDDB queries
 
 ## Build
 Run the following commands in your terminal. 
@@ -33,8 +42,11 @@ On Linux, run the following command in your terminal (with superuser permissions
 make install
 ```
 
+## Docs
+For help with theBeat, visit the [theBeat Documentation](https://help.vicr123.com/docs/thebeat/intro).
+
 ---
 
-> © Victor Tran, 2020. This project is licensed under the GNU General Public License, version 3, or at your option, any later version.
+> © Victor Tran, 2022. This project is licensed under the GNU General Public License, version 3, or at your option, any later version.
 > 
 > Check the [LICENSE](LICENSE) file for more information.
