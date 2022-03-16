@@ -38,76 +38,107 @@
 #include <QDir>
 #include <QFileInfo>
 
-QImage Helpers::albumArt(QUrl url) {
-    auto extractID3v2 = [=](TagLib::ID3v2::Tag* tag) {
-        TagLib::ID3v2::FrameList frameList = tag->frameListMap()["APIC"];
-        if (frameList.isEmpty()) return QImage();
+QCache<QUrl, QImage> Helpers::artCache(50000);
 
-        TagLib::ID3v2::AttachedPictureFrame* frame;
-        for (TagLib::ID3v2::FrameList::ConstIterator i = frameList.begin(); i != frameList.end(); i++) {
-            frame = static_cast<TagLib::ID3v2::AttachedPictureFrame*>(*i);
-            if (frame->type() == TagLib::ID3v2::AttachedPictureFrame::FrontCover) {
-                return QImage::fromData(reinterpret_cast<const uchar*>(frame->picture().data()), frame->picture().size());
+tPromise<QImage>* Helpers::albumArt(QUrl url) {
+    return TPROMISE_CREATE_SAME_THREAD(QImage, {
+        return TPROMISE_CREATE_NEW_THREAD(QImage, {
+            Q_UNUSED(rej)
+
+            if (artCache.contains(url)) {
+                res(artCache.object(url)->copy());
+                return;
             }
-        }
 
-        return QImage();
-    };
+            auto extractID3v2 = [=](TagLib::ID3v2::Tag* tag) {
+                TagLib::ID3v2::FrameList frameList = tag->frameListMap()["APIC"];
+                if (frameList.isEmpty()) return QImage();
 
-    auto extractXiph = [=](TagLib::Ogg::XiphComment* xiph) {
-        for (TagLib::FLAC::Picture* picture : xiph->pictureList()) {
-            if (picture->type() == TagLib::FLAC::Picture::FrontCover) {
-                return QImage::fromData(reinterpret_cast<const uchar*>(picture->data().data()), picture->data().size());
-            }
-        }
-        return QImage();
-    };
+                TagLib::ID3v2::AttachedPictureFrame* frame;
+                for (TagLib::ID3v2::FrameList::ConstIterator i = frameList.begin(); i != frameList.end(); i++) {
+                    frame = static_cast<TagLib::ID3v2::AttachedPictureFrame*>(*i);
+                    if (frame->type() == TagLib::ID3v2::AttachedPictureFrame::FrontCover) {
+                        return QImage::fromData(reinterpret_cast<const uchar*>(frame->picture().data()), frame->picture().size());
+                    }
+                }
 
-    // Try using Taglib
-    if (url.isLocalFile()) {
+                return QImage();
+            };
+
+            auto extractXiph = [=](TagLib::Ogg::XiphComment* xiph) {
+                for (TagLib::FLAC::Picture* picture : xiph->pictureList()) {
+                    if (picture->type() == TagLib::FLAC::Picture::FrontCover) {
+                        return QImage::fromData(reinterpret_cast<const uchar*>(picture->data().data()), picture->data().size());
+                    }
+                }
+                return QImage();
+            };
+
+            // Try using Taglib
+            if (url.isLocalFile()) {
 #ifdef Q_OS_WIN
-        TagLib::FileName filename = reinterpret_cast<const wchar_t*>(url.toLocalFile().constData());
+                TagLib::FileName filename = reinterpret_cast<const wchar_t*>(url.toLocalFile().constData());
 #else
-        TagLib::FileName filename = url.toLocalFile().toUtf8();
+                                                                                     TagLib::FileName filename = url.toLocalFile().toUtf8();
 #endif
 
-        TagLib::MPEG::File mpegFile(filename);
-        if (mpegFile.hasID3v2Tag()) {
-            QImage image = extractID3v2(mpegFile.ID3v2Tag());
-            if (!image.isNull()) return image;
-        }
+                TagLib::MPEG::File mpegFile(filename);
+                if (mpegFile.hasID3v2Tag()) {
+                    QImage image = extractID3v2(mpegFile.ID3v2Tag());
+                    if (!image.isNull()) {
+                        res(image);
+                        return;
+                    }
+                }
 
-        TagLib::FLAC::File flacFile(filename);
-        if (flacFile.hasID3v2Tag()) {
-            QImage image = extractID3v2(flacFile.ID3v2Tag());
-            if (!image.isNull()) return image;
-        }
-        if (flacFile.hasXiphComment()) {
-            QImage image = extractXiph(flacFile.xiphComment());
-            if (!image.isNull()) return image;
-        }
+                TagLib::FLAC::File flacFile(filename);
+                if (flacFile.hasID3v2Tag()) {
+                    QImage image = extractID3v2(flacFile.ID3v2Tag());
+                    if (!image.isNull()) {
+                        res(image);
+                        return;
+                    }
+                }
+                if (flacFile.hasXiphComment()) {
+                    QImage image = extractXiph(flacFile.xiphComment());
+                    if (!image.isNull()) {
+                        res(image);
+                        return;
+                    }
+                }
 
-        // See if there is a cover file in the same directory
-        QDir parentDir = QFileInfo(url.toLocalFile()).dir();
-        for (const QFileInfo& coverPath : parentDir.entryInfoList({"cover.*"})) {
-            QImage image;
-            image.load(coverPath.absoluteFilePath());
-            if (!image.isNull()) return image;
-        }
-    } else if (url.scheme() == "qrc") {
-        QFile qrc(url.path());
-        qrc.open(QFile::ReadOnly);
+                // See if there is a cover file in the same directory
+                QDir parentDir = QFileInfo(url.toLocalFile()).dir();
+                for (const QFileInfo& coverPath : parentDir.entryInfoList({"cover.*"})) {
+                    QImage image;
+                    image.load(coverPath.absoluteFilePath());
+                    if (!image.isNull()) {
+                        res(image);
+                        return;
+                    }
+                }
+            } else if (url.scheme() == "qrc") {
+                QFile qrc(url.path());
+                qrc.open(QFile::ReadOnly);
 
-        QByteArray ba = qrc.readAll();
+                QByteArray ba = qrc.readAll();
 
-        TagLib::ByteVectorStream* stream = new TagLib::ByteVectorStream(TagLib::ByteVector(ba.data(), ba.length()));
-        TagLib::MPEG::File mpegFile(stream, TagLib::ID3v2::FrameFactory::instance());
+                TagLib::ByteVectorStream* stream = new TagLib::ByteVectorStream(TagLib::ByteVector(ba.data(), ba.length()));
+                TagLib::MPEG::File mpegFile(stream, TagLib::ID3v2::FrameFactory::instance());
 
-        QImage image;
-        if (mpegFile.hasID3v2Tag()) image = extractID3v2(mpegFile.ID3v2Tag());
-        delete stream;
-        return image;
-    }
+                QImage image;
+                if (mpegFile.hasID3v2Tag()) image = extractID3v2(mpegFile.ID3v2Tag());
+                delete stream;
+                if (!image.isNull()) {
+                    res(image);
+                    return;
+                }
+            }
 
-    return QImage();
+            res(QImage());
+        })->then([=](QImage art) {
+            artCache.insert(url, new QImage(art), art.sizeInBytes());
+            res(art);
+        });
+    });
 }

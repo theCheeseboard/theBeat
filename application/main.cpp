@@ -19,22 +19,22 @@
  * *************************************/
 #include "mainwindow.h"
 
-#include <QDir>
-#include <QUrl>
 #include "library/librarymanager.h"
+#include "qtmultimedia/qtmultimediaurlhandler.h"
+#include "thememanager.h"
+#include <QCommandLineParser>
+#include <QDir>
+#include <QJsonArray>
+#include <QUrl>
+#include <playlist.h>
+#include <statemanager.h>
 #include <tapplication.h>
 #include <tsettings.h>
-#include <QCommandLineParser>
 #include <tstylemanager.h>
-#include <QJsonArray>
-#include <statemanager.h>
-#include <playlist.h>
-#include "thememanager.h"
-#include "qtmultimedia/qtmultimediaurlhandler.h"
 #include <urlmanager.h>
 
-#include <visualisationmanager.h>
 #include "visualisations/scopevisualisation.h"
+#include <visualisationmanager.h>
 
 #ifdef HAVE_THEINSTALLER
     #include <updatechecker.h>
@@ -96,19 +96,19 @@ int main(int argc, char* argv[]) {
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addVersionOption();
-//    parser.addOption({"force-contemporary-palette", a.translate("main", "Force theBeat to use the Contemporary colour palette")});
+    //    parser.addOption({"force-contemporary-palette", a.translate("main", "Force theBeat to use the Contemporary colour palette")});
     parser.addPositionalArgument(a.translate("main", "file"), a.translate("main", "File to open"), QStringLiteral("[%1]").arg(a.translate("main", "file")));
     parser.process(a);
 
-//    if (parser.isSet("force-contemporary-palette")) {
-//        shouldLoadThemeManager = true;
-//    }
+    //    if (parser.isSet("force-contemporary-palette")) {
+    //        shouldLoadThemeManager = true;
+    //    }
 
-//    if (shouldLoadThemeManager) {
-//        new ThemeManager();
-//    }
+    //    if (shouldLoadThemeManager) {
+    //        new ThemeManager();
+    //    }
 
-    QObject::connect(&settings, &tSettings::settingChanged, [ = ](QString key, QVariant value) {
+    QObject::connect(&settings, &tSettings::settingChanged, [=](QString key, QVariant value) {
         if (key == "theme/mode") {
             tStyleManager::setOverrideStyleForApplication(value.toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
         }
@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
 
     MainWindow* w = new MainWindow();
 
-    QObject::connect(&a, &tApplication::singleInstanceMessage, [ = ](QJsonObject launchMessage) {
+    QObject::connect(&a, &tApplication::singleInstanceMessage, [=](QJsonObject launchMessage) {
         if (launchMessage.contains("files")) {
             QJsonArray files = launchMessage.value("files").toArray();
             MediaItem* firstItem = nullptr;
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
             }
         }
     });
-    QObject::connect(&a, &tApplication::dockIconClicked, [ = ] {
+    QObject::connect(&a, &tApplication::dockIconClicked, [=] {
         w->show();
         w->activateWindow();
     });
@@ -173,6 +173,8 @@ int main(int argc, char* argv[]) {
     }
 
     int retval = a.exec();
+
+    StateManager::instance()->playlist()->pause();
 
     return retval;
 }

@@ -22,12 +22,15 @@
 
 #include "libthebeat_global.h"
 #include <QObject>
+#include <tpromise.h>
 
 class LIBTHEBEAT_EXPORT Helpers : public QObject {
         Q_OBJECT
     public:
-        static QImage albumArt(QUrl url);
+        static tPromise<QImage>* albumArt(QUrl url);
 
+    private:
+        static QCache<QUrl, QImage> artCache;
 };
 
 #endif // HELPERS_H

@@ -37,7 +37,7 @@
 #include <visualisationmanager.h>
 
 struct QtMultimediaMediaItemPrivate {
-        QMediaPlayer* player;
+        QMediaPlayer* player = nullptr;
         QAudioProbe* probe;
         QImage albumArt;
         QUrl url;
@@ -60,8 +60,22 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) :
 
     tDebug("QtMultimediaMediaItem") << "Constructing Qt Multimedia backend item for URL" << url.toString();
 
+    updateAlbumArt();
+    updateTaglib();
+    loadLyrics();
+}
+
+QtMultimediaMediaItem::~QtMultimediaMediaItem() {
+    delete d;
+}
+
+void QtMultimediaMediaItem::preparePlayer() {
+    if (d->player) return;
+
+    tDebug("QtMultimediaMediaItem") << "Preparing Qt Multimedia player for URL" << d->url.toString();
+
     d->player = new QMediaPlayer(this);
-    d->player->setMedia(QMediaContent(url));
+    d->player->setMedia(QMediaContent(d->url));
     connect(d->player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::EndOfMedia) emit done();
     });
@@ -78,7 +92,7 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) :
         }
 #endif
 
-        tWarn("QtMultimediaMediaItem") << "Qt Multimedia item" << url.toString() << "failed with error" << error;
+        tWarn("QtMultimediaMediaItem") << "Qt Multimedia item" << d->url.toString() << "failed with error" << error;
         emit this->error();
     });
     updateAlbumArt();
@@ -134,19 +148,12 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) :
             tDebug("QtMultimediaMediaItem") << "Sample size " << format.sampleSize() << "; Sample type " << format.sampleType() << "; Channels " << format.channelCount();
         }
     });
-
-    updateTaglib();
-    loadLyrics();
-}
-
-QtMultimediaMediaItem::~QtMultimediaMediaItem() {
-    delete d;
 }
 
 void QtMultimediaMediaItem::updateAlbumArt() {
-    if (d->player->availableMetaData().contains(QMediaMetaData::CoverArtImage)) {
+    if (d->player && d->player->availableMetaData().contains(QMediaMetaData::CoverArtImage)) {
         d->albumArt = d->player->metaData(QMediaMetaData::CoverArtImage).value<QImage>();
-    } else if (d->player->availableMetaData().contains(QMediaMetaData::CoverArtUrlLarge)) {
+    } else if (d->player && d->player->availableMetaData().contains(QMediaMetaData::CoverArtUrlLarge)) {
         QUrl url = d->player->metaData(QMediaMetaData::CoverArtUrlLarge).toUrl();
         QNetworkReply* reply = d->mgr.get(QNetworkRequest(url));
         connect(reply, &QNetworkReply::finished, this, [=] {
@@ -156,7 +163,9 @@ void QtMultimediaMediaItem::updateAlbumArt() {
             emit metadataChanged();
         });
     } else {
-        d->albumArt = Helpers::albumArt(d->url);
+        Helpers::albumArt(d->url)->then([=](QImage albumArt) {
+            d->albumArt = albumArt;
+        });
     }
 }
 
@@ -193,18 +202,22 @@ void QtMultimediaMediaItem::loadLyrics() {
 }
 
 void QtMultimediaMediaItem::play() {
+    preparePlayer();
     d->player->play();
 }
 
 void QtMultimediaMediaItem::pause() {
+    preparePlayer();
     d->player->pause();
 }
 
 void QtMultimediaMediaItem::stop() {
+    preparePlayer();
     d->player->stop();
 }
 
 void QtMultimediaMediaItem::seek(quint64 ms) {
+    preparePlayer();
     if (ms == 0 && d->url.isLocalFile() && (d->player->position() != 0 || d->firstPlay)) {
         LibraryManager::instance()->bumpTrackPlayCount(d->url.toLocalFile());
         d->firstPlay = false;
@@ -213,15 +226,17 @@ void QtMultimediaMediaItem::seek(quint64 ms) {
 }
 
 quint64 QtMultimediaMediaItem::elapsed() {
+    if (!d->player) return 0;
     return d->player->position();
 }
 
 quint64 QtMultimediaMediaItem::duration() {
+    preparePlayer();
     return d->player->duration();
 }
 
 QString QtMultimediaMediaItem::title() {
-    if (d->player->availableMetaData().contains(QMediaMetaData::Title)) {
+    if (d->player && d->player->availableMetaData().contains(QMediaMetaData::Title)) {
         return d->player->metaData(QMediaMetaData::Title).toString();
     } else if (!d->title.isEmpty()) {
         return d->title;
@@ -235,7 +250,7 @@ QString QtMultimediaMediaItem::title() {
 }
 
 QStringList QtMultimediaMediaItem::authors() {
-    if (d->player->availableMetaData().contains(QMediaMetaData::Author)) {
+    if (d->player && d->player->availableMetaData().contains(QMediaMetaData::Author)) {
         QStringList data = d->player->metaData(QMediaMetaData::Author).toStringList();
         data.append(d->player->metaData(QMediaMetaData::AlbumArtist).toString());
         data.append(d->player->metaData(QMediaMetaData::ContributingArtist).toString());
@@ -248,7 +263,7 @@ QStringList QtMultimediaMediaItem::authors() {
 }
 
 QString QtMultimediaMediaItem::album() {
-    if (d->player->availableMetaData().contains(QMediaMetaData::AlbumTitle)) {
+    if (d->player && d->player->availableMetaData().contains(QMediaMetaData::AlbumTitle)) {
         return d->player->metaData(QMediaMetaData::AlbumTitle).toString();
     } else {
         return d->album;
@@ -260,7 +275,7 @@ QImage QtMultimediaMediaItem::albumArt() {
 }
 
 QVariant QtMultimediaMediaItem::metadata(QString key) {
-    if (d->player->availableMetaData().contains(key)) {
+    if (d->player && d->player->availableMetaData().contains(key)) {
         return d->player->metaData(key);
     } else if (key == QMediaMetaData::TrackNumber) {
         return d->trackNumber;

@@ -34,6 +34,7 @@ class QtMultimediaMediaItem : public MediaItem {
     private:
         QtMultimediaMediaItemPrivate* d;
 
+        void preparePlayer();
         void updateAlbumArt();
         void updateTaglib();
         void loadLyrics();

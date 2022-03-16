@@ -391,8 +391,10 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
 }
 
 void CdChecker::useCdText() {
-    for (int i = 0; i < d->trackInfo.length(); i++) {
-        d->trackInfo.at(i)->setData(d->cdText.at(i).data());
+    if (!d->cdText.isEmpty()) {
+        for (int i = 0; i < d->trackInfo.length(); i++) {
+            d->trackInfo.at(i)->setData(d->cdText.at(i).data());
+        }
     }
 
     updateTrackListing();

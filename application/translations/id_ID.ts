@@ -183,17 +183,17 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="195"/>
+        <location filename="../library/librarymodel.cpp" line="194"/>
         <source>by %1</source>
         <translation>oleh %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="196"/>
+        <location filename="../library/librarymodel.cpp" line="195"/>
         <source>on %1</source>
         <translation>dalam %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="198"/>
+        <location filename="../library/librarymodel.cpp" line="197"/>
         <source>Track</source>
         <translation>Trek</translation>
     </message>
