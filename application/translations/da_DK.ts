@@ -538,12 +538,12 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="265"/>
+        <location filename="../playlistmodel.cpp" line="312"/>
         <source>Track</source>
         <translation>Sang</translation>
     </message>
     <message>
-        <location filename="../playlistmodel.cpp" line="288"/>
+        <location filename="../playlistmodel.cpp" line="335"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>

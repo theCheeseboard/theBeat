@@ -41,8 +41,8 @@
 QCache<QUrl, QImage> Helpers::artCache(50000);
 
 tPromise<QImage>* Helpers::albumArt(QUrl url) {
-    return TPROMISE_CREATE_SAME_THREAD(QImage, {
-        return TPROMISE_CREATE_NEW_THREAD(QImage, {
+    return tPromise<QImage>::runOnSameThread([=](tPromiseFunctions<QImage>::SuccessFunction res, tPromiseFunctions<QImage>::FailureFunction rej) {
+        return tPromise<QImage>::runOnNewThread([=](tPromiseFunctions<QImage>::SuccessFunction res, tPromiseFunctions<QImage>::FailureFunction rej) {
             Q_UNUSED(rej)
 
             if (artCache.contains(url)) {
@@ -79,7 +79,7 @@ tPromise<QImage>* Helpers::albumArt(QUrl url) {
 #ifdef Q_OS_WIN
                 TagLib::FileName filename = reinterpret_cast<const wchar_t*>(url.toLocalFile().constData());
 #else
-                                                                                     TagLib::FileName filename = url.toLocalFile().toUtf8();
+                TagLib::FileName filename = url.toLocalFile().toUtf8();
 #endif
 
                 TagLib::MPEG::File mpegFile(filename);
