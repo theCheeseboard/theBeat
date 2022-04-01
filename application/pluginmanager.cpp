@@ -25,7 +25,7 @@
 #include <QPluginLoader>
 #include <plugininterface.h>
 #include <tlogger.h>
-#include <the-libs_global.h>
+#include <libcontemporary_global.h>
 
 PluginManager::PluginManager(QObject* parent) : QObject(parent) {
 

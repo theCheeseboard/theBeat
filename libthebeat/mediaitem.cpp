@@ -20,6 +20,7 @@
 #include "mediaitem.h"
 
 #include <QVariant>
+#include "helpers.h"
 
 MediaItem::MediaItem() : QObject(nullptr) {
 
@@ -28,4 +29,8 @@ MediaItem::MediaItem() : QObject(nullptr) {
 QVariant MediaItem::metadata(QString key) {
     Q_UNUSED(key);
     return QVariant();
+}
+
+QVariant MediaItem::metadata(QMediaMetaData::Key key) {
+  return metadata(Helpers::stringForMetadataKey(key));
 }

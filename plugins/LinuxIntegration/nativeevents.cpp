@@ -24,7 +24,7 @@
 #include <playlist.h>
 
 #ifdef HAVE_X11
-    #include <QX11Info>
+    #include <tx11info.h>
 
     #include <X11/Xlib.h>
     #include <X11/XF86keysym.h>
@@ -36,32 +36,32 @@ NativeEvents::NativeEvents(QObject* parent) : QObject(parent) {
     QApplication::instance()->installNativeEventFilter(this);
 
 #ifdef HAVE_X11
-    if (QX11Info::isPlatformX11()) {
+    if (tX11Info::isPlatformX11()) {
         //Capture keys using X11
-        XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioPlay), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
-        XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioNext), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
-        XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioPrev), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
-        XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioStop), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+        XGrabKey(tX11Info::display(), XKeysymToKeycode(tX11Info::display(), XF86XK_AudioPlay), AnyModifier, RootWindow(tX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+        XGrabKey(tX11Info::display(), XKeysymToKeycode(tX11Info::display(), XF86XK_AudioNext), AnyModifier, RootWindow(tX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+        XGrabKey(tX11Info::display(), XKeysymToKeycode(tX11Info::display(), XF86XK_AudioPrev), AnyModifier, RootWindow(tX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+        XGrabKey(tX11Info::display(), XKeysymToKeycode(tX11Info::display(), XF86XK_AudioStop), AnyModifier, RootWindow(tX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     }
 #endif
 }
 
-bool NativeEvents::nativeEventFilter(const QByteArray& eventType, void* message, long* result) {
+bool NativeEvents::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) {
 #ifdef HAVE_X11
     if (eventType == "xcb_generic_event_t") {
         xcb_generic_event_t* event = static_cast<xcb_generic_event_t*>(message);
         if (event->response_type == XCB_KEY_PRESS) {
             xcb_key_press_event_t* button = static_cast<xcb_key_press_event_t*>(message);
 
-            if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioPlay) || button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioStop)) {
+            if (button->detail == XKeysymToKeycode(tX11Info::display(), XF86XK_AudioPlay) || button->detail == XKeysymToKeycode(tX11Info::display(), XF86XK_AudioStop)) {
                 if (StateManager::instance()->playlist()->state() == Playlist::Playing) {
                     StateManager::instance()->playlist()->pause();
                 } else {
                     StateManager::instance()->playlist()->play();
                 }
-            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioNext)) {
+            } else if (button->detail == XKeysymToKeycode(tX11Info::display(), XF86XK_AudioNext)) {
                 StateManager::instance()->playlist()->next();
-            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioPrev)) {
+            } else if (button->detail == XKeysymToKeycode(tX11Info::display(), XF86XK_AudioPrev)) {
                 StateManager::instance()->playlist()->previous();
             }
         }

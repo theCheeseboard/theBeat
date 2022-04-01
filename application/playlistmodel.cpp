@@ -28,7 +28,7 @@
 #include <QUrl>
 #include <playlist.h>
 #include <statemanager.h>
-#include <the-libs_global.h>
+#include <libcontemporary_global.h>
 #include <tpaintcalculator.h>
 
 struct PlaylistModelPrivate {
@@ -36,6 +36,8 @@ struct PlaylistModelPrivate {
         QVector<PlaylistModel::DrawType> drawTypes;
         QVector<int> playlistIndexes;
         QVector<int> playlistPriorHeaders;
+
+        int fullHeaders = 0;
 };
 
 PlaylistModel::PlaylistModel(QObject* parent) :
@@ -73,14 +75,7 @@ PlaylistModel::~PlaylistModel() {
 int PlaylistModel::rowCount(const QModelIndex& parent) const {
     if (parent.isValid()) return 0;
 
-    int headers = 0;
-    for (int i = 0; i < StateManager::instance()->playlist()->items().count(); i++) {
-        if (drawTypeForPlaylistIndex(i) == GroupHeader) {
-            headers++;
-        }
-    }
-
-    return StateManager::instance()->playlist()->items().count() + headers;
+    return StateManager::instance()->playlist()->items().count() + d->fullHeaders;
 }
 
 QVariant PlaylistModel::data(const QModelIndex& index, int role) const {
@@ -213,9 +208,18 @@ PlaylistModel::DrawType PlaylistModel::drawTypeForPlaylistIndex(int index) const
 }
 
 void PlaylistModel::invalidateDrawTypes(int from) {
+    if (from < 0) from = 0;
     d->drawTypes.resize(from);
     d->playlistIndexes.resize(from);
     d->playlistPriorHeaders.resize(from);
+
+    int headers = 0;
+    for (int i = 0; i < StateManager::instance()->playlist()->items().count(); i++) {
+        if (drawTypeForPlaylistIndex(i) == GroupHeader) {
+            headers++;
+        }
+    }
+    d->fullHeaders = headers;
 }
 
 int PlaylistModel::playlistIndex(int index, int* priorHeaders) const {
@@ -300,7 +304,7 @@ void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
                 QImage artImage = currentItem->albumArt();
                 if (artImage.isNull()) {
                     artImage = QIcon::fromTheme("media-album-cover").pixmap(artRect.size()).toImage();
-                    theLibsGlobal::tintImage(artImage, option.palette.color(QPalette::WindowText));
+                    libContemporaryCommon::tintImage(artImage, option.palette.color(QPalette::WindowText));
                 } else {
                     artImage = artImage.scaled(artRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }
@@ -325,7 +329,7 @@ void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
                         playRect.moveCenter(QPoint(artImage.width() / 2, artImage.height() / 2));
 
                         QImage playImage = QIcon::fromTheme("media-playback-start").pixmap(playRect.size()).toImage();
-                        theLibsGlobal::tintImage(playImage, option.palette.color(QPalette::WindowText));
+                        libContemporaryCommon::tintImage(playImage, option.palette.color(QPalette::WindowText));
                         painter.drawImage(playRect, playImage);
                     }
                 } else {
@@ -382,7 +386,9 @@ void PlaylistDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
                     iconRect.moveCenter(trackRect.center());
 
                     paintCalculator.addRect(iconRect, [=](QRectF paintBounds) {
-                        painter->drawPixmap(paintBounds.toRect(), QIcon::fromTheme("media-playback-start").pixmap(iconRect.size()));
+                        QImage playImage = QIcon::fromTheme("media-playback-start").pixmap(paintBounds.size().toSize()).toImage();
+                        libContemporaryCommon::tintImage(playImage, option.palette.color(QPalette::WindowText));
+                        painter->drawImage(paintBounds, playImage);
                     });
                 } else if (trackNumber == 0) {
                     paintCalculator.addRect(trackRect, [=](QRectF paintBounds) {

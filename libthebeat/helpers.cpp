@@ -39,6 +39,35 @@
 #include <QFileInfo>
 
 QCache<QUrl, QImage> Helpers::artCache(50000);
+QMap<QMediaMetaData::Key, QString> Helpers::metadataStrings = {
+    {QMediaMetaData::Title, "Title"},
+    {QMediaMetaData::Author, "Author"},
+    {QMediaMetaData::Comment, "Comment"},
+    {QMediaMetaData::Description, "Description"},
+    {QMediaMetaData::Genre, "Genre"},
+    {QMediaMetaData::Date, "Date"},
+    {QMediaMetaData::Language, "Language"},
+    {QMediaMetaData::Publisher, "Publisher"},
+    {QMediaMetaData::Copyright, "Copyright"},
+    {QMediaMetaData::Url, "Url"},
+    {QMediaMetaData::Duration, "Duration"},
+    {QMediaMetaData::MediaType, "MediaType"},
+    {QMediaMetaData::FileFormat, "FileFormat"},
+    {QMediaMetaData::AudioBitRate, "AudioBitRate"},
+    {QMediaMetaData::AudioCodec, "AudioCodec"},
+    {QMediaMetaData::VideoBitRate, "VideoBitRate"},
+    {QMediaMetaData::VideoCodec, "VideoCodec"},
+    {QMediaMetaData::VideoFrameRate, "VideoFrameRate"},
+    {QMediaMetaData::AlbumTitle, "AlbumTitle"},
+    {QMediaMetaData::AlbumArtist, "AlbumArtist"},
+    {QMediaMetaData::ContributingArtist, "ContributingArtist"},
+    {QMediaMetaData::TrackNumber, "TrackNumber"},
+    {QMediaMetaData::Composer, "Composer"},
+    {QMediaMetaData::ThumbnailImage, "ThumbnailImage"},
+    {QMediaMetaData::CoverArtImage, "CoverArtImage"},
+    {QMediaMetaData::Orientation, "Orientation"},
+    {QMediaMetaData::Resolution, "Resolution"}
+};
 
 tPromise<QImage>* Helpers::albumArt(QUrl url) {
     return tPromise<QImage>::runOnSameThread([=](tPromiseFunctions<QImage>::SuccessFunction res, tPromiseFunctions<QImage>::FailureFunction rej) {
@@ -141,4 +170,10 @@ tPromise<QImage>* Helpers::albumArt(QUrl url) {
             res(art);
         });
     });
+}
+QString Helpers::stringForMetadataKey(QMediaMetaData::Key key) {
+  return metadataStrings.value(key);
+}
+QMediaMetaData::Key Helpers::metadataKeyForString(QString string) {
+  return metadataStrings.key(string);
 }

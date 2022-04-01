@@ -33,7 +33,7 @@ class NativeEvents : public QObject, public QAbstractNativeEventFilter {
 
         // QAbstractNativeEventFilter interface
     public:
-        bool nativeEventFilter(const QByteArray& eventType, void* message, long* result);
+        bool nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result);
 };
 
 #endif // NATIVEEVENTS_H

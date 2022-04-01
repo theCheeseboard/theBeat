@@ -1,0 +1,7 @@
+set(libthefrisbee_VERSION 6.0.0)
+
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/libthebeatTargets.cmake")
+
+check_required_components(libthebeat)

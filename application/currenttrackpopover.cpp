@@ -152,15 +152,12 @@ void CurrentTrackPopover::updateMetadata() {
     addMetadataEntry(tr("Name"), d->currentItem->metadata(QMediaMetaData::AlbumTitle).toString());
 
     int track = d->currentItem->metadata(QMediaMetaData::TrackNumber).toInt();
-    int totalTrack = d->currentItem->metadata(QMediaMetaData::TrackCount).toInt();
-    if (track > 0 && totalTrack > 0) {
-        addMetadataEntry(tr("Track"), tr("%1 of %2", "Track 1 of 12").arg(track).arg(totalTrack));
-    } else if (track > 0) {
         addMetadataEntry(tr("Track"), locale.toString(track));
-    }
 
     addMetadataTitle(tr("Track"));
-    if (d->currentItem->metadata(QMediaMetaData::Year).toInt() > 0) addMetadataEntry(tr("Year"), QString::number(d->currentItem->metadata(QMediaMetaData::Year).toInt()));
+
+    //TODO: Year Metadata
+//    if (d->currentItem->metadata(QMediaMetaData::Year).toInt() > 0) addMetadataEntry(tr("Year"), QString::number(d->currentItem->metadata(QMediaMetaData::Year).toInt()));
 
     this->update();
 }

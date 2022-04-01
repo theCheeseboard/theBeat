@@ -27,7 +27,6 @@
 #include <statemanager.h>
 #include <tapplication.h>
 
-#include <QAudioDeviceInfo>
 #include <tlogger.h>
 
 struct PluginPrivate {
@@ -43,8 +42,6 @@ Plugin::~Plugin() {
 }
 
 void Plugin::activate() {
-    tDebug("Plugin") << QAudioDeviceInfo::defaultOutputDevice().supportedCodecs();
-
     new DriveWatcher();
 }
 

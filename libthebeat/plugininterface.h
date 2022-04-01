@@ -30,7 +30,7 @@ class PluginInterface {
         virtual void deactivate() = 0;
 };
 
-#define PluginInterface_iid "com.vicr123.thebeat.PluginInterface/1.0"
+#define PluginInterface_iid "com.vicr123.thebeat.PluginInterface/4.0"
 Q_DECLARE_INTERFACE(PluginInterface, PluginInterface_iid);
 
 #endif // PLUGININTERFACE_H

@@ -23,6 +23,7 @@
 #include "libthebeat_global.h"
 #include <QObject>
 #include <QSharedPointer>
+#include <QMediaMetaData>
 
 class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         Q_OBJECT
@@ -41,6 +42,8 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         virtual QString album() = 0;
         virtual QImage albumArt() = 0;
         virtual QVariant metadata(QString key);
+
+        QVariant metadata(QMediaMetaData::Key key);
 
         virtual QString lyrics() = 0;
         virtual QString lyricFormat() = 0;

@@ -116,22 +116,10 @@
         <translation>أسم</translation>
     </message>
     <message>
+        <location filename="../currenttrackpopover.cpp" line="155"/>
         <location filename="../currenttrackpopover.cpp" line="157"/>
-        <location filename="../currenttrackpopover.cpp" line="159"/>
-        <location filename="../currenttrackpopover.cpp" line="162"/>
         <source>Track</source>
         <translation>مسار</translation>
-    </message>
-    <message>
-        <location filename="../currenttrackpopover.cpp" line="157"/>
-        <source>%1 of %2</source>
-        <comment>Track 1 of 12</comment>
-        <translation>1% من %2</translation>
-    </message>
-    <message>
-        <location filename="../currenttrackpopover.cpp" line="163"/>
-        <source>Year</source>
-        <translation>السنة</translation>
     </message>
 </context>
 <context>
@@ -554,12 +542,12 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="312"/>
+        <location filename="../playlistmodel.cpp" line="316"/>
         <source>Track</source>
         <translation>مسار</translation>
     </message>
     <message>
-        <location filename="../playlistmodel.cpp" line="335"/>
+        <location filename="../playlistmodel.cpp" line="339"/>
         <source>Album</source>
         <translation>ألبوم</translation>
     </message>
@@ -590,6 +578,91 @@
     </message>
     <message>
         <location filename="../print/printcontroller.cpp" line="197"/>
+        <source>on %1</source>
+        <translation type="unfinished">على %1</translation>
+    </message>
+</context>
+<context>
+    <name>PrintPopover</name>
+    <message>
+        <location filename="../print/printpopover.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="50"/>
+        <source>Track Listing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="63"/>
+        <source>Copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="75"/>
+        <source>PRINT OPTIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="87"/>
+        <source>PRINT TYPE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="107"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="120"/>
+        <source>Jewel Case Insert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="133"/>
+        <source>Printer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="147"/>
+        <source>Page Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="154"/>
+        <source>Print in Grayscale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.ui" line="161"/>
+        <source>Double Sided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.cpp" line="52"/>
+        <source>Print %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../print/printpopover.cpp" line="121"/>
+        <source>%n tracks</source>
+        <translation type="unfinished">
+            <numerusform>صفر مسارات</numerusform>
+            <numerusform>واحد مسار</numerusform>
+            <numerusform>مسارات اثنين</numerusform>
+            <numerusform>عدد قليل من المسارات</numerusform>
+            <numerusform>عديد من المسارات</numerusform>
+            <numerusform>مسارات آخرة</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.cpp" line="193"/>
+        <source>by %1</source>
+        <translation type="unfinished">من %1</translation>
+    </message>
+    <message>
+        <location filename="../print/printpopover.cpp" line="194"/>
         <source>on %1</source>
         <translation type="unfinished">على %1</translation>
     </message>
@@ -836,54 +909,49 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>حرق</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="93"/>
+        <location filename="../userplaylistswidget.cpp" line="92"/>
         <source>New Playlist</source>
         <translation>قائمة تشغيل جديدة</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="93"/>
-        <location filename="../userplaylistswidget.cpp" line="159"/>
+        <location filename="../userplaylistswidget.cpp" line="92"/>
+        <location filename="../userplaylistswidget.cpp" line="158"/>
         <source>What name do you want to give to this playlist?</source>
         <translation>ما الاسم الذي تريد أن تسمي عليه هذة قائمة التشغيل؟</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="156"/>
+        <location filename="../userplaylistswidget.cpp" line="155"/>
         <source>For %1</source>
         <translation>ل %1</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="157"/>
-        <location filename="../userplaylistswidget.cpp" line="159"/>
+        <location filename="../userplaylistswidget.cpp" line="156"/>
+        <location filename="../userplaylistswidget.cpp" line="158"/>
         <source>Rename</source>
         <translation>إعادة تسمية</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="162"/>
-        <location filename="../userplaylistswidget.cpp" line="222"/>
+        <location filename="../userplaylistswidget.cpp" line="161"/>
+        <location filename="../userplaylistswidget.cpp" line="223"/>
         <source>Tracks in %1</source>
         <translation>المسارات في %1</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="165"/>
-        <source>Export</source>
-        <translation>صدر</translation>
-    </message>
-    <message>
-        <location filename="../userplaylistswidget.cpp" line="190"/>
-        <location filename="../userplaylistswidget.cpp" line="192"/>
-        <location filename="../userplaylistswidget.cpp" line="202"/>
-        <location filename="../userplaylistswidget.cpp" line="204"/>
+        <location filename="../userplaylistswidget.cpp" line="191"/>
+        <location filename="../userplaylistswidget.cpp" line="193"/>
+        <location filename="../userplaylistswidget.cpp" line="203"/>
+        <location filename="../userplaylistswidget.cpp" line="205"/>
         <source>Remove</source>
         <translation>إزالة</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="191"/>
-        <location filename="../userplaylistswidget.cpp" line="203"/>
+        <location filename="../userplaylistswidget.cpp" line="192"/>
+        <location filename="../userplaylistswidget.cpp" line="204"/>
         <source>Are you sure?</source>
         <translation>هل أنت واثق في هذة العملية؟</translation>
     </message>
     <message numerus="yes">
-        <location filename="../userplaylistswidget.cpp" line="198"/>
+        <location filename="../userplaylistswidget.cpp" line="199"/>
         <source>For %n playlists</source>
         <translation>
             <numerusform>لصفر مسارات</numerusform>

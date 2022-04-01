@@ -27,7 +27,7 @@
 #include <QPainter>
 #include <QUrl>
 #include <helpers.h>
-#include <the-libs_global.h>
+#include <libcontemporary_global.h>
 #include <tpaintcalculator.h>
 
 struct LibraryModelPrivate {

@@ -23,7 +23,6 @@
 #include "common.h"
 #include "library/librarymanager.h"
 #include <QFileDialog>
-#include <QMediaPlaylist>
 #include <QMenu>
 #include <QUrl>
 #include <burnbackend.h>
@@ -162,26 +161,28 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
                 if (d->currentPlaylist == playlists.first()) ui->tracksTitle->setText(tr("Tracks in %1").arg(name));
             }
         });
-        menu->addAction(QIcon::fromTheme("document-export"), tr("Export"), this, [=] {
-            QFileDialog* dialog = new QFileDialog(this);
-            dialog->setAcceptMode(QFileDialog::AcceptOpen);
-            dialog->setNameFilters({"M3U8 Playlists (*.m3u8)"});
-            dialog->setFileMode(QFileDialog::AnyFile);
-            connect(dialog, &QFileDialog::fileSelected, this, [=](QString file) {
-                QMediaPlaylist playlist;
-                LibraryModel* model = LibraryManager::instance()->tracksByPlaylist(playlists.first());
 
-                for (int i = 0; i < model->rowCount(); i++) {
-                    QModelIndex index = model->index(i, 0);
-                    playlist.addMedia(QMediaContent(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString())));
-                }
-
-                model->deleteLater();
-                playlist.save(QUrl::fromLocalFile(file), "m3u8");
-            });
-            connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
-            dialog->open();
-        });
+        //TODO: Reimplement file export
+//        menu->addAction(QIcon::fromTheme("document-export"), tr("Export"), this, [=] {
+//            QFileDialog* dialog = new QFileDialog(this);
+//            dialog->setAcceptMode(QFileDialog::AcceptOpen);
+//            dialog->setNameFilters({"M3U8 Playlists (*.m3u8)"});
+//            dialog->setFileMode(QFileDialog::AnyFile);
+//            connect(dialog, &QFileDialog::fileSelected, this, [=](QString file) {
+//                QMediaPlaylist playlist;
+//                LibraryModel* model = LibraryManager::instance()->tracksByPlaylist(playlists.first());
+//
+//                for (int i = 0; i < model->rowCount(); i++) {
+//                    QModelIndex index = model->index(i, 0);
+//                    playlist.addMedia(QMediaContent(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString())));
+//                }
+//
+//                model->deleteLater();
+//                playlist.save(QUrl::fromLocalFile(file), "m3u8");
+//            });
+//            connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
+//            dialog->open();
+//        });
 
         menu->addSeparator();
 
