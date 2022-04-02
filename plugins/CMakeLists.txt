@@ -1,7 +1,7 @@
 add_subdirectory(InternetRadioPlugin)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    add_subdirectory(AvFoundationPlugin)
+#    add_subdirectory(AvFoundationPlugin)
     add_subdirectory(MacIntegration)
 ENDIF()
 

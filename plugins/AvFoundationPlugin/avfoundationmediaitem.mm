@@ -84,59 +84,59 @@ AvFoundationMediaItem::AvFoundationMediaItem(QUrl url) : MediaItem() {
     d->asset = [AVAsset assetWithURL:url.toNSURL()];
     d->duration = CMTimeGetSeconds([d->asset duration]) * 1000;
     [d->asset loadValuesAsynchronouslyForKeys:@[@"availableMetadataFormats"] completionHandler: ^ {
-                 NSError* error = nil;
+            NSError* error = nil;
 
-        AVKeyValueStatus status = [d->asset statusOfValueForKey:@"availableMetadataFormats" error:&error];
-        if (status == AVKeyValueStatusLoaded) {
-            for (AVMetadataFormat format : [d->asset availableMetadataFormats]) {
-                NSArray<AVMetadataItem*>* metadata = [d->asset metadataForFormat:format];
+            AVKeyValueStatus status = [d->asset statusOfValueForKey:@"availableMetadataFormats" error:&error];
+            if (status == AVKeyValueStatusLoaded) {
+                for (AVMetadataFormat format: [d->asset availableMetadataFormats]) {
+                    NSArray<AVMetadataItem *> *metadata = [d->asset metadataForFormat:format];
 
-                auto extractOneString = [ = ](AVMetadataIdentifier identifier) {
-                    NSArray<AVMetadataItem*>* items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
-                    AVMetadataItem* item = [items firstObject];
-                    if (item) {
-                        return QString::fromNSString([item stringValue]);
-                    } else {
-                        return QStringLiteral("");
-                    }
-                };
-                auto extractStrings = [ = ](AVMetadataIdentifier identifier) {
-                    NSArray<AVMetadataItem*>* items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
-                    QStringList strings;
-                    for (AVMetadataItem* item : items) {
-                        strings.append(QString::fromNSString([item stringValue]));
-                    }
-                    return strings;
-                };
-                auto extractOneInt = [ = ](AVMetadataIdentifier identifier, int defaultValue = -1) {
-                    NSArray<AVMetadataItem*>* items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
-                    AVMetadataItem* item = [items firstObject];
-                    if (item) {
-                        return [[item numberValue] intValue];
-                    } else {
-                        return defaultValue;
-                    }
-                };
-                auto extractImage = [ = ](AVMetadataIdentifier identifier) {
-                    NSArray<AVMetadataItem*>* items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
-                    AVMetadataItem* item = [items firstObject];
-                    if (item) {
+                    auto extractOneString = [=](AVMetadataIdentifier identifier) {
+                        NSArray<AVMetadataItem *> *items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
+                        AVMetadataItem *item = [items firstObject];
+                        if (item) {
+                            return QString::fromNSString([item stringValue]);
+                        } else {
+                            return QStringLiteral("");
+                        }
+                    };
+                    auto extractStrings = [=](AVMetadataIdentifier identifier) {
+                        NSArray<AVMetadataItem *> *items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
+                        QStringList strings;
+                        for (AVMetadataItem *item: items) {
+                            strings.append(QString::fromNSString([item stringValue]));
+                        }
+                        return strings;
+                    };
+                    auto extractOneInt = [=](AVMetadataIdentifier identifier, int defaultValue = -1) {
+                        NSArray<AVMetadataItem *> *items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
+                        AVMetadataItem *item = [items firstObject];
+                        if (item) {
+                            return [[item numberValue] intValue];
+                        } else {
+                            return defaultValue;
+                        }
+                    };
+                    auto extractImage = [=](AVMetadataIdentifier identifier) {
+                        NSArray<AVMetadataItem *> *items = [AVMetadataItem metadataItemsFromArray:metadata filteredByIdentifier:identifier];
+                        AVMetadataItem *item = [items firstObject];
+                        if (item) {
 //                        return QString::fromNSString([item stringValue]);
-                        return QImage::fromData(QByteArray::fromNSData([item dataValue]));
-                    } else {
-                        return QImage();
-                    }
-                };
+                            return QImage::fromData(QByteArray::fromNSData([item dataValue]));
+                        } else {
+                            return QImage();
+                        }
+                    };
 
-                d->metadata.insert("title", extractOneString(AVMetadataCommonIdentifierTitle));
-                d->metadata.insert("artist", extractStrings(AVMetadataCommonIdentifierArtist));
-                d->metadata.insert("album", extractOneString(AVMetadataCommonIdentifierAlbumName));
-                d->metadata.insert("track", extractOneInt(AVMetadataIdentifierID3MetadataTrackNumber, 0));
-                d->metadata.insert("albumart", extractImage(AVMetadataCommonIdentifierArtwork));
+                    d->metadata.insert("title", extractOneString(AVMetadataCommonIdentifierTitle));
+                    d->metadata.insert("artist", extractStrings(AVMetadataCommonIdentifierArtist));
+                    d->metadata.insert("album", extractOneString(AVMetadataCommonIdentifierAlbumName));
+                    d->metadata.insert("track", extractOneInt(AVMetadataIdentifierID3MetadataTrackNumber, 0));
+                    d->metadata.insert("albumart", extractImage(AVMetadataCommonIdentifierArtwork));
 
-                emit metadataChanged();
+                    emit metadataChanged();
+                }
             }
-        }
     }];
 }
 

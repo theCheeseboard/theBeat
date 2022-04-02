@@ -87,7 +87,6 @@ void QtMultimediaMediaItem::preparePlayer() {
     tDebug("QtMultimediaMediaItem") << "Preparing Qt Multimedia player for URL" << d->url.toString();
 
     d->player = new QMediaPlayer(this);
-    d->player->setAudioOutput(QtMultimediaMediaItemPrivate::audioOutput);
     d->player->setSource(d->url);
     connect(d->player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::EndOfMedia) emit done();
@@ -212,6 +211,7 @@ void QtMultimediaMediaItem::loadLyrics() {
 
 void QtMultimediaMediaItem::play() {
     preparePlayer();
+    d->player->setAudioOutput(QtMultimediaMediaItemPrivate::audioOutput);
     d->player->play();
 }
 
