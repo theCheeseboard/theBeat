@@ -6,9 +6,9 @@
     <message>
         <location filename="../cd/cdchecker.ui" line="43"/>
         <location filename="../cd/cdchecker.cpp" line="62"/>
-        <location filename="../cd/cdchecker.cpp" line="128"/>
-        <location filename="../cd/cdchecker.cpp" line="129"/>
-        <location filename="../cd/cdchecker.cpp" line="130"/>
+        <location filename="../cd/cdchecker.cpp" line="133"/>
+        <location filename="../cd/cdchecker.cpp" line="134"/>
+        <location filename="../cd/cdchecker.cpp" line="135"/>
         <source>CD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -62,83 +62,6 @@
         <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../cd/cdchecker-objc.mm" line="31"/>
-        <source>Couldn&apos;t eject the disc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cd/cdchecker-objc.mm" line="32"/>
-        <source>Make sure no other applications are accessing the disc, and then try again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MacBurnJob</name>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="79"/>
-        <source>Burn Complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="82"/>
-        <source>Burn cancelled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="84"/>
-        <source>Failed to burn: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="87"/>
-        <source>Erasing disc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="91"/>
-        <source>Finalising disc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="95"/>
-        <location filename="../burn/macburnjob.mm" line="97"/>
-        <source>Preparing to burn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="99"/>
-        <source>Burning track %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="101"/>
-        <source>Burning</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MacBurnJobPrivate</name>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="69"/>
-        <source>Burn Successful</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="69"/>
-        <source>Burned %1 to disc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="72"/>
-        <source>Burn Failure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../burn/macburnjob.mm" line="72"/>
-        <source>Failed to burn %1 to disc</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MacBurnJobWidget</name>
@@ -151,31 +74,8 @@
 <context>
     <name>MacBurnProvider</name>
     <message>
-        <location filename="../burn/macburnprovider-objc.mm" line="64"/>
-        <source>Insert a CD-R or CD-RW</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../burn/macburnprovider.cpp" line="11"/>
         <source>Burn on macOS</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MusicBrainzReleaseModel</name>
-    <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="71"/>
-        <source>Released: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="73"/>
-        <source>Barcode: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="75"/>
-        <source>Country: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

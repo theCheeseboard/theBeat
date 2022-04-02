@@ -25,7 +25,8 @@
 #include <visualisationmanager.h>
 
 #include <QMediaPlayer>
-#include <QAudioProbe>
+#include <QAudioOutput>
+//#include <QAudioProbe>
 
 #include <QDir>
 #include <tlogger.h>
@@ -33,14 +34,18 @@
 #include <playlist.h>
 
 struct MacCdMediaItemPrivate {
+    static QAudioOutput* audioOutput;
     TrackInfoPtr info;
     QString volume;
 
     QMediaPlayer* player;
-    QAudioProbe* probe;
+
+//    QAudioProbe* probe;
 
     static QMultiMap<QString, MacCdMediaItem*> items;
 };
+
+QAudioOutput* MacCdMediaItemPrivate::audioOutput = nullptr;
 
 QMultiMap<QString, MacCdMediaItem*> MacCdMediaItemPrivate::items = QMultiMap<QString, MacCdMediaItem*>();
 
@@ -48,6 +53,15 @@ MacCdMediaItem::MacCdMediaItem(QString volume, TrackInfoPtr info) : MediaItem() 
     d = new MacCdMediaItemPrivate();
     d->volume = volume;
     d->info = info;
+
+    if (!MacCdMediaItemPrivate::audioOutput) {
+        MacCdMediaItemPrivate::audioOutput = new QAudioOutput();
+
+        connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, MacCdMediaItemPrivate::audioOutput, [=] {
+            MacCdMediaItemPrivate::audioOutput->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
+        });
+        MacCdMediaItemPrivate::audioOutput->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
+    }
 
     //Locate the track to be played
     QDir dir(volume);
@@ -61,77 +75,63 @@ MacCdMediaItem::MacCdMediaItem(QString volume, TrackInfoPtr info) : MediaItem() 
     tDebug("MacCdMediaItem") << "Constructing Mac CD backend item for URL" << url.toString();
 
     d->player = new QMediaPlayer(this);
-    d->player->setMedia(QMediaContent(url));
+    d->player->setSource(url);
     connect(d->player, &QMediaPlayer::mediaStatusChanged, this, [ = ](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::EndOfMedia) emit done();
     });
     connect(d->player, &QMediaPlayer::positionChanged, this, &MacCdMediaItem::elapsedChanged);
     connect(d->player, &QMediaPlayer::durationChanged, this, &MacCdMediaItem::durationChanged);
-    connect(d->player, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, [ = ](QMediaPlayer::Error error) {
-#ifdef Q_OS_WIN
-        if (error == QMediaPlayer::FormatError && d->url.isLocalFile() && QFileInfo(d->url.toLocalFile()).suffix() == "flac") {
-            //Ignore
-            tWarn("QtMultimediaMediaItem") << "Qt Multimedia item apparently failed with error" << error << "but since we're on Windows and this is a FLAC file we'll try anyway...";
-            return;
-        }
-#endif
-
-
+    connect(d->player, &QMediaPlayer::errorOccurred, this, [ = ](QMediaPlayer::Error error, QString errorString) {
         tWarn("QtMultimediaMediaItem") << "Mac CD item" << url.toString() << "failed with error" << error;
         emit this->error();
     });
 
-    connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [ = ] {
-        d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
-    });
-    d->player->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
-
-    d->probe = new QAudioProbe(this);
-    d->probe->setSource(d->player);
-    connect(d->probe, &QAudioProbe::audioBufferProbed, this, [ = ](QAudioBuffer buffer) {
-        QAudioFormat format = buffer.format();
-        if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::SignedInt) {
-            QVector<qint16> bufferData;
-            if (format.channelCount() == 2) {
-                bufferData.reserve(buffer.sampleCount());
-                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
-                    qint16 sample = static_cast<qint16*>(buffer.data())[i] / 2 + static_cast<qint16*>(buffer.data())[i + 1] / 2;
-                    bufferData.append(sample);
-                }
-            } else {
-                bufferData.fill(0, buffer.sampleCount());
-                memcpy(bufferData.data(), buffer.constData(), buffer.byteCount());
-            }
-
-            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
-        } else if (format.sampleSize() == 32 && format.sampleType() == QAudioFormat::Float) {
-            QVector<qint16> bufferData;
-            bufferData.reserve(buffer.sampleCount());
-            if (format.channelCount() == 2) {
-                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
-                    float sample = static_cast<float*>(buffer.data())[i] / 2 + static_cast<float*>(buffer.data())[i + 1] / 2;
-                    sample = sample * 32768;
-                    if (sample > 32767) sample = 32767;
-                    if (sample < -32768) sample = -32768;
-                    bufferData.append(static_cast<qint16>(sample));
-                    bufferData.append(sample);
-                }
-            } else {
-                for (qint64 i = 0; i < buffer.sampleCount(); i++) {
-                    float sample = static_cast<float*>(buffer.data())[i];
-                    sample = sample * 32768;
-                    if (sample > 32767) sample = 32767;
-                    if (sample < -32768) sample = -32768;
-                    bufferData.append(static_cast<qint16>(sample));
-                }
-            }
-
-            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
-        } else {
-            tDebug("QtMultimediaMediaItem") << "Weird format:";
-            tDebug("QtMultimediaMediaItem") << "Sample size " << format.sampleSize() << "; Sample type " << format.sampleType() << "; Channels " << format.channelCount();
-        }
-    });
+//    d->probe = new QAudioProbe(this);
+//    d->probe->setSource(d->player);
+//    connect(d->probe, &QAudioProbe::audioBufferProbed, this, [ = ](QAudioBuffer buffer) {
+//        QAudioFormat format = buffer.format();
+//        if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::SignedInt) {
+//            QVector<qint16> bufferData;
+//            if (format.channelCount() == 2) {
+//                bufferData.reserve(buffer.sampleCount());
+//                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
+//                    qint16 sample = static_cast<qint16*>(buffer.data())[i] / 2 + static_cast<qint16*>(buffer.data())[i + 1] / 2;
+//                    bufferData.append(sample);
+//                }
+//            } else {
+//                bufferData.fill(0, buffer.sampleCount());
+//                memcpy(bufferData.data(), buffer.constData(), buffer.byteCount());
+//            }
+//
+//            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
+//        } else if (format.sampleSize() == 32 && format.sampleType() == QAudioFormat::Float) {
+//            QVector<qint16> bufferData;
+//            bufferData.reserve(buffer.sampleCount());
+//            if (format.channelCount() == 2) {
+//                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
+//                    float sample = static_cast<float*>(buffer.data())[i] / 2 + static_cast<float*>(buffer.data())[i + 1] / 2;
+//                    sample = sample * 32768;
+//                    if (sample > 32767) sample = 32767;
+//                    if (sample < -32768) sample = -32768;
+//                    bufferData.append(static_cast<qint16>(sample));
+//                    bufferData.append(sample);
+//                }
+//            } else {
+//                for (qint64 i = 0; i < buffer.sampleCount(); i++) {
+//                    float sample = static_cast<float*>(buffer.data())[i];
+//                    sample = sample * 32768;
+//                    if (sample > 32767) sample = 32767;
+//                    if (sample < -32768) sample = -32768;
+//                    bufferData.append(static_cast<qint16>(sample));
+//                }
+//            }
+//
+//            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
+//        } else {
+//            tDebug("QtMultimediaMediaItem") << "Weird format:";
+//            tDebug("QtMultimediaMediaItem") << "Sample size " << format.sampleSize() << "; Sample type " << format.sampleType() << "; Channels " << format.channelCount();
+//        }
+//    });
 
     d->items.insert(d->volume, this);
 }
@@ -191,7 +191,7 @@ QImage MacCdMediaItem::albumArt() {
 }
 
 
-QVariant MacCdMediaItem::metadata(QString key) {
+QVariant MacCdMediaItem::metadata(QMediaMetaData::Key key) {
     if (key == QMediaMetaData::TrackNumber) {
         return d->info->track() + 1;
     }

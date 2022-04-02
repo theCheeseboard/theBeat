@@ -49,7 +49,7 @@ class MacCdMediaItem : public MediaItem {
         QStringList authors();
         QString album();
         QImage albumArt();
-        QVariant metadata(QString key);
+        QVariant metadata(QMediaMetaData::Key key);
         QString lyrics();
         QString lyricFormat();
 };

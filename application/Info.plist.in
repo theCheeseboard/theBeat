@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
         <key>CFBundleExecutable</key>
-        <string>@EXECUTABLE@</string>
+        <string>${MACOSX_BUNDLE_EXECUTABLE_NAME}</string>
         <key>CFBundleGetInfoString</key>
         <string>Audio Player</string>
         <key>CFBundleIconFile</key>
-        <string>@ICON@</string>
+        <string>${MACOSX_BUNDLE_ICON_FILE}</string>
         <key>CFBundleIdentifier</key>
         <string>com.vicr123.theBeat</string>
         <key>CFBundlePackageType</key>

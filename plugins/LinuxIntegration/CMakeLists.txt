@@ -35,4 +35,4 @@ IF(${X11_FOUND})
     target_compile_definitions(plugin-linuxintegration PRIVATE HAVE_X11)
 ENDIF()
 
-target_link_libraries(plugin-linuxintegration Qt6::Widgets Qt6::DBus libcontemporary)
+target_link_libraries(plugin-linuxintegration Qt6::Widgets Qt6::DBus libcontemporary libthebeat)

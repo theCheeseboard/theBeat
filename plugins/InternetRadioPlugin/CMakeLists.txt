@@ -37,4 +37,4 @@ set_target_properties(plugin-internetradio PROPERTIES
         OUTPUT_NAME internetRadioPlugin
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-internetradio Qt6::Widgets Qt6::DBus libcontemporary)
+target_link_libraries(plugin-internetradio Qt6::Widgets Qt6::DBus libcontemporary libthebeat)

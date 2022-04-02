@@ -19,7 +19,7 @@
  * *************************************/
 #include "musicbrainzreleasemodel.h"
 
-#include <the-libs_global.h>
+#include <libcontemporary_global.h>
 #include <musicbrainz5/Release.h>
 #include <musicbrainz5/ArtistCredit.h>
 #include <musicbrainz5/NameCreditList.h>

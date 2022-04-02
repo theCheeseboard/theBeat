@@ -232,7 +232,6 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
 
         //Attempt to get album art for this release
         QNetworkRequest req(QUrl("https://coverartarchive.org/release/" + QString::fromStdString(releaseInfo->ID()) + "/front"));
-        req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
         QNetworkReply* artReply = d->mgr.get(req);
         connect(artReply, &QNetworkReply::finished, this, [ = ] {
             //Make sure the user hasn't changed releases

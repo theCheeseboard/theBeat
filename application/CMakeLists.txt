@@ -49,7 +49,10 @@ set(SOURCES
         trackswidget.ui
         userplaylistswidget.ui
 
-        resources.qrc)
+        resources.qrc
+
+        Info.plist.in
+        icon.icns)
 
 set(HEADERS
         artistsalbumswidget.h
@@ -92,7 +95,16 @@ add_executable(thebeat ${SOURCES} ${HEADERS})
 
 set_target_properties(thebeat PROPERTIES
         MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in
+        MACOSX_BUNDLE_ICON_FILE icon.icns
         CNTP_DATA_SUBDIR thebeat)
+set_source_files_properties(icon.icns PROPERTIES
+        MACOSX_PACKAGE_LOCATION Resources)
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set_target_properties(thebeat PROPERTIES
+            OUTPUT_NAME theBeat)
+ENDIF()
 
 cntp_init(thebeat 17)
 cntp_translate(thebeat)

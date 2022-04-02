@@ -42,4 +42,4 @@ set_target_properties(plugin-cdrdao PROPERTIES
         OUTPUT_NAME cdrdaoPlugin
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-cdrdao Qt6::Widgets Qt6::DBus Qt6::Multimedia libcontemporary libthefrisbee tag)
+target_link_libraries(plugin-cdrdao Qt6::Widgets Qt6::DBus Qt6::Multimedia libcontemporary libthefrisbee PkgConfig::tag)

@@ -48,7 +48,7 @@ set_target_properties(libthebeat PROPERTIES
         VERSION 1.0.0
         PUBLIC_HEADER "${HEADERS}")
 
-target_link_libraries(libthebeat Qt6::Widgets Qt6::DBus Qt6::Multimedia libcontemporary tag)
+target_link_libraries(libthebeat Qt6::Widgets Qt6::DBus Qt6::Multimedia libcontemporary PkgConfig::tag)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKECONFIG_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/libthebeat.framework/Resources/CMake)
@@ -78,3 +78,5 @@ install(TARGETS libthebeat
         INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+cntp_mark_support_library_directory()

@@ -197,7 +197,7 @@ QImage AvFoundationMediaItem::albumArt() {
     return d->metadata.value("albumart").value<QImage>();
 }
 
-QVariant AvFoundationMediaItem::metadata(QString key) {
+QVariant AvFoundationMediaItem::metadata(QMediaMetaData::Key key) {
     if (key == QMediaMetaData::AlbumTitle) {
         return album();
     } else if (key == QMediaMetaData::Title) {
