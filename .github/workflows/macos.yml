@@ -22,7 +22,7 @@ jobs:
         with:
           project: "vicr123/libcontemporary"
           commitish: "blueprint"
-      - uses: vicr123/contemporary-theme/build-project@actions
+      - uses: vicr123/libcontemporary/build-project@actions
         name: "Build contemporary-theme"
         with:
           project: "vicr123/contemporary-theme"
