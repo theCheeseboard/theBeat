@@ -34,7 +34,7 @@ jobs:
           mkdir output
           mkdir build
           cd build
-          cmake .. -GNinja -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 -DCMAKE_PREFIX_PATH=/usr/local/lib
+          cmake .. -GNinja -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 -DCMAKE_PREFIX_PATH=/usr/local/lib -Dlibcontemporary_DIR=/usr/local/lib/libcontemporary.framework/Resources/CMake
           ninja
           cd application
           cntp-macdeploy theBeat.app
