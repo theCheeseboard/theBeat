@@ -1,0 +1,46 @@
+name: "macOS CI"
+on:
+  push:
+    branches:
+      - master
+      - blueprint
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macOS-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: vicr123/libcontemporary/brew-universalinstall@actions
+        name: "Install Dependencies"
+        with:
+          packages: "qt:taglib:libmusicbrainz:cmake:ninja"
+      - uses: vicr123/libcontemporary/build-project@actions
+        name: "Build libcontemporary"
+        with:
+          project: "vicr123/libcontemporary"
+          commitish: "blueprint"
+      - uses: vicr123/contemporary-theme/build-project@actions
+        name: "Build contemporary-theme"
+        with:
+          project: "vicr123/contemporary-theme"
+          commitish: "blueprint"
+      - uses: actions/checkout@v1
+        with:
+          submodules: 'recursive'
+      - run: |
+          mkdir output
+          mkdir build
+          cd build
+          cmake .. -GNinja -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64
+          ninja
+          cd application
+          cntp-macdeploy theBeat.app
+          cp -r theBeat.app ../../output
+      - uses: actions/upload-artifact@v1
+        name: Upload Artifact to GitHub Actions
+        with:
+          name: "theBeat-macOS"
+          path: "output/"
