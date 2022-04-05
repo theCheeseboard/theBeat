@@ -34,11 +34,13 @@ jobs:
         name: "Build project"
         with:
           project: "."
-      - run: |
-          cntp-macdeploy build/application/theBeat.app
-          cp -r build/application/theBeat.app ../../output
+      - uses: vicr123/libcontemporary/deploy-project@actions
+        id: deploy
+        name: "Deploy project"
+        with:
+          subdir: "application"
       - uses: actions/upload-artifact@v1
         name: Upload Artifact to GitHub Actions
         with:
           name: "theBeat-macOS"
-          path: "output/"
+          path: ${{ steps.deploy.outputs.package }}

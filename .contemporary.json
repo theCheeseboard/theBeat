@@ -1,0 +1,6 @@
+{
+    "dmg": {
+        "icon": "dist/dmgicon.icns",
+        "background": "dist/app-dmg-background.png"
+    }
+}
