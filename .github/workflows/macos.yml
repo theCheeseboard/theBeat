@@ -30,15 +30,13 @@ jobs:
       - uses: actions/checkout@v1
         with:
           submodules: 'recursive'
+      - uses: vicr123/libcontemporary/build-project@actions
+        name: "Build project"
+        with:
+          project: "."
       - run: |
-          mkdir output
-          mkdir build
-          cd build
-          cmake .. -GNinja -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 -DCMAKE_PREFIX_PATH=/usr/local/lib -Dlibcontemporary_DIR=/usr/local/lib/libcontemporary.framework/Resources/CMake
-          ninja
-          cd application
-          cntp-macdeploy theBeat.app
-          cp -r theBeat.app ../../output
+          cntp-macdeploy build/application/theBeat.app
+          cp -r build/application/theBeat.app ../../output
       - uses: actions/upload-artifact@v1
         name: Upload Artifact to GitHub Actions
         with:
