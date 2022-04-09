@@ -91,6 +91,20 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
             platformintegration/winplatformintegration.h)
 ENDIF()
 
+# Find Apple lproj files
+set(LPROJ_SOURCES)
+file(GLOB LPROJ_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/translations/apple-lproj/*.lproj)
+FOREACH(DIR ${LPROJ_DIRS})
+    cmake_path(GET DIR FILENAME DIR_NAME)
+    file(GLOB LPROJ_FILES ${DIR}/*.strings)
+    FOREACH(FILE ${LPROJ_FILES})
+        list(APPEND LPROJ_SOURCES ${FILE})
+        set_source_files_properties(${FILE} PROPERTIES
+                MACOSX_PACKAGE_LOCATION Resources/${DIR_NAME})
+    ENDFOREACH()
+ENDFOREACH()
+set(SOURCES ${SOURCES} ${LPROJ_SOURCES})
+
 add_executable(thebeat ${SOURCES} ${HEADERS})
 
 set_target_properties(thebeat PROPERTIES
