@@ -63,17 +63,17 @@ void TagEditor::on_titleLabel_backButtonClicked() {
 }
 
 void TagEditor::on_titleEdit_textEdited(const QString& arg1) {
-    d->file.tag()->setTitle(arg1.toStdString());
+    d->file.tag()->setTitle(TagLib::String(arg1.toUtf8().data(), TagLib::String::UTF8));
     markDirty();
 }
 
 void TagEditor::on_artistEdit_textEdited(const QString& arg1) {
-    d->file.tag()->setArtist(arg1.toStdString());
+    d->file.tag()->setArtist(TagLib::String(arg1.toUtf8().data(), TagLib::String::UTF8));
     markDirty();
 }
 
 void TagEditor::on_albumEdit_textEdited(const QString& arg1) {
-    d->file.tag()->setAlbum(arg1.toStdString());
+    d->file.tag()->setAlbum(TagLib::String(arg1.toUtf8().data(), TagLib::String::UTF8));
     markDirty();
 }
 
@@ -88,10 +88,10 @@ void TagEditor::loadTag() {
     QSignalBlocker blocker2(ui->discBox);
     QSignalBlocker blocker3(ui->yearBox);
 
-    ui->titleEdit->setText(QString::fromStdString(d->file.tag()->title().to8Bit(true)));
-    ui->artistEdit->setText(QString::fromStdString(d->file.tag()->artist().to8Bit(true)));
-    ui->albumEdit->setText(QString::fromStdString(d->file.tag()->album().to8Bit(true)));
-    ui->genreEdit->setText(QString::fromStdString(d->file.tag()->genre().to8Bit(true)));
+    ui->titleEdit->setText(QString::fromWCharArray(d->file.tag()->title().toCWString()));
+    ui->artistEdit->setText(QString::fromWCharArray(d->file.tag()->artist().toCWString()));
+    ui->albumEdit->setText(QString::fromWCharArray(d->file.tag()->album().toCWString()));
+    ui->genreEdit->setText(QString::fromWCharArray(d->file.tag()->genre().toCWString()));
     ui->trackBox->setValue(d->file.tag()->track());
     ui->yearBox->setValue(d->file.tag()->year());
 
@@ -110,6 +110,9 @@ void TagEditor::markDirty() {
 }
 
 void TagEditor::revert() {
+    //Close the file
+    d->file = TagLib::FileRef();
+
     loadTag();
     ui->dirtyWidget->collapse();
     tPopover::popoverForPopoverWidget(this)->setDismissable(true);

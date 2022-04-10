@@ -140,13 +140,13 @@ void CdChecker::getMetadata() {
     for (uint i = 0; i < media.Tracks().Size(); i++) {
         TrackInfoPtr trackInfo = d->trackInfo.at(i);
         winrt::CDLib::IAudioCDTrack cdTrack = media.Tracks().GetAt(i);
-        trackInfo->setData(QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.Title().c_str())),
-        {QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.Artist().c_str()))},
-        QString::fromUtf16(reinterpret_cast<const ushort*>(cdTrack.AlbumTitle().c_str())));
+        trackInfo->setData(QString::fromUtf16(reinterpret_cast<const char16_t*>(cdTrack.Title().c_str())),
+        {QString::fromUtf16(reinterpret_cast<const char16_t*>(cdTrack.Artist().c_str()))},
+        QString::fromUtf16(reinterpret_cast<const char16_t*>(cdTrack.AlbumTitle().c_str())));
     }
 
     winrt::CDLib::IAudioCDTrack firstTrack = media.Tracks().GetAt(0);
-    QString album = QString::fromUtf16(reinterpret_cast<const ushort*>(firstTrack.AlbumTitle().c_str()));
+    QString album = QString::fromUtf16(reinterpret_cast<const char16_t*>(firstTrack.AlbumTitle().c_str()));
     d->source->setName(album);
     ui->albumTitleLabel->setText(album);
 

@@ -98,22 +98,22 @@ quint64 WinCdMediaItem::duration() {
 }
 
 QString WinCdMediaItem::title() {
-    return QString::fromUtf16(reinterpret_cast<const ushort*>(d->track.Title().c_str()));
+    return QString::fromUtf16(reinterpret_cast<const char16_t*>(d->track.Title().c_str()));
 }
 
 QStringList WinCdMediaItem::authors() {
-    return {QString::fromUtf16(reinterpret_cast<const ushort*>(d->track.Artist().c_str()))};
+    return {QString::fromUtf16(reinterpret_cast<const char16_t*>(d->track.Artist().c_str()))};
 }
 
 QString WinCdMediaItem::album() {
-    return QString::fromUtf16(reinterpret_cast<const ushort*>(d->track.AlbumTitle().c_str()));
+    return QString::fromUtf16(reinterpret_cast<const char16_t*>(d->track.AlbumTitle().c_str()));
 }
 
 QImage WinCdMediaItem::albumArt() {
     return QImage();
 }
 
-QVariant WinCdMediaItem::metadata(QString key) {
+QVariant WinCdMediaItem::metadata(QMediaMetaData::Key key) {
     if (key == QMediaMetaData::TrackNumber) {
         return d->track.TrackNumber();
     }

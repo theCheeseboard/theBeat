@@ -105,7 +105,7 @@ FOREACH(DIR ${LPROJ_DIRS})
 ENDFOREACH()
 set(SOURCES ${SOURCES} ${LPROJ_SOURCES})
 
-add_executable(thebeat ${SOURCES} ${HEADERS})
+add_executable(thebeat ${SOURCES} ${HEADERS} icon.rc)
 
 set_target_properties(thebeat PROPERTIES
         MACOSX_BUNDLE TRUE

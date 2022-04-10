@@ -53,12 +53,12 @@ int main(int argc, char* argv[]) {
     }
     a.installTranslators();
 
-    a.setApplicationVersion("3.1.1");
+    a.setApplicationVersion("4.0");
     a.setGenericName(QApplication::translate("main", "Audio Player"));
     a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
     a.setCopyrightHolder("Victor Tran");
-    a.setCopyrightYear("2021");
+    a.setCopyrightYear("2022");
     a.setOrganizationName("theSuite");
     a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thebeat/intro"));
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theBeat"));

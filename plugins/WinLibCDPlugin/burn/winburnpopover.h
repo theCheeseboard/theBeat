@@ -37,7 +37,7 @@ class WinBurnPopover : public QWidget, public QAbstractNativeEventFilter {
 
         // QAbstractNativeEventFilter interface
     public:
-        bool nativeEventFilter(const QByteArray& eventType, void* message, long* result);
+        bool nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result);
 };
 
 #endif // WINBURNPOPOVER_H

@@ -359,7 +359,6 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="500"/>
-        <location filename="../mainwindow.cpp" line="219"/>
         <source>Skip Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -441,24 +440,12 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="524"/>
-        <location filename="../mainwindow.cpp" line="227"/>
-        <location filename="../mainwindow.cpp" line="241"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="527"/>
         <source>Space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="236"/>
-        <source>Pause</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="248"/>
-        <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -98,9 +98,9 @@ void LibraryEnumerateDirectoryJob::performEnumeration() {
             if (!tag) continue;
 
             paths.append(path);
-            titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
-            artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
-            albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
+            titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromWCharArray(tag->title().toCWString()));
+            artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromWCharArray(tag->artist().toCWString()));
+            albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromWCharArray(tag->album().toCWString()));
             durations.append(audioProperties->length() * 1000);
             trackNumbers.append(tag->track());
 

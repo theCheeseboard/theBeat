@@ -4,7 +4,10 @@ project(lib VERSION 1.0.0 LANGUAGES CXX)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Multimedia)
 find_package(libcontemporary)
-pkg_check_modules(tag IMPORTED_TARGET REQUIRED taglib)
+cntp_find_pkgconfig(tag taglib REQUIRED
+        WIN_FALLBACK_DLL "C:\\Program Files (x86)\\taglib\\bin\\tag.dll"
+        WIN_FALLBACK_IMPLIB "C:\\Program Files (x86)\\taglib\\lib\\tag.lib"
+        WIN_FALLBACK_INCLUDE "C:\\Program Files (x86)\\taglib\\include")
 
 set(SOURCES
         burnbackend.cpp
@@ -49,6 +52,7 @@ set_target_properties(libthebeat PROPERTIES
         PUBLIC_HEADER "${HEADERS}")
 
 target_link_libraries(libthebeat Qt6::Widgets Qt6::DBus Qt6::Multimedia libcontemporary PkgConfig::tag)
+target_compile_definitions(libthebeat PRIVATE LIBTHEBEAT_LIBRARY)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKECONFIG_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/libthebeat.framework/Resources/CMake)

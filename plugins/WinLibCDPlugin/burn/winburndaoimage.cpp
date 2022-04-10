@@ -30,16 +30,17 @@ WinBurnDaoImage::~WinBurnDaoImage() {
 QByteArray transcode(const QString& file) {
     tPromiseResults<QByteArray> decodeResults = TPROMISE_CREATE_SAME_THREAD(QByteArray, {
         QAudioFormat format;
-        format.setCodec("audio/pcm");
-        format.setByteOrder(QAudioFormat::LittleEndian);
-        format.setSampleSize(16);
+//        format.setCodec("audio/pcm");
+//        format.setByteOrder(QAudioFormat::LittleEndian);
+//        format.setSampleSize(16);
+        format.setSampleFormat(QAudioFormat::Int16);
         format.setSampleRate(44100);
         format.setChannelCount(2);
 
         QAudioDecoder* decoder = new QAudioDecoder();
 
         decoder->setAudioFormat(format);
-        decoder->setSourceFilename(file);
+        decoder->setSource(QUrl::fromLocalFile(file));
 
         QByteArray* audioData = new QByteArray();
 

@@ -58,8 +58,8 @@
 
 #ifdef Q_OS_WIN
     #include "platformintegration/winplatformintegration.h"
-    #include <QWinThumbnailToolBar>
-    #include <QWinThumbnailToolButton>
+//    #include <QWinThumbnailToolBar>
+//    #include <QWinThumbnailToolButton>
 #endif
 
 struct MainWindowPrivate {
@@ -210,51 +210,51 @@ MainWindow::MainWindow(QWidget* parent) :
     });
 
 #ifdef Q_OS_WIN
-    new WinPlatformIntegration(this);
+//    new WinPlatformIntegration(this);
 
-    QWinThumbnailToolBar* thumbBar = new QWinThumbnailToolBar(this);
-    thumbBar->setWindow(this->windowHandle());
+//    QWinThumbnailToolBar* thumbBar = new QWinThumbnailToolBar(this);
+//    thumbBar->setWindow(this->windowHandle());
+//
+//    QWinThumbnailToolButton* backToolButton = new QWinThumbnailToolButton(thumbBar);
+//    backToolButton->setToolTip(tr("Skip Back"));
+//    backToolButton->setIcon(QIcon::fromTheme("media-skip-backward"));
+//    backToolButton->setDismissOnClick(false);
+//    connect(backToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
+//        StateManager::instance()->playlist()->previous();
+//    });
+//
+//    QWinThumbnailToolButton* playPauseToolButton = new QWinThumbnailToolButton(thumbBar);
+//    playPauseToolButton->setToolTip(tr("Play"));
+//    playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-start"));
+//    playPauseToolButton->setDismissOnClick(false);
+//    connect(playPauseToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
+//        StateManager::instance()->playlist()->playPause();
+//    });
+//    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [ = ](Playlist::State state) {
+//        switch (state) {
+//            case Playlist::Playing:
+//                playPauseToolButton->setToolTip(tr("Pause"));
+//                playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-pause"));
+//                break;
+//            case Playlist::Paused:
+//            case Playlist::Stopped:
+//                playPauseToolButton->setToolTip(tr("Play"));
+//                playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-start"));
+//                break;
+//        }
+//    });
+//
+//    QWinThumbnailToolButton* nextToolButton = new QWinThumbnailToolButton(thumbBar);
+//    nextToolButton->setToolTip(tr("Skip Next"));
+//    nextToolButton->setIcon(QIcon::fromTheme("media-skip-forward"));
+//    nextToolButton->setDismissOnClick(false);
+//    connect(nextToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
+//        StateManager::instance()->playlist()->next();
+//    });
 
-    QWinThumbnailToolButton* backToolButton = new QWinThumbnailToolButton(thumbBar);
-    backToolButton->setToolTip(tr("Skip Back"));
-    backToolButton->setIcon(QIcon::fromTheme("media-skip-backward"));
-    backToolButton->setDismissOnClick(false);
-    connect(backToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
-        StateManager::instance()->playlist()->previous();
-    });
-
-    QWinThumbnailToolButton* playPauseToolButton = new QWinThumbnailToolButton(thumbBar);
-    playPauseToolButton->setToolTip(tr("Play"));
-    playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-start"));
-    playPauseToolButton->setDismissOnClick(false);
-    connect(playPauseToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
-        StateManager::instance()->playlist()->playPause();
-    });
-    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [ = ](Playlist::State state) {
-        switch (state) {
-            case Playlist::Playing:
-                playPauseToolButton->setToolTip(tr("Pause"));
-                playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-pause"));
-                break;
-            case Playlist::Paused:
-            case Playlist::Stopped:
-                playPauseToolButton->setToolTip(tr("Play"));
-                playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-start"));
-                break;
-        }
-    });
-
-    QWinThumbnailToolButton* nextToolButton = new QWinThumbnailToolButton(thumbBar);
-    nextToolButton->setToolTip(tr("Skip Next"));
-    nextToolButton->setIcon(QIcon::fromTheme("media-skip-forward"));
-    nextToolButton->setDismissOnClick(false);
-    connect(nextToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
-        StateManager::instance()->playlist()->next();
-    });
-
-    thumbBar->addButton(backToolButton);
-    thumbBar->addButton(playPauseToolButton);
-    thumbBar->addButton(nextToolButton);
+//    thumbBar->addButton(backToolButton);
+//    thumbBar->addButton(playPauseToolButton);
+//    thumbBar->addButton(nextToolButton);
 #endif
 
     connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {

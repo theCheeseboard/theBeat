@@ -189,9 +189,9 @@ void QtMultimediaMediaItem::updateTaglib() {
     if (!tag) return;
 
     d->artist.clear();
-    d->title = QString::fromStdString(tag->title().to8Bit());
-    d->artist.append(QString::fromStdString(tag->artist().to8Bit()));
-    d->album = QString::fromStdString(tag->album().to8Bit());
+    d->title = QString::fromWCharArray(tag->title().toCWString());
+    d->artist.append(QString::fromWCharArray(tag->artist().toCWString()));
+    d->album = QString::fromWCharArray(tag->album().toCWString());
     d->trackNumber = tag->track();
 
     emit metadataChanged();

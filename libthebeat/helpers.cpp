@@ -79,7 +79,7 @@ tPromise<QImage>* Helpers::albumArt(QUrl url) {
                 return;
             }
 
-            auto extractID3v2 = [=](TagLib::ID3v2::Tag* tag) {
+            auto extractID3v2 = [](TagLib::ID3v2::Tag* tag) {
                 TagLib::ID3v2::FrameList frameList = tag->frameListMap()["APIC"];
                 if (frameList.isEmpty()) return QImage();
 
@@ -94,7 +94,7 @@ tPromise<QImage>* Helpers::albumArt(QUrl url) {
                 return QImage();
             };
 
-            auto extractXiph = [=](TagLib::Ogg::XiphComment* xiph) {
+            auto extractXiph = [](TagLib::Ogg::XiphComment* xiph) {
                 for (TagLib::FLAC::Picture* picture : xiph->pictureList()) {
                     if (picture->type() == TagLib::FLAC::Picture::FrontCover) {
                         return QImage::fromData(reinterpret_cast<const uchar*>(picture->data().data()), picture->data().size());
@@ -105,6 +105,7 @@ tPromise<QImage>* Helpers::albumArt(QUrl url) {
 
             // Try using Taglib
             if (url.isLocalFile()) {
+#ifndef Q_OS_WIN
 #ifdef Q_OS_WIN
                 TagLib::FileName filename = reinterpret_cast<const wchar_t*>(url.toLocalFile().constData());
 #else
@@ -135,7 +136,7 @@ tPromise<QImage>* Helpers::albumArt(QUrl url) {
                         return;
                     }
                 }
-
+#endif
                 // See if there is a cover file in the same directory
                 QDir parentDir = QFileInfo(url.toLocalFile()).dir();
                 for (const QFileInfo& coverPath : parentDir.entryInfoList({"cover.*"})) {
