@@ -4,7 +4,7 @@ project(lib VERSION 1.0.0 LANGUAGES CXX)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets DBus)
 find_package(libcontemporary)
-pkg_check_modules(X11 IMPORTED_TARGET x11)
+cntp_find_pkgconfig(X11 x11)
 
 set(SOURCES
         favouritestationswidget.cpp
