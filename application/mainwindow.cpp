@@ -522,21 +522,14 @@ void MainWindow::on_actionShuffle_triggered(bool checked) {
 }
 
 void MainWindow::on_actionPrint_triggered() {
-    //    QPrinter* printer = new QPrinter();
-    //    QPrintPreviewDialog* preview = new QPrintPreviewDialog(printer, this);
-    //    connect(preview, &QPrintPreviewDialog::paintRequested, this, [=](QPrinter* printer) {
-    //        QPainter painter(printer);
-    //        double xscale = printer->pageRect().width() / double(this->width());
-    //        double yscale = printer->pageRect().height() / double(this->height());
-    //        double scale = qMin(xscale, yscale);
-    //        painter.translate(printer->paperRect().x() + printer->pageRect().width()/2,
-    //                           printer->paperRect().y() + printer->pageRect().height()/2);
-    //        painter.scale(scale, scale);
-    //        painter.translate(-width()/2, -height()/2);
-
-    //        this->render(&painter);
-    //    });
-    //    preview->open();
+    if (!PrintController::hasPrintersAvailable()) {
+      tMessageBox* box = new tMessageBox(this);
+      box->setWindowTitle(tr("No Printers"));
+      box->setText(tr("Before printing a list of tracks, you'll need to set up a printer."));
+      connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
+      box->open();
+      return;
+    }
 
     AbstractLibraryBrowser* currentBrowser = qobject_cast<AbstractLibraryBrowser*>(ui->stackedWidget->currentWidget());
     if (!currentBrowser || currentBrowser->currentListInformation().tracks.isEmpty()) {

@@ -22,6 +22,7 @@
 #include "printsettings.h"
 #include <QPainter>
 #include <QPrinter>
+#include <QPrinterInfo>
 #include <common.h>
 #include <tpaintcalculator.h>
 #include <tpopover.h>
@@ -250,4 +251,7 @@ void PrintController::paintJewelCase(QPrinter* printer) {
 
     calculator.performPaint();
     painter.end();
+}
+bool PrintController::hasPrintersAvailable() {
+    return !QPrinterInfo::availablePrinters().isEmpty();
 }

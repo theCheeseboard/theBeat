@@ -103,9 +103,13 @@ void TagEditor::markDirty() {
 
     tPopover* popover = tPopover::popoverForPopoverWidget(this);
     popover->setDismissable(false);
-    d->scrimClickConnection = connect(tScrim::scrimForWidget(popover->parentWidget()), &tScrim::scrimClicked, this, [=] {
-        on_titleLabel_backButtonClicked();
-    });
+
+    if (popover->parentWidget()) {
+      d->scrimClickConnection =
+          connect(tScrim::scrimForWidget(popover->parentWidget()),
+                  &tScrim::scrimClicked, this,
+                  [=] { on_titleLabel_backButtonClicked(); });
+    }
     d->clean = false;
 }
 

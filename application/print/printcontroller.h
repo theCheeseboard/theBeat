@@ -31,6 +31,8 @@ class PrintController : public QObject {
         explicit PrintController(AbstractLibraryBrowser::ListInformation listInformation, QWidget* parent = nullptr);
         ~PrintController();
 
+        static bool hasPrintersAvailable();
+
         void confirmAndPerformPrint();
 
     signals:
