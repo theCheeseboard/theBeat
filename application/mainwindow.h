@@ -49,27 +49,17 @@ class MainWindow : public QMainWindow {
 
         void on_actionExit_triggered();
 
-        void on_tracksButton_toggled(bool checked);
-
-        void on_artistsButton_toggled(bool checked);
-
-        void on_albumsButton_toggled(bool checked);
-
         void on_queueList_activated(const QModelIndex& index);
 
         void on_queueList_customContextMenuRequested(const QPoint& pos);
 
         void on_actionOpen_URL_triggered();
 
-        void on_otherButton_toggled(bool checked);
-
         void on_actionSkip_Back_triggered();
 
         void on_actionSkip_Forward_triggered();
 
         void on_actionPlayPause_triggered();
-
-        void on_playlistsButton_toggled(bool checked);
 
         void on_actionAdd_to_Library_triggered();
 
