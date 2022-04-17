@@ -21,6 +21,7 @@ jobs:
         with:
           version: 6.2.4
           arch: win64_msvc2019_64
+          modules: qtnetwork qtmultimedia qt5compat
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build zlib"
         with:
