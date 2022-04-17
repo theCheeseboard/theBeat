@@ -1,0 +1,52 @@
+name: "Windows CI"
+on:
+  push:
+    branches:
+      - master
+      - blueprint
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: 6.2.4
+          arch: win64_msvc2019_64
+      - uses: vicr123/libcontemporary/build-project@actions
+        name: "Build zlib"
+        with:
+          project: "madler/zlib"
+          commitish: "v1.2.12"
+      - uses: vicr123/libcontemporary/build-project@actions
+        name: "Build libcontemporary"
+        with:
+          project: "vicr123/libcontemporary"
+          commitish: "blueprint"
+      - uses: vicr123/libcontemporary/build-project@actions
+        name: "Build contemporary-theme"
+        with:
+          project: "vicr123/contemporary-theme"
+          commitish: "blueprint"
+      - uses: actions/checkout@v1
+        with:
+          submodules: 'recursive'
+      - uses: vicr123/libcontemporary/build-project@actions
+        name: "Build project"
+        with:
+          project: "."
+      - uses: vicr123/libcontemporary/deploy-project@actions
+        id: deploy
+        name: "Deploy project"
+        with:
+          subdir: "application"
+      - uses: actions/upload-artifact@v1
+        name: Upload Artifact to GitHub Actions
+        with:
+          name: "theBeat-win"
+          path: ${{ steps.deploy.outputs.package }}
