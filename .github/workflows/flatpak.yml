@@ -17,25 +17,11 @@ jobs:
       # Don't fail the whole workflow if one architecture fails
       fail-fast: false
     steps:
-    - uses: actions/checkout@v2
-    # Docker is required by the docker/setup-qemu-action which enables emulation
-    - name: Install Docker dependency
-      run: |
-        dnf -y install docker
-    - name: Set up QEMU
-      id: qemu
-      uses: docker/setup-qemu-action@v1
+    - uses: vicr123/libcontemporary/build-flatpak@actions
+      name: "Build Flatpak"
       with:
-        platforms: arm64
-    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
-      with:
-        bundle: "thebeat.flatpak"
-        manifest-path: "dist/com.vicr123.thebeat_blueprint.yml"
-        cache-key: flatpak-builder-${{ github.sha }}
         arch: ${{ matrix.arch }}
-    - uses: bilelmoussaoui/flatpak-github-actions/flat-manager@v4
-      name: "Deploy"
-      with:
+        repo-token: ${{ secrets.REPO_TOKEN }}
         repository: blueprint
-        flat-manager-url: https://flatpak.vicr123.com
-        token: ${{ secrets.REPO_TOKEN }}
+        bundle-name: "thebeat.flatpak"
+        manifest: "dist/com.vicr123.thebeat_blueprint.yml"
