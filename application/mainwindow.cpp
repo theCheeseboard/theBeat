@@ -302,7 +302,7 @@ void MainWindow::on_actionOpen_File_triggered() {
             StateManager::instance()->playlist()->addItem(item);
         }
     });
-    connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->open();
 }
 
@@ -433,7 +433,7 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
         menu->addAction(QIcon::fromTheme("list-remove"), tr("Remove from Queue"), [ = ] {
             // Directly removing the items causes the list to change and invalidate itself
             QList<MediaItem*> itemsToRemove;
-            for (QModelIndex idx : selected) {
+            for (const QModelIndex& idx : selected) {
                 itemsToRemove.append(idx.data(PlaylistModel::MediaItemRole).value<MediaItem*>());
             }
 
@@ -459,7 +459,11 @@ void MainWindow::on_actionOpen_URL_triggered() {
     if (ok) {
         MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(url));
         if (!item) {
-            tMessageBox::information(this, tr("Can't open that URL"), tr("Sorry, that URL isn't supported by theBeat."));
+            tMessageBox messageBox(this);
+            messageBox.setMessageText(tr("Can't open that URL"));
+            messageBox.setInformativeText(tr("Sorry, that URL isn't supported by theBeat."));
+            messageBox.setIcon(QMessageBox::Information);
+            messageBox.exec();
         } else {
             StateManager::instance()->playlist()->addItem(item);
         }
@@ -523,21 +527,20 @@ void MainWindow::on_actionShuffle_triggered(bool checked) {
 
 void MainWindow::on_actionPrint_triggered() {
     if (!PrintController::hasPrintersAvailable()) {
-      tMessageBox* box = new tMessageBox(this);
-      box->setWindowTitle(tr("No Printers"));
-      box->setText(tr("Before printing a list of tracks, you'll need to set up a printer."));
-      connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
-      box->open();
+      tMessageBox box(this);
+      box.setMessageText(tr("No Printers"));
+      box.setMessageText(tr("Before printing a list of tracks, you'll need to set up a printer."));
+      box.exec();
       return;
     }
 
     AbstractLibraryBrowser* currentBrowser = qobject_cast<AbstractLibraryBrowser*>(ui->stackedWidget->currentWidget());
     if (!currentBrowser || currentBrowser->currentListInformation().tracks.isEmpty()) {
         tMessageBox* box = new tMessageBox(this);
-        box->setWindowTitle(tr("Print"));
-        box->setText(tr("Open a list of tracks (for example, a playlist) to print it."));
-        connect(box, &tMessageBox::finished, box, &tMessageBox::deleteLater);
-        box->open();
+        box->setIcon(QMessageBox::Information);
+        box->setTitleBarText(tr("Print"));
+        box->setMessageText(tr("Open a list of tracks (for example, a playlist) to print it."));
+        box->show(true);
     } else {
         PrintController* controller = new PrintController(currentBrowser->currentListInformation(), this);
         controller->confirmAndPerformPrint();
