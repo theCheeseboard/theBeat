@@ -55,7 +55,7 @@ jobs:
           mkdir -p ./build/application/deploy
           mkdir -p ./build/application/deploy/plugins
           cp ./build/plugins/*/*.dll ./build/application/deploy/plugins
-          cp ./build/cdlib/src/CDLib-build/CDLib.dll ./build/deploy
+          cp ./build/cdlib/src/CDLib-build/CDLib.dll ./build/application/deploy
       - uses: vicr123/libcontemporary/deploy-project@actions
         id: deploy
         name: "Deploy project"
