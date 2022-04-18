@@ -52,9 +52,9 @@ jobs:
       - name: "Prepare for deployment"
         shell: bash
         run: |
-          mkdir -p ./build/deploy
-          mkdir -p ./build/deploy/plugins
-          cp ./build/plugins/*/*.dll ./build/deploy/plugins
+          mkdir -p ./build/application/deploy
+          mkdir -p ./build/application/deploy/plugins
+          cp ./build/plugins/*/*.dll ./build/application/deploy/plugins
           cp ./build/cdlib/src/CDLib-build/CDLib.dll ./build/deploy
       - uses: vicr123/libcontemporary/deploy-project@actions
         id: deploy
