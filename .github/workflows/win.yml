@@ -27,11 +27,6 @@ jobs:
         with:
           sdk: 10.0.22000.0
       - uses: vicr123/libcontemporary/build-project@actions
-        name: "Build zlib"
-        with:
-          project: "madler/zlib"
-          commitish: "v1.2.12"
-      - uses: vicr123/libcontemporary/build-project@actions
         name: "Build libcontemporary"
         with:
           project: "vicr123/libcontemporary"
@@ -41,6 +36,11 @@ jobs:
         with:
           project: "vicr123/contemporary-theme"
           commitish: "blueprint"
+      - uses: vicr123/libcontemporary/build-project@actions
+        name: "Build taglib"
+        with:
+          project: "taglib/taglib"
+          commitish: "v1.12"
       - uses: actions/checkout@v1
         with:
           submodules: 'recursive'
