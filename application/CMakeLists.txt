@@ -111,6 +111,7 @@ set_target_properties(thebeat PROPERTIES
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in
         MACOSX_BUNDLE_ICON_FILE icon.icns
+        WIN32_EXECUTABLE TRUE
         CNTP_DATA_SUBDIR thebeat)
 set_source_files_properties(icon.icns PROPERTIES
         MACOSX_PACKAGE_LOCATION Resources)

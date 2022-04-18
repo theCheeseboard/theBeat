@@ -49,6 +49,13 @@ jobs:
         name: "Build project"
         with:
           project: "."
+      - name: "Prepare for deployment"
+        shell: bash
+        run: |
+          mkdir -p ./build/deploy
+          mkdir -p ./build/deploy/plugins
+          cp ./plugins/*/*.dll ./build/deploy/plugins
+          cp ./cdlib/src/CDLib-build/CDLib.dll ./build/deploy
       - uses: vicr123/libcontemporary/deploy-project@actions
         id: deploy
         name: "Deploy project"
