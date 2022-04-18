@@ -97,6 +97,12 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->topWidget->raise();
     ui->topWidget->move(0, 0);
 
+    ui->windowTabber->addButton(new tWindowTabberButton(QIcon::fromTheme("view-media-track"), tr("Tracks"), ui->stackedWidget, ui->tracksPage));
+    ui->windowTabber->addButton(new tWindowTabberButton(QIcon::fromTheme("view-media-artist"), tr("Artists"), ui->stackedWidget, ui->artistsPage));
+    ui->windowTabber->addButton(new tWindowTabberButton(QIcon::fromTheme("media-album-cover"), tr("Albums"), ui->stackedWidget, ui->albumsPage));
+    ui->windowTabber->addButton(new tWindowTabberButton(QIcon::fromTheme("view-media-playlist"), tr("Playlists"), ui->stackedWidget, ui->playlistsPage));
+    ui->windowTabber->addButton(new tWindowTabberButton(QIcon::fromTheme("view-list-details"), tr("Other Sources"), ui->stackedWidget, ui->otherSourcesPage));
+
 #ifdef Q_OS_MAC
     ui->menuBar->addMenu(new tHelpMenu(this));
     ui->menuButton->setVisible(false);
@@ -323,24 +329,6 @@ void MainWindow::on_actionExit_triggered() {
     QApplication::exit();
 }
 
-void MainWindow::on_tracksButton_toggled(bool checked) {
-    if (checked) {
-        ui->stackedWidget->setCurrentWidget(ui->tracksPage);
-    }
-}
-
-void MainWindow::on_artistsButton_toggled(bool checked) {
-    if (checked) {
-        ui->stackedWidget->setCurrentWidget(ui->artistsPage);
-    }
-}
-
-void MainWindow::on_albumsButton_toggled(bool checked) {
-    if (checked) {
-        ui->stackedWidget->setCurrentWidget(ui->albumsPage);
-    }
-}
-
 void MainWindow::resizeEvent(QResizeEvent* event) {
     d->topBarLine->move(ui->queueLine->x(), 0);
     d->topBarLine->setFixedHeight(ui->topWidget->height());
@@ -470,12 +458,6 @@ void MainWindow::on_actionOpen_URL_triggered() {
     }
 }
 
-void MainWindow::on_otherButton_toggled(bool checked) {
-    if (checked) {
-        ui->stackedWidget->setCurrentWidget(ui->otherSourcesPage);
-    }
-}
-
 void MainWindow::on_actionSkip_Back_triggered() {
     StateManager::instance()->playlist()->previous();
 }
@@ -486,12 +468,6 @@ void MainWindow::on_actionSkip_Forward_triggered() {
 
 void MainWindow::on_actionPlayPause_triggered() {
     StateManager::instance()->playlist()->playPause();
-}
-
-void MainWindow::on_playlistsButton_toggled(bool checked) {
-    if (checked) {
-        ui->stackedWidget->setCurrentWidget(ui->playlistsPage);
-    }
 }
 
 void MainWindow::on_actionAdd_to_Library_triggered() {
