@@ -504,7 +504,7 @@ void MainWindow::on_actionShuffle_triggered(bool checked) {
 void MainWindow::on_actionPrint_triggered() {
     if (!PrintController::hasPrintersAvailable()) {
       auto box = new tMessageBox(this);
-      box->setWindowTitle(tr("No Printers"));
+      box->setTitleBarText(tr("No Printers"));
       box->setMessageText(tr("Before printing a list of tracks, you'll need to set up a printer."));
       box->show(true);
       return;
