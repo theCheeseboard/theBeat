@@ -41,6 +41,7 @@ jobs:
         with:
           project: "taglib/taglib"
           commitish: "v1.12"
+          extra-cmake-args: -DBUILD_SHARED_LIBS=ON
       - uses: actions/checkout@v1
         with:
           submodules: 'recursive'
