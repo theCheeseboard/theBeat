@@ -139,6 +139,12 @@ int main(int argc, char* argv[]) {
         w->show();
         w->activateWindow();
     });
+    QObject::connect(&a, &tApplication::openFile, [=](QString file) {
+      MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
+      StateManager::instance()->playlist()->addItem(item);
+      StateManager::instance()->playlist()->setCurrentItem(item);
+      StateManager::instance()->playlist()->play();
+    });
 
     QStringList files;
     for (QString arg : parser.positionalArguments()) {

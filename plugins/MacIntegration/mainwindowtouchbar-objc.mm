@@ -20,14 +20,14 @@ struct MainWindowTouchBarItem {
     void setImage(NSImageName image);
 
     QString identifier;
-    QAction* action;
+    QAction* action = nullptr;
 
-    bool haveImage = false;;
+    bool haveImage = false;
     NSImageName image;
 
-    NSButton* button;
+    NSButton* button = nil;
 
-    NSTouchBarItem* touchBarItem;
+    NSTouchBarItem* touchBarItem = nil;
 };
 typedef QSharedPointer<MainWindowTouchBarItem> TouchBarItemPtr;
 
