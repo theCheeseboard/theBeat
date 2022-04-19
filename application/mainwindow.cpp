@@ -448,8 +448,8 @@ void MainWindow::on_actionOpen_URL_triggered() {
         MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(url));
         if (!item) {
             tMessageBox messageBox(this);
-            messageBox.setMessageText(tr("Can't open that URL"));
-            messageBox.setInformativeText(tr("Sorry, that URL isn't supported by theBeat."));
+            messageBox.setTitleBarText(tr("Can't open that URL"));
+            messageBox.setMessageText(tr("Sorry, that URL isn't supported by theBeat."));
             messageBox.setIcon(QMessageBox::Information);
             messageBox.exec();
         } else {
