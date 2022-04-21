@@ -110,23 +110,22 @@ add_executable(thebeat ${SOURCES} ${HEADERS} icon.rc)
 set_target_properties(thebeat PROPERTIES
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in
-        MACOSX_BUNDLE_ICON_FILE icon.icns
+        MACOSX_BUNDLE_GUI_IDENTIFIER com.vicr123.thebeat
         WIN32_EXECUTABLE TRUE
         CNTP_DATA_SUBDIR thebeat)
-set_source_files_properties(icon.icns PROPERTIES
-        MACOSX_PACKAGE_LOCATION Resources)
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set_target_properties(thebeat PROPERTIES
-            OUTPUT_NAME theBeat)
-ENDIF()
 
 cntp_init(thebeat 17)
 cntp_translate(thebeat)
+cntp_target_name(thebeat "theBeat")
+cntp_mac_icon(thebeat
+    ICON icon.icns
+    BLUEPRINT_ICON icon-bp.icns)
+cntp_target_desktop_file(thebeat
+    DESKTOP_FILE com.vicr123.thebeat.desktop
+    BLUEPRINT_DESKTOP_FILE com.vicr123.thebeat_blueprint.desktop)
 
 target_link_libraries(thebeat Qt6::Widgets Qt6::DBus Qt6::Sql Qt6::PrintSupport libcontemporary libthebeat)
 target_include_directories(thebeat PUBLIC ../libthebeat/)
-cntp_target_install_desktop_file_switch(thebeat com.vicr123.thebeat.desktop com.vicr123.thebeat_blueprint.desktop)
 
 install(TARGETS thebeat
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

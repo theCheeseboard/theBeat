@@ -2,7 +2,7 @@ app-id: com.vicr123.thebeat_blueprint
 runtime: org.kde.Platform
 runtime-version: '6.2'
 sdk: org.kde.Sdk
-command: thebeat
+command: thebeat-blueprint
 finish-args:
   - --socket=wayland
   - --socket=fallback-x11
@@ -11,6 +11,7 @@ finish-args:
   - --own-name=org.mpris.MediaPlayer2.theBeat
   - --filesystem=home
   - --filesystem=/run/media
+  - --system-talk-name=org.freedesktop.UDisks2
 cleanup:
   - '/include'
   - '/qt'
