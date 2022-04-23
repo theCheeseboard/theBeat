@@ -77,13 +77,8 @@ int main(int argc, char* argv[]) {
 
 #if defined(Q_OS_WIN)
     a.setWinApplicationClassId("{98fd3bc5-b39c-4c97-b483-4c95b90a7c39}");
-    tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
 #elif defined(Q_OS_MAC)
-    tSettings::registerDefaults(a.macOSBundlePath() + "/Contents/Resources/defaults.conf");
     a.setQuitOnLastWindowClosed(false);
-#else
-    tSettings::registerDefaults(a.applicationDirPath() + "/defaults.conf");
-    tSettings::registerDefaults("/etc/theSuite/theBeat/defaults.conf");
 #endif
 
     tSettings settings;

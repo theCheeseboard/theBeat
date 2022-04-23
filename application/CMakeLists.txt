@@ -123,6 +123,8 @@ cntp_mac_icon(thebeat
 cntp_target_desktop_file(thebeat
     DESKTOP_FILE com.vicr123.thebeat.desktop
     BLUEPRINT_DESKTOP_FILE com.vicr123.thebeat_blueprint.desktop)
+cntp_defaults_file(thebeat
+    DEFAULTS_FILE thebeat.conf)
 
 target_link_libraries(thebeat Qt6::Widgets Qt6::DBus Qt6::Sql Qt6::PrintSupport libcontemporary libthebeat)
 target_include_directories(thebeat PUBLIC ../libthebeat/)
