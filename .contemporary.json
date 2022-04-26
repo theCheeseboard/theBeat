@@ -2,5 +2,7 @@
     "dmg": {
         "icon": "dist/dmgicon.icns",
         "background": "dist/app-dmg-background.png"
-    }
+    },
+    "desktop-id": "com.vicr123.thebeat",
+    "theme-colors": ["#ff6400", "#ffc800"]
 }

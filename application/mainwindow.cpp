@@ -63,12 +63,12 @@
 #endif
 
 struct MainWindowPrivate {
-    tCsdTools csd;
-    PluginManager plugins;
+        tCsdTools csd;
+        PluginManager plugins;
 
-    tSettings settings;
+        tSettings settings;
 
-    QFrame* topBarLine;
+        QFrame* topBarLine;
 };
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -112,11 +112,11 @@ MainWindow::MainWindow(QWidget* parent) :
 
     tHelpMenu* helpMenu = new tHelpMenu(this);
 
-#ifdef HAVE_THEINSTALLER
+    #ifdef HAVE_THEINSTALLER
     if (tApplication::currentPlatform() != tApplication::WindowsAppPackage && UpdateChecker::updatesSupported()) {
         helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
 
-        connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [ = ] {
+        connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [=] {
             QPixmap menuPixmap = UpdateChecker::updateAvailableIcon(ui->menuButton->icon().pixmap(ui->menuButton->iconSize()));
             ui->menuButton->setIcon(QIcon(menuPixmap));
 
@@ -125,7 +125,7 @@ MainWindow::MainWindow(QWidget* parent) :
             helpMenu->setIcon(QIcon(UpdateChecker::updateAvailableIcon(QPixmap::fromImage(helpImage))));
         });
     }
-#endif
+    #endif
 
     menu->addAction(ui->actionOpen_File);
     menu->addAction(ui->actionOpen_URL);
@@ -144,11 +144,7 @@ MainWindow::MainWindow(QWidget* parent) :
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
 
-#ifdef T_BLUEPRINT_BUILD
-    ui->menuButton->setIcon(QIcon(":/icons/com.vicr123.thebeat_blueprint.svg"));
-#else
-    ui->menuButton->setIcon(QIcon::fromTheme("com.vicr123.thebeat", QIcon(":/icons/com.vicr123.thebeat.svg")));
-#endif
+    ui->menuButton->setIcon(tApplication::applicationIcon());
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
 #endif
@@ -157,11 +153,11 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->queueStack->setCurrentAnimation(tStackedWidget::Fade);
     this->setWindowIcon(ui->menuButton->windowIcon());
 
-    connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [ = ] {
+    connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [=] {
         ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
 
         // Sometimes the animation breaks it
-        QTimer::singleShot(500, [ = ] {
+        QTimer::singleShot(500, [=] {
             ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
         });
     });
@@ -183,35 +179,35 @@ MainWindow::MainWindow(QWidget* parent) :
     d->topBarLine->setVisible(true);
     d->topBarLine->lower();
 
-    connect(new QShortcut(QKeySequence(Qt::Key_J), this), &QShortcut::activated, this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_J), this), &QShortcut::activated, this, [=] {
         this->rewind10();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_K), this), &QShortcut::activated, this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_K), this), &QShortcut::activated, this, [=] {
         StateManager::instance()->playlist()->playPause();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_L), this), &QShortcut::activated, this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_L), this), &QShortcut::activated, this, [=] {
         this->ff10();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_Up), this), &QShortcut::activated, this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Up), this), &QShortcut::activated, this, [=] {
         double newVolume = StateManager::instance()->playlist()->volume();
         newVolume += 0.1;
         if (newVolume > 1) newVolume = 1;
         StateManager::instance()->playlist()->setVolume(newVolume);
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_Down), this), &QShortcut::activated, this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Down), this), &QShortcut::activated, this, [=] {
         double newVolume = StateManager::instance()->playlist()->volume();
         newVolume -= 0.1;
         if (newVolume < 0) newVolume = 0;
         StateManager::instance()->playlist()->setVolume(newVolume);
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_Left), this), &QShortcut::activated, this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Left), this), &QShortcut::activated, this, [=] {
         this->rewind10();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_Right), this), &QShortcut::activated, this, [ = ] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Right), this), &QShortcut::activated, this, [=] {
         this->ff10();
     });
 
-    QTimer::singleShot(0, this, [ = ] {
+    QTimer::singleShot(0, this, [=] {
         resizeEvent(nullptr);
     });
 
@@ -263,7 +259,7 @@ MainWindow::MainWindow(QWidget* parent) :
 //    thumbBar->addButton(nextToolButton);
 #endif
 
-    connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
+    connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
         if (key == "notifications/trackChange") {
             StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(value.toBool());
         } else if (key == "appearance/useSsds") {
@@ -275,10 +271,10 @@ MainWindow::MainWindow(QWidget* parent) :
 
     StateManager::instance()->sources()->setPadTop(ui->topWidget->sizeHint().height());
 
-    connect(StateManager::instance()->playlist(), &Playlist::repeatOneChanged, this, [ = ](bool repeatOne) {
+    connect(StateManager::instance()->playlist(), &Playlist::repeatOneChanged, this, [=](bool repeatOne) {
         ui->actionRepeat_One->setChecked(repeatOne);
     });
-    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, this, [ = ](bool shuffle) {
+    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, this, [=](bool shuffle) {
         ui->actionShuffle->setChecked(shuffle);
     });
 
@@ -302,7 +298,7 @@ void MainWindow::on_actionOpen_File_triggered() {
     QFileDialog* dialog = new QFileDialog(this);
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::ExistingFiles);
-    connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
+    connect(dialog, &QFileDialog::filesSelected, this, [=](QStringList files) {
         for (QString file : files) {
             MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
             StateManager::instance()->playlist()->addItem(item);
@@ -418,7 +414,7 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
         } else {
             menu->addSection(tr("For %n items", nullptr, selected.count()));
         }
-        menu->addAction(QIcon::fromTheme("list-remove"), tr("Remove from Queue"), [ = ] {
+        menu->addAction(QIcon::fromTheme("list-remove"), tr("Remove from Queue"), [=] {
             // Directly removing the items causes the list to change and invalidate itself
             QList<MediaItem*> itemsToRemove;
             for (const QModelIndex& idx : selected) {
@@ -432,7 +428,7 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
     }
 
     menu->addSection(tr("For Queue"));
-    menu->addAction(QIcon::fromTheme("list-remove"), tr("Clear Queue"), [ = ] {
+    menu->addAction(QIcon::fromTheme("list-remove"), tr("Clear Queue"), [=] {
         StateManager::instance()->playlist()->clear();
     });
 
@@ -475,7 +471,7 @@ void MainWindow::on_actionAdd_to_Library_triggered() {
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::Directory);
     dialog->setOption(QFileDialog::ShowDirsOnly);
-    connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
+    connect(dialog, &QFileDialog::filesSelected, this, [=](QStringList files) {
         for (QString file : files) {
             LibraryManager::instance()->enumerateDirectory(file, true, true);
         }
@@ -503,11 +499,11 @@ void MainWindow::on_actionShuffle_triggered(bool checked) {
 
 void MainWindow::on_actionPrint_triggered() {
     if (!PrintController::hasPrintersAvailable()) {
-      auto box = new tMessageBox(this);
-      box->setTitleBarText(tr("No Printers"));
-      box->setMessageText(tr("Before printing a list of tracks, you'll need to set up a printer."));
-      box->show(true);
-      return;
+        auto box = new tMessageBox(this);
+        box->setTitleBarText(tr("No Printers"));
+        box->setMessageText(tr("Before printing a list of tracks, you'll need to set up a printer."));
+        box->show(true);
+        return;
     }
 
     AbstractLibraryBrowser* currentBrowser = qobject_cast<AbstractLibraryBrowser*>(ui->stackedWidget->currentWidget());

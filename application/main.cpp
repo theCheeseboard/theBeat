@@ -63,15 +63,8 @@ int main(int argc, char* argv[]) {
     a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thebeat/intro"));
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theBeat"));
     a.setApplicationUrl(tApplication::FileBug, QUrl("http://github.com/vicr123/theBeat/issues"));
-#ifdef T_BLUEPRINT_BUILD
-    a.setApplicationIcon(QIcon(":/icons/com.vicr123.thebeat_blueprint.svg"));
-    a.setApplicationName("theBeat Blueprint");
-    a.setDesktopFileName("com.vicr123.thebeat_blueprint");
-#else
-    a.setApplicationIcon(QIcon::fromTheme("thebeat", QIcon(":/icons/com.vicr123.thebeat.svg")));
-    a.setApplicationName("theBeat");
-    a.setDesktopFileName("com.vicr123.thebeat");
-#endif
+    a.setApplicationName(T_APPMETA_READABLE_NAME);
+    a.setDesktopFileName(T_APPMETA_DESKTOP_ID);
 
     a.registerCrashTrap();
 
@@ -135,10 +128,10 @@ int main(int argc, char* argv[]) {
         w->activateWindow();
     });
     QObject::connect(&a, &tApplication::openFile, [=](QString file) {
-      MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
-      StateManager::instance()->playlist()->addItem(item);
-      StateManager::instance()->playlist()->setCurrentItem(item);
-      StateManager::instance()->playlist()->play();
+        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
+        StateManager::instance()->playlist()->addItem(item);
+        StateManager::instance()->playlist()->setCurrentItem(item);
+        StateManager::instance()->playlist()->play();
     });
 
     QStringList files;

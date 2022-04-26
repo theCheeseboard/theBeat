@@ -52,7 +52,8 @@ set(SOURCES
         resources.qrc
 
         Info.plist.in
-        icon.icns)
+#        icon.icns
+    )
 
 set(HEADERS
         artistsalbumswidget.h
@@ -105,7 +106,7 @@ FOREACH(DIR ${LPROJ_DIRS})
 ENDFOREACH()
 set(SOURCES ${SOURCES} ${LPROJ_SOURCES})
 
-add_executable(thebeat ${SOURCES} ${HEADERS} icon.rc)
+add_executable(thebeat ${SOURCES} ${HEADERS})
 
 set_target_properties(thebeat PROPERTIES
         MACOSX_BUNDLE TRUE
@@ -117,9 +118,9 @@ set_target_properties(thebeat PROPERTIES
 cntp_init(thebeat 17)
 cntp_translate(thebeat)
 cntp_target_name(thebeat "theBeat")
-cntp_mac_icon(thebeat
-    ICON icon.icns
-    BLUEPRINT_ICON icon-bp.icns)
+cntp_app_icon(thebeat
+    BASEICON icons/baseicon.svg
+    BASEICON_MAC icons/baseicon-mac.svg)
 cntp_target_desktop_file(thebeat
     DESKTOP_FILE com.vicr123.thebeat.desktop
     BLUEPRINT_DESKTOP_FILE com.vicr123.thebeat_blueprint.desktop)
