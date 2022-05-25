@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.21.0)
-
 project(thebeat VERSION 1.0.0 LANGUAGES CXX)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Sql PrintSupport)
@@ -52,7 +50,6 @@ set(SOURCES
         resources.qrc
 
         Info.plist.in
-#        icon.icns
     )
 
 set(HEADERS
@@ -115,7 +112,12 @@ set_target_properties(thebeat PROPERTIES
         WIN32_EXECUTABLE TRUE
         CNTP_DATA_SUBDIR thebeat)
 
-cntp_init(thebeat 17)
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    cntp_init(thebeat 20)
+ELSE()
+    cntp_init(thebeat 17)
+ENDIF()
+
 cntp_translate(thebeat)
 cntp_target_name(thebeat "theBeat")
 cntp_app_icon(thebeat

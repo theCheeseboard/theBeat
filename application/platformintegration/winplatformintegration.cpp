@@ -34,6 +34,7 @@ namespace abi
 
 class QByteArrayBackedIBuffer : public winrt::implements<QByteArrayBackedIBuffer, IBuffer, Windows::Storage::Streams::IBufferByteAccess> {
     QByteArray buf;
+    uint32_t length{};
 
     public:
         QByteArrayBackedIBuffer(QByteArray buffer) {
@@ -45,11 +46,15 @@ class QByteArrayBackedIBuffer : public winrt::implements<QByteArrayBackedIBuffer
         }
 
         uint32_t Length() const {
-            return buf.length();
+            return length;
         }
 
         void Length(uint32_t value) {
-            buf.reserve(value);
+            if (value > buf.length()) {
+                throw winrt::hresult_invalid_argument();
+            }
+
+            length = value;
         }
 
         HRESULT __stdcall Buffer(uint8_t** value) {
@@ -60,22 +65,19 @@ class QByteArrayBackedIBuffer : public winrt::implements<QByteArrayBackedIBuffer
 };
 
 struct WinPlatformIntegrationPrivate {
-    MediaItem* currentItem = nullptr;
-    QWidget* parentWindow;
+    MediaItem* currentItem{ };
+    QWidget* parentWindow{ };
 
     SystemMediaTransportControls smtc{ nullptr };
 
     bool metadataUpdateRequired = true;
-    void updateSMTC();
+    winrt::fire_and_forget updateSMTC();
 };
 
 WinPlatformIntegration::WinPlatformIntegration(QWidget *parent) : QObject(parent) {
     d = new WinPlatformIntegrationPrivate();
     d->parentWindow = parent;
 
-    //TODO: Add a version check for Windows 8 and later
-
-    //Initialise the SMTC
     IActivationFactory factory = winrt::get_activation_factory<SystemMediaTransportControls>();
     winrt::com_ptr<ISystemMediaTransportControlsInterop> interop = factory.as<ISystemMediaTransportControlsInterop>();
 
@@ -139,60 +141,59 @@ void WinPlatformIntegration::updateSMTC() {
 }
 
 #include <QDebug>
-void WinPlatformIntegrationPrivate::updateSMTC()
+winrt::fire_and_forget WinPlatformIntegrationPrivate::updateSMTC()
 {
-    if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::Windows8) {
-        Playlist* playlist = StateManager::instance()->playlist();
+    Playlist* playlist = StateManager::instance()->playlist();
 
-        smtc.IsPlayEnabled(true);
-        smtc.IsPauseEnabled(true);
-        smtc.IsNextEnabled(true);
-        smtc.IsPreviousEnabled(true);
-        smtc.ShuffleEnabled(playlist->shuffle());
-        smtc.AutoRepeatMode(playlist->repeatOne() ? MediaPlaybackAutoRepeatMode::Track : MediaPlaybackAutoRepeatMode::None);
+    smtc.IsPlayEnabled(true);
+    smtc.IsPauseEnabled(true);
+    smtc.IsNextEnabled(true);
+    smtc.IsPreviousEnabled(true);
+    smtc.ShuffleEnabled(playlist->shuffle());
+    smtc.AutoRepeatMode(playlist->repeatOne() ? MediaPlaybackAutoRepeatMode::Track : MediaPlaybackAutoRepeatMode::None);
 
-        switch (playlist->state()) {
-            case Playlist::Playing:
-                smtc.PlaybackStatus(MediaPlaybackStatus::Playing);
-                break;
-            case Playlist::Paused:
-                smtc.PlaybackStatus(MediaPlaybackStatus::Paused);
-                break;
-            case Playlist::Stopped:
-                smtc.PlaybackStatus(MediaPlaybackStatus::Stopped);
-                break;
-        }
+    switch (playlist->state()) {
+    case Playlist::Playing:
+        smtc.PlaybackStatus(MediaPlaybackStatus::Playing);
+        break;
+    case Playlist::Paused:
+        smtc.PlaybackStatus(MediaPlaybackStatus::Paused);
+        break;
+    case Playlist::Stopped:
+        smtc.PlaybackStatus(MediaPlaybackStatus::Stopped);
+        break;
+    }
 
-        if (metadataUpdateRequired) {
-            auto updater = smtc.DisplayUpdater();
-            updater.Type(MediaPlaybackType::Music);
-            updater.MusicProperties().Title(currentItem->title().toStdWString().c_str());
-            updater.MusicProperties().Artist(QLocale().createSeparatedList(currentItem->authors()).toStdWString().c_str());
-            updater.MusicProperties().AlbumTitle(currentItem->album().toStdWString().c_str());
+    if (metadataUpdateRequired) {
+        auto updater = smtc.DisplayUpdater();
+        updater.Type(MediaPlaybackType::Music);
+        updater.MusicProperties().Title(currentItem->title().toStdWString().c_str());
+        updater.MusicProperties().Artist(QLocale().createSeparatedList(currentItem->authors()).toStdWString().c_str());
+        updater.MusicProperties().AlbumTitle(currentItem->album().toStdWString().c_str());
 
-            QByteArray albumArt;
-            QBuffer albumArtBuffer(&albumArt);
-            albumArtBuffer.open(QBuffer::WriteOnly);
-            currentItem->albumArt().save(&albumArtBuffer, "PNG");
-            albumArtBuffer.close();
+        QByteArray albumArt;
+        QBuffer albumArtBuffer(&albumArt);
+        albumArtBuffer.open(QBuffer::WriteOnly);
+        currentItem->albumArt().save(&albumArtBuffer, "PNG");
+        albumArtBuffer.close();
 
+        if (!albumArt.isNull()) {
             InMemoryRandomAccessStream memoryStream;
-            memoryStream.WriteAsync(winrt::make<QByteArrayBackedIBuffer>(albumArt)).get();
+            co_await memoryStream.WriteAsync(winrt::make<QByteArrayBackedIBuffer>(albumArt));
             memoryStream.Seek(0);
 
             auto randomAccessStream = RandomAccessStreamReference::CreateFromStream(memoryStream);
             updater.Thumbnail(randomAccessStream);
-
-            updater.Update();
         }
 
-        SystemMediaTransportControlsTimelineProperties timeline;
-        timeline.StartTime(0ms);
-        timeline.MinSeekTime(timeline.StartTime());
-        timeline.Position(std::chrono::milliseconds(currentItem->elapsed()));
-        timeline.EndTime(std::chrono::milliseconds(currentItem->duration()));
-        timeline.MaxSeekTime(timeline.EndTime());
-        smtc.UpdateTimelineProperties(timeline);
-
+        updater.Update();
     }
+
+    SystemMediaTransportControlsTimelineProperties timeline;
+    timeline.StartTime(0ms);
+    timeline.MinSeekTime(timeline.StartTime());
+    timeline.Position(std::chrono::milliseconds(currentItem->elapsed()));
+    timeline.EndTime(std::chrono::milliseconds(currentItem->duration()));
+    timeline.MaxSeekTime(timeline.EndTime());
+    smtc.UpdateTimelineProperties(timeline);
 }
