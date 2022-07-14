@@ -28,7 +28,7 @@ set(HEADERS
 add_library(plugin-internetradio SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-internetradio PUBLIC ../../libthebeat/)
 
-cntp_init_plugin(thebeat plugin-internetradio 17 internetradioplugin)
+cntp_init_plugin(thebeat plugin-internetradio 20 internetradioplugin)
 cntp_translate(plugin-internetradio)
 
 set_target_properties(plugin-internetradio PROPERTIES

@@ -41,7 +41,7 @@ set(HEADERS
         visualisationmanager.h)
 
 add_library(libthebeat SHARED ${SOURCES} ${HEADERS})
-cntp_init(libthebeat 17)
+cntp_init(libthebeat 20)
 set_target_properties(libthebeat PROPERTIES
         OUTPUT_NAME thebeat
         FRAMEWORK TRUE

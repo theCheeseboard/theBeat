@@ -25,7 +25,11 @@ set(SOURCES
         mainwindowtouchbar-objc.mm
         mainwindowtouchbar.cpp
         nowplayingintegration.mm
-        plugin.cpp)
+        plugin.cpp
+
+        burn/macburnjobwidget.ui
+        cd/cdchecker.ui
+    )
 
 set(HEADERS
         ../PhononPlugin/musicbrainzreleasemodel.h
@@ -46,7 +50,7 @@ set(HEADERS
 add_library(plugin-macintegration SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-macintegration PUBLIC ../../libthebeat/)
 
-cntp_init_plugin(thebeat plugin-macintegration 17 macintegration)
+cntp_init_plugin(thebeat plugin-macintegration 20 macintegration)
 cntp_translate(plugin-macintegration)
 
 set_target_properties(plugin-macintegration PROPERTIES

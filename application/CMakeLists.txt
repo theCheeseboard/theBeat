@@ -112,12 +112,7 @@ set_target_properties(thebeat PROPERTIES
         WIN32_EXECUTABLE TRUE
         CNTP_DATA_SUBDIR thebeat)
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    cntp_init(thebeat 20)
-ELSE()
-    cntp_init(thebeat 17)
-ENDIF()
-
+cntp_init(thebeat 20)
 cntp_translate(thebeat)
 cntp_target_name(thebeat "theBeat")
 cntp_app_icon(thebeat

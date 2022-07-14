@@ -4,53 +4,64 @@
 <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="65"/>
-        <location filename="../artistsalbumswidget.ui" line="188"/>
+        <location filename="../artistsalbumswidget.ui" line="+65"/>
+        <location line="+123"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+273"/>
+        <location line="+1"/>
         <source>Tracks in Library</source>
         <translation>Sange i bibliotek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="237"/>
+        <location line="+49"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation>Tilføj alle til kø</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="248"/>
+        <location line="+11"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Play All</source>
         <translation>Afspil alle</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="259"/>
+        <location line="+11"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Shuffle All</source>
         <translation>Bland alle</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="283"/>
+        <location line="+24"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Burn</source>
         <translation>Brænd</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="68"/>
+        <location filename="../artistsalbumswidget.cpp" line="+68"/>
         <source>Albums in Library</source>
         <translation>Albummer i bibliotek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="68"/>
+        <location line="+0"/>
         <source>Artists in Library</source>
         <translation>Kunstnere i bibliotek</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="189"/>
+        <location line="+121"/>
         <source>Tracks in %1</source>
         <translation>Sange i %1</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="189"/>
+        <location line="+0"/>
         <source>Tracks by %1</source>
         <translation>Sange efter %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../artistsalbumswidget.cpp" line="198"/>
+        <location line="+9"/>
         <source>%n tracks</source>
         <translation>
             <numerusform>%n sang</numerusform>
@@ -59,9 +70,28 @@
     </message>
 </context>
 <context>
+    <name>CdChecker</name>
+    <message>
+        <source>CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play All</source>
+        <translation type="unfinished">Afspil alle</translation>
+    </message>
+    <message>
+        <source>Enqueue All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shuffle All</source>
+        <translation type="unfinished">Bland alle</translation>
+    </message>
+</context>
+<context>
     <name>Common</name>
     <message>
-        <location filename="../common.cpp" line="31"/>
+        <location filename="../common.cpp" line="+31"/>
         <source>Select Device</source>
         <translation>Vælg enhed</translation>
     </message>
@@ -69,32 +99,36 @@
 <context>
     <name>ControlStrip</name>
     <message>
-        <location filename="../controlstrip.ui" line="101"/>
+        <location filename="../controlstrip.ui" line="+101"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+310"/>
         <source>Title</source>
         <translation>Navn</translation>
     </message>
     <message>
-        <location filename="../controlstrip.ui" line="128"/>
+        <location line="+27"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+1"/>
         <source>Metadata</source>
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="82"/>
+        <location filename="../controlstrip.cpp" line="+82"/>
         <source>Repeat Options</source>
         <translation>Gentagelsesindstillinger</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="83"/>
+        <location line="+1"/>
         <source>Repeat Play Queue</source>
         <translation>Gentag kø</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="100"/>
+        <location line="+17"/>
         <source>Playback Options</source>
         <translation>Afspilningsindstillinger</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="101"/>
+        <location line="+1"/>
         <source>Pause after current track</source>
         <translation>Pause efter nuværende spor</translation>
     </message>
@@ -102,31 +136,46 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="151"/>
+        <location filename="../currenttrackpopover.cpp" line="+151"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="152"/>
+        <location line="+1"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="155"/>
-        <location filename="../currenttrackpopover.cpp" line="157"/>
+        <location line="+3"/>
+        <location line="+2"/>
         <source>Track</source>
         <translation>Sang</translation>
     </message>
 </context>
 <context>
+    <name>FavouriteStationsWidget</name>
+    <message>
+        <source>Internet Radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jam out to your favourite radio stations and radio stations all around the world</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go Searching</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="153"/>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
         <source>Folder Added</source>
         <translation>Mappe tilføjet</translation>
     </message>
     <message numerus="yes">
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="154"/>
+        <location line="+1"/>
         <source>%n tracks added/updated</source>
         <translation>
             <numerusform>%n sang tilføjet/opdateret</numerusform>
@@ -137,7 +186,8 @@
 <context>
     <name>LibraryEnumerateDirectoryJobWidget</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="26"/>
+        <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="+26"/>
+        <location/>
         <source>DISCOVERING AUDIO TRACKS</source>
         <translation>SØGER EFTER SANGE</translation>
     </message>
@@ -145,27 +195,35 @@
 <context>
     <name>LibraryErrorPopover</name>
     <message>
-        <location filename="../libraryerrorpopover.ui" line="35"/>
+        <location filename="../libraryerrorpopover.ui" line="+35"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+129"/>
         <source>Hmm</source>
         <translation>Hmm</translation>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.ui" line="134"/>
+        <location line="+99"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>ACTIONS</source>
         <translation>HANDLINGER</translation>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.ui" line="143"/>
+        <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>Locate File</source>
         <translation>Vælg fil</translation>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.ui" line="150"/>
+        <location line="+7"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>Remove from Library</source>
         <translation>Fjern fra bibliotek</translation>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.cpp" line="39"/>
+        <location filename="../libraryerrorpopover.cpp" line="+39"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
         <translation>Det ser ud til at filen er gået i skjul. Hvis du ved hvor den er, lad os gerne vide det så vi kan afspille sangen.</translation>
     </message>
@@ -173,17 +231,17 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="194"/>
+        <location filename="../library/librarymodel.cpp" line="+194"/>
         <source>by %1</source>
         <translation>af %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="195"/>
+        <location line="+1"/>
         <source>on %1</source>
         <translation>i %1</translation>
     </message>
     <message>
-        <location filename="../library/librarymodel.cpp" line="197"/>
+        <location line="+2"/>
         <source>Track</source>
         <translation>Sang</translation>
     </message>
@@ -191,51 +249,51 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="31"/>
+        <location filename="../library/librarylistview.cpp" line="+31"/>
         <source>Add to Playlist</source>
         <translation>Tilføj til playliste</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="46"/>
-        <location filename="../library/librarylistview.cpp" line="48"/>
+        <location line="+15"/>
+        <location line="+2"/>
         <source>Remove from Library</source>
         <translation>Fjern fra bibliotek</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="36"/>
-        <location filename="../library/librarylistview.cpp" line="47"/>
+        <location line="-12"/>
+        <location line="+11"/>
         <source>Are you sure?</source>
         <translation>Er du sikker?</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="35"/>
-        <location filename="../library/librarylistview.cpp" line="37"/>
+        <location line="-12"/>
+        <location line="+2"/>
         <source>Remove from Playlist</source>
         <translation>Fjern fra playliste</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="113"/>
-        <location filename="../library/librarylistview.cpp" line="115"/>
+        <location line="+79"/>
+        <location line="+2"/>
         <source>New Playlist</source>
         <translation>Ny playliste</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="115"/>
+        <location line="+0"/>
         <source>What do you want to call this playlist?</source>
         <translation>Hvad ønsker du at kalde denne playliste?</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="130"/>
+        <location line="+15"/>
         <source>For %1</source>
         <translation>For %1</translation>
     </message>
     <message>
-        <location filename="../library/librarylistview.cpp" line="135"/>
+        <location line="+5"/>
         <source>Track Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../library/librarylistview.cpp" line="146"/>
+        <location line="+11"/>
         <source>For %n items</source>
         <translation>
             <numerusform>For %n ting</numerusform>
@@ -246,12 +304,12 @@
 <context>
     <name>LibraryManager</name>
     <message>
-        <location filename="../library/librarymanager.cpp" line="455"/>
+        <location filename="../library/librarymanager.cpp" line="+455"/>
         <source>20 Most Played Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../library/librarymanager.cpp" line="457"/>
+        <location line="+2"/>
         <source>20 Random Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -259,202 +317,269 @@
 <context>
     <name>LyricsDisplayWidget</name>
     <message>
-        <location filename="../lyrics/lyricsdisplaywidget.ui" line="14"/>
+        <location filename="../lyrics/lyricsdisplaywidget.ui" line="+14"/>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MacBurnProvider</name>
+    <message>
+        <source>Burn on macOS</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="14"/>
+        <location filename="../mainwindow.ui" line="+14"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+429"/>
         <source>theBeat</source>
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="90"/>
+        <location filename="../mainwindow.cpp" line="+100"/>
         <source>Tracks</source>
         <translation>Sange</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="116"/>
+        <location line="+1"/>
         <source>Artists</source>
         <translation>Kunstnere</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="139"/>
+        <location line="+1"/>
         <source>Albums</source>
         <translation>Albummer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="162"/>
+        <location line="+1"/>
         <source>Playlists</source>
         <translation>Playlister</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="185"/>
+        <location line="+1"/>
         <source>Other Sources</source>
         <translation>Andre kilder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="276"/>
+        <location filename="../mainwindow.ui" line="+141"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+47"/>
         <source>Queue</source>
         <translation>Kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="346"/>
+        <location line="+70"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Nothing Here!</source>
         <translation>Intet her!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="408"/>
+        <location line="+62"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="423"/>
+        <location line="+15"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Playback</source>
         <translation>Afspilning</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="441"/>
+        <location line="+18"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-50"/>
         <source>File Bug</source>
         <translation>Filfejl</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="450"/>
+        <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Sources</source>
         <translation>Kilder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="459"/>
+        <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="468"/>
+        <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Exit</source>
         <translation>Luk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="471"/>
+        <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="483"/>
+        <location line="+12"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Open File</source>
         <translation>Åben fil</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="486"/>
+        <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="491"/>
-        <location filename="../mainwindow.cpp" line="457"/>
+        <location line="+5"/>
+        <location/>
+        <location filename="../mainwindow.cpp" line="+339"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Open URL</source>
         <translation>Åben URL</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="500"/>
+        <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Skip Back</source>
         <translation>Spring tilbage</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="503"/>
+        <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shift+Left</source>
         <translation>Skift+Venstre</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="515"/>
+        <location line="+12"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+4"/>
         <source>Shift+Right</source>
         <translation>Skift+Højre</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="536"/>
+        <location line="+21"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+6"/>
         <source>Add to Library</source>
         <translation>Tilføj til bibliotek</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="545"/>
+        <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Settings</source>
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="548"/>
+        <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+,</source>
         <translation>Ctrl+,</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="560"/>
+        <location line="+12"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>theBeat Help</source>
         <translation>theBeat Hjælp</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="563"/>
+        <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="571"/>
+        <location line="+8"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Repeat One</source>
         <translation>Gentag en</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="574"/>
+        <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="582"/>
+        <location line="+8"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shuffle</source>
         <translation>Bland</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="585"/>
+        <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="594"/>
-        <location filename="../mainwindow.cpp" line="544"/>
+        <location line="+9"/>
+        <location filename="../mainwindow.cpp" line="+72"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="597"/>
+        <location line="+3"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="512"/>
+        <location line="-85"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-27"/>
         <source>Skip Forward</source>
         <translation>Spring over</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="356"/>
+        <location line="-156"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+32"/>
         <source>Select a track or drop something here!</source>
         <translation>Vælg en sang eller smid noget her!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="524"/>
+        <location line="+168"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-28"/>
         <source>Play</source>
         <translation>Afspil</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="527"/>
+        <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Space</source>
         <translation>Mellemrum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="429"/>
+        <location filename="../mainwindow.cpp" line="-100"/>
         <source>For &quot;%1&quot;</source>
         <translation>For &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="431"/>
+        <location line="+2"/>
         <source>For %n items</source>
         <translation>
             <numerusform>For %1 ting</numerusform>
@@ -462,37 +587,47 @@
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="433"/>
+        <location line="+2"/>
         <source>Remove from Queue</source>
         <translation>Fjern fra kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="446"/>
+        <location line="+13"/>
         <source>For Queue</source>
         <translation>For kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="447"/>
+        <location line="+1"/>
         <source>Clear Queue</source>
         <translation>Ryd kø</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="457"/>
+        <location line="+10"/>
         <source>Enter the URL you&apos;d like to open</source>
         <translation>Skriv den URL du ønsker at åbne</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="462"/>
+        <location line="+6"/>
         <source>Can&apos;t open that URL</source>
         <translation>Kan ikke åbne den URL</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="462"/>
+        <location line="+1"/>
         <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
         <translation>Beklager, den URL understøttes ikke af theBeat.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="545"/>
+        <location line="+55"/>
+        <source>No Printers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Before printing a list of tracks, you&apos;ll need to set up a printer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Open a list of tracks (for example, a playlist) to print it.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -500,12 +635,16 @@
 <context>
     <name>OtherSourcesWidget</name>
     <message>
-        <location filename="../othersourceswidget.ui" line="103"/>
+        <location filename="../othersourceswidget.ui" line="+103"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+125"/>
         <source>No other sources available</source>
         <translation>Ingen andre kilder tilgængelig</translation>
     </message>
     <message>
-        <location filename="../othersourceswidget.ui" line="113"/>
+        <location line="+10"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+1"/>
         <source>There&apos;s nothing else to play right now</source>
         <translation>Der er intet andet at afspille lige nu</translation>
     </message>
@@ -513,12 +652,12 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="316"/>
+        <location filename="../playlistmodel.cpp" line="+316"/>
         <source>Track</source>
         <translation>Sang</translation>
     </message>
     <message>
-        <location filename="../playlistmodel.cpp" line="339"/>
+        <location line="+23"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
@@ -526,12 +665,12 @@
 <context>
     <name>PrintController</name>
     <message>
-        <location filename="../print/printcontroller.cpp" line="58"/>
+        <location filename="../print/printcontroller.cpp" line="+59"/>
         <source>Print %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../print/printcontroller.cpp" line="124"/>
+        <location line="+66"/>
         <source>%n tracks</source>
         <translation type="unfinished">
             <numerusform>%n sang</numerusform>
@@ -539,80 +678,19 @@
         </translation>
     </message>
     <message>
-        <location filename="../print/printcontroller.cpp" line="196"/>
+        <location line="+72"/>
         <source>by %1</source>
         <translation type="unfinished">af %1</translation>
     </message>
     <message>
-        <location filename="../print/printcontroller.cpp" line="197"/>
+        <location line="+1"/>
         <source>on %1</source>
         <translation type="unfinished">i %1</translation>
     </message>
 </context>
 <context>
     <name>PrintPopover</name>
-    <message>
-        <location filename="../print/printpopover.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="50"/>
-        <source>Track Listing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="63"/>
-        <source>Copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="75"/>
-        <source>PRINT OPTIONS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="87"/>
-        <source>PRINT TYPE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="107"/>
-        <source>Print</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="120"/>
-        <source>Jewel Case Insert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="133"/>
-        <source>Printer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="147"/>
-        <source>Page Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="154"/>
-        <source>Print in Grayscale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.ui" line="161"/>
-        <source>Double Sided</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../print/printpopover.cpp" line="52"/>
-        <source>Print %1</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
-        <location filename="../print/printpopover.cpp" line="121"/>
         <source>%n tracks</source>
         <translation type="unfinished">
             <numerusform>%n sang</numerusform>
@@ -620,12 +698,10 @@
         </translation>
     </message>
     <message>
-        <location filename="../print/printpopover.cpp" line="193"/>
         <source>by %1</source>
         <translation type="unfinished">af %1</translation>
     </message>
     <message>
-        <location filename="../print/printpopover.cpp" line="194"/>
         <source>on %1</source>
         <translation type="unfinished">i %1</translation>
     </message>
@@ -633,25 +709,32 @@
 <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../print/printsettings.ui" line="25"/>
+        <location filename="../print/printsettings.ui" line="+25"/>
         <source>PRINT TYPE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../print/printsettings.ui" line="32"/>
+        <location line="+7"/>
         <source>Track Listing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../print/printsettings.ui" line="42"/>
+        <location line="+10"/>
         <source>Jewel Case Insert</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RadioPane</name>
+    <message>
+        <source>Internet Radio</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ScopeVisualisation</name>
     <message>
-        <location filename="../visualisations/scopevisualisation.cpp" line="38"/>
+        <location filename="../visualisations/scopevisualisation.cpp" line="+38"/>
         <source>Scope</source>
         <translation>Lydskop</translation>
     </message>
@@ -659,36 +742,52 @@
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../settingsdialog.ui" line="14"/>
-        <location filename="../settingsdialog.ui" line="53"/>
+        <location filename="../settingsdialog.ui" line="+14"/>
+        <location line="+39"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+325"/>
+        <location line="+1"/>
         <source>Settings</source>
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="64"/>
-        <location filename="../settingsdialog.ui" line="120"/>
+        <location line="+11"/>
+        <location line="+56"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+5"/>
+        <location line="+7"/>
         <source>Library</source>
         <translation>Bibliotek</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="69"/>
-        <location filename="../settingsdialog.ui" line="248"/>
+        <location line="-51"/>
+        <location line="+179"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="-5"/>
+        <location line="+11"/>
         <source>Appearance</source>
         <translation>Udseende</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="74"/>
-        <location filename="../settingsdialog.ui" line="424"/>
+        <location line="-174"/>
+        <location line="+350"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="-9"/>
+        <location line="+15"/>
         <source>Notifications</source>
         <translation>Notifikationer</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="180"/>
+        <location line="-244"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="-11"/>
         <source>RESET</source>
         <translation>NULSTIL</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="187"/>
+        <location line="+7"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
@@ -697,139 +796,192 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="201"/>
+        <location line="+14"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+3"/>
         <source>Reset theBeat Library</source>
         <translation>Nulstil theBeat-biblioteket</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="311"/>
+        <location line="+110"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+2"/>
         <source>TITLEBAR</source>
         <translation>TITELLINJE</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="318"/>
+        <location line="+7"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>Use System Titlebars</source>
         <translation>Brug system-titellinjer</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="364"/>
+        <location line="+46"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>COLOURS</source>
         <translation>FARVER</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="371"/>
+        <location line="+7"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>Light</source>
         <translation>Lys</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="378"/>
+        <location line="+7"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>Dark</source>
         <translation>Mørk</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="481"/>
+        <location line="+103"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+2"/>
         <source>Send a notification when the track changes</source>
         <translation>Send en notifikation når en ny sang afspilles</translation>
     </message>
 </context>
 <context>
+    <name>StationSearchWidget</name>
+    <message>
+        <source>Internet Radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TOP VOTED</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TagEditor</name>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="35"/>
+        <location filename="../tageditor/tageditor.ui" line="+35"/>
         <source>Track Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="85"/>
+        <location line="+50"/>
         <source>DETAILS MODIFIED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="92"/>
+        <location line="+7"/>
         <source>Save your changes to this track to keep them saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="117"/>
+        <location line="+25"/>
         <source>Revert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="127"/>
+        <location line="+10"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="209"/>
+        <location line="+82"/>
         <source>Track #</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="242"/>
+        <location line="+33"/>
+        <location/>
         <source>Title</source>
         <translation type="unfinished">Navn</translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="249"/>
+        <location line="+7"/>
         <source>Genre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="262"/>
+        <location line="+13"/>
         <source>Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="195"/>
+        <location line="-67"/>
         <source>Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="202"/>
+        <location line="+7"/>
         <source>Disc #</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="178"/>
+        <location line="-24"/>
+        <location/>
         <source>Year</source>
         <translation type="unfinished">År</translation>
     </message>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="188"/>
+        <location line="+10"/>
+        <location/>
         <source>Album</source>
         <translation type="unfinished">Album</translation>
     </message>
 </context>
 <context>
+    <name>TrackInfo</name>
+    <message>
+        <source>Track %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TracksWidget</name>
     <message>
-        <location filename="../trackswidget.ui" line="65"/>
-        <location filename="../trackswidget.cpp" line="59"/>
+        <location filename="../trackswidget.ui" line="+65"/>
+        <location/>
+        <location filename="../trackswidget.cpp" line="+59"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+199"/>
         <source>Tracks in Library</source>
         <translation>Sange i bibliotek</translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="74"/>
+        <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation>Sæt alle i kø</translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="119"/>
+        <location line="+45"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Search</source>
         <translation>Søg</translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="176"/>
+        <location line="+57"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Processing Library</source>
         <translation>Behandler bibliotek</translation>
     </message>
     <message>
-        <location filename="../trackswidget.ui" line="183"/>
+        <location line="+7"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
         <translation>Dette kan tage lang tid hvis du har mange sange. Dette sker kun første gang du starter theBeat.</translation>
     </message>
     <message>
-        <location filename="../trackswidget.cpp" line="61"/>
+        <location filename="../trackswidget.cpp" line="+2"/>
         <source>Search for %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -837,84 +989,98 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>UserPlaylistsWidget</name>
     <message>
-        <location filename="../userplaylistswidget.ui" line="62"/>
+        <location filename="../userplaylistswidget.ui" line="+62"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+300"/>
         <source>Playlists</source>
         <translation>Playlister</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="71"/>
+        <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Create Playlist</source>
         <translation>Ny playliste</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="261"/>
+        <location line="+190"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+3"/>
         <source>Play All</source>
         <translation>Afspil alle</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="272"/>
+        <location line="+11"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Shuffle All</source>
         <translation>Bland alle</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="316"/>
+        <location line="+44"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Burn</source>
         <translation>Brænd</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="222"/>
+        <location line="-94"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="-4"/>
         <source>Tracks in Library</source>
         <translation>Sange i bibliotek</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.ui" line="250"/>
+        <location line="+28"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation>Sæt alle i kø</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="191"/>
-        <location filename="../userplaylistswidget.cpp" line="193"/>
-        <location filename="../userplaylistswidget.cpp" line="203"/>
-        <location filename="../userplaylistswidget.cpp" line="205"/>
+        <location filename="../userplaylistswidget.cpp" line="+191"/>
+        <location line="+2"/>
+        <location line="+10"/>
+        <location line="+2"/>
         <source>Remove</source>
         <translation>Fjern</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="192"/>
-        <location filename="../userplaylistswidget.cpp" line="204"/>
+        <location line="-13"/>
+        <location line="+12"/>
         <source>Are you sure?</source>
         <translation>Er du sikker?</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="161"/>
-        <location filename="../userplaylistswidget.cpp" line="223"/>
+        <location line="-43"/>
+        <location line="+62"/>
         <source>Tracks in %1</source>
         <translation>Sange i %1</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="155"/>
+        <location line="-68"/>
         <source>For %1</source>
         <translation>For %1</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="92"/>
+        <location line="-63"/>
         <source>New Playlist</source>
         <translation>Ny playliste</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="92"/>
-        <location filename="../userplaylistswidget.cpp" line="158"/>
+        <location line="+0"/>
+        <location line="+66"/>
         <source>What name do you want to give to this playlist?</source>
         <translation>Hvad ønsker du at kalde denne playliste?</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="156"/>
-        <location filename="../userplaylistswidget.cpp" line="158"/>
+        <location line="-2"/>
+        <location line="+2"/>
         <source>Rename</source>
         <translation>Omdøb</translation>
     </message>
     <message numerus="yes">
-        <location filename="../userplaylistswidget.cpp" line="199"/>
+        <location line="+41"/>
         <source>For %n playlists</source>
         <translation>
             <numerusform>For %n playliste</numerusform>
@@ -925,17 +1091,17 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="57"/>
+        <location filename="../main.cpp" line="+57"/>
         <source>Audio Player</source>
         <translation>Musikafspiller</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="100"/>
+        <location line="+31"/>
         <source>file</source>
         <translation>fil</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="100"/>
+        <location line="+0"/>
         <source>File to open</source>
         <translation>Fil der skal åbnes</translation>
     </message>
