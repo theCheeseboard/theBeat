@@ -50,7 +50,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/danvratil/qcoro
-        branch: master
+        branch: main
   - name: libcontemporary
     buildsystem: cmake-ninja
     sources:
