@@ -21,7 +21,7 @@ jobs:
         with:
           version: 6.2.4
           arch: win64_msvc2019_64
-          modules: addons.qtmultimedia qt5compat
+          modules: addons.qtmultimedia addons.qtwebsockets qt5compat
       - name: Set up MSVC
         uses: ilammy/msvc-dev-cmd@v1.10.0
         with:
