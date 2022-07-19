@@ -17,11 +17,7 @@ jobs:
         name: "Install Dependencies"
         with:
           packages: "qt:taglib:libmusicbrainz:cmake:ninja"
-      - uses: vicr123/libcontemporary/build-project@actions
-        name: "Build libcontemporary"
-        with:
-          project: "vicr123/libcontemporary"
-          commitish: "blueprint"
+      - uses: vicr123/libcontemporary/install-libcontemporary@actions
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build contemporary-theme"
         with:
