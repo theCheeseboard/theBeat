@@ -76,7 +76,7 @@ add_library(plugin-winlibcd SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-winlibcd PUBLIC ../../libthebeat/ ${INSTALL_DIR}/Include)
 add_dependencies(plugin-winlibcd CDLib)
 
-cntp_init_plugin(thebeat plugin-winlibcd 17 linuxintegration)
+cntp_init_plugin(thebeat plugin-winlibcd 20 linuxintegration)
 cntp_translate(plugin-winlibcd)
 
 set_target_properties(plugin-winlibcd PROPERTIES

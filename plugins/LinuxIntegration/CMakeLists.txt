@@ -21,7 +21,7 @@ set(HEADERS
 add_library(plugin-linuxintegration SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-linuxintegration PUBLIC ../../libthebeat/)
 
-cntp_init_plugin(thebeat plugin-linuxintegration 17 linuxintegration)
+cntp_init_plugin(thebeat plugin-linuxintegration 20 linuxintegration)
 cntp_translate(plugin-linuxintegration)
 
 set_target_properties(plugin-linuxintegration PROPERTIES

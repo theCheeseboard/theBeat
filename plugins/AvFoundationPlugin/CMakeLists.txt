@@ -23,7 +23,7 @@ set(HEADERS
 add_library(plugin-avfoundation SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-avfoundation PUBLIC ../../libthebeat/)
 
-cntp_init_plugin(thebeat plugin-avfoundation 17 avfoundation)
+cntp_init_plugin(thebeat plugin-avfoundation 20 avfoundation)
 cntp_translate(plugin-avfoundation)
 
 set_target_properties(plugin-avfoundation PROPERTIES

@@ -33,7 +33,7 @@ set(HEADERS
 add_library(plugin-cdrdao SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-cdrdao PUBLIC ../../libthebeat/)
 
-cntp_init_plugin(thebeat plugin-cdrdao 17 cdrdaoplugin)
+cntp_init_plugin(thebeat plugin-cdrdao 20 cdrdaoplugin)
 cntp_translate(plugin-cdrdao)
 
 set_target_properties(plugin-cdrdao PROPERTIES
