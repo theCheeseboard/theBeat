@@ -1,0 +1,53 @@
+{
+    "name": "theBeat",
+    "subprojects": [
+        {
+            "name": "theBeat Desktop",
+            "type": "qt",
+            "path": "/application/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Desktop File",
+            "type": "webext-json",
+            "path": "/application/translations/desktop/com.vicr123.thebeat/{lang}.json",
+            "baseLang": "en"
+        },
+        {
+            "name": "theBeat cdrdao Integration",
+            "type": "qt",
+            "path": "/plugins/CdrdaoPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Discord Integration",
+            "type": "qt",
+            "path": "/plugins/DRPIntegration/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Internet Radio",
+            "type": "qt",
+            "path": "/plugins/InternetRadioPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Mac Integration",
+            "type": "qt",
+            "path": "/plugins/MacIntegration/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Phonon",
+            "type": "qt",
+            "path": "/plugins/PhononPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Windows CD Integration",
+            "type": "qt",
+            "path": "/plugins/WinLibCDPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        }
+    ]
+}
