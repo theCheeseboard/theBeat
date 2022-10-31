@@ -1,195 +1,194 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
-<context>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TS version="2.1">
+  <context>
     <name>CdChecker</name>
     <message>
-        <location filename="../cd/cdchecker.ui" line="43"/>
-        <location filename="../cd/cdchecker.cpp" line="62"/>
-        <location filename="../cd/cdchecker.cpp" line="133"/>
-        <location filename="../cd/cdchecker.cpp" line="134"/>
-        <location filename="../cd/cdchecker.cpp" line="135"/>
-        <source>CD</source>
-        <translation>CD</translation>
+      <translation>CD</translation>
+      <location filename="../cd/cdchecker.ui" line="43" />
+      <location filename="../cd/cdchecker.cpp" line="62" />
+      <location filename="../cd/cdchecker.cpp" line="133" />
+      <location filename="../cd/cdchecker.cpp" line="134" />
+      <location filename="../cd/cdchecker.cpp" line="135" />
+      <source>CD</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="68"/>
-        <source>Enqueue All</source>
-        <translation>Đặt tất cả vào hàng phát</translation>
+      <translation>Đặt tất cả vào hàng phát</translation>
+      <location filename="../cd/cdchecker.ui" line="68" />
+      <source>Enqueue All</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="79"/>
-        <source>Play All</source>
-        <translation>Phát tất cả</translation>
+      <translation>Phát tất cả</translation>
+      <location filename="../cd/cdchecker.ui" line="79" />
+      <source>Play All</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="89"/>
-        <source>Shuffle All</source>
-        <translation>Phát ngẫu nhiên</translation>
+      <translation>Phát ngẫu nhiên</translation>
+      <location filename="../cd/cdchecker.ui" line="89" />
+      <source>Shuffle All</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="112"/>
-        <source>Import</source>
-        <translation>Nhập</translation>
+      <translation>Nhập</translation>
+      <location filename="../cd/cdchecker.ui" line="112" />
+      <source>Import</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="123"/>
-        <source>Eject</source>
-        <translation>Nhổ đĩa</translation>
+      <translation>Nhổ đĩa</translation>
+      <location filename="../cd/cdchecker.ui" line="123" />
+      <source>Eject</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="213"/>
-        <source>Accessing MusicBrainz...</source>
-        <translation>Đang truy cập vào MusicBrainz...</translation>
+      <translation>Đang truy cập vào MusicBrainz...</translation>
+      <location filename="../cd/cdchecker.ui" line="213" />
+      <source>Accessing MusicBrainz...</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="230"/>
-        <source>CD NOT FOUND</source>
-        <translation>KHÔNG TÌM THẤY ĐĨA CD</translation>
+      <translation>KHÔNG TÌM THẤY ĐĨA CD</translation>
+      <location filename="../cd/cdchecker.ui" line="230" />
+      <source>CD NOT FOUND</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="237"/>
-        <source>This CD was not found on the MusicBrainz CD Database.</source>
-        <translation>Đĩa CD này không thể tìm được trong cơ sở dữ liệu MusicBrainz.</translation>
+      <translation>Đĩa CD này không thể tìm được trong cơ sở dữ liệu MusicBrainz.</translation>
+      <location filename="../cd/cdchecker.ui" line="237" />
+      <source>This CD was not found on the MusicBrainz CD Database.</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="257"/>
-        <source>SELECT CORRECT ALBUM</source>
-        <translation>CHỌN ALBUM ĐÚNG</translation>
+      <translation>CHỌN ALBUM ĐÚNG</translation>
+      <location filename="../cd/cdchecker.ui" line="257" />
+      <source>SELECT CORRECT ALBUM</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="264"/>
-        <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
-        <translation>Được tìm hơn một kết quả trên MusicBrainz cho dĩa CD này. Chọn CD đúng để có thông tin chính xác về bản nhạc.</translation>
+      <translation>Được tìm hơn một kết quả trên MusicBrainz cho dĩa CD này. Chọn CD đúng để có thông tin chính xác về bản nhạc.</translation>
+      <location filename="../cd/cdchecker.ui" line="264" />
+      <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker-objc.mm" line="31"/>
-        <source>Couldn&apos;t eject the disc</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../cd/cdchecker-objc.mm" line="31" />
+      <source>Couldn't eject the disc</source>
     </message>
     <message>
-        <location filename="../cd/cdchecker-objc.mm" line="32"/>
-        <source>Make sure no other applications are accessing the disc, and then try again.</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../cd/cdchecker-objc.mm" line="32" />
+      <source>Make sure no other applications are accessing the disc, and then try again.</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MacBurnJob</name>
     <message>
-        <location filename="../burn/macburnjob.mm" line="79"/>
-        <source>Burn Complete</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="79" />
+      <source>Burn Complete</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="82"/>
-        <source>Burn cancelled</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="82" />
+      <source>Burn cancelled</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="84"/>
-        <source>Failed to burn: %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="84" />
+      <source>Failed to burn: %1</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="87"/>
-        <source>Erasing disc</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="87" />
+      <source>Erasing disc</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="91"/>
-        <source>Finalising disc</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="91" />
+      <source>Finalising disc</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="95"/>
-        <location filename="../burn/macburnjob.mm" line="97"/>
-        <source>Preparing to burn</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="95" />
+      <location filename="../burn/macburnjob.mm" line="97" />
+      <source>Preparing to burn</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="99"/>
-        <source>Burning track %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="99" />
+      <source>Burning track %1</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="101"/>
-        <source>Burning</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="101" />
+      <source>Burning</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MacBurnJobPrivate</name>
     <message>
-        <location filename="../burn/macburnjob.mm" line="69"/>
-        <source>Burn Successful</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="69" />
+      <source>Burn Successful</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="69"/>
-        <source>Burned %1 to disc</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="69" />
+      <source>Burned %1 to disc</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="72"/>
-        <source>Burn Failure</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="72" />
+      <source>Burn Failure</source>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="72"/>
-        <source>Failed to burn %1 to disc</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnjob.mm" line="72" />
+      <source>Failed to burn %1 to disc</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MacBurnJobWidget</name>
     <message>
-        <location filename="../burn/macburnjobwidget.ui" line="26"/>
-        <source>BURN CD</source>
-        <translation>GHI ĐĨA</translation>
+      <translation>GHI ĐĨA</translation>
+      <location filename="../burn/macburnjobwidget.ui" line="26" />
+      <source>BURN CD</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MacBurnProvider</name>
     <message>
-        <location filename="../burn/macburnprovider.cpp" line="11"/>
-        <source>Burn on macOS</source>
-        <translation>Ghi đĩa trên macOS</translation>
+      <translation>Ghi đĩa trên macOS</translation>
+      <location filename="../burn/macburnprovider.cpp" line="11" />
+      <source>Burn on macOS</source>
     </message>
     <message>
-        <location filename="../burn/macburnprovider-objc.mm" line="90"/>
-        <source>Insert a CD-R or CD-RW</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../burn/macburnprovider-objc.mm" line="90" />
+      <source>Insert a CD-R or CD-RW</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MusicBrainzReleaseModel</name>
     <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="71"/>
-        <source>Released: %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="71" />
+      <source>Released: %1</source>
     </message>
     <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="73"/>
-        <source>Barcode: %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="73" />
+      <source>Barcode: %1</source>
     </message>
     <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="75"/>
-        <source>Country: %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="75" />
+      <source>Country: %1</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TrackInfo</name>
     <message>
-        <location filename="../cd/trackinfo.cpp" line="39"/>
-        <source>Track %1</source>
-        <translation>Rãnh %1</translation>
+      <translation>Rãnh %1</translation>
+      <location filename="../cd/trackinfo.cpp" line="39" />
+      <source>Track %1</source>
     </message>
     <message>
-        <location filename="../cd/trackinfo.cpp" line="40"/>
-        <source>Unknown</source>
-        <translation>Không xác định</translation>
+      <translation>Không xác định</translation>
+      <location filename="../cd/trackinfo.cpp" line="40" />
+      <source>Unknown</source>
     </message>
-</context>
+  </context>
 </TS>
