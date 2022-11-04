@@ -6,37 +6,32 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="+65"/>
         <location line="+123"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+273"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+273"/>
         <location line="+1"/>
         <source>Tracks in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+49"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Shuffle All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
@@ -71,25 +66,6 @@
     </message>
 </context>
 <context>
-    <name>CdChecker</name>
-    <message>
-        <source>CD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Play All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Common</name>
     <message>
         <location filename="../common.cpp" line="+31"/>
@@ -101,15 +77,13 @@
     <name>ControlStrip</name>
     <message>
         <location filename="../controlstrip.ui" line="+101"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+310"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+310"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+1"/>
         <source>Metadata</source>
         <translation type="unfinished"></translation>
     </message>
@@ -154,21 +128,6 @@
     </message>
 </context>
 <context>
-    <name>FavouriteStationsWidget</name>
-    <message>
-        <source>Internet Radio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Jam out to your favourite radio stations and radio stations all around the world</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Go Searching</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
@@ -189,7 +148,6 @@
     <name>LibraryEnumerateDirectoryJobWidget</name>
     <message>
         <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="+26"/>
-        <location/>
         <source>DISCOVERING AUDIO TRACKS</source>
         <translation type="unfinished"></translation>
     </message>
@@ -198,29 +156,25 @@
     <name>LibraryErrorPopover</name>
     <message>
         <location filename="../libraryerrorpopover.ui" line="+35"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+129"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+129"/>
         <source>Hmm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+99"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>ACTIONS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>Locate File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>Remove from Library</source>
         <translation type="unfinished"></translation>
     </message>
@@ -326,18 +280,10 @@
     </message>
 </context>
 <context>
-    <name>MacBurnProvider</name>
-    <message>
-        <source>Burn on macOS</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="+14"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+429"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+429"/>
         <source>theBeat</source>
         <translation type="unfinished"></translation>
     </message>
@@ -368,211 +314,183 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+141"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+47"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+47"/>
         <source>Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+70"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Nothing Here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Select a track or drop something here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+52"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Playback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+18"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-50"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-50"/>
         <source>File Bug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location/>
         <location filename="../mainwindow.cpp" line="+339"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Open URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Skip Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shift+Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Skip Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shift+Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Add to Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>theBeat Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Repeat One</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shuffle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
         <location filename="../mainwindow.cpp" line="+72"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
@@ -640,15 +558,13 @@
     <name>OtherSourcesWidget</name>
     <message>
         <location filename="../othersourceswidget.ui" line="+103"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+125"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+125"/>
         <source>No other sources available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+1"/>
         <source>There&apos;s nothing else to play right now</source>
         <translation type="unfinished"></translation>
     </message>
@@ -694,25 +610,6 @@
     </message>
 </context>
 <context>
-    <name>PrintPopover</name>
-    <message>
-        <source>by %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>on %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-</context>
-<context>
     <name>PrintSettings</name>
     <message>
         <location filename="../print/printsettings.ui" line="+25"/>
@@ -731,13 +628,6 @@
     </message>
 </context>
 <context>
-    <name>RadioPane</name>
-    <message>
-        <source>Internet Radio</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ScopeVisualisation</name>
     <message>
         <location filename="../visualisations/scopevisualisation.cpp" line="+38"/>
@@ -750,8 +640,7 @@
     <message>
         <location filename="../settingsdialog.ui" line="+14"/>
         <location line="+39"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+325"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+325"/>
         <location line="+1"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
@@ -759,8 +648,7 @@
     <message>
         <location line="+11"/>
         <location line="+56"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+5"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+5"/>
         <location line="+7"/>
         <source>Library</source>
         <translation type="unfinished"></translation>
@@ -768,8 +656,7 @@
     <message>
         <location line="-51"/>
         <location line="+179"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="-5"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="-5"/>
         <location line="+11"/>
         <source>Appearance</source>
         <translation type="unfinished"></translation>
@@ -777,23 +664,20 @@
     <message>
         <location line="-174"/>
         <location line="+350"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="-9"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="-9"/>
         <location line="+15"/>
         <source>Notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-244"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="-11"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="-11"/>
         <source>RESET</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
@@ -801,66 +685,44 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     </message>
     <message>
         <location line="+14"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+3"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+3"/>
         <source>Reset theBeat Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+110"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+2"/>
         <source>TITLEBAR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>Use System Titlebars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+46"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>COLOURS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+1"/>
         <source>Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+103"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+2"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_settingsdialog.h" line="+2"/>
         <source>Send a notification when the track changes</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>StationSearchWidget</name>
-    <message>
-        <source>Internet Radio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TOP VOTED</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -898,7 +760,6 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     </message>
     <message>
         <location line="+33"/>
-        <location/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -924,25 +785,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     </message>
     <message>
         <location line="-24"/>
-        <location/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <location/>
         <source>Album</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TrackInfo</name>
-    <message>
-        <source>Track %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -950,37 +798,32 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <name>TracksWidget</name>
     <message>
         <location filename="../trackswidget.ui" line="+65"/>
-        <location/>
         <location filename="../trackswidget.cpp" line="+59"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+199"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+199"/>
         <source>Tracks in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+45"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+57"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Processing Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -994,50 +837,43 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <name>UserPlaylistsWidget</name>
     <message>
         <location filename="../userplaylistswidget.ui" line="+62"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+300"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+300"/>
         <source>Playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Create Playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+151"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Tracks in Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+28"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Shuffle All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+44"/>
-        <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
+        <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1096,7 +932,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+57"/>
+        <location filename="../main.cpp" line="+52"/>
         <source>Audio Player</source>
         <translation type="unfinished"></translation>
     </message>

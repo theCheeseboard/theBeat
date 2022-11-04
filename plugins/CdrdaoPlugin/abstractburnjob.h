@@ -20,6 +20,7 @@
 #ifndef ABSTRACTBURNJOB_H
 #define ABSTRACTBURNJOB_H
 
+#include <QCoroTask>
 #include <tjob.h>
 
 class AbstractBurnJob : public tJob {
@@ -27,7 +28,7 @@ class AbstractBurnJob : public tJob {
     public:
         explicit AbstractBurnJob(QObject* parent = nullptr);
 
-        virtual void start() = 0;
+        virtual QCoro::Task<> start() = 0;
         virtual QString description() = 0;
         virtual bool canCancel() = 0;
         virtual void cancel() = 0;

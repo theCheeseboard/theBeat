@@ -5,48 +5,48 @@
     <name>BurnJob</name>
     <message>
         <location filename="../burnjob.cpp" line="71"/>
-        <location filename="../burnjob.cpp" line="130"/>
+        <location filename="../burnjob.cpp" line="131"/>
         <source>Preparing to burn</source>
         <translation>Yanmaya hazırlanıyor</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="108"/>
+        <location filename="../burnjob.cpp" line="109"/>
         <source>Preparing Track %1 to be burned</source>
         <translation>%1 şarkı yakılmak üzere hazırlanıyor</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="117"/>
+        <location filename="../burnjob.cpp" line="118"/>
         <source>Couldn&apos;t transcode track</source>
         <translation>Parçanın kodu dönüştürülemedi</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="213"/>
+        <location filename="../burnjob.cpp" line="214"/>
         <source>Burning Track %1</source>
         <translation>Yazan Parça %1</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="219"/>
+        <location filename="../burnjob.cpp" line="220"/>
         <source>Finalising CD</source>
         <translation>CD tamamlanıyor</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="257"/>
+        <location filename="../burnjob.cpp" line="258"/>
         <source>Cancelled</source>
         <translation>İptal edildi</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="259"/>
+        <location filename="../burnjob.cpp" line="260"/>
         <source>Couldn&apos;t burn tracks</source>
         <translation>İzler yazılamadı</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="287"/>
-        <location filename="../burnjob.cpp" line="295"/>
+        <location filename="../burnjob.cpp" line="288"/>
+        <location filename="../burnjob.cpp" line="296"/>
         <source>Burn Successful</source>
         <translation>Başarılı Yandı</translation>
     </message>
     <message>
-        <location filename="../burnjob.cpp" line="295"/>
+        <location filename="../burnjob.cpp" line="296"/>
         <source>Burned %1 to disc</source>
         <translation>%1 diske yazdırıldı</translation>
     </message>
@@ -65,67 +65,67 @@
     <name>BurnJobMp3</name>
     <message>
         <location filename="../burnjobmp3.cpp" line="73"/>
-        <location filename="../burnjobmp3.cpp" line="181"/>
+        <location filename="../burnjobmp3.cpp" line="182"/>
         <source>Preparing to burn</source>
         <translation>Yanmaya hazırlanıyor</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="117"/>
+        <location filename="../burnjobmp3.cpp" line="118"/>
         <source>Preparing %1 to be burned</source>
         <translation>%1 yakılmak üzere hazırlanıyor</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="131"/>
+        <location filename="../burnjobmp3.cpp" line="132"/>
         <source>Couldn&apos;t transcode track</source>
         <translation>Parçanın kodu dönüştürülemedi</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="222"/>
+        <location filename="../burnjobmp3.cpp" line="223"/>
         <source>Finalising CD</source>
         <translation>CD tamamlanıyor</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="126"/>
-        <location filename="../burnjobmp3.cpp" line="165"/>
-        <location filename="../burnjobmp3.cpp" line="267"/>
+        <location filename="../burnjobmp3.cpp" line="127"/>
+        <location filename="../burnjobmp3.cpp" line="166"/>
+        <location filename="../burnjobmp3.cpp" line="268"/>
         <source>Cancelled</source>
         <translation>İptal edildi</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="155"/>
+        <location filename="../burnjobmp3.cpp" line="156"/>
         <source>Generating Disc Image</source>
         <translation>Disk Resim Oluşturuluyor</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="167"/>
+        <location filename="../burnjobmp3.cpp" line="168"/>
         <source>Couldn&apos;t prepare ISO image</source>
         <translation>ISO resim hazırlanamadı</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="216"/>
+        <location filename="../burnjobmp3.cpp" line="217"/>
         <source>Burning Disc</source>
         <translation>Diske Yazma</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="243"/>
+        <location filename="../burnjobmp3.cpp" line="244"/>
         <source>Burning %1
 %2 of %3</source>
         <translation>%1 yanıyor
 %2/%3</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="269"/>
+        <location filename="../burnjobmp3.cpp" line="270"/>
         <source>Couldn&apos;t burn tracks</source>
         <translation>İzler yazılamadı</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="297"/>
-        <location filename="../burnjobmp3.cpp" line="305"/>
+        <location filename="../burnjobmp3.cpp" line="298"/>
+        <location filename="../burnjobmp3.cpp" line="306"/>
         <source>Burn Successful</source>
         <translation>Başarılı Yandı</translation>
     </message>
     <message>
-        <location filename="../burnjobmp3.cpp" line="305"/>
+        <location filename="../burnjobmp3.cpp" line="306"/>
         <source>Burned %1 to disc</source>
         <translation>%1 diske yazdırıldı</translation>
     </message>
@@ -144,6 +144,7 @@
     <name>BurnJobWidget</name>
     <message>
         <location filename="../burnjobwidget.ui" line="26"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnjobwidget.h" line="100"/>
         <source>BURN CD</source>
         <translation>CD OLUŞTURMAK</translation>
     </message>
@@ -152,51 +153,61 @@
     <name>BurnPopover</name>
     <message>
         <location filename="../burnpopover.ui" line="92"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="231"/>
         <source>BURN OPTIONS</source>
         <translation>YAKMA SEÇENEKLERİ</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="110"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="233"/>
         <source>Album Name</source>
         <translation>Albüm Adı</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="99"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="232"/>
         <source>Burn</source>
         <translation>Yanmak</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="67"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="229"/>
         <source>Audio CD</source>
         <translation>Ses CD&apos;si</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="80"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="230"/>
         <source>Disc Type</source>
         <translation>Disk Tipi</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="134"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="234"/>
         <source>HEADS UP</source>
         <translation>DİKKAT ET</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="154"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="235"/>
         <source>MP3 CD</source>
         <translation>MP3 CD&apos;si</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="196"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="236"/>
         <source>Burn Disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="211"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="237"/>
         <source>DISC NOT BLANK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="218"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="238"/>
         <source>The disc in the drive is not blank. To burn these tracks to the disc, the disc will need to be erased.
 
 Once the disc in the drive is erased, all the data on it will be gone forever.</source>
@@ -204,6 +215,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
     </message>
     <message>
         <location filename="../burnpopover.ui" line="230"/>
+        <location filename="../../../../build-theBeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="241"/>
         <source>Erase and Burn</source>
         <translation type="unfinished"></translation>
     </message>

@@ -75,10 +75,11 @@ BurnJob::~BurnJob() {
     delete d;
 }
 
-void BurnJob::start() {
+QCoro::Task<> BurnJob::start() {
     tInfo("cdrdao") << "Burn job starting";
     tInfo("cdrdao") << "Working directory for burn job is" << d->workDir.path();
     performNextAction();
+    co_return;
 }
 
 QString BurnJob::description() {
@@ -103,7 +104,7 @@ void BurnJob::cancel() {
     }
 }
 
-void BurnJob::performNextAction() {
+QCoro::Task<> BurnJob::performNextAction() {
     if (d->nextItem < d->sourceFiles.count()) {
         d->description = tr("Preparing Track %1 to be burned").arg(d->nextItem + 1);
         emit descriptionChanged(d->description);
@@ -275,26 +276,25 @@ void BurnJob::performNextAction() {
         d->canCancel = true;
         emit canCancelChanged(true);
     } else {
-        d->diskObject->interface<BlockInterface>()->triggerReload()->then([=] {
-                d->state = Finished;
-                emit stateChanged(Finished);
+        co_await d->diskObject->interface<BlockInterface>()->triggerReload();
+        d->state = Finished;
+        emit stateChanged(Finished);
 
-                d->progress = 100;
-                d->maxProgress = 100;
-                emit totalProgressChanged(d->maxProgress);
-                emit progressChanged(d->progress);
+        d->progress = 100;
+        d->maxProgress = 100;
+        emit totalProgressChanged(d->maxProgress);
+        emit progressChanged(d->progress);
 
-                d->description = tr("Burn Successful");
-                emit descriptionChanged(d->description);
+        d->description = tr("Burn Successful");
+        emit descriptionChanged(d->description);
 
-                d->workDir.remove();
+        d->workDir.remove();
 
-                tInfo("cdrdao") << "Burn job completed successfully";
+        tInfo("cdrdao") << "Burn job completed successfully";
 
-                // Fire a notification
-                tNotification* notification = new tNotification(tr("Burn Successful"), tr("Burned %1 to disc").arg(QLocale().quoteString(d->albumTitle)));
-                notification->post();
-        });
+        // Fire a notification
+        tNotification* notification = new tNotification(tr("Burn Successful"), tr("Burned %1 to disc").arg(QLocale().quoteString(d->albumTitle)));
+        notification->post();
     }
 }
 

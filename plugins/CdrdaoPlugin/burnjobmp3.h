@@ -30,7 +30,7 @@ class BurnJobMp3 : public AbstractBurnJob {
         explicit BurnJobMp3(QStringList files, DiskObject* diskObject, QString albumTitle, QObject* parent = nullptr);
         ~BurnJobMp3();
 
-        void start();
+        QCoro::Task<> start();
 
         QString description();
         bool canCancel();
@@ -41,7 +41,7 @@ class BurnJobMp3 : public AbstractBurnJob {
     private:
         BurnJobMp3Private* d;
 
-        void performNextAction();
+        QCoro::Task<> performNextAction();
         void fail(QString description);
 
         // tJob interface

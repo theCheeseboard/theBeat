@@ -43,15 +43,10 @@
 int main(int argc, char* argv[]) {
     if (!qEnvironmentVariableIsSet("QT_MULTIMEDIA_PREFERRED_PLUGINS")) qputenv("QT_MULTIMEDIA_PREFERRED_PLUGINS", "windowsmediafoundation");
     tApplication a(argc, argv);
+    a.setApplicationShareDir("thebeat");
+    a.installTranslators();
 
     QString dir = SYSTEM_PREFIX_DIRECTORY;
-
-    if (QDir(QStringLiteral("%1/share/thebeat/").arg(SYSTEM_PREFIX_DIRECTORY)).exists()) {
-        a.setShareDir(QStringLiteral("%1/share/thebeat/").arg(SYSTEM_PREFIX_DIRECTORY));
-    } else if (QDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/")).exists()) {
-        a.setShareDir(QDir::cleanPath(QApplication::applicationDirPath() + "/../share/thebeat/"));
-    }
-    a.installTranslators();
 
     a.setApplicationVersion("4.0");
     a.setGenericName(QApplication::translate("main", "Audio Player"));

@@ -24,6 +24,9 @@
 #include <DriveObjects/driveinterface.h>
 #include <DriveObjects/filesysteminterface.h>
 
+#include <QCoroProcess>
+#include <frisbeeexception.h>
+
 struct FullBurnJobPrivate {
         DiskObject* diskObject;
         AbstractBurnJob* mainBurnJob;
@@ -59,7 +62,7 @@ FullBurnJob::~FullBurnJob() {
     delete d;
 }
 
-void FullBurnJob::unmountAndEraseDisc() {
+QCoro::Task<> FullBurnJob::unmountAndEraseDisc() {
     d->isErasing = true;
     emit stateChanged(state());
     emit canCancelChanged(canCancel());
@@ -68,59 +71,57 @@ void FullBurnJob::unmountAndEraseDisc() {
     FilesystemInterface* fs = d->diskObject->interface<FilesystemInterface>();
     if (!fs) {
         // This disc does not have a filesystem so doesn't need to be unmounted
-        eraseDisc();
-        return;
+        co_await eraseDisc();
+        co_return;
     }
 
     QByteArrayList mountPoints = fs->mountPoints();
     if (mountPoints.count() == 0) {
         // This disc is not mounted
-        eraseDisc();
-        return;
+        co_await eraseDisc();
+        co_return;
     }
 
     // Unmount the disc
-    fs->unmount()->then([=] {
-                     eraseDisc();
-                 })
-        ->error([=](QString error) {
-            d->isErasing = false;
-            d->erasingFailed = true;
+    try {
+        co_await fs->unmount();
+        eraseDisc();
+    } catch (FrisbeeException& ex) {
+        d->isErasing = false;
+        d->erasingFailed = true;
 
-            // Bail out
-            emit stateChanged(Failed);
-            emit descriptionChanged(description());
-        });
+        // Bail out
+        emit stateChanged(Failed);
+        emit descriptionChanged(description());
+    }
 }
 
-void FullBurnJob::eraseDisc() {
+QCoro::Task<> FullBurnJob::eraseDisc() {
     // Erase the disc
-    QProcess* proc = new QProcess();
-    proc->setProcessChannelMode(QProcess::MergedChannels);
-    connect(proc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=](int exitCode, QProcess::ExitStatus exitStatus) {
-        Q_UNUSED(exitStatus);
-        if (exitCode == 0) {
-            // Start the main burn job after reloading the disc
-            d->diskObject->interface<BlockInterface>()->triggerReload()->then([=] {
-                    d->mainBurnJob->start();
-                    d->isErasing = false;
-                    emit stateChanged(state());
-                    emit canCancelChanged(canCancel());
-                    emit descriptionChanged(description());
-            });
-        } else {
-            d->isErasing = false;
-            d->erasingFailed = true;
-
-            // Bail out
-            emit stateChanged(Failed);
-            emit descriptionChanged(description());
-        }
-        proc->deleteLater();
-    });
+    QProcess proc;
+    proc.setProcessChannelMode(QProcess::MergedChannels);
 
     QStringList cdrecordArgs = {"blank", "--device", d->diskObject->interface<BlockInterface>()->blockName(), "--blank-mode", "minimal"};
-    proc->start("cdrdao", cdrecordArgs);
+    proc.start("cdrdao", cdrecordArgs);
+
+    co_await proc;
+
+    if (proc.exitCode() == 0) {
+        // Start the main burn job after reloading the disc
+        co_await d->diskObject->interface<BlockInterface>()->triggerReload();
+        d->mainBurnJob->start();
+        d->isErasing = false;
+        emit stateChanged(state());
+        emit canCancelChanged(canCancel());
+        emit descriptionChanged(description());
+    } else {
+        d->isErasing = false;
+        d->erasingFailed = true;
+
+        // Bail out
+        emit stateChanged(Failed);
+        emit descriptionChanged(description());
+    }
 }
 
 quint64 FullBurnJob::progress() {
@@ -141,16 +142,15 @@ tJob::State FullBurnJob::state() {
     return d->mainBurnJob->state();
 }
 
-void FullBurnJob::start() {
-    d->diskObject->lock()->then([=] {
-        d->shouldUnlock = true;
+QCoro::Task<> FullBurnJob::start() {
+    co_await d->diskObject->lock();
+    d->shouldUnlock = true;
 
-        if (!d->diskObject->interface<BlockInterface>()->drive()->opticalBlank()) {
-            this->unmountAndEraseDisc();
-        } else {
-            d->mainBurnJob->start();
-        }
-    });
+    if (!d->diskObject->interface<BlockInterface>()->drive()->opticalBlank()) {
+        this->unmountAndEraseDisc();
+    } else {
+        d->mainBurnJob->start();
+    }
 }
 
 QString FullBurnJob::description() {

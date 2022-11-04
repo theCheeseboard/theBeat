@@ -21,6 +21,7 @@
 #define FULLBURNJOB_H
 
 #include "abstractburnjob.h"
+#include <QCoroTask>
 
 class DiskObject;
 struct FullBurnJobPrivate;
@@ -35,8 +36,8 @@ class FullBurnJob : public AbstractBurnJob {
     private:
         FullBurnJobPrivate* d;
 
-        void unmountAndEraseDisc();
-        void eraseDisc();
+        QCoro::Task<> unmountAndEraseDisc();
+        QCoro::Task<> eraseDisc();
 
         // tJob interface
     public:
@@ -46,7 +47,7 @@ class FullBurnJob : public AbstractBurnJob {
 
         // AbstractBurnJob interface
     public:
-        void start();
+        QCoro::Task<> start();
         QString description();
         bool canCancel();
         void cancel();
