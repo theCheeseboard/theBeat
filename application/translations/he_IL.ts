@@ -14,7 +14,7 @@
       <source>Enqueue All</source>
     </message>
     <message>
-      <translation>המשע הכל</translation>
+      <translation>השמע הכל</translation>
       <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1" />
       <source>Play All</source>
     </message>
@@ -76,20 +76,20 @@
       <source>Metadata</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>אפשרויות חזרה</translation>
       <location filename="../controlstrip.cpp" line="+82" />
       <source>Repeat Options</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>חזרה על התור</translation>
       <source>Repeat Play Queue</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>אפשרויות נגינה</translation>
       <source>Playback Options</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>עצור אחרי השיר הנוכחי</translation>
       <source>Pause after current track</source>
     </message>
   </context>
@@ -536,7 +536,7 @@
       <source>Track Listing</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>רשימת שירים בגודל קטן</translation>
       <source>Jewel Case Insert</source>
     </message>
   </context>
@@ -701,12 +701,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
       <source>Processing Library</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>בהתאם למספר השירים בספרייה שלכם, זה אמור לקחת זמן. זה אמור לקרות רק בפעם הראשונה ש-theBeat נפתח.</translation>
       <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1" />
       <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>חיפוש על %1</translation>
       <location filename="../trackswidget.cpp" line="+2" />
       <source>Search for %1</source>
     </message>
@@ -714,60 +714,60 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
   <context>
     <name>UserPlaylistsWidget</name>
     <message>
-      <translation></translation>
+      <translation>רשימות השמעה</translation>
       <location filename="../userplaylistswidget.ui" line="+62" />
       <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+300" />
       <source>Playlists</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>צור רשימת השמעה</translation>
       <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1" />
       <source>Create Playlist</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>שירים בספרייה</translation>
       <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1" />
       <source>Tracks in Library</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>הכנס כולם לתור</translation>
       <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1" />
       <source>Enqueue All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>השמע הכל</translation>
       <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1" />
       <source>Play All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>ערבב הכל</translation>
       <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1" />
       <source>Shuffle All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>צרוב</translation>
       <location filename="../../../build-theBeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1" />
       <source>Burn</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>רשימת השמעה חדשה</translation>
       <location filename="../userplaylistswidget.cpp" line="+92" />
       <source>New Playlist</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>איך תקראו לרשימת ההשמעה הזו?</translation>
       <source>What name do you want to give to this playlist?</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>עבור %1</translation>
       <source>For %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>שנה שם</translation>
       <source>Rename</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>שירים ב-%1</translation>
       <source>Tracks in %1</source>
     </message>
     <message>
@@ -775,14 +775,14 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
       <source>Remove</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>אתה בטוח?</translation>
       <source>Are you sure?</source>
     </message>
     <message numerus="yes">
       <translation>
-        <numerusform></numerusform>
-        <numerusform></numerusform>
-        <numerusform></numerusform>
+        <numerusform>עבור רשימת השמעה %n</numerusform>
+        <numerusform>עבור %n רשימות השמעה</numerusform>
+        <numerusform>עבור %n רשימות השמעה</numerusform>
       </translation>
       <source>For %n playlists</source>
     </message>
@@ -790,16 +790,16 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
   <context>
     <name>main</name>
     <message>
-      <translation></translation>
+      <translation>מנגן מוזיקה</translation>
       <location filename="../main.cpp" line="+52" />
       <source>Audio Player</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>קובץ</translation>
       <source>file</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>קובץ לפתיחה</translation>
       <source>File to open</source>
     </message>
   </context>
