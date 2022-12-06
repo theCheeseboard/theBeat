@@ -20,13 +20,13 @@
 #include "stationwidget.h"
 #include "ui_stationwidget.h"
 
+#include "radioinfoclient.h"
+#include <playlist.h>
 #include <statemanager.h>
 #include <urlmanager.h>
-#include <playlist.h>
-#include "radioinfoclient.h"
 
 struct StationWidgetPrivate {
-    RadioInfoClient::Station station;
+        RadioInfoClient::Station station;
 };
 
 StationWidget::StationWidget(RadioInfoClient::Station station, QWidget* parent) :
@@ -40,17 +40,7 @@ StationWidget::StationWidget(RadioInfoClient::Station station, QWidget* parent) 
     ui->nameLabel->setText(station.name);
     ui->secondaryLabel->setText(station.country);
 
-    QPointer<StationWidget> pointer = this;
-    RadioInfoClient::getIcon(station)->then([ = ](QPixmap px) {
-        if (!pointer) return;
-
-        ui->iconLabel->setPixmap(px);
-    })->error([ = ](QString error) {
-        if (!pointer) return;
-
-        ui->iconLabel->setVisible(false);
-    });
-
+    this->load();
     if (this->layoutDirection() == Qt::RightToLeft) {
         ui->nameLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         ui->secondaryLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -63,10 +53,10 @@ StationWidget::~StationWidget() {
 }
 
 void StationWidget::on_playButton_clicked() {
-    //Count the click
+    // Count the click
     RadioInfoClient::countClick(d->station);
 
-    //Add the station URL to the queue and play it
+    // Add the station URL to the queue and play it
     MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(d->station.streamUrl));
     StateManager::instance()->playlist()->addItem(item);
     StateManager::instance()->playlist()->setCurrentItem(item);
@@ -74,4 +64,18 @@ void StationWidget::on_playButton_clicked() {
 
 void StationWidget::resizeEvent(QResizeEvent* event) {
     ui->iconLabel->setFixedWidth(this->height());
+}
+
+QCoro::Task<> StationWidget::load() {
+    QPointer<StationWidget> pointer = this;
+    try {
+        auto px = co_await RadioInfoClient::getIcon(d->station);
+        if (!pointer) co_return;
+
+        ui->iconLabel->setPixmap(px);
+    } catch (QException ex) {
+        if (!pointer) co_return;
+
+        ui->iconLabel->setVisible(false);
+    }
 }

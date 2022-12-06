@@ -20,8 +20,9 @@
 #ifndef STATIONWIDGET_H
 #define STATIONWIDGET_H
 
-#include <QWidget>
 #include "radioinfoclient.h"
+#include <QCoroTask>
+#include <QWidget>
 
 namespace Ui {
     class StationWidget;
@@ -43,6 +44,7 @@ class StationWidget : public QWidget {
         StationWidgetPrivate* d;
 
         void resizeEvent(QResizeEvent* event);
+        QCoro::Task<> load();
 };
 
 #endif // STATIONWIDGET_H

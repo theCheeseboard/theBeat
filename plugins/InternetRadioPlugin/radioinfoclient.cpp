@@ -19,18 +19,20 @@
  * *************************************/
 #include "radioinfoclient.h"
 
-#include <QNetworkAccessManager>
-#include <QRandomGenerator>
-#include <QHostInfo>
-#include <QNetworkReply>
+#include <QCoroNetworkReply>
+#include <QCoroSignal>
 #include <QDnsLookup>
+#include <QHostInfo>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QRandomGenerator>
 #include <tapplication.h>
 
 struct RadioInfoClientPrivate {
-    QHostAddress selectedAddress;
-    QNetworkAccessManager mgr;
+        QString selectedAddress;
+        QNetworkAccessManager mgr;
 
-    QMap<QString, QPixmap> iconCache;
+        QMap<QString, QPixmap> iconCache;
 };
 
 RadioInfoClient* RadioInfoClient::instance() {
@@ -38,127 +40,113 @@ RadioInfoClient* RadioInfoClient::instance() {
     return instance;
 }
 
-tPromise<void>* RadioInfoClient::selectServer() {
-    return TPROMISE_CREATE_SAME_THREAD(void, {
-        QDnsLookup* lookup = new QDnsLookup(QDnsLookup::A, "all.api.radio-browser.info");
-        connect(lookup, &QDnsLookup::finished, [ = ] {
-            if (lookup->error() != QDnsLookup::NoError) {
-                rej(lookup->errorString());
-                lookup->deleteLater();
-                return;
-            }
+QCoro::Task<> RadioInfoClient::selectServer() {
+    QDnsLookup* lookup = new QDnsLookup(QDnsLookup::A, "all.api.radio-browser.info");
+    lookup->lookup();
+    co_await qCoro(lookup, &QDnsLookup::finished);
 
-            instance()->d->selectedAddress = lookup->hostAddressRecords().at(QRandomGenerator::system()->bounded(lookup->hostAddressRecords().count())).value();
-            emit instance()->ready();
-            res();
-        });
-        lookup->lookup();
-    });
+    if (lookup->error() != QDnsLookup::NoError) {
+        lookup->deleteLater();
+        co_return;
+    }
+
+    instance()->d->selectedAddress = lookup->hostAddressRecords().at(QRandomGenerator::system()->bounded(lookup->hostAddressRecords().count())).value().toString();
+    emit instance()->ready();
+    lookup->deleteLater();
 }
 
-tPromise<QList<RadioInfoClient::Station>>* RadioInfoClient::topVoted() {
-//    return tPromise<QList<RadioInfoClient::Station>>::runOnSameThread([ = ](tPromiseFunctions<QList<Station>>::SuccessFunction res, tPromiseFunctions<QList<Station>>::FailureFunction rej) {
-    return TPROMISE_CREATE_SAME_THREAD(QList<Station>, {
-        QUrl url;
-        url.setScheme("http");
-        url.setHost(instance()->d->selectedAddress.toString());
-        url.setPath("/json/stations/topvote/25");
+QCoro::Task<QList<RadioInfoClient::Station>> RadioInfoClient::topVoted() {
+    QUrl url;
+    url.setScheme("http");
+    url.setHost(instance()->d->selectedAddress);
+    url.setPath("/json/stations/topvote/25");
 
-        QNetworkRequest req(url);
-        req.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("%1/%2").arg(tApplication::applicationName(), tApplication::applicationVersion()));
-        QNetworkReply* reply = instance()->d->mgr.get(req);
-        connect(reply, &QNetworkReply::finished, [ = ] {
-            if (reply->error() != QNetworkReply::NoError) {
-                rej(reply->errorString());
-                return;
-            }
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("%1/%2").arg(tApplication::applicationName(), tApplication::applicationVersion()));
+    QNetworkReply* reply = instance()->d->mgr.get(req);
+    co_await reply;
 
-            QByteArray data = reply->readAll();
-            QJsonArray array = QJsonDocument::fromJson(data).array();
+    if (reply->error() != QNetworkReply::NoError) {
+        co_return {};
+    }
 
-            QList<Station> stations;
-            for (const QJsonValue& station : array) {
-                stations.append(Station(station.toObject(), &instance()->d->iconCache));
-            }
-            res(stations);
-        });
-    });
+    QByteArray data = reply->readAll();
+    QJsonArray array = QJsonDocument::fromJson(data).array();
+
+    QList<Station> stations;
+    for (const QJsonValue& station : array) {
+        stations.append(Station(station.toObject(), &instance()->d->iconCache));
+    }
+    co_return stations;
 }
 
-tPromise<QList<RadioInfoClient::Station>>* RadioInfoClient::search(QString query) {
-    return TPROMISE_CREATE_SAME_THREAD(QList<Station>, {
-        QUrl url;
-        url.setScheme("http");
-        url.setHost(instance()->d->selectedAddress.toString());
-        url.setPath("/json/stations/search");
+QCoro::Task<QList<RadioInfoClient::Station>> RadioInfoClient::search(QString query) {
+    QUrl url;
+    url.setScheme("http");
+    url.setHost(instance()->d->selectedAddress);
+    url.setPath("/json/stations/search");
 
-        QUrlQuery queryString;
-        queryString.addQueryItem("name", query);
-        queryString.addQueryItem("limit", "50");
-        url.setQuery(queryString);
+    QUrlQuery queryString;
+    queryString.addQueryItem("name", query);
+    queryString.addQueryItem("limit", "50");
+    url.setQuery(queryString);
 
-        QNetworkRequest req(url);
-        req.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("%1/%2").arg(tApplication::applicationName(), tApplication::applicationVersion()));
-        QNetworkReply* reply = instance()->d->mgr.get(req);
-        connect(reply, &QNetworkReply::finished, [ = ] {
-            if (reply->error() != QNetworkReply::NoError) {
-                rej(reply->errorString());
-                return;
-            }
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("%1/%2").arg(tApplication::applicationName(), tApplication::applicationVersion()));
+    QNetworkReply* reply = instance()->d->mgr.get(req);
+    co_await reply;
 
-            QByteArray data = reply->readAll();
-            QJsonArray array = QJsonDocument::fromJson(data).array();
+    if (reply->error() != QNetworkReply::NoError) {
+        co_return {};
+    }
 
-            QList<Station> stations;
-            for (const QJsonValue& station : array) {
-                stations.append(Station(station.toObject(), &instance()->d->iconCache));
-            }
-            res(stations);
-        });
-    });
+    QByteArray data = reply->readAll();
+    QJsonArray array = QJsonDocument::fromJson(data).array();
+
+    QList<Station> stations;
+    for (const QJsonValue& station : array) {
+        stations.append(Station(station.toObject(), &instance()->d->iconCache));
+    }
+    co_return stations;
 }
 
-tPromise<QPixmap>* RadioInfoClient::getIcon(RadioInfoClient::Station station) {
-    return TPROMISE_CREATE_SAME_THREAD(QPixmap, {
-        QString stationUuid = station.stationUuid;
-        if (instance()->d->iconCache.contains(stationUuid)) {
-            QPixmap px = instance()->d->iconCache.value(stationUuid);
-            if (px.isNull()) {
-                rej("null");
-            } else {
-                res(px);
-            }
-            return;
+QCoro::Task<QPixmap> RadioInfoClient::getIcon(RadioInfoClient::Station station) {
+    QString stationUuid = station.stationUuid;
+    if (instance()->d->iconCache.contains(stationUuid)) {
+        QPixmap px = instance()->d->iconCache.value(stationUuid);
+        if (px.isNull()) {
+            throw QException();
+        } else {
+            co_return px;
         }
+    }
 
-        QNetworkAccessManager* mgr = new QNetworkAccessManager();
-        QNetworkRequest req((QUrl(station.icon)));
-        req.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("%1/%2").arg(tApplication::applicationName(), tApplication::applicationVersion()));
-        QNetworkReply* reply = mgr->get(req);
-        connect(reply, &QNetworkReply::finished, [ = ] {
-            if (reply->error() != QNetworkReply::NoError) {
-                rej(reply->errorString());
-                mgr->deleteLater();
-                return;
-            }
+    QNetworkAccessManager* mgr = new QNetworkAccessManager();
+    QNetworkRequest req((QUrl(station.icon)));
+    req.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("%1/%2").arg(tApplication::applicationName(), tApplication::applicationVersion()));
+    QNetworkReply* reply = mgr->get(req);
+    co_await reply;
 
-            QPixmap px;
-            px.loadFromData(reply->readAll());
-            instance()->d->iconCache.insert(stationUuid, px);
-            if (px.isNull()) {
-                rej("null");
-            } else {
-                res(px);
-            }
-            mgr->deleteLater();
-        });
-    });
+    if (reply->error() != QNetworkReply::NoError) {
+        mgr->deleteLater();
+        throw QException();
+    }
+
+    QPixmap px;
+    px.loadFromData(reply->readAll());
+    instance()->d->iconCache.insert(stationUuid, px);
+    mgr->deleteLater();
+    if (px.isNull()) {
+        throw QException();
+    } else {
+        co_return px;
+    }
 }
 
 void RadioInfoClient::countClick(RadioInfoClient::Station station) {
     QUrl url;
     url.setScheme("http");
-    url.setHost(instance()->d->selectedAddress.toString());
+    url.setHost(instance()->d->selectedAddress);
     url.setPath(QStringLiteral("/json/url/%1").arg(station.stationUuid));
 
     QNetworkRequest req(url);
@@ -166,14 +154,14 @@ void RadioInfoClient::countClick(RadioInfoClient::Station station) {
     instance()->d->mgr.get(req);
 }
 
-RadioInfoClient::RadioInfoClient(QObject* parent) : QObject(parent) {
+RadioInfoClient::RadioInfoClient(QObject* parent) :
+    QObject(parent) {
     d = new RadioInfoClientPrivate();
 
     selectServer();
 }
 
 RadioInfoClient::Station::Station() {
-
 }
 
 RadioInfoClient::Station::Station(QJsonObject object, QMap<QString, QPixmap>* iconCache) {
