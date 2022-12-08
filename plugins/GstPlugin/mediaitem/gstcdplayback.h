@@ -22,6 +22,7 @@ class GstCdPlayback : public GstMediaItem {
     public:
         QString title();
         void preparePlayer();
+        QVariant metadata(QString key);
 };
 
 #endif // GSTCDPLAYBACK_H

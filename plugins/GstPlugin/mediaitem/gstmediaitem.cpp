@@ -7,6 +7,10 @@
 struct GstMediaItemPrivate {
         QTimer* timer;
         bool prepared = false;
+
+        QString title;
+        QString album;
+        QString artist;
 };
 
 GstMediaItem::GstMediaItem() {
@@ -42,6 +46,39 @@ void GstMediaItem::preparePlayer() {
                         tWarn("GstMediaItem") << "Gst Media Item signalled an error";
                         emit self->error();
                         break;
+                    case GST_MESSAGE_TAG:
+                        {
+                            GstTagList* tags = nullptr;
+                            gst_message_parse_tag(msg, &tags);
+                            gst_tag_list_foreach(
+                                tags, [](const GstTagList* list, const gchar* tag, gpointer data) {
+                                    auto self = reinterpret_cast<GstMediaItem*>(data);
+
+                                    auto tagName = QString::fromLatin1(tag);
+                                    guint tagSize = gst_tag_list_get_tag_size(list, tag);
+                                    for (auto i = 0; i < tagSize; i++) {
+                                        auto tagValue = gst_tag_list_get_value_index(list, tag, i);
+                                        if (G_VALUE_HOLDS_STRING(tagValue)) {
+                                            auto str = QString::fromLocal8Bit(g_value_get_string(tagValue));
+                                            tWarn("GstMediaItem") << "Tag received: " << tagName << " -> " << str;
+
+                                            if (tagName == GST_TAG_TITLE) {
+                                                self->d->title = str;
+                                            } else if (tagName == GST_TAG_ALBUM) {
+                                                self->d->album = str;
+                                            } else if (tagName == GST_TAG_ALBUM_ARTIST) {
+                                                self->d->artist = str;
+                                            } else if (tagName == "musicbrainz-discid") {
+                                                // TODO: MusicBrainz support
+                                            }
+                                        }
+                                    }
+
+                                    emit self->metadataChanged();
+                                },
+                                data);
+                            gst_tag_list_unref(tags);
+                        }
                     default:
                         break;
                 }
@@ -90,15 +127,15 @@ quint64 GstMediaItem::duration() {
 }
 
 QString GstMediaItem::title() {
-    return "";
+    return d->title;
 }
 
 QStringList GstMediaItem::authors() {
-    return {};
+    return {d->artist};
 }
 
 QString GstMediaItem::album() {
-    return "";
+    return d->album;
 }
 
 QImage GstMediaItem::albumArt() {
@@ -111,4 +148,8 @@ QString GstMediaItem::lyrics() {
 
 QString GstMediaItem::lyricFormat() {
     return "";
+}
+
+QVariant GstMediaItem::metadata(QString key) {
+    return QVariant();
 }

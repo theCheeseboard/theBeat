@@ -33,6 +33,7 @@ class GstMediaItem : public MediaItem {
         QImage albumArt();
         QString lyrics();
         QString lyricFormat();
+        QVariant metadata(QString key);
 };
 
 #endif // GSTMEDIAITEM_H

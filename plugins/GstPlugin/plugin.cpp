@@ -18,6 +18,7 @@
  *
  * *************************************/
 #include "plugin.h"
+#include "cdmonitor.h"
 #include "mediaitem/gsturlhandler.h"
 
 #include <QDebug>
@@ -30,6 +31,7 @@
 #include <urlmanager.h>
 
 struct PluginPrivate {
+        CdMonitor* monitor;
 };
 
 Plugin::Plugin() {
@@ -47,7 +49,10 @@ Plugin::~Plugin() {
 
 void Plugin::activate() {
     StateManager::instance()->url()->registerHandler(new GstUrlHandler());
+
+    d->monitor = new CdMonitor();
 }
 
 void Plugin::deactivate() {
+    d->monitor->deleteLater();
 }

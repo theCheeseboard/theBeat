@@ -2,7 +2,7 @@
 
 struct GstCdPlaybackPrivate {
         GstElement* pipeline = nullptr;
-        ;
+
         QString device;
         int track;
 };
@@ -27,13 +27,27 @@ GstElement* GstCdPlayback::pipeline() {
 }
 
 QString GstCdPlayback::title() {
+    auto title = GstMediaItem::title();
+    if (!title.isEmpty()) return title;
+
     return tr("Track %1").arg(d->track);
 }
 
 void GstCdPlayback::preparePlayer() {
     if (!d->pipeline) {
-        auto pipelineString = QStringLiteral("cdiocddasrc device=/dev/%1 track=%2 ! pulsesink").arg(d->device).arg(d->track);
+        auto pipelineString = QStringLiteral("cdiocddasrc device=%1 track=%2 ! pulsesink").arg(d->device).arg(d->track);
         d->pipeline = gst_parse_launch(pipelineString.toUtf8().data(), nullptr);
     }
     GstMediaItem::preparePlayer();
+}
+
+QVariant GstCdPlayback::metadata(QString key) {
+    auto metadata = GstMediaItem::metadata(key);
+    if (!metadata.isNull()) return metadata;
+
+    if (key == "TrackNumber") {
+        return d->track;
+    }
+
+    return QVariant();
 }
