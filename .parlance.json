@@ -11,7 +11,7 @@
             "name": "theBeat Apple Support",
             "type": "apple-strings",
             "path": "/application/translations/apple-lproj/{lang}.lproj/InfoPlist.strings",
-            "baseLang": "en"
+            "baseLang": "en_US"
         },
         {
             "name": "theBeat Desktop File",
