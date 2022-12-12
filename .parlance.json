@@ -8,6 +8,12 @@
             "baseLang": "en_US"
         },
         {
+            "name": "theBeat Apple Support",
+            "type": "apple-strings",
+            "path": "/application/translations/apple-lproj/{lang}.lproj/InfoPlist.strings",
+            "baseLang": "en"
+        },
+        {
             "name": "theBeat Desktop File",
             "type": "webext-json",
             "path": "/application/translations/desktop/com.vicr123.thebeat/{lang}.json",
@@ -25,6 +31,12 @@
             "path": "/plugins/DRPIntegration/translations/{lang}.ts",
             "baseLang": "en_US"
         },
+        {
+            "name": "theBeat GStreamer Support",
+            "type": "qt",
+            "path": "/plugins/GstPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        }
         {
             "name": "theBeat Internet Radio",
             "type": "qt",
