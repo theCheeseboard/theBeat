@@ -36,7 +36,7 @@
             "type": "qt",
             "path": "/plugins/GstPlugin/translations/{lang}.ts",
             "baseLang": "en_US"
-        }
+        },
         {
             "name": "theBeat Internet Radio",
             "type": "qt",
