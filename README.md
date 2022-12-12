@@ -11,7 +11,7 @@ theBeat is an audio player.
 ---
 
 ## Dependencies
-- Qt 5
+- Qt 6
   - Qt Core
   - Qt GUI
   - Qt Widgets
