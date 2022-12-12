@@ -4,48 +4,38 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Sql PrintSupport)
 find_package(libcontemporary REQUIRED)
 
 set(SOURCES
-        artistsalbumswidget.cpp
+        artistsalbumswidget.cpp artistsalbumswidget.ui
         common.cpp
-        controlstrip.cpp
-        currenttrackpopover.cpp
+        controlstrip.cpp controlstrip.ui
+        currenttrackpopover.cpp currenttrackpopover.ui
         library/libraryenumeratedirectoryjob.cpp
-        library/libraryenumeratedirectoryjobwidget.cpp
+        library/libraryenumeratedirectoryjobwidget.cpp library/libraryenumeratedirectoryjobwidget.ui
         library/librarylistview.cpp
         library/librarymanager.cpp
         library/librarymodel.cpp
-        libraryerrorpopover.cpp
+        libraryerrorpopover.cpp libraryerrorpopover.ui
         lyrics/abstractlyricformat.cpp
         lyrics/basiclrcfilelyricformat.cpp
-        lyrics/lyricsdisplaywidget.cpp
+        lyrics/lyricsdisplaywidget.cpp lyrics/lyricsdisplaywidget.ui
         main.cpp
-        mainwindow.cpp
-        othersourceswidget.cpp
+        mainwindow.cpp mainwindow.ui
+        othersourceswidget.cpp othersourceswidget.ui
         playlistmodel.cpp
         pluginmanager.cpp
         print/printcontroller.cpp
-        print/printsettings.cpp
+        print/printsettings.cpp print/printsettings.ui
         qtmultimedia/qtmultimediamediaitem.cpp
         qtmultimedia/qtmultimediaurlhandler.cpp
-        settingsdialog.cpp
-        tageditor/tageditor.cpp
+        tageditor/tageditor.cpp tageditor/tageditor.ui
         thememanager.cpp
-        trackswidget.cpp
-        userplaylistswidget.cpp
+        trackswidget.cpp trackswidget.ui
+        userplaylistswidget.cpp userplaylistswidget.ui
         visualisations/scopevisualisation.cpp
-
-        artistsalbumswidget.ui
-        controlstrip.ui
-        currenttrackpopover.ui
-        library/libraryenumeratedirectoryjobwidget.ui
-        libraryerrorpopover.ui
-        lyrics/lyricsdisplaywidget.ui
-        mainwindow.ui
-        othersourceswidget.ui
-        print/printsettings.ui
-        settingsdialog.ui
-        tageditor/tageditor.ui
-        trackswidget.ui
-        userplaylistswidget.ui
+        settingspanes/libraryresetsettingspane.cpp settingspanes/libraryresetsettingspane.ui
+        settingspanes/titlebarsettingspane.cpp settingspanes/titlebarsettingspane.ui
+        settingspanes/colourssettingspane.cpp settingspanes/colourssettingspane.ui
+        settingspanes/notificationssettingspane.cpp settingspanes/notificationssettingspane.ui
+        resetlibrarypopover.cpp resetlibrarypopover.ui
 
         resources.qrc
 
@@ -74,12 +64,17 @@ set(HEADERS
         print/printsettings.h
         qtmultimedia/qtmultimediamediaitem.h
         qtmultimedia/qtmultimediaurlhandler.h
-        settingsdialog.h
         tageditor/tageditor.h
         thememanager.h
         trackswidget.h
         userplaylistswidget.h
-        visualisations/scopevisualisation.h)
+        visualisations/scopevisualisation.h
+        settingspanes/libraryresetsettingspane.h
+        settingspanes/titlebarsettingspane.h
+        settingspanes/colourssettingspane.h
+        settingspanes/notificationssettingspane.h
+        resetlibrarypopover.h
+    )
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(SOURCES ${SOURCES}

@@ -24,8 +24,10 @@
 #include "playlistmodel.h"
 #include "pluginmanager.h"
 #include "print/printcontroller.h"
-#include "print/printpopover.h"
-#include "settingsdialog.h"
+#include "settingspanes/colourssettingspane.h"
+#include "settingspanes/libraryresetsettingspane.h"
+#include "settingspanes/notificationssettingspane.h"
+#include "settingspanes/titlebarsettingspane.h"
 #include <QDesktopServices>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
@@ -49,6 +51,8 @@
 #include <tmessagebox.h>
 #include <tpopover.h>
 #include <tsettings.h>
+#include <tsettingswindow/tsettingswindow.h>
+#include <tstylemanager.h>
 
 #ifdef HAVE_THEINSTALLER
     #include "updatechecker.h"
@@ -210,7 +214,6 @@ MainWindow::MainWindow(QWidget* parent) :
     QTimer::singleShot(0, this, [=] {
         resizeEvent(nullptr);
     });
-
 
     /*QWinThumbnailToolBar* thumbBar = new QWinThumbnailToolBar(this);
     thumbBar->setWindow(this->windowHandle());
@@ -483,8 +486,20 @@ void MainWindow::on_actionAdd_to_Library_triggered() {
 }
 
 void MainWindow::on_actionSettings_triggered() {
-    SettingsDialog dialog;
-    dialog.exec();
+    tSettingsWindow window(this);
+    window.appendSection(tr("General"));
+    window.appendPane(new NotificationsSettingsPane());
+
+    window.appendSection(tr("Appearance"));
+    window.appendPane(new TitlebarSettingsPane());
+
+    if (tStyleManager::isOverridingStyle()) {
+        window.appendPane(new ColoursSettingsPane());
+    }
+
+    window.appendSection(tr("Library"));
+    window.appendPane(new LibraryResetSettingsPane());
+    window.exec();
 }
 
 void MainWindow::on_actionHelp_triggered() {
