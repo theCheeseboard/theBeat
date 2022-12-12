@@ -2,6 +2,8 @@
 
 #include <QImage>
 #include <QTimer>
+#include <playlist.h>
+#include <statemanager.h>
 #include <tlogger.h>
 
 struct GstMediaItemPrivate {
@@ -87,6 +89,16 @@ void GstMediaItem::preparePlayer() {
             },
             this);
         gst_object_unref(bus);
+
+        connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [this](double volume) {
+            auto volumeElement = gst_bin_get_by_name(GST_BIN(pipeline()), "volume");
+            g_object_set(volumeElement, "volume", volume, nullptr);
+            gst_object_unref(volumeElement);
+        });
+        auto volumeElement = gst_bin_get_by_name(GST_BIN(pipeline()), "volume");
+        g_object_set(volumeElement, "volume", StateManager::instance()->playlist()->volume(), nullptr);
+        gst_object_unref(volumeElement);
+
         d->prepared = true;
     }
 }

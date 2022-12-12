@@ -35,7 +35,7 @@ QString GstCdPlayback::title() {
 
 void GstCdPlayback::preparePlayer() {
     if (!d->pipeline) {
-        auto pipelineString = QStringLiteral("cdiocddasrc device=%1 track=%2 ! pulsesink").arg(d->device).arg(d->track);
+        auto pipelineString = QStringLiteral("cdiocddasrc device=%1 track=%2 ! volume name=\"volume\" ! pulsesink").arg(d->device).arg(d->track);
         d->pipeline = gst_parse_launch(pipelineString.toUtf8().data(), nullptr);
     }
     GstMediaItem::preparePlayer();
