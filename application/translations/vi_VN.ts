@@ -1,1023 +1,886 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
-<context>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TS version="2.1" language="vi_VN">
+  <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="+65"/>
-        <location line="+123"/>
-        <source>Tracks in Library</source>
-        <translation>Bài hát trong thư viện</translation>
+      <translation>Bài hát trong thư viện</translation>
+      <location filename="../artistsalbumswidget.ui" line="+65" />
+      <source>Tracks in Library</source>
     </message>
     <message>
-        <location line="+49"/>
-        <source>Enqueue All</source>
-        <translation>Đặt tất cả vào hàng phát</translation>
+      <translation>Đặt tất cả vào hàng phát</translation>
+      <source>Enqueue All</source>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Play All</source>
-        <translation>Phát tất cả</translation>
+      <translation>Phát tất cả</translation>
+      <source>Play All</source>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Shuffle All</source>
-        <translation>Phát ngẫu nhiên</translation>
+      <translation>Phát ngẫu nhiên</translation>
+      <source>Shuffle All</source>
     </message>
     <message>
-        <location line="+24"/>
-        <source>Burn</source>
-        <translation>Ghi đĩa</translation>
+      <translation>Ghi đĩa</translation>
+      <source>Burn</source>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+68"/>
-        <source>Albums in Library</source>
-        <translation>Đĩa nhạc trong thư viện</translation>
+      <translation>Đĩa nhạc trong thư viện</translation>
+      <location filename="../artistsalbumswidget.cpp" line="+68" />
+      <source>Albums in Library</source>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Artists in Library</source>
-        <translation>Nghệ sĩ trong thư viện</translation>
+      <translation>Nghệ sĩ trong thư viện</translation>
+      <source>Artists in Library</source>
     </message>
     <message>
-        <location line="+121"/>
-        <source>Tracks in %1</source>
-        <translation>Bài hát trong %1</translation>
+      <translation>Bài hát trong %1</translation>
+      <source>Tracks in %1</source>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Tracks by %1</source>
-        <translation>Bài hát bởi %1</translation>
+      <translation>Bài hát bởi %1</translation>
+      <source>Tracks by %1</source>
     </message>
     <message numerus="yes">
-        <location line="+9"/>
-        <source>%n tracks</source>
-        <translation>
-            <numerusform>%n bài hát</numerusform>
-        </translation>
+      <translation>
+        <numerusform>%n bài hát</numerusform>
+      </translation>
+      <source>%n tracks</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>CdChecker</name>
     <message>
-        <source>Play All</source>
-        <translation type="obsolete">Phát tất cả</translation>
+      <translation>Phát tất cả</translation>
+      <source>Play All</source>
     </message>
     <message>
-        <source>Enqueue All</source>
-        <translation type="obsolete">Đặt tất cả vào hàng phát</translation>
+      <translation>Đặt tất cả vào hàng phát</translation>
+      <source>Enqueue All</source>
     </message>
     <message>
-        <source>Shuffle All</source>
-        <translation type="obsolete">Phát ngẫu nhiên</translation>
+      <translation>Phát ngẫu nhiên</translation>
+      <source>Shuffle All</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ColoursSettingsPane</name>
     <message>
-        <location filename="../settingspanes/colourssettingspane.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/colourssettingspane.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Light</source>
-        <translation type="unfinished">Sáng</translation>
+      <translation>Sáng</translation>
+      <source>Light</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Dark</source>
-        <translation type="unfinished">Tối</translation>
+      <translation>Tối</translation>
+      <source>Dark</source>
     </message>
     <message>
-        <location filename="../settingspanes/colourssettingspane.cpp" line="+30"/>
-        <source>Colours</source>
-        <translation type="unfinished"></translation>
+      <translation>Màu</translation>
+      <location filename="../settingspanes/colourssettingspane.cpp" line="+30" />
+      <source>Colours</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Common</name>
     <message>
-        <location filename="../common.cpp" line="+31"/>
-        <source>Select Device</source>
-        <translation>Chọn thiết bị</translation>
+      <translation>Chọn thiết bị</translation>
+      <location filename="../common.cpp" line="+31" />
+      <source>Select Device</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ControlStrip</name>
     <message>
-        <location filename="../controlstrip.ui" line="+101"/>
-        <source>Title</source>
-        <translation>Tiêu đề</translation>
+      <translation>Tiêu đề</translation>
+      <location filename="../controlstrip.ui" line="+101" />
+      <source>Title</source>
     </message>
     <message>
-        <location line="+27"/>
-        <source>Metadata</source>
-        <translation>Siêu dữ liệu</translation>
+      <translation>Siêu dữ liệu</translation>
+      <source>Metadata</source>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+82"/>
-        <source>Repeat Options</source>
-        <translation>Tùy chọn lặp lại</translation>
+      <translation>Tùy chọn lặp lại</translation>
+      <location filename="../controlstrip.cpp" line="+82" />
+      <source>Repeat Options</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Repeat Play Queue</source>
-        <translation>Lặp lại hàng phát</translation>
+      <translation>Lặp lại hàng phát</translation>
+      <source>Repeat Play Queue</source>
     </message>
     <message>
-        <location line="+17"/>
-        <source>Playback Options</source>
-        <translation>Tùy chọn phát</translation>
+      <translation>Tùy chọn phát</translation>
+      <source>Playback Options</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Pause after current track</source>
-        <translation>Tạm dừng sau bài hát này</translation>
+      <translation>Tạm dừng sau bài hát này</translation>
+      <source>Pause after current track</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="+151"/>
-        <source>Album</source>
-        <translation>Đĩa nhạc</translation>
+      <translation>Đĩa nhạc</translation>
+      <location filename="../currenttrackpopover.cpp" line="+151" />
+      <source>Album</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Name</source>
-        <translation>Tên</translation>
+      <translation>Tên</translation>
+      <source>Name</source>
     </message>
     <message>
-        <location line="+3"/>
-        <location line="+2"/>
-        <source>Track</source>
-        <translation>Số bài</translation>
+      <translation>Số bài</translation>
+      <source>Track</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
-        <source>Folder Added</source>
-        <translation>Được thêm thư mục</translation>
+      <translation>Được thêm thư mục</translation>
+      <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153" />
+      <source>Folder Added</source>
     </message>
     <message numerus="yes">
-        <location line="+1"/>
-        <source>%n tracks added/updated</source>
-        <translation>
-            <numerusform>%n bài được thêm/cập nhật</numerusform>
-        </translation>
+      <translation>
+        <numerusform>%n bài được thêm/cập nhật</numerusform>
+      </translation>
+      <source>%n tracks added/updated</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryEnumerateDirectoryJobWidget</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="+26"/>
-        <source>DISCOVERING AUDIO TRACKS</source>
-        <translation>KHÁM PHÁ BÀI HÁT</translation>
+      <translation>KHÁM PHÁ BÀI HÁT</translation>
+      <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="+26" />
+      <source>DISCOVERING AUDIO TRACKS</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryErrorPopover</name>
     <message>
-        <location filename="../libraryerrorpopover.ui" line="+35"/>
-        <source>Hmm</source>
-        <translation>Ừm</translation>
+      <translation>Ừm</translation>
+      <location filename="../libraryerrorpopover.ui" line="+35" />
+      <source>Hmm</source>
     </message>
     <message>
-        <location line="+99"/>
-        <source>ACTIONS</source>
-        <translation>HOẠT ĐỘNG</translation>
+      <translation>HOẠT ĐỘNG</translation>
+      <source>ACTIONS</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Locate File</source>
-        <translation>Định vị tệp</translation>
+      <translation>Định vị tệp</translation>
+      <source>Locate File</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Remove from Library</source>
-        <translation>Xóa khỏi thư viện</translation>
+      <translation>Xóa khỏi thư viện</translation>
+      <source>Remove from Library</source>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.cpp" line="+39"/>
-        <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
-        <translation>Có vẻ như tệp này bị biến mất. Nếu bạn biết vị trí của tệp này, hãy báo cho chúng tôi để cho mình phát bài này.</translation>
+      <translation>Có vẻ như tệp này bị biến mất. Nếu bạn biết vị trí của tệp này, hãy báo cho chúng tôi để cho mình phát bài này.</translation>
+      <location filename="../libraryerrorpopover.cpp" line="+39" />
+      <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+194"/>
-        <source>by %1</source>
-        <translation>bởi %1</translation>
+      <translation>bởi %1</translation>
+      <location filename="../library/librarymodel.cpp" line="+194" />
+      <source>by %1</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>on %1</source>
-        <translation>trên %1</translation>
+      <translation>trên %1</translation>
+      <source>on %1</source>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Track</source>
-        <translation>Bài hát</translation>
+      <translation>Bài hát</translation>
+      <source>Track</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="+31"/>
-        <source>Add to Playlist</source>
-        <translation>Thêm vào danh sách phát</translation>
+      <translation>Thêm vào danh sách phát</translation>
+      <location filename="../library/librarylistview.cpp" line="+31" />
+      <source>Add to Playlist</source>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+2"/>
-        <source>Remove from Library</source>
-        <translation>Xóa khỏi thư viện</translation>
+      <translation>Xóa khỏi thư viện</translation>
+      <source>Remove from Library</source>
     </message>
     <message>
-        <location line="-12"/>
-        <location line="+11"/>
-        <source>Are you sure?</source>
-        <translation>Có chắc chắn không?</translation>
+      <translation>Có chắc chắn không?</translation>
+      <source>Are you sure?</source>
     </message>
     <message>
-        <location line="-12"/>
-        <location line="+2"/>
-        <source>Remove from Playlist</source>
-        <translation>Xoá khỏi danh sách phát</translation>
+      <translation>Xoá khỏi danh sách phát</translation>
+      <source>Remove from Playlist</source>
     </message>
     <message>
-        <location line="+79"/>
-        <location line="+2"/>
-        <source>New Playlist</source>
-        <translation>Danh sách mới</translation>
+      <translation>Danh sách mới</translation>
+      <source>New Playlist</source>
     </message>
     <message>
-        <location line="+0"/>
-        <source>What do you want to call this playlist?</source>
-        <translation>Bạn muốn gọi danh sách phát này tên gì?</translation>
+      <translation>Bạn muốn gọi danh sách phát này tên gì?</translation>
+      <source>What do you want to call this playlist?</source>
     </message>
     <message>
-        <location line="+15"/>
-        <source>For %1</source>
-        <translation>Cho %1</translation>
+      <translation>Cho %1</translation>
+      <source>For %1</source>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Track Properties</source>
-        <translation type="unfinished"></translation>
+      <translation>Chi tiết bài hát</translation>
+      <source>Track Properties</source>
     </message>
     <message numerus="yes">
-        <location line="+11"/>
-        <source>For %n items</source>
-        <translation>
-            <numerusform>Cho %n mục</numerusform>
-        </translation>
+      <translation>
+        <numerusform>Cho %n mục</numerusform>
+      </translation>
+      <source>For %n items</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryManager</name>
     <message>
-        <location filename="../library/librarymanager.cpp" line="+455"/>
-        <source>20 Most Played Tracks</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../library/librarymanager.cpp" line="+455" />
+      <source>20 Most Played Tracks</source>
     </message>
     <message>
-        <location line="+2"/>
-        <source>20 Random Tracks</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>20 Random Tracks</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryResetSettingsPane</name>
     <message>
-        <location filename="../settingspanes/libraryresetsettingspane.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/libraryresetsettingspane.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>If you want to start over with theBeat, you can reset your library.</source>
-        <translation type="unfinished"></translation>
+      <translation>Nếu bạn muốn bắt đầu lại với theBeat, ban co the đất lại thu viện.</translation>
+      <source>If you want to start over with theBeat, you can reset your library.</source>
     </message>
     <message>
-        <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
-
-theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation type="obsolete">Đặt thư viện về mặc định. Điều này sẽ xóa các bài đã bị thêm vào theBeat, và theBeat sẽ quét lại thư mục Nhạc của bạn khi khởi động.
+      <translation>Đặt thư viện về mặc định. Điều này sẽ xóa các bài đã bị thêm vào theBeat, và theBeat sẽ quét lại thư mục Nhạc của bạn khi khởi động.
 
 theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt động này không thể bị hoàn tác.</translation>
+      <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
+
+theBeat will restart once the reset is complete. This action is irreversible.</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Reset theBeat Library</source>
-        <translation type="unfinished">Đặt lại thư viện theBeat</translation>
+      <translation>Đặt lại thư viện theBeat</translation>
+      <source>Reset theBeat Library</source>
     </message>
     <message>
-        <location filename="../settingspanes/libraryresetsettingspane.cpp" line="+22"/>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
+      <translation>Đặt lại</translation>
+      <location filename="../settingspanes/libraryresetsettingspane.cpp" line="+22" />
+      <source>Reset</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibrarySettingsPane</name>
     <message>
-        <source>Library</source>
-        <translation type="obsolete">Thư viện</translation>
+      <translation>Thư viện</translation>
+      <source>Library</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LyricsDisplayWidget</name>
     <message>
-        <location filename="../lyrics/lyricsdisplaywidget.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../lyrics/lyricsdisplaywidget.ui" line="+14" />
+      <source>Form</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="+14"/>
-        <source>theBeat</source>
-        <translation>theBeat</translation>
+      <translation>theBeat</translation>
+      <location filename="../mainwindow.ui" line="+14" />
+      <source>theBeat</source>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+104"/>
-        <source>Tracks</source>
-        <translation>Bài hát</translation>
+      <translation>Bài hát</translation>
+      <location filename="../mainwindow.cpp" line="+104" />
+      <source>Tracks</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Artists</source>
-        <translation>Nghệ sĩ</translation>
+      <translation>Nghệ sĩ</translation>
+      <source>Artists</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Albums</source>
-        <translation>Đĩa nhạc</translation>
+      <translation>Đĩa nhạc</translation>
+      <source>Albums</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Playlists</source>
-        <translation>Danh sách phát</translation>
+      <translation>Danh sách phát</translation>
+      <source>Playlists</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Other Sources</source>
-        <translation>Nguồn khác</translation>
+      <translation>Nguồn khác</translation>
+      <source>Other Sources</source>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+141"/>
-        <source>Queue</source>
-        <translation>Hàng phát</translation>
+      <translation>Hàng phát</translation>
+      <location filename="../mainwindow.ui" line="+141" />
+      <source>Queue</source>
     </message>
     <message>
-        <location line="+70"/>
-        <source>Nothing Here!</source>
-        <translation>Không có gì đây!</translation>
+      <translation>Không có gì đây!</translation>
+      <source>Nothing Here!</source>
     </message>
     <message>
-        <location line="+62"/>
-        <source>File</source>
-        <translation>Tệp</translation>
+      <translation>Tệp</translation>
+      <source>File</source>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Playback</source>
-        <translation>Phát lại</translation>
+      <translation>Phát lại</translation>
+      <source>Playback</source>
     </message>
     <message>
-        <location line="+18"/>
-        <source>File Bug</source>
-        <translation>Báo cáo lỗi</translation>
+      <translation>Báo cáo lỗi</translation>
+      <source>File Bug</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Sources</source>
-        <translation>Mã nguồn</translation>
+      <translation>Mã nguồn</translation>
+      <source>Sources</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>About</source>
-        <translation>Giới thiệu</translation>
+      <translation>Giới thiệu</translation>
+      <source>About</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Exit</source>
-        <translation>Thoát</translation>
+      <translation>Thoát</translation>
+      <source>Exit</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+      <translation>Ctrl+Q</translation>
+      <source>Ctrl+Q</source>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Open File</source>
-        <translation>Mở tệp</translation>
+      <translation>Mở tệp</translation>
+      <source>Open File</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+      <translation>Ctrl+O</translation>
+      <source>Ctrl+O</source>
     </message>
     <message>
-        <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+338"/>
-        <source>Open URL</source>
-        <translation>Mở liên kết</translation>
+      <translation>Mở liên kết</translation>
+      <location filename="../mainwindow.cpp" line="+338" />
+      <source>Open URL</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Skip Back</source>
-        <translation>Nhảy lại</translation>
+      <translation>Nhảy lại</translation>
+      <source>Skip Back</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Shift+Left</source>
-        <translation>Shift+Left</translation>
+      <translation>Shift+Left</translation>
+      <source>Shift+Left</source>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Shift+Right</source>
-        <translation>Shift+Right</translation>
+      <translation>Shift+Right</translation>
+      <source>Shift+Right</source>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Add to Library</source>
-        <translation>Thêm vào thư viện</translation>
+      <translation>Thêm vào thư viện</translation>
+      <source>Add to Library</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Settings</source>
-        <translation>Cài đặt</translation>
+      <translation>Cài đặt</translation>
+      <source>Settings</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+,</source>
-        <translation>Ctrl+,</translation>
+      <translation>Ctrl+,</translation>
+      <source>Ctrl+,</source>
     </message>
     <message>
-        <location line="+12"/>
-        <source>theBeat Help</source>
-        <translation>Trợ giúp cho theBeat</translation>
+      <translation>Trợ giúp cho theBeat</translation>
+      <source>theBeat Help</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>F1</source>
-        <translation>F1</translation>
+      <translation>F1</translation>
+      <source>F1</source>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Repeat One</source>
-        <translation>Lặp lại một bài</translation>
+      <translation>Lặp lại một bài</translation>
+      <source>Repeat One</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+R</source>
-        <translation>CTRL+R</translation>
+      <translation>CTRL+R</translation>
+      <source>Ctrl+R</source>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Shuffle</source>
-        <translation>Ngẫu nhiên</translation>
+      <translation>Ngẫu nhiên</translation>
+      <source>Shuffle</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+S</source>
-        <translation>CTRL+S</translation>
+      <translation>CTRL+S</translation>
+      <source>Ctrl+S</source>
     </message>
     <message>
-        <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+84"/>
-        <source>Print</source>
-        <translation type="unfinished"></translation>
+      <translation>In</translation>
+      <location filename="../mainwindow.cpp" line="+84" />
+      <source>Print</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+      <translation>Ctrl+P</translation>
+      <source>Ctrl+P</source>
     </message>
     <message>
-        <location line="-85"/>
-        <source>Skip Forward</source>
-        <translation>Nhảy tiếp</translation>
+      <translation>Nhảy tiếp</translation>
+      <source>Skip Forward</source>
     </message>
     <message>
-        <location line="-156"/>
-        <source>Select a track or drop something here!</source>
-        <translation>Hãy chọn bài hoặc thả bài đây!</translation>
+      <translation>Hãy chọn bài hoặc thả bài đây!</translation>
+      <source>Select a track or drop something here!</source>
     </message>
     <message>
-        <location line="+168"/>
-        <source>Play</source>
-        <translation>Phát</translation>
+      <translation>Phát</translation>
+      <source>Play</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Space</source>
-        <translation>Space</translation>
+      <translation>Space</translation>
+      <source>Space</source>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-112"/>
-        <source>For &quot;%1&quot;</source>
-        <translation>Cho &quot;%1&quot;</translation>
+      <translation>Cho "%1"</translation>
+      <location filename="../mainwindow.cpp" line="-112" />
+      <source>For "%1"</source>
     </message>
     <message numerus="yes">
-        <location line="+2"/>
-        <source>For %n items</source>
-        <translation>
-            <numerusform>Cho %n mục</numerusform>
-        </translation>
+      <translation>
+        <numerusform>Cho %n mục</numerusform>
+      </translation>
+      <source>For %n items</source>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Remove from Queue</source>
-        <translation>Xóa khỏi hàng phát</translation>
+      <translation>Xóa khỏi hàng phát</translation>
+      <source>Remove from Queue</source>
     </message>
     <message>
-        <location line="+13"/>
-        <source>For Queue</source>
-        <translation>Cho hàng phát</translation>
+      <translation>Cho hàng phát</translation>
+      <source>For Queue</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Clear Queue</source>
-        <translation>Xóa các mục</translation>
+      <translation>Xóa các mục</translation>
+      <source>Clear Queue</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Enter the URL you&apos;d like to open</source>
-        <translation>Điền vào URL bạn muốn mở</translation>
+      <translation>Điền vào URL bạn muốn mở</translation>
+      <source>Enter the URL you'd like to open</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Can&apos;t open that URL</source>
-        <translation>Không thể mở URL đó</translation>
+      <translation>Không thể mở URL đó</translation>
+      <source>Can't open that URL</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
-        <translation>Rất tiếc, URL đó không hỗ trợ với theBeat.</translation>
+      <translation>Rất tiếc, URL đó không hỗ trợ với theBeat.</translation>
+      <source>Sorry, that URL isn't supported by theBeat.</source>
     </message>
     <message>
-        <location line="+37"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
+      <translation>Chung</translation>
+      <source>General</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Appearance</source>
-        <translation type="unfinished">Giao diện</translation>
+      <translation>Giao diện</translation>
+      <source>Appearance</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Library</source>
-        <translation type="unfinished">Thư viện</translation>
+      <translation>Thư viện</translation>
+      <source>Library</source>
     </message>
     <message>
-        <location line="+20"/>
-        <source>No Printers</source>
-        <translation type="unfinished"></translation>
+      <translation>Không có máy in nào</translation>
+      <source>No Printers</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Before printing a list of tracks, you&apos;ll need to set up a printer.</source>
-        <translation type="unfinished"></translation>
+      <translation>Trước khi bạn in danh sách bài hát, ban cán thiết lập mấy in.</translation>
+      <source>Before printing a list of tracks, you'll need to set up a printer.</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Open a list of tracks (for example, a playlist) to print it.</source>
-        <translation type="unfinished"></translation>
+      <translation>Vùi lòng mở một danh sách bài hát (ví dụ, danh sách phát) để in nó.</translation>
+      <source>Open a list of tracks (for example, a playlist) to print it.</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>NotificationsSettingsPane</name>
     <message>
-        <location filename="../settingspanes/notificationssettingspane.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/notificationssettingspane.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Send a notification when the track changes</source>
-        <translation type="unfinished">Gửi thông báo khi bài hát hiện tại thay đổi</translation>
+      <translation>Gửi thông báo khi bài hát hiện tại thay đổi</translation>
+      <source>Send a notification when the track changes</source>
     </message>
     <message>
-        <location filename="../settingspanes/notificationssettingspane.cpp" line="+24"/>
-        <source>Notifications</source>
-        <translation type="unfinished">Thông báo</translation>
+      <translation>Thông báo</translation>
+      <location filename="../settingspanes/notificationssettingspane.cpp" line="+24" />
+      <source>Notifications</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>OtherSourcesWidget</name>
     <message>
-        <location filename="../othersourceswidget.ui" line="+103"/>
-        <source>No other sources available</source>
-        <translation>Không có nguồn khác sẵn sàng</translation>
+      <translation>Không có nguồn khác sẵn sàng</translation>
+      <location filename="../othersourceswidget.ui" line="+103" />
+      <source>No other sources available</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>There&apos;s nothing else to play right now</source>
-        <translation>Không có gì khác để phát ngay bây giờ</translation>
+      <translation>Không có gì khác để phát ngay bây giờ</translation>
+      <source>There's nothing else to play right now</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="+316"/>
-        <source>Track</source>
-        <translation>Bài hát</translation>
+      <translation>Bài hát</translation>
+      <location filename="../playlistmodel.cpp" line="+316" />
+      <source>Track</source>
     </message>
     <message>
-        <location line="+23"/>
-        <source>Album</source>
-        <translation>Album</translation>
+      <translation>Album</translation>
+      <source>Album</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PrintController</name>
     <message>
-        <location filename="../print/printcontroller.cpp" line="+59"/>
-        <source>Print %1</source>
-        <translation type="unfinished"></translation>
+      <translation>In %1</translation>
+      <location filename="../print/printcontroller.cpp" line="+59" />
+      <source>Print %1</source>
     </message>
     <message numerus="yes">
-        <location line="+66"/>
-        <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform>%n bài hát</numerusform>
-        </translation>
+      <translation>
+        <numerusform>%n bài hát</numerusform>
+      </translation>
+      <source>%n tracks</source>
     </message>
     <message>
-        <location line="+72"/>
-        <source>by %1</source>
-        <translation type="unfinished">bởi %1</translation>
+      <translation>bởi %1</translation>
+      <source>by %1</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>on %1</source>
-        <translation type="unfinished">trên %1</translation>
+      <translation>trên %1</translation>
+      <source>on %1</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PrintPopover</name>
     <message numerus="yes">
-        <source>%n tracks</source>
-        <translation type="obsolete">
-            <numerusform>%n bài hát</numerusform>
-        </translation>
+      <translation>
+        <numerusform>%n bài hát</numerusform>
+      </translation>
+      <source>%n tracks</source>
     </message>
     <message>
-        <source>by %1</source>
-        <translation type="obsolete">bởi %1</translation>
+      <translation>bởi %1</translation>
+      <source>by %1</source>
     </message>
     <message>
-        <source>on %1</source>
-        <translation type="obsolete">trên %1</translation>
+      <translation>trên %1</translation>
+      <source>on %1</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../print/printsettings.ui" line="+25"/>
-        <source>PRINT TYPE</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../print/printsettings.ui" line="+25" />
+      <source>PRINT TYPE</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Track Listing</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Track Listing</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Jewel Case Insert</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Jewel Case Insert</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ResetLibraryPopover</name>
     <message>
-        <location filename="../resetlibrarypopover.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../resetlibrarypopover.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Reset Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Reset Library</source>
     </message>
     <message>
-        <location line="+24"/>
-        <source>This is it!</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>This is it!</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Resetting the library will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
+      <translation></translation>
+      <source>Resetting the library will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Reset theBeat Library</source>
-        <translation type="unfinished">Đặt lại thư viện theBeat</translation>
+      <translation>Đặt lại thư viện theBeat</translation>
+      <source>Reset theBeat Library</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ScopeVisualisation</name>
     <message>
-        <location filename="../visualisations/scopevisualisation.cpp" line="+38"/>
-        <source>Scope</source>
-        <translation>Sóng</translation>
+      <translation>Sóng</translation>
+      <location filename="../visualisations/scopevisualisation.cpp" line="+38" />
+      <source>Scope</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>SettingsDialog</name>
     <message>
-        <source>Settings</source>
-        <translation type="vanished">Cài đặt</translation>
+      <translation>Cài đặt</translation>
+      <source>Settings</source>
     </message>
     <message>
-        <source>Library</source>
-        <translation type="vanished">Thư viện</translation>
+      <translation>Thư viện</translation>
+      <source>Library</source>
     </message>
     <message>
-        <source>Appearance</source>
-        <translation type="vanished">Giao diện</translation>
+      <translation>Giao diện</translation>
+      <source>Appearance</source>
     </message>
     <message>
-        <source>Notifications</source>
-        <translation type="vanished">Thông báo</translation>
+      <translation>Thông báo</translation>
+      <source>Notifications</source>
     </message>
     <message>
-        <source>RESET</source>
-        <translation type="vanished">ĐẶT LẠI</translation>
+      <translation>ĐẶT LẠI</translation>
+      <source>RESET</source>
     </message>
     <message>
-        <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
-
-theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation type="vanished">Đặt thư viện về mặc định. Điều này sẽ xóa các bài đã bị thêm vào theBeat, và theBeat sẽ quét lại thư mục Nhạc của bạn khi khởi động.
+      <translation>Đặt thư viện về mặc định. Điều này sẽ xóa các bài đã bị thêm vào theBeat, và theBeat sẽ quét lại thư mục Nhạc của bạn khi khởi động.
 
 theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt động này không thể bị hoàn tác.</translation>
+      <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
+
+theBeat will restart once the reset is complete. This action is irreversible.</source>
     </message>
     <message>
-        <source>Reset theBeat Library</source>
-        <translation type="vanished">Đặt lại thư viện theBeat</translation>
+      <translation>Đặt lại thư viện theBeat</translation>
+      <source>Reset theBeat Library</source>
     </message>
     <message>
-        <source>TITLEBAR</source>
-        <translation type="vanished">THANH TIÊU ĐỀ</translation>
+      <translation>THANH TIÊU ĐỀ</translation>
+      <source>TITLEBAR</source>
     </message>
     <message>
-        <source>Use System Titlebars</source>
-        <translation type="vanished">Sử dụng thanh tiêu đề của hệ thống</translation>
+      <translation>Sử dụng thanh tiêu đề của hệ thống</translation>
+      <source>Use System Titlebars</source>
     </message>
     <message>
-        <source>COLOURS</source>
-        <translation type="vanished">MẦU</translation>
+      <translation>MẦU</translation>
+      <source>COLOURS</source>
     </message>
     <message>
-        <source>Light</source>
-        <translation type="vanished">Sáng</translation>
+      <translation>Sáng</translation>
+      <source>Light</source>
     </message>
     <message>
-        <source>Dark</source>
-        <translation type="vanished">Tối</translation>
+      <translation>Tối</translation>
+      <source>Dark</source>
     </message>
     <message>
-        <source>Send a notification when the track changes</source>
-        <translation type="vanished">Gửi thông báo khi bài hát hiện tại thay đổi</translation>
+      <translation>Gửi thông báo khi bài hát hiện tại thay đổi</translation>
+      <source>Send a notification when the track changes</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TagEditor</name>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="+35"/>
-        <source>Track Properties</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../tageditor/tageditor.ui" line="+35" />
+      <source>Track Properties</source>
     </message>
     <message>
-        <location line="+50"/>
-        <source>DETAILS MODIFIED</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>DETAILS MODIFIED</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Save your changes to this track to keep them saved.</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Save your changes to this track to keep them saved.</source>
     </message>
     <message>
-        <location line="+25"/>
-        <source>Revert</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Revert</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Save</source>
     </message>
     <message>
-        <location line="+82"/>
-        <source>Track #</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Track #</source>
     </message>
     <message>
-        <location line="+33"/>
-        <source>Title</source>
-        <translation type="unfinished">Tiêu đề</translation>
+      <translation>Tiêu đề</translation>
+      <source>Title</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Genre</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Genre</source>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Length</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Length</source>
     </message>
     <message>
-        <location line="-67"/>
-        <source>Artist</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Artist</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Disc #</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Disc #</source>
     </message>
     <message>
-        <location line="-24"/>
-        <source>Year</source>
-        <translation type="unfinished">Năm</translation>
+      <translation>Năm</translation>
+      <source>Year</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Album</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Album</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TitlebarSettingsPane</name>
     <message>
-        <location filename="../settingspanes/titlebarsettingspane.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/titlebarsettingspane.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Use System Titlebars</source>
-        <translation type="unfinished">Sử dụng thanh tiêu đề của hệ thống</translation>
+      <translation>Sử dụng thanh tiêu đề của hệ thống</translation>
+      <source>Use System Titlebars</source>
     </message>
     <message>
-        <location filename="../settingspanes/titlebarsettingspane.cpp" line="+29"/>
-        <source>Titlebar</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/titlebarsettingspane.cpp" line="+29" />
+      <source>Titlebar</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TracksWidget</name>
     <message>
-        <location filename="../trackswidget.ui" line="+65"/>
-        <location filename="../trackswidget.cpp" line="+59"/>
-        <source>Tracks in Library</source>
-        <translation>Bài hát trong thư viện</translation>
+      <translation>Bài hát trong thư viện</translation>
+      <location filename="../trackswidget.ui" line="+65" />
+      <location filename="../trackswidget.cpp" line="+59" />
+      <source>Tracks in Library</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Enqueue All</source>
-        <translation>Đặt tất cả vào hàng phát</translation>
+      <translation>Đặt tất cả vào hàng phát</translation>
+      <source>Enqueue All</source>
     </message>
     <message>
-        <location line="+45"/>
-        <source>Search</source>
-        <translation>Tìm kiếm</translation>
+      <translation>Tìm kiếm</translation>
+      <source>Search</source>
     </message>
     <message>
-        <location line="+57"/>
-        <source>Processing Library</source>
-        <translation>Đang xử lý thư viện</translation>
+      <translation>Đang xử lý thư viện</translation>
+      <source>Processing Library</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
-        <translation>Tùy thuộc vào số bài trong thư viện của bạn, điều này có thể mất một số thời gian. Điều này chỉ có xảy ra lần đầu tiên bạn khởi động theBeat.</translation>
+      <translation>Tùy thuộc vào số bài trong thư viện của bạn, điều này có thể mất một số thời gian. Điều này chỉ có xảy ra lần đầu tiên bạn khởi động theBeat.</translation>
+      <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
     </message>
     <message>
-        <location filename="../trackswidget.cpp" line="+2"/>
-        <source>Search for %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../trackswidget.cpp" line="+2" />
+      <source>Search for %1</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UserPlaylistsWidget</name>
     <message>
-        <location filename="../userplaylistswidget.ui" line="+62"/>
-        <source>Playlists</source>
-        <translation>Danh sách phát</translation>
+      <translation>Danh sách phát</translation>
+      <location filename="../userplaylistswidget.ui" line="+62" />
+      <source>Playlists</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Create Playlist</source>
-        <translation>Tạo danh sách</translation>
+      <translation>Tạo danh sách</translation>
+      <source>Create Playlist</source>
     </message>
     <message>
-        <location line="+190"/>
-        <source>Play All</source>
-        <translation>Phát tất cả</translation>
+      <translation>Phát tất cả</translation>
+      <source>Play All</source>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Shuffle All</source>
-        <translation>Phát ngẫu nhiên</translation>
+      <translation>Phát ngẫu nhiên</translation>
+      <source>Shuffle All</source>
     </message>
     <message>
-        <location line="+44"/>
-        <source>Burn</source>
-        <translation>Ghi đĩa</translation>
+      <translation>Ghi đĩa</translation>
+      <source>Burn</source>
     </message>
     <message>
-        <location line="-94"/>
-        <source>Tracks in Library</source>
-        <translation>Bài hát trong thư viện</translation>
+      <translation>Bài hát trong thư viện</translation>
+      <source>Tracks in Library</source>
     </message>
     <message>
-        <location line="+28"/>
-        <source>Enqueue All</source>
-        <translation>Đặt tất cả vào hàng phát</translation>
+      <translation>Đặt tất cả vào hàng phát</translation>
+      <source>Enqueue All</source>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="+191"/>
-        <location line="+2"/>
-        <location line="+10"/>
-        <location line="+2"/>
-        <source>Remove</source>
-        <translation>Xóa</translation>
+      <translation>Xóa</translation>
+      <location filename="../userplaylistswidget.cpp" line="+191" />
+      <source>Remove</source>
     </message>
     <message>
-        <location line="-13"/>
-        <location line="+12"/>
-        <source>Are you sure?</source>
-        <translation>Có chắc chắn không?</translation>
+      <translation>Có chắc chắn không?</translation>
+      <source>Are you sure?</source>
     </message>
     <message>
-        <location line="-43"/>
-        <location line="+62"/>
-        <source>Tracks in %1</source>
-        <translation>Bài hát trong %1</translation>
+      <translation>Bài hát trong %1</translation>
+      <source>Tracks in %1</source>
     </message>
     <message>
-        <location line="-68"/>
-        <source>For %1</source>
-        <translation>Cho %1</translation>
+      <translation>Cho %1</translation>
+      <source>For %1</source>
     </message>
     <message>
-        <location line="-63"/>
-        <source>New Playlist</source>
-        <translation>Danh sách mới</translation>
+      <translation>Danh sách mới</translation>
+      <source>New Playlist</source>
     </message>
     <message>
-        <location line="+0"/>
-        <location line="+66"/>
-        <source>What name do you want to give to this playlist?</source>
-        <translation>Bạn muốn gọi danh sách phát này tên gì?</translation>
+      <translation>Bạn muốn gọi danh sách phát này tên gì?</translation>
+      <source>What name do you want to give to this playlist?</source>
     </message>
     <message>
-        <location line="-2"/>
-        <location line="+2"/>
-        <source>Rename</source>
-        <translation>Đổi tên</translation>
+      <translation>Đổi tên</translation>
+      <source>Rename</source>
     </message>
     <message numerus="yes">
-        <location line="+41"/>
-        <source>For %n playlists</source>
-        <translation>
-            <numerusform>Cho %n danh sách</numerusform>
-        </translation>
+      <translation>
+        <numerusform>Cho %n danh sách</numerusform>
+      </translation>
+      <source>For %n playlists</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+52"/>
-        <source>Audio Player</source>
-        <translation>Bộ nghe nhạc</translation>
+      <translation>Bộ nghe nhạc</translation>
+      <location filename="../main.cpp" line="+52" />
+      <source>Audio Player</source>
     </message>
     <message>
-        <location line="+31"/>
-        <source>file</source>
-        <translation>tệp</translation>
+      <translation>tệp</translation>
+      <source>file</source>
     </message>
     <message>
-        <location line="+0"/>
-        <source>File to open</source>
-        <translation>Tệp đẻ mở</translation>
+      <translation>Tệp đẻ mở</translation>
+      <source>File to open</source>
     </message>
-</context>
+  </context>
 </TS>

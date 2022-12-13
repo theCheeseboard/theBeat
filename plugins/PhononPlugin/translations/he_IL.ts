@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TS version="2.1">
+<TS version="2.1" language="he_IL">
   <context>
     <name>CdChecker</name>
     <message>
@@ -12,42 +12,42 @@
       <source>CD</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>הכנס כולם לתור</translation>
       <location filename="../cdchecker.ui" line="68" />
       <source>Enqueue All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>השמע הכל</translation>
       <location filename="../cdchecker.ui" line="79" />
       <source>Play All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>ערבב הכל</translation>
       <location filename="../cdchecker.ui" line="89" />
       <source>Shuffle All</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>יבא</translation>
       <location filename="../cdchecker.ui" line="112" />
       <source>Import</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>הוצא</translation>
       <location filename="../cdchecker.ui" line="123" />
       <source>Eject</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>ניגש לשרת MusicBrainz...</translation>
       <location filename="../cdchecker.ui" line="213" />
       <source>Accessing MusicBrainz...</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>לא נמצא תקליטור</translation>
       <location filename="../cdchecker.ui" line="230" />
       <source>CD NOT FOUND</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>תקליטור זה לא נמצא במאגר התקליטורים של MusicBrainz/</translation>
       <location filename="../cdchecker.ui" line="237" />
       <source>This CD was not found on the MusicBrainz CD Database.</source>
     </message>
