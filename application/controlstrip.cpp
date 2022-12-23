@@ -177,7 +177,7 @@ void ControlStrip::enterZenMode() {
     d->zenModePopover->setPopoverWidth(SC_DPI(-100));
     connect(d->zenModePopover, &tPopover::dismissed, d->zenModePopover, &tPopover::deleteLater);
     connect(d->zenModePopover, &tPopover::dismissed, track, &CurrentTrackPopover::deleteLater);
-    popover->show(this->window());
+    d->zenModePopover->show(this->window());
 #endif
 
     d->inZenMode = true;

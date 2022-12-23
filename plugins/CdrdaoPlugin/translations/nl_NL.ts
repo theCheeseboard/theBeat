@@ -143,6 +143,7 @@
     <name>BurnJobWidget</name>
     <message>
         <location filename="../burnjobwidget.ui" line="26"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnjobwidget.h" line="100"/>
         <source>BURN CD</source>
         <translation>CD BRANDEN</translation>
     </message>
@@ -151,51 +152,61 @@
     <name>BurnPopover</name>
     <message>
         <location filename="../burnpopover.ui" line="92"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="231"/>
         <source>BURN OPTIONS</source>
         <translation>BRANDOPTIES</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="110"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="233"/>
         <source>Album Name</source>
         <translation>Albumnaam</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="99"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="232"/>
         <source>Burn</source>
         <translation>Branden</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="67"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="229"/>
         <source>Audio CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="80"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="230"/>
         <source>Disc Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="134"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="234"/>
         <source>HEADS UP</source>
         <translation>LET OP</translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="154"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="235"/>
         <source>MP3 CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="196"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="236"/>
         <source>Burn Disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="211"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="237"/>
         <source>DISC NOT BLANK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../burnpopover.ui" line="218"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="238"/>
         <source>The disc in the drive is not blank. To burn these tracks to the disc, the disc will need to be erased.
 
 Once the disc in the drive is erased, all the data on it will be gone forever.</source>
@@ -203,6 +214,7 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
     </message>
     <message>
         <location filename="../burnpopover.ui" line="230"/>
+        <location filename="../../../../build-thebeat-Chroot_6-Debug/plugins/CdrdaoPlugin/plugin-cdrdao_autogen/include/ui_burnpopover.h" line="241"/>
         <source>Erase and Burn</source>
         <translation type="unfinished"></translation>
     </message>
