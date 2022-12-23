@@ -192,7 +192,7 @@
         <translation>البيانات الوصفية</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+82"/>
+        <location filename="../controlstrip.cpp" line="+86"/>
         <source>Repeat Options</source>
         <translation>خيارات التكرير</translation>
     </message>
@@ -215,7 +215,7 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="+151"/>
+        <location filename="../currenttrackpopover.cpp" line="+155"/>
         <source>Album</source>
         <translation>ألبوم</translation>
     </message>
@@ -528,7 +528,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     <message>
         <location filename="../mainwindow.ui" line="+14"/>
         <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+430"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+439"/>
         <source>theBeat</source>
         <translation>theBeat</translation>
     </message>
@@ -560,7 +560,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     <message>
         <location filename="../mainwindow.ui" line="+141"/>
         <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+46"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+47"/>
         <source>Queue</source>
         <translation>أنتظر</translation>
     </message>
@@ -593,9 +593,15 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>تشغيل</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+14"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-49"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-51"/>
         <source>File Bug</source>
         <translation>أرسل مشكلة</translation>
     </message>
@@ -678,14 +684,40 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>Shift+Right</translation>
     </message>
     <message>
+        <location line="+90"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+26"/>
+        <source>Zen Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Increase Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Decrease Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="-53"/>
         <source>Play</source>
         <translation>ألعب</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+12"/>
+        <location filename="../mainwindow.ui" line="-94"/>
         <location/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+3"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-23"/>
         <source>Space</source>
         <translation>مساحة</translation>
     </message>

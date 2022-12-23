@@ -1,39 +1,43 @@
 #include "currenttrackpopover.h"
 #include "ui_currenttrackpopover.h"
 
-#include <QPainter>
+#include "common.h"
+#include "controlstrip.h"
+#include "lyrics/abstractlyricformat.h"
 #include <QGraphicsBlurEffect>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 #include <QMediaMetaData>
-#include <statemanager.h>
+#include <QPainter>
+#include <mediaitem.h>
 #include <playlist.h>
 #include <sourcemanager.h>
-#include <mediaitem.h>
-#include <tvariantanimation.h>
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
-#include <visualisationmanager.h>
+#include <statemanager.h>
 #include <tcsdtools.h>
-#include "common.h"
-#include "lyrics/abstractlyricformat.h"
+#include <tvariantanimation.h>
+#include <visualisationmanager.h>
 
 struct CurrentTrackPopoverPrivate {
-    MediaItem* currentItem = nullptr;
-    QImage artBackground;
+        MediaItem* currentItem = nullptr;
+        QImage artBackground;
 
-    QList<QLabel*> metadataInfo;
-    QString pendingMetadataTitle;
-    int currentRow = 0;
+        QList<QLabel*> metadataInfo;
+        QString pendingMetadataTitle;
+        int currentRow = 0;
 
-    tCsdTools csd;
-    QWidget* backing = nullptr;
-    QWidget* windowDragWidget = nullptr;
+        tCsdTools csd;
+        QWidget* backing = nullptr;
+        QWidget* windowDragWidget = nullptr;
+
+        ControlStrip* controlStrip;
 };
 
-CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
+CurrentTrackPopover::CurrentTrackPopover(ControlStrip* controlStrip, QWidget* parent) :
     QWidget(parent),
     ui(new Ui::CurrentTrackPopover) {
     ui->setupUi(this);
     d = new CurrentTrackPopoverPrivate();
+    d->controlStrip = controlStrip;
 
     ui->titleLabel->setFixedWidth(SC_DPI(300));
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
@@ -51,11 +55,11 @@ CurrentTrackPopover::CurrentTrackPopover(QWidget* parent) :
     ui->playButton->setIconSize(bigIconSize);
     ui->skipNextButton->setIconSize(iconSize);
 
-    connect(StateManager::instance()->visualisation(), &VisualisationManager::visualisationUpdated, this, [ = ] {
+    connect(StateManager::instance()->visualisation(), &VisualisationManager::visualisationUpdated, this, [=] {
         this->update();
     });
 
-    //Ensure that the seeker and transport controls are always LTR
+    // Ensure that the seeker and transport controls are always LTR
     ui->transportControlsWidget->setLayoutDirection(Qt::LeftToRight);
     ui->seekerWidget->setLayoutDirection(Qt::LeftToRight);
 
@@ -128,7 +132,7 @@ void CurrentTrackPopover::updateMetadata() {
         ui->artLabel->setPixmap(art);
         ui->artLabel->setVisible(true);
 
-        //Blur the background
+        // Blur the background
         int radius = 30;
         QGraphicsBlurEffect* blur = new QGraphicsBlurEffect;
         blur->setBlurRadius(radius);
@@ -152,12 +156,12 @@ void CurrentTrackPopover::updateMetadata() {
     addMetadataEntry(tr("Name"), d->currentItem->metadata(QMediaMetaData::AlbumTitle).toString());
 
     int track = d->currentItem->metadata(QMediaMetaData::TrackNumber).toInt();
-        addMetadataEntry(tr("Track"), locale.toString(track));
+    addMetadataEntry(tr("Track"), locale.toString(track));
 
     addMetadataTitle(tr("Track"));
 
-    //TODO: Year Metadata
-//    if (d->currentItem->metadata(QMediaMetaData::Year).toInt() > 0) addMetadataEntry(tr("Year"), QString::number(d->currentItem->metadata(QMediaMetaData::Year).toInt()));
+    // TODO: Year Metadata
+    //    if (d->currentItem->metadata(QMediaMetaData::Year).toInt() > 0) addMetadataEntry(tr("Year"), QString::number(d->currentItem->metadata(QMediaMetaData::Year).toInt()));
 
     this->update();
 }
@@ -233,8 +237,7 @@ void CurrentTrackPopover::updateBar() {
     ui->elapsedLabel->setText(Common::durationToString(d->currentItem->elapsed()));
 }
 
-void CurrentTrackPopover::updateRightPane(bool initial)
-{
+void CurrentTrackPopover::updateRightPane(bool initial) {
     if (d->currentItem) {
         if (d->currentItem->elapsed() > 5000 && !d->currentItem->lyrics().isEmpty()) {
             if (ui->stackedWidget->currentWidget() != ui->lyricsPage) ui->stackedWidget->setCurrentWidget(ui->lyricsPage, !initial);
@@ -252,14 +255,14 @@ void CurrentTrackPopover::resizeEvent(QResizeEvent* event) {
     QRect geometry;
     geometry.setSize(QSize(1, 1).scaled(this->width(), this->height(), Qt::KeepAspectRatioByExpanding));
     geometry.moveCenter(QPoint(this->width() / 2, this->height() / 2));
-//    d->artBackground->setGeometry(geometry);
+    //    d->artBackground->setGeometry(geometry);
 }
 
 void CurrentTrackPopover::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     painter.setOpacity(0.7);
 
-    //Draw art background
+    // Draw art background
     QRect geometry;
     geometry.setSize(d->artBackground.size().scaled(this->width(), this->height(), Qt::KeepAspectRatioByExpanding));
     geometry.moveCenter(QPoint(this->width() / 2, this->height() / 2));
@@ -267,7 +270,7 @@ void CurrentTrackPopover::paintEvent(QPaintEvent* event) {
 
     painter.setOpacity(1);
 
-    //Draw visualisations
+    // Draw visualisations
     QRect visRect;
     visRect.setSize(QSize(this->width(), this->height() * 0.6));
     visRect.moveLeft(0);
@@ -281,24 +284,8 @@ bool CurrentTrackPopover::eventFilter(QObject* watched, QEvent* event) {
             d->backing->resize(d->backing->parentWidget()->size());
             d->windowDragWidget->resize(d->backing->width(), StateManager::instance()->sources()->padTop());
         } else if (event->type() == QEvent::Close) {
-            //Close zen mode
-            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(d->backing);
-            effect->setOpacity(1);
-            d->backing->setGraphicsEffect(effect);
-
-            tVariantAnimation* opacityAnim = new tVariantAnimation(d->backing);
-            opacityAnim->setStartValue(1.0);
-            opacityAnim->setEndValue(0.0);
-            opacityAnim->setDuration(500);
-            opacityAnim->setEasingCurve(QEasingCurve::OutCubic);
-            connect(opacityAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
-                effect->setOpacity(value.toReal());
-            });
-            connect(opacityAnim, &tVariantAnimation::finished, this, [ = ] {
-                d->backing->deleteLater();
-            });
-            opacityAnim->start();
-
+            // Close zen mode
+            d->controlStrip->leaveZenMode();
             event->ignore();
             return true;
         }

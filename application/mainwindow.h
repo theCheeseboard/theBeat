@@ -73,6 +73,12 @@ class MainWindow : public QMainWindow {
 
         void on_actionPrint_triggered();
 
+        void on_actionZen_Mode_triggered();
+
+        void on_actionIncrease_Volume_triggered();
+
+        void on_actionDecrease_Volume_triggered();
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;

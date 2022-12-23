@@ -305,11 +305,21 @@
     <addaction name="actionSkip_Back"/>
     <addaction name="actionSkip_Forward"/>
     <addaction name="separator"/>
+    <addaction name="actionIncrease_Volume"/>
+    <addaction name="actionDecrease_Volume"/>
+    <addaction name="separator"/>
     <addaction name="actionRepeat_One"/>
     <addaction name="actionShuffle"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionZen_Mode"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPlayback"/>
+   <addaction name="menuView"/>
   </widget>
   <action name="actionFileBug">
    <property name="icon">
@@ -474,6 +484,30 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionZen_Mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Zen Mode</string>
+   </property>
+  </action>
+  <action name="actionIncrease_Volume">
+   <property name="text">
+    <string>Increase Volume</string>
+   </property>
+   <property name="shortcut">
+    <string>Up</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Volume">
+   <property name="text">
+    <string>Decrease Volume</string>
+   </property>
+   <property name="shortcut">
+    <string>Down</string>
    </property>
   </action>
  </widget>

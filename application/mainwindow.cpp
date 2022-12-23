@@ -208,31 +208,25 @@ MainWindow::MainWindow(QWidget* parent) :
     d->topBarLine->setVisible(true);
     d->topBarLine->lower();
 
-    connect(new QShortcut(QKeySequence(Qt::Key_J), this), &QShortcut::activated, this, [=] {
+    connect(new QShortcut(QKeySequence(Qt::Key_J), this), &QShortcut::activated, this, [this] {
         this->rewind10();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_K), this), &QShortcut::activated, this, [=] {
+    connect(new QShortcut(QKeySequence(Qt::Key_K), this), &QShortcut::activated, this, [] {
         StateManager::instance()->playlist()->playPause();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_L), this), &QShortcut::activated, this, [=] {
+    connect(new QShortcut(QKeySequence(Qt::Key_L), this), &QShortcut::activated, this, [this] {
         this->ff10();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_Up), this), &QShortcut::activated, this, [=] {
-        double newVolume = StateManager::instance()->playlist()->volume();
-        newVolume += 0.1;
-        if (newVolume > 1) newVolume = 1;
-        StateManager::instance()->playlist()->setVolume(newVolume);
+    connect(new QShortcut(QKeySequence(Qt::Key_Up), this), &QShortcut::activated, this, [this] {
+        on_actionIncrease_Volume_triggered();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_Down), this), &QShortcut::activated, this, [=] {
-        double newVolume = StateManager::instance()->playlist()->volume();
-        newVolume -= 0.1;
-        if (newVolume < 0) newVolume = 0;
-        StateManager::instance()->playlist()->setVolume(newVolume);
+    connect(new QShortcut(QKeySequence(Qt::Key_Down), this), &QShortcut::activated, this, [this] {
+        on_actionDecrease_Volume_triggered();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_Left), this), &QShortcut::activated, this, [=] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Left), this), &QShortcut::activated, this, [this] {
         this->rewind10();
     });
-    connect(new QShortcut(QKeySequence(Qt::Key_Right), this), &QShortcut::activated, this, [=] {
+    connect(new QShortcut(QKeySequence(Qt::Key_Right), this), &QShortcut::activated, this, [this] {
         this->ff10();
     });
 
@@ -309,6 +303,10 @@ MainWindow::MainWindow(QWidget* parent) :
         updatePlayState();
     });
     updatePlayState();
+
+    connect(ui->controlStrip, &ControlStrip::inZenModeChanged, this, [this](bool inZenMode) {
+        ui->actionZen_Mode->setChecked(inZenMode);
+    });
 
     d->plugins.load();
 
@@ -432,10 +430,12 @@ void MainWindow::updatePlayState() {
         ui->actionPlayPause->setEnabled(false);
         ui->actionSkip_Back->setEnabled(false);
         ui->actionSkip_Forward->setEnabled(false);
+        ui->actionZen_Mode->setEnabled(false);
     } else {
         ui->actionPlayPause->setEnabled(true);
         ui->actionSkip_Back->setEnabled(true);
         ui->actionSkip_Forward->setEnabled(true);
+        ui->actionZen_Mode->setEnabled(true);
     }
 
     if (StateManager::instance()->playlist()->state() == Playlist::Playing) {
@@ -586,4 +586,26 @@ void MainWindow::on_actionPrint_triggered() {
         PrintController* controller = new PrintController(currentBrowser->currentListInformation(), this);
         controller->confirmAndPerformPrint();
     }
+}
+
+void MainWindow::on_actionZen_Mode_triggered() {
+    if (ui->controlStrip->inZenMode()) {
+        ui->controlStrip->leaveZenMode();
+    } else {
+        ui->controlStrip->enterZenMode();
+    }
+}
+
+void MainWindow::on_actionIncrease_Volume_triggered() {
+    double newVolume = StateManager::instance()->playlist()->volume();
+    newVolume += 0.1;
+    if (newVolume > 1) newVolume = 1;
+    StateManager::instance()->playlist()->setVolume(newVolume);
+}
+
+void MainWindow::on_actionDecrease_Volume_triggered() {
+    double newVolume = StateManager::instance()->playlist()->volume();
+    newVolume -= 0.1;
+    if (newVolume < 0) newVolume = 0;
+    StateManager::instance()->playlist()->setVolume(newVolume);
 }

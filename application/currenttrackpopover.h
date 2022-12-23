@@ -7,12 +7,13 @@ namespace Ui {
     class CurrentTrackPopover;
 }
 
+class ControlStrip;
 struct CurrentTrackPopoverPrivate;
 class CurrentTrackPopover : public QWidget {
         Q_OBJECT
 
     public:
-        explicit CurrentTrackPopover(QWidget* parent = nullptr);
+        explicit CurrentTrackPopover(ControlStrip* controlStrip, QWidget* parent = nullptr);
         ~CurrentTrackPopover();
 
         void setBacking(QWidget* backing);
