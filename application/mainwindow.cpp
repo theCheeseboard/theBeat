@@ -20,6 +20,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "commandpalette/artistsalbumscommandpalettescope.h"
+#include "commandpalette/trackscommandpalettescope.h"
 #include "library/librarymanager.h"
 #include "playlistmodel.h"
 #include "pluginmanager.h"
@@ -101,6 +103,22 @@ MainWindow::MainWindow(QWidget* parent) :
 
     tCommandPaletteActionScope* commandPaletteActionScope;
     auto commandPalette = tCommandPaletteController::defaultController(this, &commandPaletteActionScope);
+
+    auto artistCommandPaletteScope = new ArtistsAlbumsCommandPaletteScope(true, this);
+    connect(artistCommandPaletteScope, &ArtistsAlbumsCommandPaletteScope::activated, this, [this](QString text) {
+        ui->stackedWidget->setCurrentWidget(ui->artistsPage);
+        ui->artistsPage->changeItem(text);
+    });
+    commandPalette->addScope(artistCommandPaletteScope);
+
+    auto albumCommandPaletteScope = new ArtistsAlbumsCommandPaletteScope(false, this);
+    connect(albumCommandPaletteScope, &ArtistsAlbumsCommandPaletteScope::activated, this, [this](QString text) {
+        ui->stackedWidget->setCurrentWidget(ui->albumsPage);
+        ui->albumsPage->changeItem(text);
+    });
+    commandPalette->addScope(albumCommandPaletteScope);
+
+    commandPalette->addScope(new TracksCommandPaletteScope(this));
 
     ui->centralwidget->layout()->removeWidget(ui->topWidget);
     ui->topWidget->raise();
@@ -287,6 +305,9 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [this] {
         updatePlayState();
     });
+    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [this] {
+        updatePlayState();
+    });
     updatePlayState();
 
     d->plugins.load();
@@ -415,6 +436,14 @@ void MainWindow::updatePlayState() {
         ui->actionPlayPause->setEnabled(true);
         ui->actionSkip_Back->setEnabled(true);
         ui->actionSkip_Forward->setEnabled(true);
+    }
+
+    if (StateManager::instance()->playlist()->state() == Playlist::Playing) {
+        ui->actionPlayPause->setText(tr("Pause"));
+        ui->actionPlayPause->setIcon(QIcon::fromTheme("media-playback-pause"));
+    } else {
+        ui->actionPlayPause->setText(tr("Play"));
+        ui->actionPlayPause->setIcon(QIcon::fromTheme("media-playback-start"));
     }
 }
 

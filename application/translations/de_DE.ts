@@ -2,30 +2,54 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE" sourcelanguage="en_US">
 <context>
+    <name>ArtistsAlbumsCommandPaletteScope</name>
+    <message>
+        <location filename="../commandpalette/artistsalbumscommandpalettescope.cpp" line="+35"/>
+        <source>Artists</source>
+        <translation type="unfinished">Künstler</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Albums</source>
+        <translation type="unfinished">Alben</translation>
+    </message>
+</context>
+<context>
     <name>ArtistsAlbumsWidget</name>
     <message>
         <location filename="../artistsalbumswidget.ui" line="+65"/>
         <location line="+123"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+273"/>
+        <location line="+1"/>
         <source>Tracks in Library</source>
         <translation>Titel in der Bibliothek</translation>
     </message>
     <message>
         <location line="+49"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation>Alle einreihen</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Play All</source>
         <translation>Alle abspielen</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Shuffle All</source>
         <translation>Alle in Zufallswiedergabe</translation>
     </message>
     <message>
         <location line="+24"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Burn</source>
         <translation>Brennen</translation>
     </message>
@@ -40,7 +64,7 @@
         <translation>Künstler in der Bibliothek</translation>
     </message>
     <message>
-        <location line="+121"/>
+        <location line="+34"/>
         <source>Tracks in %1</source>
         <translation>Titel in %1</translation>
     </message>
@@ -62,31 +86,74 @@
     <name>CdChecker</name>
     <message>
         <source>Play All</source>
-        <translation type="obsolete">Alle abspielen</translation>
+        <translation type="unfinished">Alle abspielen</translation>
     </message>
     <message>
         <source>Enqueue All</source>
-        <translation type="obsolete">Alle einreihen</translation>
+        <translation type="unfinished">Alle einreihen</translation>
     </message>
     <message>
         <source>Shuffle All</source>
-        <translation type="obsolete">Alle in Zufallswiedergabe</translation>
+        <translation type="unfinished">Alle in Zufallswiedergabe</translation>
+    </message>
+    <message>
+        <source>CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CD NOT FOUND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accessing MusicBrainz...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SELECT CORRECT ALBUM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This CD was not found on the MusicBrainz CD Database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t eject the disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make sure no other applications are accessing the disc, and then try again.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ColoursSettingsPane</name>
     <message>
         <location filename="../settingspanes/colourssettingspane.ui" line="+14"/>
+        <location/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
+        <location/>
         <source>Light</source>
         <translation type="unfinished">Hell</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location/>
         <source>Dark</source>
         <translation type="unfinished">Dunkel</translation>
     </message>
@@ -108,11 +175,15 @@
     <name>ControlStrip</name>
     <message>
         <location filename="../controlstrip.ui" line="+101"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+310"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
         <location line="+27"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+1"/>
         <source>Metadata</source>
         <translation>Metadaten</translation>
     </message>
@@ -157,6 +228,21 @@
     </message>
 </context>
 <context>
+    <name>FavouriteStationsWidget</name>
+    <message>
+        <source>Internet Radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jam out to your favourite radio stations and radio stations all around the world</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go Searching</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
         <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
@@ -176,6 +262,7 @@
     <name>LibraryEnumerateDirectoryJobWidget</name>
     <message>
         <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="+26"/>
+        <location/>
         <source>DISCOVERING AUDIO TRACKS</source>
         <translation>SUCHE NACH AUDIO TITELN</translation>
     </message>
@@ -184,21 +271,29 @@
     <name>LibraryErrorPopover</name>
     <message>
         <location filename="../libraryerrorpopover.ui" line="+35"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+129"/>
         <source>Hmm</source>
         <translation>Hmm</translation>
     </message>
     <message>
         <location line="+99"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>ACTIONS</source>
         <translation>AKTIONEN</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>Locate File</source>
         <translation>Datei Finden</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>Remove from Library</source>
         <translation>Aus der Bibliothek entfernen</translation>
     </message>
@@ -298,11 +393,13 @@
     <name>LibraryResetSettingsPane</name>
     <message>
         <location filename="../settingspanes/libraryresetsettingspane.ui" line="+14"/>
+        <location/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
+        <location/>
         <source>If you want to start over with theBeat, you can reset your library.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -316,6 +413,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
     <message>
         <location line="+10"/>
+        <location/>
         <source>Reset theBeat Library</source>
         <translation type="unfinished">theBeat Bibliothek zurücksetzen</translation>
     </message>
@@ -336,7 +434,80 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <name>LyricsDisplayWidget</name>
     <message>
         <location filename="../lyrics/lyricsdisplaywidget.ui" line="+14"/>
+        <location/>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MacBurnJob</name>
+    <message>
+        <source>Finalising disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Erasing disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preparing to burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burn cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burning track %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burn Complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to burn: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MacBurnJobPrivate</name>
+    <message>
+        <source>Burn Successful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burned %1 to disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burn Failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to burn %1 to disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MacBurnJobWidget</name>
+    <message>
+        <source>BURN CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MacBurnProvider</name>
+    <message>
+        <source>Burn on macOS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert a CD-R or CD-RW</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -344,11 +515,13 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="+14"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+430"/>
         <source>theBeat</source>
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+109"/>
+        <location filename="../mainwindow.cpp" line="+127"/>
         <source>Tracks</source>
         <translation>Titel</translation>
     </message>
@@ -374,158 +547,221 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+141"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+46"/>
         <source>Queue</source>
         <translation>Warteschlange</translation>
     </message>
     <message>
         <location line="+70"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Nothing Here!</source>
         <translation>Hier ist nichts!</translation>
     </message>
     <message>
         <location line="+62"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
         <location line="+15"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Playback</source>
         <translation>Wiedergabe</translation>
     </message>
     <message>
         <location line="+18"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-49"/>
         <source>File Bug</source>
         <translation>Bug melden</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Sources</source>
         <translation>Quellen</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Exit</source>
         <translation>Beenden</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+Q</source>
         <translation>Strg+Q</translation>
     </message>
     <message>
         <location line="+12"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Open File</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+O</source>
         <translation>Strg+O</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+356"/>
+        <location/>
+        <location filename="../mainwindow.cpp" line="+367"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Open URL</source>
         <translation>URL öffnen</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Skip Back</source>
         <translation>Zurückspringen</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shift+Left</source>
         <translation>Umschalt+Links</translation>
     </message>
     <message>
         <location line="+12"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+4"/>
         <source>Shift+Right</source>
         <translation>Umschalt+Rechts</translation>
     </message>
     <message>
         <location line="+21"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+5"/>
         <source>Add to Library</source>
         <translation>Zur Bibliothek hinzufügen</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+,</source>
         <translation>Strg+,</translation>
     </message>
     <message>
         <location line="+12"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>theBeat Help</source>
         <translation>theBeat Hilfe</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
         <location line="+8"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Repeat One</source>
         <translation type="unfinished">Titel wiederholen</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+R</source>
         <translation>Strg+R</translation>
     </message>
     <message>
         <location line="+8"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shuffle</source>
         <translation>Zufallswiedergabe</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+S</source>
         <translation>Strg+S</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location/>
         <location filename="../mainwindow.cpp" line="+84"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-85"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-26"/>
         <source>Skip Forward</source>
         <translation>Vorwärtsspringen</translation>
     </message>
     <message>
         <location line="-156"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+31"/>
         <source>Select a track or drop something here!</source>
         <translation>Wähle einen Title aus oder ziehe etwas hier hin!</translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location filename="../mainwindow.cpp" line="-137"/>
         <source>Play</source>
         <translation>Abspielen</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location filename="../mainwindow.ui" line="+171"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-26"/>
         <source>Space</source>
         <translation>Leer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-112"/>
+        <location filename="../mainwindow.cpp" line="-3"/>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>For &quot;%1&quot;</source>
         <translation>Für &quot;%1&quot;</translation>
     </message>
@@ -599,14 +835,31 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
 </context>
 <context>
+    <name>MusicBrainzReleaseModel</name>
+    <message>
+        <source>Barcode: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Country: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Released: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NotificationsSettingsPane</name>
     <message>
         <location filename="../settingspanes/notificationssettingspane.ui" line="+14"/>
+        <location/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
+        <location/>
         <source>Send a notification when the track changes</source>
         <translation type="unfinished">Sende eine Benachrichtigung, wenn der Titel wechselt</translation>
     </message>
@@ -620,11 +873,15 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <name>OtherSourcesWidget</name>
     <message>
         <location filename="../othersourceswidget.ui" line="+103"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+125"/>
         <source>No other sources available</source>
         <translation>Keine anderen Quellen verfügbar</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+1"/>
         <source>There&apos;s nothing else to play right now</source>
         <translation>Es gibt aktuell nichts anderes zum abspielen</translation>
     </message>
@@ -690,17 +947,27 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <name>PrintSettings</name>
     <message>
         <location filename="../print/printsettings.ui" line="+25"/>
+        <location/>
         <source>PRINT TYPE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
+        <location/>
         <source>Track Listing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
+        <location/>
         <source>Jewel Case Insert</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RadioPane</name>
+    <message>
+        <source>Internet Radio</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -708,21 +975,29 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <name>ResetLibraryPopover</name>
     <message>
         <location filename="../resetlibrarypopover.ui" line="+14"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+93"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+21"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+1"/>
         <source>Reset Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+1"/>
         <source>This is it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+1"/>
         <source>Resetting the library will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
@@ -730,6 +1005,8 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     </message>
     <message>
         <location line="+12"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+3"/>
         <source>Reset theBeat Library</source>
         <translation type="unfinished">theBeat Bibliothek zurücksetzen</translation>
     </message>
@@ -746,125 +1023,153 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <name>SettingsDialog</name>
     <message>
         <source>Settings</source>
-        <translation type="vanished">Einstellungen</translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="vanished">Bibliothek</translation>
+        <translation>Bibliothek</translation>
     </message>
     <message>
         <source>Appearance</source>
-        <translation type="vanished">Darstellung</translation>
+        <translation>Darstellung</translation>
     </message>
     <message>
         <source>Notifications</source>
-        <translation type="vanished">Benachrichtigungen</translation>
+        <translation>Benachrichtigungen</translation>
     </message>
     <message>
         <source>RESET</source>
-        <translation type="vanished">ZURÜCKSETZEN</translation>
+        <translation>ZURÜCKSETZEN</translation>
     </message>
     <message>
         <source>Reset the library back to defaults. This will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation type="vanished">Setze die Bibliothek auf Standardeinstellungen zurück. Dies wird alle Title die zu theBeat hinzugefügt wurden entfernen und theBeat wird den Musik-Ordner beim Start erneut scannen.
+        <translation>Setze die Bibliothek auf Standardeinstellungen zurück. Dies wird alle Title die zu theBeat hinzugefügt wurden entfernen und theBeat wird den Musik-Ordner beim Start erneut scannen.
 
 theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irreversibel.</translation>
     </message>
     <message>
         <source>Reset theBeat Library</source>
-        <translation type="vanished">theBeat Bibliothek zurücksetzen</translation>
+        <translation>theBeat Bibliothek zurücksetzen</translation>
     </message>
     <message>
         <source>TITLEBAR</source>
-        <translation type="vanished">TITELLEISTE</translation>
+        <translation>TITELLEISTE</translation>
     </message>
     <message>
         <source>Use System Titlebars</source>
-        <translation type="vanished">System Titelleisten verwenden</translation>
+        <translation>System Titelleisten verwenden</translation>
     </message>
     <message>
         <source>COLOURS</source>
-        <translation type="vanished">FARBEN</translation>
+        <translation>FARBEN</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation type="vanished">Hell</translation>
+        <translation>Hell</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="vanished">Dunkel</translation>
+        <translation>Dunkel</translation>
     </message>
     <message>
         <source>Send a notification when the track changes</source>
-        <translation type="vanished">Sende eine Benachrichtigung, wenn der Titel wechselt</translation>
+        <translation>Sende eine Benachrichtigung, wenn der Titel wechselt</translation>
+    </message>
+</context>
+<context>
+    <name>StationSearchWidget</name>
+    <message>
+        <source>Internet Radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TOP VOTED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TagEditor</name>
     <message>
         <location filename="../tageditor/tageditor.ui" line="+35"/>
+        <location/>
         <source>Track Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+50"/>
+        <location/>
         <source>DETAILS MODIFIED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
+        <location/>
         <source>Save your changes to this track to keep them saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
+        <location/>
         <source>Revert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
+        <location/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+82"/>
+        <location/>
         <source>Track #</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+33"/>
+        <location/>
         <source>Title</source>
         <translation type="unfinished">Titel</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location/>
         <source>Genre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
+        <location/>
         <source>Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-67"/>
+        <location/>
         <source>Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
+        <location/>
         <source>Disc #</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-24"/>
+        <location/>
         <source>Year</source>
         <translation type="unfinished">Jahr</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location/>
         <source>Album</source>
         <translation type="unfinished"></translation>
     </message>
@@ -873,11 +1178,13 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <name>TitlebarSettingsPane</name>
     <message>
         <location filename="../settingspanes/titlebarsettingspane.ui" line="+14"/>
+        <location/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
+        <location/>
         <source>Use System Titlebars</source>
         <translation type="unfinished">System Titelleisten verwenden</translation>
     </message>
@@ -888,30 +1195,59 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
 </context>
 <context>
+    <name>TrackInfo</name>
+    <message>
+        <source>Track %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TracksCommandPaletteScope</name>
+    <message>
+        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
+        <source>Tracks</source>
+        <translation type="unfinished">Titel</translation>
+    </message>
+</context>
+<context>
     <name>TracksWidget</name>
     <message>
         <location filename="../trackswidget.ui" line="+65"/>
+        <location/>
         <location filename="../trackswidget.cpp" line="+59"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+199"/>
         <source>Tracks in Library</source>
         <translation>Titel in der Bibliothek</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation>Alle einreihen</translation>
     </message>
     <message>
         <location line="+45"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Search</source>
         <translation>Suchen</translation>
     </message>
     <message>
         <location line="+57"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Processing Library</source>
         <translation>Bibliothek wird verarbeitet</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
         <translation>Je nach der Anzahl der Titel in deiner Bibliothek könnte dies eine Weile dauern. Dies sollte nur passieren, wenn du theBeat zum ersten mal startest.</translation>
     </message>
@@ -925,36 +1261,50 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <name>UserPlaylistsWidget</name>
     <message>
         <location filename="../userplaylistswidget.ui" line="+62"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+300"/>
         <source>Playlists</source>
         <translation>Playlists</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Create Playlist</source>
         <translation>Playlist erstellen</translation>
     </message>
     <message>
         <location line="+190"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+3"/>
         <source>Play All</source>
         <translation>Alle abspielen</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Shuffle All</source>
         <translation>Alle in Zufallswiedergabe</translation>
     </message>
     <message>
         <location line="+44"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Burn</source>
         <translation>Brennen</translation>
     </message>
     <message>
         <location line="-94"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="-4"/>
         <source>Tracks in Library</source>
         <translation>Titel in der Bibliothek</translation>
     </message>
     <message>
         <location line="+28"/>
+        <location/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation>Alle einreihen</translation>
     </message>

@@ -37,6 +37,9 @@ set(SOURCES
         settingspanes/notificationssettingspane.cpp settingspanes/notificationssettingspane.ui
         resetlibrarypopover.cpp resetlibrarypopover.ui
 
+        commandpalette/artistsalbumscommandpalettescope.cpp
+        commandpalette/trackscommandpalettescope.cpp
+
         resources.qrc
 
         Info.plist.in
@@ -73,6 +76,8 @@ set(HEADERS
         settingspanes/titlebarsettingspane.h
         settingspanes/colourssettingspane.h
         settingspanes/notificationssettingspane.h
+        commandpalette/artistsalbumscommandpalettescope.h
+        commandpalette/trackscommandpalettescope.h
         resetlibrarypopover.h
     )
 

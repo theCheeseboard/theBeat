@@ -45,6 +45,8 @@ class ArtistsAlbumsWidget : public AbstractLibraryBrowser {
         void setTopPadding(int padding);
         ListInformation currentListInformation();
 
+        void changeItem(QString text);
+
     private slots:
         void on_initialList_itemActivated(QListWidgetItem* item);
 
