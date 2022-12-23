@@ -344,7 +344,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+104"/>
+        <location filename="../mainwindow.cpp" line="+109"/>
         <source>Tracks</source>
         <translation>Tracks</translation>
     </message>
@@ -425,7 +425,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+338"/>
+        <location filename="../mainwindow.cpp" line="+356"/>
         <source>Open URL</source>
         <translation>Open URL</translation>
     </message>

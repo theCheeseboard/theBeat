@@ -83,5 +83,7 @@ class MainWindow : public QMainWindow {
 
         void rewind10();
         void ff10();
+
+        void updatePlayState();
 };
 #endif // MAINWINDOW_H

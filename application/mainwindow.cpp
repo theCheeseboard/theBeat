@@ -43,6 +43,8 @@
 #include <statemanager.h>
 #include <taboutdialog.h>
 #include <tapplication.h>
+#include <tcommandpalette/tcommandpaletteactionscope.h>
+#include <tcommandpalette/tcommandpalettecontroller.h>
 #include <tcsdtools.h>
 #include <thelpmenu.h>
 #include <ticon.h>
@@ -97,6 +99,9 @@ MainWindow::MainWindow(QWidget* parent) :
 
     this->resize(SC_DPI_T(this->size(), QSize));
 
+    tCommandPaletteActionScope* commandPaletteActionScope;
+    auto commandPalette = tCommandPaletteController::defaultController(this, &commandPaletteActionScope);
+
     ui->centralwidget->layout()->removeWidget(ui->topWidget);
     ui->topWidget->raise();
     ui->topWidget->move(0, 0);
@@ -107,8 +112,8 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->windowTabber->addButton(new tWindowTabberButton(QIcon::fromTheme("view-media-playlist"), tr("Playlists"), ui->stackedWidget, ui->playlistsPage));
     ui->windowTabber->addButton(new tWindowTabberButton(QIcon::fromTheme("view-list-details"), tr("Other Sources"), ui->stackedWidget, ui->otherSourcesPage));
 
+    ui->menuBar->addMenu(new tHelpMenu(this, commandPalette));
 #ifdef Q_OS_MAC
-    ui->menuBar->addMenu(new tHelpMenu(this));
     ui->menuButton->setVisible(false);
 #else
     ui->menuBar->setVisible(false);
@@ -144,6 +149,7 @@ MainWindow::MainWindow(QWidget* parent) :
     menu->addSeparator();
     menu->addAction(ui->actionPrint);
     menu->addSeparator();
+    menu->addAction(commandPalette->commandPaletteAction());
     menu->addAction(ui->actionSettings);
     menu->addMenu(helpMenu);
     menu->addAction(ui->actionExit);
@@ -152,6 +158,7 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setMenu(menu);
 #endif
+    commandPaletteActionScope->addMenuBar(ui->menuBar);
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
     ui->queueStack->setCurrentAnimation(tStackedWidget::Fade);
@@ -271,12 +278,16 @@ MainWindow::MainWindow(QWidget* parent) :
 
     StateManager::instance()->sources()->setPadTop(ui->topWidget->sizeHint().height());
 
-    connect(StateManager::instance()->playlist(), &Playlist::repeatOneChanged, this, [=](bool repeatOne) {
+    connect(StateManager::instance()->playlist(), &Playlist::repeatOneChanged, this, [this](bool repeatOne) {
         ui->actionRepeat_One->setChecked(repeatOne);
     });
-    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, this, [=](bool shuffle) {
+    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, this, [this](bool shuffle) {
         ui->actionShuffle->setChecked(shuffle);
     });
+    connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [this] {
+        updatePlayState();
+    });
+    updatePlayState();
 
     d->plugins.load();
 
@@ -392,6 +403,18 @@ void MainWindow::ff10() {
         StateManager::instance()->playlist()->next();
     } else {
         StateManager::instance()->playlist()->currentItem()->seek(seekTo);
+    }
+}
+
+void MainWindow::updatePlayState() {
+    if (StateManager::instance()->playlist()->items().length() == 0) {
+        ui->actionPlayPause->setEnabled(false);
+        ui->actionSkip_Back->setEnabled(false);
+        ui->actionSkip_Forward->setEnabled(false);
+    } else {
+        ui->actionPlayPause->setEnabled(true);
+        ui->actionSkip_Back->setEnabled(true);
+        ui->actionSkip_Forward->setEnabled(true);
     }
 }
 
