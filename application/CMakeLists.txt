@@ -110,7 +110,9 @@ set_target_properties(thebeat PROPERTIES
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in
         MACOSX_BUNDLE_GUI_IDENTIFIER com.vicr123.thebeat
         WIN32_EXECUTABLE TRUE
-        CNTP_DATA_SUBDIR thebeat)
+        CNTP_DATA_SUBDIR thebeat
+        TRANSLATION_SOURCES "${SOURCES};${HEADERS}"
+    )
 
 cntp_init(thebeat 20)
 cntp_translate(thebeat)

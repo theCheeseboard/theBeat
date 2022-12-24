@@ -5,6 +5,7 @@
     <name>CdChecker</name>
     <message>
         <location filename="../cdchecker.ui" line="14"/>
+        <location filename="../../../../build-theBeat-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/plugins/WinLibCDPlugin/plugin-winlibcd_autogen/include/ui_cdchecker.h" line="179"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13,31 +14,37 @@
         <location filename="../cdchecker.cpp" line="51"/>
         <location filename="../cdchecker.cpp" line="131"/>
         <location filename="../cdchecker.cpp" line="132"/>
+        <location filename="../../../../build-theBeat-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/plugins/WinLibCDPlugin/plugin-winlibcd_autogen/include/ui_cdchecker.h" line="180"/>
         <source>CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../cdchecker.ui" line="68"/>
+        <location filename="../../../../build-theBeat-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/plugins/WinLibCDPlugin/plugin-winlibcd_autogen/include/ui_cdchecker.h" line="181"/>
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../cdchecker.ui" line="79"/>
+        <location filename="../../../../build-theBeat-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/plugins/WinLibCDPlugin/plugin-winlibcd_autogen/include/ui_cdchecker.h" line="182"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../cdchecker.ui" line="90"/>
+        <location filename="../../../../build-theBeat-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/plugins/WinLibCDPlugin/plugin-winlibcd_autogen/include/ui_cdchecker.h" line="183"/>
         <source>Shuffle All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../cdchecker.ui" line="114"/>
+        <location filename="../../../../build-theBeat-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/plugins/WinLibCDPlugin/plugin-winlibcd_autogen/include/ui_cdchecker.h" line="184"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../cdchecker.ui" line="125"/>
+        <location filename="../../../../build-theBeat-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/plugins/WinLibCDPlugin/plugin-winlibcd_autogen/include/ui_cdchecker.h" line="185"/>
         <source>Eject</source>
         <translation type="unfinished"></translation>
     </message>

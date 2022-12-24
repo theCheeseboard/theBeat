@@ -27,14 +27,13 @@ using namespace winrt::Windows::Media;
 using namespace winrt::Windows::Storage;
 using namespace winrt::Windows::Storage::Streams;
 
-namespace abi
-{
+namespace abi {
     using namespace ABI::Windows::Media;
 }
 
 class QByteArrayBackedIBuffer : public winrt::implements<QByteArrayBackedIBuffer, IBuffer, Windows::Storage::Streams::IBufferByteAccess> {
-    QByteArray buf;
-    uint32_t length{};
+        QByteArray buf;
+        uint32_t length{};
 
     public:
         QByteArrayBackedIBuffer(QByteArray buffer) {
@@ -74,7 +73,7 @@ struct WinPlatformIntegrationPrivate {
     winrt::fire_and_forget updateSMTC();
 };
 
-WinPlatformIntegration::WinPlatformIntegration(QWidget *parent) : QObject(parent) {
+WinPlatformIntegration::WinPlatformIntegration(QWidget* parent) : QObject(parent) {
     d = new WinPlatformIntegrationPrivate();
     d->parentWindow = parent;
 
@@ -83,7 +82,7 @@ WinPlatformIntegration::WinPlatformIntegration(QWidget *parent) : QObject(parent
 
     interop->GetForWindow(reinterpret_cast<HWND>(d->parentWindow->winId()), winrt::guid_of<abi::ISystemMediaTransportControls>(), winrt::put_abi(d->smtc));
 
-    d->smtc.ButtonPressed([=](SystemMediaTransportControls smtc, SystemMediaTransportControlsButtonPressedEventArgs e) {
+    d->smtc.ButtonPressed([ = ](SystemMediaTransportControls smtc, SystemMediaTransportControlsButtonPressedEventArgs e) {
         Playlist* playlist = StateManager::instance()->playlist();
         switch (e.Button()) {
             case SystemMediaTransportControlsButton::Play:
@@ -123,7 +122,7 @@ void WinPlatformIntegration::updateCurrentItem() {
     }
     d->currentItem = StateManager::instance()->playlist()->currentItem();
     if (d->currentItem) {
-        connect(d->currentItem, &MediaItem::metadataChanged, this, [=] {
+        connect(d->currentItem, &MediaItem::metadataChanged, this, [ = ] {
             d->metadataUpdateRequired = true;
             updateSMTC();
         });
@@ -141,8 +140,7 @@ void WinPlatformIntegration::updateSMTC() {
 }
 
 #include <QDebug>
-winrt::fire_and_forget WinPlatformIntegrationPrivate::updateSMTC()
-{
+winrt::fire_and_forget WinPlatformIntegrationPrivate::updateSMTC() {
     Playlist* playlist = StateManager::instance()->playlist();
 
     smtc.IsPlayEnabled(true);
@@ -153,15 +151,15 @@ winrt::fire_and_forget WinPlatformIntegrationPrivate::updateSMTC()
     smtc.AutoRepeatMode(playlist->repeatOne() ? MediaPlaybackAutoRepeatMode::Track : MediaPlaybackAutoRepeatMode::None);
 
     switch (playlist->state()) {
-    case Playlist::Playing:
-        smtc.PlaybackStatus(MediaPlaybackStatus::Playing);
-        break;
-    case Playlist::Paused:
-        smtc.PlaybackStatus(MediaPlaybackStatus::Paused);
-        break;
-    case Playlist::Stopped:
-        smtc.PlaybackStatus(MediaPlaybackStatus::Stopped);
-        break;
+        case Playlist::Playing:
+            smtc.PlaybackStatus(MediaPlaybackStatus::Playing);
+            break;
+        case Playlist::Paused:
+            smtc.PlaybackStatus(MediaPlaybackStatus::Paused);
+            break;
+        case Playlist::Stopped:
+            smtc.PlaybackStatus(MediaPlaybackStatus::Stopped);
+            break;
     }
 
     if (metadataUpdateRequired) {
@@ -171,20 +169,20 @@ winrt::fire_and_forget WinPlatformIntegrationPrivate::updateSMTC()
         updater.MusicProperties().Artist(QLocale().createSeparatedList(currentItem->authors()).toStdWString().c_str());
         updater.MusicProperties().AlbumTitle(currentItem->album().toStdWString().c_str());
 
-        QByteArray albumArt;
-        QBuffer albumArtBuffer(&albumArt);
-        albumArtBuffer.open(QBuffer::WriteOnly);
-        currentItem->albumArt().save(&albumArtBuffer, "PNG");
-        albumArtBuffer.close();
+//        QByteArray albumArt;
+//        QBuffer albumArtBuffer(&albumArt);
+//        albumArtBuffer.open(QBuffer::WriteOnly);
+//        currentItem->albumArt().save(&albumArtBuffer, "PNG");
+//        albumArtBuffer.close();
 
-        if (!albumArt.isNull()) {
-            InMemoryRandomAccessStream memoryStream;
-            co_await memoryStream.WriteAsync(winrt::make<QByteArrayBackedIBuffer>(albumArt));
-            memoryStream.Seek(0);
+//        if (!albumArt.isNull()) {
+//            InMemoryRandomAccessStream memoryStream;
+//            co_await memoryStream.WriteAsync(winrt::make<QByteArrayBackedIBuffer>(albumArt));
+//            memoryStream.Seek(0);
 
-            auto randomAccessStream = RandomAccessStreamReference::CreateFromStream(memoryStream);
-            updater.Thumbnail(randomAccessStream);
-        }
+//            auto randomAccessStream = RandomAccessStreamReference::CreateFromStream(memoryStream);
+//            updater.Thumbnail(randomAccessStream);
+//        }
 
         updater.Update();
     }
@@ -196,4 +194,5 @@ winrt::fire_and_forget WinPlatformIntegrationPrivate::updateSMTC()
     timeline.EndTime(std::chrono::milliseconds(currentItem->duration()));
     timeline.MaxSeekTime(timeline.EndTime());
     smtc.UpdateTimelineProperties(timeline);
+    co_return;
 }
