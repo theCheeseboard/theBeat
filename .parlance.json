@@ -56,9 +56,9 @@
             "baseLang": "en_US"
         },
         {
-            "name": "theBeat Windows CD Integration",
+            "name": "theBeat Windows Integration",
             "type": "qt",
-            "path": "/plugins/WinLibCDPlugin/translations/{lang}.ts",
+            "path": "/plugins/WinIntegration/translations/{lang}.ts",
             "baseLang": "en_US"
         }
     ]

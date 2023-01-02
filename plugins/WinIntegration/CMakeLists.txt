@@ -1,6 +1,6 @@
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Concurrent)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Concurrent)
 find_package(libcontemporary REQUIRED)
 
 include(ExternalProject)
@@ -36,7 +36,6 @@ ExternalProject_Add(CDLib
 ExternalProject_Get_Property(CDLib INSTALL_DIR)
 
 set(SOURCES
-        audiocdplayerthread.cpp
         burn/cdtextcrcgenerator.cpp
         burn/cdtextgenerator.cpp
         burn/winburndaoimage.cpp
@@ -45,18 +44,18 @@ set(SOURCES
         burn/winburnmanager.cpp
         burn/winburnpopover.cpp
         burn/winburnprovider.cpp
-        cdchecker.cpp
-        diskwatcher.cpp
+        cdplayback/audiocdplayerthread.cpp
+        cdplayback/cdchecker.cpp
+        cdplayback/diskwatcher.cpp
+        cdplayback/trackinfo.cpp
+        cdplayback/wincdmediaitem.cpp
         plugin.cpp
-        trackinfo.cpp
-        wincdmediaitem.cpp
 
         burn/winburnjobwidget.ui
         burn/winburnpopover.ui
-        cdchecker.ui)
+        cdplayback/cdchecker.ui)
 
 set(HEADERS
-        audiocdplayerthread.h
         burn/cdtextcrcgenerator.h
         burn/cdtextgenerator.h
         burn/daoformatlocker.h
@@ -66,21 +65,22 @@ set(HEADERS
         burn/winburnmanager.h
         burn/winburnpopover.h
         burn/winburnprovider.h
-        cdchecker.h
-        diskwatcher.h
-        plugin.h
-        trackinfo.h
-        wincdmediaitem.h)
+        cdplayback/audiocdplayerthread.h
+        cdplayback/cdchecker.h
+        cdplayback/diskwatcher.h
+        cdplayback/trackinfo.h
+        cdplayback/wincdmediaitem.h
+        plugin.h)
 
-add_library(plugin-winlibcd SHARED ${SOURCES} ${HEADERS})
-target_include_directories(plugin-winlibcd PUBLIC ../../libthebeat/ ${INSTALL_DIR}/Include)
-add_dependencies(plugin-winlibcd CDLib)
+add_library(plugin-winintegration SHARED ${SOURCES} ${HEADERS})
+target_include_directories(plugin-winintegration PUBLIC ../../libthebeat/ ${INSTALL_DIR}/Include)
+add_dependencies(plugin-winintegration CDLib)
 
-cntp_init_plugin(thebeat plugin-winlibcd 20 linuxintegration)
-cntp_translate(plugin-winlibcd)
+cntp_init_plugin(thebeat plugin-winintegration 20 linuxintegration)
+cntp_translate(plugin-winintegration)
 
-set_target_properties(plugin-winlibcd PROPERTIES
-        OUTPUT_NAME winLibCdIntegration
+set_target_properties(plugin-winintegration PROPERTIES
+        OUTPUT_NAME winIntegration
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-winlibcd Qt6::Widgets Qt6::DBus Qt6::Concurrent libcontemporary libthebeat User32 windowsapp comsuppwd shlwapi)
+target_link_libraries(plugin-winintegration Qt6::Widgets Qt6::DBus Qt6::Concurrent libcontemporary libthebeat User32 windowsapp comsuppwd shlwapi)

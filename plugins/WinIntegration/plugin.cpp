@@ -17,28 +17,31 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef PLUGIN_H
-#define PLUGIN_H
+#include "plugin.h"
 
-#include <plugininterface.h>
+#include <tlogger.h>
 
-struct PluginPrivate;
-class Plugin : public QObject, public PluginInterface {
-        Q_OBJECT
-        Q_PLUGIN_METADATA(IID PluginInterface_iid FILE "WinLibCDPlugin.json")
-        Q_INTERFACES(PluginInterface)
+#include "cdplayback/diskwatcher.h"
+#include "burn/winburnmanager.h"
 
-    public:
-        Plugin();
-        ~Plugin();
-
-    private:
-        PluginPrivate* d;
-
-        // PluginInterface interface
-    public:
-        void activate();
-        void deactivate();
+struct PluginPrivate {
+    WinBurnManager* burnManager;
 };
 
-#endif // PLUGIN_H
+Plugin::Plugin() {
+    d = new PluginPrivate();
+    tDebug("WinLibCdPlugin") << "CDLib plugin loaded:";
+}
+
+Plugin::~Plugin() {
+    delete d;
+}
+
+void Plugin::activate() {
+    new DiskWatcher();
+    d->burnManager = new WinBurnManager();
+}
+
+void Plugin::deactivate() {
+    d->burnManager->deleteLater();
+}

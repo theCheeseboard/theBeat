@@ -12,5 +12,5 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    add_subdirectory(WinLibCDPlugin)
+    add_subdirectory(WinIntegration)
 ENDIF()
