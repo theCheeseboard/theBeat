@@ -444,13 +444,12 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+362"/>
+        <location filename="../mainwindow.cpp" line="+327"/>
         <source>Open URL</source>
         <translation>Mở liên kết</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="-253"/>
         <source>Skip Back</source>
         <translation>Nhảy lại</translation>
     </message>
@@ -511,7 +510,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+337"/>
+        <location filename="../mainwindow.cpp" line="+84"/>
         <source>Print</source>
         <translation>In</translation>
     </message>
@@ -556,9 +555,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>Hãy chọn bài hoặc thả bài đây!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-330"/>
-        <location line="+21"/>
-        <location line="+172"/>
+        <location filename="../mainwindow.cpp" line="-137"/>
         <source>Play</source>
         <translation>Phát</translation>
     </message>
@@ -568,13 +565,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>Space</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-186"/>
-        <source>Skip Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <location line="+174"/>
+        <location filename="../mainwindow.cpp" line="-3"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>

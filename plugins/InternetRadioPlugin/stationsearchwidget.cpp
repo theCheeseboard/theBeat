@@ -23,6 +23,8 @@
 #include "radioinfoclient.h"
 #include "stationwidget.h"
 
+#include <QException>
+
 struct StationSearchWidgetPrivate {
         //    QList<RadioInfoClient::Station> topVotedStations;
         QList<StationWidget*> topVotedWidgets;

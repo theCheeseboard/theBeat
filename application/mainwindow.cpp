@@ -231,43 +231,8 @@ MainWindow::MainWindow(QWidget* parent) :
 
     auto thumbnail = tWindowThumbnail::thumbnailFor(this);
 
-    QAction* backAction = new QAction(thumbnail);
-    backAction->setToolTip(tr("Skip Back"));
-    backAction->setIcon(QIcon::fromTheme("media-skip-backward"));
-    connect(backAction, &QAction::triggered, this, [=] {
-        StateManager::instance()->playlist()->previous();
-    });
-
-    QAction* playPauseAction = new QAction(thumbnail);
-    playPauseAction->setToolTip(tr("Play"));
-    playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
-    connect(playPauseAction, &QAction::triggered, this, [=] {
-        StateManager::instance()->playlist()->playPause();
-    });
-
-    QAction* nextAction = new QAction(thumbnail);
-    nextAction->setToolTip(tr("Skip Next"));
-    nextAction->setIcon(QIcon::fromTheme("media-skip-forward"));
-    connect(nextAction, &QAction::triggered, this, [=] {
-        StateManager::instance()->playlist()->next();
-    });
-
-    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [=](Playlist::State state) {
-        switch (state) {
-            case Playlist::Playing:
-                playPauseAction->setToolTip(tr("Pause"));
-                playPauseAction->setIcon(QIcon::fromTheme("media-playback-pause"));
-                break;
-            case Playlist::Paused:
-            case Playlist::Stopped:
-                playPauseAction->setToolTip(tr("Play"));
-                playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
-                break;
-        }
-    });
-
     if (thumbnail) {
-        thumbnail->setToolbar({backAction, playPauseAction, nextAction});
+        thumbnail->setToolbar(QList<QAction*> { ui->actionSkip_Back, ui->actionPlayPause, ui->actionSkip_Forward });
     }
 
     connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {

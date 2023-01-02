@@ -22,7 +22,9 @@
 
 #include <QCoroTask>
 #include <QObject>
-#include <tpromise.h>
+#include <QJsonObject>
+#include <QUrl>
+
 
 struct RadioInfoClientPrivate;
 class RadioInfoClient : public QObject {

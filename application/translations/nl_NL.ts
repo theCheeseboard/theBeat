@@ -439,13 +439,12 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+362"/>
+        <location filename="../mainwindow.cpp" line="+327"/>
         <source>Open URL</source>
         <translation>URL Openen</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="-253"/>
         <source>Skip Back</source>
         <translation>Terug Springen</translation>
     </message>
@@ -506,7 +505,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+337"/>
+        <location filename="../mainwindow.cpp" line="+84"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -551,9 +550,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <translation>Selecteer een nummer of sleep hier iets heen!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-330"/>
-        <location line="+21"/>
-        <location line="+172"/>
+        <location filename="../mainwindow.cpp" line="-137"/>
         <source>Play</source>
         <translation>Afspelen</translation>
     </message>
@@ -563,13 +560,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <translation>Spatie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-186"/>
-        <source>Skip Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <location line="+174"/>
+        <location filename="../mainwindow.cpp" line="-3"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>

@@ -76,7 +76,7 @@ QVariant LibraryModel::data(const QModelIndex& index, int role) const {
         case TrackRole:
             return QSqlQueryModel::data(this->index(index.row(), 6));
         case AlbumArtRole:
-            return Helpers::albumArt(QUrl::fromLocalFile(data(index, PathRole).toString()))->await().result;
+            return QCoro::waitFor(Helpers::albumArt(QUrl::fromLocalFile(data(index, PathRole).toString())));
         case ErrorRole:
             if (!QFile::exists(data(index, PathRole).toString())) {
                 return PathNotFoundError;

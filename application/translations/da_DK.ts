@@ -443,13 +443,12 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+362"/>
+        <location filename="../mainwindow.cpp" line="+327"/>
         <source>Open URL</source>
         <translation>Åben URL</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="-253"/>
         <source>Skip Back</source>
         <translation>Spring tilbage</translation>
     </message>
@@ -510,7 +509,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+337"/>
+        <location filename="../mainwindow.cpp" line="+84"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -555,9 +554,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>Vælg en sang eller smid noget her!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-330"/>
-        <location line="+21"/>
-        <location line="+172"/>
+        <location filename="../mainwindow.cpp" line="-137"/>
         <source>Play</source>
         <translation>Afspil</translation>
     </message>
@@ -567,13 +564,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>Mellemrum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-186"/>
-        <source>Skip Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <location line="+174"/>
+        <location filename="../mainwindow.cpp" line="-3"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>

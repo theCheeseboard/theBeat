@@ -171,8 +171,9 @@ void QtMultimediaMediaItem::updateAlbumArt() {
 //            emit metadataChanged();
 //        });
     } else {
-        Helpers::albumArt(d->url)->then([=](QImage albumArt) {
-            d->albumArt = albumArt;
+        Helpers::albumArt(d->url).then([=](QImage image) {
+            d->albumArt = image;
+            emit metadataChanged();
         });
     }
 }

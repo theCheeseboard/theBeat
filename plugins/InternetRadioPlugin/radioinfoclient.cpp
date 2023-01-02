@@ -27,6 +27,10 @@
 #include <QNetworkReply>
 #include <QRandomGenerator>
 #include <tapplication.h>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QUrlQuery>
+#include <QException>
 
 struct RadioInfoClientPrivate {
         QString selectedAddress;

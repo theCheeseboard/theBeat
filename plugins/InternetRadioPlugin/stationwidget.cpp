@@ -24,6 +24,7 @@
 #include <playlist.h>
 #include <statemanager.h>
 #include <urlmanager.h>
+#include <QException>
 
 struct StationWidgetPrivate {
         RadioInfoClient::Station station;
