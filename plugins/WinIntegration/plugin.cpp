@@ -54,7 +54,8 @@ void Plugin::activate() {
     d->burnManager = new WinBurnManager();
 
     QTimer::singleShot(0, [] { 
-        new SmtcIntegration(getMainWindow());
+        auto mainWindow = getMainWindow();
+        new SmtcIntegration(mainWindow);
     });
 }
 

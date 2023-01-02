@@ -334,7 +334,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+121"/>
+        <location filename="../mainwindow.cpp" line="+122"/>
         <source>Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -425,12 +425,13 @@
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+364"/>
+        <location filename="../mainwindow.cpp" line="+360"/>
         <source>Open URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../mainwindow.cpp" line="-251"/>
         <source>Skip Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -475,7 +476,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-53"/>
+        <location filename="../mainwindow.cpp" line="+7"/>
+        <location line="+21"/>
+        <location line="+170"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
@@ -541,7 +544,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-140"/>
+        <location filename="../mainwindow.cpp" line="-321"/>
+        <source>Skip Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location line="+172"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>

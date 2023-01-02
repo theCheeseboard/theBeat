@@ -1,5 +1,5 @@
-#ifndef WINPLATFORMINTEGRATION_H
-#define WINPLATFORMINTEGRATION_H
+#ifndef SMTCINTEGRATION_H
+#define SMTCINTEGRATION_H
 
 #include <QWidget>
 #include <QScopedPointer>
@@ -8,7 +8,7 @@ struct SmtcIntegrationPrivate;
 class SmtcIntegration : public QObject {
     Q_OBJECT
     public:
-        explicit SmtcIntegration(QWidget *parent = nullptr);
+        explicit SmtcIntegration(QWidget *parent);
         ~SmtcIntegration();
 
     signals:
@@ -20,4 +20,4 @@ class SmtcIntegration : public QObject {
         void updateSMTC();
 };
 
-#endif // WINPLATFORMINTEGRATION_H
+#endif // SMTCINTEGRATION_H

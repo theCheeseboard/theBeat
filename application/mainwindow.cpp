@@ -45,6 +45,7 @@
 #include <statemanager.h>
 #include <taboutdialog.h>
 #include <tapplication.h>
+#include "twindowthumbnail.h"
 #include <tcommandpalette/tcommandpaletteactionscope.h>
 #include <tcommandpalette/tcommandpalettecontroller.h>
 #include <tcsdtools.h>
@@ -228,49 +229,44 @@ MainWindow::MainWindow(QWidget* parent) :
         resizeEvent(nullptr);
     });
 
-    /*QWinThumbnailToolBar* thumbBar = new QWinThumbnailToolBar(this);
-    thumbBar->setWindow(this->windowHandle());
+    auto thumbnail = tWindowThumbnail::create(this);
 
-    QWinThumbnailToolButton* backToolButton = new QWinThumbnailToolButton(thumbBar);
-    backToolButton->setToolTip(tr("Skip Back"));
-    backToolButton->setIcon(QIcon::fromTheme("media-skip-backward"));
-    backToolButton->setDismissOnClick(false);
-    connect(backToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
+    QAction* backAction = new QAction(thumbnail);
+    backAction->setToolTip(tr("Skip Back"));
+    backAction->setIcon(QIcon::fromTheme("media-skip-backward"));
+    connect(backAction, &QAction::triggered, this, [ = ] {
         StateManager::instance()->playlist()->previous();
     });
 
-    QWinThumbnailToolButton* playPauseToolButton = new QWinThumbnailToolButton(thumbBar);
-    playPauseToolButton->setToolTip(tr("Play"));
-    playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-start"));
-    playPauseToolButton->setDismissOnClick(false);
-    connect(playPauseToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
+    QAction* playPauseAction = new QAction(thumbnail);
+    playPauseAction->setToolTip(tr("Play"));
+    playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
+    connect(playPauseAction, &QAction::triggered, this, [=] {
         StateManager::instance()->playlist()->playPause();
     });
+
+    QAction* nextAction = new QAction(thumbnail);
+    nextAction->setToolTip(tr("Skip Next"));
+    nextAction->setIcon(QIcon::fromTheme("media-skip-forward"));
+    connect(nextAction, &QAction::triggered, this, [ = ] {
+        StateManager::instance()->playlist()->next();
+    });
+
     connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [ = ](Playlist::State state) {
         switch (state) {
             case Playlist::Playing:
-                playPauseToolButton->setToolTip(tr("Pause"));
-                playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-pause"));
+                playPauseAction->setToolTip(tr("Pause"));
+                playPauseAction->setIcon(QIcon::fromTheme("media-playback-pause"));
                 break;
             case Playlist::Paused:
             case Playlist::Stopped:
-                playPauseToolButton->setToolTip(tr("Play"));
-                playPauseToolButton->setIcon(QIcon::fromTheme("media-playback-start"));
+                playPauseAction->setToolTip(tr("Play"));
+                playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
                 break;
         }
     });
 
-    QWinThumbnailToolButton* nextToolButton = new QWinThumbnailToolButton(thumbBar);
-    nextToolButton->setToolTip(tr("Skip Next"));
-    nextToolButton->setIcon(QIcon::fromTheme("media-skip-forward"));
-    nextToolButton->setDismissOnClick(false);
-    connect(nextToolButton, &QWinThumbnailToolButton::clicked, this, [ = ] {
-        StateManager::instance()->playlist()->next();
-    });
-
-    thumbBar->addButton(backToolButton);
-    thumbBar->addButton(playPauseToolButton);
-    thumbBar->addButton(nextToolButton);*/
+    thumbnail->setToolbar(QList<QAction*> { backAction, playPauseAction, nextAction });
 
     connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
         if (key == "notifications/trackChange") {
@@ -279,6 +275,7 @@ MainWindow::MainWindow(QWidget* parent) :
             tCsdGlobal::setCsdsEnabled(!value.toBool());
         }
     });
+    
     StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(d->settings.value("notifications/trackChange").toBool());
     tCsdGlobal::setCsdsEnabled(!d->settings.value("appearance/useSsds").toBool());
 

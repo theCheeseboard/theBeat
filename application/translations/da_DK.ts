@@ -357,7 +357,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+121"/>
+        <location filename="../mainwindow.cpp" line="+122"/>
         <source>Tracks</source>
         <translation>Sange</translation>
     </message>
@@ -443,12 +443,13 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+364"/>
+        <location filename="../mainwindow.cpp" line="+360"/>
         <source>Open URL</source>
         <translation>Åben URL</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../mainwindow.cpp" line="-251"/>
         <source>Skip Back</source>
         <translation>Spring tilbage</translation>
     </message>
@@ -509,7 +510,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+84"/>
+        <location filename="../mainwindow.cpp" line="+335"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -554,7 +555,9 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>Vælg en sang eller smid noget her!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-137"/>
+        <location filename="../mainwindow.cpp" line="-328"/>
+        <location line="+21"/>
+        <location line="+170"/>
         <source>Play</source>
         <translation>Afspil</translation>
     </message>
@@ -564,7 +567,13 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>Mellemrum</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-3"/>
+        <location filename="../mainwindow.cpp" line="-184"/>
+        <source>Skip Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location line="+172"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>

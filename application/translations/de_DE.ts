@@ -361,7 +361,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+121"/>
+        <location filename="../mainwindow.cpp" line="+122"/>
         <source>Tracks</source>
         <translation>Titel</translation>
     </message>
@@ -447,12 +447,13 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+364"/>
+        <location filename="../mainwindow.cpp" line="+360"/>
         <source>Open URL</source>
         <translation>URL öffnen</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../mainwindow.cpp" line="-251"/>
         <source>Skip Back</source>
         <translation>Zurückspringen</translation>
     </message>
@@ -513,7 +514,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+84"/>
+        <location filename="../mainwindow.cpp" line="+335"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -558,7 +559,9 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Wähle einen Title aus oder ziehe etwas hier hin!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-137"/>
+        <location filename="../mainwindow.cpp" line="-328"/>
+        <location line="+21"/>
+        <location line="+170"/>
         <source>Play</source>
         <translation>Abspielen</translation>
     </message>
@@ -568,7 +571,13 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Leer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-3"/>
+        <location filename="../mainwindow.cpp" line="-184"/>
+        <source>Skip Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location line="+172"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
