@@ -50,6 +50,7 @@ set(SOURCES
         cdplayback/trackinfo.cpp
         cdplayback/wincdmediaitem.cpp
         plugin.cpp
+        smtcintegration.cpp
 
         burn/winburnjobwidget.ui
         burn/winburnpopover.ui
@@ -70,7 +71,8 @@ set(HEADERS
         cdplayback/diskwatcher.h
         cdplayback/trackinfo.h
         cdplayback/wincdmediaitem.h
-        plugin.h)
+        plugin.h
+        smtcintegration.h)
 
 add_library(plugin-winintegration SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-winintegration PUBLIC ../../libthebeat/ ${INSTALL_DIR}/Include)

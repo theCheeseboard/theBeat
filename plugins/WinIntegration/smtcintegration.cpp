@@ -1,4 +1,4 @@
-#include "winplatformintegration.h"
+#include "smtcintegration.h"
 
 #include <QSysInfo>
 #include <QLocale>
@@ -6,8 +6,6 @@
 #include <QUrl>
 #include <QOperatingSystemVersion>
 #include <robuffer.h>
-
-#pragma comment(lib, "windowsapp")
 
 #include <statemanager.h>
 #include <playlist.h>
@@ -20,6 +18,8 @@
 #include <winrt/Windows.Media.h>
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.Storage.Streams.h>
+
+#include "tlogger.h"
 
 using namespace std::chrono_literals;
 using namespace winrt::Windows::Foundation;
@@ -56,14 +56,14 @@ class QByteArrayBackedIBuffer : public winrt::implements<QByteArrayBackedIBuffer
             length = value;
         }
 
-        HRESULT __stdcall Buffer(uint8_t** value) {
+        HRESULT __stdcall Buffer(uint8_t** value) noexcept {
             *value = reinterpret_cast<uint8_t*>(buf.data());
             return S_OK;
         }
 
 };
 
-struct WinPlatformIntegrationPrivate {
+struct SmtcIntegrationPrivate {
     MediaItem* currentItem{ };
     QWidget* parentWindow{ };
 
@@ -73,8 +73,7 @@ struct WinPlatformIntegrationPrivate {
     winrt::fire_and_forget updateSMTC();
 };
 
-WinPlatformIntegration::WinPlatformIntegration(QWidget* parent) : QObject(parent) {
-    d = new WinPlatformIntegrationPrivate();
+SmtcIntegration::SmtcIntegration(QWidget* parent) : QObject(parent), d(new SmtcIntegrationPrivate) {
     d->parentWindow = parent;
 
     IActivationFactory factory = winrt::get_activation_factory<SystemMediaTransportControls>();
@@ -82,20 +81,20 @@ WinPlatformIntegration::WinPlatformIntegration(QWidget* parent) : QObject(parent
 
     interop->GetForWindow(reinterpret_cast<HWND>(d->parentWindow->winId()), winrt::guid_of<abi::ISystemMediaTransportControls>(), winrt::put_abi(d->smtc));
 
-    d->smtc.ButtonPressed([ = ](SystemMediaTransportControls smtc, SystemMediaTransportControlsButtonPressedEventArgs e) {
+    d->smtc.ButtonPressed([=](SystemMediaTransportControls smtc, SystemMediaTransportControlsButtonPressedEventArgs e) {
         Playlist* playlist = StateManager::instance()->playlist();
         switch (e.Button()) {
             case SystemMediaTransportControlsButton::Play:
-                playlist->metaObject()->invokeMethod(playlist, "play", Qt::QueuedConnection);
+                playlist->metaObject()->invokeMethod(playlist, &Playlist::play, Qt::QueuedConnection);
                 break;
             case SystemMediaTransportControlsButton::Pause:
-                playlist->metaObject()->invokeMethod(playlist, "pause", Qt::QueuedConnection);
+                playlist->metaObject()->invokeMethod(playlist, &Playlist::pause, Qt::QueuedConnection);
                 break;
             case SystemMediaTransportControlsButton::Next:
-                playlist->metaObject()->invokeMethod(playlist, "next", Qt::QueuedConnection);
+                playlist->metaObject()->invokeMethod(playlist, &Playlist::next, Qt::QueuedConnection);
                 break;
             case SystemMediaTransportControlsButton::Previous:
-                playlist->metaObject()->invokeMethod(playlist, "previous", Qt::QueuedConnection);
+                playlist->metaObject()->invokeMethod(playlist, &Playlist::previous, Qt::QueuedConnection);
                 break;
             case SystemMediaTransportControlsButton::Stop:
             case SystemMediaTransportControlsButton::Record:
@@ -107,16 +106,17 @@ WinPlatformIntegration::WinPlatformIntegration(QWidget* parent) : QObject(parent
         }
     });
 
-    connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &WinPlatformIntegration::updateCurrentItem);
-    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, this, &WinPlatformIntegration::updateCurrentItem);
+    connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &SmtcIntegration::updateCurrentItem);
+    connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, this, &SmtcIntegration::updateCurrentItem);
+
+    tDebug("WinIntegration") << "Successfully created system media transport controls";
+
     updateCurrentItem();
 }
 
-WinPlatformIntegration::~WinPlatformIntegration() {
-    delete d;
-}
+SmtcIntegration::~SmtcIntegration() { }
 
-void WinPlatformIntegration::updateCurrentItem() {
+void SmtcIntegration::updateCurrentItem() {
     if (d->currentItem) {
         d->currentItem->disconnect(this);
     }
@@ -126,21 +126,21 @@ void WinPlatformIntegration::updateCurrentItem() {
             d->metadataUpdateRequired = true;
             updateSMTC();
         });
-        connect(d->currentItem, &MediaItem::elapsedChanged, this, &WinPlatformIntegration::updateSMTC);
-        connect(d->currentItem, &MediaItem::durationChanged, this, &WinPlatformIntegration::updateSMTC);
+        connect(d->currentItem, &MediaItem::elapsedChanged, this, &SmtcIntegration::updateSMTC);
+        connect(d->currentItem, &MediaItem::durationChanged, this, &SmtcIntegration::updateSMTC);
 
         d->metadataUpdateRequired = true;
         updateSMTC();
     }
 }
 
-void WinPlatformIntegration::updateSMTC() {
+void SmtcIntegration::updateSMTC() {
     //Forward this call to the private implementation
     d->updateSMTC();
 }
 
 #include <QDebug>
-winrt::fire_and_forget WinPlatformIntegrationPrivate::updateSMTC() {
+winrt::fire_and_forget SmtcIntegrationPrivate::updateSMTC() {
     Playlist* playlist = StateManager::instance()->playlist();
 
     smtc.IsPlayEnabled(true);

@@ -2,19 +2,19 @@
 #define WINPLATFORMINTEGRATION_H
 
 #include <QWidget>
+#include <QScopedPointer>
 
-struct WinPlatformIntegrationPrivate;
-class WinPlatformIntegration : public QObject
-{
+struct SmtcIntegrationPrivate;
+class SmtcIntegration : public QObject {
     Q_OBJECT
     public:
-        explicit WinPlatformIntegration(QWidget *parent);
-        ~WinPlatformIntegration();
+        explicit SmtcIntegration(QWidget *parent = nullptr);
+        ~SmtcIntegration();
 
     signals:
 
     private:
-        WinPlatformIntegrationPrivate* d;
+        QScopedPointer<SmtcIntegrationPrivate> d;
 
         void updateCurrentItem();
         void updateSMTC();

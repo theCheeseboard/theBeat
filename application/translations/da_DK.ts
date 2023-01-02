@@ -357,7 +357,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+127"/>
+        <location filename="../mainwindow.cpp" line="+121"/>
         <source>Tracks</source>
         <translation>Sange</translation>
     </message>
@@ -443,7 +443,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+367"/>
+        <location filename="../mainwindow.cpp" line="+364"/>
         <source>Open URL</source>
         <translation>Åben URL</translation>
     </message>

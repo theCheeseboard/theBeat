@@ -373,7 +373,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+127"/>
+        <location filename="../mainwindow.cpp" line="+121"/>
         <source>Tracks</source>
         <translation>المسارات</translation>
     </message>
@@ -464,7 +464,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+367"/>
+        <location filename="../mainwindow.cpp" line="+364"/>
         <source>Open URL</source>
         <translation>أفتح الرابط</translation>
     </message>

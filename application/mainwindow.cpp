@@ -64,12 +64,6 @@
 
 #include <urlmanager.h>
 
-#ifdef Q_OS_WIN
-    #include "platformintegration/winplatformintegration.h"
-//    #include <QWinThumbnailToolBar>
-//    #include <QWinThumbnailToolButton>
-#endif
-
 struct MainWindowPrivate {
         tCsdTools csd;
         PluginManager plugins;
@@ -311,9 +305,6 @@ MainWindow::MainWindow(QWidget* parent) :
     d->plugins.load();
 
     setWindowIcon(tApplication::applicationIcon());
-#ifdef Q_OS_WIN
-    new WinPlatformIntegration(this);
-#endif
 
     tIcon::processWidget(this);
 }

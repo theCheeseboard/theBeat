@@ -20,9 +20,13 @@
 #include "plugin.h"
 
 #include <tlogger.h>
+#include <QTimer>
+#include <QMainWindow>
+#include "tapplication.h"
 
 #include "cdplayback/diskwatcher.h"
 #include "burn/winburnmanager.h"
+#include "smtcintegration.h"
 
 struct PluginPrivate {
     WinBurnManager* burnManager;
@@ -30,16 +34,28 @@ struct PluginPrivate {
 
 Plugin::Plugin() {
     d = new PluginPrivate();
-    tDebug("WinLibCdPlugin") << "CDLib plugin loaded:";
+    tDebug("WinIntegration") << "Windows integration plugin loaded.";
 }
 
 Plugin::~Plugin() {
     delete d;
 }
 
+QMainWindow* getMainWindow() {
+    for (QWidget* w : tApplication::topLevelWidgets()) {
+        if (QMainWindow* mainWin = qobject_cast<QMainWindow*>(w))
+            return mainWin;
+    }
+    return nullptr;
+}
+
 void Plugin::activate() {
     new DiskWatcher();
     d->burnManager = new WinBurnManager();
+
+    QTimer::singleShot(0, [] { 
+        new SmtcIntegration(getMainWindow());
+    });
 }
 
 void Plugin::deactivate() {

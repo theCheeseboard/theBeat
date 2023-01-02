@@ -81,14 +81,6 @@ set(HEADERS
         resetlibrarypopover.h
     )
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    set(SOURCES ${SOURCES}
-            platformintegration/winplatformintegration.cpp)
-
-    set(HEADERS ${HEADERS}
-            platformintegration/winplatformintegration.h)
-ENDIF()
-
 # Find Apple lproj files
 set(LPROJ_SOURCES)
 file(GLOB LPROJ_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/translations/apple-lproj/*.lproj)
@@ -132,3 +124,11 @@ target_include_directories(thebeat PUBLIC ../libthebeat/)
 install(TARGETS thebeat
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         BUNDLE DESTINATION /Applications)
+
+
+if (WIN32)
+    add_custom_command(TARGET thebeat POST_BUILD
+        COMMAND powershell -Command Copy-Item $<JOIN:$<TARGET_RUNTIME_DLLS:thebeat>,,> -Destination $<TARGET_FILE_DIR:thebeat> -Exclude Qt*.dll
+        COMMAND_EXPAND_LISTS
+        VERBATIM)
+endif()

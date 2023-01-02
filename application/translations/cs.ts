@@ -334,7 +334,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+127"/>
+        <location filename="../mainwindow.cpp" line="+121"/>
         <source>Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -425,7 +425,7 @@
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+367"/>
+        <location filename="../mainwindow.cpp" line="+364"/>
         <source>Open URL</source>
         <translation type="unfinished"></translation>
     </message>
