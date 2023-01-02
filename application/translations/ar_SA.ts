@@ -464,13 +464,13 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+360"/>
+        <location filename="../mainwindow.cpp" line="+362"/>
         <source>Open URL</source>
         <translation>أفتح الرابط</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="-251"/>
+        <location filename="../mainwindow.cpp" line="-253"/>
         <source>Skip Back</source>
         <translation>أعد للخلف</translation>
     </message>
@@ -517,7 +517,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     <message>
         <location filename="../mainwindow.cpp" line="+7"/>
         <location line="+21"/>
-        <location line="+170"/>
+        <location line="+172"/>
         <source>Play</source>
         <translation>ألعب</translation>
     </message>
@@ -583,13 +583,13 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-321"/>
+        <location filename="../mainwindow.cpp" line="-323"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+172"/>
+        <location line="+174"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>

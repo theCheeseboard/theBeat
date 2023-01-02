@@ -30,6 +30,7 @@
 #include "settingspanes/libraryresetsettingspane.h"
 #include "settingspanes/notificationssettingspane.h"
 #include "settingspanes/titlebarsettingspane.h"
+#include "twindowthumbnail.h"
 #include <QDesktopServices>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
@@ -45,7 +46,6 @@
 #include <statemanager.h>
 #include <taboutdialog.h>
 #include <tapplication.h>
-#include "twindowthumbnail.h"
 #include <tcommandpalette/tcommandpaletteactionscope.h>
 #include <tcommandpalette/tcommandpalettecontroller.h>
 #include <tcsdtools.h>
@@ -234,7 +234,7 @@ MainWindow::MainWindow(QWidget* parent) :
     QAction* backAction = new QAction(thumbnail);
     backAction->setToolTip(tr("Skip Back"));
     backAction->setIcon(QIcon::fromTheme("media-skip-backward"));
-    connect(backAction, &QAction::triggered, this, [ = ] {
+    connect(backAction, &QAction::triggered, this, [=] {
         StateManager::instance()->playlist()->previous();
     });
 
@@ -248,11 +248,11 @@ MainWindow::MainWindow(QWidget* parent) :
     QAction* nextAction = new QAction(thumbnail);
     nextAction->setToolTip(tr("Skip Next"));
     nextAction->setIcon(QIcon::fromTheme("media-skip-forward"));
-    connect(nextAction, &QAction::triggered, this, [ = ] {
+    connect(nextAction, &QAction::triggered, this, [=] {
         StateManager::instance()->playlist()->next();
     });
 
-    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [ = ](Playlist::State state) {
+    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [=](Playlist::State state) {
         switch (state) {
             case Playlist::Playing:
                 playPauseAction->setToolTip(tr("Pause"));
@@ -266,7 +266,9 @@ MainWindow::MainWindow(QWidget* parent) :
         }
     });
 
-    thumbnail->setToolbar(QList<QAction*> { backAction, playPauseAction, nextAction });
+    if (thumbnail) {
+        thumbnail->setToolbar({backAction, playPauseAction, nextAction});
+    }
 
     connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
         if (key == "notifications/trackChange") {

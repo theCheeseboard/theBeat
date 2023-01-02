@@ -443,13 +443,13 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+360"/>
+        <location filename="../mainwindow.cpp" line="+362"/>
         <source>Open URL</source>
         <translation>Open URL</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="-251"/>
+        <location filename="../mainwindow.cpp" line="-253"/>
         <source>Skip Back</source>
         <translation>Skip Back</translation>
     </message>
@@ -510,7 +510,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+335"/>
+        <location filename="../mainwindow.cpp" line="+337"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -555,9 +555,9 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <translation>Select a track or drop something here!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-328"/>
+        <location filename="../mainwindow.cpp" line="-330"/>
         <location line="+21"/>
-        <location line="+170"/>
+        <location line="+172"/>
         <source>Play</source>
         <translation>Play</translation>
     </message>
@@ -567,13 +567,13 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <translation>Space</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-184"/>
+        <location filename="../mainwindow.cpp" line="-186"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+172"/>
+        <location line="+174"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>

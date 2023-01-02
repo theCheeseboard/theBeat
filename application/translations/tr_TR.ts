@@ -444,13 +444,13 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+360"/>
+        <location filename="../mainwindow.cpp" line="+362"/>
         <source>Open URL</source>
         <translation>Link Aç</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="-251"/>
+        <location filename="../mainwindow.cpp" line="-253"/>
         <source>Skip Back</source>
         <translation>Geriye Atla</translation>
     </message>
@@ -511,7 +511,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+335"/>
+        <location filename="../mainwindow.cpp" line="+337"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -556,9 +556,9 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>Bir şarkı seçin ya da buraya bir şey bırakın!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-328"/>
+        <location filename="../mainwindow.cpp" line="-330"/>
         <location line="+21"/>
-        <location line="+170"/>
+        <location line="+172"/>
         <source>Play</source>
         <translation>Oyna</translation>
     </message>
@@ -568,13 +568,13 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>Boşluk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-184"/>
+        <location filename="../mainwindow.cpp" line="-186"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+172"/>
+        <location line="+174"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
