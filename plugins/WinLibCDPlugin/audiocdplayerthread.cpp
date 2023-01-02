@@ -44,8 +44,13 @@ AudioCdPlayerThread::AudioCdPlayerThread(QObject* parent) : QObject(parent) {
 }
 
 void AudioCdPlayerThread::run() {
-    winrt::init_apartment(winrt::apartment_type::single_threaded);
-    d->audioCdPlayer = winrt::CDLib::AudioCDPlayer::GetPlayer();
+    try {
+        winrt::init_apartment(winrt::apartment_type::single_threaded);
+        d->audioCdPlayer = winrt::CDLib::AudioCDPlayer::GetPlayer();
+    } catch (winrt::hresult_error err) {
+        tWarn("AudioCdPlayerThread") << "Error creating player:" << QString::fromWCharArray(err.message().c_str());
+        return;
+    }
 
     emit ready();
 
