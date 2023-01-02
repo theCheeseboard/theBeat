@@ -229,7 +229,7 @@ MainWindow::MainWindow(QWidget* parent) :
         resizeEvent(nullptr);
     });
 
-    auto thumbnail = tWindowThumbnail::create(this);
+    auto thumbnail = tWindowThumbnail::thumbnailFor(this);
 
     QAction* backAction = new QAction(thumbnail);
     backAction->setToolTip(tr("Skip Back"));
@@ -275,7 +275,7 @@ MainWindow::MainWindow(QWidget* parent) :
             tCsdGlobal::setCsdsEnabled(!value.toBool());
         }
     });
-    
+
     StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(d->settings.value("notifications/trackChange").toBool());
     tCsdGlobal::setCsdsEnabled(!d->settings.value("appearance/useSsds").toBool());
 
