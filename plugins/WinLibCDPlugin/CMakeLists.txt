@@ -29,7 +29,7 @@ ExternalProject_Add(CDLib
   GIT_TAG           21f9f6abd03291a56a6b5875f6afc6c67c1d5795
   PREFIX            ${CMAKE_BINARY_DIR}/cdlib
   CONFIGURE_COMMAND ""
-  BUILD_COMMAND     msbuild /m /v:m /r /p:OutDir=<BINARY_DIR>/ /p:RestorePackagesConfig=true /p:Configuration=${CMAKE_BUILD_TYPE} /p:Platform=${RESULT_ARCH} <SOURCE_DIR>/CDLib.sln
+  BUILD_COMMAND     msbuild /m /v:m /r /p:OutDir=<BINARY_DIR>/ /p:RestorePackagesConfig=true /p:Configuration=$<CONFIG> /p:Platform=${RESULT_ARCH} <SOURCE_DIR>/CDLib.sln
   INSTALL_COMMAND   ${CPPWINRT_PATH} -out <INSTALL_DIR>/Include/ -in <BINARY_DIR>/CDLib.winmd -ref ${WINDOWS_SDK_VERSION}
 )
 
