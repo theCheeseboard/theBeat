@@ -124,11 +124,3 @@ target_include_directories(thebeat PUBLIC ../libthebeat/)
 install(TARGETS thebeat
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         BUNDLE DESTINATION /Applications)
-
-
-if (WIN32)
-    add_custom_command(TARGET thebeat POST_BUILD
-        COMMAND powershell -Command Copy-Item $<JOIN:$<TARGET_RUNTIME_DLLS:thebeat>,,> -Destination $<TARGET_FILE_DIR:thebeat> -Exclude Qt*.dll
-        COMMAND_EXPAND_LISTS
-        VERBATIM)
-endif()
