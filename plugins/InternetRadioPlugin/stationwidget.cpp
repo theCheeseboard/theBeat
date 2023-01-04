@@ -25,9 +25,10 @@
 #include <statemanager.h>
 #include <urlmanager.h>
 #include <QException>
+#include <QPointer>
 
 struct StationWidgetPrivate {
-        RadioInfoClient::Station station;
+    RadioInfoClient::Station station;
 };
 
 StationWidget::StationWidget(RadioInfoClient::Station station, QWidget* parent) :
