@@ -5,7 +5,7 @@
    viewBox="0 0 8.4666665 8.4666669"
    version="1.1"
    id="svg20249"
-   inkscape:version="1.1.2 (b8e25be8, 2022-02-05)"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
    sodipodi:docname="baseicon-mac.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -62,22 +62,9 @@
          style="fill:url(#linearGradient980);fill-opacity:1;fill-rule:evenodd;stroke-width:0.999999"
          d="m 16.03125,2.9980724 a 13.000112,13.000112 0 0 0 -0.152345,0.00197 H 9.0000005 C 5.6759725,3.0000378 3,5.676019 3,9.0000379 v 6.9687311 7.031244 c 0,3.324018 2.6759725,6 6.0000005,6 H 23 c 3.324028,0 6.000001,-2.675982 6.000001,-6 V 16.029317 9.0000379 C 29.000001,5.676019 26.324028,3.0000378 23,3.0000378 h -6.867188 a 13.000112,13.000112 0 0 0 -0.101562,-0.00197 z" />
     </clipPath>
-    <filter
-       inkscape:collect="always"
-       style="color-interpolation-filters:sRGB"
-       id="filter1094"
-       x="-inf"
-       width="inf"
-       y="-inf"
-       height="inf">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.4440341"
-         id="feGaussianBlur1096" />
-    </filter>
     <inkscape:path-effect
        effect="clone_original"
-       linkeditem="#rect824-2-2"
+       linkeditem=""
        method="bsplinespiro"
        allow_transforms="false"
        id="path-effect29-9"
@@ -94,19 +81,21 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="19.126673"
-     inkscape:cx="11.397696"
-     inkscape:cy="17.279534"
+     inkscape:cx="8.3652813"
+     inkscape:cy="28.494239"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="iconlayer"
      showgrid="true"
      units="px"
-     inkscape:window-width="1680"
-     inkscape:window-height="907"
-     inkscape:window-x="0"
-     inkscape:window-y="25"
-     inkscape:window-maximized="0"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="3832"
+     inkscape:window-y="710"
+     inkscape:window-maximized="1"
      inkscape:document-rotation="0"
-     inkscape:pagecheckerboard="0">
+     inkscape:pagecheckerboard="0"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1">
     <inkscape:grid
        type="xygrid"
        id="grid20794"
@@ -157,66 +146,76 @@
      inkscape:groupmode="layer"
      id="iconlayer"
      inkscape:label="Icon">
-    <path
-       d="M 0,0"
-       id="path31"
-       transform="scale(0.26458333)"
-       inkscape:original-d="M 0,0"
-       inkscape:path-effect="#path-effect29-9"
-       clip-path="url(#clipPath976-4)"
-       style="filter:url(#filter1094)" />
-    <path
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.203353;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path819-5"
-       sodipodi:type="arc"
-       sodipodi:cx="-6.3729382"
-       sodipodi:cy="4.1710744"
-       sodipodi:rx="1.0676023"
-       sodipodi:ry="1.0676023"
-       sodipodi:start="3.1415927"
-       sodipodi:end="0"
-       transform="matrix(-0.9645279,-0.26398092,-0.26398092,0.9645279,0,0)"
-       inkscape:export-filename="/home/victor/newcontemporary.png"
-       inkscape:export-xdpi="2165.5593"
-       inkscape:export-ydpi="2165.5593"
-       sodipodi:arc-type="arc"
-       sodipodi:open="true"
-       d="m -7.4405404,4.1710744 a 1.0676023,1.0676023 0 0 1 1.0676022,-1.0676023 1.0676023,1.0676023 0 0 1 1.0676023,1.0676023" />
-    <path
-       style="fill:none;stroke:#ffffff;stroke-width:0.203353px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 4.0160013,5.42379 3.8208926,6.13669"
-       id="path821-4"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc"
-       inkscape:export-filename="/home/victor/newcontemporary.png"
-       inkscape:export-xdpi="2165.5593"
-       inkscape:export-ydpi="2165.5593" />
-    <path
-       style="fill:none;stroke:#ffffff;stroke-width:0.203353px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 6.0754844,5.98745 5.8803663,6.70032"
-       id="path823-0"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc"
-       inkscape:export-filename="/home/victor/newcontemporary.png"
-       inkscape:export-xdpi="2165.5593"
-       inkscape:export-ydpi="2165.5593" />
-    <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.212926px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
-       d="M 4.326146,5.93026 4.0991396,6.75966 C 4.2650627,6.80496 4.4763052,6.68456 4.5217021,6.51871 L 4.5671151,6.35284 C 4.6125301,6.18696 4.4920261,5.97567 4.3261563,5.93028 Z"
-       id="path825-5"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc"
-       inkscape:export-filename="/home/victor/newcontemporary.png"
-       inkscape:export-xdpi="2165.5593"
-       inkscape:export-ydpi="2165.5593" />
-    <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.212929px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
-       d="M 5.5702406,6.27076 5.3432399,7.10017 C 5.1773245,7.05487 5.0568764,6.8435 5.1022739,6.67759 L 5.1476869,6.51172 C 5.1930979,6.34585 5.404373,6.22536 5.5702592,6.27075 Z"
-       id="path825-6-9"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc"
-       inkscape:export-filename="/home/victor/newcontemporary.png"
-       inkscape:export-xdpi="2165.5593"
-       inkscape:export-ydpi="2165.5593" />
+    <g
+       id="g347"
+       transform="matrix(0.81281339,0,0,0.81281339,0.75858552,0.78507767)"
+       style="stroke-width:0.976907">
+      <path
+         id="path819-5-7"
+         style="color:#000000;opacity:0.5;fill:#ffffff;stroke-width:0.976907;stroke-linecap:round;stroke-linejoin:round"
+         d="m -6.233468,3.091727 c 0.6028586,0.1717293 1.0460737,0.7280978 1.0460737,1.3850568 a 0.125139,0.125139 0 0 1 -0.00152,0.015643 l 3.599e-4,0.895141 A 0.125139,0.125139 45 0 1 -5.3128634,5.512082 0.125139,0.125139 45 0 1 -5.4388747,5.3873685 l 0.00108,-0.8985014 a 0.125139,0.125139 0 0 1 -0.00155,-0.012185 c 0,-0.6580489 -0.529734,-1.1876304 -1.1877829,-1.1876304 -0.6580491,0 -1.1891279,0.5293328 -1.1891279,1.1873817 a 0.125139,0.125139 0 0 1 -0.125079,0.1253783 0.125139,0.125139 0 0 1 -0.1253783,-0.1250789 c 0,-0.793309 0.646378,-1.4396359 1.439687,-1.4396359 0.13635,0 0.2684405,0.018988 0.3935622,0.05463 z"
+         transform="matrix(-0.96592583,-0.25881905,-0.25881905,0.96592583,0,0)" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.244498px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 6.5119971,6.38007 6.2765473,7.25872"
+         id="path823-0-3"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc"
+         inkscape:export-filename="/home/victor/newcontemporary.png"
+         inkscape:export-xdpi="2165.5593"
+         inkscape:export-ydpi="2165.5593" />
+      <path
+         style="opacity:0.5;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.256009px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         d="m 4.3586372,6.3212 -0.27393,1.02227 c 0.20447,0.0548 0.4637,-0.0949 0.5184799,-0.29933 l 0.0548,-0.20445 c 0.0548,-0.20445 -0.0949,-0.46369 -0.29934,-0.51847 z"
+         id="path825-5-7"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccc"
+         inkscape:export-filename="/home/victor/newcontemporary.png"
+         inkscape:export-xdpi="2165.5593"
+         inkscape:export-ydpi="2165.5593" />
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.256012px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         d="M 5.8920373,6.73207 5.6181171,7.75435 C 5.4136572,7.69955 5.2639872,7.44034 5.3187673,7.23586 l 0.0548,-0.20445 c 0.0548,-0.20444 0.3140299,-0.35413 0.5184899,-0.29934 z"
+         id="path825-6-9-5"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccc"
+         inkscape:export-filename="/home/victor/newcontemporary.png"
+         inkscape:export-xdpi="2165.5593"
+         inkscape:export-ydpi="2165.5593" />
+      <path
+         style="opacity:0.5;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.244498;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path350"
+         sodipodi:type="arc"
+         sodipodi:cx="-6.6274247"
+         sodipodi:cy="4.4770188"
+         sodipodi:rx="1.3139607"
+         sodipodi:ry="1.3139607"
+         sodipodi:start="3.1415927"
+         sodipodi:end="5.7595865"
+         transform="matrix(-0.96592583,-0.25881905,-0.25881905,0.96592583,0,0)"
+         inkscape:export-filename="/home/victor/newcontemporary.png"
+         inkscape:export-xdpi="2165.5593"
+         inkscape:export-ydpi="2165.5593"
+         sodipodi:arc-type="arc"
+         sodipodi:open="true"
+         d="m -7.9413854,4.4770188 a 1.3139607,1.3139607 0 0 1 0.9738826,-1.2691885 1.3139607,1.3139607 0 0 1 1.4780014,0.6122082" />
+      <path
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.244498;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path352"
+         sodipodi:type="arc"
+         sodipodi:cx="-6.6274247"
+         sodipodi:cy="4.4770188"
+         sodipodi:rx="1.3139607"
+         sodipodi:ry="1.3139607"
+         sodipodi:start="3.1415927"
+         sodipodi:end="5.2359878"
+         transform="matrix(-0.96592583,-0.25881905,-0.25881905,0.96592583,0,0)"
+         inkscape:export-filename="/home/victor/newcontemporary.png"
+         inkscape:export-xdpi="2165.5593"
+         inkscape:export-ydpi="2165.5593"
+         sodipodi:arc-type="arc"
+         sodipodi:open="true"
+         d="m -7.9413854,4.4770188 a 1.3139607,1.3139607 0 0 1 0.6569804,-1.1379233 1.3139607,1.3139607 0 0 1 1.3139607,0" />
+    </g>
   </g>
 </svg>
