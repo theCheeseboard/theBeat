@@ -1,11 +1,13 @@
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
+set(TAGLIB_ROOT "C:/Program Files (x86)/taglib" CACHE PATH "Path to taglib on Windows")
+
 find_package(Qt6 REQUIRED COMPONENTS Widgets Multimedia)
 find_package(libcontemporary REQUIRED)
 cntp_find_pkgconfig(tag taglib REQUIRED
-        WIN_FALLBACK_DLL "C:/Program Files (x86)/taglib/bin/tag.dll"
-        WIN_FALLBACK_IMPLIB "C:/Program Files (x86)/taglib/lib/tag.lib"
-        WIN_FALLBACK_INCLUDE "C:/Program Files (x86)/taglib/include")
+        WIN_FALLBACK_DLL "${TAGLIB_ROOT}/bin/tag.dll"
+        WIN_FALLBACK_IMPLIB "${TAGLIB_ROOT}/lib/tag.lib"
+        WIN_FALLBACK_INCLUDE "${TAGLIB_ROOT}/include")
 
 set(SOURCES
         burnbackend.cpp
