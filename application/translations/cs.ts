@@ -1,985 +1,842 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs" sourcelanguage="en_US">
-<context>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TS version="2.1" language="cs">
+  <context>
     <name>ArtistsAlbumsCommandPaletteScope</name>
     <message>
-        <location filename="../commandpalette/artistsalbumscommandpalettescope.cpp" line="+35"/>
-        <source>Artists</source>
-        <translation type="unfinished"></translation>
+      <translation>Umělci</translation>
+      <location filename="../commandpalette/artistsalbumscommandpalettescope.cpp" line="+35" />
+      <source>Artists</source>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Albums</source>
-        <translation type="unfinished"></translation>
+      <translation>Alba</translation>
+      <source>Albums</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
-        <location filename="../artistsalbumswidget.ui" line="+65"/>
-        <location line="+123"/>
-        <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+      <translation>Písničky v knihovně</translation>
+      <location filename="../artistsalbumswidget.ui" line="+65" />
+      <source>Tracks in Library</source>
     </message>
     <message>
-        <location line="+49"/>
-        <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+      <translation>Zařadit vše do fronty</translation>
+      <source>Enqueue All</source>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Play All</source>
-        <translation type="unfinished"></translation>
+      <translation>Přehrát vše</translation>
+      <source>Play All</source>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+      <translation>Promýchat vše</translation>
+      <source>Shuffle All</source>
     </message>
     <message>
-        <location line="+24"/>
-        <source>Burn</source>
-        <translation type="unfinished"></translation>
+      <translation>Vypálit CD</translation>
+      <source>Burn</source>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+68"/>
-        <source>Albums in Library</source>
-        <translation type="unfinished"></translation>
+      <translation>Alba v knihovně</translation>
+      <location filename="../artistsalbumswidget.cpp" line="+68" />
+      <source>Albums in Library</source>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Artists in Library</source>
-        <translation type="unfinished"></translation>
+      <translation>Umělci v knihovně</translation>
+      <source>Artists in Library</source>
     </message>
     <message>
-        <location line="+34"/>
-        <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+      <translation>Písničky v %1</translation>
+      <source>Tracks in %1</source>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Tracks by %1</source>
-        <translation type="unfinished"></translation>
+      <translation>Písničky od %1</translation>
+      <source>Tracks by %1</source>
     </message>
     <message numerus="yes">
-        <location line="+9"/>
-        <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+      <translation>
+        <numerusform>%n písnička</numerusform>
+        <numerusform>%n písničky</numerusform>
+        <numerusform>%n písniček</numerusform>
+      </translation>
+      <source>%n tracks</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ColoursSettingsPane</name>
     <message>
-        <location filename="../settingspanes/colourssettingspane.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation>Formulář</translation>
+      <location filename="../settingspanes/colourssettingspane.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Light</source>
-        <translation type="unfinished"></translation>
+      <translation>Světlý</translation>
+      <source>Light</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Dark</source>
-        <translation type="unfinished"></translation>
+      <translation>Tmavý</translation>
+      <source>Dark</source>
     </message>
     <message>
-        <location filename="../settingspanes/colourssettingspane.cpp" line="+30"/>
-        <source>Colours</source>
-        <translation type="unfinished"></translation>
+      <translation>Barvy</translation>
+      <location filename="../settingspanes/colourssettingspane.cpp" line="+30" />
+      <source>Colours</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Common</name>
     <message>
-        <location filename="../common.cpp" line="+31"/>
-        <source>Select Device</source>
-        <translation type="unfinished"></translation>
+      <translation>Vybrat zařízení</translation>
+      <location filename="../common.cpp" line="+31" />
+      <source>Select Device</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ControlStrip</name>
     <message>
-        <location filename="../controlstrip.ui" line="+101"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
+      <translation>Název</translation>
+      <location filename="../controlstrip.ui" line="+101" />
+      <source>Title</source>
     </message>
     <message>
-        <location line="+27"/>
-        <source>Metadata</source>
-        <translation type="unfinished"></translation>
+      <translation>Metadata</translation>
+      <source>Metadata</source>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+86"/>
-        <source>Repeat Options</source>
-        <translation type="unfinished"></translation>
+      <translation>Možnosti opakování</translation>
+      <location filename="../controlstrip.cpp" line="+86" />
+      <source>Repeat Options</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Repeat Play Queue</source>
-        <translation type="unfinished"></translation>
+      <translation>Opakovat frontu přehrávání</translation>
+      <source>Repeat Play Queue</source>
     </message>
     <message>
-        <location line="+17"/>
-        <source>Playback Options</source>
-        <translation type="unfinished"></translation>
+      <translation>Možnosti přehrávání</translation>
+      <source>Playback Options</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Pause after current track</source>
-        <translation type="unfinished"></translation>
+      <translation>Pauznout po této písničce</translation>
+      <source>Pause after current track</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="+155"/>
-        <source>Album</source>
-        <translation type="unfinished"></translation>
+      <translation>Album</translation>
+      <location filename="../currenttrackpopover.cpp" line="+155" />
+      <source>Album</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
+      <translation>Název</translation>
+      <source>Name</source>
     </message>
     <message>
-        <location line="+3"/>
-        <location line="+2"/>
-        <source>Track</source>
-        <translation type="unfinished"></translation>
+      <translation>Písnička</translation>
+      <source>Track</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
-        <source>Folder Added</source>
-        <translation type="unfinished"></translation>
+      <translation>Složka přidána</translation>
+      <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153" />
+      <source>Folder Added</source>
     </message>
     <message numerus="yes">
-        <location line="+1"/>
-        <source>%n tracks added/updated</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+      <translation>
+        <numerusform>%n písnička přidána/aktualizována</numerusform>
+        <numerusform>%n písničky přídány/aktualizovány</numerusform>
+        <numerusform>%n písniček přídáno/aktualizováno</numerusform>
+      </translation>
+      <source>%n tracks added/updated</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryEnumerateDirectoryJobWidget</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="+26"/>
-        <source>DISCOVERING AUDIO TRACKS</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="+26" />
+      <source>DISCOVERING AUDIO TRACKS</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryErrorPopover</name>
     <message>
-        <location filename="../libraryerrorpopover.ui" line="+35"/>
-        <source>Hmm</source>
-        <translation type="unfinished"></translation>
+      <translation>Hmm</translation>
+      <location filename="../libraryerrorpopover.ui" line="+35" />
+      <source>Hmm</source>
     </message>
     <message>
-        <location line="+99"/>
-        <source>ACTIONS</source>
-        <translation type="unfinished"></translation>
+      <translation>AKCE</translation>
+      <source>ACTIONS</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Locate File</source>
-        <translation type="unfinished"></translation>
+      <translation>Najít soubor</translation>
+      <source>Locate File</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+      <translation>Odstranit z knihovny</translation>
+      <source>Remove from Library</source>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.cpp" line="+39"/>
-        <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
-        <translation type="unfinished"></translation>
+      <translation>Vypadá to, že tenhle soubor se skovává. Jestli víte kde je, pomožte nám ho najít aby jsme mohli přehrát písničku.</translation>
+      <location filename="../libraryerrorpopover.cpp" line="+39" />
+      <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+194"/>
-        <source>by %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../library/librarymodel.cpp" line="+194" />
+      <source>by %1</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>on %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>on %1</source>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Track</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Track</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="+31"/>
-        <source>Add to Playlist</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../library/librarylistview.cpp" line="+31" />
+      <source>Add to Playlist</source>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+2"/>
-        <source>Remove from Playlist</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Remove from Playlist</source>
     </message>
     <message>
-        <location line="-1"/>
-        <location line="+11"/>
-        <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Are you sure?</source>
     </message>
     <message>
-        <location line="-1"/>
-        <location line="+2"/>
-        <source>Remove from Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Remove from Library</source>
     </message>
     <message>
-        <location line="+68"/>
-        <location line="+2"/>
-        <source>New Playlist</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>New Playlist</source>
     </message>
     <message>
-        <location line="+0"/>
-        <source>What do you want to call this playlist?</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>What do you want to call this playlist?</source>
     </message>
     <message>
-        <location line="+15"/>
-        <source>For %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>For %1</source>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Track Properties</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Track Properties</source>
     </message>
     <message numerus="yes">
-        <location line="+11"/>
-        <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+      <translation>
+        <numerusform></numerusform>
+        <numerusform></numerusform>
+        <numerusform></numerusform>
+      </translation>
+      <source>For %n items</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryManager</name>
     <message>
-        <location filename="../library/librarymanager.cpp" line="+455"/>
-        <source>20 Most Played Tracks</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../library/librarymanager.cpp" line="+455" />
+      <source>20 Most Played Tracks</source>
     </message>
     <message>
-        <location line="+2"/>
-        <source>20 Random Tracks</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>20 Random Tracks</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LibraryResetSettingsPane</name>
     <message>
-        <location filename="../settingspanes/libraryresetsettingspane.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/libraryresetsettingspane.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>If you want to start over with theBeat, you can reset your library.</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>If you want to start over with theBeat, you can reset your library.</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Reset theBeat Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Reset theBeat Library</source>
     </message>
     <message>
-        <location filename="../settingspanes/libraryresetsettingspane.cpp" line="+22"/>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/libraryresetsettingspane.cpp" line="+22" />
+      <source>Reset</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LyricsDisplayWidget</name>
     <message>
-        <location filename="../lyrics/lyricsdisplaywidget.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../lyrics/lyricsdisplaywidget.ui" line="+14" />
+      <source>Form</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="+14"/>
-        <source>theBeat</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../mainwindow.ui" line="+14" />
+      <source>theBeat</source>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+122"/>
-        <source>Tracks</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../mainwindow.cpp" line="+122" />
+      <source>Tracks</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Artists</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Artists</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Albums</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Albums</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Playlists</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Playlists</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Other Sources</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Other Sources</source>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+141"/>
-        <source>Queue</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../mainwindow.ui" line="+141" />
+      <source>Queue</source>
     </message>
     <message>
-        <location line="+70"/>
-        <source>Nothing Here!</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Nothing Here!</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Select a track or drop something here!</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Select a track or drop something here!</source>
     </message>
     <message>
-        <location line="+52"/>
-        <source>File</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>File</source>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Playback</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Playback</source>
     </message>
     <message>
-        <location line="+14"/>
-        <source>View</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>View</source>
     </message>
     <message>
-        <location line="+14"/>
-        <source>File Bug</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>File Bug</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Sources</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Sources</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>About</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>About</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Exit</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Exit</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Ctrl+Q</source>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Open File</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Open File</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Ctrl+O</source>
     </message>
     <message>
-        <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+327"/>
-        <source>Open URL</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../mainwindow.cpp" line="+327" />
+      <source>Open URL</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Skip Back</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Skip Back</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Shift+Left</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Shift+Left</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Skip Forward</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Skip Forward</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Shift+Right</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Shift+Right</source>
     </message>
     <message>
-        <location line="+90"/>
-        <source>Zen Mode</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Zen Mode</source>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Increase Volume</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Increase Volume</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Up</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Up</source>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Decrease Volume</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Decrease Volume</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Down</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Down</source>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-53"/>
-        <source>Play</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../mainwindow.cpp" line="-53" />
+      <source>Play</source>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-94"/>
-        <source>Space</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../mainwindow.ui" line="-94" />
+      <source>Space</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Add to Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Add to Library</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Settings</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+,</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Ctrl+,</source>
     </message>
     <message>
-        <location line="+12"/>
-        <source>theBeat Help</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>theBeat Help</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>F1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>F1</source>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Repeat One</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Repeat One</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Ctrl+R</source>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Shuffle</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Shuffle</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Ctrl+S</source>
     </message>
     <message>
-        <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+137"/>
-        <source>Print</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../mainwindow.cpp" line="+137" />
+      <source>Print</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Ctrl+P</source>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-140"/>
-        <source>Pause</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../mainwindow.cpp" line="-140" />
+      <source>Pause</source>
     </message>
     <message>
-        <location line="+28"/>
-        <source>For &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>For "%1"</source>
     </message>
     <message numerus="yes">
-        <location line="+2"/>
-        <source>For %n items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+      <translation>
+        <numerusform></numerusform>
+        <numerusform></numerusform>
+        <numerusform></numerusform>
+      </translation>
+      <source>For %n items</source>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Remove from Queue</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Remove from Queue</source>
     </message>
     <message>
-        <location line="+13"/>
-        <source>For Queue</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>For Queue</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Clear Queue</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Clear Queue</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Enter the URL you&apos;d like to open</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Enter the URL you'd like to open</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Can&apos;t open that URL</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Can't open that URL</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Sorry, that URL isn&apos;t supported by theBeat.</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Sorry, that URL isn't supported by theBeat.</source>
     </message>
     <message>
-        <location line="+37"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>General</source>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Appearance</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Appearance</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Library</source>
     </message>
     <message>
-        <location line="+20"/>
-        <source>No Printers</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>No Printers</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Before printing a list of tracks, you&apos;ll need to set up a printer.</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Before printing a list of tracks, you'll need to set up a printer.</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Open a list of tracks (for example, a playlist) to print it.</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Open a list of tracks (for example, a playlist) to print it.</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>NotificationsSettingsPane</name>
     <message>
-        <location filename="../settingspanes/notificationssettingspane.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/notificationssettingspane.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Send a notification when the track changes</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Send a notification when the track changes</source>
     </message>
     <message>
-        <location filename="../settingspanes/notificationssettingspane.cpp" line="+24"/>
-        <source>Notifications</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/notificationssettingspane.cpp" line="+24" />
+      <source>Notifications</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>OtherSourcesWidget</name>
     <message>
-        <location filename="../othersourceswidget.ui" line="+103"/>
-        <source>No other sources available</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../othersourceswidget.ui" line="+103" />
+      <source>No other sources available</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>There&apos;s nothing else to play right now</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>There's nothing else to play right now</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="+316"/>
-        <source>Track</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../playlistmodel.cpp" line="+316" />
+      <source>Track</source>
     </message>
     <message>
-        <location line="+23"/>
-        <source>Album</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Album</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PrintController</name>
     <message>
-        <location filename="../print/printcontroller.cpp" line="+59"/>
-        <source>Print %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../print/printcontroller.cpp" line="+59" />
+      <source>Print %1</source>
     </message>
     <message numerus="yes">
-        <location line="+66"/>
-        <source>%n tracks</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+      <translation>
+        <numerusform></numerusform>
+        <numerusform></numerusform>
+        <numerusform></numerusform>
+      </translation>
+      <source>%n tracks</source>
     </message>
     <message>
-        <location line="+72"/>
-        <source>by %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>by %1</source>
     </message>
     <message>
-        <location line="+1"/>
-        <source>on %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>on %1</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../print/printsettings.ui" line="+25"/>
-        <source>PRINT TYPE</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../print/printsettings.ui" line="+25" />
+      <source>PRINT TYPE</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Track Listing</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Track Listing</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Jewel Case Insert</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Jewel Case Insert</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ResetLibraryPopover</name>
     <message>
-        <location filename="../resetlibrarypopover.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../resetlibrarypopover.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Reset Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Reset Library</source>
     </message>
     <message>
-        <location line="+24"/>
-        <source>This is it!</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>This is it!</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Resetting the library will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
+      <translation></translation>
+      <source>Resetting the library will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Reset theBeat Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Reset theBeat Library</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ScopeVisualisation</name>
     <message>
-        <location filename="../visualisations/scopevisualisation.cpp" line="+38"/>
-        <source>Scope</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../visualisations/scopevisualisation.cpp" line="+38" />
+      <source>Scope</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TagEditor</name>
     <message>
-        <location filename="../tageditor/tageditor.ui" line="+35"/>
-        <source>Track Properties</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../tageditor/tageditor.ui" line="+35" />
+      <source>Track Properties</source>
     </message>
     <message>
-        <location line="+50"/>
-        <source>DETAILS MODIFIED</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>DETAILS MODIFIED</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Save your changes to this track to keep them saved.</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Save your changes to this track to keep them saved.</source>
     </message>
     <message>
-        <location line="+25"/>
-        <source>Revert</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Revert</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Save</source>
     </message>
     <message>
-        <location line="+82"/>
-        <source>Track #</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Track #</source>
     </message>
     <message>
-        <location line="+33"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Title</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Genre</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Genre</source>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Length</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Length</source>
     </message>
     <message>
-        <location line="-67"/>
-        <source>Artist</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Artist</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Disc #</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Disc #</source>
     </message>
     <message>
-        <location line="-24"/>
-        <source>Year</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Year</source>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Album</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Album</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TitlebarSettingsPane</name>
     <message>
-        <location filename="../settingspanes/titlebarsettingspane.ui" line="+14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/titlebarsettingspane.ui" line="+14" />
+      <source>Form</source>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Use System Titlebars</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Use System Titlebars</source>
     </message>
     <message>
-        <location filename="../settingspanes/titlebarsettingspane.cpp" line="+29"/>
-        <source>Titlebar</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../settingspanes/titlebarsettingspane.cpp" line="+29" />
+      <source>Titlebar</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TracksCommandPaletteScope</name>
     <message>
-        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
-        <source>Tracks</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34" />
+      <source>Tracks</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TracksWidget</name>
     <message>
-        <location filename="../trackswidget.ui" line="+65"/>
-        <location filename="../trackswidget.cpp" line="+59"/>
-        <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../trackswidget.ui" line="+65" />
+      <location filename="../trackswidget.cpp" line="+59" />
+      <source>Tracks in Library</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Enqueue All</source>
     </message>
     <message>
-        <location line="+45"/>
-        <source>Search</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Search</source>
     </message>
     <message>
-        <location line="+57"/>
-        <source>Processing Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Processing Library</source>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
     </message>
     <message>
-        <location filename="../trackswidget.cpp" line="+2"/>
-        <source>Search for %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../trackswidget.cpp" line="+2" />
+      <source>Search for %1</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UserPlaylistsWidget</name>
     <message>
-        <location filename="../userplaylistswidget.ui" line="+62"/>
-        <source>Playlists</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../userplaylistswidget.ui" line="+62" />
+      <source>Playlists</source>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Create Playlist</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Create Playlist</source>
     </message>
     <message>
-        <location line="+151"/>
-        <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Tracks in Library</source>
     </message>
     <message>
-        <location line="+28"/>
-        <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Enqueue All</source>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Play All</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Play All</source>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Shuffle All</source>
     </message>
     <message>
-        <location line="+44"/>
-        <source>Burn</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Burn</source>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="+92"/>
-        <source>New Playlist</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../userplaylistswidget.cpp" line="+92" />
+      <source>New Playlist</source>
     </message>
     <message>
-        <location line="+0"/>
-        <location line="+66"/>
-        <source>What name do you want to give to this playlist?</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>What name do you want to give to this playlist?</source>
     </message>
     <message>
-        <location line="-3"/>
-        <source>For %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>For %1</source>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+2"/>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Rename</source>
     </message>
     <message>
-        <location line="+3"/>
-        <location line="+62"/>
-        <source>Tracks in %1</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Tracks in %1</source>
     </message>
     <message>
-        <location line="-32"/>
-        <location line="+2"/>
-        <location line="+10"/>
-        <location line="+2"/>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Remove</source>
     </message>
     <message>
-        <location line="-13"/>
-        <location line="+12"/>
-        <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>Are you sure?</source>
     </message>
     <message numerus="yes">
-        <location line="-5"/>
-        <source>For %n playlists</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+      <translation>
+        <numerusform></numerusform>
+        <numerusform></numerusform>
+        <numerusform></numerusform>
+      </translation>
+      <source>For %n playlists</source>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+52"/>
-        <source>Audio Player</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <location filename="../main.cpp" line="+52" />
+      <source>Audio Player</source>
     </message>
     <message>
-        <location line="+31"/>
-        <source>file</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>file</source>
     </message>
     <message>
-        <location line="+0"/>
-        <source>File to open</source>
-        <translation type="unfinished"></translation>
+      <translation></translation>
+      <source>File to open</source>
     </message>
-</context>
+  </context>
 </TS>
