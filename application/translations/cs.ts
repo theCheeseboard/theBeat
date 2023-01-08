@@ -15,7 +15,7 @@
   <context>
     <name>ArtistsAlbumsWidget</name>
     <message>
-      <translation>Písničky v knihovně</translation>
+      <translation>Stopy v knihovně</translation>
       <location filename="../artistsalbumswidget.ui" line="+65" />
       <source>Tracks in Library</source>
     </message>
@@ -45,18 +45,18 @@
       <source>Artists in Library</source>
     </message>
     <message>
-      <translation>Písničky v %1</translation>
+      <translation>Stopy v %1</translation>
       <source>Tracks in %1</source>
     </message>
     <message>
-      <translation>Písničky od %1</translation>
+      <translation>Stopy od %1</translation>
       <source>Tracks by %1</source>
     </message>
     <message numerus="yes">
       <translation>
-        <numerusform>%n písnička</numerusform>
-        <numerusform>%n písničky</numerusform>
-        <numerusform>%n písniček</numerusform>
+        <numerusform>%n stopa</numerusform>
+        <numerusform>%n stopy</numerusform>
+        <numerusform>%n stop</numerusform>
       </translation>
       <source>%n tracks</source>
     </message>
@@ -115,7 +115,7 @@
       <source>Playback Options</source>
     </message>
     <message>
-      <translation>Pauznout po této písničce</translation>
+      <translation>Pauznout po této stopě</translation>
       <source>Pause after current track</source>
     </message>
   </context>
@@ -131,7 +131,7 @@
       <source>Name</source>
     </message>
     <message>
-      <translation>Písnička</translation>
+      <translation>Stopa</translation>
       <source>Track</source>
     </message>
   </context>
@@ -144,7 +144,7 @@
     </message>
     <message numerus="yes">
       <translation>
-        <numerusform>%n písnička přidána/aktualizována</numerusform>
+        <numerusform>%n stopa přidána/aktualizována</numerusform>
         <numerusform>%n písničky přídány/aktualizovány</numerusform>
         <numerusform>%n písniček přídáno/aktualizováno</numerusform>
       </translation>
@@ -154,7 +154,7 @@
   <context>
     <name>LibraryEnumerateDirectoryJobWidget</name>
     <message>
-      <translation></translation>
+      <translation>HLEDÁNÍ ZVUKOVÝCH STOP</translation>
       <location filename="../library/libraryenumeratedirectoryjobwidget.ui" line="+26" />
       <source>DISCOVERING AUDIO TRACKS</source>
     </message>
@@ -187,59 +187,59 @@
   <context>
     <name>LibraryItemDelegate</name>
     <message>
-      <translation></translation>
+      <translation>od %1</translation>
       <location filename="../library/librarymodel.cpp" line="+194" />
       <source>by %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>na %1</translation>
       <source>on %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Stopa</translation>
       <source>Track</source>
     </message>
   </context>
   <context>
     <name>LibraryListView</name>
     <message>
-      <translation></translation>
+      <translation>Přidat to playlistu</translation>
       <location filename="../library/librarylistview.cpp" line="+31" />
       <source>Add to Playlist</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Odstranit z playlistu</translation>
       <source>Remove from Playlist</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Opravdu?</translation>
       <source>Are you sure?</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Odstranit z knihovny</translation>
       <source>Remove from Library</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Nový playlist</translation>
       <source>New Playlist</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Jak chcete tento playlist pojmenovat?</translation>
       <source>What do you want to call this playlist?</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Pro %1</translation>
       <source>For %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Vlastnosti stopy</translation>
       <source>Track Properties</source>
     </message>
     <message numerus="yes">
       <translation>
-        <numerusform></numerusform>
-        <numerusform></numerusform>
-        <numerusform></numerusform>
+        <numerusform>Pro %n předmět</numerusform>
+        <numerusform>Pro %n předměty</numerusform>
+        <numerusform>Pro %n předmětů</numerusform>
       </translation>
       <source>For %n items</source>
     </message>
@@ -247,19 +247,19 @@
   <context>
     <name>LibraryManager</name>
     <message>
-      <translation></translation>
+      <translation>20 nejvíce přehraných stop</translation>
       <location filename="../library/librarymanager.cpp" line="+455" />
       <source>20 Most Played Tracks</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>20 náhodných stop</translation>
       <source>20 Random Tracks</source>
     </message>
   </context>
   <context>
     <name>LibraryResetSettingsPane</name>
     <message>
-      <translation></translation>
+      <translation>Forma</translation>
       <location filename="../settingspanes/libraryresetsettingspane.ui" line="+14" />
       <source>Form</source>
     </message>
@@ -268,11 +268,11 @@
       <source>If you want to start over with theBeat, you can reset your library.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Resetovat knihovnu theBeat</translation>
       <source>Reset theBeat Library</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Resetovat</translation>
       <location filename="../settingspanes/libraryresetsettingspane.cpp" line="+22" />
       <source>Reset</source>
     </message>
@@ -280,7 +280,7 @@
   <context>
     <name>LyricsDisplayWidget</name>
     <message>
-      <translation></translation>
+      <translation>Forma</translation>
       <location filename="../lyrics/lyricsdisplaywidget.ui" line="+14" />
       <source>Form</source>
     </message>
@@ -288,7 +288,7 @@
   <context>
     <name>MainWindow</name>
     <message>
-      <translation></translation>
+      <translation>theBeat</translation>
       <location filename="../mainwindow.ui" line="+14" />
       <source>theBeat</source>
     </message>
