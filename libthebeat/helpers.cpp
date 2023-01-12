@@ -35,40 +35,40 @@
 #include <taglib/tbytevectorstream.h>
 #include <taglib/xiphcomment.h>
 
+#include <QCoroFuture>
 #include <QDir>
 #include <QFileInfo>
 #include <QtConcurrent>
-#include <QCoroFuture>
 
 QCache<QUrl, QImage> Helpers::artCache(50000);
 QMap<QMediaMetaData::Key, QString> Helpers::metadataStrings = {
-    {QMediaMetaData::Title, "Title"},
-    {QMediaMetaData::Author, "Author"},
-    {QMediaMetaData::Comment, "Comment"},
-    {QMediaMetaData::Description, "Description"},
-    {QMediaMetaData::Genre, "Genre"},
-    {QMediaMetaData::Date, "Date"},
-    {QMediaMetaData::Language, "Language"},
-    {QMediaMetaData::Publisher, "Publisher"},
-    {QMediaMetaData::Copyright, "Copyright"},
-    {QMediaMetaData::Url, "Url"},
-    {QMediaMetaData::Duration, "Duration"},
-    {QMediaMetaData::MediaType, "MediaType"},
-    {QMediaMetaData::FileFormat, "FileFormat"},
-    {QMediaMetaData::AudioBitRate, "AudioBitRate"},
-    {QMediaMetaData::AudioCodec, "AudioCodec"},
-    {QMediaMetaData::VideoBitRate, "VideoBitRate"},
-    {QMediaMetaData::VideoCodec, "VideoCodec"},
-    {QMediaMetaData::VideoFrameRate, "VideoFrameRate"},
-    {QMediaMetaData::AlbumTitle, "AlbumTitle"},
-    {QMediaMetaData::AlbumArtist, "AlbumArtist"},
+    {QMediaMetaData::Title,              "Title"             },
+    {QMediaMetaData::Author,             "Author"            },
+    {QMediaMetaData::Comment,            "Comment"           },
+    {QMediaMetaData::Description,        "Description"       },
+    {QMediaMetaData::Genre,              "Genre"             },
+    {QMediaMetaData::Date,               "Date"              },
+    {QMediaMetaData::Language,           "Language"          },
+    {QMediaMetaData::Publisher,          "Publisher"         },
+    {QMediaMetaData::Copyright,          "Copyright"         },
+    {QMediaMetaData::Url,                "Url"               },
+    {QMediaMetaData::Duration,           "Duration"          },
+    {QMediaMetaData::MediaType,          "MediaType"         },
+    {QMediaMetaData::FileFormat,         "FileFormat"        },
+    {QMediaMetaData::AudioBitRate,       "AudioBitRate"      },
+    {QMediaMetaData::AudioCodec,         "AudioCodec"        },
+    {QMediaMetaData::VideoBitRate,       "VideoBitRate"      },
+    {QMediaMetaData::VideoCodec,         "VideoCodec"        },
+    {QMediaMetaData::VideoFrameRate,     "VideoFrameRate"    },
+    {QMediaMetaData::AlbumTitle,         "AlbumTitle"        },
+    {QMediaMetaData::AlbumArtist,        "AlbumArtist"       },
     {QMediaMetaData::ContributingArtist, "ContributingArtist"},
-    {QMediaMetaData::TrackNumber, "TrackNumber"},
-    {QMediaMetaData::Composer, "Composer"},
-    {QMediaMetaData::ThumbnailImage, "ThumbnailImage"},
-    {QMediaMetaData::CoverArtImage, "CoverArtImage"},
-    {QMediaMetaData::Orientation, "Orientation"},
-    {QMediaMetaData::Resolution, "Resolution"}
+    {QMediaMetaData::TrackNumber,        "TrackNumber"       },
+    {QMediaMetaData::Composer,           "Composer"          },
+    {QMediaMetaData::ThumbnailImage,     "ThumbnailImage"    },
+    {QMediaMetaData::CoverArtImage,      "CoverArtImage"     },
+    {QMediaMetaData::Orientation,        "Orientation"       },
+    {QMediaMetaData::Resolution,         "Resolution"        }
 };
 
 QImage findAlbumArtWorker(QUrl url) {
@@ -101,7 +101,8 @@ QImage findAlbumArtWorker(QUrl url) {
 #ifdef Q_OS_WIN
         TagLib::FileName filename = reinterpret_cast<const wchar_t*>(url.toLocalFile().utf16());
 #else
-        TagLib::FileName filename = url.toLocalFile().toUtf8();
+        QByteArray qtFilename = url.toLocalFile().toUtf8();
+        TagLib::FileName filename = qtFilename.data();
 #endif
 
         TagLib::MPEG::File mpegFile(filename);
@@ -167,8 +168,8 @@ QCoro::Task<QImage> Helpers::albumArt(QUrl url) {
     co_return art;
 }
 QString Helpers::stringForMetadataKey(QMediaMetaData::Key key) {
-  return metadataStrings.value(key);
+    return metadataStrings.value(key);
 }
 QMediaMetaData::Key Helpers::metadataKeyForString(QString string) {
-  return metadataStrings.key(string);
+    return metadataStrings.key(string);
 }
