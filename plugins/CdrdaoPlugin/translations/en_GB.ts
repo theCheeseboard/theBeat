@@ -219,28 +219,33 @@ Once the disc in the drive is erased, all the data on it will be gone forever.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="96"/>
         <location filename="../burnpopover.cpp" line="97"/>
+        <location filename="../burnpopover.cpp" line="98"/>
         <source>Burn %1</source>
         <translation>Burn %1</translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="105"/>
+        <location filename="../burnpopover.cpp" line="112"/>
+        <source>Unable to burn the disc because the required tools (%1) are not installed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../burnpopover.cpp" line="116"/>
         <source>Insert a CD-R or a CD-RW into the drive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="109"/>
+        <location filename="../burnpopover.cpp" line="120"/>
         <source>The CD-R in the drive has already been written.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="139"/>
+        <location filename="../burnpopover.cpp" line="150"/>
         <source>This playlist is too long to fit on the CD.</source>
         <translation>This playlist is too long to fit on the CD.</translation>
     </message>
     <message>
-        <location filename="../burnpopover.cpp" line="143"/>
+        <location filename="../burnpopover.cpp" line="154"/>
         <source>The CD in the drive is rewritable, so the burned CD may not work on older CD players.</source>
         <translation>The CD in the drive is rewritable, so the burned CD may not work on older CD players.</translation>
     </message>

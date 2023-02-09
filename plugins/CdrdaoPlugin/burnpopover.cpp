@@ -25,6 +25,7 @@
 #include "fullburnjob.h"
 #include <QDBusInterface>
 #include <QProcess>
+#include <QStandardPaths>
 #include <taglib/audioproperties.h>
 #include <taglib/fileref.h>
 #include <tjobmanager.h>
@@ -101,7 +102,17 @@ void BurnPopover::updateCd() {
     if (!d->diskObject) return;
     DriveInterface* drive = d->diskObject->interface<BlockInterface>()->drive();
 
-    if (!QList<DriveInterface::MediaFormat>({DriveInterface::CdR, DriveInterface::CdRw}).contains(drive->media())) {
+    auto cdrdaoPath = QStandardPaths::findExecutable("cdrdao");
+    auto ffmpegPath = QStandardPaths::findExecutable("ffmpeg");
+    if (cdrdaoPath.isEmpty() || ffmpegPath.isEmpty()) {
+        QStringList tools;
+        if (cdrdaoPath.isEmpty()) tools.append("cdrdao");
+        if (ffmpegPath.isEmpty()) tools.append("ffmpeg");
+
+        ui->warningText->setText(tr("Unable to burn the disc because the required tools (%1) are not installed.").arg(QLocale().createSeparatedList(tools)));
+        ui->warningFrame->setVisible(true);
+        ui->burnButton->setEnabled(false);
+    } else if (!QList<DriveInterface::MediaFormat>({DriveInterface::CdR, DriveInterface::CdRw}).contains(drive->media())) {
         ui->warningText->setText(tr("Insert a CD-R or a CD-RW into the drive."));
         ui->warningFrame->setVisible(true);
         ui->burnButton->setEnabled(false);

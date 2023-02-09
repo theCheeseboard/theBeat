@@ -20,6 +20,7 @@
 #include "qtmultimediamediaitem.h"
 
 #include "library/librarymanager.h"
+#include <QAudioOutput>
 #include <QDir>
 #include <QFileInfo>
 #include <QImage>
@@ -27,7 +28,6 @@
 #include <QMediaPlayer>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QAudioOutput>
 #include <helpers.h>
 #include <playlist.h>
 #include <statemanager.h>
@@ -37,11 +37,11 @@
 #include <visualisationmanager.h>
 
 struct QtMultimediaMediaItemPrivate {
-  static QAudioOutput* audioOutput;
+        static QAudioOutput* audioOutput;
         QMediaPlayer* player = nullptr;
-//        QAudioProbe* probe;
+        //        QAudioProbe* probe;
         QImage albumArt;
-        QUrl url;
+        QString url;
 
         QString title;
         QStringList artist;
@@ -59,13 +59,13 @@ QAudioOutput* QtMultimediaMediaItemPrivate::audioOutput = nullptr;
 QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) :
     MediaItem() {
     d = new QtMultimediaMediaItemPrivate();
-    d->url = url;
+    d->url = url.toString();
 
     if (!QtMultimediaMediaItemPrivate::audioOutput) {
         QtMultimediaMediaItemPrivate::audioOutput = new QAudioOutput();
 
         connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, QtMultimediaMediaItemPrivate::audioOutput, [=] {
-          QtMultimediaMediaItemPrivate::audioOutput->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
+            QtMultimediaMediaItemPrivate::audioOutput->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
         });
         QtMultimediaMediaItemPrivate::audioOutput->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
     }
@@ -84,7 +84,7 @@ QtMultimediaMediaItem::~QtMultimediaMediaItem() {
 void QtMultimediaMediaItem::preparePlayer() {
     if (d->player) return;
 
-    tDebug("QtMultimediaMediaItem") << "Preparing Qt Multimedia player for URL" << d->url.toString();
+    tDebug("QtMultimediaMediaItem") << "Preparing Qt Multimedia player for URL" << d->url;
 
     d->player = new QMediaPlayer(this);
     d->player->setSource(d->url);
@@ -104,72 +104,72 @@ void QtMultimediaMediaItem::preparePlayer() {
         }
 #endif
 
-        tWarn("QtMultimediaMediaItem") << "Qt Multimedia item" << d->url.toString() << "failed with error" << error << "description" << errorString;
+        tWarn("QtMultimediaMediaItem") << "Qt Multimedia item" << d->url << "failed with error" << error << "description" << errorString;
         emit this->error();
     });
     updateAlbumArt();
 
-    //TODO: Audio Probe
-//    d->probe = new QAudioProbe(this);
-//    d->probe->setSource(d->player);
-//    connect(d->probe, &QAudioProbe::audioBufferProbed, this, [=](QAudioBuffer buffer) {
-//        QAudioFormat format = buffer.format();
-//        if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::SignedInt) {
-//            QVector<qint16> bufferData;
-//            if (format.channelCount() == 2) {
-//                bufferData.reserve(buffer.sampleCount());
-//                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
-//                    qint16 sample = static_cast<qint16*>(buffer.data())[i] / 2 + static_cast<qint16*>(buffer.data())[i + 1] / 2;
-//                    bufferData.append(sample);
-//                }
-//            } else {
-//                bufferData.fill(0, buffer.sampleCount());
-//                memcpy(bufferData.data(), buffer.constData(), buffer.byteCount());
-//            }
-//
-//            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
-//        } else if (format.sampleSize() == 32 && format.sampleType() == QAudioFormat::Float) {
-//            QVector<qint16> bufferData;
-//            bufferData.reserve(buffer.sampleCount());
-//            if (format.channelCount() == 2) {
-//                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
-//                    float sample = static_cast<float*>(buffer.data())[i] / 2 + static_cast<float*>(buffer.data())[i + 1] / 2;
-//                    sample = sample * 32768;
-//                    if (sample > 32767) sample = 32767;
-//                    if (sample < -32768) sample = -32768;
-//                    bufferData.append(static_cast<qint16>(sample));
-//                    bufferData.append(sample);
-//                }
-//            } else {
-//                for (qint64 i = 0; i < buffer.sampleCount(); i++) {
-//                    float sample = static_cast<float*>(buffer.data())[i];
-//                    sample = sample * 32768;
-//                    if (sample > 32767) sample = 32767;
-//                    if (sample < -32768) sample = -32768;
-//                    bufferData.append(static_cast<qint16>(sample));
-//                }
-//            }
-//
-//            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
-//        } else {
-//            tDebug("QtMultimediaMediaItem") << "Weird format:";
-//            tDebug("QtMultimediaMediaItem") << "Sample size " << format.sampleSize() << "; Sample type " << format.sampleType() << "; Channels " << format.channelCount();
-//        }
-//    });
+    // TODO: Audio Probe
+    //    d->probe = new QAudioProbe(this);
+    //    d->probe->setSource(d->player);
+    //    connect(d->probe, &QAudioProbe::audioBufferProbed, this, [=](QAudioBuffer buffer) {
+    //        QAudioFormat format = buffer.format();
+    //        if (format.sampleSize() == 16 && format.sampleType() == QAudioFormat::SignedInt) {
+    //            QVector<qint16> bufferData;
+    //            if (format.channelCount() == 2) {
+    //                bufferData.reserve(buffer.sampleCount());
+    //                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
+    //                    qint16 sample = static_cast<qint16*>(buffer.data())[i] / 2 + static_cast<qint16*>(buffer.data())[i + 1] / 2;
+    //                    bufferData.append(sample);
+    //                }
+    //            } else {
+    //                bufferData.fill(0, buffer.sampleCount());
+    //                memcpy(bufferData.data(), buffer.constData(), buffer.byteCount());
+    //            }
+    //
+    //            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
+    //        } else if (format.sampleSize() == 32 && format.sampleType() == QAudioFormat::Float) {
+    //            QVector<qint16> bufferData;
+    //            bufferData.reserve(buffer.sampleCount());
+    //            if (format.channelCount() == 2) {
+    //                for (qint64 i = 0; i < buffer.sampleCount(); i += 2) {
+    //                    float sample = static_cast<float*>(buffer.data())[i] / 2 + static_cast<float*>(buffer.data())[i + 1] / 2;
+    //                    sample = sample * 32768;
+    //                    if (sample > 32767) sample = 32767;
+    //                    if (sample < -32768) sample = -32768;
+    //                    bufferData.append(static_cast<qint16>(sample));
+    //                    bufferData.append(sample);
+    //                }
+    //            } else {
+    //                for (qint64 i = 0; i < buffer.sampleCount(); i++) {
+    //                    float sample = static_cast<float*>(buffer.data())[i];
+    //                    sample = sample * 32768;
+    //                    if (sample > 32767) sample = 32767;
+    //                    if (sample < -32768) sample = -32768;
+    //                    bufferData.append(static_cast<qint16>(sample));
+    //                }
+    //            }
+    //
+    //            StateManager::instance()->visualisation()->provideSamples(bufferData.toList());
+    //        } else {
+    //            tDebug("QtMultimediaMediaItem") << "Weird format:";
+    //            tDebug("QtMultimediaMediaItem") << "Sample size " << format.sampleSize() << "; Sample type " << format.sampleType() << "; Channels " << format.channelCount();
+    //        }
+    //    });
 }
 
 void QtMultimediaMediaItem::updateAlbumArt() {
     if (d->player && d->player->metaData().keys().contains(QMediaMetaData::CoverArtImage)) {
         d->albumArt = d->player->metaData().value(QMediaMetaData::CoverArtImage).value<QImage>();
-//    } else if (d->player && d->player->metaData().keys().contains(QMediaMetaData::CoverArtUrlLarge)) {
-//        QUrl url = d->player->metaData().value(QMediaMetaData::CoverArtUrlLarge).toUrl();
-//        QNetworkReply* reply = d->mgr.get(QNetworkRequest(url));
-//        connect(reply, &QNetworkReply::finished, this, [=] {
-//            d->albumArt = QImage::fromData(reply->readAll());
-//            reply->deleteLater();
-//
-//            emit metadataChanged();
-//        });
+        //    } else if (d->player && d->player->metaData().keys().contains(QMediaMetaData::CoverArtUrlLarge)) {
+        //        QUrl url = d->player->metaData().value(QMediaMetaData::CoverArtUrlLarge).toUrl();
+        //        QNetworkReply* reply = d->mgr.get(QNetworkRequest(url));
+        //        connect(reply, &QNetworkReply::finished, this, [=] {
+        //            d->albumArt = QImage::fromData(reply->readAll());
+        //            reply->deleteLater();
+        //
+        //            emit metadataChanged();
+        //        });
     } else {
         Helpers::albumArt(d->url).then([=](QImage image) {
             d->albumArt = image;
@@ -179,11 +179,12 @@ void QtMultimediaMediaItem::updateAlbumArt() {
 }
 
 void QtMultimediaMediaItem::updateTaglib() {
-    if (!d->url.isLocalFile()) return;
+    QUrl url(d->url);
+    if (!url.isLocalFile()) return;
 #ifdef Q_OS_WIN
     TagLib::FileRef file(reinterpret_cast<const wchar_t*>(d->url.toLocalFile().constData()));
 #else
-    TagLib::FileRef file(d->url.toLocalFile().toUtf8());
+    TagLib::FileRef file(url.toLocalFile().toUtf8());
 #endif
     TagLib::Tag* tag = file.tag();
 
@@ -199,9 +200,10 @@ void QtMultimediaMediaItem::updateTaglib() {
 }
 
 void QtMultimediaMediaItem::loadLyrics() {
-    if (!d->url.isLocalFile()) return;
+    QUrl url(d->url);
+    if (!url.isLocalFile()) return;
 
-    QFileInfo file(d->url.toLocalFile());
+    QFileInfo file(url.toLocalFile());
     QFile lyricFile(file.dir().absoluteFilePath(file.completeBaseName() + ".lrc"));
     if (lyricFile.exists()) {
         lyricFile.open(QFile::ReadOnly);
@@ -227,9 +229,10 @@ void QtMultimediaMediaItem::stop() {
 }
 
 void QtMultimediaMediaItem::seek(quint64 ms) {
+    QUrl url(d->url);
     preparePlayer();
-    if (ms == 0 && d->url.isLocalFile() && (d->player->position() != 0 || d->firstPlay)) {
-        LibraryManager::instance()->bumpTrackPlayCount(d->url.toLocalFile());
+    if (ms == 0 && url.isLocalFile() && (d->player->position() != 0 || d->firstPlay)) {
+        LibraryManager::instance()->bumpTrackPlayCount(url.toLocalFile());
         d->firstPlay = false;
     }
     d->player->setPosition(ms);
@@ -246,16 +249,17 @@ quint64 QtMultimediaMediaItem::duration() {
 }
 
 QString QtMultimediaMediaItem::title() {
+    QUrl url(d->url);
     if (d->player && d->player->metaData().keys().contains(QMediaMetaData::Title)) {
         return d->player->metaData().value(QMediaMetaData::Title).toString();
     } else if (!d->title.isEmpty()) {
         return d->title;
     }
-    if (d->url.isLocalFile()) {
-        QFileInfo file(d->url.toLocalFile());
+    if (url.isLocalFile()) {
+        QFileInfo file(url.toLocalFile());
         return file.baseName();
     } else {
-        return d->url.toString();
+        return d->url;
     }
 }
 

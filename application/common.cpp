@@ -1,10 +1,10 @@
 #include "common.h"
 
-#include <QStringList>
 #include <QMenu>
-#include <statemanager.h>
-#include <burnmanager.h>
+#include <QStringList>
 #include <burnbackend.h>
+#include <burnmanager.h>
+#include <statemanager.h>
 
 QString Common::durationToString(quint64 ms, bool zeroIsInfinity) {
     if (zeroIsInfinity && ms == 0) return "∞";
@@ -30,7 +30,7 @@ void Common::showBurnMenu(QStringList files, QString title, QWidget* atButton) {
         QMenu* menu = new QMenu();
         menu->addSection(tr("Select Device"));
         for (BurnBackend* backend : backends) {
-            menu->addAction(backend->displayName(), [ = ] {
+            menu->addAction(backend->displayName(), [=] {
                 backend->burn(files, title, atButton->window());
             });
         }

@@ -23,32 +23,29 @@
 #include <QRegularExpression>
 
 struct BasicLrcFileLyricFormatPrivate {
-    QMap<quint64, QString> lyrics;
+        QMap<quint64, QString> lyrics;
 };
 
-BasicLrcFileLyricFormat::BasicLrcFileLyricFormat()
-    : AbstractLyricFormat()
-{
+BasicLrcFileLyricFormat::BasicLrcFileLyricFormat() :
+    AbstractLyricFormat() {
     d = new BasicLrcFileLyricFormatPrivate();
 }
 
-BasicLrcFileLyricFormat::~BasicLrcFileLyricFormat()
-{
+BasicLrcFileLyricFormat::~BasicLrcFileLyricFormat() {
     delete d;
 }
 
-BasicLrcFileLyricFormat*BasicLrcFileLyricFormat::create(QString contents)
-{
+BasicLrcFileLyricFormat* BasicLrcFileLyricFormat::create(QString contents) {
     BasicLrcFileLyricFormat* format = new BasicLrcFileLyricFormat();
     QRegularExpression lineExpression(QRegularExpression::anchoredPattern("\\[(.+)\\](.+)?"));
     QRegularExpression timecodeExpression("(.+):(.+)\\.(.+)");
-    for (const QString &line : contents.split("\n")) {
+    for (const QString& line : contents.split("\n")) {
         QRegularExpressionMatch match = lineExpression.match(line);
-        if (!match.hasMatch()) continue; //Not interested in this line
+        if (!match.hasMatch()) continue; // Not interested in this line
         QString timecode = match.captured(1);
         QString lyrics = match.captured(2);
 
-        if (!timecode.at(0).isDigit()) continue; //This is a tag
+        if (!timecode.at(0).isDigit()) continue; // This is a tag
         QRegularExpressionMatch timecodeMatch = timecodeExpression.match(timecode);
         QString minutes = timecodeMatch.captured(1).rightJustified(3, '0', true);
         QString seconds = timecodeMatch.captured(2).leftJustified(2, '0', true);
@@ -63,17 +60,19 @@ BasicLrcFileLyricFormat*BasicLrcFileLyricFormat::create(QString contents)
         timePoint += millis.toInt(&ok);
         if (!ok) continue;
 
-        format->d->lyrics.insert(timePoint, lyrics.trimmed());
+        auto trimmed = lyrics.trimmed();
+        if (!trimmed.isEmpty() || !format->d->lyrics.contains(timePoint)) {
+            format->d->lyrics.insert(timePoint, lyrics.trimmed());
+        }
     }
     return format;
 }
 
-QString BasicLrcFileLyricFormat::lyricsForTime(quint64 time, int offset)
-{
+QString BasicLrcFileLyricFormat::lyricsForTime(quint64 time, int offset) {
     QList<quint64> timePoints = d->lyrics.keys();
     for (auto timePoint = timePoints.crbegin(); timePoint != timePoints.crend(); timePoint++) {
         if (*timePoint <= time) {
-            //Correct lyric for offset = 0
+            // Correct lyric for offset = 0
             while (offset != 0) {
                 if (offset < 0) {
                     timePoint++;
@@ -91,12 +90,11 @@ QString BasicLrcFileLyricFormat::lyricsForTime(quint64 time, int offset)
     return "";
 }
 
-quint64 BasicLrcFileLyricFormat::timePointForTime(quint64 time, int offset)
-{
+quint64 BasicLrcFileLyricFormat::timePointForTime(quint64 time, int offset) {
     QList<quint64> timePoints = d->lyrics.keys();
     for (auto timePoint = timePoints.crbegin(); timePoint != timePoints.crend(); timePoint++) {
         if (*timePoint <= time) {
-            //Correct lyric for offset = 0
+            // Correct lyric for offset = 0
             while (offset != 0) {
                 if (offset < 0) {
                     timePoint++;
