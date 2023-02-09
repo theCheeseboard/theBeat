@@ -97,7 +97,7 @@ void QtMultimediaMediaItem::preparePlayer() {
     connect(d->player, &QMediaPlayer::durationChanged, this, &QtMultimediaMediaItem::durationChanged);
     connect(d->player, &QMediaPlayer::errorOccurred, this, [=](QMediaPlayer::Error error, QString errorString) {
 #ifdef Q_OS_WIN
-        if (error == QMediaPlayer::FormatError && d->url.isLocalFile() && QFileInfo(d->url.toLocalFile()).suffix() == "flac") {
+        if (error == QMediaPlayer::FormatError && QUrl(d->url).isLocalFile() && QFileInfo(QUrl(d->url).toLocalFile()).suffix() == "flac") {
             // Ignore
             tWarn("QtMultimediaMediaItem") << "Qt Multimedia item apparently failed with error" << error << "but since we're on Windows and this is a FLAC file we'll try anyway...";
             return;
@@ -182,7 +182,7 @@ void QtMultimediaMediaItem::updateTaglib() {
     QUrl url(d->url);
     if (!url.isLocalFile()) return;
 #ifdef Q_OS_WIN
-    TagLib::FileRef file(reinterpret_cast<const wchar_t*>(d->url.toLocalFile().constData()));
+    TagLib::FileRef file(reinterpret_cast<const wchar_t*>(QUrl(d->url).toLocalFile().constData()));
 #else
     TagLib::FileRef file(url.toLocalFile().toUtf8());
 #endif
