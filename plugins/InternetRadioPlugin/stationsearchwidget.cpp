@@ -43,7 +43,7 @@ StationSearchWidget::StationSearchWidget(QWidget* parent) :
     //    ui->titleLabel->setBackButtonShown(true);
 
     //    QList<RadioInfoClient::Station> stations = RadioInfoClient::topVoted();
-    connect(RadioInfoClient::instance(), &RadioInfoClient::ready, this, [=]() -> QCoro::Task<> {
+    connect(RadioInfoClient::instance(), &RadioInfoClient::ready, this, [this]() -> QCoro::Task<> {
         try {
             auto stations = co_await RadioInfoClient::topVoted();
             for (const RadioInfoClient::Station& station : stations) {

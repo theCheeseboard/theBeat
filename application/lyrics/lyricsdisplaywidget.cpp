@@ -20,23 +20,22 @@
 #include "lyricsdisplaywidget.h"
 #include "ui_lyricsdisplaywidget.h"
 
-#include <QPainter>
 #include "abstractlyricformat.h"
+#include <tpainter.h>
 #include <tvariantanimation.h>
 
 struct LyricsDisplayWidgetPrivate {
-    AbstractLyricFormat* lyrics = nullptr;
-    quint64 time = 0;
+        AbstractLyricFormat* lyrics = nullptr;
+        quint64 time = 0;
 
-    QStringList currentLyrics;
-    quint64 currentTimePoint = 0;
-    tVariantAnimation* scrollAnimation;
+        QStringList currentLyrics;
+        quint64 currentTimePoint = 0;
+        tVariantAnimation* scrollAnimation;
 };
 
-LyricsDisplayWidget::LyricsDisplayWidget(QWidget *parent) :
+LyricsDisplayWidget::LyricsDisplayWidget(QWidget* parent) :
     QWidget(parent),
-    ui(new Ui::LyricsDisplayWidget)
-{
+    ui(new Ui::LyricsDisplayWidget) {
     ui->setupUi(this);
     d = new LyricsDisplayWidgetPrivate();
 
@@ -45,39 +44,35 @@ LyricsDisplayWidget::LyricsDisplayWidget(QWidget *parent) :
     d->scrollAnimation->setEndValue(0.0);
     d->scrollAnimation->setCurrentTime(100);
     d->scrollAnimation->setEasingCurve(QEasingCurve::OutCubic);
-    connect(d->scrollAnimation, &tVariantAnimation::valueChanged, this, [=] {
+    connect(d->scrollAnimation, &tVariantAnimation::valueChanged, this, [this] {
         this->update();
     });
 }
 
-LyricsDisplayWidget::~LyricsDisplayWidget()
-{
+LyricsDisplayWidget::~LyricsDisplayWidget() {
     delete ui;
     if (d->lyrics) d->lyrics->deleteLater();
     delete d;
 }
 
-void LyricsDisplayWidget::setLyrics(AbstractLyricFormat*lyrics)
-{
+void LyricsDisplayWidget::setLyrics(AbstractLyricFormat* lyrics) {
     if (d->lyrics) d->lyrics->deleteLater();
     d->lyrics = lyrics;
     updateLyrics();
 }
 
-void LyricsDisplayWidget::setTime(quint64 time)
-{
+void LyricsDisplayWidget::setTime(quint64 time) {
     d->time = time;
     updateLyrics();
 }
 
-void LyricsDisplayWidget::updateLyrics()
-{
+void LyricsDisplayWidget::updateLyrics() {
     if (!d->lyrics) return;
 
     quint64 currentTimePoint = d->lyrics->timePointForTime(d->time);
     if (currentTimePoint == d->currentTimePoint) return;
 
-    //New lyrics!
+    // New lyrics!
     if (d->currentTimePoint > currentTimePoint) {
         d->scrollAnimation->setStartValue(-1.0);
     } else {
@@ -94,18 +89,15 @@ void LyricsDisplayWidget::updateLyrics()
     this->update();
 }
 
-QSize LyricsDisplayWidget::sizeHint() const
-{
+QSize LyricsDisplayWidget::sizeHint() const {
     return QWidget::sizeHint();
 }
 
-QSize LyricsDisplayWidget::minimumSizeHint() const
-{
+QSize LyricsDisplayWidget::minimumSizeHint() const {
     return QWidget::minimumSizeHint();
 }
 
-void LyricsDisplayWidget::paintEvent(QPaintEvent*event)
-{
+void LyricsDisplayWidget::paintEvent(QPaintEvent* event) {
     if (!d->lyrics) return;
 
     QFont font = this->font();
@@ -140,12 +132,13 @@ void LyricsDisplayWidget::paintEvent(QPaintEvent*event)
     lyricRect.moveBottom(lyricRect.top() - metrics.height() * 0.75);
 
     painter.setPen(QPen(grad, 3));
-    for (QString lyric : d->currentLyrics) {
+    for (const QString& lyric : d->currentLyrics) {
         QPointF center = lyricRect.center();
         lyricRect.setWidth(metrics.horizontalAdvance(lyric) + 1);
+        if (lyricRect.width() > this->width()) lyricRect.setWidth(this->width());
         lyricRect.moveCenter(center);
 
-        painter.drawText(lyricRect, Qt::AlignCenter, lyric);
+        tPainter(painter).drawSquashedText(lyricRect, Qt::AlignCenter, lyric);
         lyricRect.moveTop(lyricRect.bottom() + metrics.height() * 0.75);
     }
 }

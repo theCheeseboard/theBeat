@@ -20,12 +20,12 @@
 #include "radiopane.h"
 #include "ui_radiopane.h"
 
-#include <statemanager.h>
-#include <sourcemanager.h>
 #include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
 
 struct RadioPanePrivate {
-    PluginMediaSource* source;
+        PluginMediaSource* source;
 };
 
 RadioPane::RadioPane(QWidget* parent) :
@@ -42,14 +42,14 @@ RadioPane::RadioPane(QWidget* parent) :
 
     this->layout()->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
 
-    connect(ui->favouriteStations, &FavouriteStationsWidget::addStation, this, [ = ] {
+    connect(ui->favouriteStations, &FavouriteStationsWidget::addStation, this, [this] {
         ui->stackedWidget->setCurrentWidget(ui->searchPage);
     });
-    connect(ui->searchPage, &StationSearchWidget::done, this, [ = ] {
+    connect(ui->searchPage, &StationSearchWidget::done, this, [this] {
         ui->stackedWidget->setCurrentWidget(ui->favouriteStations);
     });
 
-    //TODO: Remove once favourite stations is implemented
+    // TODO: Remove once favourite stations is implemented
     ui->stackedWidget->setCurrentWidget(ui->searchPage);
 }
 
@@ -60,7 +60,6 @@ RadioPane::~RadioPane() {
     delete d;
 }
 
-AbstractLibraryBrowser::ListInformation RadioPane::currentListInformation()
-{
+AbstractLibraryBrowser::ListInformation RadioPane::currentListInformation() {
     return ListInformation();
 }

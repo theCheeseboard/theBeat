@@ -105,16 +105,18 @@ void TagEditor::markDirty() {
     popover->setDismissable(false);
 
     if (popover->parentWidget()) {
-      d->scrimClickConnection =
-          connect(tScrim::scrimForWidget(popover->parentWidget()),
-                  &tScrim::scrimClicked, this,
-                  [=] { on_titleLabel_backButtonClicked(); });
+        d->scrimClickConnection =
+            connect(tScrim::scrimForWidget(popover->parentWidget()),
+                &tScrim::scrimClicked, this,
+                [this] {
+            on_titleLabel_backButtonClicked();
+            });
     }
     d->clean = false;
 }
 
 void TagEditor::revert() {
-    //Close the file
+    // Close the file
     d->file = TagLib::FileRef();
 
     loadTag();

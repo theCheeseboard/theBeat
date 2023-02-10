@@ -22,17 +22,18 @@
 #include "pluginmediasource.h"
 
 struct SourceManagerPrivate {
-    QList<PluginMediaSource*> sources;
-    int padTop;
+        QList<PluginMediaSource*> sources;
+        int padTop;
 };
 
-SourceManager::SourceManager(QObject* parent) : QObject(parent) {
+SourceManager::SourceManager(QObject* parent) :
+    QObject(parent) {
     d = new SourceManagerPrivate();
 }
 
 void SourceManager::addSource(PluginMediaSource* source) {
     if (d->sources.contains(source)) return;
-    connect(source, &PluginMediaSource::destroyed, this, [ = ] {
+    connect(source, &PluginMediaSource::destroyed, this, [this, source] {
         removeSource(source);
     });
     d->sources.append(source);

@@ -97,7 +97,7 @@ LibraryManager::LibraryManager(QObject* parent) :
     }
 
     // Enumerate the Music directory
-    QTimer::singleShot(0, [=] {
+    QTimer::singleShot(0, [this] {
         QStringList musicDirectories = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
         for (QString dir : musicDirectories) {
             this->enumerateDirectory(dir, false, false);
@@ -118,7 +118,7 @@ void LibraryManager::enumerateDirectory(QString path, bool ignoreBlacklist, bool
     emit isProcessingChanged();
 
     LibraryEnumerateDirectoryJob* job = new LibraryEnumerateDirectoryJob(path, ignoreBlacklist, isUserAction);
-    connect(job, &LibraryEnumerateDirectoryJob::stateChanged, this, [=](tJob::State state) {
+    connect(job, &LibraryEnumerateDirectoryJob::stateChanged, this, [this](tJob::State state) {
         if (state == tJob::Finished) {
             d->isProcessing--;
             emit isProcessingChanged();
@@ -153,9 +153,9 @@ void LibraryManager::addTrack(QString path, bool updateOnly) {
     QVariantList paths, titles, artists, albums, durations, trackNumbers;
 
     paths.append(path);
-    titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
-    artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
-    albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
+    titles.append(tag->title().isEmpty() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
+    artists.append(tag->artist().isEmpty() ? QVariant(QMetaType(QMetaType::Type::QString)) : QString::fromStdString(tag->artist().to8Bit(true)));
+    albums.append(tag->album().isEmpty() ? QVariant(QMetaType(QMetaType::Type::QString)) : QString::fromStdString(tag->album().to8Bit(true)));
     durations.append(audioProperties->length() * 1000);
     trackNumbers.append(tag->track());
 
@@ -253,7 +253,7 @@ LibraryModel* LibraryManager::searchTracks(QString query) {
     q.bindValue(":query", query);
     q.exec();
 
-    model->setQuery(q);
+    model->setQuery(std::move(q));
     return model;
 }
 
@@ -292,7 +292,7 @@ LibraryModel* LibraryManager::tracksByArtist(QString artist) {
     q.bindValue(":artist", artist);
     q.exec();
 
-    model->setQuery(q);
+    model->setQuery(std::move(q));
     return model;
 }
 
@@ -303,7 +303,7 @@ LibraryModel* LibraryManager::tracksByAlbum(QString album) {
     q.bindValue(":album", album);
     q.exec();
 
-    model->setQuery(q);
+    model->setQuery(std::move(q));
     return model;
 }
 
@@ -394,7 +394,7 @@ LibraryModel* LibraryManager::tracksByPlaylist(int playlist) {
     q.bindValue(":playlist", playlist);
     q.exec();
 
-    model->setQuery(q);
+    model->setQuery(std::move(q));
     return model;
 }
 
@@ -437,7 +437,7 @@ LibraryModel* LibraryManager::smartPlaylist(SmartPlaylist smartPlaylist) {
                 q.bindValue(":fromDate", QDateTime::currentDateTime().addMonths(-1).toMSecsSinceEpoch());
                 q.exec();
 
-                model->setQuery(q);
+                model->setQuery(std::move(q));
                 break;
             }
         case LibraryManager::Random:

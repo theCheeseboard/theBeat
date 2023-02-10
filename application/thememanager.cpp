@@ -3,23 +3,22 @@
 #include <tsettings.h>
 
 struct ThemeManagerPrivate {
-    tSettings settings;
+        tSettings settings;
 };
 
-ThemeManager::ThemeManager(QObject *parent) : QObject(parent)
-{
+ThemeManager::ThemeManager(QObject* parent) :
+    QObject(parent) {
     d = new ThemeManagerPrivate();
 
-    connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
+    connect(&d->settings, &tSettings::settingChanged, this, [this](QString key, QVariant value) {
         if (key == "theme/mode") updatePalette();
     });
 
     updatePalette();
 }
 
-void ThemeManager::updatePalette()
-{
-    //Get the accent colour
+void ThemeManager::updatePalette() {
+    // Get the accent colour
     QSettings accentDetection("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM", QSettings::NativeFormat);
     QColor accentCol(QRgb(accentDetection.value("ColorizationColor", 0xC4003296).toInt() & 0x00FFFFFF));
 

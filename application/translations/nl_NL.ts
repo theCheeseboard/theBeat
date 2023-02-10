@@ -208,7 +208,7 @@
         <translation>Verwijderen uit Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.cpp" line="+39"/>
+        <location filename="../libraryerrorpopover.cpp" line="+36"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
         <translation>Het lijkt erop dat het bestand zoek is geraakt. Als jij wel weet waar het is, laat het ons dan weten zodat we het nummer kunnen afspelen.</translation>
     </message>

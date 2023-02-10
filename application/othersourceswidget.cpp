@@ -34,10 +34,10 @@ OtherSourcesWidget::OtherSourcesWidget(QWidget* parent) :
     ui->setupUi(this);
 
     d = new OtherSourcesWidgetPrivate();
-    ui->sourcesList->setFixedWidth(SC_DPI(300));
-    ui->sourcesList->setIconSize(SC_DPI_T(QSize(32, 32), QSize));
+    ui->sourcesList->setFixedWidth(300);
+    ui->sourcesList->setIconSize(QSize(32, 32));
 
-    connect(StateManager::instance()->sources(), &SourceManager::sourceAdded, this, [=](PluginMediaSource* source) {
+    connect(StateManager::instance()->sources(), &SourceManager::sourceAdded, this, [this](PluginMediaSource* source) {
         QListWidgetItem* item = new QListWidgetItem();
         ui->sourcesList->addItem(item);
 
@@ -55,7 +55,7 @@ OtherSourcesWidget::OtherSourcesWidget(QWidget* parent) :
 
         ui->mainStack->setCurrentWidget(ui->sourcesPage);
     });
-    connect(StateManager::instance()->sources(), &SourceManager::sourceRemoved, this, [=](PluginMediaSource* source) {
+    connect(StateManager::instance()->sources(), &SourceManager::sourceRemoved, this, [this](PluginMediaSource* source) {
         QListWidgetItem* item = ui->sourcesList->takeItem(ui->sourcesList->row(d->listItems.key(source)));
         d->listItems.remove(item);
         ui->stackedWidget->removeWidget(source->widget());

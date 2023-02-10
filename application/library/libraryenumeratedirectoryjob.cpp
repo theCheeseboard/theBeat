@@ -20,31 +20,32 @@
 #include "libraryenumeratedirectoryjob.h"
 
 #include "libraryenumeratedirectoryjobwidget.h"
-#include <QSqlQuery>
-#include <tnotification.h>
-#include <tpromise.h>
+#include "librarymanager.h"
 #include <QDirIterator>
+#include <QSqlQuery>
+#include <taglib/audioproperties.h>
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
-#include <taglib/audioproperties.h>
-#include "librarymanager.h"
+#include <tnotification.h>
+#include <tpromise.h>
 
 struct LibraryEnumerateDirectoryJobPrivate {
-    QString path;
-    bool ignoreBlacklist;
-    bool isUserAction;
+        QString path;
+        bool ignoreBlacklist;
+        bool isUserAction;
 
-    quint64 progress = 0;
-    quint64 total = 0;
+        quint64 progress = 0;
+        quint64 total = 0;
 
-    static QMutex mutex;
+        static QMutex mutex;
 
-    tJob::State state = tJob::Processing;
+        tJob::State state = tJob::Processing;
 };
 
 QMutex LibraryEnumerateDirectoryJobPrivate::mutex = QMutex();
 
-LibraryEnumerateDirectoryJob::LibraryEnumerateDirectoryJob(QString path, bool ignoreBlacklist, bool isUserAction, QObject* parent) : tJob(parent) {
+LibraryEnumerateDirectoryJob::LibraryEnumerateDirectoryJob(QString path, bool ignoreBlacklist, bool isUserAction, QObject* parent) :
+    tJob(parent) {
     d = new LibraryEnumerateDirectoryJobPrivate();
     d->path = path;
     d->ignoreBlacklist = ignoreBlacklist;
@@ -54,7 +55,6 @@ LibraryEnumerateDirectoryJob::LibraryEnumerateDirectoryJob(QString path, bool ig
 }
 
 LibraryEnumerateDirectoryJob::~LibraryEnumerateDirectoryJob() {
-
 }
 
 void LibraryEnumerateDirectoryJob::performEnumeration() {
@@ -64,13 +64,13 @@ void LibraryEnumerateDirectoryJob::performEnumeration() {
         blacklistedPaths.append(blacklistQuery.value("path").toString());
     }
 
-    tPromise<int>::runOnNewThread([ = ](tPromiseFunctions<int>::SuccessFunction res, tPromiseFunctions<int>::FailureFunction rej) {
+    tPromise<int>::runOnNewThread([this, blacklistedPaths](tPromiseFunctions<int>::SuccessFunction res, tPromiseFunctions<int>::FailureFunction rej) {
         Q_UNUSED(rej)
 
-        //Lock the mutex
+        // Lock the mutex
         d->mutex.lock();
 
-        //Figure out the number of files to track
+        // Figure out the number of files to track
         quint64 totalFiles = 0;
         QDirIterator trackerIterator(d->path, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
         while (trackerIterator.hasNext()) {
@@ -98,9 +98,9 @@ void LibraryEnumerateDirectoryJob::performEnumeration() {
             if (!tag) continue;
 
             paths.append(path);
-            titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromWCharArray(tag->title().toCWString()));
-            artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromWCharArray(tag->artist().toCWString()));
-            albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromWCharArray(tag->album().toCWString()));
+            titles.append(tag->title().isEmpty() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromWCharArray(tag->title().toCWString()));
+            artists.append(tag->artist().isEmpty() ? QVariant(QMetaType(QMetaType::Type::QString)) : QString::fromWCharArray(tag->artist().toCWString()));
+            albums.append(tag->album().isEmpty() ? QVariant(QMetaType(QMetaType::Type::QString)) : QString::fromWCharArray(tag->album().toCWString()));
             durations.append(audioProperties->length() * 1000);
             trackNumbers.append(tag->track());
 
@@ -122,7 +122,7 @@ void LibraryEnumerateDirectoryJob::performEnumeration() {
         for (int i = 0; i < paths.count(); i += 50) {
             QSqlQuery q(db.db);
             q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
-                "UPDATE SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd");
+                      "UPDATE SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd");
             q.bindValue(":path", paths.mid(i, 50));
             q.bindValue(":title", titles.mid(i, 50));
             q.bindValue(":artist", artists.mid(i, 50));
@@ -147,7 +147,7 @@ void LibraryEnumerateDirectoryJob::performEnumeration() {
         d->mutex.unlock();
 
         res(rowsAffected);
-    })->then([ = ](int result) {
+    })->then([this](int result) {
         if (d->isUserAction) {
             tNotification* notification = new tNotification();
             notification->setSummary(tr("Folder Added"));

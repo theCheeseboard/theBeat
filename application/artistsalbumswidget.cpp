@@ -168,7 +168,7 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
             rect.moveTop(ui->topWidget->height() / 2 - rect.height() / 2);
 
             // Blur the background
-            paintCalculator.addRect(rect, [=](QRectF paintBounds) {
+            paintCalculator.addRect(rect, [this, painter](QRectF paintBounds) {
                 int radius = 30;
                 QGraphicsBlurEffect* blur = new QGraphicsBlurEffect;
                 blur->setBlurRadius(radius);
@@ -187,11 +187,11 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
             rightRect.moveRight(ui->topWidget->width());
             rightRect.moveTop(d->topPadding + (ui->topWidget->height() - d->topPadding) / 2 - rightRect.height() / 2);
 
-            paintCalculator.addRect(rightRect, [=](QRectF paintBounds) {
+            paintCalculator.addRect(rightRect, [this, painter, backgroundCol](QRectF paintBounds) {
                 painter->setBrush(backgroundCol);
                 painter->setPen(Qt::transparent);
                 painter->drawRect(0, 0, ui->topWidget->width(), ui->topWidget->height());
-                painter->drawImage(paintBounds, d->playlistBackground.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                painter->drawImage(paintBounds, d->playlistBackground.scaled(paintBounds.size().toSize(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
             });
 
             ui->buttonSpacer->setFixedWidth(rightRect.width());

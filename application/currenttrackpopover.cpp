@@ -39,7 +39,7 @@ CurrentTrackPopover::CurrentTrackPopover(ControlStrip* controlStrip, QWidget* pa
     d = new CurrentTrackPopoverPrivate();
     d->controlStrip = controlStrip;
 
-    ui->titleLabel->setFixedWidth(SC_DPI(300));
+    ui->titleLabel->setFixedWidth(300);
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
 
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &CurrentTrackPopover::updateCurrentItem);
@@ -48,14 +48,14 @@ CurrentTrackPopover::CurrentTrackPopover(ControlStrip* controlStrip, QWidget* pa
     updateState();
     updateRightPane(true);
 
-    QSize iconSize = SC_DPI_T(QSize(32, 32), QSize);
-    QSize bigIconSize = SC_DPI_T(QSize(64, 64), QSize);
+    QSize iconSize(32, 32);
+    QSize bigIconSize(64, 64);
 
     ui->skipBackButton->setIconSize(iconSize);
     ui->playButton->setIconSize(bigIconSize);
     ui->skipNextButton->setIconSize(iconSize);
 
-    connect(StateManager::instance()->visualisation(), &VisualisationManager::visualisationUpdated, this, [=] {
+    connect(StateManager::instance()->visualisation(), &VisualisationManager::visualisationUpdated, this, [this] {
         this->update();
     });
 
@@ -100,7 +100,7 @@ void CurrentTrackPopover::updateCurrentItem() {
     if (d->currentItem) {
         connect(d->currentItem, &MediaItem::metadataChanged, this, &CurrentTrackPopover::updateMetadata);
         connect(d->currentItem, &MediaItem::elapsedChanged, this, &CurrentTrackPopover::updateBar);
-        connect(d->currentItem, &MediaItem::elapsedChanged, this, [=] {
+        connect(d->currentItem, &MediaItem::elapsedChanged, this, [this] {
             this->updateRightPane(false);
         });
         connect(d->currentItem, &MediaItem::durationChanged, this, &CurrentTrackPopover::updateBar);

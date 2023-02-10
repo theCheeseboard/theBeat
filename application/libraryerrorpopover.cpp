@@ -7,13 +7,12 @@
 #include "library/librarymodel.h"
 
 struct LibraryErrorPopoverPrivate {
-    QString originalPath;
+        QString originalPath;
 };
 
-LibraryErrorPopover::LibraryErrorPopover(QWidget *parent) :
+LibraryErrorPopover::LibraryErrorPopover(QWidget* parent) :
     QWidget(parent),
-    ui(new Ui::LibraryErrorPopover)
-{
+    ui(new Ui::LibraryErrorPopover) {
     ui->setupUi(this);
     d = new LibraryErrorPopoverPrivate();
 
@@ -22,14 +21,12 @@ LibraryErrorPopover::LibraryErrorPopover(QWidget *parent) :
     ui->removeButton->setProperty("type", "destructive");
 }
 
-LibraryErrorPopover::~LibraryErrorPopover()
-{
+LibraryErrorPopover::~LibraryErrorPopover() {
     delete d;
     delete ui;
 }
 
-void LibraryErrorPopover::setData(QModelIndex index)
-{
+void LibraryErrorPopover::setData(QModelIndex index) {
     d->originalPath = index.data(LibraryModel::PathRole).toString();
 
     switch (index.data(LibraryModel::ErrorRole).value<LibraryModel::Errors>()) {
@@ -41,23 +38,20 @@ void LibraryErrorPopover::setData(QModelIndex index)
     }
 }
 
-void LibraryErrorPopover::on_titleLabel_backButtonClicked()
-{
+void LibraryErrorPopover::on_titleLabel_backButtonClicked() {
     emit rejected();
 }
 
-void LibraryErrorPopover::on_removeButton_clicked()
-{
+void LibraryErrorPopover::on_removeButton_clicked() {
     LibraryManager::instance()->removeTrack(d->originalPath);
     emit rejected();
 }
 
-void LibraryErrorPopover::on_locateButton_clicked()
-{
+void LibraryErrorPopover::on_locateButton_clicked() {
     QFileDialog* dialog = new QFileDialog(this);
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::ExistingFile);
-    connect(dialog, &QFileDialog::fileSelected, this, [ = ](QString file) {
+    connect(dialog, &QFileDialog::fileSelected, this, [this](QString file) {
         LibraryManager::instance()->relocateTrack(d->originalPath, file);
         emit accepted(file);
     });

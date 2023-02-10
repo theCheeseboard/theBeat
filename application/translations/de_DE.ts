@@ -216,7 +216,7 @@
         <translation>Aus der Bibliothek entfernen</translation>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.cpp" line="+39"/>
+        <location filename="../libraryerrorpopover.cpp" line="+36"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
         <translation>Sieht so aus als wäre die Datei untergetaucht. Wenn du weißt wo sie ist, sag uns bescheid, damit wir den Titel spielen können.</translation>
     </message>

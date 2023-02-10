@@ -212,7 +212,7 @@
         <translation>Fjern fra bibliotek</translation>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.cpp" line="+39"/>
+        <location filename="../libraryerrorpopover.cpp" line="+36"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
         <translation>Det ser ud til at filen er gået i skjul. Hvis du ved hvor den er, lad os gerne vide det så vi kan afspille sangen.</translation>
     </message>

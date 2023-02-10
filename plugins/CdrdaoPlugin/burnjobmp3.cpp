@@ -122,7 +122,7 @@ QCoro::Task<> BurnJobMp3::performNextAction() {
         QString sourceFile = d->sourceFiles.at(d->nextItem);
         QProcess* ffmpeg = new QProcess();
         ffmpeg->setWorkingDirectory(d->workDir.path());
-        connect(ffmpeg, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=](int exitCode, QProcess::ExitStatus status) {
+        connect(ffmpeg, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [this, ffmpeg](int exitCode, QProcess::ExitStatus status) {
             if (d->cancelNext) {
                 fail(tr("Cancelled"));
                 return;
@@ -160,7 +160,7 @@ QCoro::Task<> BurnJobMp3::performNextAction() {
         QProcess* process = new QProcess();
         process->setProcessChannelMode(QProcess::MergedChannels);
         process->setWorkingDirectory(d->workDir.path());
-        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=](int exitCode, QProcess::ExitStatus status) {
+        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [this, process](int exitCode, QProcess::ExitStatus status) {
             if (exitCode != 0) {
                 if (d->cancelNext) {
                     fail(tr("Cancelled"));
@@ -199,7 +199,7 @@ QCoro::Task<> BurnJobMp3::performNextAction() {
         QProcess* process = new QProcess();
         process->setProcessChannelMode(QProcess::MergedChannels);
         process->setWorkingDirectory(d->workDir.path());
-        connect(process, &QProcess::readyRead, this, [=] {
+        connect(process, &QProcess::readyRead, this, [this, process] {
             QByteArray peek = process->peek(1024);
             while (process->canReadLine() || peek.contains('\r')) {
                 QString line;
@@ -262,7 +262,7 @@ QCoro::Task<> BurnJobMp3::performNextAction() {
                 peek = process->peek(1024);
             }
         });
-        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=](int exitCode, QProcess::ExitStatus status) {
+        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [this, process](int exitCode, QProcess::ExitStatus status) {
             if (exitCode != 0) {
                 if (d->cancelNext) {
                     fail(tr("Cancelled"));

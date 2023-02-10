@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget* parent) :
     menu->addAction(ui->actionExit);
 
     ui->menuButton->setIcon(tApplication::applicationIcon());
-    ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
+    ui->menuButton->setIconSize(QSize(24, 24));
     ui->menuButton->setMenu(menu);
 #endif
     commandPaletteActionScope->addMenuBar(ui->menuBar);
@@ -177,11 +177,11 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->queueStack->setCurrentAnimation(tStackedWidget::Fade);
     this->setWindowIcon(ui->menuButton->windowIcon());
 
-    connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [=] {
+    connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [this] {
         ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
 
         // Sometimes the animation breaks it
-        QTimer::singleShot(500, [=] {
+        QTimer::singleShot(500, [this] {
             ui->queueStack->setCurrentWidget(StateManager::instance()->playlist()->items().isEmpty() ? ui->queuePromptPage : ui->queueListPage);
         });
     });
@@ -191,7 +191,7 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->albumsPage->setType(ArtistsAlbumsWidget::Albums);
 
     ui->queueWidget->installEventFilter(this);
-    ui->queueWidget->setFixedWidth(SC_DPI(300));
+    ui->queueWidget->setFixedWidth(300);
     ui->queueWidget->setAcceptDrops(true);
     ui->queueList->setModel(new PlaylistModel);
     ui->queueList->setItemDelegate(new PlaylistDelegate());
@@ -225,14 +225,14 @@ MainWindow::MainWindow(QWidget* parent) :
         this->ff10();
     });
 
-    QTimer::singleShot(0, this, [=] {
+    QTimer::singleShot(0, this, [this] {
         resizeEvent(nullptr);
     });
 
     auto thumbnail = tWindowThumbnail::thumbnailFor(this);
 
     if (thumbnail) {
-        thumbnail->setToolbar(QList<QAction*> { ui->actionSkip_Back, ui->actionPlayPause, ui->actionSkip_Forward });
+        thumbnail->setToolbar(QList<QAction*>{ui->actionSkip_Back, ui->actionPlayPause, ui->actionSkip_Forward});
     }
 
     connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {

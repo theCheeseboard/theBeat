@@ -45,7 +45,7 @@ UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent) :
     d = new UserPlaylistsWidgetPrivate();
 
     connect(LibraryManager::instance(), &LibraryManager::playlistsChanged, this, &UserPlaylistsWidget::updatePlaylists);
-    connect(LibraryManager::instance(), &LibraryManager::playlistChanged, this, [=](int id) {
+    connect(LibraryManager::instance(), &LibraryManager::playlistChanged, this, [this](int id) {
         if (id == d->currentPlaylist) loadPlaylist(id);
     });
     updatePlaylists();
@@ -153,7 +153,7 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
             }
         }
         menu->addSection(tr("For %1").arg(QLocale().quoteString(playlistName)));
-        menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, [=] {
+        menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, [this, playlists, playlistName] {
             bool ok;
             QString name = tInputDialog::getText(this->window(), tr("Rename"), tr("What name do you want to give to this playlist?"), QLineEdit::Normal, playlistName, &ok);
             if (ok) {
@@ -162,27 +162,27 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
             }
         });
 
-        //TODO: Reimplement file export
-//        menu->addAction(QIcon::fromTheme("document-export"), tr("Export"), this, [=] {
-//            QFileDialog* dialog = new QFileDialog(this);
-//            dialog->setAcceptMode(QFileDialog::AcceptOpen);
-//            dialog->setNameFilters({"M3U8 Playlists (*.m3u8)"});
-//            dialog->setFileMode(QFileDialog::AnyFile);
-//            connect(dialog, &QFileDialog::fileSelected, this, [=](QString file) {
-//                QMediaPlaylist playlist;
-//                LibraryModel* model = LibraryManager::instance()->tracksByPlaylist(playlists.first());
-//
-//                for (int i = 0; i < model->rowCount(); i++) {
-//                    QModelIndex index = model->index(i, 0);
-//                    playlist.addMedia(QMediaContent(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString())));
-//                }
-//
-//                model->deleteLater();
-//                playlist.save(QUrl::fromLocalFile(file), "m3u8");
-//            });
-//            connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
-//            dialog->open();
-//        });
+        // TODO: Reimplement file export
+        //        menu->addAction(QIcon::fromTheme("document-export"), tr("Export"), this, [=] {
+        //            QFileDialog* dialog = new QFileDialog(this);
+        //            dialog->setAcceptMode(QFileDialog::AcceptOpen);
+        //            dialog->setNameFilters({"M3U8 Playlists (*.m3u8)"});
+        //            dialog->setFileMode(QFileDialog::AnyFile);
+        //            connect(dialog, &QFileDialog::fileSelected, this, [=](QString file) {
+        //                QMediaPlaylist playlist;
+        //                LibraryModel* model = LibraryManager::instance()->tracksByPlaylist(playlists.first());
+        //
+        //                for (int i = 0; i < model->rowCount(); i++) {
+        //                    QModelIndex index = model->index(i, 0);
+        //                    playlist.addMedia(QMediaContent(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString())));
+        //                }
+        //
+        //                model->deleteLater();
+        //                playlist.save(QUrl::fromLocalFile(file), "m3u8");
+        //            });
+        //            connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
+        //            dialog->open();
+        //        });
 
         menu->addSeparator();
 
@@ -190,7 +190,7 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
         removeMenu->setIcon(QIcon::fromTheme("edit-delete"));
         removeMenu->setTitle(tr("Remove"));
         removeMenu->addSection(tr("Are you sure?"));
-        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [=] {
+        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [this, playlists] {
             LibraryManager::instance()->removePlaylist(playlists.first());
             if (d->currentPlaylist == playlists.first()) ui->stackedWidget->setCurrentWidget(ui->mainPage);
         });
@@ -202,7 +202,7 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
         removeMenu->setIcon(QIcon::fromTheme("edit-delete"));
         removeMenu->setTitle(tr("Remove"));
         removeMenu->addSection(tr("Are you sure?"));
-        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [=] {
+        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [playlists] {
             for (int playlist : playlists) {
                 LibraryManager::instance()->removePlaylist(playlist);
             }

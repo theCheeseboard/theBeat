@@ -46,7 +46,7 @@ FullBurnJob::FullBurnJob(DiskObject* diskObject, AbstractBurnJob* mainBurnJob, Q
     connect(d->mainBurnJob, &AbstractBurnJob::descriptionChanged, this, &FullBurnJob::descriptionChanged);
     connect(d->mainBurnJob, &AbstractBurnJob::progressChanged, this, &FullBurnJob::progressChanged);
     connect(d->mainBurnJob, &AbstractBurnJob::totalProgressChanged, this, &FullBurnJob::totalProgressChanged);
-    connect(d->mainBurnJob, &AbstractBurnJob::stateChanged, this, [=](AbstractBurnJob::State state) {
+    connect(d->mainBurnJob, &AbstractBurnJob::stateChanged, this, [this](AbstractBurnJob::State state) {
         emit stateChanged(state);
 
         if (!d->shouldUnlock) return;

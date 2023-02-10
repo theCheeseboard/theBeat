@@ -214,7 +214,7 @@
         <translation>Kitaplıktan Kaldır</translation>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.cpp" line="+39"/>
+        <location filename="../libraryerrorpopover.cpp" line="+36"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
         <translation>Görünüşe göre dosya saklanıyor. Nerede olduğunu biliyorsanız, parçayı çalabilmemiz için bize bildirin.</translation>
     </message>

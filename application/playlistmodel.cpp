@@ -26,9 +26,9 @@
 #include <QPainter>
 #include <QSet>
 #include <QUrl>
+#include <libcontemporary_global.h>
 #include <playlist.h>
 #include <statemanager.h>
-#include <libcontemporary_global.h>
 #include <tpaintcalculator.h>
 
 struct PlaylistModelPrivate {
@@ -44,16 +44,16 @@ PlaylistModel::PlaylistModel(QObject* parent) :
     QAbstractListModel(parent) {
     d = new PlaylistModelPrivate();
 
-    connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, [=] {
+    connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, [this] {
         emit dataChanged(index(0), index(rowCount()));
     });
-    connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [=] {
+    connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [this] {
         for (MediaItem* item : StateManager::instance()->playlist()->items()) {
             if (!d->knownItems.contains(item)) {
-                connect(item, &MediaItem::metadataChanged, this, [=] {
+                connect(item, &MediaItem::metadataChanged, this, [this] {
                     emit dataChanged(index(0), index(rowCount()));
                 });
-                connect(item, &MediaItem::destroyed, this, [=] {
+                connect(item, &MediaItem::destroyed, this, [this, item] {
                     d->knownItems.remove(item);
                 });
                 d->knownItems.insert(item);
@@ -63,7 +63,7 @@ PlaylistModel::PlaylistModel(QObject* parent) :
         emit dataChanged(index(0), index(rowCount()));
     });
 
-    connect(this, &PlaylistModel::dataChanged, this, [=](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
+    connect(this, &PlaylistModel::dataChanged, this, [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
         invalidateDrawTypes(topLeft.row());
     });
 }

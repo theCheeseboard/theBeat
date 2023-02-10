@@ -32,10 +32,10 @@ DriveWatcher::DriveWatcher(QObject* parent) :
     QObject{parent} {
     d = new DriveWatcherPrivate();
 
-    connect(DriveObjectManager::instance(), &DriveObjectManager::diskAdded, this, [=](DiskObject* disk) {
+    connect(DriveObjectManager::instance(), &DriveObjectManager::diskAdded, this, [this](DiskObject* disk) {
         update();
     });
-    connect(DriveObjectManager::instance(), &DriveObjectManager::diskRemoved, this, [=](DiskObject* disk) {
+    connect(DriveObjectManager::instance(), &DriveObjectManager::diskRemoved, this, [this](DiskObject* disk) {
         update();
     });
     update();

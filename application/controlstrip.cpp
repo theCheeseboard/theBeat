@@ -54,12 +54,12 @@ ControlStrip::ControlStrip(QWidget* parent) :
 
     d = new ControlStripPrivate();
 
-    ui->playPauseButton->setIconSize(SC_DPI_T(QSize(32, 32), QSize));
+    ui->playPauseButton->setIconSize(QSize(32, 32));
     connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, &ControlStrip::updateState);
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &ControlStrip::updateCurrentItem);
     connect(StateManager::instance()->playlist(), &Playlist::repeatOneChanged, ui->repeatOneButton, &QToolButton::setChecked);
     connect(StateManager::instance()->playlist(), &Playlist::shuffleChanged, ui->shuffleButton, &QToolButton::setChecked);
-    connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [=] {
+    connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [this] {
         ui->volumeSlider->setValue(StateManager::instance()->playlist()->volume() * 100);
     });
     ui->volumeSlider->setValue(StateManager::instance()->playlist()->volume() * 100);
@@ -73,10 +73,10 @@ ControlStrip::ControlStrip(QWidget* parent) :
     d->volumeBarAnim = new tVariantAnimation(this);
     d->volumeBarAnim->setDuration(500);
     d->volumeBarAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(d->volumeBarAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(d->volumeBarAnim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
         this->setFixedHeight(value.toInt());
     });
-    connect(d->volumeBarAnim, &tVariantAnimation::finished, this, [=] {
+    connect(d->volumeBarAnim, &tVariantAnimation::finished, this, [this] {
         if (d->volumeBarAnim->endValue().toInt() != 0) this->setFixedHeight(QWIDGETSIZE_MAX);
     });
 
@@ -84,11 +84,11 @@ ControlStrip::ControlStrip(QWidget* parent) :
 
     QMenu* repeatAllMenu = new QMenu();
     repeatAllMenu->addSection(tr("Repeat Options"));
-    QAction* playQueueAction = repeatAllMenu->addAction(tr("Repeat Play Queue"), [=] {
+    QAction* playQueueAction = repeatAllMenu->addAction(tr("Repeat Play Queue"), [this] {
         d->settings.setValue("playback/repeatAll", !StateManager::instance()->playlist()->repeatAll());
     });
     playQueueAction->setCheckable(true);
-    connect(StateManager::instance()->playlist(), &Playlist::repeatAllChanged, this, [=](bool repeatAll) {
+    connect(StateManager::instance()->playlist(), &Playlist::repeatAllChanged, this, [this](bool repeatAll) {
         d->settings.setValue("playback/repeatAll", repeatAll);
     });
     connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
@@ -113,7 +113,7 @@ ControlStrip::ControlStrip(QWidget* parent) :
     });
     ui->playPauseButton->setMenu(pauseMenu);
 
-    connect(StateManager::instance()->controlStrip(), &ControlStripManager::buttonAdded, this, [=](QWidget* button) {
+    connect(StateManager::instance()->controlStrip(), &ControlStripManager::buttonAdded, this, [this](QWidget* button) {
         ui->customButtonsLayout->addWidget(button);
     });
 
@@ -352,10 +352,10 @@ bool ControlStrip::eventFilter(QObject* watched, QEvent* event) {
         if (event->type() == QEvent::Enter) {
             tVariantAnimation* anim = new tVariantAnimation(this);
             anim->setStartValue(ui->volumeSlider->width());
-            anim->setEndValue(SC_DPI(150));
+            anim->setEndValue(150);
             anim->setDuration(500);
             anim->setEasingCurve(QEasingCurve::OutCubic);
-            connect(anim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+            connect(anim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
                 ui->volumeSlider->setFixedWidth(value.toInt());
                 ui->volumeWidget->updateGeometry();
             });
@@ -367,7 +367,7 @@ bool ControlStrip::eventFilter(QObject* watched, QEvent* event) {
             anim->setEndValue(0);
             anim->setDuration(500);
             anim->setEasingCurve(QEasingCurve::OutCubic);
-            connect(anim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+            connect(anim, &tVariantAnimation::valueChanged, this, [this](QVariant value) {
                 ui->volumeSlider->setFixedWidth(value.toInt());
                 ui->volumeWidget->updateGeometry();
             });

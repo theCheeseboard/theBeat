@@ -199,7 +199,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libraryerrorpopover.cpp" line="+39"/>
+        <location filename="../libraryerrorpopover.cpp" line="+36"/>
         <source>Looks like the file has gone into hiding. If you know where it is, let us know so we can play the track.</source>
         <translation type="unfinished"></translation>
     </message>

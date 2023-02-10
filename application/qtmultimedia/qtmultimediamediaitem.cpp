@@ -88,14 +88,14 @@ void QtMultimediaMediaItem::preparePlayer() {
 
     d->player = new QMediaPlayer(this);
     d->player->setSource(d->url);
-    connect(d->player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
+    connect(d->player, &QMediaPlayer::mediaStatusChanged, this, [this](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::EndOfMedia) emit done();
     });
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::metadataChanged);
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::updateAlbumArt);
     connect(d->player, &QMediaPlayer::positionChanged, this, &QtMultimediaMediaItem::elapsedChanged);
     connect(d->player, &QMediaPlayer::durationChanged, this, &QtMultimediaMediaItem::durationChanged);
-    connect(d->player, &QMediaPlayer::errorOccurred, this, [=](QMediaPlayer::Error error, QString errorString) {
+    connect(d->player, &QMediaPlayer::errorOccurred, this, [this](QMediaPlayer::Error error, QString errorString) {
 #ifdef Q_OS_WIN
         if (error == QMediaPlayer::FormatError && QUrl(d->url).isLocalFile() && QFileInfo(QUrl(d->url).toLocalFile()).suffix() == "flac") {
             // Ignore
@@ -171,7 +171,7 @@ void QtMultimediaMediaItem::updateAlbumArt() {
         //            emit metadataChanged();
         //        });
     } else {
-        Helpers::albumArt(d->url).then([=](QImage image) {
+        Helpers::albumArt(d->url).then([this](QImage image) {
             d->albumArt = image;
             emit metadataChanged();
         });

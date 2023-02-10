@@ -35,16 +35,16 @@ BurnJobWidget::BurnJobWidget(AbstractBurnJob* parent) :
     d = new BurnJobWidgetPrivate();
     d->parentJob = parent;
 
-    connect(parent, &AbstractBurnJob::totalProgressChanged, this, [=](quint64 totalProgress) {
+    connect(parent, &AbstractBurnJob::totalProgressChanged, this, [this](quint64 totalProgress) {
         ui->progressBar->setMaximum(totalProgress);
     });
-    connect(parent, &AbstractBurnJob::progressChanged, this, [=](quint64 progress) {
+    connect(parent, &AbstractBurnJob::progressChanged, this, [this](quint64 progress) {
         ui->progressBar->setValue(progress);
     });
-    connect(parent, &AbstractBurnJob::descriptionChanged, this, [=](QString description) {
+    connect(parent, &AbstractBurnJob::descriptionChanged, this, [this](QString description) {
         ui->statusLabel->setText(description);
     });
-    connect(parent, &AbstractBurnJob::canCancelChanged, this, [=](bool canCancel) {
+    connect(parent, &AbstractBurnJob::canCancelChanged, this, [this](bool canCancel) {
         ui->cancelButton->setEnabled(canCancel);
     });
     connect(parent, &AbstractBurnJob::stateChanged, this, &BurnJobWidget::updateState);
