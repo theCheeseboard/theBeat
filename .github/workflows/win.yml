@@ -61,7 +61,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         name: Upload Artifact to GitHub Actions
         with:
-          name: "theBeat-win"
+          name: "thebeat-win"
           path: ${{ steps.deploy.outputs.package }}
   release:
     permissions:
