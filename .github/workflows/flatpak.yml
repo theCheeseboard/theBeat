@@ -1,6 +1,8 @@
 on:
   push:
     branches: [blueprint]
+  release:
+    types: [published]
   pull_request:
   workflow_dispatch:
 name: Build Flatpak
@@ -17,11 +19,32 @@ jobs:
       # Don't fail the whole workflow if one architecture fails
       fail-fast: false
     steps:
+    - name: "Calculate Variables"
+      id: vars
+      run: |
+        echo "GITHUB_REF:" $GITHUB_REF
+        if [[ $GITHUB_REF == "refs/tags/v"* ]]; then
+          echo "FLATPAK_REPO_NAME=stable" >> $GITHUB_OUTPUT
+          echo "FLATPAK_MANIFEST=dist/com.vicr123.thebeat.yml" >> $GITHUB_OUTPUT
+        else
+          echo "FLATPAK_REPO_NAME=blueprint" >> $GITHUB_OUTPUT
+          echo "FLATPAK_MANIFEST=dist/com.vicr123.thebeat_blueprint.yml" >> $GITHUB_OUTPUT
+        fi
     - uses: vicr123/libcontemporary/build-flatpak@actions
       name: "Build Flatpak"
       with:
         arch: ${{ matrix.arch }}
         repo-token: ${{ secrets.REPO_TOKEN }}
-        repository: blueprint
+        repository: ${{ steps.vars.outputs.FLATPAK_REPO_NAME }}
         bundle-name: "thebeat.flatpak"
-        manifest: "dist/com.vicr123.thebeat_blueprint.yml"
+        manifest: ${{ steps.vars.outputs.FLATPAK_MANIFEST }}
+    - shell: bash
+      env:
+        REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+        REPO_LOCATION: https://flatpak.vicr123.com
+        REPO_NAME: ${{ steps.vars.outputs.FLATPAK_REPO_NAME }}
+        run: |
+          sudo dnf install -y python3-aiohttp python3-tenacity python3-gobject
+          curl https://github.com/flatpak/flat-manager/releases/download/0.3.7/flat-manager-client -L > flat-manager-client
+          chmod +x flat-manager-client
+          ./flat-manager-client push --commit --publish $(./flat-manager-client create $REPO_LOCATION $REPO_NAME) repo
