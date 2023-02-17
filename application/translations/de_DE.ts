@@ -361,7 +361,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+120"/>
+        <location filename="../mainwindow.cpp" line="+121"/>
         <source>Tracks</source>
         <translation>Titel</translation>
     </message>
@@ -513,7 +513,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+84"/>
+        <location filename="../mainwindow.cpp" line="+85"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -558,7 +558,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Wähle einen Title aus oder ziehe etwas hier hin!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-137"/>
+        <location filename="../mainwindow.cpp" line="-138"/>
         <source>Play</source>
         <translation>Abspielen</translation>
     </message>
@@ -621,7 +621,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Appearance</source>
         <translation type="unfinished">Darstellung</translation>
     </message>

@@ -328,7 +328,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+120"/>
+        <location filename="../mainwindow.cpp" line="+121"/>
         <source>Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -525,7 +525,7 @@
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+137"/>
+        <location filename="../mainwindow.cpp" line="+138"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -535,7 +535,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-140"/>
+        <location filename="../mainwindow.cpp" line="-141"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
@@ -587,7 +587,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Appearance</source>
         <translation type="unfinished"></translation>
     </message>

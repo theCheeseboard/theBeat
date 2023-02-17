@@ -353,7 +353,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+120"/>
+        <location filename="../mainwindow.cpp" line="+121"/>
         <source>Tracks</source>
         <translation>Nummers</translation>
     </message>
@@ -505,7 +505,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+84"/>
+        <location filename="../mainwindow.cpp" line="+85"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -550,7 +550,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <translation>Selecteer een nummer of sleep hier iets heen!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-137"/>
+        <location filename="../mainwindow.cpp" line="-138"/>
         <source>Play</source>
         <translation>Afspelen</translation>
     </message>
@@ -613,7 +613,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Appearance</source>
         <translation type="unfinished">Uiterlijk</translation>
     </message>

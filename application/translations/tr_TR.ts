@@ -358,7 +358,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+120"/>
+        <location filename="../mainwindow.cpp" line="+121"/>
         <source>Tracks</source>
         <translation>Şarkılar</translation>
     </message>
@@ -510,7 +510,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+84"/>
+        <location filename="../mainwindow.cpp" line="+85"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -555,7 +555,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>Bir şarkı seçin ya da buraya bir şey bırakın!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-137"/>
+        <location filename="../mainwindow.cpp" line="-138"/>
         <source>Play</source>
         <translation>Oyna</translation>
     </message>
@@ -617,7 +617,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Appearance</source>
         <translation type="unfinished">Görünüm</translation>
     </message>

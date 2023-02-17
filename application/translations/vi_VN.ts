@@ -358,7 +358,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+120"/>
+        <location filename="../mainwindow.cpp" line="+121"/>
         <source>Tracks</source>
         <translation>Bài hát</translation>
     </message>
@@ -510,7 +510,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+84"/>
+        <location filename="../mainwindow.cpp" line="+85"/>
         <source>Print</source>
         <translation>In</translation>
     </message>
@@ -555,7 +555,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>Hãy chọn bài hoặc thả bài đây!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-137"/>
+        <location filename="../mainwindow.cpp" line="-138"/>
         <source>Play</source>
         <translation>Phát</translation>
     </message>
@@ -617,7 +617,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>Chung</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Appearance</source>
         <translation>Giao diện</translation>
     </message>

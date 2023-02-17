@@ -41,6 +41,7 @@
 #include <QTimer>
 #include <abstractlibrarybrowser.h>
 #include <playlist.h>
+#include <plugins/tpluginmanagerpane.h>
 #include <sourcemanager.h>
 #include <statemanager.h>
 #include <taboutdialog.h>
@@ -492,6 +493,7 @@ void MainWindow::on_actionSettings_triggered() {
     tSettingsWindow window(this);
     window.appendSection(tr("General"));
     window.appendPane(new NotificationsSettingsPane());
+    window.appendPane(new tPluginManagerPane());
 
     window.appendSection(tr("Appearance"));
     window.appendPane(new TitlebarSettingsPane());
