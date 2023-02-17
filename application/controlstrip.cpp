@@ -32,19 +32,20 @@
 #include <tpopover.h>
 #include <tsettings.h>
 #include <tvariantanimation.h>
+#include <ranges>
 
 struct ControlStripPrivate {
-        MediaItem* currentItem = nullptr;
-        bool isCollapsed = true;
+    MediaItem* currentItem = nullptr;
+    bool isCollapsed = true;
 
-        QPalette standardPal;
-        QPointer<tPopover> zenModePopover;
-        QWidget* zenBacking;
+    QPalette standardPal;
+    QPointer<tPopover> zenModePopover;
+    QWidget* zenBacking;
 
-        tSettings settings;
+    tSettings settings;
 
-        tVariantAnimation* volumeBarAnim;
-        bool inZenMode = false;
+    tVariantAnimation* volumeBarAnim;
+    bool inZenMode = false;
 };
 
 ControlStrip::ControlStrip(QWidget* parent) :
@@ -91,7 +92,7 @@ ControlStrip::ControlStrip(QWidget* parent) :
     connect(StateManager::instance()->playlist(), &Playlist::repeatAllChanged, this, [this](bool repeatAll) {
         d->settings.setValue("playback/repeatAll", repeatAll);
     });
-    connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
+    connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
         if (key == "playback/repeatAll" && StateManager::instance()->playlist()->repeatAll() != value.toBool()) {
             playQueueAction->setChecked(value.toBool());
             StateManager::instance()->playlist()->setRepeatAll(value.toBool());
@@ -103,12 +104,12 @@ ControlStrip::ControlStrip(QWidget* parent) :
     QMenu* pauseMenu = new QMenu();
     pauseMenu->addSection(tr("Playback Options"));
     QAction* pauseAfterCurrentTrackAction = pauseMenu->addAction(QIcon::fromTheme("media-playback-pause"), tr("Pause after current track"));
-    connect(pauseAfterCurrentTrackAction, &QAction::toggled, this, [=](bool checked) {
+    connect(pauseAfterCurrentTrackAction, &QAction::toggled, this, [ = ](bool checked) {
         StateManager::instance()->playlist()->setPauseAfterCurrentTrack(checked);
     });
     pauseAfterCurrentTrackAction->setCheckable(true);
     pauseAfterCurrentTrackAction->setChecked(StateManager::instance()->playlist()->pauseAfterCurrentTrack());
-    connect(StateManager::instance()->playlist(), &Playlist::pauseAfterCurrentTrackChanged, this, [=](bool pauseAfterCurrentTrack) {
+    connect(StateManager::instance()->playlist(), &Playlist::pauseAfterCurrentTrackChanged, this, [ = ](bool pauseAfterCurrentTrack) {
         pauseAfterCurrentTrackAction->setChecked(pauseAfterCurrentTrack);
     });
     ui->playPauseButton->setMenu(pauseMenu);
@@ -148,10 +149,10 @@ void ControlStrip::enterZenMode() {
     opacityAnim->setEndValue(1.0);
     opacityAnim->setDuration(500);
     opacityAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(opacityAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(opacityAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
         effect->setOpacity(value.toReal());
     });
-    connect(opacityAnim, &tVariantAnimation::finished, this, [=] {
+    connect(opacityAnim, &tVariantAnimation::finished, this, [ = ] {
         opacityAnim->deleteLater();
         effect->deleteLater();
     });
@@ -201,10 +202,10 @@ void ControlStrip::leaveZenMode() {
     opacityAnim->setEndValue(0.0);
     opacityAnim->setDuration(500);
     opacityAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(opacityAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(opacityAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
         effect->setOpacity(value.toReal());
     });
-    connect(opacityAnim, &tVariantAnimation::finished, this, [=] {
+    connect(opacityAnim, &tVariantAnimation::finished, this, [ = ] {
         d->zenBacking->deleteLater();
     });
     opacityAnim->start();

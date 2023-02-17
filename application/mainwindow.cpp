@@ -68,9 +68,9 @@
 struct MainWindowPrivate {
         tCsdTools csd;
 
-        tSettings settings;
+    tSettings settings;
 
-        QFrame* topBarLine;
+    QFrame* topBarLine;
 };
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -80,6 +80,14 @@ MainWindow::MainWindow(QWidget* parent) :
     StateManager::instance()->setMainWindow(this);
 
     d = new MainWindowPrivate();
+
+    d->topBarLine = new QFrame(this);
+    d->topBarLine->setFrameShape(QFrame::VLine);
+    d->topBarLine->setFixedWidth(1);
+    d->topBarLine->setParent(ui->topWidget);
+    d->topBarLine->setVisible(true);
+    d->topBarLine->lower();
+
     d->csd.installMoveAction(ui->topWidget);
 #ifndef Q_OS_MAC
     d->csd.installResizeAction(this);
@@ -133,11 +141,11 @@ MainWindow::MainWindow(QWidget* parent) :
 
     tHelpMenu* helpMenu = new tHelpMenu(this);
 
-    #ifdef HAVE_THEINSTALLER
+#ifdef HAVE_THEINSTALLER
     if (tApplication::currentPlatform() != tApplication::WindowsAppPackage && UpdateChecker::updatesSupported()) {
         helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
 
-        connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [=] {
+        connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [ = ] {
             QPixmap menuPixmap = UpdateChecker::updateAvailableIcon(ui->menuButton->icon().pixmap(ui->menuButton->iconSize()));
             ui->menuButton->setIcon(QIcon(menuPixmap));
 
@@ -146,7 +154,7 @@ MainWindow::MainWindow(QWidget* parent) :
             helpMenu->setIcon(QIcon(UpdateChecker::updateAvailableIcon(QPixmap::fromImage(helpImage))));
         });
     }
-    #endif
+#endif
 
     menu->addAction(ui->actionOpen_File);
     menu->addAction(ui->actionOpen_URL);
@@ -195,13 +203,6 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->queueList->setModel(new PlaylistModel);
     ui->queueList->setItemDelegate(new PlaylistDelegate());
 
-    d->topBarLine = new QFrame(this);
-    d->topBarLine->setFrameShape(QFrame::VLine);
-    d->topBarLine->setFixedWidth(1);
-    d->topBarLine->setParent(ui->topWidget);
-    d->topBarLine->setVisible(true);
-    d->topBarLine->lower();
-
     connect(new QShortcut(QKeySequence(Qt::Key_J), this), &QShortcut::activated, this, [this] {
         this->rewind10();
     });
@@ -234,7 +235,7 @@ MainWindow::MainWindow(QWidget* parent) :
         thumbnail->setToolbar(QList<QAction*>{ui->actionSkip_Back, ui->actionPlayPause, ui->actionSkip_Forward});
     }
 
-    connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
+    connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
         if (key == "notifications/trackChange") {
             StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(value.toBool());
         } else if (key == "appearance/useSsds") {
@@ -285,7 +286,7 @@ void MainWindow::on_actionOpen_File_triggered() {
     QFileDialog* dialog = new QFileDialog(this);
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::ExistingFiles);
-    connect(dialog, &QFileDialog::filesSelected, this, [=](QStringList files) {
+    connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
         for (QString file : files) {
             MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
             StateManager::instance()->playlist()->addItem(item);
@@ -423,7 +424,7 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
         } else {
             menu->addSection(tr("For %n items", nullptr, selected.count()));
         }
-        menu->addAction(QIcon::fromTheme("list-remove"), tr("Remove from Queue"), [=] {
+        menu->addAction(QIcon::fromTheme("list-remove"), tr("Remove from Queue"), [ = ] {
             // Directly removing the items causes the list to change and invalidate itself
             QList<MediaItem*> itemsToRemove;
             for (const QModelIndex& idx : selected) {
@@ -437,7 +438,7 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
     }
 
     menu->addSection(tr("For Queue"));
-    menu->addAction(QIcon::fromTheme("list-remove"), tr("Clear Queue"), [=] {
+    menu->addAction(QIcon::fromTheme("list-remove"), tr("Clear Queue"), [ = ] {
         StateManager::instance()->playlist()->clear();
     });
 
@@ -480,7 +481,7 @@ void MainWindow::on_actionAdd_to_Library_triggered() {
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::Directory);
     dialog->setOption(QFileDialog::ShowDirsOnly);
-    connect(dialog, &QFileDialog::filesSelected, this, [=](QStringList files) {
+    connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
         for (QString file : files) {
             LibraryManager::instance()->enumerateDirectory(file, true, true);
         }
