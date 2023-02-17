@@ -17,7 +17,7 @@ jobs:
       - uses: vicr123/libcontemporary/brew-universalinstall@actions
         name: "Install Dependencies"
         with:
-          packages: "qt:taglib:libmusicbrainz:cmake:ninja"
+          packages: "qt:taglib:libmusicbrainz:cmake:ninja:pkg-config"
       - uses: vicr123/libcontemporary/install-libcontemporary@actions
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build contemporary-theme"
