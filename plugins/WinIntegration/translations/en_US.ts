@@ -11,8 +11,8 @@
     <message>
         <location filename="../cdplayback/cdchecker.ui" line="43"/>
         <location filename="../cdplayback/cdchecker.cpp" line="51"/>
-        <location filename="../cdplayback/cdchecker.cpp" line="131"/>
-        <location filename="../cdplayback/cdchecker.cpp" line="132"/>
+        <location filename="../cdplayback/cdchecker.cpp" line="134"/>
+        <location filename="../cdplayback/cdchecker.cpp" line="135"/>
         <source>CD</source>
         <translation type="unfinished"></translation>
     </message>

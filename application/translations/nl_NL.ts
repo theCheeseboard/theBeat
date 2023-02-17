@@ -122,7 +122,7 @@
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+86"/>
+        <location filename="../controlstrip.cpp" line="+87"/>
         <source>Repeat Options</source>
         <translation>Herhalingsopties</translation>
     </message>
@@ -353,7 +353,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+121"/>
+        <location filename="../mainwindow.cpp" line="+129"/>
         <source>Tracks</source>
         <translation>Nummers</translation>
     </message>
@@ -439,7 +439,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+325"/>
+        <location filename="../mainwindow.cpp" line="+318"/>
         <source>Open URL</source>
         <translation>URL Openen</translation>
     </message>

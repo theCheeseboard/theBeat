@@ -126,7 +126,7 @@
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+86"/>
+        <location filename="../controlstrip.cpp" line="+87"/>
         <source>Repeat Options</source>
         <translation>Gentagelsesindstillinger</translation>
     </message>
@@ -357,7 +357,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+121"/>
+        <location filename="../mainwindow.cpp" line="+129"/>
         <source>Tracks</source>
         <translation>Sange</translation>
     </message>
@@ -443,7 +443,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+325"/>
+        <location filename="../mainwindow.cpp" line="+318"/>
         <source>Open URL</source>
         <translation>Åben URL</translation>
     </message>

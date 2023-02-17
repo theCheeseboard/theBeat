@@ -125,7 +125,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+86"/>
+        <location filename="../controlstrip.cpp" line="+87"/>
         <source>Repeat Options</source>
         <translation>Opsi Pengulangan</translation>
     </message>
@@ -354,7 +354,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+121"/>
+        <location filename="../mainwindow.cpp" line="+129"/>
         <source>Tracks</source>
         <translation>Trek</translation>
     </message>
@@ -440,7 +440,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+325"/>
+        <location filename="../mainwindow.cpp" line="+318"/>
         <source>Open URL</source>
         <translation>Buka URL</translation>
     </message>

@@ -129,7 +129,7 @@
         <translation>Siêu dữ liệu</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+86"/>
+        <location filename="../controlstrip.cpp" line="+87"/>
         <source>Repeat Options</source>
         <translation>Tùy chọn lặp lại</translation>
     </message>
@@ -358,7 +358,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+121"/>
+        <location filename="../mainwindow.cpp" line="+129"/>
         <source>Tracks</source>
         <translation>Bài hát</translation>
     </message>
@@ -444,7 +444,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+325"/>
+        <location filename="../mainwindow.cpp" line="+318"/>
         <source>Open URL</source>
         <translation>Mở liên kết</translation>
     </message>

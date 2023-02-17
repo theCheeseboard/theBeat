@@ -129,7 +129,7 @@
         <translation>Meta veriler</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+86"/>
+        <location filename="../controlstrip.cpp" line="+87"/>
         <source>Repeat Options</source>
         <translation>Tekrar Seçenekleri</translation>
     </message>
@@ -358,7 +358,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+121"/>
+        <location filename="../mainwindow.cpp" line="+129"/>
         <source>Tracks</source>
         <translation>Şarkılar</translation>
     </message>
@@ -444,7 +444,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+325"/>
+        <location filename="../mainwindow.cpp" line="+318"/>
         <source>Open URL</source>
         <translation>Link Aç</translation>
     </message>

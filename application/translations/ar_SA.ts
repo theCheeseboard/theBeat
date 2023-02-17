@@ -134,7 +134,7 @@
         <translation>البيانات الوصفية</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+86"/>
+        <location filename="../controlstrip.cpp" line="+87"/>
         <source>Repeat Options</source>
         <translation>خيارات التكرير</translation>
     </message>
@@ -373,7 +373,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+121"/>
+        <location filename="../mainwindow.cpp" line="+129"/>
         <source>Tracks</source>
         <translation>المسارات</translation>
     </message>
@@ -464,7 +464,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+325"/>
+        <location filename="../mainwindow.cpp" line="+318"/>
         <source>Open URL</source>
         <translation>أفتح الرابط</translation>
     </message>

@@ -22,7 +22,7 @@
 #include <tlogger.h>
 #include <QTimer>
 #include <QMainWindow>
-#include "tapplication.h"
+#include <statemanager.h>
 
 #include "cdplayback/diskwatcher.h"
 #include "burn/winburnmanager.h"
@@ -41,22 +41,17 @@ Plugin::~Plugin() {
     delete d;
 }
 
-QMainWindow* getMainWindow() {
-    for (QWidget* w : tApplication::topLevelWidgets()) {
-        if (QMainWindow* mainWin = qobject_cast<QMainWindow*>(w))
-            return mainWin;
-    }
-    return nullptr;
-}
-
 void Plugin::activate() {
     new DiskWatcher();
     d->burnManager = new WinBurnManager();
 
-    QTimer::singleShot(0, [] { 
-        auto mainWindow = getMainWindow();
-        new SmtcIntegration(mainWindow);
+    connect(StateManager::instance(), &StateManager::mainWindowAvailable, this, [] {
+        new SmtcIntegration(StateManager::instance()->mainWindow());
     });
+
+    if (StateManager::instance()->mainWindow()) {
+        new SmtcIntegration(StateManager::instance()->mainWindow());
+    }
 }
 
 void Plugin::deactivate() {
