@@ -57,6 +57,9 @@ CdChecker::CdChecker(QChar driveLetter, QWidget* parent) :
     });
     checkCd();
 
+    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
+        ui->topWidget->setContentsMargins(0, padTop, 0, 0);
+    });
     ui->topWidget->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
     ui->importCdButton->setVisible(false);
 

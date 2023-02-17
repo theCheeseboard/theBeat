@@ -65,6 +65,9 @@ CdChecker::CdChecker(QString directory, QWidget* parent) :
     ui->topWidget->installEventFilter(this);
     ui->albumSelectionSpinner->setFixedSize(SC_DPI_T(QSize(16, 16), QSize));
 
+    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
+        ui->topWidget->setContentsMargins(0, padTop, 0, 0);
+    });
     ui->topWidget->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
 
 #ifdef HAVE_MUSICBRAINZ

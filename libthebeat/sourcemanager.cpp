@@ -56,4 +56,5 @@ int SourceManager::padTop() {
 
 void SourceManager::setPadTop(int padTop) {
     d->padTop = padTop;
+    emit padTopChanged(padTop);
 }

@@ -40,6 +40,9 @@ RadioPane::RadioPane(QWidget* parent) :
 
     StateManager::instance()->sources()->addSource(d->source);
 
+    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
+        this->layout()->setContentsMargins(0, padTop, 0, 0);
+    });
     this->layout()->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
 
     connect(ui->favouriteStations, &FavouriteStationsWidget::addStation, this, [this] {
