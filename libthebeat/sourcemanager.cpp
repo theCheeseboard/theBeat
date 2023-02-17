@@ -46,6 +46,10 @@ void SourceManager::removeSource(PluginMediaSource* source) {
     emit sourceRemoved(source);
 }
 
+QList<PluginMediaSource*> SourceManager::sources() {
+    return d->sources;
+}
+
 int SourceManager::padTop() {
     return d->padTop;
 }

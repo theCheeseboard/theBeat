@@ -354,7 +354,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+122"/>
+        <location filename="../mainwindow.cpp" line="+120"/>
         <source>Tracks</source>
         <translation>Trek</translation>
     </message>
@@ -440,7 +440,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+327"/>
+        <location filename="../mainwindow.cpp" line="+325"/>
         <source>Open URL</source>
         <translation>Buka URL</translation>
     </message>
@@ -1057,12 +1057,12 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+52"/>
+        <location filename="../main.cpp" line="+54"/>
         <source>Audio Player</source>
         <translation>Pemutar Audio</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+34"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>

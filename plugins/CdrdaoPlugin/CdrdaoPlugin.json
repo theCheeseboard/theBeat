@@ -1,3 +1,5 @@
 {
-    "Keys" : [ ]
+    "name": "CDRDAO CD Burning",
+    "icon": "media-optical-cd",
+    "uuid": "ab0caa36-47da-410e-88ea-9b05eb61efcb"
 }

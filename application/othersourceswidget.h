@@ -26,6 +26,7 @@ namespace Ui {
     class OtherSourcesWidget;
 }
 
+class PluginMediaSource;
 struct OtherSourcesWidgetPrivate;
 class OtherSourcesWidget : public AbstractLibraryBrowser {
         Q_OBJECT
@@ -43,6 +44,9 @@ class OtherSourcesWidget : public AbstractLibraryBrowser {
     private:
         Ui::OtherSourcesWidget* ui;
         OtherSourcesWidgetPrivate* d;
+
+        void addSource(PluginMediaSource* source);
+        void removeSource(PluginMediaSource* source);
 };
 
 #endif // OTHERSOURCESWIDGET_H

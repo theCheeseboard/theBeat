@@ -342,7 +342,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+122"/>
+        <location filename="../mainwindow.cpp" line="+120"/>
         <source>Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -428,7 +428,7 @@
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+327"/>
+        <location filename="../mainwindow.cpp" line="+325"/>
         <source>Open URL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -972,12 +972,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+52"/>
+        <location filename="../main.cpp" line="+54"/>
         <source>Audio Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+34"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>

@@ -358,7 +358,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+122"/>
+        <location filename="../mainwindow.cpp" line="+120"/>
         <source>Tracks</source>
         <translation>Bài hát</translation>
     </message>
@@ -444,7 +444,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+327"/>
+        <location filename="../mainwindow.cpp" line="+325"/>
         <source>Open URL</source>
         <translation>Mở liên kết</translation>
     </message>
@@ -1061,12 +1061,12 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+52"/>
+        <location filename="../main.cpp" line="+54"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+34"/>
         <source>file</source>
         <translation>tệp</translation>
     </message>

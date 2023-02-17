@@ -353,7 +353,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+122"/>
+        <location filename="../mainwindow.cpp" line="+120"/>
         <source>Tracks</source>
         <translation>Nummers</translation>
     </message>
@@ -439,7 +439,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+327"/>
+        <location filename="../mainwindow.cpp" line="+325"/>
         <source>Open URL</source>
         <translation>URL Openen</translation>
     </message>
@@ -1060,12 +1060,12 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+52"/>
+        <location filename="../main.cpp" line="+54"/>
         <source>Audio Player</source>
         <translation>Audiospeler</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+34"/>
         <source>file</source>
         <translation>bestand</translation>
     </message>

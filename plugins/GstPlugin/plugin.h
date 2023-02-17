@@ -20,14 +20,14 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
-#include <plugininterface.h>
+#include <thebeatplugininterface.h>
 
 struct PluginPrivate;
 class Plugin : public QObject,
-               public PluginInterface {
+               public TheBeatPluginInterface {
         Q_OBJECT
-        Q_PLUGIN_METADATA(IID PluginInterface_iid FILE "GstPlugin.json")
-        Q_INTERFACES(PluginInterface)
+        Q_PLUGIN_METADATA(IID TheBeatPlugin_iid FILE "GstPlugin.json")
+        Q_INTERFACES(TheBeatPluginInterface)
 
     public:
         Plugin();

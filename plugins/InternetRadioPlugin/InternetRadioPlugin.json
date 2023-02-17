@@ -1,3 +1,5 @@
 {
-    "Keys" : [ ]
+    "name": "Internet Radio",
+    "icon": "radio",
+    "uuid": "b50eba6a-8ea4-4419-ae0e-93589179a4f7"
 }

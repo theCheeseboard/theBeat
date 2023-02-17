@@ -27,8 +27,10 @@
 #include <QJsonArray>
 #include <QUrl>
 #include <playlist.h>
+#include <plugins/tpluginmanager.h>
 #include <statemanager.h>
 #include <tapplication.h>
+#include <thebeatplugininterface.h>
 #include <tsettings.h>
 #include <tstylemanager.h>
 #include <urlmanager.h>
@@ -75,6 +77,9 @@ int main(int argc, char* argv[]) {
 
     StateManager::instance()->visualisation()->registerEngine("scope", new ScopeVisualisation());
     StateManager::instance()->visualisation()->setCurrentEngine("scope");
+
+    auto pluginManager = tPluginManager<TheBeatPluginInterface>::instance();
+    pluginManager->setLibraryDirectory("thebeat");
 
     QCommandLineParser parser;
     parser.addHelpOption();

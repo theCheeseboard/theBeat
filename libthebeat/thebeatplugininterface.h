@@ -17,20 +17,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef PLUGINMANAGER_H
-#define PLUGINMANAGER_H
+#ifndef THEBEATPLUGININTERFACE_H
+#define THEBEATPLUGININTERFACE_H
 
-#include <QObject>
+#include <plugins/plugininterface.h>
 
-class PluginManager : public QObject {
-        Q_OBJECT
-    public:
-        explicit PluginManager(QObject* parent = nullptr);
+class TheBeatPluginInterface : public PluginInterface {};
 
-        void load();
+#define TheBeatPlugin_iid "com.vicr123.thebeat.PluginInterface/4.0"
+Q_DECLARE_INTERFACE(TheBeatPluginInterface, TheBeatPlugin_iid);
 
-    signals:
-
-};
-
-#endif // PLUGINMANAGER_H
+#endif // THEBEATPLUGININTERFACE_H

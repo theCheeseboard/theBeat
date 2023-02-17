@@ -22,7 +22,8 @@ set(SOURCES
         urlhandler.cpp
         urlmanager.cpp
         visualisationengine.cpp
-        visualisationmanager.cpp)
+        visualisationmanager.cpp
+    )
 
 set(HEADERS
         abstractlibrarybrowser.h
@@ -33,14 +34,15 @@ set(HEADERS
         libthebeat_global.h
         mediaitem.h
         playlist.h
-        plugininterface.h
+        thebeatplugininterface.h
         pluginmediasource.h
         sourcemanager.h
         statemanager.h
         urlhandler.h
         urlmanager.h
         visualisationengine.h
-        visualisationmanager.h)
+        visualisationmanager.h
+    )
 
 add_library(libthebeat SHARED ${SOURCES} ${HEADERS})
 cntp_init(libthebeat 20)

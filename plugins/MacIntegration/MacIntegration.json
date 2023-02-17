@@ -1,3 +1,5 @@
 {
-    "Keys" : [ ]
+    "name": "macOS System Integration",
+    "icon": "phone",
+    "uuid": "d4b216dd-0d33-4f45-8982-ca1e2960f0fa"
 }

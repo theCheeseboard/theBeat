@@ -21,7 +21,6 @@ set(SOURCES
         mainwindow.cpp mainwindow.ui
         othersourceswidget.cpp othersourceswidget.ui
         playlistmodel.cpp
-        pluginmanager.cpp
         print/printcontroller.cpp
         print/printsettings.cpp print/printsettings.ui
         qtmultimedia/qtmultimediamediaitem.cpp
@@ -62,7 +61,6 @@ set(HEADERS
         mainwindow.h
         othersourceswidget.h
         playlistmodel.h
-        pluginmanager.h
         print/printcontroller.h
         print/printsettings.h
         qtmultimedia/qtmultimediamediaitem.h

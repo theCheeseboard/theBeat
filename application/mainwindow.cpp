@@ -24,7 +24,6 @@
 #include "commandpalette/trackscommandpalettescope.h"
 #include "library/librarymanager.h"
 #include "playlistmodel.h"
-#include "pluginmanager.h"
 #include "print/printcontroller.h"
 #include "settingspanes/colourssettingspane.h"
 #include "settingspanes/libraryresetsettingspane.h"
@@ -67,7 +66,6 @@
 
 struct MainWindowPrivate {
         tCsdTools csd;
-        PluginManager plugins;
 
         tSettings settings;
 
@@ -265,8 +263,6 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(ui->controlStrip, &ControlStrip::inZenModeChanged, this, [this](bool inZenMode) {
         ui->actionZen_Mode->setChecked(inZenMode);
     });
-
-    d->plugins.load();
 
     setWindowIcon(tApplication::applicationIcon());
 
