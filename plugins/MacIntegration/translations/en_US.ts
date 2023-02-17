@@ -6,9 +6,9 @@
     <message>
         <location filename="../cd/cdchecker.ui" line="43"/>
         <location filename="../cd/cdchecker.cpp" line="62"/>
-        <location filename="../cd/cdchecker.cpp" line="133"/>
-        <location filename="../cd/cdchecker.cpp" line="134"/>
-        <location filename="../cd/cdchecker.cpp" line="135"/>
+        <location filename="../cd/cdchecker.cpp" line="136"/>
+        <location filename="../cd/cdchecker.cpp" line="137"/>
+        <location filename="../cd/cdchecker.cpp" line="138"/>
         <source>CD</source>
         <translation type="unfinished"></translation>
     </message>

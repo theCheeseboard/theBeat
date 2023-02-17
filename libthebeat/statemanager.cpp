@@ -19,25 +19,26 @@
  * *************************************/
 #include "statemanager.h"
 
+#include "burnmanager.h"
+#include "controlstripmanager.h"
 #include "playlist.h"
 #include "sourcemanager.h"
-#include "burnmanager.h"
-#include "visualisationmanager.h"
-#include "controlstripmanager.h"
 #include "urlmanager.h"
+#include "visualisationmanager.h"
 
 struct StateManagerPrivate {
-    Playlist* playlist;
-    SourceManager* sources;
-    BurnManager* burn;
-    VisualisationManager* visualisation;
-    ControlStripManager* controlStrip;
-    UrlManager* url;
+        Playlist* playlist;
+        SourceManager* sources;
+        BurnManager* burn;
+        VisualisationManager* visualisation;
+        ControlStripManager* controlStrip;
+        UrlManager* url;
 
-    QWidget* mainWindow;
+        QWidget* mainWindow = nullptr;
 };
 
-StateManager::StateManager(QObject* parent) : QObject(parent) {
+StateManager::StateManager(QObject* parent) :
+    QObject(parent) {
     d = new StateManagerPrivate();
     d->playlist = new Playlist();
     d->sources = new SourceManager();
@@ -82,4 +83,5 @@ QWidget* StateManager::mainWindow() {
 
 void StateManager::setMainWindow(QWidget* mainWindow) {
     d->mainWindow = mainWindow;
+    emit mainWindowAvailable(mainWindow);
 }

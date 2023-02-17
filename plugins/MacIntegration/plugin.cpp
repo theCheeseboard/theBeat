@@ -19,19 +19,18 @@
  * *************************************/
 #include "plugin.h"
 
-#include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
-#include <QIcon>
-#include <tapplication.h>
-#include "mainwindowtouchbar.h"
-#include "cd/diskwatcher.h"
 #include "burn/macburnprovider.h"
+#include "cd/diskwatcher.h"
+#include "mainwindowtouchbar.h"
 #include "nowplayingintegration.h"
+#include <QDebug>
+#include <QIcon>
+#include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
+#include <tapplication.h>
 
 struct PluginPrivate {
-
 };
 
 Plugin::Plugin() {
@@ -43,14 +42,19 @@ Plugin::~Plugin() {
     delete d;
 }
 
-
 void Plugin::activate() {
-    new MainWindowTouchBar(StateManager::instance()->mainWindow());
+    connect(StateManager::instance(), &StateManager::mainWindowAvailable, this, [] {
+        new MainWindowTouchBar(StateManager::instance()->mainWindow());
+    });
+
+    if (StateManager::instance()->mainWindow()) {
+        new MainWindowTouchBar(StateManager::instance()->mainWindow());
+    }
+
     new DiskWatcher();
     new MacBurnProvider();
     new NowPlayingIntegration();
 }
 
 void Plugin::deactivate() {
-
 }
