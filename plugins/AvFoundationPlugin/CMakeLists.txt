@@ -1,6 +1,6 @@
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus)
 find_package(libcontemporary)
 find_library(AVFOUNDATION_FRAMEWORK AVFoundation REQUIRED)
 find_library(COREMEDIA_FRAMEWORK CoreMedia REQUIRED)
@@ -30,4 +30,4 @@ set_target_properties(plugin-avfoundation PROPERTIES
         OUTPUT_NAME avFoundationPlugin
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-avfoundation Qt6::Widgets Qt6::Multimedia libcontemporary libthebeat ${AVFOUNDATION_FRAMEWORK} ${COREMEDIA_FRAMEWORK} ${AVKIT_FRAMEWORK})
+target_link_libraries(plugin-avfoundation Qt::Widgets Qt::Multimedia libcontemporary libthebeat ${AVFOUNDATION_FRAMEWORK} ${COREMEDIA_FRAMEWORK} ${AVKIT_FRAMEWORK})

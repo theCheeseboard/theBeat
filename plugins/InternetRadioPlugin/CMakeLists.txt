@@ -1,6 +1,6 @@
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus)
 find_package(libcontemporary)
 cntp_find_pkgconfig(X11 x11)
 
@@ -38,4 +38,4 @@ cntp_init_plugin(thebeat plugin-internetradio 20 internetradioplugin)
 cntp_translate(plugin-internetradio)
 
 
-target_link_libraries(plugin-internetradio Qt6::Widgets Qt6::DBus libcontemporary libthebeat)
+target_link_libraries(plugin-internetradio Qt::Widgets Qt::DBus libcontemporary libthebeat)

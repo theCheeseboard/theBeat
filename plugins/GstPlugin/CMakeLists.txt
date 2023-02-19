@@ -1,6 +1,6 @@
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus)
 find_package(libcontemporary)
 find_package(libthefrisbee)
 pkg_check_modules(gstreamer IMPORTED_TARGET REQUIRED gstreamer-1.0)
@@ -33,4 +33,4 @@ set_target_properties(plugin-gst PROPERTIES
         OUTPUT_NAME gstPlugin
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-gst Qt6::Widgets Qt6::DBus PkgConfig::gstreamer libcontemporary libthefrisbee libthebeat)
+target_link_libraries(plugin-gst Qt::Widgets Qt::DBus PkgConfig::gstreamer libcontemporary libthefrisbee libthebeat)

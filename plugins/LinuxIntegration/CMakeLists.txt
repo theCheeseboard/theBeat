@@ -1,6 +1,6 @@
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus)
 find_package(libcontemporary)
 pkg_check_modules(X11 IMPORTED_TARGET x11)
 
@@ -33,4 +33,4 @@ IF(${X11_FOUND})
     target_compile_definitions(plugin-linuxintegration PRIVATE HAVE_X11)
 ENDIF()
 
-target_link_libraries(plugin-linuxintegration Qt6::Widgets Qt6::DBus libcontemporary libthebeat)
+target_link_libraries(plugin-linuxintegration Qt::Widgets Qt::DBus libcontemporary libthebeat)

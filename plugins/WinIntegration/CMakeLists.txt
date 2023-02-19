@@ -1,6 +1,6 @@
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Concurrent)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Concurrent)
 find_package(libcontemporary REQUIRED)
 
 include(ExternalProject)
@@ -85,4 +85,4 @@ set_target_properties(plugin-winintegration PROPERTIES
         OUTPUT_NAME winIntegration
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-winintegration Qt6::Widgets Qt6::DBus Qt6::Concurrent libcontemporary libthebeat User32 windowsapp comsuppwd shlwapi)
+target_link_libraries(plugin-winintegration Qt::Widgets Qt::DBus Qt::Concurrent libcontemporary libthebeat User32 windowsapp comsuppwd shlwapi)

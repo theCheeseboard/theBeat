@@ -1,6 +1,6 @@
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus)
 find_package(libcontemporary)
 find_package(PkgConfig REQUIRED)
 find_library(AVFOUNDATION_FRAMEWORK AVFoundation REQUIRED)
@@ -57,7 +57,7 @@ set_target_properties(plugin-macintegration PROPERTIES
         OUTPUT_NAME macIntegrationPlugin
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-macintegration Qt6::Widgets Qt6::Multimedia libcontemporary libthebeat ${AVFOUNDATION_FRAMEWORK} ${DISCRECORDING_FRAMEWORK} ${DISCRECORDINGUI_FRAMEWORK} ${MEDIAPLAYER_FRAMEWORK})
+target_link_libraries(plugin-macintegration Qt::Widgets Qt::Multimedia libcontemporary libthebeat ${AVFOUNDATION_FRAMEWORK} ${DISCRECORDING_FRAMEWORK} ${DISCRECORDINGUI_FRAMEWORK} ${MEDIAPLAYER_FRAMEWORK})
 
 IF(${MusicBrainz_FOUND})
     target_link_libraries(plugin-macintegration PkgConfig::MusicBrainz)

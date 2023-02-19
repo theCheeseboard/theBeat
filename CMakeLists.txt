@@ -7,6 +7,8 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     link_directories(/usr/local/lib)
 ENDIF()
 
+find_package(Qt REQUIRED NAMES Qt6)
+
 add_subdirectory(libthebeat)
 add_subdirectory(application)
 add_subdirectory(plugins)

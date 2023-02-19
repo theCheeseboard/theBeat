@@ -1,6 +1,6 @@
 project(thebeat VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets DBus Sql PrintSupport)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus Sql PrintSupport)
 find_package(libcontemporary REQUIRED)
 
 set(SOURCES
@@ -116,7 +116,7 @@ cntp_target_desktop_file(thebeat
 cntp_defaults_file(thebeat
     DEFAULTS_FILE thebeat.conf)
 
-target_link_libraries(thebeat Qt6::Widgets Qt6::DBus Qt6::Sql Qt6::PrintSupport libcontemporary libthebeat)
+target_link_libraries(thebeat Qt::Widgets Qt::DBus Qt::Sql Qt::PrintSupport libcontemporary libthebeat)
 target_include_directories(thebeat PUBLIC ../libthebeat/)
 
 install(TARGETS thebeat
