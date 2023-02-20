@@ -14,13 +14,15 @@ jobs:
         os: [windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: vicr123/libcontemporary/prepare-vars@actions
+        id: vars
       - name: Install ninja
         run: |
           choco install ninja
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: 6.4.1
+          version: ${{ steps.vars.outputs.qtVersion }}
           arch: win64_msvc2019_64
           modules: addons.qtmultimedia addons.qtwebsockets qt5compat
       - name: Set up MSVC
@@ -28,6 +30,8 @@ jobs:
         with:
           sdk: 10.0.22000.0
       - uses: vicr123/libcontemporary/install-libcontemporary@actions
+        with:
+          qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build contemporary-theme"
         with:

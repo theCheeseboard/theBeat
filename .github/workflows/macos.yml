@@ -14,11 +14,15 @@ jobs:
         os: [macOS-latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: vicr123/libcontemporary/prepare-vars@actions
+        id: vars
       - uses: vicr123/libcontemporary/brew-universalinstall@actions
         name: "Install Dependencies"
         with:
           packages: "qt:taglib:libmusicbrainz:cmake:ninja:pkg-config"
       - uses: vicr123/libcontemporary/install-libcontemporary@actions
+        with:
+          qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build contemporary-theme"
         with:
