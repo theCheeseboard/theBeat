@@ -43,13 +43,27 @@ jobs:
       - uses: actions/upload-artifact@v1
         name: Upload Artifact to GitHub Actions
         with:
-          name: "theBeat-macOS"
+          name: "theBeat-macOS-uncompressed"
           path: ${{ steps.deploy.outputs.package }}
+  compress:
+    runs-on: macOS-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: "theBeat-macOS-uncompressed"
+      - runs: |
+          hdiutil convert *.dmg -ov -format UDZO -imagekey zlib-level=9 -o theBeat.dmg
+      - uses: actions/upload-artifact@v1
+        name: Upload Artifact to GitHub Actions
+        with:
+          name: "theBeat-macOS"
+          path: theBeat.dmg
   release:
     permissions:
       contents: write
     runs-on: ubuntu-latest
-    needs: build
+    needs: compress
     if: github.event_name == 'release'
     steps:
       - uses: actions/download-artifact@v3
