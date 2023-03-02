@@ -40,7 +40,7 @@ jobs:
         name: "Deploy project"
         with:
           subdir: "application"
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         name: Upload Artifact to GitHub Actions
         with:
           name: "theBeat-macOS-uncompressed"
