@@ -110,6 +110,7 @@ cntp_target_name(thebeat "theBeat")
 cntp_app_icon(thebeat
     BASEICON icons/baseicon.svg
     BASEICON_MAC icons/baseicon-mac.svg)
+cntp_dmg(thebeat app-dmg-background.svg)
 cntp_target_desktop_file(thebeat
     DESKTOP_FILE com.vicr123.thebeat.desktop
     BLUEPRINT_DESKTOP_FILE com.vicr123.thebeat_blueprint.desktop)
