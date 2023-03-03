@@ -114,6 +114,9 @@ cntp_dmg(thebeat app-dmg-background.svg)
 cntp_target_desktop_file(thebeat
     DESKTOP_FILE com.vicr123.thebeat.desktop
     BLUEPRINT_DESKTOP_FILE com.vicr123.thebeat_blueprint.desktop)
+cntp_target_appstream_metainfo_file(thebeat
+    METAINFO_FILE com.vicr123.thebeat.metainfo.xml
+    BLUEPRINT_METAINFO_FILE com.vicr123.thebeat_blueprint.metainfo.xml)
 cntp_defaults_file(thebeat
     DEFAULTS_FILE thebeat.conf)
 

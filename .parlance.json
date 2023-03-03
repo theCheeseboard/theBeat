@@ -20,6 +20,24 @@
             "baseLang": "en"
         },
         {
+            "name": "theBeat Blueprint Desktop File",
+            "type": "webext-json",
+            "path": "/application/translations/desktop/com.vicr123.thebeat_blueprint/{lang}.json",
+            "baseLang": "en"
+        },
+        {
+            "name": "theBeat AppStream Metainfo",
+            "type": "webext-json",
+            "path": "/application/translations/appstream/com.vicr123.thebeat.metainfo/{lang}.json",
+            "baseLang": "en"
+        },
+        {
+            "name": "theBeat Blueprint AppStream Metainfo",
+            "type": "webext-json",
+            "path": "/application/translations/appstream/com.vicr123.thebeat_blueprint.metainfo/{lang}.json",
+            "baseLang": "en"
+        },
+        {
             "name": "theBeat cdrdao Integration",
             "type": "qt",
             "path": "/plugins/CdrdaoPlugin/translations/{lang}.ts",
