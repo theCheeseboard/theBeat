@@ -41,9 +41,9 @@ jobs:
         with:
           subdir: "application"
       - run: |
-          shasum $PACKAGE
+          shasum "$PACKAGE"
         env:
-          PACKAGE: "${{ steps.deploy.outputs.package }}"
+          PACKAGE: ${{ steps.deploy.outputs.package }}
       - uses: actions/upload-artifact@v3
         name: Upload Artifact to GitHub Actions
         with:
