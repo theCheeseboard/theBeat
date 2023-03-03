@@ -53,6 +53,8 @@ jobs:
         with:
           name: "theBeat-macOS-uncompressed"
       - run: |
+          ls
+          ls *.dmg
           hdiutil convert *.dmg -ov -format UDZO -imagekey zlib-level=9 -o theBeat.dmg
       - uses: actions/upload-artifact@v1
         name: Upload Artifact to GitHub Actions
