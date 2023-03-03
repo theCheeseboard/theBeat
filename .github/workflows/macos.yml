@@ -40,6 +40,10 @@ jobs:
         name: "Deploy project"
         with:
           subdir: "application"
+      - run: |
+          shasum $PACKAGE
+        env:
+          PACKAGE: ${{ steps.deploy.outputs.package }}
       - uses: actions/upload-artifact@v3
         name: Upload Artifact to GitHub Actions
         with:
@@ -54,7 +58,7 @@ jobs:
           name: "theBeat-macOS-uncompressed"
       - run: |
           ls
-          ls *.dmg
+          shasum *.dmg
           hdiutil convert *.dmg -ov -format UDZO -imagekey zlib-level=9 -o theBeat.dmg
       - uses: actions/upload-artifact@v1
         name: Upload Artifact to GitHub Actions
