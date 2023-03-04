@@ -72,7 +72,7 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-latest
-    needs: compress
+    needs: build
     if: github.event_name == 'release'
     steps:
       - uses: actions/download-artifact@v3
