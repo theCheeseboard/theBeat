@@ -40,34 +40,11 @@ jobs:
         name: "Deploy project"
         with:
           subdir: "application"
-      # - run: |
-          # shasum "$PACKAGE"
-        # env:
-          # PACKAGE: ${{ steps.deploy.outputs.package }}
       - uses: actions/upload-artifact@v3
         name: Upload Artifact to GitHub Actions
         with:
-          # name: "theBeat-macOS-uncompressed"
           name: "theBeat-macOS"
           path: ${{ steps.deploy.outputs.package }}
-  # compress:
-  #   runs-on: macOS-latest
-  #   needs: build
-  #   steps:
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: "theBeat-macOS-uncompressed"
-  #     - run: |
-  #         ls
-  #         shasum *.dmg
-  #         hdiutil attach *.dmg -nobrowse -noautoopen
-  #         hdiutil convert *.dmg -ov -format UDBZ -imagekey zlib-level=9 -o theBeat.dmg
-  #         hdiutil detach *.dmg
-  #     - uses: actions/upload-artifact@v1
-  #       name: Upload Artifact to GitHub Actions
-  #       with:
-  #         name: "theBeat-macOS"
-  #         path: theBeat.dmg
   release:
     permissions:
       contents: write
