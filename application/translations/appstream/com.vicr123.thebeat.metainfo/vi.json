@@ -1,0 +1,23 @@
+{
+  "DESCRIPTION_POINT_1": {
+    "message": "Tự động phân loại nhạc của bạn"
+  },
+  "DESCRIPTION_POINT_2": {
+    "message": "Tìm kiếm nhanh chóng"
+  },
+  "DESCRIPTION_POINT_3": {
+    "message": "Tìm thấy bản nhạc của tác giả và nghệ sĩ rất nhanh"
+  },
+  "DESCRIPTION_POINT_4": {
+    "message": "Tạo danh sách phát để truy cập nhạc bạn yêu"
+  },
+  "DESCRIPTION_SUMMARY": {
+    "message": "Phát và sắp xếp các nhạc của bạn. theBeat tự động khám phá các nhạc trên máy tính của bạn và trình bày với một giao diện dùng dẽ dạng."
+  },
+  "NAME": {
+    "message": "theBeat"
+  },
+  "SUMMARY": {
+    "message": "Bộ nghe nhạc"
+  }
+}
