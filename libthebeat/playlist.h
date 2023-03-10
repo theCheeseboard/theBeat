@@ -21,8 +21,8 @@
 #define PLAYLIST_H
 
 #include "libthebeat_global.h"
-#include <QObject>
 #include "mediaitem.h"
+#include <QObject>
 
 struct PlaylistPrivate;
 class LIBTHEBEAT_EXPORT Playlist : public QObject {
@@ -60,6 +60,7 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
 
         void setVolume(double volume);
         double volume();
+        double logAdjustedVolume();
 
         void setTrachChangeNotificationsEnabled(bool notificationsEnabled);
 
@@ -82,6 +83,7 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
         void repeatAllChanged(bool repeatAll);
         void shuffleChanged(bool shuffle);
         void volumeChanged(double volume);
+        void logAdjustedVolumeChanged(double logAdjustedVolume);
         void pauseAfterCurrentTrackChanged(bool pauseAfterCurrentTrack);
 
     private:

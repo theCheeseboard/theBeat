@@ -333,10 +333,16 @@ bool Playlist::shuffle() {
 void Playlist::setVolume(double volume) {
     d->volume = volume;
     emit volumeChanged(volume);
+    emit logAdjustedVolumeChanged(this->logAdjustedVolume());
 }
 
 double Playlist::volume() {
     return d->volume;
+}
+
+double Playlist::logAdjustedVolume() {
+    if (d->volume > 0.99) return 1;
+    return -std::log(1 - d->volume) / std::log(100);
 }
 
 void Playlist::setTrachChangeNotificationsEnabled(bool notificationsEnabled) {

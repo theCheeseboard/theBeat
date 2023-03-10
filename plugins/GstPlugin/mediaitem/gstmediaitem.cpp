@@ -90,13 +90,13 @@ void GstMediaItem::preparePlayer() {
             this);
         gst_object_unref(bus);
 
-        connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, this, [this](double volume) {
+        connect(StateManager::instance()->playlist(), &Playlist::logAdjustedVolumeChanged, this, [this](double volume) {
             auto volumeElement = gst_bin_get_by_name(GST_BIN(pipeline()), "volume");
             g_object_set(volumeElement, "volume", volume, nullptr);
             gst_object_unref(volumeElement);
         });
         auto volumeElement = gst_bin_get_by_name(GST_BIN(pipeline()), "volume");
-        g_object_set(volumeElement, "volume", StateManager::instance()->playlist()->volume(), nullptr);
+        g_object_set(volumeElement, "volume", StateManager::instance()->playlist()->logAdjustedVolume(), nullptr);
         gst_object_unref(volumeElement);
 
         d->prepared = true;

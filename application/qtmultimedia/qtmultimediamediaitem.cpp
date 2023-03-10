@@ -64,10 +64,10 @@ QtMultimediaMediaItem::QtMultimediaMediaItem(QUrl url) :
     if (!QtMultimediaMediaItemPrivate::audioOutput) {
         QtMultimediaMediaItemPrivate::audioOutput = new QAudioOutput();
 
-        connect(StateManager::instance()->playlist(), &Playlist::volumeChanged, QtMultimediaMediaItemPrivate::audioOutput, [=] {
-            QtMultimediaMediaItemPrivate::audioOutput->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
+        connect(StateManager::instance()->playlist(), &Playlist::logAdjustedVolumeChanged, QtMultimediaMediaItemPrivate::audioOutput, [](double volume) {
+            QtMultimediaMediaItemPrivate::audioOutput->setVolume(volume);
         });
-        QtMultimediaMediaItemPrivate::audioOutput->setVolume(QAudio::convertVolume(StateManager::instance()->playlist()->volume(), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale) * 100);
+        QtMultimediaMediaItemPrivate::audioOutput->setVolume(StateManager::instance()->playlist()->logAdjustedVolume());
     }
 
     tDebug("QtMultimediaMediaItem") << "Constructing Qt Multimedia backend item for URL" << url.toString();
