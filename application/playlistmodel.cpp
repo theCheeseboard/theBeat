@@ -214,7 +214,7 @@ void PlaylistModel::invalidateDrawTypes(int from) {
     d->playlistPriorHeaders.resize(from);
 
     int headers = 0;
-    for (int i = 0; i < StateManager::instance()->playlist()->items().count(); i++) {
+    for (int i = 0; i < StateManager::instance()->playlist()->items().count() + headers; i++) {
         if (drawTypeForPlaylistIndex(i) == GroupHeader) {
             headers++;
         }
