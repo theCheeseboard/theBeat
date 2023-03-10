@@ -261,7 +261,7 @@
         <translation>Remove from Playlist</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+78"/>
         <location line="+2"/>
         <source>New Playlist</source>
         <translation>New Playlist</translation>

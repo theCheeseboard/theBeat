@@ -263,7 +263,7 @@
         <translation>Xoá khỏi danh sách phát</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+78"/>
         <location line="+2"/>
         <source>New Playlist</source>
         <translation>Danh sách mới</translation>

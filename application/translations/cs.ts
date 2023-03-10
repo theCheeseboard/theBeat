@@ -252,7 +252,7 @@
         <translation>Odstranit z knihovny</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+67"/>
         <location line="+2"/>
         <source>New Playlist</source>
         <translation>Nový playlist</translation>

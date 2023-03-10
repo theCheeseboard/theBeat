@@ -83,7 +83,6 @@ LibraryListView::LibraryListView(QWidget* parent) :
     };
 
     connect(this, &LibraryListView::activated, this, activate);
-    connect(this, &LibraryListView::clicked, this, activate);
 
     this->setSelectionMode(QListView::ExtendedSelection);
     this->setDragDropMode(QListView::DragDrop);

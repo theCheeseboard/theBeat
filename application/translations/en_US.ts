@@ -248,7 +248,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+67"/>
         <location line="+2"/>
         <source>New Playlist</source>
         <translation type="unfinished"></translation>

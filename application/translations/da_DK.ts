@@ -261,7 +261,7 @@
         <translation>Fjern fra playliste</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+78"/>
         <location line="+2"/>
         <source>New Playlist</source>
         <translation>Ny playliste</translation>
