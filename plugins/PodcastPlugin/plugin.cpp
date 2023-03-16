@@ -39,7 +39,6 @@ Plugin::~Plugin() {
 
 void Plugin::activate() {
     PodcastManager::instance()->init();
-    PodcastManager::instance()->subscribe(QUrl("https://www.numberphile.com/podcast?format=rss"));
     PodcastManager::instance()->updatePodcasts();
 
     d->podcastPane = new PodcastPane();
