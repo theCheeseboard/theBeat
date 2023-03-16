@@ -101,7 +101,7 @@ void Podcast::readXml() {
                 d->podcastDescription = reader.readElementText();
             } else if (reader.name() == QStringLiteral("item")) {
                 // Podcast item
-                d->items.append(PodcastItemPtr(new PodcastItem(&reader, d->podcastDir.absolutePath(), &d->mgr)));
+                d->items.append(PodcastItemPtr(new PodcastItem(this, &reader, d->podcastDir.absolutePath(), &d->mgr)));
             } else {
                 reader.skipCurrentElement();
             }

@@ -19,12 +19,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastitemwidget.cpp" line="44"/>
+        <location filename="../widgets/podcastitemwidget.cpp" line="45"/>
         <source>Remove Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastitemwidget.cpp" line="46"/>
+        <location filename="../widgets/podcastitemwidget.cpp" line="47"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>

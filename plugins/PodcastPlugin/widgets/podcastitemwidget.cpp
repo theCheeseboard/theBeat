@@ -1,6 +1,7 @@
 #include "podcastitemwidget.h"
 #include "ui_podcastitemwidget.h"
 
+#include "podcastmediaitem.h"
 #include <QDesktopServices>
 #include <headerbackgroundcontroller.h>
 #include <playlist.h>
@@ -59,7 +60,7 @@ void PodcastItemWidget::on_textBrowser_anchorClicked(const QUrl& arg1) {
 }
 
 void PodcastItemWidget::on_playButton_clicked() {
-    auto item = StateManager::instance()->url()->itemForUrl(QUrl(d->currentItem->playUrl()));
+    auto item = new PodcastMediaItem(d->currentItem);
     StateManager::instance()->playlist()->addItem(item);
     StateManager::instance()->playlist()->setCurrentItem(item);
 }

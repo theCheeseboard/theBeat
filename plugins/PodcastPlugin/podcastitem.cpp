@@ -14,6 +14,7 @@
 
 struct PodcastItemPrivate {
         QNetworkAccessManager* mgr;
+        Podcast* parentPodcast;
         QDir podcastDir;
 
         QString title;
@@ -32,6 +33,10 @@ struct PodcastItemPrivate {
 
 PodcastItem::~PodcastItem() {
     delete d;
+}
+
+Podcast* PodcastItem::parentPodcast() {
+    return d->parentPodcast;
 }
 
 QString PodcastItem::title() {
@@ -121,9 +126,10 @@ QString PodcastItem::downloadedFilePath() {
     return d->podcastDir.absoluteFilePath(QStringLiteral("audio/%1").arg(this->guidHash()));
 }
 
-PodcastItem::PodcastItem(QXmlStreamReader* dataReader, QString podcastDir, QNetworkAccessManager* mgr, QObject* parent) :
+PodcastItem::PodcastItem(Podcast* parentPodcast, QXmlStreamReader* dataReader, QString podcastDir, QNetworkAccessManager* mgr, QObject* parent) :
     QObject{parent} {
     d = new PodcastItemPrivate();
+    d->parentPodcast = parentPodcast;
     d->podcastDir = podcastDir;
     d->mgr = mgr;
 

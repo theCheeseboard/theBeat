@@ -13,6 +13,8 @@ class PodcastItem : public QObject {
     public:
         ~PodcastItem();
 
+        Podcast* parentPodcast();
+
         QString title();
         QString creator();
         QString link();
@@ -34,7 +36,7 @@ class PodcastItem : public QObject {
 
     protected:
         friend Podcast;
-        explicit PodcastItem(QXmlStreamReader* dataReader, QString podcastDir, QNetworkAccessManager* mgr, QObject* parent = nullptr);
+        explicit PodcastItem(Podcast* parentPodcast, QXmlStreamReader* dataReader, QString podcastDir, QNetworkAccessManager* mgr, QObject* parent = nullptr);
 
     private:
         PodcastItemPrivate* d;
