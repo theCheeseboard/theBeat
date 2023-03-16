@@ -9,10 +9,13 @@
 struct HeaderBackgroundControllerPrivate {
         QWidget* parent;
         QImage image;
-        int topPadding;
+        int topPadding = 0;
 
         QImage cachedBlur;
         QRect cachedBlurSize;
+
+        QImage cachedMini;
+        QRect cachedMiniSize;
 };
 
 HeaderBackgroundController::HeaderBackgroundController(QWidget* parent) :
@@ -29,6 +32,7 @@ HeaderBackgroundController::~HeaderBackgroundController() {
 void HeaderBackgroundController::setImage(QImage image) {
     d->image = image;
     d->cachedBlurSize = QRect();
+    d->cachedMiniSize = QRect();
     d->parent->update();
 }
 
@@ -91,11 +95,15 @@ bool HeaderBackgroundController::eventFilter(QObject* watched, QEvent* event) {
             rightRect.moveRight(d->parent->width());
             rightRect.moveTop(d->topPadding + (d->parent->height() - d->topPadding) / 2 - rightRect.height() / 2);
 
+            if (d->cachedBlurSize != rightRect || d->cachedMiniSize.isNull()) {
+                d->cachedMini = d->image.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            }
+
             paintCalculator.addRect(rightRect, [this, painter, backgroundCol](QRectF paintBounds) {
                 painter->setBrush(backgroundCol);
                 painter->setPen(Qt::transparent);
                 painter->drawRect(0, 0, d->parent->width(), d->parent->height());
-                painter->drawImage(paintBounds, d->image.scaled(paintBounds.size().toSize(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                painter->drawImage(paintBounds, d->cachedMini);
             });
 
             //            ui->buttonSpacer->setFixedWidth(rightRect.width());
