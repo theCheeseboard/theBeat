@@ -23,6 +23,7 @@ set(SOURCES
         urlmanager.cpp
         visualisationengine.cpp
         visualisationmanager.cpp
+        headerbackgroundcontroller.cpp
     )
 
 set(HEADERS
@@ -42,6 +43,7 @@ set(HEADERS
         urlmanager.h
         visualisationengine.h
         visualisationmanager.h
+        headerbackgroundcontroller.h
     )
 
 add_library(libthebeat SHARED ${SOURCES} ${HEADERS})

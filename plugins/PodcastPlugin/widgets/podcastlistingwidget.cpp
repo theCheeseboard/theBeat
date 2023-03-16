@@ -3,8 +3,12 @@
 
 #include "podcast.h"
 #include "podcastitem.h"
+#include <headerbackgroundcontroller.h>
+#include <libcontemporary_global.h>
 
 struct PodcastListingWidgetPrivate {
+        QPointer<Podcast> podcast;
+        HeaderBackgroundController* backgroundController;
 };
 
 PodcastListingWidget::PodcastListingWidget(QWidget* parent) :
@@ -12,6 +16,7 @@ PodcastListingWidget::PodcastListingWidget(QWidget* parent) :
     ui(new Ui::PodcastListingWidget) {
     ui->setupUi(this);
     d = new PodcastListingWidgetPrivate();
+    d->backgroundController = new HeaderBackgroundController(ui->topWidget);
 }
 
 PodcastListingWidget::~PodcastListingWidget() {
@@ -19,9 +24,18 @@ PodcastListingWidget::~PodcastListingWidget() {
     delete d;
 }
 
-void PodcastListingWidget::setCurrentPodcast(Podcast* podcast) {
+QCoro::Task<> PodcastListingWidget::setCurrentPodcast(Podcast* podcast) {
+    if (d->podcast) {
+        d->podcast->disconnect(this);
+    }
+    d->podcast = podcast;
+    connect(podcast, &Podcast::itemsUpdated, this, [this, podcast] {
+        this->setCurrentPodcast(podcast);
+    });
+
     ui->podcastTitle->setText(podcast->name());
 
+    int itemCount = 0;
     ui->listWidget->clear();
     for (auto item : podcast->items()) {
         if (!item->playUrl().isValid()) continue;
@@ -29,7 +43,15 @@ void PodcastListingWidget::setCurrentPodcast(Podcast* podcast) {
         listItem->setText(item->title());
         listItem->setData(Qt::UserRole, QVariant::fromValue(item));
         ui->listWidget->addItem(listItem);
+        itemCount++;
     }
+
+    QStringList podcastMeta;
+    podcastMeta.append(tr("%n episodes", nullptr, itemCount));
+    ui->auxiliaryDataLabel->setText(podcastMeta.join(libContemporaryCommon::humanReadablePartJoinString()));
+
+    d->backgroundController->setImage(QImage());
+    d->backgroundController->setImage(co_await podcast->image());
 }
 
 void PodcastListingWidget::on_backButton_clicked() {

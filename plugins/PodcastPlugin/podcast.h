@@ -22,6 +22,7 @@ class Podcast : public QObject {
         QCoro::Task<> update();
 
     signals:
+        void itemsUpdated();
 
     protected:
         friend PodcastManager;

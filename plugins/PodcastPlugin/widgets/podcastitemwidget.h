@@ -16,7 +16,7 @@ class PodcastItemWidget : public QWidget {
         explicit PodcastItemWidget(QWidget* parent = nullptr);
         ~PodcastItemWidget();
 
-        void setPodcastItem(PodcastItemPtr item);
+        QCoro::Task<> setPodcastItem(PodcastItemPtr item);
 
     signals:
         void done();

@@ -2,12 +2,14 @@
 #include "ui_podcastitemwidget.h"
 
 #include <QDesktopServices>
+#include <headerbackgroundcontroller.h>
 #include <playlist.h>
 #include <statemanager.h>
 #include <urlmanager.h>
 
 struct PodcastItemWidgetPrivate {
         PodcastItemPtr currentItem;
+        HeaderBackgroundController* backgroundController;
 };
 
 PodcastItemWidget::PodcastItemWidget(QWidget* parent) :
@@ -15,6 +17,8 @@ PodcastItemWidget::PodcastItemWidget(QWidget* parent) :
     ui(new Ui::PodcastItemWidget) {
     ui->setupUi(this);
     d = new PodcastItemWidgetPrivate();
+    d->backgroundController = new HeaderBackgroundController(ui->topWidget);
+
     ui->auxiliaryDataLabel->setVisible(false);
 }
 
@@ -23,7 +27,7 @@ PodcastItemWidget::~PodcastItemWidget() {
     delete d;
 }
 
-void PodcastItemWidget::setPodcastItem(PodcastItemPtr item) {
+QCoro::Task<> PodcastItemWidget::setPodcastItem(PodcastItemPtr item) {
     if (d->currentItem) {
         d->currentItem->disconnect(this);
     }
@@ -41,6 +45,9 @@ void PodcastItemWidget::setPodcastItem(PodcastItemPtr item) {
     } else {
         ui->downloadButton->setText(tr("Download"));
     }
+
+    d->backgroundController->setImage(QImage());
+    d->backgroundController->setImage(co_await item->image());
 }
 
 void PodcastItemWidget::on_backButton_clicked() {

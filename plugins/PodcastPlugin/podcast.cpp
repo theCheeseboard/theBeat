@@ -1,5 +1,6 @@
 #include "podcast.h"
 
+#include "podcastcommon.h"
 #include "podcastitem.h"
 #include "podcastmanager.h"
 #include <QCoroNetwork>
@@ -130,6 +131,8 @@ void Podcast::readXml() {
         tDebug("Podcast") << "Item Subtitle: " << item->subtitle();
         tDebug("Podcast") << "Item Published: " << item->published().toString();
     }
+
+    emit itemsUpdated();
 }
 
 Podcast::~Podcast() {
@@ -145,21 +148,7 @@ QString Podcast::name() {
 }
 
 QCoro::Task<QImage> Podcast::image() {
-    if (!QFile::exists(d->podcastDir.absoluteFilePath("cover"))) {
-        QNetworkReply* reply = co_await d->mgr.get(QNetworkRequest(d->feedUrl));
-        auto error = reply->error();
-        if (reply->error() != QNetworkReply::NoError) {
-            // Do something!
-            throw tException();
-        }
-
-        QFile imageFile(d->podcastDir.absoluteFilePath("cover"));
-        imageFile.open(QFile::WriteOnly);
-        imageFile.write(reply->readAll());
-        imageFile.close();
-    }
-
-    co_return QImage(d->podcastDir.absoluteFilePath("cover"));
+    co_return co_await PodcastCommon::cacheImage(&d->mgr, d->podcastImageUrl, d->podcastDir.absoluteFilePath("cover"));
 }
 
 QList<PodcastItemPtr> Podcast::items() {

@@ -8,6 +8,7 @@ set(SOURCES
     podcastmanager.cpp
     podcast.cpp
     podcastitem.cpp
+    podcastcommon.cpp
 
     widgets/podcastpane.cpp widgets/podcastpane.ui
     widgets/subscribedpodcastswidget.cpp widgets/subscribedpodcastswidget.ui
@@ -20,6 +21,7 @@ set(HEADERS
     podcastmanager.h
     podcast.h
     podcastitem.h
+    podcastcommon.h
 
     widgets/podcastpane.h
     widgets/subscribedpodcastswidget.h

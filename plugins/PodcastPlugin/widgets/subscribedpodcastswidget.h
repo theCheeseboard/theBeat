@@ -1,6 +1,7 @@
 #ifndef SUBSCRIBEDPODCASTSWIDGET_H
 #define SUBSCRIBEDPODCASTSWIDGET_H
 
+#include <QCoroTask>
 #include <QWidget>
 
 namespace Ui {
@@ -21,7 +22,7 @@ class SubscribedPodcastsWidget : public QWidget {
         void openPodcast(Podcast* podcast);
 
     private slots:
-        void on_listWidget_itemActivated(QListWidgetItem* item);
+        QCoro::Task<> on_listWidget_itemActivated(QListWidgetItem* item);
 
     private:
         Ui::SubscribedPodcastsWidget* ui;

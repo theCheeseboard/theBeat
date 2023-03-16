@@ -18,7 +18,7 @@ class PodcastListingWidget : public QWidget {
         explicit PodcastListingWidget(QWidget* parent = nullptr);
         ~PodcastListingWidget();
 
-        void setCurrentPodcast(Podcast* podcast);
+        QCoro::Task<> setCurrentPodcast(Podcast* podcast);
 
     signals:
         void done();

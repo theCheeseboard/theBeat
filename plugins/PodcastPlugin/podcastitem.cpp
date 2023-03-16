@@ -1,9 +1,11 @@
 #include "podcastitem.h"
 
+#include "podcastcommon.h"
 #include <QCoroNetwork>
 #include <QCryptographicHash>
 #include <QDateTime>
 #include <QDir>
+#include <QImage>
 #include <QMimeDatabase>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -57,7 +59,6 @@ QDateTime PodcastItem::published() {
 }
 
 QUrl PodcastItem::playUrl() {
-    // TODO: Downloads
     if (this->isDownloaded()) {
         return QUrl::fromLocalFile(QStringLiteral("%1.%2").arg(this->downloadedFilePath(), d->mediaUrlExt));
     }
@@ -71,6 +72,10 @@ QString PodcastItem::guid() {
 
 QString PodcastItem::guidHash() {
     return QCryptographicHash::hash(this->guid().toUtf8(), QCryptographicHash::Sha256).toHex();
+}
+
+QCoro::Task<QImage> PodcastItem::image() {
+    co_return co_await PodcastCommon::cacheImage(d->mgr, QUrl(d->imageUrl), d->podcastDir.absoluteFilePath(QStringLiteral("images/%1").arg(this->guidHash())));
 }
 
 bool PodcastItem::isDownloaded() {

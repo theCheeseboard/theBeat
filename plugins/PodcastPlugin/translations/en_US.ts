@@ -19,12 +19,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastitemwidget.cpp" line="40"/>
+        <location filename="../widgets/podcastitemwidget.cpp" line="44"/>
         <source>Remove Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastitemwidget.cpp" line="42"/>
+        <location filename="../widgets/podcastitemwidget.cpp" line="46"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
@@ -56,6 +56,13 @@
         <source>Shuffle All</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <location filename="../widgets/podcastlistingwidget.cpp" line="50"/>
+        <source>%n episodes</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>PodcastPane</name>
@@ -80,6 +87,27 @@
     <message>
         <location filename="../widgets/subscribedpodcastswidget.ui" line="58"/>
         <source>Podcasts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/subscribedpodcastswidget.cpp" line="39"/>
+        <location filename="../widgets/subscribedpodcastswidget.cpp" line="49"/>
+        <source>Subscribe to new podcast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/subscribedpodcastswidget.cpp" line="49"/>
+        <source>What&apos;s the address of the feed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/subscribedpodcastswidget.cpp" line="54"/>
+        <source>Invalid URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/subscribedpodcastswidget.cpp" line="55"/>
+        <source>Sorry, that URL is not a valid feed URL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
