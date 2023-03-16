@@ -406,7 +406,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Wiedergabe</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -447,7 +447,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+318"/>
+        <location filename="../mainwindow.cpp" line="+324"/>
         <source>Open URL</source>
         <translation>URL öffnen</translation>
     </message>
@@ -548,12 +548,22 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="+8"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished">Nach diesem Titel pausieren</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shift+Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-120"/>
         <source>Skip Forward</source>
         <translation>Vorwärtsspringen</translation>
     </message>
     <message>
-        <location line="-166"/>
+        <location line="-168"/>
         <source>Select a track or drop something here!</source>
         <translation>Wähle einen Title aus oder ziehe etwas hier hin!</translation>
     </message>
@@ -563,7 +573,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Abspielen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+181"/>
+        <location filename="../mainwindow.ui" line="+183"/>
         <source>Space</source>
         <translation>Leer</translation>
     </message>

@@ -423,7 +423,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>تشغيل</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -464,7 +464,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+318"/>
+        <location filename="../mainwindow.cpp" line="+324"/>
         <source>Open URL</source>
         <translation>أفتح الرابط</translation>
     </message>
@@ -514,12 +514,22 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+8"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished">وقفة بعد المسار الحالي</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shift+Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="-53"/>
         <source>Play</source>
         <translation>ألعب</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-94"/>
+        <location filename="../mainwindow.ui" line="-105"/>
         <source>Space</source>
         <translation>مساحة</translation>
     </message>

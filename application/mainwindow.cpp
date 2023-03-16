@@ -68,9 +68,9 @@
 struct MainWindowPrivate {
         tCsdTools csd;
 
-    tSettings settings;
+        tSettings settings;
 
-    QFrame* topBarLine;
+        QFrame* topBarLine;
 };
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -141,11 +141,11 @@ MainWindow::MainWindow(QWidget* parent) :
 
     tHelpMenu* helpMenu = new tHelpMenu(this);
 
-#ifdef HAVE_THEINSTALLER
+    #ifdef HAVE_THEINSTALLER
     if (tApplication::currentPlatform() != tApplication::WindowsAppPackage && UpdateChecker::updatesSupported()) {
         helpMenu->addAction(UpdateChecker::checkForUpdatesAction());
 
-        connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [ = ] {
+        connect(UpdateChecker::instance(), &UpdateChecker::updateAvailable, this, [=] {
             QPixmap menuPixmap = UpdateChecker::updateAvailableIcon(ui->menuButton->icon().pixmap(ui->menuButton->iconSize()));
             ui->menuButton->setIcon(QIcon(menuPixmap));
 
@@ -154,7 +154,7 @@ MainWindow::MainWindow(QWidget* parent) :
             helpMenu->setIcon(QIcon(UpdateChecker::updateAvailableIcon(QPixmap::fromImage(helpImage))));
         });
     }
-#endif
+    #endif
 
     menu->addAction(ui->actionOpen_File);
     menu->addAction(ui->actionOpen_URL);
@@ -166,6 +166,7 @@ MainWindow::MainWindow(QWidget* parent) :
     menu->addSeparator();
     menu->addAction(ui->actionRepeat_One);
     menu->addAction(ui->actionShuffle);
+    menu->addAction(ui->actionPause_after_current_track);
     menu->addSeparator();
     menu->addAction(ui->actionPrint);
     menu->addSeparator();
@@ -235,7 +236,7 @@ MainWindow::MainWindow(QWidget* parent) :
         thumbnail->setToolbar(QList<QAction*>{ui->actionSkip_Back, ui->actionPlayPause, ui->actionSkip_Forward});
     }
 
-    connect(&d->settings, &tSettings::settingChanged, this, [ = ](QString key, QVariant value) {
+    connect(&d->settings, &tSettings::settingChanged, this, [=](QString key, QVariant value) {
         if (key == "notifications/trackChange") {
             StateManager::instance()->playlist()->setTrachChangeNotificationsEnabled(value.toBool());
         } else if (key == "appearance/useSsds") {
@@ -260,6 +261,11 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [this] {
         updatePlayState();
     });
+    connect(StateManager::instance()->playlist(), &Playlist::pauseAfterCurrentTrackChanged, this, [=](bool pauseAfterCurrentTrack) {
+        ui->actionPause_after_current_track->setChecked(pauseAfterCurrentTrack);
+    });
+    ui->actionPause_after_current_track->setChecked(StateManager::instance()->playlist()->pauseAfterCurrentTrack());
+
     updatePlayState();
 
     connect(ui->controlStrip, &ControlStrip::inZenModeChanged, this, [this](bool inZenMode) {
@@ -286,7 +292,7 @@ void MainWindow::on_actionOpen_File_triggered() {
     QFileDialog* dialog = new QFileDialog(this);
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::ExistingFiles);
-    connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
+    connect(dialog, &QFileDialog::filesSelected, this, [=](QStringList files) {
         for (QString file : files) {
             MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
             StateManager::instance()->playlist()->addItem(item);
@@ -424,7 +430,7 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
         } else {
             menu->addSection(tr("For %n items", nullptr, selected.count()));
         }
-        menu->addAction(QIcon::fromTheme("list-remove"), tr("Remove from Queue"), [ = ] {
+        menu->addAction(QIcon::fromTheme("list-remove"), tr("Remove from Queue"), [=] {
             // Directly removing the items causes the list to change and invalidate itself
             QList<MediaItem*> itemsToRemove;
             for (const QModelIndex& idx : selected) {
@@ -438,7 +444,7 @@ void MainWindow::on_queueList_customContextMenuRequested(const QPoint& pos) {
     }
 
     menu->addSection(tr("For Queue"));
-    menu->addAction(QIcon::fromTheme("list-remove"), tr("Clear Queue"), [ = ] {
+    menu->addAction(QIcon::fromTheme("list-remove"), tr("Clear Queue"), [=] {
         StateManager::instance()->playlist()->clear();
     });
 
@@ -481,7 +487,7 @@ void MainWindow::on_actionAdd_to_Library_triggered() {
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::Directory);
     dialog->setOption(QFileDialog::ShowDirsOnly);
-    connect(dialog, &QFileDialog::filesSelected, this, [ = ](QStringList files) {
+    connect(dialog, &QFileDialog::filesSelected, this, [=](QStringList files) {
         for (QString file : files) {
             LibraryManager::instance()->enumerateDirectory(file, true, true);
         }
@@ -562,4 +568,8 @@ void MainWindow::on_actionDecrease_Volume_triggered() {
     newVolume -= 0.1;
     if (newVolume < 0) newVolume = 0;
     StateManager::instance()->playlist()->setVolume(newVolume);
+}
+
+void MainWindow::on_actionPause_after_current_track_triggered(bool checked) {
+    StateManager::instance()->playlist()->setPauseAfterCurrentTrack(checked);
 }

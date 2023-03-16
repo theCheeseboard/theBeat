@@ -384,7 +384,7 @@
         <translation></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>View</source>
         <translation></translation>
     </message>
@@ -425,7 +425,7 @@
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+318"/>
+        <location filename="../mainwindow.cpp" line="+324"/>
         <source>Open URL</source>
         <translation></translation>
     </message>
@@ -475,12 +475,22 @@
         <translation></translation>
     </message>
     <message>
+        <location line="+8"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished">Pauznout po této stopě</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shift+Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="-53"/>
         <source>Play</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="-94"/>
+        <location filename="../mainwindow.ui" line="-105"/>
         <source>Space</source>
         <translation></translation>
     </message>

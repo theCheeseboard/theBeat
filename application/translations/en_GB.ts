@@ -402,7 +402,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -443,7 +443,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+318"/>
+        <location filename="../mainwindow.cpp" line="+324"/>
         <source>Open URL</source>
         <translation>Open URL</translation>
     </message>
@@ -544,12 +544,22 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="+8"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished">Pause after current track</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shift+Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-120"/>
         <source>Skip Forward</source>
         <translation>Skip Forward</translation>
     </message>
     <message>
-        <location line="-166"/>
+        <location line="-168"/>
         <source>Select a track or drop something here!</source>
         <translation>Select a track or drop something here!</translation>
     </message>
@@ -559,7 +569,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <translation>Play</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+181"/>
+        <location filename="../mainwindow.ui" line="+183"/>
         <source>Space</source>
         <translation>Space</translation>
     </message>

@@ -279,7 +279,7 @@
      <x>0</x>
      <y>0</y>
      <width>990</width>
-     <height>22</height>
+     <height>43</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -310,6 +310,8 @@
     <addaction name="separator"/>
     <addaction name="actionRepeat_One"/>
     <addaction name="actionShuffle"/>
+    <addaction name="separator"/>
+    <addaction name="actionPause_after_current_track"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -508,6 +510,17 @@
    </property>
    <property name="shortcut">
     <string>Down</string>
+   </property>
+  </action>
+  <action name="actionPause_after_current_track">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Pause after current track</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Esc</string>
    </property>
   </action>
  </widget>
