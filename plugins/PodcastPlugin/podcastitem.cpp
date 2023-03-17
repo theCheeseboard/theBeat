@@ -211,7 +211,9 @@ PodcastItem::PodcastItem(Podcast* parentPodcast, QXmlStreamReader* dataReader, Q
             } else if (dataReader->name() == QStringLiteral("guid")) {
                 d->guid = dataReader->readElementText();
             } else if (dataReader->name() == QStringLiteral("pubDate")) {
-                d->published = QDateTime::fromString(dataReader->readElementText(), Qt::RFC2822Date);
+                auto date = dataReader->readElementText();
+                date.replace("GMT", "+0000");
+                d->published = QDateTime::fromString(date, Qt::RFC2822Date);
             } else if (dataReader->name() == QStringLiteral("enclosure")) {
                 d->mediaUrl = dataReader->attributes().value("url").toString();
 
