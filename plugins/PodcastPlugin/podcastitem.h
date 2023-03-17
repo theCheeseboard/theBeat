@@ -27,7 +27,8 @@ class PodcastItem : public QObject {
         QCoro::Task<QImage> image();
 
         bool isDownloaded();
-        QCoro::Task<> download();
+        bool isDownloading();
+        QCoro::Task<> download(bool transient);
         void removeDownload();
         QString downloadedFilePath();
 

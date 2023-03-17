@@ -5,6 +5,8 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QUrl>
+#include <tjobmanager.h>
+#include <tstandardjob.h>
 
 struct PodcastManagerPrivate {
         QString podcastDir;
@@ -47,10 +49,17 @@ QString PodcastManager::podcastDir() {
     return d->podcastDir;
 }
 
-QCoro::Task<> PodcastManager::updatePodcasts() {
+QCoro::Task<> PodcastManager::updatePodcasts(bool transient) {
+    auto job = new tStandardJob(transient);
+    job->setTitleString(tr("Updating Podcasts"));
+    tJobManager::trackJob(job);
     for (auto podcast : d->podcasts) {
+        job->setStatusString(tr("Updating %1").arg(QLocale().quoteString(podcast->name())));
         co_await podcast->update();
     }
+
+    job->setState(tJob::Finished);
+    job->setStatusString(tr("Updated Podcasts"));
 }
 
 PodcastManager::PodcastManager(QObject* parent) :

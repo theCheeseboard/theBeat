@@ -47,10 +47,16 @@ QCoro::Task<> PodcastItemWidget::setPodcastItem(PodcastItemPtr item) {
     ui->podcastTitle->setText(item->title());
     ui->textBrowser->setHtml(item->description());
 
-    if (item->isDownloaded()) {
-        ui->downloadButton->setText(tr("Remove Download"));
+    if (item->isDownloading()) {
+        ui->downloadButton->setEnabled(false);
+        ui->downloadButton->setText(tr("Download in progress..."));
     } else {
-        ui->downloadButton->setText(tr("Download"));
+        if (item->isDownloaded()) {
+            ui->downloadButton->setText(tr("Remove Download"));
+        } else {
+            ui->downloadButton->setText(tr("Download"));
+        }
+        ui->downloadButton->setEnabled(true);
     }
 
     d->backgroundController->setImage(QImage());
@@ -75,6 +81,6 @@ void PodcastItemWidget::on_downloadButton_clicked() {
     if (d->currentItem->isDownloaded()) {
         d->currentItem->removeDownload();
     } else {
-        d->currentItem->download();
+        d->currentItem->download(false);
     }
 }

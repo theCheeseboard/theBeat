@@ -18,7 +18,7 @@ class PodcastManager : public QObject {
 
         QString podcastDir();
 
-        QCoro::Task<> updatePodcasts();
+        QCoro::Task<> updatePodcasts(bool transient);
 
     signals:
         void podcastsUpdated();

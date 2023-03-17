@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>PodcastItem</name>
+    <message>
+        <location filename="../podcastitem.cpp" line="104"/>
+        <source>Download Podcast Episode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastitem.cpp" line="105"/>
+        <source>Downloading %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastitem.cpp" line="127"/>
+        <source>Failed to download %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastitem.cpp" line="142"/>
+        <source>Downloaded %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PodcastItemWidget</name>
     <message>
         <location filename="../widgets/podcastitemwidget.ui" line="14"/>
@@ -19,12 +42,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastitemwidget.cpp" line="51"/>
+        <location filename="../widgets/podcastitemwidget.cpp" line="52"/>
+        <source>Download in progress...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/podcastitemwidget.cpp" line="55"/>
         <source>Remove Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastitemwidget.cpp" line="53"/>
+        <location filename="../widgets/podcastitemwidget.cpp" line="57"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
@@ -62,6 +90,19 @@
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PodcastManager</name>
+    <message>
+        <location filename="../podcastmanager.cpp" line="54"/>
+        <source>Updating Podcasts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastmanager.cpp" line="57"/>
+        <source>Updating %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

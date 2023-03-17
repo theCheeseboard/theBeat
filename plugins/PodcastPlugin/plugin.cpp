@@ -39,7 +39,7 @@ Plugin::~Plugin() {
 
 void Plugin::activate() {
     PodcastManager::instance()->init();
-    PodcastManager::instance()->updatePodcasts();
+    PodcastManager::instance()->updatePodcasts(true);
 
     d->podcastPane = new PodcastPane();
 }

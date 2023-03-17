@@ -11,6 +11,8 @@
 #include <QNetworkReply>
 #include <QUrl>
 #include <QXmlStreamReader>
+#include <tjobmanager.h>
+#include <tstandardjob.h>
 
 struct PodcastItemPrivate {
         QNetworkAccessManager* mgr;
@@ -29,6 +31,8 @@ struct PodcastItemPrivate {
         QString mediaUrlExt;
         QDateTime published;
         QString guid;
+
+        bool isDownloading = false;
 };
 
 PodcastItem::~PodcastItem() {
@@ -87,12 +91,30 @@ bool PodcastItem::isDownloaded() {
     return QFile::exists(QStringLiteral("%1.lck").arg(this->downloadedFilePath()));
 }
 
-QCoro::Task<> PodcastItem::download() {
-    if (isDownloaded()) co_return;
+bool PodcastItem::isDownloading() {
+    return d->isDownloading;
+}
+
+QCoro::Task<> PodcastItem::download(bool transient) {
+    if (isDownloaded() || isDownloading()) co_return;
+    d->isDownloading = true;
+    emit downloadStateChanged();
+
+    auto job = new tStandardJob(transient);
+    job->setTitleString(tr("Download Podcast Episode"));
+    job->setStatusString(tr("Downloading %1").arg(QLocale().quoteString(d->title)));
+    job->setProgress(0);
+    job->setTotalProgress(0);
+    tJobManager::trackJobDelayed(job);
+
     QFile localFile(QStringLiteral("%1.%2").arg(this->downloadedFilePath(), d->mediaUrlExt));
     localFile.open(QFile::WriteOnly);
 
     auto reply = d->mgr->get(QNetworkRequest(QUrl(d->mediaUrl)));
+    connect(reply, &QNetworkReply::downloadProgress, this, [job](qint64 bytesReceived, qint64 bytesTotal) {
+        job->setTotalProgress(bytesTotal);
+        job->setProgress(bytesReceived);
+    });
     connect(reply, &QNetworkReply::readyRead, this, [this, reply, &localFile] {
         localFile.write(reply->readAll());
     });
@@ -101,6 +123,11 @@ QCoro::Task<> PodcastItem::download() {
     auto error = reply->error();
     if (reply->error() != QNetworkReply::NoError) {
         // Do something!
+        job->setState(tJob::Failed);
+        job->setStatusString(tr("Failed to download %1").arg(QLocale().quoteString(d->title)));
+
+        d->isDownloading = false;
+        emit downloadStateChanged();
         co_return;
     }
 
@@ -111,6 +138,10 @@ QCoro::Task<> PodcastItem::download() {
     lockFile.open(QFile::WriteOnly);
     lockFile.close();
 
+    job->setState(tJob::Finished);
+    job->setStatusString(tr("Downloaded %1").arg(QLocale().quoteString(d->title)));
+
+    d->isDownloading = false;
     emit downloadStateChanged();
 }
 

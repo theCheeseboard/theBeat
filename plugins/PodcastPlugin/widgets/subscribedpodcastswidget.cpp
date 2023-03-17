@@ -65,7 +65,7 @@ QCoro::Task<> SubscribedPodcastsWidget::on_listWidget_itemActivated(QListWidgetI
                 co_return;
             }
             emit openPodcast(PodcastManager::instance()->subscribe(url));
-            PodcastManager::instance()->updatePodcasts();
+            PodcastManager::instance()->updatePodcasts(true);
         }
     } else {
         emit openPodcast(podcast);
