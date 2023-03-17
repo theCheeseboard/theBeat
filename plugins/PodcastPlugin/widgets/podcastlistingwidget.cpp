@@ -47,6 +47,9 @@ QCoro::Task<> PodcastListingWidget::setCurrentPodcast(Podcast* podcast) {
     connect(podcast, &Podcast::itemsUpdated, this, [this, podcast] {
         this->setCurrentPodcast(podcast);
     });
+    connect(podcast, &Podcast::unsubscribed, this, [this, podcast] {
+        emit done();
+    });
     d->model->setPodcast(podcast);
 
     ui->podcastTitle->setText(podcast->name());
@@ -57,6 +60,7 @@ QCoro::Task<> PodcastListingWidget::setCurrentPodcast(Podcast* podcast) {
 
     d->backgroundController->setImage(QImage());
     d->backgroundController->setImage(co_await podcast->image());
+    ui->menuButton->setMenu(podcast->podcastManagementMenu());
 }
 
 void PodcastListingWidget::on_backButton_clicked() {

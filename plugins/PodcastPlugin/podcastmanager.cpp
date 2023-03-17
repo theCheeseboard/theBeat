@@ -23,7 +23,9 @@ PodcastManager* PodcastManager::instance() {
 
 void PodcastManager::init() {
     for (const auto& entry : QDir(d->podcastDir).entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
-        d->podcasts.append(new Podcast(entry));
+        auto podcast = new Podcast(entry);
+        connect(podcast, &Podcast::itemsUpdated, this, &PodcastManager::podcastsUpdated);
+        d->podcasts.append(podcast);
     }
     emit podcastsUpdated();
 }
@@ -36,6 +38,7 @@ Podcast* PodcastManager::subscribe(QUrl rssFeed) {
     }
 
     auto podcast = new Podcast(podcastHash);
+    connect(podcast, &Podcast::itemsUpdated, this, &PodcastManager::podcastsUpdated);
     podcast->setFeedUrl(rssFeed);
     d->podcasts.append(podcast);
 
@@ -46,6 +49,13 @@ Podcast* PodcastManager::subscribe(QUrl rssFeed) {
 
 QList<Podcast*> PodcastManager::podcasts() {
     return d->podcasts;
+}
+
+void PodcastManager::unsubscribe(Podcast* podcast) {
+    if (podcast->unsubscribe()) {
+        d->podcasts.removeAll(podcast);
+        emit podcastsUpdated();
+    }
 }
 
 QString PodcastManager::podcastDir() {

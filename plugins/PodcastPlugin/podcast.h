@@ -6,6 +6,7 @@
 
 class PodcastManager;
 class PodcastItem;
+class QMenu;
 struct PodcastPrivate;
 typedef QSharedPointer<PodcastItem> PodcastItemPtr;
 class Podcast : public QObject {
@@ -21,8 +22,13 @@ class Podcast : public QObject {
 
         QCoro::Task<> update();
 
+        QMenu* podcastManagementMenu();
+
+        bool unsubscribe();
+
     signals:
         void itemsUpdated();
+        void unsubscribed();
 
     protected:
         friend PodcastManager;

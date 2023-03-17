@@ -15,6 +15,7 @@ class PodcastManager : public QObject {
 
         Podcast* subscribe(QUrl rssFeed);
         QList<Podcast*> podcasts();
+        void unsubscribe(Podcast* podcast);
 
         QString podcastDir();
 

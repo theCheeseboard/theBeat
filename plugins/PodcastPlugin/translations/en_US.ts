@@ -2,6 +2,25 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>Podcast</name>
+    <message>
+        <location filename="../podcast.cpp" line="177"/>
+        <source>For %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcast.cpp" line="181"/>
+        <location filename="../podcast.cpp" line="183"/>
+        <source>Unsubscribe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcast.cpp" line="182"/>
+        <source>Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PodcastItem</name>
     <message>
         <location filename="../podcastitem.cpp" line="110"/>
@@ -80,7 +99,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../widgets/podcastlistingwidget.cpp" line="55"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="58"/>
         <source>%n episodes</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -90,17 +109,17 @@
 <context>
     <name>PodcastManager</name>
     <message>
-        <location filename="../podcastmanager.cpp" line="60"/>
+        <location filename="../podcastmanager.cpp" line="70"/>
         <source>Updating Podcasts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastmanager.cpp" line="63"/>
+        <location filename="../podcastmanager.cpp" line="73"/>
         <source>Updating %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastmanager.cpp" line="73"/>
+        <location filename="../podcastmanager.cpp" line="83"/>
         <source>Updated Podcasts</source>
         <translation type="unfinished"></translation>
     </message>

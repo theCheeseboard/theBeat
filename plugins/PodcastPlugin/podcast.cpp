@@ -5,6 +5,7 @@
 #include "podcastmanager.h"
 #include <QCoroNetwork>
 #include <QDir>
+#include <QMenu>
 #include <QNetworkAccessManager>
 #include <QUrl>
 #include <QXmlStreamReader>
@@ -169,4 +170,28 @@ QCoro::Task<> Podcast::update() {
     xmlFile.close();
 
     readXml();
+}
+
+QMenu* Podcast::podcastManagementMenu() {
+    QMenu* menu = new QMenu();
+    menu->addSection(tr("For %1").arg(QLocale().quoteString(this->name())));
+
+    QMenu* removeMenu = new QMenu();
+    removeMenu->setIcon(QIcon::fromTheme("edit-delete"));
+    removeMenu->setTitle(tr("Unsubscribe"));
+    removeMenu->addSection(tr("Are you sure?"));
+    removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Unsubscribe"), this, [this] {
+        PodcastManager::instance()->unsubscribe(this);
+    });
+    menu->addMenu(removeMenu);
+    return menu;
+}
+
+bool Podcast::unsubscribe() {
+    if (d->podcastDir.removeRecursively()) {
+        emit unsubscribed();
+        return true;
+    } else {
+        return false;
+    }
 }
