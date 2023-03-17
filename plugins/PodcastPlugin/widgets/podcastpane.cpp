@@ -21,10 +21,6 @@ PodcastPane::PodcastPane(QWidget* parent) :
     d->source->setIcon(QIcon::fromTheme("radio"));
 
     StateManager::instance()->sources()->addSource(d->source);
-    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
-        this->layout()->setContentsMargins(0, padTop, 0, 0);
-    });
-    this->layout()->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
 

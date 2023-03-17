@@ -5,6 +5,8 @@
 #include "podcastitem.h"
 #include <headerbackgroundcontroller.h>
 #include <libcontemporary_global.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
 
 struct PodcastListingWidgetPrivate {
         QPointer<Podcast> podcast;
@@ -17,6 +19,11 @@ PodcastListingWidget::PodcastListingWidget(QWidget* parent) :
     ui->setupUi(this);
     d = new PodcastListingWidgetPrivate();
     d->backgroundController = new HeaderBackgroundController(ui->topWidget);
+
+    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
+        d->backgroundController->setTopPadding(padTop);
+    });
+    d->backgroundController->setTopPadding(StateManager::instance()->sources()->padTop());
 }
 
 PodcastListingWidget::~PodcastListingWidget() {

@@ -3,6 +3,8 @@
 
 #include "podcast.h"
 #include "podcastmanager.h"
+#include <sourcemanager.h>
+#include <statemanager.h>
 #include <ticon.h>
 #include <tinputdialog.h>
 #include <tmessagebox.h>
@@ -15,6 +17,11 @@ SubscribedPodcastsWidget::SubscribedPodcastsWidget(QWidget* parent) :
     ui(new Ui::SubscribedPodcastsWidget) {
     ui->setupUi(this);
     d = new SubscribedPodcastsWidgetPrivate();
+
+    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
+        this->layout()->setContentsMargins(0, padTop, 0, 0);
+    });
+    this->layout()->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
 
     connect(PodcastManager::instance(), &PodcastManager::podcastsUpdated, this, &SubscribedPodcastsWidget::updatePodcasts);
     this->updatePodcasts();

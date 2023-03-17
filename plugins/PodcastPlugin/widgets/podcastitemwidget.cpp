@@ -5,6 +5,7 @@
 #include <QDesktopServices>
 #include <headerbackgroundcontroller.h>
 #include <playlist.h>
+#include <sourcemanager.h>
 #include <statemanager.h>
 #include <urlmanager.h>
 
@@ -19,6 +20,11 @@ PodcastItemWidget::PodcastItemWidget(QWidget* parent) :
     ui->setupUi(this);
     d = new PodcastItemWidgetPrivate();
     d->backgroundController = new HeaderBackgroundController(ui->topWidget);
+
+    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
+        d->backgroundController->setTopPadding(padTop);
+    });
+    d->backgroundController->setTopPadding(StateManager::instance()->sources()->padTop());
 
     ui->auxiliaryDataLabel->setVisible(false);
 }

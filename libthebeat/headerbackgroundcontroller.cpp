@@ -33,32 +33,39 @@ void HeaderBackgroundController::setImage(QImage image) {
     d->image = image;
     d->cachedBlurSize = QRect();
     d->cachedMiniSize = QRect();
+    updateMargins();
     d->parent->update();
 }
 
 void HeaderBackgroundController::setTopPadding(int topPadding) {
     d->topPadding = topPadding;
+    updateMargins();
+}
+
+void HeaderBackgroundController::updateMargins() {
+    auto rightPadding = 0;
+    if (!d->image.isNull()) {
+        rightPadding = d->parent->height() - d->topPadding;
+    }
+    d->parent->setContentsMargins(0, d->topPadding, rightPadding, 0);
 }
 
 bool HeaderBackgroundController::eventFilter(QObject* watched, QEvent* event) {
-    if (watched == d->parent && event->type() == QEvent::Paint) {
-        auto painter = new QPainter(d->parent);
+    if (watched == d->parent) {
+        if (event->type() == QEvent::Paint) {
+            auto painter = new QPainter(d->parent);
 
-        tPaintCalculator paintCalculator;
-        paintCalculator.setPainter(painter);
-        paintCalculator.setDrawBounds(d->parent->size());
+            tPaintCalculator paintCalculator;
+            paintCalculator.setPainter(painter);
+            paintCalculator.setDrawBounds(d->parent->size());
 
-        QColor backgroundCol = d->parent->palette().color(QPalette::Window);
-        if ((backgroundCol.red() + backgroundCol.green() + backgroundCol.blue()) / 3 < 127) {
-            backgroundCol = QColor(0, 0, 0, 150);
-        } else {
-            backgroundCol = QColor(255, 255, 255, 150);
-        }
+            QColor backgroundCol = d->parent->palette().color(QPalette::Window);
+            if ((backgroundCol.red() + backgroundCol.green() + backgroundCol.blue()) / 3 < 127) {
+                backgroundCol = QColor(0, 0, 0, 150);
+            } else {
+                backgroundCol = QColor(255, 255, 255, 150);
+            }
 
-        if (d->image.isNull()) {
-            // TODO
-            //            ui->buttonSpacer->setFixedWidth(0);
-        } else {
             QRect rect;
             rect.setSize(d->image.size().scaled(d->parent->width(), d->parent->height(), Qt::KeepAspectRatioByExpanding));
             rect.moveLeft(d->parent->width() / 2 - rect.width() / 2);
@@ -106,12 +113,12 @@ bool HeaderBackgroundController::eventFilter(QObject* watched, QEvent* event) {
                 painter->drawImage(paintBounds, d->cachedMini);
             });
 
-            //            ui->buttonSpacer->setFixedWidth(rightRect.width());
+            paintCalculator.performPaint();
+
+            delete painter;
+        } else if (event->type() == QEvent::Resize) {
+            updateMargins();
         }
-
-        paintCalculator.performPaint();
-
-        delete painter;
     }
     return false;
 }

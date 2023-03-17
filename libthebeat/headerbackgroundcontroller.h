@@ -18,6 +18,8 @@ class HeaderBackgroundController : public QObject {
     private:
         HeaderBackgroundControllerPrivate* d;
 
+        void updateMargins();
+
         // QObject interface
     public:
         bool eventFilter(QObject* watched, QEvent* event);
