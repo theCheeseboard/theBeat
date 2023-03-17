@@ -8,6 +8,7 @@
 #include <libcontemporary_global.h>
 #include <sourcemanager.h>
 #include <statemanager.h>
+#include <ticon.h>
 
 struct PodcastListingWidgetPrivate {
         QPointer<Podcast> podcast;
@@ -19,6 +20,7 @@ PodcastListingWidget::PodcastListingWidget(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::PodcastListingWidget) {
     ui->setupUi(this);
+    tIcon::processWidget(this);
     d = new PodcastListingWidgetPrivate();
     d->backgroundController = new HeaderBackgroundController(ui->topWidget);
 

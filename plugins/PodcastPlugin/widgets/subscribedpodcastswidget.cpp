@@ -16,6 +16,7 @@ SubscribedPodcastsWidget::SubscribedPodcastsWidget(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::SubscribedPodcastsWidget) {
     ui->setupUi(this);
+    tIcon::processWidget(this);
     d = new SubscribedPodcastsWidgetPrivate();
 
     connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {

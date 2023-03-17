@@ -7,6 +7,7 @@
 #include <playlist.h>
 #include <sourcemanager.h>
 #include <statemanager.h>
+#include <ticon.h>
 #include <urlmanager.h>
 
 struct PodcastItemWidgetPrivate {
@@ -18,6 +19,7 @@ PodcastItemWidget::PodcastItemWidget(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::PodcastItemWidget) {
     ui->setupUi(this);
+    tIcon::processWidget(this);
     d = new PodcastItemWidgetPrivate();
     d->backgroundController = new HeaderBackgroundController(ui->topWidget);
 

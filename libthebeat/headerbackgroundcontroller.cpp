@@ -47,7 +47,7 @@ void HeaderBackgroundController::updateMargins() {
     if (!d->image.isNull()) {
         rightPadding = d->parent->height() - d->topPadding;
     }
-    d->parent->setContentsMargins(0, d->topPadding, rightPadding, 0);
+    d->parent->setContentsMargins(d->parent->layoutDirection() == Qt::RightToLeft ? rightPadding : 0, d->topPadding, d->parent->layoutDirection() == Qt::LeftToRight ? rightPadding : 0, 0);
 }
 
 bool HeaderBackgroundController::eventFilter(QObject* watched, QEvent* event) {

@@ -5,6 +5,7 @@
 #include <pluginmediasource.h>
 #include <sourcemanager.h>
 #include <statemanager.h>
+#include <ticon.h>
 
 struct PodcastPanePrivate {
         PluginMediaSource* source;
@@ -14,6 +15,7 @@ PodcastPane::PodcastPane(QWidget* parent) :
     AbstractLibraryBrowser(parent),
     ui(new Ui::PodcastPane) {
     ui->setupUi(this);
+    tIcon::processWidget(this);
     d = new PodcastPanePrivate();
 
     d->source = new PluginMediaSource(this);
