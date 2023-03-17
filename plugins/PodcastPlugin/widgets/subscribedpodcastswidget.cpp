@@ -49,25 +49,37 @@ void SubscribedPodcastsWidget::updatePodcasts() {
     ui->listWidget->addItem(addItem);
 }
 
-QCoro::Task<> SubscribedPodcastsWidget::on_listWidget_itemActivated(QListWidgetItem* item) {
+QCoro::Task<> SubscribedPodcastsWidget::addSubscription() {
+    bool ok;
+    auto urlString = tInputDialog::getText(this->window(), tr("Subscribe to new podcast"), tr("What's the address of the feed?"), QLineEdit::Normal, "", &ok);
+    if (ok) {
+        QUrl url(urlString);
+        if (!url.isValid() || (url.scheme() != "https" && url.scheme() != "http")) {
+            tMessageBox box(this->window());
+            box.setTitleBarText(tr("Invalid URL"));
+            box.setMessageText(tr("Sorry, that URL is not a valid feed URL"));
+            box.setIcon(QMessageBox::Critical);
+            co_await box.presentAsync();
+            co_return;
+        }
+        emit openPodcast(PodcastManager::instance()->subscribe(url));
+        PodcastManager::instance()->updatePodcasts(true);
+    }
+}
+
+void SubscribedPodcastsWidget::on_listWidget_itemActivated(QListWidgetItem* item) {
     auto podcast = item->data(Qt::UserRole).value<Podcast*>();
     if (podcast == nullptr) {
-        bool ok;
-        auto urlString = tInputDialog::getText(this->window(), tr("Subscribe to new podcast"), tr("What's the address of the feed?"), QLineEdit::Normal, "", &ok);
-        if (ok) {
-            QUrl url(urlString);
-            if (!url.isValid() || (url.scheme() != "https" && url.scheme() != "http")) {
-                tMessageBox box(this->window());
-                box.setTitleBarText(tr("Invalid URL"));
-                box.setMessageText(tr("Sorry, that URL is not a valid feed URL"));
-                box.setIcon(QMessageBox::Critical);
-                co_await box.presentAsync();
-                co_return;
-            }
-            emit openPodcast(PodcastManager::instance()->subscribe(url));
-            PodcastManager::instance()->updatePodcasts(true);
-        }
+        addSubscription();
     } else {
         emit openPodcast(podcast);
     }
+}
+
+void SubscribedPodcastsWidget::on_updateButton_clicked() {
+    PodcastManager::instance()->updatePodcasts(false);
+}
+
+void SubscribedPodcastsWidget::on_addButton_clicked() {
+    addSubscription();
 }

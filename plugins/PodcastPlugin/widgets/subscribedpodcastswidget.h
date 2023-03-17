@@ -22,13 +22,18 @@ class SubscribedPodcastsWidget : public QWidget {
         void openPodcast(Podcast* podcast);
 
     private slots:
-        QCoro::Task<> on_listWidget_itemActivated(QListWidgetItem* item);
+        void on_listWidget_itemActivated(QListWidgetItem* item);
+
+        void on_updateButton_clicked();
+
+        void on_addButton_clicked();
 
     private:
         Ui::SubscribedPodcastsWidget* ui;
         SubscribedPodcastsWidgetPrivate* d;
 
         void updatePodcasts();
+        QCoro::Task<> addSubscription();
 };
 
 #endif // SUBSCRIBEDPODCASTSWIDGET_H

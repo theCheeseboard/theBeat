@@ -19,6 +19,7 @@ class PodcastItem : public QObject {
         QString creator();
         QString link();
         QString description();
+        QString plainDescription();
         QString subtitle();
         QDateTime published();
         QUrl playUrl();

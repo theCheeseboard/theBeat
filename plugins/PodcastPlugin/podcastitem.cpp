@@ -9,6 +9,7 @@
 #include <QMimeDatabase>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QTextDocumentFragment>
 #include <QUrl>
 #include <QXmlStreamReader>
 #include <tjobmanager.h>
@@ -23,6 +24,7 @@ struct PodcastItemPrivate {
         QString creator;
         QString link;
         QString description;
+        QString plainDescription;
         QString author;
         QString subtitle;
         bool isExplicit;
@@ -57,6 +59,10 @@ QString PodcastItem::link() {
 
 QString PodcastItem::description() {
     return d->description;
+}
+
+QString PodcastItem::plainDescription() {
+    return d->plainDescription;
 }
 
 QString PodcastItem::subtitle() {
@@ -201,6 +207,7 @@ PodcastItem::PodcastItem(Podcast* parentPodcast, QXmlStreamReader* dataReader, Q
                 d->link = dataReader->readElementText();
             } else if (dataReader->name() == QStringLiteral("description")) {
                 d->description = dataReader->readElementText();
+                d->plainDescription = QTextDocumentFragment::fromHtml(d->description).toPlainText();
             } else if (dataReader->name() == QStringLiteral("guid")) {
                 d->guid = dataReader->readElementText();
             } else if (dataReader->name() == QStringLiteral("pubDate")) {

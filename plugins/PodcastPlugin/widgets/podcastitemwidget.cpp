@@ -61,6 +61,9 @@ QCoro::Task<> PodcastItemWidget::setPodcastItem(PodcastItemPtr item) {
 
     d->backgroundController->setImage(QImage());
     d->backgroundController->setImage(co_await item->image());
+
+    ui->playButton->setVisible(!item->playUrl().isEmpty());
+    ui->downloadButton->setVisible(!item->playUrl().isEmpty());
 }
 
 void PodcastItemWidget::on_backButton_clicked() {

@@ -9,7 +9,6 @@ namespace Ui {
 }
 
 class Podcast;
-class QListWidgetItem;
 struct PodcastListingWidgetPrivate;
 class PodcastListingWidget : public QWidget {
         Q_OBJECT
@@ -27,7 +26,7 @@ class PodcastListingWidget : public QWidget {
     private slots:
         void on_backButton_clicked();
 
-        void on_listWidget_itemActivated(QListWidgetItem* item);
+        void on_listView_activated(const QModelIndex& index);
 
     private:
         Ui::PodcastListingWidget* ui;

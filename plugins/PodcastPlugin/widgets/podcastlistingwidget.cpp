@@ -1,6 +1,7 @@
 #include "podcastlistingwidget.h"
 #include "ui_podcastlistingwidget.h"
 
+#include "models/podcastmodel.h"
 #include "podcast.h"
 #include "podcastitem.h"
 #include <headerbackgroundcontroller.h>
@@ -11,6 +12,7 @@
 struct PodcastListingWidgetPrivate {
         QPointer<Podcast> podcast;
         HeaderBackgroundController* backgroundController;
+        PodcastModel* model;
 };
 
 PodcastListingWidget::PodcastListingWidget(QWidget* parent) :
@@ -24,6 +26,10 @@ PodcastListingWidget::PodcastListingWidget(QWidget* parent) :
         d->backgroundController->setTopPadding(padTop);
     });
     d->backgroundController->setTopPadding(StateManager::instance()->sources()->padTop());
+
+    d->model = new PodcastModel(this);
+    ui->listView->setModel(d->model);
+    ui->listView->setItemDelegate(new PodcastItemDelegate(this));
 }
 
 PodcastListingWidget::~PodcastListingWidget() {
@@ -39,22 +45,12 @@ QCoro::Task<> PodcastListingWidget::setCurrentPodcast(Podcast* podcast) {
     connect(podcast, &Podcast::itemsUpdated, this, [this, podcast] {
         this->setCurrentPodcast(podcast);
     });
+    d->model->setPodcast(podcast);
 
     ui->podcastTitle->setText(podcast->name());
 
-    int itemCount = 0;
-    ui->listWidget->clear();
-    for (auto item : podcast->items()) {
-        if (!item->playUrl().isValid()) continue;
-        auto listItem = new QListWidgetItem();
-        listItem->setText(item->title());
-        listItem->setData(Qt::UserRole, QVariant::fromValue(item));
-        ui->listWidget->addItem(listItem);
-        itemCount++;
-    }
-
     QStringList podcastMeta;
-    podcastMeta.append(tr("%n episodes", nullptr, itemCount));
+    podcastMeta.append(tr("%n episodes", nullptr, d->model->rowCount()));
     ui->auxiliaryDataLabel->setText(podcastMeta.join(libContemporaryCommon::humanReadablePartJoinString()));
 
     d->backgroundController->setImage(QImage());
@@ -65,7 +61,7 @@ void PodcastListingWidget::on_backButton_clicked() {
     emit done();
 }
 
-void PodcastListingWidget::on_listWidget_itemActivated(QListWidgetItem* item) {
-    auto podcastItem = item->data(Qt::UserRole).value<PodcastItemPtr>();
+void PodcastListingWidget::on_listView_activated(const QModelIndex& index) {
+    auto podcastItem = index.data(PodcastModel::PodcastItem).value<PodcastItemPtr>();
     emit openPodcastItem(podcastItem);
 }

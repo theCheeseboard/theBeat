@@ -4,22 +4,22 @@
 <context>
     <name>PodcastItem</name>
     <message>
-        <location filename="../podcastitem.cpp" line="104"/>
+        <location filename="../podcastitem.cpp" line="110"/>
         <source>Download Podcast Episode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="105"/>
+        <location filename="../podcastitem.cpp" line="111"/>
         <source>Downloading %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="127"/>
+        <location filename="../podcastitem.cpp" line="133"/>
         <source>Failed to download %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="142"/>
+        <location filename="../podcastitem.cpp" line="148"/>
         <source>Downloaded %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -65,11 +65,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastlistingwidget.ui" line="109"/>
-        <source>Tracks in Library</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../widgets/podcastlistingwidget.ui" line="158"/>
         <source>Enqueue All</source>
         <translation type="unfinished"></translation>
@@ -85,7 +80,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../widgets/podcastlistingwidget.cpp" line="57"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="53"/>
         <source>%n episodes</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -95,13 +90,18 @@
 <context>
     <name>PodcastManager</name>
     <message>
-        <location filename="../podcastmanager.cpp" line="54"/>
+        <location filename="../podcastmanager.cpp" line="60"/>
         <source>Updating Podcasts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastmanager.cpp" line="57"/>
+        <location filename="../podcastmanager.cpp" line="63"/>
         <source>Updating %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastmanager.cpp" line="73"/>
+        <source>Updated Podcasts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -126,28 +126,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/subscribedpodcastswidget.ui" line="58"/>
+        <location filename="../widgets/subscribedpodcastswidget.ui" line="66"/>
         <source>Podcasts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../widgets/subscribedpodcastswidget.ui" line="78"/>
+        <source>Update All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/subscribedpodcastswidget.ui" line="89"/>
+        <source>Add Subscription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../widgets/subscribedpodcastswidget.cpp" line="46"/>
-        <location filename="../widgets/subscribedpodcastswidget.cpp" line="56"/>
+        <location filename="../widgets/subscribedpodcastswidget.cpp" line="54"/>
         <source>Subscribe to new podcast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/subscribedpodcastswidget.cpp" line="56"/>
+        <location filename="../widgets/subscribedpodcastswidget.cpp" line="54"/>
         <source>What&apos;s the address of the feed?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/subscribedpodcastswidget.cpp" line="61"/>
+        <location filename="../widgets/subscribedpodcastswidget.cpp" line="59"/>
         <source>Invalid URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/subscribedpodcastswidget.cpp" line="62"/>
+        <location filename="../widgets/subscribedpodcastswidget.cpp" line="60"/>
         <source>Sorry, that URL is not a valid feed URL</source>
         <translation type="unfinished"></translation>
     </message>

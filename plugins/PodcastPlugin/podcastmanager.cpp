@@ -5,12 +5,15 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QUrl>
+#include <texception.h>
 #include <tjobmanager.h>
+#include <tlogger.h>
 #include <tstandardjob.h>
 
 struct PodcastManagerPrivate {
         QString podcastDir;
         QList<Podcast*> podcasts;
+        bool updatingPodcasts = false;
 };
 
 PodcastManager* PodcastManager::instance() {
@@ -50,16 +53,25 @@ QString PodcastManager::podcastDir() {
 }
 
 QCoro::Task<> PodcastManager::updatePodcasts(bool transient) {
+    if (d->updatingPodcasts) co_return;
+
+    d->updatingPodcasts = true;
     auto job = new tStandardJob(transient);
     job->setTitleString(tr("Updating Podcasts"));
     tJobManager::trackJob(job);
     for (auto podcast : d->podcasts) {
         job->setStatusString(tr("Updating %1").arg(QLocale().quoteString(podcast->name())));
-        co_await podcast->update();
+        try {
+            co_await podcast->update();
+        } catch (tException& ex) {
+            // ignore
+            tWarn("PodcastManager") << "Failed to update podcast " << podcast->name();
+        }
     }
 
     job->setState(tJob::Finished);
     job->setStatusString(tr("Updated Podcasts"));
+    d->updatingPodcasts = false;
 }
 
 PodcastManager::PodcastManager(QObject* parent) :

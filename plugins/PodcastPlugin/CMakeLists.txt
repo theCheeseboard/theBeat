@@ -15,6 +15,8 @@ set(SOURCES
     widgets/subscribedpodcastswidget.cpp widgets/subscribedpodcastswidget.ui
     widgets/podcastlistingwidget.cpp widgets/podcastlistingwidget.ui
     widgets/podcastitemwidget.cpp widgets/podcastitemwidget.ui
+
+    models/podcastmodel.cpp
 )
 
 set(HEADERS
@@ -29,6 +31,8 @@ set(HEADERS
     widgets/subscribedpodcastswidget.h
     widgets/podcastlistingwidget.h
     widgets/podcastitemwidget.h
+
+    models/podcastmodel.h
 )
 
 add_library(plugin-podcast SHARED ${SOURCES} ${HEADERS})

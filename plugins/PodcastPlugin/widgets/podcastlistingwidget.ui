@@ -106,7 +106,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Tracks in Library</string>
+             <string notr="true">Podcast</string>
             </property>
            </widget>
           </item>
@@ -221,7 +221,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="listWidget">
+    <widget class="QListView" name="listView">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
