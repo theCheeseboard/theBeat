@@ -90,7 +90,7 @@ QString PodcastItem::guidHash() {
 }
 
 QCoro::Task<QImage> PodcastItem::image() {
-    co_return co_await PodcastCommon::cacheImage(d->mgr, QUrl(d->imageUrl), d->podcastDir.absoluteFilePath(QStringLiteral("images/%1").arg(this->guidHash())));
+    co_return co_await PodcastCommon::cacheImage(d->mgr, QUrl(d->imageUrl), d->podcastDir.absoluteFilePath(QStringLiteral("cover")));
 }
 
 bool PodcastItem::isDownloaded() {
@@ -160,7 +160,7 @@ void PodcastItem::removeDownload() {
 }
 
 QString PodcastItem::downloadedFilePath() {
-    return d->podcastDir.absoluteFilePath(QStringLiteral("audio/%1").arg(this->guidHash()));
+    return d->podcastDir.absoluteFilePath(QStringLiteral("audio").arg(this->guidHash()));
 }
 
 PodcastItem::PodcastItem(Podcast* parentPodcast, QXmlStreamReader* dataReader, QString podcastDir, QNetworkAccessManager* mgr, QObject* parent) :
@@ -226,4 +226,7 @@ PodcastItem::PodcastItem(Podcast* parentPodcast, QXmlStreamReader* dataReader, Q
             }
         }
     }
+
+    d->podcastDir = QDir(podcastDir).absoluteFilePath(this->guidHash());
+    QDir::root().mkpath(d->podcastDir.absolutePath());
 }

@@ -38,8 +38,6 @@ Podcast::Podcast(QString podcastHash) :
     QDir rootPodcastDir = PodcastManager::instance()->podcastDir();
     rootPodcastDir.mkdir(podcastHash);
     d->podcastDir = rootPodcastDir.absoluteFilePath(podcastHash);
-    d->podcastDir.mkdir("audio");
-    d->podcastDir.mkdir("images");
 
     if (QFile::exists(d->podcastDir.absoluteFilePath("feedUrl"))) {
         QFile feedFile(d->podcastDir.absoluteFilePath("feedUrl"));

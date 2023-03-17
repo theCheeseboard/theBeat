@@ -4,18 +4,18 @@
 <context>
     <name>Podcast</name>
     <message>
-        <location filename="../podcast.cpp" line="177"/>
+        <location filename="../podcast.cpp" line="175"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../podcast.cpp" line="179"/>
         <location filename="../podcast.cpp" line="181"/>
-        <location filename="../podcast.cpp" line="183"/>
         <source>Unsubscribe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcast.cpp" line="182"/>
+        <location filename="../podcast.cpp" line="180"/>
         <source>Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
