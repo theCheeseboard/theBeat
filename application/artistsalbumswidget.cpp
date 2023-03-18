@@ -31,6 +31,7 @@
 #include <burnmanager.h>
 #include <playlist.h>
 #include <statemanager.h>
+#include <thebeatcommon.h>
 #include <tpaintcalculator.h>
 #include <urlmanager.h>
 
@@ -114,7 +115,7 @@ void ArtistsAlbumsWidget::changeItem(QString text) {
     for (int i = 0; i < model->rowCount(); i++) {
         duration += model->index(i, 0).data(LibraryModel::DurationRole).toInt();
     }
-    parts.append(Common::durationToString(duration));
+    parts.append(TheBeatCommon::durationToString(duration));
 
     ui->auxiliaryDataLabel->setText(parts.join(" · "));
 }

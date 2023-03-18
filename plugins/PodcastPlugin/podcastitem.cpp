@@ -9,6 +9,7 @@
 #include <QMimeDatabase>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QRegularExpression>
 #include <QTextDocumentFragment>
 #include <QUrl>
 #include <QXmlStreamReader>
@@ -28,6 +29,7 @@ struct PodcastItemPrivate {
         QString author;
         QString subtitle;
         bool isExplicit;
+        quint64 duration;
         QString imageUrl;
         QString mediaUrl;
         QString mediaUrlExt;
@@ -87,6 +89,10 @@ QString PodcastItem::guid() {
 
 QString PodcastItem::guidHash() {
     return QCryptographicHash::hash(this->guid().toUtf8(), QCryptographicHash::Sha256).toHex();
+}
+
+quint64 PodcastItem::duration() {
+    return d->duration;
 }
 
 QCoro::Task<QImage> PodcastItem::image() {
@@ -185,6 +191,26 @@ PodcastItem::PodcastItem(Podcast* parentPodcast, QXmlStreamReader* dataReader, Q
             } else if (dataReader->name() == QStringLiteral("image")) {
                 d->imageUrl = dataReader->attributes().value("href").toString();
                 dataReader->skipCurrentElement();
+            } else if (dataReader->name() == QStringLiteral("duration")) {
+                auto durationString = dataReader->readElementText();
+                auto hms = QRegularExpression(R"(^(\d{1,2}):(\d{1,2}):(\d{1,2})$)").match(durationString);
+                auto ms = QRegularExpression(R"(^(\d{1,2}):(\d{1,2})$)").match(durationString);
+
+                quint64 h = 0, m = 0, s = 0;
+                if (hms.hasMatch()) {
+                    h = hms.capturedView(1).toULongLong();
+                    m = hms.capturedView(2).toULongLong();
+                    s = hms.capturedView(3).toULongLong();
+                } else if (ms.hasMatch()) {
+                    m = hms.capturedView(1).toULongLong();
+                    s = hms.capturedView(2).toULongLong();
+                } else {
+                    s = durationString.toULongLong();
+                }
+
+                m = m + h * 60;
+                s = s + m * 60;
+                d->duration = s;
             } else {
                 dataReader->skipCurrentElement();
             }

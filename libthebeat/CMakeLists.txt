@@ -24,6 +24,7 @@ set(SOURCES
         visualisationengine.cpp
         visualisationmanager.cpp
         headerbackgroundcontroller.cpp
+        thebeatcommon.cpp
     )
 
 set(HEADERS
@@ -44,6 +45,7 @@ set(HEADERS
         visualisationengine.h
         visualisationmanager.h
         headerbackgroundcontroller.h
+        thebeatcommon.h
     )
 
 add_library(libthebeat SHARED ${SOURCES} ${HEADERS})

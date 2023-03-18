@@ -23,22 +23,22 @@
 <context>
     <name>PodcastItem</name>
     <message>
-        <location filename="../podcastitem.cpp" line="110"/>
+        <location filename="../podcastitem.cpp" line="116"/>
         <source>Download Podcast Episode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="111"/>
+        <location filename="../podcastitem.cpp" line="117"/>
         <source>Downloading %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="133"/>
+        <location filename="../podcastitem.cpp" line="139"/>
         <source>Failed to download %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="148"/>
+        <location filename="../podcastitem.cpp" line="154"/>
         <source>Downloaded %1</source>
         <translation type="unfinished"></translation>
     </message>

@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QStaticText>
 #include <tapplication.h>
+#include <thebeatcommon.h>
 
 struct PodcastModelPrivate {
         QPointer<Podcast> podcast;
@@ -54,6 +55,8 @@ QVariant PodcastModel::data(const QModelIndex& index, int role) const {
             return item->plainDescription();
         case PublishDate:
             return item->published();
+        case Duration:
+            return item->duration();
     }
 
     return QVariant();
@@ -73,6 +76,7 @@ tPaintCalculator PodcastItemDelegate::paintCalculator(QPainter* painter, const Q
 
     QStringList information;
     information.append(QLocale().toString(index.data(PodcastModel::PublishDate).toDateTime().date(), "dd MMM yyyy"));
+    information.append(TheBeatCommon::durationToString(index.data(PodcastModel::Duration).toULongLong() * 1000));
     QString informationString = libContemporaryCommon::humanReadablePartJoinString().append(information.join(libContemporaryCommon::humanReadablePartJoinString()));
 
     auto title = index.data(Qt::DisplayRole).toString();

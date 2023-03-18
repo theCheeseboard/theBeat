@@ -25,6 +25,7 @@
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 #include <terrorflash.h>
+#include <thebeatcommon.h>
 #include <tpopover.h>
 #include <tscrim.h>
 
@@ -95,7 +96,7 @@ void TagEditor::loadTag() {
     ui->trackBox->setValue(d->file.tag()->track());
     ui->yearBox->setValue(d->file.tag()->year());
 
-    ui->lengthLabel->setText(Common::durationToString(d->file.audioProperties()->lengthInMilliseconds()));
+    ui->lengthLabel->setText(TheBeatCommon::durationToString(d->file.audioProperties()->lengthInMilliseconds()));
 }
 
 void TagEditor::markDirty() {

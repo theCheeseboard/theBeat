@@ -43,7 +43,7 @@
         <translation>Brænd</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+68"/>
+        <location filename="../artistsalbumswidget.cpp" line="+69"/>
         <source>Albums in Library</source>
         <translation>Albummer i bibliotek</translation>
     </message>
@@ -108,7 +108,7 @@
 <context>
     <name>Common</name>
     <message>
-        <location filename="../common.cpp" line="+31"/>
+        <location filename="../common.cpp" line="+16"/>
         <source>Select Device</source>
         <translation>Vælg enhed</translation>
     </message>
@@ -126,7 +126,7 @@
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+87"/>
+        <location filename="../controlstrip.cpp" line="+88"/>
         <source>Repeat Options</source>
         <translation>Gentagelsesindstillinger</translation>
     </message>
@@ -149,7 +149,7 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="+155"/>
+        <location filename="../currenttrackpopover.cpp" line="+156"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
@@ -220,7 +220,7 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+194"/>
+        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
         <translation>af %1</translation>
     </message>
@@ -699,7 +699,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>PrintController</name>
     <message>
-        <location filename="../print/printcontroller.cpp" line="+59"/>
+        <location filename="../print/printcontroller.cpp" line="+60"/>
         <source>Print %1</source>
         <translation type="unfinished"></translation>
     </message>

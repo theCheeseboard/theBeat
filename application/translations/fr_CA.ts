@@ -43,7 +43,7 @@
         <translation>Brûler</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+68"/>
+        <location filename="../artistsalbumswidget.cpp" line="+69"/>
         <source>Albums in Library</source>
         <translation>Albums dans la Biblio</translation>
     </message>
@@ -108,7 +108,7 @@
 <context>
     <name>Common</name>
     <message>
-        <location filename="../common.cpp" line="+31"/>
+        <location filename="../common.cpp" line="+16"/>
         <source>Select Device</source>
         <translation>Choisir un Appareil</translation>
     </message>
@@ -126,7 +126,7 @@
         <translation>Métadonnée</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+87"/>
+        <location filename="../controlstrip.cpp" line="+88"/>
         <source>Repeat Options</source>
         <translation>Options de Répétition</translation>
     </message>
@@ -149,7 +149,7 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="+155"/>
+        <location filename="../currenttrackpopover.cpp" line="+156"/>
         <source>Album</source>
         <translation type="unfinished"></translation>
     </message>
@@ -220,7 +220,7 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+194"/>
+        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -684,7 +684,7 @@
 <context>
     <name>PrintController</name>
     <message>
-        <location filename="../print/printcontroller.cpp" line="+59"/>
+        <location filename="../print/printcontroller.cpp" line="+60"/>
         <source>Print %1</source>
         <translation type="unfinished"></translation>
     </message>

@@ -25,6 +25,7 @@ class PodcastItem : public QObject {
         QUrl playUrl();
         QString guid();
         QString guidHash();
+        quint64 duration();
         QCoro::Task<QImage> image();
 
         bool isDownloaded();

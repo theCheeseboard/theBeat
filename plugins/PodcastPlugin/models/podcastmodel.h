@@ -18,7 +18,8 @@ class PodcastModel : public QAbstractListModel {
             PodcastItem = Qt::UserRole,
             Description,
             PlainDescription,
-            PublishDate
+            PublishDate,
+            Duration
         };
 
         void setPodcast(Podcast* podcast);
