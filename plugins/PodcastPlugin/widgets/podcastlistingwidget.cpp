@@ -4,11 +4,14 @@
 #include "models/podcastmodel.h"
 #include "podcast.h"
 #include "podcastitem.h"
+#include "podcastmediaitem.h"
 #include <headerbackgroundcontroller.h>
 #include <libcontemporary_global.h>
+#include <playlist.h>
 #include <sourcemanager.h>
 #include <statemanager.h>
 #include <ticon.h>
+#include <tmessagebox.h>
 
 struct PodcastListingWidgetPrivate {
         QPointer<Podcast> podcast;
@@ -70,4 +73,49 @@ void PodcastListingWidget::on_backButton_clicked() {
 void PodcastListingWidget::on_listView_activated(const QModelIndex& index) {
     auto podcastItem = index.data(PodcastModel::PodcastItem).value<PodcastItemPtr>();
     emit openPodcastItem(podcastItem);
+}
+
+QCoro::Task<> PodcastListingWidget::on_enqueueAllButton_clicked() {
+    bool played = false;
+    for (int i = d->model->rowCount() - 1; i >= 0; i--) {
+        auto index = d->model->index(i, 0);
+        if (index.data(PodcastModel::IsCompleted).toBool()) continue;
+
+        auto item = new PodcastMediaItem(index.data(PodcastModel::PodcastItem).value<PodcastItemPtr>());
+        StateManager::instance()->playlist()->addItem(item);
+        played = true;
+    }
+
+    if (!played) {
+        tMessageBox box(this->window());
+        box.setTitleBarText(tr("Up to date"));
+        box.setMessageText(tr("You've listened to every episode in this podcast."));
+        co_await box.presentAsync();
+    }
+}
+
+QCoro::Task<> PodcastListingWidget::on_playAllButton_clicked() {
+    for (int i = d->model->rowCount() - 1; i >= 0; i--) {
+        auto index = d->model->index(i, 0);
+        if (!index.data(PodcastModel::IsCompleted).toBool()) {
+            StateManager::instance()->playlist()->clear();
+            ui->enqueueAllButton->click();
+            co_return;
+        }
+    }
+
+    tMessageBox box(this->window());
+    box.setTitleBarText(tr("Up to date"));
+    box.setMessageText(tr("You've listened to every episode in this podcast."));
+    co_await box.presentAsync();
+}
+
+void PodcastListingWidget::on_listView_customContextMenuRequested(const QPoint& pos) {
+    auto index = ui->listView->indexAt(pos);
+    if (!index.isValid()) return;
+
+    auto item = index.data(PodcastModel::PodcastItem).value<PodcastItemPtr>();
+    auto menu = item->podcastManagementMenu(true);
+    connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
+    menu->popup(ui->listView->mapToGlobal(pos));
 }

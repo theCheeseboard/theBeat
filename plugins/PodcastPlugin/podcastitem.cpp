@@ -6,6 +6,7 @@
 #include <QDateTime>
 #include <QDir>
 #include <QImage>
+#include <QMenu>
 #include <QMimeDatabase>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -13,6 +14,8 @@
 #include <QTextDocumentFragment>
 #include <QUrl>
 #include <QXmlStreamReader>
+#include <QtEndian>
+#include <ticon.h>
 #include <tjobmanager.h>
 #include <tstandardjob.h>
 
@@ -35,6 +38,8 @@ struct PodcastItemPrivate {
         QString mediaUrlExt;
         QDateTime published;
         QString guid;
+
+        quint64 played = 0;
 
         bool isDownloading = false;
 };
@@ -97,6 +102,30 @@ quint64 PodcastItem::duration() {
 
 QCoro::Task<QImage> PodcastItem::image() {
     co_return co_await PodcastCommon::cacheImage(d->mgr, QUrl(d->imageUrl), d->podcastDir.absoluteFilePath(QStringLiteral("cover")));
+}
+
+quint64 PodcastItem::played() {
+    return d->played;
+}
+
+void PodcastItem::setPlayed(quint64 played) {
+    auto wasComplete = this->isCompleted();
+
+    d->played = played;
+    auto playedLe = qToLittleEndian(d->played);
+    QByteArray bytes(reinterpret_cast<const char*>(&playedLe), sizeof(playedLe));
+    QFile playedFile(d->podcastDir.absoluteFilePath("played"));
+    playedFile.open(QFile::WriteOnly);
+    playedFile.write(bytes);
+    playedFile.close();
+
+    if (wasComplete != this->isCompleted()) {
+        emit completionStateChanged();
+    }
+}
+
+bool PodcastItem::isCompleted() {
+    return this->duration() - this->played() <= 1000;
 }
 
 bool PodcastItem::isDownloaded() {
@@ -167,6 +196,34 @@ void PodcastItem::removeDownload() {
 
 QString PodcastItem::downloadedFilePath() {
     return d->podcastDir.absoluteFilePath(QStringLiteral("audio").arg(this->guidHash()));
+}
+
+QMenu* PodcastItem::podcastManagementMenu(bool showAllOptions) {
+    QMenu* menu = new QMenu();
+    menu->addSection(tr("For %1").arg(QLocale().quoteString(this->title())));
+
+    if (showAllOptions) {
+        if (isDownloaded()) {
+            menu->addAction(tIcon::fromTheme("edit-delete"), tr("Remove Download"), this, [this] {
+                this->removeDownload();
+            });
+        } else if (!isDownloading()) {
+            menu->addAction(tIcon::fromTheme("cloud-download"), tr("Download"), this, [this] {
+                this->download(false);
+            });
+        }
+    }
+
+    if (this->isCompleted()) {
+        menu->addAction(tIcon::fromTheme("view-refresh"), tr("Mark as unplayed"), this, [this] {
+            this->setPlayed(0);
+        });
+    } else {
+        menu->addAction(tIcon::fromTheme("dialog-ok"), tr("Mark as complete"), this, [this] {
+            this->setPlayed(this->duration());
+        });
+    }
+    return menu;
 }
 
 PodcastItem::PodcastItem(Podcast* parentPodcast, QXmlStreamReader* dataReader, QString podcastDir, QNetworkAccessManager* mgr, QObject* parent) :
@@ -255,4 +312,15 @@ PodcastItem::PodcastItem(Podcast* parentPodcast, QXmlStreamReader* dataReader, Q
 
     d->podcastDir = QDir(podcastDir).absoluteFilePath(this->guidHash());
     QDir::root().mkpath(d->podcastDir.absolutePath());
+
+    QFile playedFile(d->podcastDir.absoluteFilePath("played"));
+    if (playedFile.exists()) {
+        playedFile.open(QFile::ReadOnly);
+        auto playedBytes = playedFile.readAll();
+        playedFile.close();
+        if (playedBytes.length() >= sizeof(d->played)) {
+            auto playedLe = *reinterpret_cast<quint64*>(playedBytes.data());
+            d->played = qFromLittleEndian(playedLe);
+        }
+    }
 }

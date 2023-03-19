@@ -4,6 +4,7 @@
 #include "podcastitem.h"
 #include <QPainter>
 #include <QStaticText>
+#include <limits.h>
 #include <tapplication.h>
 #include <thebeatcommon.h>
 
@@ -57,6 +58,10 @@ QVariant PodcastModel::data(const QModelIndex& index, int role) const {
             return item->published();
         case Duration:
             return item->duration();
+        case PlayedDuration:
+            return item->played();
+        case IsCompleted:
+            return item->isCompleted();
     }
 
     return QVariant();
@@ -76,14 +81,37 @@ tPaintCalculator PodcastItemDelegate::paintCalculator(QPainter* painter, const Q
 
     QStringList information;
     information.append(QLocale().toString(index.data(PodcastModel::PublishDate).toDateTime().date(), "dd MMM yyyy"));
-    information.append(TheBeatCommon::durationToString(index.data(PodcastModel::Duration).toULongLong() * 1000));
+
+    auto duration = index.data(PodcastModel::Duration).toULongLong() * 1000;
+    information.append(TheBeatCommon::durationToString(duration));
+
+    auto completed = index.data(PodcastModel::IsCompleted).toBool();
+    if (completed) {
+        information.append(tr("Listened"));
+    } else {
+        auto played = index.data(PodcastModel::PlayedDuration).toULongLong() * 1000;
+        if (played == 0) {
+            information.append(tr("New"));
+        } else {
+            information.append(tr("%1 remaining").arg(TheBeatCommon::durationToString(duration - played)));
+        }
+    }
+
     QString informationString = libContemporaryCommon::humanReadablePartJoinString().append(information.join(libContemporaryCommon::humanReadablePartJoinString()));
 
     auto title = index.data(Qt::DisplayRole).toString();
 
+    auto newRect = option.rect;
+    newRect.setWidth(6);
+    if (!completed) {
+        calculator.addRect("new", newRect, [painter, option](QRectF drawBounds) {
+            painter->fillRect(drawBounds, option.palette.color(QPalette::Highlight));
+        });
+    }
+
     auto preferredTitleWidth = option.fontMetrics.horizontalAdvance(title);
     auto preferredInfoWidth = option.fontMetrics.horizontalAdvance(informationString);
-    const auto maxWidth = option.rect.width() - 18;
+    const auto maxWidth = option.rect.width() - 18 - newRect.width();
 
     auto titleWidth = preferredTitleWidth;
     auto infoWidth = preferredInfoWidth;
@@ -99,7 +127,7 @@ tPaintCalculator PodcastItemDelegate::paintCalculator(QPainter* painter, const Q
     QRect textRect;
     textRect.setWidth(titleWidth + 1);
     textRect.setHeight(option.fontMetrics.height());
-    textRect.moveTopLeft(option.rect.topLeft() + QPoint(9, 9));
+    textRect.moveTopLeft(newRect.topRight() + QPoint(9, 9));
     calculator.addRect(textRect, [painter, index, option, title](QRectF drawBounds) {
         painter->setPen(option.palette.color(QPalette::WindowText));
         painter->setFont(option.font);
@@ -139,5 +167,7 @@ void PodcastItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
 }
 
 QSize PodcastItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const {
-    return paintCalculator(nullptr, option, index).sizeWithMargins().toSize();
+    auto calculator = paintCalculator(nullptr, option, index);
+    calculator.setBoundsCalculationExcludeList({"new"});
+    return calculator.sizeWithMargins().toSize();
 }

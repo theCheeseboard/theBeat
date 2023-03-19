@@ -28,6 +28,12 @@ class PodcastListingWidget : public QWidget {
 
         void on_listView_activated(const QModelIndex& index);
 
+        QCoro::Task<> on_enqueueAllButton_clicked();
+
+        QCoro::Task<> on_playAllButton_clicked();
+
+        void on_listView_customContextMenuRequested(const QPoint& pos);
+
     private:
         Ui::PodcastListingWidget* ui;
         PodcastListingWidgetPrivate* d;

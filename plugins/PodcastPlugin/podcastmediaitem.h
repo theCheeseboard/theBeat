@@ -15,6 +15,8 @@ class PodcastMediaItem : public MediaItem {
     private:
         PodcastMediaItemPrivate* d;
 
+        void updatePodcastElapsed();
+
         // MediaItem interface
     public:
         void play();

@@ -155,7 +155,7 @@
          <item>
           <widget class="QPushButton" name="enqueueAllButton">
            <property name="text">
-            <string>Enqueue All</string>
+            <string>Enqueue All Incomplete</string>
            </property>
            <property name="icon">
             <iconset theme="view-media-playlist">
@@ -166,21 +166,10 @@
          <item>
           <widget class="QPushButton" name="playAllButton">
            <property name="text">
-            <string>Play All</string>
+            <string>Play All Incomplete</string>
            </property>
            <property name="icon">
             <iconset theme="media-playback-start">
-             <normaloff>../../../application</normaloff>../../../application</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="shuffleButton">
-           <property name="text">
-            <string>Shuffle All</string>
-           </property>
-           <property name="icon">
-            <iconset theme="media-playlist-shuffle">
              <normaloff>../../../application</normaloff>../../../application</iconset>
            </property>
           </widget>
@@ -242,6 +231,9 @@
    </item>
    <item>
     <widget class="QListView" name="listView">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>

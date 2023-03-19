@@ -162,12 +162,22 @@ QCoro::Task<> Podcast::update() {
         co_return;
     }
 
-    QFile xmlFile(d->podcastDir.absoluteFilePath("feed.xml"));
+    auto feedPath = d->podcastDir.absoluteFilePath("feed.xml");
+    auto initialDownload = !QFile::exists(feedPath);
+
+    QFile xmlFile(feedPath);
     xmlFile.open(QFile::WriteOnly);
     xmlFile.write(reply->readAll());
     xmlFile.close();
 
     readXml();
+
+    if (initialDownload) {
+        // Mark all the episodes as played
+        for (auto item : d->items) {
+            item->setPlayed(item->duration());
+        }
+    }
 }
 
 QMenu* Podcast::podcastManagementMenu() {

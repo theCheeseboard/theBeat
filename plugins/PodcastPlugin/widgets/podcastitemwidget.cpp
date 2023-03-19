@@ -45,6 +45,10 @@ QCoro::Task<> PodcastItemWidget::setPodcastItem(PodcastItemPtr item) {
     connect(item.data(), &PodcastItem::downloadStateChanged, this, [this, item] {
         this->setPodcastItem(item);
     });
+    connect(item.data(), &PodcastItem::completionStateChanged, this, [this, item] {
+        this->setPodcastItem(item);
+    });
+    ui->menuButton->setMenu(item->podcastManagementMenu(false));
 
     ui->podcastTitle->setText(item->title());
     ui->textBrowser->setHtml(item->description());

@@ -19,7 +19,9 @@ class PodcastModel : public QAbstractListModel {
             Description,
             PlainDescription,
             PublishDate,
-            Duration
+            Duration,
+            PlayedDuration,
+            IsCompleted
         };
 
         void setPodcast(Podcast* podcast);

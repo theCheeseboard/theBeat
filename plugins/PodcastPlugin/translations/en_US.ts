@@ -4,18 +4,18 @@
 <context>
     <name>Podcast</name>
     <message>
-        <location filename="../podcast.cpp" line="175"/>
+        <location filename="../podcast.cpp" line="185"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcast.cpp" line="179"/>
-        <location filename="../podcast.cpp" line="181"/>
+        <location filename="../podcast.cpp" line="189"/>
+        <location filename="../podcast.cpp" line="191"/>
         <source>Unsubscribe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcast.cpp" line="180"/>
+        <location filename="../podcast.cpp" line="190"/>
         <source>Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23,23 +23,66 @@
 <context>
     <name>PodcastItem</name>
     <message>
-        <location filename="../podcastitem.cpp" line="116"/>
+        <location filename="../podcastitem.cpp" line="145"/>
         <source>Download Podcast Episode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="117"/>
+        <location filename="../podcastitem.cpp" line="146"/>
         <source>Downloading %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="139"/>
+        <location filename="../podcastitem.cpp" line="168"/>
         <source>Failed to download %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="154"/>
+        <location filename="../podcastitem.cpp" line="183"/>
         <source>Downloaded %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastitem.cpp" line="203"/>
+        <source>For %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastitem.cpp" line="207"/>
+        <source>Remove Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastitem.cpp" line="211"/>
+        <source>Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastitem.cpp" line="218"/>
+        <source>Mark as unplayed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../podcastitem.cpp" line="222"/>
+        <source>Mark as complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PodcastItemDelegate</name>
+    <message>
+        <location filename="../models/podcastmodel.cpp" line="94"/>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../models/podcastmodel.cpp" line="90"/>
+        <source>Listened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../models/podcastmodel.cpp" line="96"/>
+        <source>%1 remaining</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -61,17 +104,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastitemwidget.cpp" line="54"/>
+        <location filename="../widgets/podcastitemwidget.cpp" line="58"/>
         <source>Download in progress...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastitemwidget.cpp" line="57"/>
+        <location filename="../widgets/podcastitemwidget.cpp" line="61"/>
         <source>Remove Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastitemwidget.cpp" line="59"/>
+        <location filename="../widgets/podcastitemwidget.cpp" line="63"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
@@ -85,25 +128,32 @@
     </message>
     <message>
         <location filename="../widgets/podcastlistingwidget.ui" line="158"/>
-        <source>Enqueue All</source>
+        <source>Enqueue All Incomplete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/podcastlistingwidget.ui" line="169"/>
-        <source>Play All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/podcastlistingwidget.ui" line="180"/>
-        <source>Shuffle All</source>
+        <source>Play All Incomplete</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../widgets/podcastlistingwidget.cpp" line="58"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="61"/>
         <source>%n episodes</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="91"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="108"/>
+        <source>Up to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="92"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="109"/>
+        <source>You&apos;ve listened to every episode in this podcast.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -2,6 +2,7 @@
 #define PODCASTITEM_H
 
 #include <QCoroTask>
+#include <QMenu>
 #include <QObject>
 
 class QXmlStreamReader;
@@ -28,14 +29,21 @@ class PodcastItem : public QObject {
         quint64 duration();
         QCoro::Task<QImage> image();
 
+        quint64 played();
+        void setPlayed(quint64 played);
+        bool isCompleted();
+
         bool isDownloaded();
         bool isDownloading();
         QCoro::Task<> download(bool transient);
         void removeDownload();
         QString downloadedFilePath();
 
+        QMenu* podcastManagementMenu(bool showAllOptions);
+
     signals:
         void downloadStateChanged();
+        void completionStateChanged();
 
     protected:
         friend Podcast;
