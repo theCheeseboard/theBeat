@@ -125,7 +125,7 @@ void PodcastItem::setPlayed(quint64 played) {
 }
 
 bool PodcastItem::isCompleted() {
-    return this->duration() - this->played() <= 1000;
+    return this->duration() - this->played() <= 5;
 }
 
 bool PodcastItem::isDownloaded() {
