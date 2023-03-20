@@ -361,7 +361,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+125"/>
         <source>Tracks</source>
         <translation>Titel</translation>
     </message>
@@ -513,7 +513,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+85"/>
+        <location filename="../mainwindow.cpp" line="+71"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -568,7 +568,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Wähle einen Title aus oder ziehe etwas hier hin!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-138"/>
+        <location filename="../mainwindow.cpp" line="-124"/>
         <source>Play</source>
         <translation>Abspielen</translation>
     </message>
@@ -626,22 +626,15 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Entschuldigung, diese URL unterstützt theBeat nicht.</translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Appearance</source>
-        <translation type="unfinished">Darstellung</translation>
+        <translation type="obsolete">Darstellung</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Library</source>
-        <translation type="unfinished">Bibliothek</translation>
+        <translation type="obsolete">Bibliothek</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+54"/>
         <source>No Printers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1078,7 +1071,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+54"/>
+        <location filename="../main.cpp" line="+60"/>
         <source>Audio Player</source>
         <translation>Audio Player</translation>
     </message>
@@ -1091,6 +1084,21 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <location line="+0"/>
         <source>File to open</source>
         <translation>Datei zum öffnen</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Appearance</source>
+        <translation type="unfinished">Darstellung</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Library</source>
+        <translation type="unfinished">Bibliothek</translation>
     </message>
 </context>
 </TS>

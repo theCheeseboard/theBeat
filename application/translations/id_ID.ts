@@ -354,7 +354,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+125"/>
         <source>Tracks</source>
         <translation>Trek</translation>
     </message>
@@ -506,7 +506,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+85"/>
+        <location filename="../mainwindow.cpp" line="+71"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -561,7 +561,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation>Pilih trek atau drop file di sini!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-138"/>
+        <location filename="../mainwindow.cpp" line="-124"/>
         <source>Play</source>
         <translation>Mainkan</translation>
     </message>
@@ -618,22 +618,15 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation>Maaf, URL itu tidak dapat diputar oleh theBeat.</translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Appearance</source>
-        <translation type="unfinished">Tampilan</translation>
+        <translation type="obsolete">Tampilan</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Library</source>
-        <translation type="unfinished">Pustaka</translation>
+        <translation type="obsolete">Pustaka</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+54"/>
         <source>No Printers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1067,7 +1060,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+54"/>
+        <location filename="../main.cpp" line="+60"/>
         <source>Audio Player</source>
         <translation>Pemutar Audio</translation>
     </message>
@@ -1080,6 +1073,21 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <location line="+0"/>
         <source>File to open</source>
         <translation>File untuk dibuka</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Appearance</source>
+        <translation type="unfinished">Tampilan</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Library</source>
+        <translation type="unfinished">Pustaka</translation>
     </message>
 </context>
 </TS>

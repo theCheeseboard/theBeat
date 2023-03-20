@@ -3,6 +3,7 @@
 #include "podcast.h"
 #include <QCryptographicHash>
 #include <QDir>
+#include <QNetworkAccessManager>
 #include <QStandardPaths>
 #include <QUrl>
 #include <texception.h>
@@ -11,6 +12,7 @@
 #include <tstandardjob.h>
 
 struct PodcastManagerPrivate {
+        QNetworkAccessManager mgr;
         QString podcastDir;
         QList<Podcast*> podcasts;
         bool updatingPodcasts = false;
@@ -23,7 +25,7 @@ PodcastManager* PodcastManager::instance() {
 
 void PodcastManager::init() {
     for (const auto& entry : QDir(d->podcastDir).entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
-        auto podcast = new Podcast(entry);
+        auto podcast = new Podcast(entry, &d->mgr);
         connect(podcast, &Podcast::itemsUpdated, this, &PodcastManager::podcastsUpdated);
         d->podcasts.append(podcast);
     }
@@ -37,7 +39,7 @@ Podcast* PodcastManager::subscribe(QUrl rssFeed) {
         if (podcast->podcastHash() == podcastHash) return podcast;
     }
 
-    auto podcast = new Podcast(podcastHash);
+    auto podcast = new Podcast(podcastHash, &d->mgr);
     connect(podcast, &Podcast::itemsUpdated, this, &PodcastManager::podcastsUpdated);
     podcast->setFeedUrl(rssFeed);
     d->podcasts.append(podcast);
@@ -92,4 +94,6 @@ PodcastManager::PodcastManager(QObject* parent) :
     d->podcastDir = QDir(appdata).absoluteFilePath("podcasts");
 
     QDir::root().mkpath(d->podcastDir);
+
+    d->mgr.setAutoDeleteReplies(true);
 }

@@ -25,10 +25,6 @@
 #include "library/librarymanager.h"
 #include "playlistmodel.h"
 #include "print/printcontroller.h"
-#include "settingspanes/colourssettingspane.h"
-#include "settingspanes/libraryresetsettingspane.h"
-#include "settingspanes/notificationssettingspane.h"
-#include "settingspanes/titlebarsettingspane.h"
 #include "twindowthumbnail.h"
 #include <QDesktopServices>
 #include <QDragEnterEvent>
@@ -497,21 +493,7 @@ void MainWindow::on_actionAdd_to_Library_triggered() {
 }
 
 void MainWindow::on_actionSettings_triggered() {
-    tSettingsWindow window(this);
-    window.appendSection(tr("General"));
-    window.appendPane(new NotificationsSettingsPane());
-    window.appendPane(new tPluginManagerPane());
-
-    window.appendSection(tr("Appearance"));
-    window.appendPane(new TitlebarSettingsPane());
-
-    if (tStyleManager::isOverridingStyle()) {
-        window.appendPane(new ColoursSettingsPane());
-    }
-
-    window.appendSection(tr("Library"));
-    window.appendPane(new LibraryResetSettingsPane());
-    window.exec();
+    tSettingsWindow::openStaticSettingsWindow(this);
 }
 
 void MainWindow::on_actionHelp_triggered() {

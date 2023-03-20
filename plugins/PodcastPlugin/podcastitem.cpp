@@ -17,6 +17,7 @@
 #include <QtEndian>
 #include <ticon.h>
 #include <tjobmanager.h>
+#include <tqueueguard.h>
 #include <tstandardjob.h>
 
 struct PodcastItemPrivate {
@@ -41,8 +42,11 @@ struct PodcastItemPrivate {
 
         quint64 played = 0;
 
+        static tQueueGuard downloadQueueGuard;
         bool isDownloading = false;
 };
+
+tQueueGuard PodcastItemPrivate::downloadQueueGuard = tQueueGuard();
 
 PodcastItem::~PodcastItem() {
     delete d;
@@ -141,6 +145,9 @@ QCoro::Task<> PodcastItem::download(bool transient) {
     d->isDownloading = true;
     emit downloadStateChanged();
 
+    QPointer<PodcastItem> thisPtr = this;
+    auto downloadedFilePath = this->downloadedFilePath();
+
     auto job = new tStandardJob(transient);
     job->setTitleString(tr("Download Podcast Episode"));
     job->setStatusString(tr("Downloading %1").arg(QLocale().quoteString(d->title)));
@@ -148,15 +155,17 @@ QCoro::Task<> PodcastItem::download(bool transient) {
     job->setTotalProgress(0);
     tJobManager::trackJobDelayed(job);
 
-    QFile localFile(QStringLiteral("%1.%2").arg(this->downloadedFilePath(), d->mediaUrlExt));
+    auto guard = co_await d->downloadQueueGuard.guardQueue();
+
+    QFile localFile(QStringLiteral("%1.%2").arg(downloadedFilePath, d->mediaUrlExt));
     localFile.open(QFile::WriteOnly);
 
     auto reply = d->mgr->get(QNetworkRequest(QUrl(d->mediaUrl)));
-    connect(reply, &QNetworkReply::downloadProgress, this, [job](qint64 bytesReceived, qint64 bytesTotal) {
+    connect(reply, &QNetworkReply::downloadProgress, thisPtr, [job](qint64 bytesReceived, qint64 bytesTotal) {
         job->setTotalProgress(bytesTotal);
         job->setProgress(bytesReceived);
     });
-    connect(reply, &QNetworkReply::readyRead, this, [this, reply, &localFile] {
+    connect(reply, &QNetworkReply::readyRead, thisPtr, [reply, &localFile] {
         localFile.write(reply->readAll());
     });
     co_await reply;
@@ -175,7 +184,7 @@ QCoro::Task<> PodcastItem::download(bool transient) {
     localFile.write(reply->readAll());
     localFile.close();
 
-    QFile lockFile(QStringLiteral("%1.lck").arg(this->downloadedFilePath()));
+    QFile lockFile(QStringLiteral("%1.lck").arg(downloadedFilePath));
     lockFile.open(QFile::WriteOnly);
     lockFile.close();
 
@@ -183,7 +192,9 @@ QCoro::Task<> PodcastItem::download(bool transient) {
     job->setStatusString(tr("Downloaded %1").arg(QLocale().quoteString(d->title)));
 
     d->isDownloading = false;
-    emit downloadStateChanged();
+    if (thisPtr) {
+        emit downloadStateChanged();
+    }
 }
 
 void PodcastItem::removeDownload() {
@@ -195,7 +206,7 @@ void PodcastItem::removeDownload() {
 }
 
 QString PodcastItem::downloadedFilePath() {
-    return d->podcastDir.absoluteFilePath(QStringLiteral("audio").arg(this->guidHash()));
+    return d->podcastDir.absoluteFilePath(QStringLiteral("audio"));
 }
 
 QMenu* PodcastItem::podcastManagementMenu(bool showAllOptions) {

@@ -20,12 +20,21 @@
 #include "plugin.h"
 
 #include "podcastmanager.h"
+#include "settingspanes/podcastsettingspane.h"
 #include "widgets/podcastpane.h"
+#include <QTimer>
 #include <tapplication.h>
+#include <tsettings.h>
+#include <tsettingswindow/tsettingswindow.h>
 
 struct PluginPrivate {
         PodcastPane* podcastPane;
+        QTimer* podcastUpdateTimer;
 };
+
+inline void initResources() {
+    Q_INIT_RESOURCE(PODCASTPLUGIN);
+}
 
 Plugin::Plugin() {
     d = new PluginPrivate();
@@ -38,10 +47,26 @@ Plugin::~Plugin() {
 }
 
 void Plugin::activate() {
+    initResources();
+
+    tSettings::registerDefaults(":/plugins/podcast/defaults.conf");
+
     PodcastManager::instance()->init();
     PodcastManager::instance()->updatePodcasts(true);
 
     d->podcastPane = new PodcastPane();
+
+    // Set up timer to update podcasts periodically
+    d->podcastUpdateTimer = new QTimer();
+    d->podcastUpdateTimer->setInterval(15 * 60 * 1000);
+    connect(d->podcastUpdateTimer, &QTimer::timeout, this, [] {
+        PodcastManager::instance()->updatePodcasts(true);
+    });
+    d->podcastUpdateTimer->start();
+
+    tSettingsWindow::addStaticPane(20, "general", [] {
+        return new PodcastSettingsPane();
+    });
 }
 
 void Plugin::deactivate() {

@@ -17,6 +17,8 @@ set(SOURCES
     widgets/podcastitemwidget.cpp widgets/podcastitemwidget.ui
 
     models/podcastmodel.cpp
+
+    settingspanes/podcastsettingspane.cpp settingspanes/podcastsettingspane.ui
 )
 
 set(HEADERS
@@ -33,6 +35,8 @@ set(HEADERS
     widgets/podcastitemwidget.h
 
     models/podcastmodel.h
+
+    settingspanes/podcastsettingspane.h
 )
 
 add_library(plugin-podcast SHARED ${SOURCES} ${HEADERS})
@@ -40,6 +44,11 @@ target_include_directories(plugin-podcast PUBLIC ../../libthebeat/)
 
 cntp_init_plugin(thebeat plugin-podcast 20 podcast)
 cntp_translate(plugin-podcast)
+
+qt_add_resources(plugin-podcast PODCASTPLUGIN
+    PREFIX "/plugins/podcast"
+    FILES defaults.conf
+)
 
 set_target_properties(plugin-podcast PROPERTIES
         OUTPUT_NAME podcastPlugin

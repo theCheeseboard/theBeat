@@ -358,7 +358,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+125"/>
         <source>Tracks</source>
         <translation>Bài hát</translation>
     </message>
@@ -510,7 +510,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+85"/>
+        <location filename="../mainwindow.cpp" line="+71"/>
         <source>Print</source>
         <translation>In</translation>
     </message>
@@ -565,7 +565,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>Hãy chọn bài hoặc thả bài đây!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-138"/>
+        <location filename="../mainwindow.cpp" line="-124"/>
         <source>Play</source>
         <translation>Phát</translation>
     </message>
@@ -622,22 +622,19 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>Rất tiếc, URL đó không hỗ trợ với theBeat.</translation>
     </message>
     <message>
-        <location line="+37"/>
         <source>General</source>
-        <translation>Chung</translation>
+        <translation type="vanished">Chung</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Appearance</source>
-        <translation>Giao diện</translation>
+        <translation type="vanished">Giao diện</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Library</source>
-        <translation>Thư viện</translation>
+        <translation type="vanished">Thư viện</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+54"/>
         <source>No Printers</source>
         <translation>Không có máy in nào</translation>
     </message>
@@ -1071,7 +1068,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+54"/>
+        <location filename="../main.cpp" line="+60"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>
@@ -1084,6 +1081,21 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <location line="+0"/>
         <source>File to open</source>
         <translation>Tệp đẻ mở</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>General</source>
+        <translation type="unfinished">Chung</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Appearance</source>
+        <translation type="unfinished">Giao diện</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Library</source>
+        <translation type="unfinished">Thư viện</translation>
     </message>
 </context>
 </TS>

@@ -23,47 +23,47 @@
 <context>
     <name>PodcastItem</name>
     <message>
-        <location filename="../podcastitem.cpp" line="145"/>
+        <location filename="../podcastitem.cpp" line="152"/>
         <source>Download Podcast Episode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="146"/>
+        <location filename="../podcastitem.cpp" line="153"/>
         <source>Downloading %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="168"/>
+        <location filename="../podcastitem.cpp" line="177"/>
         <source>Failed to download %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="183"/>
+        <location filename="../podcastitem.cpp" line="192"/>
         <source>Downloaded %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="203"/>
+        <location filename="../podcastitem.cpp" line="214"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="207"/>
+        <location filename="../podcastitem.cpp" line="218"/>
         <source>Remove Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="211"/>
+        <location filename="../podcastitem.cpp" line="222"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="218"/>
+        <location filename="../podcastitem.cpp" line="229"/>
         <source>Mark as unplayed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="222"/>
+        <location filename="../podcastitem.cpp" line="233"/>
         <source>Mark as complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -159,17 +159,17 @@
 <context>
     <name>PodcastManager</name>
     <message>
-        <location filename="../podcastmanager.cpp" line="70"/>
+        <location filename="../podcastmanager.cpp" line="72"/>
         <source>Updating Podcasts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastmanager.cpp" line="73"/>
+        <location filename="../podcastmanager.cpp" line="75"/>
         <source>Updating %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastmanager.cpp" line="83"/>
+        <location filename="../podcastmanager.cpp" line="85"/>
         <source>Updated Podcasts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -183,6 +183,24 @@
     </message>
     <message>
         <location filename="../widgets/podcastpane.cpp" line="22"/>
+        <source>Podcasts</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PodcastSettingsPane</name>
+    <message>
+        <location filename="../settingspanes/podcastsettingspane.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingspanes/podcastsettingspane.ui" line="20"/>
+        <source>Download new podcast episodes automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingspanes/podcastsettingspane.cpp" line="25"/>
         <source>Podcasts</source>
         <translation type="unfinished"></translation>
     </message>

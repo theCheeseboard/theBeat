@@ -11,12 +11,15 @@
 #include <QXmlStreamReader>
 #include <texception.h>
 #include <tlogger.h>
+#include <tsettings.h>
 
 struct PodcastPrivate {
-        QNetworkAccessManager mgr;
+        QNetworkAccessManager* mgr;
         QString podcastHash;
         QDir podcastDir;
         QUrl feedUrl;
+
+        tSettings settings;
 
         QString podcastName;
         QString podcastLink;
@@ -30,10 +33,11 @@ struct PodcastPrivate {
         QList<PodcastItemPtr> items;
 };
 
-Podcast::Podcast(QString podcastHash) :
+Podcast::Podcast(QString podcastHash, QNetworkAccessManager* mgr) :
     QObject{nullptr} {
     d = new PodcastPrivate();
     d->podcastHash = podcastHash;
+    d->mgr = mgr;
 
     QDir rootPodcastDir = PodcastManager::instance()->podcastDir();
     rootPodcastDir.mkdir(podcastHash);
@@ -100,7 +104,7 @@ void Podcast::readXml() {
                 d->podcastDescription = reader.readElementText();
             } else if (reader.name() == QStringLiteral("item")) {
                 // Podcast item
-                d->items.append(PodcastItemPtr(new PodcastItem(this, &reader, d->podcastDir.absolutePath(), &d->mgr)));
+                d->items.append(PodcastItemPtr(new PodcastItem(this, &reader, d->podcastDir.absolutePath(), d->mgr)));
             } else {
                 reader.skipCurrentElement();
             }
@@ -110,25 +114,6 @@ void Podcast::readXml() {
     if (reader.error() != QXmlStreamReader::NoError) {
         tWarn("Podcast") << "Podcast parse error: " << reader.errorString();
         return;
-    }
-
-    tDebug("Podcast") << "Podcast Name: " << d->podcastName;
-    tDebug("Podcast") << "Podcast Link: " << d->podcastLink;
-    tDebug("Podcast") << "Podcast Author: " << d->podcastAuthor;
-    tDebug("Podcast") << "Podcast Subtitle: " << d->podcastSubtitle;
-    tDebug("Podcast") << "Podcast Copyright: " << d->podcastCopyright;
-    tDebug("Podcast") << "Podcast Image: " << d->podcastImageUrl;
-    tDebug("Podcast") << "Podcast Description: " << d->podcastDescription;
-
-    for (auto item : d->items) {
-        if (item->link().isEmpty()) continue;
-
-        tDebug("Podcast") << "Item Title: " << item->title();
-        tDebug("Podcast") << "Item Creator: " << item->creator();
-        tDebug("Podcast") << "Item Link: " << item->link();
-        tDebug("Podcast") << "Item Description: " << item->description();
-        tDebug("Podcast") << "Item Subtitle: " << item->subtitle();
-        tDebug("Podcast") << "Item Published: " << item->published().toString();
     }
 
     emit itemsUpdated();
@@ -147,7 +132,7 @@ QString Podcast::name() {
 }
 
 QCoro::Task<QImage> Podcast::image() {
-    co_return co_await PodcastCommon::cacheImage(&d->mgr, d->podcastImageUrl, d->podcastDir.absoluteFilePath("cover"));
+    co_return co_await PodcastCommon::cacheImage(d->mgr, d->podcastImageUrl, d->podcastDir.absoluteFilePath("cover"));
 }
 
 QList<PodcastItemPtr> Podcast::items() {
@@ -155,7 +140,7 @@ QList<PodcastItemPtr> Podcast::items() {
 }
 
 QCoro::Task<> Podcast::update() {
-    QNetworkReply* reply = co_await d->mgr.get(QNetworkRequest(d->feedUrl));
+    QNetworkReply* reply = co_await d->mgr->get(QNetworkRequest(d->feedUrl));
     auto error = reply->error();
     if (reply->error() != QNetworkReply::NoError) {
         // Do something!
@@ -164,6 +149,11 @@ QCoro::Task<> Podcast::update() {
 
     auto feedPath = d->podcastDir.absoluteFilePath("feed.xml");
     auto initialDownload = !QFile::exists(feedPath);
+
+    QStringList knownGuids;
+    for (auto item : d->items) {
+        knownGuids.append(item->guid());
+    }
 
     QFile xmlFile(feedPath);
     xmlFile.open(QFile::WriteOnly);
@@ -176,6 +166,16 @@ QCoro::Task<> Podcast::update() {
         // Mark all the episodes as played
         for (auto item : d->items) {
             item->setPlayed(item->duration());
+        }
+    } else {
+        if (d->settings.value("podcasts/autoDownload").toBool()) {
+            // Start downloading new podcast episodes from oldest to newest
+            for (auto i = d->items.rbegin(); i != d->items.rend(); i++) {
+                auto item = *i;
+                if (!item->isDownloading() && !item->isDownloaded() && !knownGuids.contains(item->guid())) {
+                    item->download(true);
+                }
+            }
         }
     }
 }

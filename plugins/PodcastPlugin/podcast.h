@@ -7,6 +7,7 @@
 class PodcastManager;
 class PodcastItem;
 class QMenu;
+class QNetworkAccessManager;
 struct PodcastPrivate;
 typedef QSharedPointer<PodcastItem> PodcastItemPtr;
 class Podcast : public QObject {
@@ -32,7 +33,7 @@ class Podcast : public QObject {
 
     protected:
         friend PodcastManager;
-        explicit Podcast(QString podcastHash);
+        explicit Podcast(QString podcastHash, QNetworkAccessManager* mgr);
 
         void setFeedUrl(QUrl url);
 

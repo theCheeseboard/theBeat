@@ -357,7 +357,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+125"/>
         <source>Tracks</source>
         <translation>Tracks</translation>
     </message>
@@ -509,7 +509,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+85"/>
+        <location filename="../mainwindow.cpp" line="+71"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -564,7 +564,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <translation>Select a track or drop something here!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-138"/>
+        <location filename="../mainwindow.cpp" line="-124"/>
         <source>Play</source>
         <translation>Play</translation>
     </message>
@@ -622,22 +622,15 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Appearance</source>
-        <translation type="unfinished">Appearance</translation>
+        <translation type="obsolete">Appearance</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Library</source>
-        <translation type="unfinished">Library</translation>
+        <translation type="obsolete">Library</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+54"/>
         <source>No Printers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1074,7 +1067,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+54"/>
+        <location filename="../main.cpp" line="+60"/>
         <source>Audio Player</source>
         <translation>Audio Player</translation>
     </message>
@@ -1087,6 +1080,21 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <location line="+0"/>
         <source>File to open</source>
         <translation>File to open</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Appearance</source>
+        <translation type="unfinished">Appearance</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Library</source>
+        <translation type="unfinished">Library</translation>
     </message>
 </context>
 </TS>

@@ -373,7 +373,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+125"/>
         <source>Tracks</source>
         <translation>المسارات</translation>
     </message>
@@ -580,7 +580,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+138"/>
+        <location filename="../mainwindow.cpp" line="+124"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -590,7 +590,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-141"/>
+        <location filename="../mainwindow.cpp" line="-127"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
@@ -642,22 +642,15 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>عذرًا ، العنوان (URL) هذا لا يدعمه theBeat.</translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Appearance</source>
-        <translation type="unfinished">المظهر</translation>
+        <translation type="obsolete">المظهر</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Library</source>
-        <translation type="unfinished">المكتبة</translation>
+        <translation type="obsolete">المكتبة</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+54"/>
         <source>No Printers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1106,7 +1099,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+54"/>
+        <location filename="../main.cpp" line="+60"/>
         <source>Audio Player</source>
         <translation>مشغل الصوت</translation>
     </message>
@@ -1119,6 +1112,21 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <location line="+0"/>
         <source>File to open</source>
         <translation>ملف للفتح</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Appearance</source>
+        <translation type="unfinished">المظهر</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Library</source>
+        <translation type="unfinished">المكتبة</translation>
     </message>
 </context>
 </TS>
