@@ -33,37 +33,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="177"/>
+        <location filename="../podcastitem.cpp" line="183"/>
         <source>Failed to download %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="192"/>
+        <location filename="../podcastitem.cpp" line="198"/>
         <source>Downloaded %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="214"/>
+        <location filename="../podcastitem.cpp" line="220"/>
         <source>For %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="218"/>
+        <location filename="../podcastitem.cpp" line="224"/>
         <source>Remove Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="222"/>
+        <location filename="../podcastitem.cpp" line="228"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="229"/>
+        <location filename="../podcastitem.cpp" line="235"/>
         <source>Mark as unplayed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../podcastitem.cpp" line="233"/>
+        <location filename="../podcastitem.cpp" line="239"/>
         <source>Mark as complete</source>
         <translation type="unfinished"></translation>
     </message>

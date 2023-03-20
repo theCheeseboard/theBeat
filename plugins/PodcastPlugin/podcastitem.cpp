@@ -155,12 +155,18 @@ QCoro::Task<> PodcastItem::download(bool transient) {
     job->setTotalProgress(0);
     tJobManager::trackJobDelayed(job);
 
-    auto guard = co_await d->downloadQueueGuard.guardQueue();
+    auto guardTask = d->downloadQueueGuard.guardQueue();
+
+    auto request = QNetworkRequest(QUrl(d->mediaUrl));
+    QNetworkReply* headResponse = co_await d->mgr->head(request);
+    job->setTotalProgress(headResponse->header(QNetworkRequest::ContentLengthHeader).toULongLong());
+
+    auto guard = co_await guardTask;
 
     QFile localFile(QStringLiteral("%1.%2").arg(downloadedFilePath, d->mediaUrlExt));
     localFile.open(QFile::WriteOnly);
 
-    auto reply = d->mgr->get(QNetworkRequest(QUrl(d->mediaUrl)));
+    auto reply = d->mgr->get(request);
     connect(reply, &QNetworkReply::downloadProgress, thisPtr, [job](qint64 bytesReceived, qint64 bytesTotal) {
         job->setTotalProgress(bytesTotal);
         job->setProgress(bytesReceived);
