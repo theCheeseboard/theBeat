@@ -1,10 +1,11 @@
 #ifndef HEADERBACKGROUNDCONTROLLER_H
 #define HEADERBACKGROUNDCONTROLLER_H
 
+#include "libthebeat_global.h"
 #include <QWidget>
 
 struct HeaderBackgroundControllerPrivate;
-class HeaderBackgroundController : public QObject {
+class LIBTHEBEAT_EXPORT HeaderBackgroundController : public QObject {
         Q_OBJECT
     public:
         explicit HeaderBackgroundController(QWidget* parent = nullptr);
