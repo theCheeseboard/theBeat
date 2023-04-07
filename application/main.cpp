@@ -21,6 +21,10 @@
 
 #include "library/librarymanager.h"
 #include "qtmultimedia/qtmultimediaurlhandler.h"
+#include "settingspanes/colourssettingspane.h"
+#include "settingspanes/libraryresetsettingspane.h"
+#include "settingspanes/notificationssettingspane.h"
+#include "settingspanes/titlebarsettingspane.h"
 #include "thememanager.h"
 #include <QCommandLineParser>
 #include <QDir>
@@ -28,10 +32,12 @@
 #include <QUrl>
 #include <playlist.h>
 #include <plugins/tpluginmanager.h>
+#include <plugins/tpluginmanagerpane.h>
 #include <statemanager.h>
 #include <tapplication.h>
 #include <thebeatplugininterface.h>
 #include <tsettings.h>
+#include <tsettingswindow/tsettingswindow.h>
 #include <tstylemanager.h>
 #include <urlmanager.h>
 
@@ -152,6 +158,30 @@ int main(int argc, char* argv[]) {
         QObject::connect(UpdateChecker::instance(), &UpdateChecker::closeAllWindows, &a, &tApplication::quit);
     }
 #endif
+
+    tSettingsWindow::addStaticSection(0, "general", a.translate("main", "General"));
+    tSettingsWindow::addStaticPane(10, "general", [] {
+        return new NotificationsSettingsPane();
+    });
+    tSettingsWindow::addStaticPane(100, "general", [] {
+        return new tPluginManagerPane();
+    });
+
+    tSettingsWindow::addStaticSection(10, "appearance", a.translate("main", "Appearance"));
+    tSettingsWindow::addStaticPane(10, "appearance", [] {
+        return new TitlebarSettingsPane();
+    });
+
+    if (tStyleManager::isOverridingStyle()) {
+        tSettingsWindow::addStaticPane(20, "appearance", [] {
+            return new ColoursSettingsPane();
+        });
+    }
+
+    tSettingsWindow::addStaticSection(20, "library", a.translate("main", "Library"));
+    tSettingsWindow::addStaticPane(10, "library", [] {
+        return new LibraryResetSettingsPane();
+    });
 
     w->show();
 

@@ -79,6 +79,8 @@ class MainWindow : public QMainWindow {
 
         void on_actionDecrease_Volume_triggered();
 
+        void on_actionPause_after_current_track_triggered(bool checked);
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;

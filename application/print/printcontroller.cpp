@@ -24,6 +24,7 @@
 #include <QPrinter>
 #include <QPrinterInfo>
 #include <common.h>
+#include <thebeatcommon.h>
 #include <tpaintcalculator.h>
 #include <tpopover.h>
 #include <tprintpopover.h>
@@ -128,7 +129,7 @@ void PrintController::paintTrackListing(QPrinter* printer) {
     for (AbstractLibraryBrowser::TrackInformation trackInformation : d->listInformation.tracks) {
         totalDuration += trackInformation.duration;
     }
-    subtitleText.append(Common::durationToString(totalDuration));
+    subtitleText.append(TheBeatCommon::durationToString(totalDuration));
 
     QRectF subtitleRect;
     subtitleRect.setHeight(bodyFontMetrics.height());
@@ -182,7 +183,7 @@ void PrintController::paintTrackListing(QPrinter* printer) {
 
         QStringList trackTitleText;
         trackTitleText.append(trackInformation.title);
-        trackTitleText.append(Common::durationToString(trackInformation.duration));
+        trackTitleText.append(TheBeatCommon::durationToString(trackInformation.duration));
 
         QRectF trackTitleRect;
         trackTitleRect.setWidth(bodyFontMetrics.horizontalAdvance(trackTitleText.join(" · ")));

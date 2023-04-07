@@ -31,6 +31,9 @@
    </property>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
      <widget class="FavouriteStationsWidget" name="favouriteStations"/>
      <widget class="StationSearchWidget" name="searchPage"/>
     </widget>

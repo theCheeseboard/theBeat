@@ -14,6 +14,7 @@
 #include <sourcemanager.h>
 #include <statemanager.h>
 #include <tcsdtools.h>
+#include <thebeatcommon.h>
 #include <tvariantanimation.h>
 #include <visualisationmanager.h>
 
@@ -233,8 +234,8 @@ void CurrentTrackPopover::updateBar() {
     ui->progressSlider->setMaximum(d->currentItem->duration());
     ui->progressSlider->setValue(d->currentItem->elapsed());
 
-    ui->durationLabel->setText(Common::durationToString(d->currentItem->duration(), true));
-    ui->elapsedLabel->setText(Common::durationToString(d->currentItem->elapsed()));
+    ui->durationLabel->setText(TheBeatCommon::durationToString(d->currentItem->duration(), true));
+    ui->elapsedLabel->setText(TheBeatCommon::durationToString(d->currentItem->elapsed()));
 }
 
 void CurrentTrackPopover::updateRightPane(bool initial) {

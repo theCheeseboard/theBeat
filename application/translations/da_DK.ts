@@ -43,7 +43,7 @@
         <translation>Brænd</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+68"/>
+        <location filename="../artistsalbumswidget.cpp" line="+69"/>
         <source>Albums in Library</source>
         <translation>Albummer i bibliotek</translation>
     </message>
@@ -108,7 +108,7 @@
 <context>
     <name>Common</name>
     <message>
-        <location filename="../common.cpp" line="+31"/>
+        <location filename="../common.cpp" line="+16"/>
         <source>Select Device</source>
         <translation>Vælg enhed</translation>
     </message>
@@ -126,7 +126,7 @@
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+87"/>
+        <location filename="../controlstrip.cpp" line="+88"/>
         <source>Repeat Options</source>
         <translation>Gentagelsesindstillinger</translation>
     </message>
@@ -149,7 +149,7 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="+155"/>
+        <location filename="../currenttrackpopover.cpp" line="+156"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
@@ -220,7 +220,7 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+194"/>
+        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
         <translation>af %1</translation>
     </message>
@@ -357,7 +357,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+125"/>
         <source>Tracks</source>
         <translation>Sange</translation>
     </message>
@@ -402,7 +402,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>Afspilning</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -443,7 +443,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+318"/>
+        <location filename="../mainwindow.cpp" line="+324"/>
         <source>Open URL</source>
         <translation>Åben URL</translation>
     </message>
@@ -509,7 +509,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+85"/>
+        <location filename="../mainwindow.cpp" line="+71"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -544,22 +544,32 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="+8"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished">Pause efter nuværende spor</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shift+Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-120"/>
         <source>Skip Forward</source>
         <translation>Spring over</translation>
     </message>
     <message>
-        <location line="-166"/>
+        <location line="-168"/>
         <source>Select a track or drop something here!</source>
         <translation>Vælg en sang eller smid noget her!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-138"/>
+        <location filename="../mainwindow.cpp" line="-124"/>
         <source>Play</source>
         <translation>Afspil</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+181"/>
+        <location filename="../mainwindow.ui" line="+183"/>
         <source>Space</source>
         <translation>Mellemrum</translation>
     </message>
@@ -612,22 +622,15 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>Beklager, den URL understøttes ikke af theBeat.</translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Appearance</source>
-        <translation type="unfinished">Udseende</translation>
+        <translation type="obsolete">Udseende</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Library</source>
-        <translation type="unfinished">Bibliotek</translation>
+        <translation type="obsolete">Bibliotek</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+54"/>
         <source>No Printers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -689,7 +692,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>PrintController</name>
     <message>
-        <location filename="../print/printcontroller.cpp" line="+59"/>
+        <location filename="../print/printcontroller.cpp" line="+60"/>
         <source>Print %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1064,7 +1067,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+54"/>
+        <location filename="../main.cpp" line="+60"/>
         <source>Audio Player</source>
         <translation>Musikafspiller</translation>
     </message>
@@ -1077,6 +1080,21 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <location line="+0"/>
         <source>File to open</source>
         <translation>Fil der skal åbnes</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Appearance</source>
+        <translation type="unfinished">Udseende</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Library</source>
+        <translation type="unfinished">Bibliotek</translation>
     </message>
 </context>
 </TS>

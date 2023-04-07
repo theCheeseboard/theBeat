@@ -28,6 +28,7 @@
 #include <QUrl>
 #include <helpers.h>
 #include <libcontemporary_global.h>
+#include <thebeatcommon.h>
 #include <tpaintcalculator.h>
 
 struct LibraryModelPrivate {
@@ -210,7 +211,7 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     if (duration != 0) {
         paintCalculator.addRect(textRect, [=](QRectF paintBounds) {
             painter->setPen(transientColor);
-            painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, "· " + Common::durationToString(duration));
+            painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, "· " + TheBeatCommon::durationToString(duration));
         });
     }
 

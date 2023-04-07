@@ -43,7 +43,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+68"/>
+        <location filename="../artistsalbumswidget.cpp" line="+69"/>
         <source>Albums in Library</source>
         <translation>Album dalam Pustaka</translation>
     </message>
@@ -107,7 +107,7 @@
 <context>
     <name>Common</name>
     <message>
-        <location filename="../common.cpp" line="+31"/>
+        <location filename="../common.cpp" line="+16"/>
         <source>Select Device</source>
         <translation>Pilih Devais</translation>
     </message>
@@ -125,7 +125,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+87"/>
+        <location filename="../controlstrip.cpp" line="+88"/>
         <source>Repeat Options</source>
         <translation>Opsi Pengulangan</translation>
     </message>
@@ -148,7 +148,7 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="+155"/>
+        <location filename="../currenttrackpopover.cpp" line="+156"/>
         <source>Album</source>
         <translation type="unfinished"></translation>
     </message>
@@ -218,7 +218,7 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+194"/>
+        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
         <translation>oleh %1</translation>
     </message>
@@ -354,7 +354,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+125"/>
         <source>Tracks</source>
         <translation>Trek</translation>
     </message>
@@ -399,7 +399,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation>Pemutaran</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -440,7 +440,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+318"/>
+        <location filename="../mainwindow.cpp" line="+324"/>
         <source>Open URL</source>
         <translation>Buka URL</translation>
     </message>
@@ -506,7 +506,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+85"/>
+        <location filename="../mainwindow.cpp" line="+71"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -541,22 +541,32 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="+8"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished">Pause setelah trek saat ini</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shift+Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-120"/>
         <source>Skip Forward</source>
         <translation>Lompat Maju</translation>
     </message>
     <message>
-        <location line="-166"/>
+        <location line="-168"/>
         <source>Select a track or drop something here!</source>
         <translation>Pilih trek atau drop file di sini!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-138"/>
+        <location filename="../mainwindow.cpp" line="-124"/>
         <source>Play</source>
         <translation>Mainkan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+181"/>
+        <location filename="../mainwindow.ui" line="+183"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
@@ -608,22 +618,15 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation>Maaf, URL itu tidak dapat diputar oleh theBeat.</translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Appearance</source>
-        <translation type="unfinished">Tampilan</translation>
+        <translation type="obsolete">Tampilan</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Library</source>
-        <translation type="unfinished">Pustaka</translation>
+        <translation type="obsolete">Pustaka</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+54"/>
         <source>No Printers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -685,7 +688,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
 <context>
     <name>PrintController</name>
     <message>
-        <location filename="../print/printcontroller.cpp" line="+59"/>
+        <location filename="../print/printcontroller.cpp" line="+60"/>
         <source>Print %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1057,7 +1060,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+54"/>
+        <location filename="../main.cpp" line="+60"/>
         <source>Audio Player</source>
         <translation>Pemutar Audio</translation>
     </message>
@@ -1070,6 +1073,21 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <location line="+0"/>
         <source>File to open</source>
         <translation>File untuk dibuka</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Appearance</source>
+        <translation type="unfinished">Tampilan</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Library</source>
+        <translation type="unfinished">Pustaka</translation>
     </message>
 </context>
 </TS>

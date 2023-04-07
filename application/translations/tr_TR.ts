@@ -43,7 +43,7 @@
         <translation>Yan</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+68"/>
+        <location filename="../artistsalbumswidget.cpp" line="+69"/>
         <source>Albums in Library</source>
         <translation>Kitaplıktaki Albümler</translation>
     </message>
@@ -111,7 +111,7 @@
 <context>
     <name>Common</name>
     <message>
-        <location filename="../common.cpp" line="+31"/>
+        <location filename="../common.cpp" line="+16"/>
         <source>Select Device</source>
         <translation>Cihaz seç</translation>
     </message>
@@ -129,7 +129,7 @@
         <translation>Meta veriler</translation>
     </message>
     <message>
-        <location filename="../controlstrip.cpp" line="+87"/>
+        <location filename="../controlstrip.cpp" line="+88"/>
         <source>Repeat Options</source>
         <translation>Tekrar Seçenekleri</translation>
     </message>
@@ -152,7 +152,7 @@
 <context>
     <name>CurrentTrackPopover</name>
     <message>
-        <location filename="../currenttrackpopover.cpp" line="+155"/>
+        <location filename="../currenttrackpopover.cpp" line="+156"/>
         <source>Album</source>
         <translation>Albüm</translation>
     </message>
@@ -222,7 +222,7 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+194"/>
+        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
         <translation>%1 tarafından</translation>
     </message>
@@ -358,7 +358,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+129"/>
+        <location filename="../mainwindow.cpp" line="+125"/>
         <source>Tracks</source>
         <translation>Şarkılar</translation>
     </message>
@@ -403,7 +403,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>Geri çalma</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -444,7 +444,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+318"/>
+        <location filename="../mainwindow.cpp" line="+324"/>
         <source>Open URL</source>
         <translation>Link Aç</translation>
     </message>
@@ -510,7 +510,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../mainwindow.cpp" line="+85"/>
+        <location filename="../mainwindow.cpp" line="+71"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
@@ -545,22 +545,32 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="+8"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished">Geçerli şarkıdan sonra duraklat</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shift+Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-120"/>
         <source>Skip Forward</source>
         <translation>Ileri atlamak</translation>
     </message>
     <message>
-        <location line="-166"/>
+        <location line="-168"/>
         <source>Select a track or drop something here!</source>
         <translation>Bir şarkı seçin ya da buraya bir şey bırakın!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="-138"/>
+        <location filename="../mainwindow.cpp" line="-124"/>
         <source>Play</source>
         <translation>Oyna</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="+181"/>
+        <location filename="../mainwindow.ui" line="+183"/>
         <source>Space</source>
         <translation>Boşluk</translation>
     </message>
@@ -612,22 +622,15 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>Ne yazık ki, bu URL theBeat tarafından desteklenmiyor.</translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Appearance</source>
-        <translation type="unfinished">Görünüm</translation>
+        <translation type="obsolete">Görünüm</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Library</source>
-        <translation type="unfinished">Kütüphane</translation>
+        <translation type="obsolete">Kütüphane</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+54"/>
         <source>No Printers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -689,7 +692,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>PrintController</name>
     <message>
-        <location filename="../print/printcontroller.cpp" line="+59"/>
+        <location filename="../print/printcontroller.cpp" line="+60"/>
         <source>Print %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1061,7 +1064,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+54"/>
+        <location filename="../main.cpp" line="+60"/>
         <source>Audio Player</source>
         <translation>Ses oynatıcı</translation>
     </message>
@@ -1074,6 +1077,21 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <location line="+0"/>
         <source>File to open</source>
         <translation>Açılacak dosya</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Appearance</source>
+        <translation type="unfinished">Görünüm</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Library</source>
+        <translation type="unfinished">Kütüphane</translation>
     </message>
 </context>
 </TS>
