@@ -74,6 +74,12 @@
             "baseLang": "en_US"
         },
         {
+            "name": "theBeat Podcasts",
+            "type": "qt",
+            "path": "/plugins/PodcastPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
             "name": "theBeat Windows Integration",
             "type": "qt",
             "path": "/plugins/WinIntegration/translations/{lang}.ts",
