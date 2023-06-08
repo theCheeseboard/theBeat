@@ -26,4 +26,4 @@ jobs:
         repository: blueprint
         bundle-name: "thebeat.flatpak"
         manifest: dist/com.vicr123.thebeat_blueprint.yml
-        deploy: ${{ github.event_name == "push" || github.event_name == "workflow_dispatch" }}
+        deploy: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
