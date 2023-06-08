@@ -1,6 +1,6 @@
 app-id: com.vicr123.thebeat_blueprint
 runtime: org.kde.Platform
-runtime-version: '6.2'
+runtime-version: '6.5'
 sdk: org.kde.Sdk
 command: thebeat-blueprint
 finish-args:
