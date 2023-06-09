@@ -50,7 +50,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/danvratil/qcoro
-        branch: main
+        tag: v0.9.0
     config-opts:
       - -DCMAKE_POSITION_INDEPENDENT_CODE=ON
   - name: libcontemporary
@@ -58,13 +58,13 @@ modules:
     sources:
       - type: git
         url: https://github.com/vicr123/libcontemporary
-        branch: master
+        tag: v6.0
   - name: contemporary
     buildsystem: cmake-ninja
     sources:
       - type: git
         url: https://github.com/vicr123/contemporary-theme
-        branch: master
+        tag: v2.0
   - name: contemporary-icons
     buildsystem: simple
     build-commands:
@@ -73,14 +73,16 @@ modules:
     sources:
       - type: git
         url: https://github.com/vicr123/contemporary-icons
-        branch: master
+        tag: v1.11
   - name: thefrisbee
     buildsystem: cmake-ninja
     builddir: true
     sources:
       - type: git
         url: https://github.com/vicr123/thefrisbee
-        branch: master
+        tag: v2.0
+    config-opts:
+      - -DFORCE_STABLE=ON
   - name: thebeat
     buildsystem: cmake-ninja
     builddir: true

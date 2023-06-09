@@ -20,7 +20,7 @@ PodcastPane::PodcastPane(QWidget* parent) :
 
     d->source = new PluginMediaSource(this);
     d->source->setName(tr("Podcasts"));
-    d->source->setIcon(QIcon::fromTheme("radio"));
+    d->source->setIcon(QIcon::fromTheme("podcast"));
 
     StateManager::instance()->sources()->addSource(d->source);
 

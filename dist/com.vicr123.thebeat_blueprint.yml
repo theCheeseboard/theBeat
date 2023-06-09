@@ -58,13 +58,13 @@ modules:
     sources:
       - type: git
         url: https://github.com/vicr123/libcontemporary
-        branch: blueprint
+        branch: master
   - name: contemporary
     buildsystem: cmake-ninja
     sources:
       - type: git
         url: https://github.com/vicr123/contemporary-theme
-        branch: blueprint
+        branch: master
   - name: contemporary-icons
     buildsystem: simple
     build-commands:
@@ -73,18 +73,18 @@ modules:
     sources:
       - type: git
         url: https://github.com/vicr123/contemporary-icons
-        branch: blueprint
+        branch: master
   - name: thefrisbee
     buildsystem: cmake-ninja
     builddir: true
     sources:
       - type: git
         url: https://github.com/vicr123/thefrisbee
-        branch: blueprint
+        branch: master
   - name: thebeat
     buildsystem: cmake-ninja
     builddir: true
     sources:
       - type: git
         url: https://github.com/vicr123/thebeat
-        branch: blueprint
+        branch: master

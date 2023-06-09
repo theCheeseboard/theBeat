@@ -58,7 +58,7 @@ void PrintController::confirmAndPerformPrint() {
     tPrintPopover* jp = new tPrintPopover(d->printer);
     connect(jp, &tPrintPopover::paintRequested, this, &PrintController::paintPrinter);
     jp->setTitle(tr("Print %1").arg(QLocale().quoteString(d->listInformation.name)));
-    jp->setCustomPrintSettingsWidget(d->printSettings);
+    //    jp->setCustomPrintSettingsWidget(d->printSettings);
 
     tPopover* popover = new tPopover(jp);
     popover->setPopoverWidth(SC_DPI(-200));
