@@ -19,30 +19,32 @@
  * *************************************/
 #include "librarymanager.h"
 
-#include <QDir>
-#include <QSqlDatabase>
-#include <QStandardPaths>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDirIterator>
-#include <QVariant>
-#include <QDebug>
-#include <QRandomGenerator>
-#include <statemanager.h>
-#include <playlist.h>
-#include "qtmultimedia/qtmultimediamediaitem.h"
-#include <taglib/fileref.h>
 #include "libraryenumeratedirectoryjob.h"
-#include <tjobmanager.h>
-#include <QUrl>
+#include "qtmultimedia/qtmultimediamediaitem.h"
+#include <QDateTime>
+#include <QDebug>
+#include <QDir>
+#include <QDirIterator>
+#include <QRandomGenerator>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QStandardPaths>
 #include <QTimer>
+#include <QUrl>
+#include <QVariant>
+#include <playlist.h>
+#include <statemanager.h>
+#include <taglib/fileref.h>
+#include <tjobmanager.h>
 
 struct LibraryManagerPrivate {
-    bool available = false;
-    int isProcessing = 0;
+        bool available = false;
+        int isProcessing = 0;
 };
 
-LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
+LibraryManager::LibraryManager(QObject* parent) :
+    QObject(parent) {
     d = new LibraryManagerPrivate();
 
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
@@ -56,7 +58,7 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
     db.exec("PRAGMA foreign_keys = ON");
     db.exec("PRAGMA journal_mode = WAL");
 
-    //Initialise the tables
+    // Initialise the tables
     QStringList tables = db.tables();
     db.exec("CREATE TABLE IF NOT EXISTS version(version INTEGER)");
 
@@ -67,26 +69,35 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
     }
 
     if (version == -1) {
-        //Initialise a new database; this is the first time we're running theBeat
+        // Initialise a new database; this is the first time we're running theBeat
         db.exec("CREATE TABLE tracks(id INTEGER PRIMARY KEY, path TEXT UNIQUE, title TEXT, artist TEXT, album TEXT, duration INTEGER, trackNumber INTEGER)");
         db.exec("CREATE TABLE blacklist(path TEXT PRIMARY KEY)");
         db.exec("CREATE TABLE playlists(id INTEGER PRIMARY KEY, name TEXT UNIQUE)");
         db.exec("CREATE TABLE playlistTracks(playlistid INTEGER REFERENCES playlists(id) ON DELETE CASCADE, trackid INTEGER REFERENCES tracks(id) ON DELETE CASCADE ON UPDATE CASCADE, sort INTEGER, CONSTRAINT playlistTracks_pk PRIMARY KEY(playlistid, trackid, sort))");
         db.exec("INSERT INTO version(version) VALUES(1)");
 
-        //Also add Silly to the playlist
+        // Also add Silly to the playlist
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
         StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.mp3")));
 #else
         StateManager::instance()->playlist()->addItem(new QtMultimediaMediaItem(QUrl("qrc:/resources/Silly.ogg")));
 #endif
         StateManager::instance()->playlist()->pause();
-    } else if (version == 1) {
-        //This is the current database version
     }
 
-    //Enumerate the Music directory
-    QTimer::singleShot(0, [ = ] {
+    if (version <= 1) {
+        // Upgrade to database version 2
+        db.exec("CREATE TABLE playTime(id INTEGER PRIMARY KEY, trackId INTEGER REFERENCES tracks(id) ON DELETE CASCADE ON UPDATE CASCADE, date INTEGER)");
+        db.exec("DELETE FROM version");
+        db.exec("INSERT INTO version(version) VALUES(2)");
+    }
+
+    if (version <= 2) {
+        // This is the current database version
+    }
+
+    // Enumerate the Music directory
+    QTimer::singleShot(0, [this] {
         QStringList musicDirectories = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
         for (QString dir : musicDirectories) {
             this->enumerateDirectory(dir, false, false);
@@ -95,7 +106,6 @@ LibraryManager::LibraryManager(QObject* parent) : QObject(parent) {
 }
 
 LibraryManager::~LibraryManager() {
-
 }
 
 LibraryManager* LibraryManager::instance() {
@@ -108,7 +118,7 @@ void LibraryManager::enumerateDirectory(QString path, bool ignoreBlacklist, bool
     emit isProcessingChanged();
 
     LibraryEnumerateDirectoryJob* job = new LibraryEnumerateDirectoryJob(path, ignoreBlacklist, isUserAction);
-    connect(job, &LibraryEnumerateDirectoryJob::stateChanged, this, [ = ](tJob::State state) {
+    connect(job, &LibraryEnumerateDirectoryJob::stateChanged, this, [this](tJob::State state) {
         if (state == tJob::Finished) {
             d->isProcessing--;
             emit isProcessingChanged();
@@ -119,12 +129,14 @@ void LibraryManager::enumerateDirectory(QString path, bool ignoreBlacklist, bool
     tJobManager::trackJob(job);
 }
 
-void LibraryManager::addTrack(QString path) {
-    //Remove the path from the blacklist if it exists
-    QSqlQuery blacklistQuery;
-    blacklistQuery.prepare("DELETE FROM blacklist WHERE path=:path");
-    blacklistQuery.bindValue(":path", path);
-    blacklistQuery.exec();
+void LibraryManager::addTrack(QString path, bool updateOnly) {
+    if (!updateOnly) {
+        // Remove the path from the blacklist if it exists
+        QSqlQuery blacklistQuery;
+        blacklistQuery.prepare("DELETE FROM blacklist WHERE path=:path");
+        blacklistQuery.bindValue(":path", path);
+        blacklistQuery.exec();
+    }
 
 #ifdef Q_OS_WIN
     TagLib::FileRef file(reinterpret_cast<const wchar_t*>(path.constData()));
@@ -136,26 +148,30 @@ void LibraryManager::addTrack(QString path) {
 
     if (!tag) return;
 
-    //TODO: make this less... ugly
+    // TODO: make this less... ugly
 
     QVariantList paths, titles, artists, albums, durations, trackNumbers;
 
     paths.append(path);
-    titles.append(tag->title().isNull() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
-    artists.append(tag->artist().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->artist().to8Bit(true)));
-    albums.append(tag->album().isNull() ? QVariant(QVariant::String) : QString::fromStdString(tag->album().to8Bit(true)));
+    titles.append(tag->title().isEmpty() || tag->title().isEmpty() ? QFileInfo(path).baseName() : QString::fromStdString(tag->title().to8Bit(true)));
+    artists.append(tag->artist().isEmpty() ? QVariant(QMetaType(QMetaType::Type::QString)) : QString::fromStdString(tag->artist().to8Bit(true)));
+    albums.append(tag->album().isEmpty() ? QVariant(QMetaType(QMetaType::Type::QString)) : QString::fromStdString(tag->album().to8Bit(true)));
     durations.append(audioProperties->length() * 1000);
     trackNumbers.append(tag->track());
 
     QSqlQuery q;
-    q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
-        "UPDATE SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd");
+    if (updateOnly) {
+        q.prepare("UPDATE tracks SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd WHERE path=:path");
+    } else {
+        q.prepare("INSERT INTO tracks(path, title, artist, album, duration, trackNumber) VALUES(:path, :title, :artist, :album, :duration, :tracknumber) ON CONFLICT (path) DO "
+                  "UPDATE SET title=:titleupd, artist=:artistupd, album=:albumupd, duration=:durationupd, trackNumber=:tracknumberupd");
+        q.bindValue(":title", titles);
+        q.bindValue(":artist", artists);
+        q.bindValue(":album", albums);
+        q.bindValue(":duration", durations);
+        q.bindValue(":tracknumber", trackNumbers);
+    }
     q.bindValue(":path", paths);
-    q.bindValue(":title", titles);
-    q.bindValue(":artist", artists);
-    q.bindValue(":album", albums);
-    q.bindValue(":duration", durations);
-    q.bindValue(":tracknumber", trackNumbers);
     q.bindValue(":titleupd", titles);
     q.bindValue(":artistupd", artists);
     q.bindValue(":albumupd", albums);
@@ -197,6 +213,33 @@ void LibraryManager::relocateTrack(QString oldPath, QString newPath) {
     emit libraryChanged();
 }
 
+void LibraryManager::bumpTrackPlayCount(QString path) {
+    TemporaryDatabase db;
+    int trackId = this->trackId(path);
+    if (trackId == -1) return;
+
+    QSqlQuery q(db.db);
+    q.prepare("INSERT INTO playTime(trackId, date) VALUES(:id, :date)");
+    q.bindValue(":id", trackId);
+    q.bindValue(":date", QDateTime::currentDateTime().toMSecsSinceEpoch());
+    q.exec();
+}
+
+int LibraryManager::trackPlayCount(QString path) {
+    TemporaryDatabase db;
+    QSqlQuery q(db.db);
+    q.prepare("SELECT COUNT(*) AS count FROM tracks NATURAL JOIN playTime WHERE tracks.path=:path AND playTime.date>:fromDate");
+    q.bindValue(":path", path);
+    q.bindValue(":fromDate", QDateTime::currentDateTime().addMonths(-1).toMSecsSinceEpoch());
+    q.exec();
+
+    if (q.next()) {
+        return q.value("count").toInt();
+    } else {
+        return 0;
+    }
+}
+
 LibraryModel* LibraryManager::allTracks() {
     LibraryModel* model = new LibraryModel();
     model->setQuery("SELECT * FROM tracks ORDER BY LOWER(title) ASC", model->database());
@@ -210,7 +253,7 @@ LibraryModel* LibraryManager::searchTracks(QString query) {
     q.bindValue(":query", query);
     q.exec();
 
-    model->setQuery(q);
+    model->setQuery(std::move(q));
     return model;
 }
 
@@ -249,7 +292,7 @@ LibraryModel* LibraryManager::tracksByArtist(QString artist) {
     q.bindValue(":artist", artist);
     q.exec();
 
-    model->setQuery(q);
+    model->setQuery(std::move(q));
     return model;
 }
 
@@ -260,7 +303,7 @@ LibraryModel* LibraryManager::tracksByAlbum(QString album) {
     q.bindValue(":album", album);
     q.exec();
 
-    model->setQuery(q);
+    model->setQuery(std::move(q));
     return model;
 }
 
@@ -351,7 +394,7 @@ LibraryModel* LibraryManager::tracksByPlaylist(int playlist) {
     q.bindValue(":playlist", playlist);
     q.exec();
 
-    model->setQuery(q);
+    model->setQuery(std::move(q));
     return model;
 }
 
@@ -384,6 +427,39 @@ void LibraryManager::normalisePlaylistSort(int playlist) {
     db.db.commit();
 }
 
+LibraryModel* LibraryManager::smartPlaylist(SmartPlaylist smartPlaylist) {
+    LibraryModel* model = new LibraryModel();
+    switch (smartPlaylist) {
+        case LibraryManager::Frequents:
+            {
+                QSqlQuery q(model->database());
+                q.prepare("SELECT tracks.*, counts.count FROM tracks, (SELECT *, COUNT(*) AS count FROM playTime WHERE playTime.date>:fromDate GROUP BY playTime.trackId) AS counts WHERE counts.trackId=tracks.id ORDER BY counts.count DESC LIMIT 20");
+                q.bindValue(":fromDate", QDateTime::currentDateTime().addMonths(-1).toMSecsSinceEpoch());
+                q.exec();
+
+                model->setQuery(std::move(q));
+                break;
+            }
+        case LibraryManager::Random:
+            model->setQuery("SELECT * FROM tracks ORDER BY random() DESC LIMIT 20", model->database());
+            break;
+        case LibraryManager::LastSmartPlaylist:
+            break;
+    }
+    return model;
+}
+
+QString LibraryManager::smartPlaylistName(SmartPlaylist smartPlaylist) {
+    switch (smartPlaylist) {
+        case LibraryManager::Frequents:
+            return tr("20 Most Played Tracks");
+        case LibraryManager::Random:
+            return tr("20 Random Tracks");
+        default:
+            return "";
+    }
+}
+
 bool LibraryManager::isProcessing() {
     return d->isProcessing > 0;
 }
@@ -400,6 +476,20 @@ void LibraryManager::erase() {
     QFile::remove(dataDir.absoluteFilePath("library.db"));
     QFile::remove(dataDir.absoluteFilePath("library.db-shm"));
     QFile::remove(dataDir.absoluteFilePath("library.db-wal"));
+}
+
+int LibraryManager::trackId(QString path) {
+    TemporaryDatabase db;
+    QSqlQuery q(db.db);
+    q.prepare("SELECT id FROM tracks WHERE tracks.path=:path");
+    q.bindValue(":path", path);
+    q.exec();
+
+    if (q.next()) {
+        return q.value("id").toInt();
+    } else {
+        return -1;
+    }
 }
 
 TemporaryDatabase::TemporaryDatabase() {

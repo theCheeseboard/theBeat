@@ -19,28 +19,29 @@
  * *************************************/
 #include "playlist.h"
 
-#include <tnotification.h>
 #include <QRandomGenerator>
+#include <tnotification.h>
 
 struct PlaylistPrivate {
-    QList<MediaItem*> items;
-    QList<MediaItem*> playOrder;
+        QList<MediaItem*> items;
+        QList<MediaItem*> playOrder;
 
-    Playlist::State state = Playlist::Stopped;
-    MediaItem* currentItem = nullptr;
+        Playlist::State state = Playlist::Stopped;
+        MediaItem* currentItem = nullptr;
 
-    bool repeatOne = false;
-    bool repeatAll = true;
-    bool shuffle = false;
-    bool pauseAfterCurrentTrack = false;
-    double volume = 1;
+        bool repeatOne = false;
+        bool repeatAll = true;
+        bool shuffle = false;
+        bool pauseAfterCurrentTrack = false;
+        double volume = 1;
 
-    bool trackChangeNotificationsEnabled = true;
+        bool trackChangeNotificationsEnabled = true;
 
-    QString oldTitle;
+        QString oldTitle;
 };
 
-Playlist::Playlist(QObject* parent) : QObject(parent) {
+Playlist::Playlist(QObject* parent) :
+    QObject(parent) {
     d = new PlaylistPrivate();
 }
 
@@ -48,7 +49,7 @@ void Playlist::addItem(MediaItem* item) {
     d->items.append(item);
 
     if (d->shuffle) {
-        //Add this item somewhere random in the play order
+        // Add this item somewhere random in the play order
         d->playOrder.insert(QRandomGenerator::global()->bounded(d->playOrder.count() + 1), item);
     } else {
         d->playOrder.append(item);
@@ -77,7 +78,7 @@ void Playlist::removeItem(MediaItem* item) {
 void Playlist::insertItem(int index, MediaItem* item) {
     d->items.insert(index, item);
     if (d->shuffle) {
-        //Add this item somewhere random in the play order
+        // Add this item somewhere random in the play order
         d->playOrder.insert(QRandomGenerator::global()->bounded(d->playOrder.count() + 1), item);
     } else {
         d->playOrder.insert(index, item);
@@ -86,7 +87,7 @@ void Playlist::insertItem(int index, MediaItem* item) {
 }
 
 MediaItem* Playlist::takeItem(int index) {
-    //This is used exclusively for drag and drop, so we'll see it again soon
+    // This is used exclusively for drag and drop, so we'll see it again soon
     MediaItem* item = d->items.takeAt(index);
     d->playOrder.removeOne(item);
     emit itemsChanged();
@@ -151,7 +152,7 @@ void Playlist::next() {
         return;
     }
 
-    //Repeat this track if repeat one is on
+    // Repeat this track if repeat one is on
     if (d->repeatOne) {
         d->currentItem->seek(0);
         d->currentItem->play();
@@ -167,15 +168,15 @@ void Playlist::next() {
     }
     setCurrentItem(d->playOrder.at(index));
 
-    //Pause now if pause after current track is enabled
+    // Pause now if pause after current track is enabled
     if (pauseAfterCurrentTrack) {
         pause();
-        //Will have been disabled in setCurrentItem()
+        // Will have been disabled in setCurrentItem()
     }
 }
 
 void Playlist::previous() {
-    //TODO: Skip to beginning if elapsed < 5000
+    // TODO: Skip to beginning if elapsed < 5000
     if (!d->currentItem) {
         play();
         return;
@@ -190,7 +191,7 @@ void Playlist::previous() {
     if (index == -1) index = d->playOrder.count() - 1;
     setCurrentItem(d->playOrder.at(index));
 
-    //Disable pause after current track
+    // Disable pause after current track
     setPauseAfterCurrentTrack(false);
 }
 
@@ -198,11 +199,10 @@ void Playlist::updateMetadata() {
     if (!d->currentItem) return;
     if (d->currentItem->title() != d->oldTitle) {
         if (!d->currentItem->title().isEmpty()) {
-            //Fire a notification
+            // Fire a notification
             QStringList text = {
                 d->currentItem->title(),
-                QLocale().createSeparatedList(d->currentItem->authors())
-            };
+                QLocale().createSeparatedList(d->currentItem->authors())};
             text.removeAll("");
 
             if (d->trackChangeNotificationsEnabled) {
@@ -212,9 +212,9 @@ void Playlist::updateMetadata() {
                 notification->setTransient(true);
                 notification->setSoundOn(false);
                 notification->insertAction(QStringLiteral("next"), tr("Skip Next"));
-                connect(notification, &tNotification::actionClicked, this, [ = ](QString key) {
+                connect(notification, &tNotification::actionClicked, this, [this](QString key) {
                     if (key == QStringLiteral("next")) {
-                        //Skip to the next track
+                        // Skip to the next track
                         this->next();
                     }
                 });
@@ -259,9 +259,9 @@ void Playlist::setCurrentItem(MediaItem* item) {
 
     item->seek(0);
 
-    //TODO: connect to signals
+    // TODO: connect to signals
     connect(d->currentItem, &MediaItem::done, this, &Playlist::next);
-    connect(d->currentItem, &MediaItem::error, this, [ = ] {
+    connect(d->currentItem, &MediaItem::error, this, [this, item] {
         tNotification* notification = new tNotification();
         notification->setSummary(tr("Playback Failed"));
         notification->setText(tr("\"%1\" was removed from the play queue because it couldn't be played.").arg(item->title()));
@@ -269,9 +269,8 @@ void Playlist::setCurrentItem(MediaItem* item) {
         notification->setSoundOn(false);
         notification->post();
 
-        //Remove the item from the playlist because it can't be played
+        // Remove the item from the playlist because it can't be played
         removeItem(item);
-
     });
     connect(d->currentItem, &MediaItem::metadataChanged, this, &Playlist::updateMetadata);
 
@@ -281,7 +280,7 @@ void Playlist::setCurrentItem(MediaItem* item) {
 
     updateMetadata();
 
-    //Disable pause after current track
+    // Disable pause after current track
     setPauseAfterCurrentTrack(false);
 }
 
@@ -298,7 +297,7 @@ void Playlist::setShuffle(bool shuffle) {
     d->shuffle = shuffle;
 
     if (shuffle) {
-        //Shuffle the play order
+        // Shuffle the play order
         QList<MediaItem*> remaining = d->items;
         d->playOrder.clear();
         while (!remaining.isEmpty()) {
@@ -307,7 +306,7 @@ void Playlist::setShuffle(bool shuffle) {
             remaining.removeAt(index);
         }
     } else {
-        //Reset the play order
+        // Reset the play order
         d->playOrder = d->items;
     }
 
@@ -334,10 +333,16 @@ bool Playlist::shuffle() {
 void Playlist::setVolume(double volume) {
     d->volume = volume;
     emit volumeChanged(volume);
+    emit logAdjustedVolumeChanged(this->logAdjustedVolume());
 }
 
 double Playlist::volume() {
     return d->volume;
+}
+
+double Playlist::logAdjustedVolume() {
+    if (d->volume > 0.99) return 1;
+    return -std::log(1 - d->volume) / std::log(100);
 }
 
 void Playlist::setTrachChangeNotificationsEnabled(bool notificationsEnabled) {

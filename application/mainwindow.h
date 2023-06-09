@@ -49,27 +49,17 @@ class MainWindow : public QMainWindow {
 
         void on_actionExit_triggered();
 
-        void on_tracksButton_toggled(bool checked);
-
-        void on_artistsButton_toggled(bool checked);
-
-        void on_albumsButton_toggled(bool checked);
-
         void on_queueList_activated(const QModelIndex& index);
 
         void on_queueList_customContextMenuRequested(const QPoint& pos);
 
         void on_actionOpen_URL_triggered();
 
-        void on_otherButton_toggled(bool checked);
-
         void on_actionSkip_Back_triggered();
 
         void on_actionSkip_Forward_triggered();
 
         void on_actionPlayPause_triggered();
-
-        void on_playlistsButton_toggled(bool checked);
 
         void on_actionAdd_to_Library_triggered();
 
@@ -81,6 +71,16 @@ class MainWindow : public QMainWindow {
 
         void on_actionShuffle_triggered(bool checked);
 
+        void on_actionPrint_triggered();
+
+        void on_actionZen_Mode_triggered();
+
+        void on_actionIncrease_Volume_triggered();
+
+        void on_actionDecrease_Volume_triggered();
+
+        void on_actionPause_after_current_track_triggered(bool checked);
+
     private:
         Ui::MainWindow* ui;
         MainWindowPrivate* d;
@@ -91,5 +91,7 @@ class MainWindow : public QMainWindow {
 
         void rewind10();
         void ff10();
+
+        void updatePlayState();
 };
 #endif // MAINWINDOW_H

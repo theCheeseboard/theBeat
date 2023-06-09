@@ -22,12 +22,21 @@
 
 #include "libthebeat_global.h"
 #include <QObject>
+#include <QCoroTask>
+#include <QCache>
+#include <QMediaMetaData>
 
 class LIBTHEBEAT_EXPORT Helpers : public QObject {
         Q_OBJECT
     public:
-        static QImage albumArt(QUrl url);
+        static QCoro::Task<QImage> albumArt(QUrl url);
 
+        static QString stringForMetadataKey(QMediaMetaData::Key key);
+        static QMediaMetaData::Key metadataKeyForString(QString string);
+
+    private:
+        static QCache<QUrl, QImage> artCache;
+        static QMap<QMediaMetaData::Key, QString> metadataStrings;
 };
 
 #endif // HELPERS_H

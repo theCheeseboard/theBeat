@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PodcastPane</class>
+ <widget class="QWidget" name="PodcastPane">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="tStackedWidget" name="stackedWidget">
+     <widget class="SubscribedPodcastsWidget" name="subscribedPage"/>
+     <widget class="PodcastListingWidget" name="podcastListingPage"/>
+     <widget class="PodcastItemWidget" name="podcastItemPage"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>tStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header location="global">tstackedwidget.h</header>
+   <container>1</container>
+   <slots>
+    <signal>switchingFrame(int)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>SubscribedPodcastsWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/subscribedpodcastswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PodcastListingWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/podcastlistingwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PodcastItemWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/podcastitemwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -52,7 +52,7 @@
 #endif
 
 CdChecker::CdChecker(QString directory, QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::CdChecker) {
     ui->setupUi(this);
 
@@ -65,6 +65,9 @@ CdChecker::CdChecker(QString directory, QWidget* parent) :
     ui->topWidget->installEventFilter(this);
     ui->albumSelectionSpinner->setFixedSize(SC_DPI_T(QSize(16, 16), QSize));
 
+    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
+        ui->topWidget->setContentsMargins(0, padTop, 0, 0);
+    });
     ui->topWidget->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
 
 #ifdef HAVE_MUSICBRAINZ
@@ -84,6 +87,11 @@ CdChecker::~CdChecker() {
     StateManager::instance()->sources()->removeSource(d->source);
 
     delete d;
+}
+
+AbstractLibraryBrowser::ListInformation CdChecker::currentListInformation()
+{
+return ListInformation();
 }
 
 void CdChecker::checkCd() {
@@ -227,7 +235,6 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
 
         //Attempt to get album art for this release
         QNetworkRequest req(QUrl("https://coverartarchive.org/release/" + QString::fromStdString(releaseInfo->ID()) + "/front"));
-        req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
         QNetworkReply* artReply = d->mgr.get(req);
         connect(artReply, &QNetworkReply::finished, this, [ = ] {
             //Make sure the user hasn't changed releases

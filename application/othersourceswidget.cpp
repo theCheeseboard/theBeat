@@ -20,53 +20,32 @@
 #include "othersourceswidget.h"
 #include "ui_othersourceswidget.h"
 
-#include <statemanager.h>
-#include <sourcemanager.h>
 #include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
 
 struct OtherSourcesWidgetPrivate {
-    QMap<QListWidgetItem*, PluginMediaSource*> listItems;
+        QMap<QListWidgetItem*, PluginMediaSource*> listItems;
 };
 
 OtherSourcesWidget::OtherSourcesWidget(QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::OtherSourcesWidget) {
     ui->setupUi(this);
 
     d = new OtherSourcesWidgetPrivate();
-    ui->sourcesList->setFixedWidth(SC_DPI(300));
-    ui->sourcesList->setIconSize(SC_DPI_T(QSize(32, 32), QSize));
+    ui->sourcesList->setFixedWidth(300);
+    ui->sourcesList->setIconSize(QSize(32, 32));
 
-    connect(StateManager::instance()->sources(), &SourceManager::sourceAdded, this, [ = ](PluginMediaSource * source) {
-        QListWidgetItem* item = new QListWidgetItem();
-        ui->sourcesList->addItem(item);
-
-        connect(source, &PluginMediaSource::nameChanged, this, [ = ](QString text) {
-            item->setText(text);
-        });
-        connect(source, &PluginMediaSource::iconChanged, this, [ = ](QIcon icon) {
-            item->setIcon(icon);
-        });
-        item->setText(source->name());
-        item->setIcon(source->icon());
-        d->listItems.insert(item, source);
-
-        ui->stackedWidget->addWidget(source->widget());
-
-        ui->mainStack->setCurrentWidget(ui->sourcesPage);
-    });
-    connect(StateManager::instance()->sources(), &SourceManager::sourceRemoved, this, [ = ](PluginMediaSource * source) {
-        QListWidgetItem* item = ui->sourcesList->takeItem(ui->sourcesList->row(d->listItems.key(source)));
-        d->listItems.remove(item);
-        ui->stackedWidget->removeWidget(source->widget());
-        source->disconnect(this);
-        delete item;
-
-        if (ui->stackedWidget->count() == 0) ui->mainStack->setCurrentWidget(ui->noSourcesPage);
-    });
+    connect(StateManager::instance()->sources(), &SourceManager::sourceAdded, this, &OtherSourcesWidget::addSource);
+    connect(StateManager::instance()->sources(), &SourceManager::sourceRemoved, this, &OtherSourcesWidget::removeSource);
 
     ui->mainStack->setCurrentAnimation(tStackedWidget::Fade);
     ui->mainStack->setCurrentWidget(ui->noSourcesPage, false);
+
+    for (auto source : StateManager::instance()->sources()->sources()) {
+        addSource(source);
+    }
 }
 
 OtherSourcesWidget::~OtherSourcesWidget() {
@@ -78,7 +57,45 @@ void OtherSourcesWidget::setTopPadding(int padding) {
     ui->sourcesLayout->setContentsMargins(0, padding, 0, 0);
 }
 
+AbstractLibraryBrowser::ListInformation OtherSourcesWidget::currentListInformation() {
+    AbstractLibraryBrowser* currentBrowser = qobject_cast<AbstractLibraryBrowser*>(ui->stackedWidget->currentWidget());
+    if (!currentBrowser || currentBrowser->currentListInformation().tracks.isEmpty()) {
+        return ListInformation();
+    } else {
+        return currentBrowser->currentListInformation();
+    }
+}
+
 void OtherSourcesWidget::on_sourcesList_currentRowChanged(int currentRow) {
     QListWidgetItem* item = ui->sourcesList->item(currentRow);
     if (item) ui->stackedWidget->setCurrentWidget(d->listItems.value(item)->widget());
+}
+
+void OtherSourcesWidget::addSource(PluginMediaSource* source) {
+    QListWidgetItem* item = new QListWidgetItem();
+    ui->sourcesList->addItem(item);
+
+    connect(source, &PluginMediaSource::nameChanged, this, [=](QString text) {
+        item->setText(text);
+    });
+    connect(source, &PluginMediaSource::iconChanged, this, [=](QIcon icon) {
+        item->setIcon(icon);
+    });
+    item->setText(source->name());
+    item->setIcon(source->icon());
+    d->listItems.insert(item, source);
+
+    ui->stackedWidget->addWidget(source->widget());
+
+    ui->mainStack->setCurrentWidget(ui->sourcesPage);
+}
+
+void OtherSourcesWidget::removeSource(PluginMediaSource* source) {
+    QListWidgetItem* item = ui->sourcesList->takeItem(ui->sourcesList->row(d->listItems.key(source)));
+    d->listItems.remove(item);
+    ui->stackedWidget->removeWidget(source->widget());
+    source->disconnect(this);
+    delete item;
+
+    if (ui->stackedWidget->count() == 0) ui->mainStack->setCurrentWidget(ui->noSourcesPage);
 }

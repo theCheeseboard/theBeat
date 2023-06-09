@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop-application">
+<component type="desktop-application" xmlns:cntp="https://vicr123.com/projects/libcontemporary">
   <id>com.vicr123.thebeat_blueprint</id>
 
-  <name>theBeat Blueprint</name>
-  <summary>Audio Player</summary>
+  <name cntp:trkey="NAME">theBeat Blueprint</name>
+  <summary cntp:trkey="SUMMARY">Audio Player</summary>
 
   <metadata_license>CC-BY-SA-4.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
@@ -16,17 +16,17 @@
   </recommends>
 
   <description>
-    <p>
+    <p cntp:trkey="BLUEPRINT_WARNING">
       WARNING: This is prerelease software. Features are subject to change at any time, and stability is not guaranteed.
     </p>
-    <p>
+    <p cntp:trkey="DESCRIPTION_SUMMARY">
       Play and organise your music. theBeat automatically discovers music on your computer and presents it in an easy-to-use interface.
     </p>
     <ul>
-      <li>Automatically categorise your music</li>
-      <li>Blazing fast search</li>
-      <li>Quickly find tracks by author and artist</li>
-      <li>Create playlists to quickly access the music you love</li>
+      <li cntp:trkey="DESCRIPTION_POINT_1">Automatically categorise your music</li>
+      <li cntp:trkey="DESCRIPTION_POINT_2">Blazing fast search</li>
+      <li cntp:trkey="DESCRIPTION_POINT_3">Quickly find tracks by author and artist</li>
+      <li cntp:trkey="DESCRIPTION_POINT_4">Create playlists to quickly access the music you love</li>
     </ul>
   </description>
 

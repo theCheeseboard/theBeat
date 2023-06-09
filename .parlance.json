@@ -1,0 +1,89 @@
+{
+    "name": "theBeat",
+    "subprojects": [
+        {
+            "name": "theBeat Desktop",
+            "type": "qt",
+            "path": "/application/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Apple Support",
+            "type": "apple-strings",
+            "path": "/application/translations/apple-lproj/{lang}.lproj/InfoPlist.strings",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Desktop File",
+            "type": "webext-json",
+            "path": "/application/translations/desktop/com.vicr123.thebeat/{lang}.json",
+            "baseLang": "en"
+        },
+        {
+            "name": "theBeat Blueprint Desktop File",
+            "type": "webext-json",
+            "path": "/application/translations/desktop/com.vicr123.thebeat_blueprint/{lang}.json",
+            "baseLang": "en"
+        },
+        {
+            "name": "theBeat AppStream Metainfo",
+            "type": "webext-json",
+            "path": "/application/translations/appstream/com.vicr123.thebeat.metainfo/{lang}.json",
+            "baseLang": "en"
+        },
+        {
+            "name": "theBeat Blueprint AppStream Metainfo",
+            "type": "webext-json",
+            "path": "/application/translations/appstream/com.vicr123.thebeat_blueprint.metainfo/{lang}.json",
+            "baseLang": "en"
+        },
+        {
+            "name": "theBeat cdrdao Integration",
+            "type": "qt",
+            "path": "/plugins/CdrdaoPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Discord Integration",
+            "type": "qt",
+            "path": "/plugins/DRPIntegration/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat GStreamer Support",
+            "type": "qt",
+            "path": "/plugins/GstPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Internet Radio",
+            "type": "qt",
+            "path": "/plugins/InternetRadioPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Mac Integration",
+            "type": "qt",
+            "path": "/plugins/MacIntegration/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Phonon",
+            "type": "qt",
+            "path": "/plugins/PhononPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Podcasts",
+            "type": "qt",
+            "path": "/plugins/PodcastPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat Windows Integration",
+            "type": "qt",
+            "path": "/plugins/WinIntegration/translations/{lang}.ts",
+            "baseLang": "en_US"
+        }
+    ]
+}

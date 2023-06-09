@@ -34,6 +34,10 @@ class ControlStrip : public QWidget {
         explicit ControlStrip(QWidget* parent = nullptr);
         ~ControlStrip();
 
+        void enterZenMode();
+        void leaveZenMode();
+        bool inZenMode();
+
     private slots:
         void on_playPauseButton_clicked();
 
@@ -54,6 +58,9 @@ class ControlStrip : public QWidget {
         void on_repeatOneButton_customContextMenuRequested(const QPoint& pos);
 
         void on_playPauseButton_customContextMenuRequested(const QPoint& pos);
+
+    signals:
+        void inZenModeChanged(bool inZenMode);
 
     private:
         Ui::ControlStrip* ui;

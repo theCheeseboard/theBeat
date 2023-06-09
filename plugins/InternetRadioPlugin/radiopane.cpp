@@ -20,16 +20,16 @@
 #include "radiopane.h"
 #include "ui_radiopane.h"
 
-#include <statemanager.h>
-#include <sourcemanager.h>
 #include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
 
 struct RadioPanePrivate {
-    PluginMediaSource* source;
+        PluginMediaSource* source;
 };
 
 RadioPane::RadioPane(QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::RadioPane) {
     ui->setupUi(this);
 
@@ -40,16 +40,19 @@ RadioPane::RadioPane(QWidget* parent) :
 
     StateManager::instance()->sources()->addSource(d->source);
 
+    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
+        this->layout()->setContentsMargins(0, padTop, 0, 0);
+    });
     this->layout()->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
 
-    connect(ui->favouriteStations, &FavouriteStationsWidget::addStation, this, [ = ] {
+    connect(ui->favouriteStations, &FavouriteStationsWidget::addStation, this, [this] {
         ui->stackedWidget->setCurrentWidget(ui->searchPage);
     });
-    connect(ui->searchPage, &StationSearchWidget::done, this, [ = ] {
+    connect(ui->searchPage, &StationSearchWidget::done, this, [this] {
         ui->stackedWidget->setCurrentWidget(ui->favouriteStations);
     });
 
-    //TODO: Remove once favourite stations is implemented
+    // TODO: Remove once favourite stations is implemented
     ui->stackedWidget->setCurrentWidget(ui->searchPage);
 }
 
@@ -58,4 +61,8 @@ RadioPane::~RadioPane() {
 
     delete ui;
     delete d;
+}
+
+AbstractLibraryBrowser::ListInformation RadioPane::currentListInformation() {
+    return ListInformation();
 }

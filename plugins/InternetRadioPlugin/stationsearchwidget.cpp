@@ -23,12 +23,14 @@
 #include "radioinfoclient.h"
 #include "stationwidget.h"
 
-struct StationSearchWidgetPrivate {
-//    QList<RadioInfoClient::Station> topVotedStations;
-    QList<StationWidget*> topVotedWidgets;
+#include <QException>
 
-    QList<StationWidget*> searchWidgets;
-    quint16 searchNonce = 0;
+struct StationSearchWidgetPrivate {
+        //    QList<RadioInfoClient::Station> topVotedStations;
+        QList<StationWidget*> topVotedWidgets;
+
+        QList<StationWidget*> searchWidgets;
+        quint16 searchNonce = 0;
 };
 
 StationSearchWidget::StationSearchWidget(QWidget* parent) :
@@ -38,20 +40,19 @@ StationSearchWidget::StationSearchWidget(QWidget* parent) :
 
     d = new StationSearchWidgetPrivate();
 
-//    ui->titleLabel->setBackButtonShown(true);
+    //    ui->titleLabel->setBackButtonShown(true);
 
     //    QList<RadioInfoClient::Station> stations = RadioInfoClient::topVoted();
-    connect(RadioInfoClient::instance(), &RadioInfoClient::ready, this, [ = ] {
-        RadioInfoClient::topVoted()->then([ = ](QList<RadioInfoClient::Station> stations) {
-//            d->topVotedStations = stations;
+    connect(RadioInfoClient::instance(), &RadioInfoClient::ready, this, [this]() -> QCoro::Task<> {
+        try {
+            auto stations = co_await RadioInfoClient::topVoted();
             for (const RadioInfoClient::Station& station : stations) {
                 d->topVotedWidgets.append(new StationWidget(station, this));
             }
 
             layoutTopVoted();
-        })->error([ = ](QString error) {
-            qDebug() << "rej: " << error;
-        });
+        } catch (QException ex) {
+        }
     });
 }
 
@@ -82,7 +83,7 @@ void StationSearchWidget::layoutTopVoted() {
     }
 }
 
-void StationSearchWidget::on_searchBox_textChanged(const QString& arg1) {
+QCoro::Task<> StationSearchWidget::on_searchBox_textChanged(const QString& arg1) {
     if (arg1.isEmpty()) {
         ui->stackedWidget->setCurrentWidget(ui->discoverWidget);
     } else {
@@ -95,14 +96,14 @@ void StationSearchWidget::on_searchBox_textChanged(const QString& arg1) {
         d->searchWidgets.clear();
 
         quint16 nonce = ++d->searchNonce;
-        RadioInfoClient::search(arg1)->then([ = ](QList<RadioInfoClient::Station> stations) {
-            if (d->searchNonce != nonce) return;
+        auto stations = co_await RadioInfoClient::search(arg1);
 
-            for (const RadioInfoClient::Station& station : stations) {
-                StationWidget* widget = new StationWidget(station, this);
-                ui->searchLayout->addWidget(widget);
-                d->searchWidgets.append(widget);
-            }
-        });
+        if (d->searchNonce != nonce) co_return;
+
+        for (const RadioInfoClient::Station& station : stations) {
+            StationWidget* widget = new StationWidget(station, this);
+            ui->searchLayout->addWidget(widget);
+            d->searchWidgets.append(widget);
+        }
     }
 }

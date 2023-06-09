@@ -20,8 +20,8 @@
 #ifndef CDCHECKER_H
 #define CDCHECKER_H
 
-#include <QWidget>
 #include <QDBusObjectPath>
+#include <abstractlibrarybrowser.h>
 
 namespace Ui {
     class CdChecker;
@@ -29,11 +29,13 @@ namespace Ui {
 
 class QListWidgetItem;
 struct CdCheckerPrivate;
-class CdChecker : public QWidget {
+class CdChecker : public AbstractLibraryBrowser {
         Q_OBJECT
     public:
         explicit CdChecker(QDBusObjectPath blockDevice, QWidget* parent = nullptr);
         ~CdChecker();
+
+        ListInformation currentListInformation();
 
     signals:
 
@@ -65,6 +67,7 @@ class CdChecker : public QWidget {
         void updateTrackListing();
         void loadMusicbrainzData(QString discId);
         void selectMusicbrainzRelease(QString release);
+        void useCdText();
 };
 
 #endif // CDCHECKER_H

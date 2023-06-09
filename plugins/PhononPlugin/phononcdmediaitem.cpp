@@ -154,3 +154,13 @@ QVariant PhononCdMediaItem::metadata(QString key) {
     }
     return QVariant();
 }
+
+QString PhononCdMediaItem::lyrics()
+{
+    return "";
+}
+
+QString PhononCdMediaItem::lyricFormat()
+{
+return "";
+}

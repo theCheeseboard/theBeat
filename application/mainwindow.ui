@@ -79,135 +79,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="tracksButton">
+        <widget class="tWindowTabber" name="windowTabber" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="text">
-          <string>Tracks</string>
-         </property>
-         <property name="icon">
-          <iconset theme="view-media-track">
-           <normaloff>../../the24/application</normaloff>../../the24/application</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-         <property name="autoExclusive">
-          <bool>true</bool>
-         </property>
         </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="artistsButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Artists</string>
-         </property>
-         <property name="icon">
-          <iconset theme="view-media-artist">
-           <normaloff>../../the24/application</normaloff>../../the24/application</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="autoExclusive">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="albumsButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Albums</string>
-         </property>
-         <property name="icon">
-          <iconset theme="media-album-cover">
-           <normaloff>../../the24/application</normaloff>../../the24/application</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="autoExclusive">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="playlistsButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Playlists</string>
-         </property>
-         <property name="icon">
-          <iconset theme="view-media-playlist">
-           <normaloff>.</normaloff>.</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="autoExclusive">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="otherButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Other Sources</string>
-         </property>
-         <property name="icon">
-          <iconset theme="view-list-details">
-           <normaloff>../../the24/application</normaloff>../../the24/application</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="autoExclusive">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" name="jobButtonLayout"/>
@@ -400,7 +279,7 @@
      <x>0</x>
      <y>0</y>
      <width>990</width>
-     <height>22</height>
+     <height>43</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -411,6 +290,8 @@
     <addaction name="actionOpen_URL"/>
     <addaction name="separator"/>
     <addaction name="actionAdd_to_Library"/>
+    <addaction name="separator"/>
+    <addaction name="actionPrint"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
@@ -424,11 +305,23 @@
     <addaction name="actionSkip_Back"/>
     <addaction name="actionSkip_Forward"/>
     <addaction name="separator"/>
+    <addaction name="actionIncrease_Volume"/>
+    <addaction name="actionDecrease_Volume"/>
+    <addaction name="separator"/>
     <addaction name="actionRepeat_One"/>
     <addaction name="actionShuffle"/>
+    <addaction name="separator"/>
+    <addaction name="actionPause_after_current_track"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionZen_Mode"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPlayback"/>
+   <addaction name="menuView"/>
   </widget>
   <action name="actionFileBug">
    <property name="icon">
@@ -519,7 +412,7 @@
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Play</string>
+    <string notr="true">Play</string>
    </property>
    <property name="shortcut">
     <string>Space</string>
@@ -583,6 +476,53 @@
     <string>Ctrl+S</string>
    </property>
   </action>
+  <action name="actionPrint">
+   <property name="icon">
+    <iconset theme="document-print">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionZen_Mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Zen Mode</string>
+   </property>
+  </action>
+  <action name="actionIncrease_Volume">
+   <property name="text">
+    <string>Increase Volume</string>
+   </property>
+   <property name="shortcut">
+    <string>Up</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Volume">
+   <property name="text">
+    <string>Decrease Volume</string>
+   </property>
+   <property name="shortcut">
+    <string>Down</string>
+   </property>
+  </action>
+  <action name="actionPause_after_current_track">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Pause after current track</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Esc</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -630,6 +570,12 @@
    <class>UserPlaylistsWidget</class>
    <extends>QWidget</extends>
    <header>userplaylistswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>tWindowTabber</class>
+   <extends>QWidget</extends>
+   <header location="global">twindowtabber.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

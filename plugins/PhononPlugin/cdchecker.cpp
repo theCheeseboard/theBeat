@@ -20,68 +20,71 @@
 #include "cdchecker.h"
 #include "ui_cdchecker.h"
 
-#include <QDBusInterface>
-#include <QDBusConnection>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <pluginmediasource.h>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <playlist.h>
-#include <tpromise.h>
 #include "importcdpopover.h"
-#include <tpopover.h>
-#include <tlogger.h>
 #include "phononcdmediaitem.h"
 #include "trackinfo.h"
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <playlist.h>
+#include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
+#include <tlogger.h>
+#include <tpopover.h>
+#include <tpromise.h>
 
-#include <phonon/MediaObject>
-#include <phonon/MediaController>
-#include <phonon/MediaSource>
-#include <phonon/AudioDataOutput>
-#include <QPainter>
 #include <QGraphicsBlurEffect>
-#include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
+#include <QPainter>
+#include <phonon/AudioDataOutput>
+#include <phonon/MediaController>
+#include <phonon/MediaObject>
+#include <phonon/MediaSource>
 
 #include <tapplication.h>
 
 #ifdef HAVE_MUSICBRAINZ
-    #include <musicbrainz5/Query.h>
-    #include <musicbrainz5/Release.h>
-    #include <musicbrainz5/Medium.h>
-    #include <musicbrainz5/Track.h>
-    #include <musicbrainz5/Recording.h>
-    #include <musicbrainz5/ArtistCredit.h>
-    #include <musicbrainz5/NameCredit.h>
-    #include <musicbrainz5/Artist.h>
     #include "musicbrainzreleasemodel.h"
+    #include <musicbrainz5/Artist.h>
+    #include <musicbrainz5/ArtistCredit.h>
+    #include <musicbrainz5/Medium.h>
+    #include <musicbrainz5/NameCredit.h>
+    #include <musicbrainz5/Query.h>
+    #include <musicbrainz5/Recording.h>
+    #include <musicbrainz5/Release.h>
+    #include <musicbrainz5/Track.h>
 #endif
+
+#include "cdio++/cdio.hpp"
 
 using namespace Phonon;
 
 struct CdCheckerPrivate {
-    QDBusObjectPath blockPath;
-    QString blockDevice;
-    QDBusObjectPath cdDrivePath;
+        QDBusObjectPath blockPath;
+        QString blockDevice;
+        QDBusObjectPath cdDrivePath;
 
-    PluginMediaSource* source;
-    QStringList mbDiscIds;
-    QString albumName;
-    QList<TrackInfoPtr> trackInfo;
+        PluginMediaSource* source;
+        QStringList mbDiscIds;
+        QString albumName;
+        QList<TrackInfoPtr> trackInfo;
+        QList<TrackInfoPtr> cdText;
 
-    QImage playlistBackground;
-    QNetworkAccessManager mgr;
+        QImage playlistBackground;
+        QNetworkAccessManager mgr;
 
 #ifdef HAVE_MUSICBRAINZ
-    QString currentDiscId;
-    QString currentReleaseId;
-    MusicBrainz5::CReleaseList releases;
+        QString currentDiscId;
+        QString currentReleaseId;
+        MusicBrainz5::CReleaseList releases;
 #endif
 };
 
 CdChecker::CdChecker(QDBusObjectPath blockPath, QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::CdChecker) {
     ui->setupUi(this);
 
@@ -91,7 +94,7 @@ CdChecker::CdChecker(QDBusObjectPath blockPath, QWidget* parent) :
     d->source->setName(tr("CD"));
     d->source->setIcon(QIcon::fromTheme("media-optical-audio"));
 
-    //Get CD drive and attach to CD information
+    // Get CD drive and attach to CD information
     QDBusInterface blockInterface("org.freedesktop.UDisks2", blockPath.path(), "org.freedesktop.UDisks2.Block", QDBusConnection::systemBus());
     d->cdDrivePath = blockInterface.property("Drive").value<QDBusObjectPath>();
     d->blockDevice = blockInterface.property("Device").toByteArray();
@@ -100,6 +103,9 @@ CdChecker::CdChecker(QDBusObjectPath blockPath, QWidget* parent) :
     ui->topWidget->installEventFilter(this);
     ui->albumSelectionSpinner->setFixedSize(SC_DPI_T(QSize(16, 16), QSize));
 
+    connect(StateManager::instance()->sources(), &SourceManager::padTopChanged, this, [this](int padTop) {
+        ui->topWidget->setContentsMargins(0, padTop, 0, 0);
+    });
     ui->topWidget->setContentsMargins(0, StateManager::instance()->sources()->padTop(), 0, 0);
 
 #ifdef HAVE_MUSICBRAINZ
@@ -112,21 +118,30 @@ CdChecker::CdChecker(QDBusObjectPath blockPath, QWidget* parent) :
 }
 
 CdChecker::~CdChecker() {
-    //Deregister this source
+    // Deregister this source
     PhononCdMediaItem::blockDeviceGone(d->blockDevice);
     StateManager::instance()->sources()->removeSource(d->source);
 
     delete d;
 }
 
+AbstractLibraryBrowser::ListInformation CdChecker::currentListInformation() {
+    return ListInformation();
+}
+
 void CdChecker::checkCd() {
     struct CdInformation {
-        bool available = false;
-        int numberOfTracks = 0;
-        QStringList mbDiscId;
+            bool available = false;
+            int numberOfTracks = 0;
+            QStringList mbDiscId;
+
+            QString cdTextAlbum;
+            QList<TrackInfoPtr> cdText;
     };
 
-    tPromise<CdInformation>::runOnNewThread([ = ](tPromiseFunctions<CdInformation>::SuccessFunction res, tPromiseFunctions<CdInformation>::FailureFunction rej) {
+    TPROMISE_CREATE_NEW_THREAD(CdInformation, {
+        Q_UNUSED(rej)
+
         if (d->cdDrivePath.path() == "") {
             res(CdInformation());
             return;
@@ -138,17 +153,17 @@ void CdChecker::checkCd() {
             Qt::LayoutDirection oldDirection = tApplication::layoutDirection();
 
             QEventLoop* eventLoop = new QEventLoop();
-            MediaObject* cdFinder = new MediaObject();
+            MediaObject* cdFinder = new MediaObject(this);
             MediaController* cdController = new MediaController(cdFinder);
 
             AudioDataOutput dummyOutput;
             createPath(cdFinder, &dummyOutput);
-            connect(cdController, &MediaController::availableTitlesChanged, eventLoop, [ =, &info](int tracks) {
-                //New CD inserted
+            connect(cdController, &MediaController::availableTitlesChanged, eventLoop, [=, &info](int tracks) {
+                // New CD inserted
                 info.numberOfTracks = tracks;
 
                 if (tracks > 0) {
-                    connect(cdFinder, &MediaObject::metaDataChanged, [ =, &info]() {
+                    connect(cdFinder, &MediaObject::metaDataChanged, this, [=, &info]() {
                         info.mbDiscId = cdFinder->metaData(Phonon::MusicBrainzDiscIdMetaData);
                         eventLoop->quit();
                     });
@@ -164,9 +179,30 @@ void CdChecker::checkCd() {
 
             tApplication::setLayoutDirection(oldDirection);
 
-            //Time out after 30 seconds
+            // Time out after 30 seconds
             QTimer::singleShot(30000, eventLoop, &QEventLoop::quit);
             eventLoop->exec();
+
+            CdioDevice device;
+            device.open(d->blockDevice.toUtf8());
+            track_t firstTrack = device.getFirstTrackNum();
+            track_t tracks = device.getNumTracks();
+            discmode_t discMode = device.getDiscmode();
+            CdioCDText* cdText = device.getCdtext();
+
+            if (cdText) {
+                cdText->setLanguageIndex(0);
+
+                info.cdTextAlbum = QString::fromLocal8Bit(cdText->getConst(CDTEXT_FIELD_TITLE, 0));
+                for (int i = firstTrack; i < tracks + firstTrack; i++) {
+                    TrackInfoPtr trackInfo(new TrackInfo());
+                    trackInfo->setData(QString::fromLocal8Bit(cdText->getConst(CDTEXT_FIELD_TITLE, i)),
+                        {QString::fromLocal8Bit(cdText->getConst(CDTEXT_FIELD_SONGWRITER, i))},
+                        info.cdTextAlbum);
+                    info.cdText.append(trackInfo);
+                }
+            }
+            device.close();
 
             eventLoop->deleteLater();
             cdFinder->deleteLater();
@@ -174,9 +210,9 @@ void CdChecker::checkCd() {
             info.available = true;
         }
         res(info);
-    })->then([ = ](CdInformation info) {
+    })->then([=](CdInformation info) {
         if (info.numberOfTracks == 0) {
-            //No CD
+            // No CD
             PhononCdMediaItem::blockDeviceGone(d->blockDevice);
             StateManager::instance()->sources()->removeSource(d->source);
 
@@ -184,6 +220,7 @@ void CdChecker::checkCd() {
             ui->topWidget->update();
         } else {
             d->mbDiscIds = info.mbDiscId;
+            d->cdText = info.cdText;
             d->trackInfo.clear();
 
 #ifdef HAVE_MUSICBRAINZ
@@ -196,16 +233,23 @@ void CdChecker::checkCd() {
                 d->trackInfo.append(TrackInfoPtr(new TrackInfo(i)));
             }
 
-            d->source->setName(tr("CD"));
-            ui->albumTitleLabel->setText(tr("CD"));
-            d->albumName = tr("CD");
+            if (info.cdTextAlbum.isEmpty()) {
+                d->source->setName(tr("CD"));
+                ui->albumTitleLabel->setText(tr("CD"));
+                d->albumName = tr("CD");
+            } else {
+                d->source->setName(info.cdTextAlbum);
+                ui->albumTitleLabel->setText(info.cdTextAlbum);
+                d->albumName = info.cdTextAlbum;
+            }
             StateManager::instance()->sources()->addSource(d->source);
-
-            updateTrackListing();
 
             if (!info.mbDiscId.isEmpty()) {
                 loadMusicbrainzData(info.mbDiscId.first());
+            } else {
+                useCdText();
             }
+            updateTrackListing();
         }
     });
 }
@@ -221,7 +265,7 @@ void CdChecker::updateTrackListing() {
 }
 
 void CdChecker::loadMusicbrainzData(QString discId) {
-    //Load information from MusicBrainz
+    // Load information from MusicBrainz
 #ifdef HAVE_MUSICBRAINZ
     d->currentDiscId = discId;
     ui->musicBrainzWidget->setVisible(true);
@@ -233,29 +277,30 @@ void CdChecker::loadMusicbrainzData(QString discId) {
         MusicBrainz5::CQuery query("thebeat-3.0");
         try {
             res(query.LookupDiscID(discId.toStdString()));
-        }  catch (...) {
+        } catch (...) {
             rej("Error");
         }
-    })->then([ = ](MusicBrainz5::CReleaseList releases) {
-        d->releases = releases;
-        if (d->releases.Count() > 0) {
-            tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " succeded";
+    })->then([=](MusicBrainz5::CReleaseList releases) {
+          d->releases = releases;
+          if (d->releases.Count() > 0) {
+              tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " succeded";
 
-            if (d->releases.Count() > 1) {
-                //Populate releases
-                ui->musicBrainzStack->setCurrentWidget(ui->multipleFoundPage);
-                ui->releaseBox->setModel(new MusicBrainzReleaseModel(d->releases));
-            } else {
-                ui->musicBrainzWidget->setVisible(false);
-            }
+              if (d->releases.Count() > 1) {
+                  // Populate releases
+                  ui->musicBrainzStack->setCurrentWidget(ui->multipleFoundPage);
+                  ui->releaseBox->setModel(new MusicBrainzReleaseModel(d->releases));
+              } else {
+                  ui->musicBrainzWidget->setVisible(false);
+              }
 
-            selectMusicbrainzRelease(QString::fromStdString(d->releases.Item(0)->ID()));
-        } else {
-            tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " succeded with no results";
-        }
-    })->error([ = ](QString error) {
+              selectMusicbrainzRelease(QString::fromStdString(d->releases.Item(0)->ID()));
+          } else {
+              tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " succeded with no results";
+          }
+      })->error([=](QString error) {
         tDebug("CdChecker") << "MusicBrainz lookup for " << discId << " failed";
         ui->musicBrainzStack->setCurrentWidget(ui->notFoundPage);
+        useCdText();
     });
 #endif
 }
@@ -269,10 +314,10 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
 
     ui->albumSelectionSpinner->setVisible(true);
 
-    tPromise<MusicBrainz5::CRelease*>::runOnNewThread([ = ](tPromiseFunctions<MusicBrainz5::CRelease*>::SuccessFunction res, tPromiseFunctions<MusicBrainz5::CMetadata>::FailureFunction rej) {
+    tPromise<MusicBrainz5::CRelease*>::runOnNewThread([=](tPromiseFunctions<MusicBrainz5::CRelease*>::SuccessFunction res, tPromiseFunctions<MusicBrainz5::CMetadata>::FailureFunction rej) {
         try {
             MusicBrainz5::CQuery query("thebeat-3.0");
-//            res(query.LookupRelease(release.toStdString()).Clone());
+            //            res(query.LookupRelease(release.toStdString()).Clone());
             MusicBrainz5::CQuery::tParamMap params;
             params["inc"] = "artists labels recordings release-groups url-rels discids artist-credits";
             MusicBrainz5::CMetadata fullData = query.Query("release", release.toStdString(), "", params);
@@ -284,20 +329,20 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
         } catch (...) {
             rej("Failure");
         }
-    })->then([ = ](MusicBrainz5::CRelease * releaseInfo) {
-        //Make sure the user hasn't changed releases
+    })->then([=](MusicBrainz5::CRelease* releaseInfo) {
+        // Make sure the user hasn't changed releases
         if (d->currentReleaseId != release) return;
 
         d->albumName = QString::fromStdString(releaseInfo->Title());
         ui->albumTitleLabel->setText(d->albumName);
         d->source->setName(d->albumName);
 
-        //Attempt to get album art for this release
+        // Attempt to get album art for this release
         QNetworkRequest req(QUrl("https://coverartarchive.org/release/" + QString::fromStdString(releaseInfo->ID()) + "/front"));
         req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
         QNetworkReply* artReply = d->mgr.get(req);
-        connect(artReply, &QNetworkReply::finished, this, [ = ] {
-            //Make sure the user hasn't changed releases
+        connect(artReply, &QNetworkReply::finished, this, [=] {
+            // Make sure the user hasn't changed releases
             if (d->currentReleaseId != release) return;
 
             if (artReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
@@ -348,6 +393,15 @@ void CdChecker::selectMusicbrainzRelease(QString release) {
 #endif
 }
 
+void CdChecker::useCdText() {
+    if (!d->cdText.isEmpty()) {
+        for (int i = 0; i < d->trackInfo.length(); i++) {
+            d->trackInfo.at(i)->setData(d->cdText.at(i).data());
+        }
+    }
+
+    updateTrackListing();
+}
 
 void CdChecker::on_tracksWidget_itemActivated(QListWidgetItem* item) {
     int track = item->data(Qt::UserRole).toInt();
@@ -361,10 +415,10 @@ void CdChecker::on_enqueueAllButton_clicked() {
 }
 
 void CdChecker::on_ejectButton_clicked() {
-    //Remove any tracks in the playlist
+    // Remove any tracks in the playlist
     PhononCdMediaItem::blockDeviceGone(d->blockDevice);
 
-    //Eject the CD
+    // Eject the CD
     QDBusInterface cdDriveInterface("org.freedesktop.UDisks2", d->cdDrivePath.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
     cdDriveInterface.call(QDBus::NoBlock, "Eject", QVariantMap());
 }
@@ -378,7 +432,6 @@ void CdChecker::on_importCdButton_clicked() {
     connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
     connect(popover, &tPopover::dismissed, jp, &ImportCdPopover::deleteLater);
     popover->show(this->window());
-
 }
 
 bool CdChecker::eventFilter(QObject* watched, QEvent* event) {
@@ -393,18 +446,18 @@ bool CdChecker::eventFilter(QObject* watched, QEvent* event) {
         }
 
         if (d->playlistBackground.isNull()) {
-//            QSvgRenderer renderer(QString(":/icons/coverimage.svg"));
+            //            QSvgRenderer renderer(QString(":/icons/coverimage.svg"));
 
-//            QRect rect;
-//            rect.setSize(renderer.defaultSize().scaled(ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
-//            rect.setLeft(ui->mediaLibraryInfoWidget->width() / 2 - rect.width() / 2);
-//            rect.setTop(ui->mediaLibraryInfoWidget->height() / 2 - rect.height() / 2);
+            //            QRect rect;
+            //            rect.setSize(renderer.defaultSize().scaled(ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
+            //            rect.setLeft(ui->mediaLibraryInfoWidget->width() / 2 - rect.width() / 2);
+            //            rect.setTop(ui->mediaLibraryInfoWidget->height() / 2 - rect.height() / 2);
 
-//            renderer.render(&painter, rect);
+            //            renderer.render(&painter, rect);
 
-//            painter.setBrush(backgroundCol);
-//            painter.setPen(Qt::transparent);
-//            painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
+            //            painter.setBrush(backgroundCol);
+            //            painter.setPen(Qt::transparent);
+            //            painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
             ui->buttonWidget->setContentsMargins(0, 0, 0, 0);
         } else {
             QRect rect;
@@ -412,7 +465,7 @@ bool CdChecker::eventFilter(QObject* watched, QEvent* event) {
             rect.moveLeft(ui->topWidget->width() / 2 - rect.width() / 2);
             rect.moveTop(ui->topWidget->height() / 2 - rect.height() / 2);
 
-            //Blur the background
+            // Blur the background
             int radius = 30;
             QGraphicsBlurEffect* blur = new QGraphicsBlurEffect;
             blur->setBlurRadius(radius);
@@ -423,7 +476,7 @@ bool CdChecker::eventFilter(QObject* watched, QEvent* event) {
             item.setGraphicsEffect(blur);
             scene.addItem(&item);
 
-            //scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
+            // scene.render(&painter, QRectF(), QRectF(-radius, -radius, image.width() + radius, image.height() + radius));
             scene.render(&painter, rect.adjusted(-radius, -radius, radius, radius), QRectF(-radius, -radius, d->playlistBackground.width() + radius, d->playlistBackground.height() + radius));
 
             painter.setBrush(backgroundCol);

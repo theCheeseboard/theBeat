@@ -19,19 +19,20 @@
  * *************************************/
 #include "mprisplayer.h"
 
-#include <QDBusMessage>
-#include <statemanager.h>
-#include <playlist.h>
-#include <QDBusConnection>
-#include <QCryptographicHash>
-#include <QImage>
 #include <QBuffer>
+#include <QCryptographicHash>
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QImage>
+#include <playlist.h>
+#include <statemanager.h>
 
 struct MprisPlayerPrivate {
-    MediaItem* currentItem = nullptr;
+        MediaItem* currentItem = nullptr;
 };
 
-MprisPlayer::MprisPlayer(QObject* parent) : QDBusAbstractAdaptor(parent) {
+MprisPlayer::MprisPlayer(QObject* parent) :
+    QDBusAbstractAdaptor(parent) {
     d = new MprisPlayerPrivate();
 
     Playlist* playlist = StateManager::instance()->playlist();
@@ -58,6 +59,7 @@ QString MprisPlayer::PlaybackStatus() {
         case Playlist::Stopped:
             return QStringLiteral("Stopped");
     }
+    return QStringLiteral();
 }
 
 QString MprisPlayer::LoopStatus() {
@@ -73,7 +75,7 @@ double MprisPlayer::Rate() {
 }
 
 void MprisPlayer::setRate(double rate) {
-    //noop
+    // noop
     Q_UNUSED(rate)
 }
 
@@ -177,7 +179,6 @@ void MprisPlayer::PlayPause() {
         case Playlist::Stopped:
             StateManager::instance()->playlist()->play();
             break;
-
     }
 }
 
@@ -211,7 +212,6 @@ void MprisPlayer::SetPosition(QDBusObjectPath trackId, qint64 mu) {
 }
 
 void MprisPlayer::OpenUri(QString uri) {
-
 }
 
 void MprisPlayer::updateCurrentItem() {
@@ -221,24 +221,23 @@ void MprisPlayer::updateCurrentItem() {
     d->currentItem = StateManager::instance()->playlist()->currentItem();
     if (d->currentItem) {
         connect(d->currentItem, &MediaItem::metadataChanged, this, std::bind(&MprisPlayer::propertyChanged, this, "Metadata"));
-        connect(d->currentItem, &MediaItem::elapsedChanged, this, [ = ] {
+        connect(d->currentItem, &MediaItem::elapsedChanged, this, [this] {
             emit Seeked(d->currentItem->elapsed() * 1000);
         });
     }
     propertyChanged("Metadata");
 }
 
-
 void MprisPlayer::propertyChanged(QString property) {
     QDBusMessage signal = QDBusMessage::createSignal("/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged");
     QList<QVariant> args = {
         QStringLiteral("org.mpris.MediaPlayer2.Player"),
-        QVariantMap({ //Changed properties
-            {property, this->property(property.toUtf8())}
-        }),
-        QStringList({ //Invalidated properties
-            property
-        })
+        QVariantMap({//                     Changed properties
+            {property, this->property(property.toUtf8())}}
+        ),
+        QStringList({// Invalidated properties
+            property                                     }
+        )
     };
     signal.setArguments(args);
     QDBusConnection::sessionBus().send(signal);
@@ -247,4 +246,3 @@ void MprisPlayer::propertyChanged(QString property) {
 QDBusObjectPath MprisPlayer::trackPath(MediaItem* item) {
     return QDBusObjectPath(QStringLiteral("/org/thesuite/thebeat/") + QCryptographicHash::hash((item->title() + item->authors().join(",")).toUtf8(), QCryptographicHash::Sha256).toHex());
 }
-

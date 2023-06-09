@@ -58,8 +58,8 @@ include(../plugins.pri)
 
 DISTFILES += MacIntegration.json
 
-INCLUDEPATH += "/usr/local/include/the-libs"
-LIBS += -L/usr/local/lib -lthe-libs -framework AVFoundation -framework DiscRecording -framework DiscRecordingUI -framework MediaPlayer
+INCLUDEPATH += "/usr/local/include/the-libs" "/usr/local/include"
+LIBS += -L/usr/local/lib -lthe-libs -ltag -framework AVFoundation -framework DiscRecording -framework DiscRecordingUI -framework MediaPlayer
 
 FORMS += \
     burn/macburnjobwidget.ui \

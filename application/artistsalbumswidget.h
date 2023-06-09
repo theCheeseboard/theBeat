@@ -20,7 +20,7 @@
 #ifndef ARTISTSALBUMSWIDGET_H
 #define ARTISTSALBUMSWIDGET_H
 
-#include <QWidget>
+#include <abstractlibrarybrowser.h>
 
 namespace Ui {
     class ArtistsAlbumsWidget;
@@ -28,7 +28,7 @@ namespace Ui {
 
 class QListWidgetItem;
 struct ArtistsAlbumsWidgetPrivate;
-class ArtistsAlbumsWidget : public QWidget {
+class ArtistsAlbumsWidget : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
@@ -43,6 +43,9 @@ class ArtistsAlbumsWidget : public QWidget {
         void setType(Type type);
 
         void setTopPadding(int padding);
+        ListInformation currentListInformation();
+
+        void changeItem(QString text);
 
     private slots:
         void on_initialList_itemActivated(QListWidgetItem* item);

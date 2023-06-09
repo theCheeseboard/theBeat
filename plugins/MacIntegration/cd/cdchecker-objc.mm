@@ -28,12 +28,10 @@ void CdChecker::on_ejectButton_clicked() {
         }
     })->error([ = ](QString error) {
         tMessageBox* warning = new tMessageBox(StateManager::instance()->mainWindow());
-        warning->setWindowTitle(tr("Couldn't eject the disc"));
-        warning->setText(tr("Make sure no other applications are accessing the disc, and then try again."));
-        warning->setIcon(tMessageBox::Warning);
-        warning->setWindowFlag(Qt::Sheet);
-        connect(warning, &tMessageBox::finished, warning, &tMessageBox::deleteLater);
-        warning->open();
+        warning->setTitleBarText(tr("Couldn't eject the disc"));
+        warning->setMessageText(tr("Make sure no other applications are accessing the disc, and then try again."));
+        warning->setIcon(QMessageBox::Warning);
+        warning->show(true);
     });
 }
 

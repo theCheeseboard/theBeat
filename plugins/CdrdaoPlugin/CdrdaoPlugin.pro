@@ -1,4 +1,4 @@
-QT += widgets gui dbus thelib
+QT += widgets gui dbus thelib frisbee multimedia
 
 TEMPLATE = lib
 CONFIG += plugin
@@ -30,19 +30,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    abstractburnjob.cpp \
     burndevice.cpp \
     burnjob.cpp \
     burnjobmp3.cpp \
     burnjobwidget.cpp \
     burnpopover.cpp \
+    drivewatcher.cpp \
+    fullburnjob.cpp \
     plugin.cpp
 
 HEADERS += \
+    abstractburnjob.h \
     burndevice.h \
     burnjob.h \
     burnjobmp3.h \
     burnjobwidget.h \
     burnpopover.h \
+    drivewatcher.h \
+    fullburnjob.h \
     plugin.h
 
 DISTFILES += CdrdaoPlugin.json \

@@ -20,6 +20,7 @@
 #ifndef STATIONSEARCHWIDGET_H
 #define STATIONSEARCHWIDGET_H
 
+#include <QCoroTask>
 #include <QWidget>
 
 namespace Ui {
@@ -40,7 +41,7 @@ class StationSearchWidget : public QWidget {
     private slots:
         void on_titleLabel_backButtonClicked();
 
-        void on_searchBox_textChanged(const QString& arg1);
+        QCoro::Task<> on_searchBox_textChanged(const QString& arg1);
 
     private:
         Ui::StationSearchWidget* ui;

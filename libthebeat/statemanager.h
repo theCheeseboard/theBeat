@@ -49,6 +49,7 @@ class LIBTHEBEAT_EXPORT StateManager : public QObject {
         QWidget* mainWindow();
 
     signals:
+        void mainWindowAvailable(QWidget* mainWindow);
 
     protected:
         friend MainWindow;

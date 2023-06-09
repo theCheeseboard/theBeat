@@ -1,0 +1,63 @@
+name: "macOS CI"
+on:
+  push:
+    branches: [blueprint]
+  release:
+    types: [published]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macOS-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: vicr123/libcontemporary/prepare-vars@actions
+        id: vars
+      - uses: vicr123/libcontemporary/brew-universalinstall@actions
+        name: "Install Dependencies"
+        with:
+          packages: "qt:taglib:libmusicbrainz:cmake:ninja:pkg-config"
+      - uses: vicr123/libcontemporary/install-libcontemporary@actions
+        with:
+          qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
+      - uses: vicr123/libcontemporary/build-project@actions
+        name: "Build contemporary-theme"
+        with:
+          project: "vicr123/contemporary-theme"
+          commitish: "blueprint"
+      - uses: actions/checkout@v1
+        with:
+          submodules: 'recursive'
+      - uses: vicr123/libcontemporary/build-project@actions
+        name: "Build project"
+        with:
+          project: "."
+      - uses: vicr123/libcontemporary/deploy-project@actions
+        id: deploy
+        name: "Deploy project"
+        with:
+          subdir: "application"
+      - uses: actions/upload-artifact@v3
+        name: Upload Artifact to GitHub Actions
+        with:
+          name: "theBeat-macOS"
+          path: ${{ steps.deploy.outputs.package }}
+  release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'release'
+    steps:
+      - uses: actions/download-artifact@v3
+        name: "Download Artifact"
+        id: download
+        with:
+          name: "theBeat-macOS"
+      - name: "Upload to Release"
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "*.dmg"

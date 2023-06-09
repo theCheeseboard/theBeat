@@ -1,0 +1,26 @@
+{
+    "BLUEPRINT_WARNING": {
+        "message": "WARNING: This is prerelease software. Features are subject to change at any time, and stability is not guaranteed."
+    },
+    "DESCRIPTION_POINT_1": {
+        "message": "Automatically categorise your music"
+    },
+    "DESCRIPTION_POINT_2": {
+        "message": "Blazing fast search"
+    },
+    "DESCRIPTION_POINT_3": {
+        "message": "Quickly find tracks by author and artist"
+    },
+    "DESCRIPTION_POINT_4": {
+        "message": "Create playlists to quickly access the music you love"
+    },
+    "DESCRIPTION_SUMMARY": {
+        "message": "Play and organise your music. theBeat automatically discovers music on your computer and presents it in an easy-to-use interface."
+    },
+    "NAME": {
+        "message": "theBeat Blueprint"
+    },
+    "SUMMARY": {
+        "message": "Audio Player"
+    }
+}

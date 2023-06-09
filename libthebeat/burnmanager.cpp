@@ -20,17 +20,19 @@
 #include "burnmanager.h"
 
 #include "burnbackend.h"
+#include <tlogger.h>
 
 struct BurnManagerPrivate {
-    QList<BurnBackend*> backends;
+        QList<BurnBackend*> backends;
 };
 
-BurnManager::BurnManager(QObject* parent) : QObject(parent) {
+BurnManager::BurnManager(QObject* parent) :
+    QObject(parent) {
     d = new BurnManagerPrivate();
 }
 
 void BurnManager::registerBackend(BurnBackend* backend) {
-    connect(backend, &BurnBackend::destroyed, this, [ = ] {
+    connect(backend, &BurnBackend::destroyed, this, [this, backend] {
         deregisterBackend(backend);
     });
     d->backends.append(backend);

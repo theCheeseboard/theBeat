@@ -38,6 +38,7 @@ class PlaylistModel : public QAbstractListModel {
         };
 
         enum DrawType {
+            NotCalculated = 0,
             GroupHeader,
             GroupItem,
             SingleItemGroup
@@ -55,10 +56,12 @@ class PlaylistModel : public QAbstractListModel {
         bool insertRows(int row, int count, const QModelIndex& parent) override;
 
         DrawType drawTypeForPlaylistIndex(int index) const;
+        void invalidateDrawTypes(int from);
+
+        int playlistIndex(int index, int* priorHeaders = nullptr) const;
 
     private:
         PlaylistModelPrivate* d;
-
 };
 Q_DECLARE_METATYPE(PlaylistModel::DrawType);
 

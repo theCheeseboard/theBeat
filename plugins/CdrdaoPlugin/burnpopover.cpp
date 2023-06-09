@@ -20,32 +20,42 @@
 #include "burnpopover.h"
 #include "ui_burnpopover.h"
 
-#include <QDBusInterface>
-#include <QProcess>
-#include <taglib/fileref.h>
-#include <taglib/audioproperties.h>
-#include <tjobmanager.h>
 #include "burnjob.h"
 #include "burnjobmp3.h"
+#include "fullburnjob.h"
+#include <QDBusInterface>
+#include <QProcess>
+#include <QStandardPaths>
+#include <taglib/audioproperties.h>
+#include <taglib/fileref.h>
+#include <tjobmanager.h>
+
+#include <DriveObjects/blockinterface.h>
+#include <DriveObjects/diskobject.h>
+#include <DriveObjects/driveinterface.h>
 
 struct BurnPopoverPrivate {
-    QStringList files;
-    QString blockDevice;
-    quint64 playlistLength = 0;
+        QStringList files;
+        QPointer<DiskObject> diskObject;
+        quint64 playlistLength = 0;
 };
 
-BurnPopover::BurnPopover(QStringList files, QString blockDevice, QString albumName, QWidget* parent) :
+BurnPopover::BurnPopover(QStringList files, DiskObject* diskObject, QString albumName, QWidget* parent) :
     QWidget(parent),
     ui(new Ui::BurnPopover) {
     ui->setupUi(this);
 
     d = new BurnPopoverPrivate();
     d->files = files;
-    d->blockDevice = blockDevice;
+    d->diskObject = diskObject;
 
-    ui->titleLabel->setText(tr("Burn %1").arg(albumName));
     ui->titleLabel->setBackButtonShown(true);
+    ui->titleLabel_2->setBackButtonShown(true);
     ui->burnOptionsWidget->setFixedWidth(SC_DPI(600));
+    ui->burnConfirmWidget->setFixedWidth(SC_DPI(600));
+
+    ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
+    ui->doBurnButton->setProperty("type", "destructive");
 
     ui->albumNameEdit->setText(albumName);
 
@@ -61,6 +71,8 @@ BurnPopover::BurnPopover(QStringList files, QString blockDevice, QString albumNa
         }
     }
 
+    connect(d->diskObject, &DiskObject::destroyed, this, &BurnPopover::done);
+    connect(d->diskObject->interface<BlockInterface>()->drive(), &DriveInterface::changed, this, &BurnPopover::updateCd);
     updateCd();
 }
 
@@ -74,46 +86,46 @@ void BurnPopover::on_titleLabel_backButtonClicked() {
 }
 
 void BurnPopover::on_burnButton_clicked() {
-    if (ui->mp3CdButton->isChecked()) {
-        BurnJobMp3* job = new BurnJobMp3(d->files, d->blockDevice, ui->albumNameEdit->text());
-        tJobManager::trackJob(job);
+    if (d->diskObject->interface<BlockInterface>()->drive()->opticalBlank()) {
+        doBurn();
     } else {
-        BurnJob* job = new BurnJob(d->files, d->blockDevice, ui->albumNameEdit->text());
-        tJobManager::trackJob(job);
+        ui->stackedWidget->setCurrentWidget(ui->eraseWarningPage);
     }
-    emit done();
 }
 
 void BurnPopover::on_albumNameEdit_textChanged(const QString& arg1) {
     ui->titleLabel->setText(tr("Burn %1").arg(QLocale().quoteString(arg1)));
+    ui->titleLabel_2->setText(tr("Burn %1").arg(QLocale().quoteString(arg1)));
 }
 
 void BurnPopover::updateCd() {
-    QDBusInterface blockInterface("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2/block_devices/" + d->blockDevice, "org.freedesktop.UDisks2.Block", QDBusConnection::systemBus());
-    QDBusObjectPath cdDrivePath = blockInterface.property("Drive").value<QDBusObjectPath>();
-    QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", cdDrivePath.path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(updateCd()));
+    if (!d->diskObject) return;
+    DriveInterface* drive = d->diskObject->interface<BlockInterface>()->drive();
 
-    QDBusInterface cdDriveInterface("org.freedesktop.UDisks2", cdDrivePath.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
-    QString media = cdDriveInterface.property("Media").toString();
-    bool mediaBlank = cdDriveInterface.property("OpticalBlank").toBool();
-    if (!QStringList({"optical_cd_r", "optical_cd_rw"}).contains(media)) {
+    auto cdrdaoPath = QStandardPaths::findExecutable("cdrdao");
+    auto ffmpegPath = QStandardPaths::findExecutable("ffmpeg");
+    if (cdrdaoPath.isEmpty() || ffmpegPath.isEmpty()) {
+        QStringList tools;
+        if (cdrdaoPath.isEmpty()) tools.append("cdrdao");
+        if (ffmpegPath.isEmpty()) tools.append("ffmpeg");
+
+        ui->warningText->setText(tr("Unable to burn the disc because the required tools (%1) are not installed.").arg(QLocale().createSeparatedList(tools)));
+        ui->warningFrame->setVisible(true);
+        ui->burnButton->setEnabled(false);
+    } else if (!QList<DriveInterface::MediaFormat>({DriveInterface::CdR, DriveInterface::CdRw}).contains(drive->media())) {
         ui->warningText->setText(tr("Insert a CD-R or a CD-RW into the drive."));
         ui->warningFrame->setVisible(true);
         ui->burnButton->setEnabled(false);
-    } else if (!mediaBlank && media == "optical_cd_rw") {
-        ui->warningText->setText(tr("The CD in the drive is not blank. Erase the CD first."));
-        ui->warningFrame->setVisible(true);
-        ui->burnButton->setEnabled(false);
-    } else if (!mediaBlank && media == "optical_cd_r") {
+    } else if (!drive->opticalBlank() && drive->media() == DriveInterface::CdR) {
         ui->warningText->setText(tr("The CD-R in the drive has already been written."));
         ui->warningFrame->setVisible(true);
         ui->burnButton->setEnabled(false);
     } else {
         quint64 capacity = 0;
         if (ui->audioCdButton->isChecked()) {
-            //Call cdrdao to make sure this CD is large enough to fit the data
+            // Call cdrdao to make sure this CD is large enough to fit the data
             QProcess cdrdao;
-            cdrdao.start("cdrdao", {"disk-info"});
+            cdrdao.start("cdrdao", {"--device", d->diskObject->interface<BlockInterface>()->blockName(), "disk-info"});
             cdrdao.waitForFinished();
 
             while (cdrdao.canReadLine()) {
@@ -138,7 +150,7 @@ void BurnPopover::updateCd() {
             ui->warningText->setText(tr("This playlist is too long to fit on the CD."));
             ui->warningFrame->setVisible(true);
             ui->burnButton->setEnabled(false);
-        } else if (media == "optical_cd_rw") {
+        } else if (drive->media() == DriveInterface::CdRw) {
             ui->warningText->setText(tr("The CD in the drive is rewritable, so the burned CD may not work on older CD players."));
             ui->warningFrame->setVisible(true);
             ui->burnButton->setEnabled(true);
@@ -149,11 +161,36 @@ void BurnPopover::updateCd() {
     }
 }
 
-
 void BurnPopover::on_audioCdButton_toggled(bool checked) {
     if (checked) updateCd();
 }
 
 void BurnPopover::on_mp3CdButton_toggled(bool checked) {
     if (checked) updateCd();
+}
+
+void BurnPopover::on_titleLabel_2_backButtonClicked() {
+    ui->stackedWidget->setCurrentWidget(ui->burnPage);
+}
+
+void BurnPopover::on_doBurnButton_clicked() {
+    doBurn();
+}
+
+void BurnPopover::doBurn() {
+    if (!d->diskObject) return;
+
+    AbstractBurnJob* mainBurnJob;
+    if (ui->mp3CdButton->isChecked()) {
+        mainBurnJob = new BurnJobMp3(d->files, d->diskObject, ui->albumNameEdit->text());
+    } else {
+        mainBurnJob = new BurnJob(d->files, d->diskObject, ui->albumNameEdit->text());
+    }
+
+    FullBurnJob* fullBurnJob = new FullBurnJob(d->diskObject, mainBurnJob);
+    tJobManager::trackJob(fullBurnJob);
+
+    fullBurnJob->start();
+
+    emit done();
 }

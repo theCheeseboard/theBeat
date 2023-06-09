@@ -20,14 +20,15 @@
 #ifndef OTHERSOURCESWIDGET_H
 #define OTHERSOURCESWIDGET_H
 
-#include <QWidget>
+#include <abstractlibrarybrowser.h>
 
 namespace Ui {
     class OtherSourcesWidget;
 }
 
+class PluginMediaSource;
 struct OtherSourcesWidgetPrivate;
-class OtherSourcesWidget : public QWidget {
+class OtherSourcesWidget : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
@@ -35,6 +36,7 @@ class OtherSourcesWidget : public QWidget {
         ~OtherSourcesWidget();
 
         void setTopPadding(int padding);
+        ListInformation currentListInformation();
 
     private slots:
         void on_sourcesList_currentRowChanged(int currentRow);
@@ -42,6 +44,9 @@ class OtherSourcesWidget : public QWidget {
     private:
         Ui::OtherSourcesWidget* ui;
         OtherSourcesWidgetPrivate* d;
+
+        void addSource(PluginMediaSource* source);
+        void removeSource(PluginMediaSource* source);
 };
 
 #endif // OTHERSOURCESWIDGET_H

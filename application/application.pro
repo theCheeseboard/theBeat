@@ -1,4 +1,4 @@
-QT       += core gui multimedia sql
+QT       += core gui multimedia sql printsupport
 SHARE_APP_NAME = thebeat
 CONFIG += c++17
 
@@ -128,14 +128,20 @@ SOURCES += \
     library/librarymanager.cpp \
     library/librarymodel.cpp \
     libraryerrorpopover.cpp \
+    lyrics/abstractlyricformat.cpp \
+    lyrics/basiclrcfilelyricformat.cpp \
+    lyrics/lyricsdisplaywidget.cpp \
     main.cpp \
     mainwindow.cpp \
     othersourceswidget.cpp \
     playlistmodel.cpp \
     pluginmanager.cpp \
+    print/printcontroller.cpp \
+    print/printsettings.cpp \
     qtmultimedia/qtmultimediamediaitem.cpp \
     qtmultimedia/qtmultimediaurlhandler.cpp \
     settingsdialog.cpp \
+    tageditor/tageditor.cpp \
     thememanager.cpp \
     trackswidget.cpp \
     userplaylistswidget.cpp \
@@ -152,13 +158,19 @@ HEADERS += \
     library/librarymanager.h \
     library/librarymodel.h \
     libraryerrorpopover.h \
+    lyrics/abstractlyricformat.h \
+    lyrics/basiclrcfilelyricformat.h \
+    lyrics/lyricsdisplaywidget.h \
     mainwindow.h \
     othersourceswidget.h \
     playlistmodel.h \
     pluginmanager.h \
+    print/printcontroller.h \
+    print/printsettings.h \
     qtmultimedia/qtmultimediamediaitem.h \
     qtmultimedia/qtmultimediaurlhandler.h \
     settingsdialog.h \
+    tageditor/tageditor.h \
     thememanager.h \
     trackswidget.h \
     userplaylistswidget.h \
@@ -170,9 +182,12 @@ FORMS += \
     currenttrackpopover.ui \
     library/libraryenumeratedirectoryjobwidget.ui \
     libraryerrorpopover.ui \
+    lyrics/lyricsdisplaywidget.ui \
     mainwindow.ui \
     othersourceswidget.ui \
+    print/printsettings.ui \
     settingsdialog.ui \
+    tageditor/tageditor.ui \
     trackswidget.ui \
     userplaylistswidget.ui
 

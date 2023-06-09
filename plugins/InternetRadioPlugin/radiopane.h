@@ -20,19 +20,21 @@
 #ifndef RADIOPANE_H
 #define RADIOPANE_H
 
-#include <QWidget>
+#include <abstractlibrarybrowser.h>
 
 namespace Ui {
     class RadioPane;
 }
 
 struct RadioPanePrivate;
-class RadioPane : public QWidget {
+class RadioPane : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
         explicit RadioPane(QWidget* parent = nullptr);
         ~RadioPane();
+
+        ListInformation currentListInformation();
 
     private:
         Ui::RadioPane* ui;

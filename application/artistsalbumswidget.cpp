@@ -20,30 +20,31 @@
 #include "artistsalbumswidget.h"
 #include "ui_artistsalbumswidget.h"
 
-#include <statemanager.h>
-#include <playlist.h>
-#include <QUrl>
-#include <QPainter>
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
-#include <burnbackend.h>
-#include <burnmanager.h>
-#include <QMenu>
-#include <tpaintcalculator.h>
-#include <urlmanager.h>
 #include "common.h"
 #include "library/librarymanager.h"
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
+#include <QMenu>
+#include <QPainter>
+#include <QUrl>
+#include <burnbackend.h>
+#include <burnmanager.h>
+#include <playlist.h>
+#include <statemanager.h>
+#include <thebeatcommon.h>
+#include <tpaintcalculator.h>
+#include <urlmanager.h>
 
 struct ArtistsAlbumsWidgetPrivate {
-    ArtistsAlbumsWidget::Type type;
-    int topPadding = 0;
+        ArtistsAlbumsWidget::Type type;
+        int topPadding = 0;
 
-    QImage playlistBackground;
-    QString listName;
+        QImage playlistBackground;
+        QString listName;
 };
 
 ArtistsAlbumsWidget::ArtistsAlbumsWidget(QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::ArtistsAlbumsWidget) {
     ui->setupUi(this);
 
@@ -76,6 +77,49 @@ void ArtistsAlbumsWidget::setTopPadding(int padding) {
     d->topPadding = padding;
 }
 
+AbstractLibraryBrowser::ListInformation ArtistsAlbumsWidget::currentListInformation() {
+    if (ui->stackedWidget->currentWidget() == ui->mainPage) return ListInformation();
+
+    ListInformation info;
+    info.name = d->listName;
+    info.graphic = d->playlistBackground;
+
+    for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
+        QModelIndex index = ui->tracksList->model()->index(i, 0);
+        TrackInformation trackInfo;
+        trackInfo.title = index.data(LibraryModel::TitleRole).toString();
+        trackInfo.artist = index.data(LibraryModel::ArtistRole).toString();
+        trackInfo.album = index.data(LibraryModel::AlbumRole).toString();
+        trackInfo.trackNumber = index.data(LibraryModel::TrackRole).toInt();
+        trackInfo.duration = index.data(LibraryModel::DurationRole).toULongLong();
+        info.tracks.append(trackInfo);
+    }
+
+    return info;
+}
+
+void ArtistsAlbumsWidget::changeItem(QString text) {
+    d->listName = text;
+    ui->tracksTitle->setText(d->type == Albums ? tr("Tracks in %1").arg(QLocale().quoteString(text)) : tr("Tracks by %1").arg(QLocale().quoteString(text)));
+    LibraryModel* model = d->type == Albums ? LibraryManager::instance()->tracksByAlbum(text) : LibraryManager::instance()->tracksByArtist(text);
+    ui->tracksList->setModel(model);
+    ui->stackedWidget->setCurrentWidget(ui->tracksPage);
+
+    d->playlistBackground = model->index(0, 0).data(LibraryModel::AlbumArtRole).value<QImage>();
+    ui->topWidget->update();
+
+    QStringList parts;
+    parts.append(tr("%n tracks", nullptr, model->rowCount()));
+
+    quint64 duration = 0;
+    for (int i = 0; i < model->rowCount(); i++) {
+        duration += model->index(i, 0).data(LibraryModel::DurationRole).toInt();
+    }
+    parts.append(TheBeatCommon::durationToString(duration));
+
+    ui->auxiliaryDataLabel->setText(parts.join(" · "));
+}
+
 void ArtistsAlbumsWidget::updateData() {
     QStringList data = d->type == Albums ? LibraryManager::instance()->albums() : LibraryManager::instance()->artists();
     ui->initialList->clear();
@@ -104,19 +148,19 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
         }
 
         if (d->playlistBackground.isNull()) {
-//            QSvgRenderer renderer(QString(":/icons/coverimage.svg"));
+            //            QSvgRenderer renderer(QString(":/icons/coverimage.svg"));
 
-//            QRect rect;
-//            rect.setSize(renderer.defaultSize().scaled(ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
-//            rect.setLeft(ui->mediaLibraryInfoWidget->width() / 2 - rect.width() / 2);
-//            rect.setTop(ui->mediaLibraryInfoWidget->height() / 2 - rect.height() / 2);
+            //            QRect rect;
+            //            rect.setSize(renderer.defaultSize().scaled(ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height(), Qt::KeepAspectRatioByExpanding));
+            //            rect.setLeft(ui->mediaLibraryInfoWidget->width() / 2 - rect.width() / 2);
+            //            rect.setTop(ui->mediaLibraryInfoWidget->height() / 2 - rect.height() / 2);
 
-//            renderer.render(&painter, rect);
+            //            renderer.render(&painter, rect);
 
-//            painter.setBrush(backgroundCol);
-//            painter.setPen(Qt::transparent);
-//            painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
-//            ui->buttonSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Preferred);
+            //            painter.setBrush(backgroundCol);
+            //            painter.setPen(Qt::transparent);
+            //            painter.drawRect(0, 0, ui->mediaLibraryInfoWidget->width(), ui->mediaLibraryInfoWidget->height());
+            //            ui->buttonSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Preferred);
             ui->buttonSpacer->setFixedWidth(0);
         } else {
             QRect rect;
@@ -124,8 +168,8 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
             rect.moveLeft(ui->topWidget->width() / 2 - rect.width() / 2);
             rect.moveTop(ui->topWidget->height() / 2 - rect.height() / 2);
 
-            //Blur the background
-            paintCalculator.addRect(rect, [ = ](QRectF paintBounds) {
+            // Blur the background
+            paintCalculator.addRect(rect, [this, painter](QRectF paintBounds) {
                 int radius = 30;
                 QGraphicsBlurEffect* blur = new QGraphicsBlurEffect;
                 blur->setBlurRadius(radius);
@@ -139,17 +183,16 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
                 scene.render(painter, paintBounds.adjusted(-radius, -radius, radius, radius), QRectF(-radius, -radius, d->playlistBackground.width() + radius, d->playlistBackground.height() + radius));
             });
 
-
             QRect rightRect;
             rightRect.setSize(d->playlistBackground.size().scaled(0, ui->topWidget->height() - d->topPadding, Qt::KeepAspectRatioByExpanding));
             rightRect.moveRight(ui->topWidget->width());
             rightRect.moveTop(d->topPadding + (ui->topWidget->height() - d->topPadding) / 2 - rightRect.height() / 2);
 
-            paintCalculator.addRect(rightRect, [ = ](QRectF paintBounds) {
+            paintCalculator.addRect(rightRect, [this, painter, backgroundCol](QRectF paintBounds) {
                 painter->setBrush(backgroundCol);
                 painter->setPen(Qt::transparent);
                 painter->drawRect(0, 0, ui->topWidget->width(), ui->topWidget->height());
-                painter->drawImage(paintBounds, d->playlistBackground.scaled(rightRect.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                painter->drawImage(paintBounds, d->playlistBackground.scaled(paintBounds.size().toSize(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
             });
 
             ui->buttonSpacer->setFixedWidth(rightRect.width());
@@ -163,25 +206,7 @@ bool ArtistsAlbumsWidget::eventFilter(QObject* watched, QEvent* event) {
 }
 
 void ArtistsAlbumsWidget::on_initialList_itemActivated(QListWidgetItem* item) {
-    d->listName = item->text();
-    ui->tracksTitle->setText(d->type == Albums ? tr("Tracks in %1").arg(QLocale().quoteString(item->text())) : tr("Tracks by %1").arg(QLocale().quoteString(item->text())));
-    LibraryModel* model = d->type == Albums ? LibraryManager::instance()->tracksByAlbum(item->text()) : LibraryManager::instance()->tracksByArtist(item->text());
-    ui->tracksList->setModel(model);
-    ui->stackedWidget->setCurrentWidget(ui->tracksPage);
-
-    d->playlistBackground = model->index(0, 0).data(LibraryModel::AlbumArtRole).value<QImage>();
-    ui->topWidget->update();
-
-    QStringList parts;
-    parts.append(tr("%n tracks", nullptr, model->rowCount()));
-
-    quint64 duration = 0;
-    for (int i = 0; i < model->rowCount(); i++) {
-        duration += model->index(i, 0).data(LibraryModel::DurationRole).toInt();
-    }
-    parts.append(Common::durationToString(duration));
-
-    ui->auxiliaryDataLabel->setText(parts.join(" · "));
+    changeItem(item->text());
 }
 
 void ArtistsAlbumsWidget::on_backButton_clicked() {
@@ -212,7 +237,7 @@ void ArtistsAlbumsWidget::on_burnButton_clicked() {
     QStringList files;
     for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
         if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) {
-            //TODO: Do something!!!
+            // TODO: Do something!!!
             continue;
         }
 

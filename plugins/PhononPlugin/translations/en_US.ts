@@ -5,10 +5,10 @@
     <name>CdChecker</name>
     <message>
         <location filename="../cdchecker.ui" line="43"/>
-        <location filename="../cdchecker.cpp" line="91"/>
-        <location filename="../cdchecker.cpp" line="199"/>
-        <location filename="../cdchecker.cpp" line="200"/>
-        <location filename="../cdchecker.cpp" line="201"/>
+        <location filename="../cdchecker.cpp" line="94"/>
+        <location filename="../cdchecker.cpp" line="234"/>
+        <location filename="../cdchecker.cpp" line="235"/>
+        <location filename="../cdchecker.cpp" line="236"/>
         <source>CD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -66,59 +66,59 @@
 <context>
     <name>ImportCdJob</name>
     <message>
-        <location filename="../importcdjob.cpp" line="62"/>
+        <location filename="../importcdjob.cpp" line="63"/>
         <source>Preparing to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="82"/>
+        <location filename="../importcdjob.cpp" line="83"/>
         <source>Cancelling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="91"/>
+        <location filename="../importcdjob.cpp" line="92"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="103"/>
+        <location filename="../importcdjob.cpp" line="104"/>
         <source>Couldn&apos;t query disc info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="123"/>
+        <location filename="../importcdjob.cpp" line="125"/>
         <source>Importing %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="150"/>
+        <location filename="../importcdjob.cpp" line="152"/>
         <source>Couldn&apos;t import track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="211"/>
-        <location filename="../importcdjob.cpp" line="221"/>
+        <location filename="../importcdjob.cpp" line="213"/>
+        <location filename="../importcdjob.cpp" line="223"/>
         <source>Import Successful</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="216"/>
-        <location filename="../importcdjob.cpp" line="235"/>
+        <location filename="../importcdjob.cpp" line="218"/>
+        <location filename="../importcdjob.cpp" line="237"/>
         <source>CD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="221"/>
+        <location filename="../importcdjob.cpp" line="223"/>
         <source>Imported &quot;%1&quot; successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="241"/>
+        <location filename="../importcdjob.cpp" line="243"/>
         <source>Import Failure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importcdjob.cpp" line="241"/>
+        <location filename="../importcdjob.cpp" line="243"/>
         <source>Failed to import &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>

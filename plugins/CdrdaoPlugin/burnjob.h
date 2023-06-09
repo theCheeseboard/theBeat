@@ -20,14 +20,17 @@
 #ifndef BURNJOB_H
 #define BURNJOB_H
 
-#include <tjob.h>
+#include "abstractburnjob.h"
 
+class DiskObject;
 struct BurnJobPrivate;
-class BurnJob : public tJob {
+class BurnJob : public AbstractBurnJob {
         Q_OBJECT
     public:
-        explicit BurnJob(QStringList files, QString blockDevice, QString albumTitle, QObject* parent = nullptr);
+        explicit BurnJob(QStringList files, DiskObject* diskObject, QString albumTitle, QObject* parent = nullptr);
         ~BurnJob();
+
+        QCoro::Task<> start();
 
         QString description();
         bool canCancel();
@@ -35,14 +38,10 @@ class BurnJob : public tJob {
 
         void cancel();
 
-    signals:
-        void descriptionChanged(QString description);
-        void canCancelChanged(bool canCancel);
-
     private:
         BurnJobPrivate* d;
 
-        void performNextAction();
+        QCoro::Task<> performNextAction();
         void fail(QString description);
 
         // tJob interface
@@ -50,7 +49,6 @@ class BurnJob : public tJob {
         quint64 progress();
         quint64 totalProgress();
         State state();
-        QWidget* makeProgressWidget();
 };
 
 #endif // BURNJOB_H

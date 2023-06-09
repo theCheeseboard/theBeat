@@ -6,9 +6,9 @@
     <message>
         <location filename="../cd/cdchecker.ui" line="43"/>
         <location filename="../cd/cdchecker.cpp" line="62"/>
-        <location filename="../cd/cdchecker.cpp" line="128"/>
-        <location filename="../cd/cdchecker.cpp" line="129"/>
-        <location filename="../cd/cdchecker.cpp" line="130"/>
+        <location filename="../cd/cdchecker.cpp" line="136"/>
+        <location filename="../cd/cdchecker.cpp" line="137"/>
+        <location filename="../cd/cdchecker.cpp" line="138"/>
         <source>CD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -151,13 +151,13 @@
 <context>
     <name>MacBurnProvider</name>
     <message>
-        <location filename="../burn/macburnprovider-objc.mm" line="64"/>
-        <source>Insert a CD-R or CD-RW</source>
+        <location filename="../burn/macburnprovider.cpp" line="11"/>
+        <source>Burn on macOS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnprovider.cpp" line="11"/>
-        <source>Burn on macOS</source>
+        <location filename="../burn/macburnprovider-objc.mm" line="90"/>
+        <source>Insert a CD-R or CD-RW</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

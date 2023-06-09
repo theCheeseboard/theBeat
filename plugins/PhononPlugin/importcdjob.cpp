@@ -19,37 +19,38 @@
  * *************************************/
 #include "importcdjob.h"
 
+#include "importcdjobwidget.h"
 #include <QProcess>
 #include <QTemporaryDir>
-#include <tlogger.h>
-#include "importcdjobwidget.h"
 #include <cdio/paranoia/paranoia.h>
+#include <tlogger.h>
 #include <tnotification.h>
 
 #include <taglib/fileref.h>
 #include <taglib/tpropertymap.h>
 
 struct ImportCdJobPrivate {
-    tJob::State state = tJob::Processing;
-    quint64 progress;
+        tJob::State state = tJob::Processing;
+        quint64 progress;
 
-    QTemporaryDir workDir;
-    QDir outputDir;
+        QTemporaryDir workDir;
+        QDir outputDir;
 
-    QString blockDevice;
-    QList<TrackInfoPtr> trackInfo;
+        QString blockDevice;
+        QList<TrackInfoPtr> trackInfo;
 
-    QString description;
+        QString description;
 
-    int nextTrack = 0;
-    int totalLength = 0;
-    int readSpeed;
+        int nextTrack = 0;
+        int totalLength = 0;
+        int readSpeed;
 
-    bool canCancel = true;
-    bool cancelNext = false;
+        bool canCancel = true;
+        bool cancelNext = false;
 };
 
-ImportCdJob::ImportCdJob(QString blockDevice, QList<TrackInfoPtr> trackInfo, QString outputDir, int readSpeed, QObject* parent) : tJob(parent) {
+ImportCdJob::ImportCdJob(QString blockDevice, QList<TrackInfoPtr> trackInfo, QString outputDir, int readSpeed, QObject* parent) :
+    tJob(parent) {
     d = new ImportCdJobPrivate();
     d->blockDevice = blockDevice;
     d->trackInfo = trackInfo;
@@ -94,18 +95,19 @@ void ImportCdJob::performNextAction() {
     }
 
     if (d->nextTrack == 0) {
-        //Query cdparanoia
+        // Query cdparanoia
         QProcess* process = new QProcess();
         process->setProcessChannelMode(QProcess::MergedChannels);
         process->setWorkingDirectory(d->workDir.path());
-        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
+        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=](int exitCode, QProcess::ExitStatus status) {
             if (exitCode != 0) {
                 fail(tr("Couldn't query disc info"));
                 return;
             }
 
             QString line;
-            while (!(line = process->readLine()).startsWith("TOTAL")); //do nothing
+            while (!(line = process->readLine()).startsWith("TOTAL"))
+                ; // do nothing
 
             QString totalLength = line.split(" ", Qt::SkipEmptyParts).at(1);
             d->totalLength = totalLength.toInt();
@@ -115,9 +117,9 @@ void ImportCdJob::performNextAction() {
             performNextAction();
             process->deleteLater();
         });
-        process->start("cdparanoia", {"-Q"});
+        process->start("cdparanoia", {"--force-cdrom-device", d->blockDevice, "-Q"});
     } else if (d->nextTrack <= d->trackInfo.count()) {
-        //Extract the audio
+        // Extract the audio
 
         TrackInfoPtr trackInfo = d->trackInfo.at(d->nextTrack - 1);
         d->description = tr("Importing %1").arg(trackInfo->title());
@@ -126,7 +128,7 @@ void ImportCdJob::performNextAction() {
         QProcess* process = new QProcess();
         process->setProcessChannelMode(QProcess::MergedChannels);
         process->setWorkingDirectory(d->workDir.path());
-        connect(process, &QProcess::readyRead, this, [ = ] {
+        connect(process, &QProcess::readyRead, this, [=] {
             while (process->canReadLine()) {
                 QString line = process->readLine();
 
@@ -145,16 +147,16 @@ void ImportCdJob::performNextAction() {
                 }
             }
         });
-        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
+        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=](int exitCode, QProcess::ExitStatus status) {
             if (exitCode != 0) {
                 fail(tr("Couldn't import track"));
                 return;
             }
 
-            //Invoke ffmpeg to convert the audio files
+            // Invoke ffmpeg to convert the audio files
             QString filename = QStringLiteral("%1 %2.%3").arg(trackInfo->track() + 1, 2, 10, QLatin1Char('0')).arg(trackInfo->title()).arg("ogg");
 
-            //Make sure the filename does not contain special characters
+            // Make sure the filename does not contain special characters
             for (QChar& c : filename) {
                 if (!c.isLetterOrNumber() && c != "." && c != " ") c = '_';
             }
@@ -163,8 +165,8 @@ void ImportCdJob::performNextAction() {
 
             QProcess* ffmpeg = new QProcess();
             ffmpeg->setWorkingDirectory(d->workDir.path());
-            connect(ffmpeg, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [ = ](int exitCode, QProcess::ExitStatus status) {
-                //TODO: Tag the file
+            connect(ffmpeg, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=](int exitCode, QProcess::ExitStatus status) {
+                // TODO: Tag the file
                 TagLib::PropertyMap map;
                 map.insert("TITLE", TagLib::StringList(trackInfo->title().toStdString().data()));
 
@@ -181,10 +183,10 @@ void ImportCdJob::performNextAction() {
                     file.file()->setProperties(map);
                     file.save();
                 } else {
-                    //Hmm, something is wrong...
+                    // Hmm, something is wrong...
                 }
 
-                //TODO: Add the file to the library
+                // TODO: Add the file to the library
 
                 d->nextTrack++;
                 performNextAction();
@@ -237,7 +239,7 @@ void ImportCdJob::fail(QString description) {
         album = d->trackInfo.first()->album();
     }
 
-    //Fire a notification
+    // Fire a notification
     tNotification* notification = new tNotification(tr("Import Failure"), tr("Failed to import \"%1\"").arg(album));
     notification->post();
 }

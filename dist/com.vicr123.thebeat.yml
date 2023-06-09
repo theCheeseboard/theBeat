@@ -1,6 +1,6 @@
 app-id: com.vicr123.thebeat
 runtime: org.kde.Platform
-runtime-version: '5.15'
+runtime-version: '6.5'
 sdk: org.kde.Sdk
 command: thebeat
 finish-args:
@@ -11,6 +11,7 @@ finish-args:
   - --own-name=org.mpris.MediaPlayer2.theBeat
   - --filesystem=home
   - --filesystem=/run/media
+  - --system-talk-name=org.freedesktop.UDisks2
 cleanup:
   - '/include'
   - '/qt'
@@ -44,26 +45,26 @@ modules:
       - type: archive
         url: https://github.com/rocky/libcdio-paranoia/archive/release-10.2+2.0.1.tar.gz
         sha256: 7a4e257c85f3f84129cca55cd097c397364c7a6f79b9701bbc593b13bd59eb95
-  - name: the-libs
-    buildsystem: qmake
+  - name: qcoro
+    buildsystem: cmake-ninja
     sources:
       - type: git
-        url: https://github.com/vicr123/the-libs
-        branch: master
-  - name: contemporary
-    buildsystem: qmake
+        url: https://github.com/danvratil/qcoro
+        tag: v0.9.0
     config-opts:
-      - THELIBS_BUILDTOOLS_PATH = /app/share/the-libs/pri
-      - THELIBS_INSTALL_QT_PLUGINS = /app/lib/qt/plugins
-      - '-after'
-      - QT -= thelib
-      - QT += dbus
-      - LIBS += -L/app/lib -lthe-libs
-      - INCLUDEPATH += /app/include/the-libs
+      - -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+  - name: libcontemporary
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/vicr123/libcontemporary
+        tag: v6.0
+  - name: contemporary
+    buildsystem: cmake-ninja
     sources:
       - type: git
         url: https://github.com/vicr123/contemporary-theme
-        branch: master
+        tag: v2.0
   - name: contemporary-icons
     buildsystem: simple
     build-commands:
@@ -72,18 +73,19 @@ modules:
     sources:
       - type: git
         url: https://github.com/vicr123/contemporary-icons
-        branch: master
-  - name: thebeat
-    buildsystem: qmake
+        tag: v1.11
+  - name: thefrisbee
+    buildsystem: cmake-ninja
     builddir: true
+    sources:
+      - type: git
+        url: https://github.com/vicr123/thefrisbee
+        tag: v2.0
     config-opts:
-      - THELIBS_BUILDTOOLS_PATH = /app/share/the-libs/pri
-      - THELIBS_INSTALL_SETTINGS = /app/etc
-      - '-after'
-      - QT -= thelib
-      - QT += dbus
-      - LIBS += -L/app/lib -lthe-libs
-      - INCLUDEPATH += /app/include/the-libs
+      - -DFORCE_STABLE=ON
+  - name: thebeat
+    buildsystem: cmake-ninja
+    builddir: true
     sources:
       - type: git
         url: https://github.com/vicr123/thebeat

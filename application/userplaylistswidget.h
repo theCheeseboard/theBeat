@@ -20,15 +20,16 @@
 #ifndef USERPLAYLISTSWIDGET_H
 #define USERPLAYLISTSWIDGET_H
 
-#include <QWidget>
+#include "library/librarymanager.h"
 #include <QListWidgetItem>
+#include <abstractlibrarybrowser.h>
 
 namespace Ui {
     class UserPlaylistsWidget;
 }
 
 struct UserPlaylistsWidgetPrivate;
-class UserPlaylistsWidget : public QWidget {
+class UserPlaylistsWidget : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
@@ -36,6 +37,7 @@ class UserPlaylistsWidget : public QWidget {
         ~UserPlaylistsWidget();
 
         void setTopPadding(int padding);
+        ListInformation currentListInformation();
 
     private slots:
         void on_createButton_clicked();
@@ -60,6 +62,7 @@ class UserPlaylistsWidget : public QWidget {
 
         void updatePlaylists();
         void loadPlaylist(int id);
+        void loadSmartPlaylist(LibraryManager::SmartPlaylist smartPlaylist);
         void updateBurn();
 
         QMenu* playlistManagementMenu(QList<int> playlists);

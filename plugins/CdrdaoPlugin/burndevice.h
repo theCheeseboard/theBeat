@@ -22,11 +22,12 @@
 
 #include <burnbackend.h>
 
+class DiskObject;
 struct BurnDevicePrivate;
 class BurnDevice : public BurnBackend {
         Q_OBJECT
     public:
-        explicit BurnDevice(QString blockDevice, QObject* parent = nullptr);
+        explicit BurnDevice(DiskObject* diskObject, QObject* parent = nullptr);
         ~BurnDevice();
 
     private slots:

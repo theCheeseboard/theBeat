@@ -20,35 +20,38 @@
 #ifndef RADIOINFOCLIENT_H
 #define RADIOINFOCLIENT_H
 
+#include <QCoroTask>
 #include <QObject>
-#include <tpromise.h>
+#include <QJsonObject>
+#include <QUrl>
+
 
 struct RadioInfoClientPrivate;
 class RadioInfoClient : public QObject {
         Q_OBJECT
     public:
         struct Station {
-            Station();
-            Station(QJsonObject object, QMap<QString, QPixmap>* iconCache);
+                Station();
+                Station(QJsonObject object, QMap<QString, QPixmap>* iconCache);
 
-            QString stationUuid;
-            QString name;
-            QUrl streamUrl;
-            QString icon;
-            QString country;
+                QString stationUuid;
+                QString name;
+                QUrl streamUrl;
+                QString icon;
+                QString country;
 
-            QMap<QString, QPixmap>* iconCache;
+                QMap<QString, QPixmap>* iconCache;
 
-            QJsonObject json;
+                QJsonObject json;
         };
 
         static RadioInfoClient* instance();
 
-        static tPromise<void>* selectServer();
+        static QCoro::Task<> selectServer();
 
-        static tPromise<QList<Station>>* topVoted();
-        static tPromise<QList<Station>>* search(QString query);
-        static tPromise<QPixmap>* getIcon(Station station);
+        static QCoro::Task<QList<Station>> topVoted();
+        static QCoro::Task<QList<Station>> search(QString query);
+        static QCoro::Task<QPixmap> getIcon(Station station);
         static void countClick(Station station);
 
     signals:
@@ -57,7 +60,6 @@ class RadioInfoClient : public QObject {
     private:
         explicit RadioInfoClient(QObject* parent = nullptr);
         RadioInfoClientPrivate* d;
-
 };
 
 #endif // RADIOINFOCLIENT_H

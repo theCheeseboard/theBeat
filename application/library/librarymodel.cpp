@@ -19,23 +19,24 @@
  * *************************************/
 #include "librarymodel.h"
 
-#include <QPainter>
-#include <QFile>
-#include <QMimeData>
-#include <QUrl>
-#include <QFileInfo>
-#include <tpaintcalculator.h>
-#include <the-libs_global.h>
-#include <helpers.h>
 #include "common.h"
 #include "librarymanager.h"
+#include <QFile>
+#include <QFileInfo>
+#include <QMimeData>
+#include <QPainter>
+#include <QUrl>
+#include <helpers.h>
+#include <libcontemporary_global.h>
+#include <thebeatcommon.h>
+#include <tpaintcalculator.h>
 
 struct LibraryModelPrivate {
-    TemporaryDatabase db;
+        TemporaryDatabase db;
 };
 
-LibraryModel::LibraryModel(QObject* parent)
-    : QSqlQueryModel(parent) {
+LibraryModel::LibraryModel(QObject* parent) :
+    QSqlQueryModel(parent) {
     d = new LibraryModelPrivate();
 }
 
@@ -76,7 +77,7 @@ QVariant LibraryModel::data(const QModelIndex& index, int role) const {
         case TrackRole:
             return QSqlQueryModel::data(this->index(index.row(), 6));
         case AlbumArtRole:
-            return Helpers::albumArt(QUrl::fromLocalFile(data(index, PathRole).toString()));
+            return QCoro::waitFor(Helpers::albumArt(QUrl::fromLocalFile(data(index, PathRole).toString())));
         case ErrorRole:
             if (!QFile::exists(data(index, PathRole).toString())) {
                 return PathNotFoundError;
@@ -90,7 +91,6 @@ QVariant LibraryModel::data(const QModelIndex& index, int role) const {
 }
 
 LibraryItemDelegate::LibraryItemDelegate(QObject* parent) {
-
 }
 
 void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
@@ -118,7 +118,7 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
         textPen = option.palette.color(QPalette::WindowText);
     }
 
-    paintCalculator.addRect(option.rect, [ = ](QRectF paintBounds) {
+    paintCalculator.addRect(option.rect, [=](QRectF paintBounds) {
         painter->setPen(Qt::transparent);
         painter->setBrush(brush);
         painter->drawRect(paintBounds);
@@ -130,7 +130,7 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     textRect.moveTop(option.rect.top() + 6);
     textRect.moveLeft(option.rect.left() + 6);
 
-    //Reserve two characters' space for the track number
+    // Reserve two characters' space for the track number
     QFont trackFont = option.font;
     trackFont.setPointSizeF(trackFont.pointSizeF() * 2);
     QFontMetrics trackFontMetrics(trackFont);
@@ -141,9 +141,9 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     trackRect.moveTop(option.rect.top() + option.rect.height() / 2 - trackRect.height() / 2);
     textRect.setLeft(trackRect.right() + SC_DPI(6));
 
-    //Draw the track number
+    // Draw the track number
     if (drawAsError) {
-        paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+        paintCalculator.addRect(trackRect, [=](QRectF paintBounds) {
             painter->setFont(trackFont);
             painter->setPen(transientColor);
             painter->drawText(paintBounds, Qt::AlignCenter, "!");
@@ -151,23 +151,23 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     } else if (index.data(LibraryModel::TrackRole).toInt() != -1) {
         int trackNumber = index.data(LibraryModel::TrackRole).toInt();
         if (trackNumber == 0) {
-            paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+            paintCalculator.addRect(trackRect, [=](QRectF paintBounds) {
                 painter->setFont(trackFont);
                 painter->setPen(transientColor);
                 painter->drawText(paintBounds, Qt::AlignCenter, "-");
             });
         } else if (trackNumber < 99) {
-            paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+            paintCalculator.addRect(trackRect, [=](QRectF paintBounds) {
                 painter->setFont(trackFont);
                 painter->setPen(transientColor);
                 painter->drawText(paintBounds, Qt::AlignCenter, QLocale().toString(trackNumber));
             });
         } else {
-            //Squash the text
+            // Squash the text
             qreal factor = painter->fontMetrics().horizontalAdvance("00") / static_cast<qreal>(painter->fontMetrics().horizontalAdvance(QLocale().toString(trackNumber)));
             trackRect.setWidth(trackRect.width() / factor);
             trackRect.moveLeft(trackRect.left() / factor);
-            paintCalculator.addRect(trackRect, [ = ](QRectF paintBounds) {
+            paintCalculator.addRect(trackRect, [=](QRectF paintBounds) {
                 painter->save();
                 painter->scale(factor, 1);
                 painter->drawText(paintBounds, Qt::AlignCenter, QLocale().toString(trackNumber));
@@ -176,18 +176,18 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
         }
     }
 
-    //Draw the track name
+    // Draw the track name
     QRect nameRect = textRect;
     nameRect.setWidth(option.fontMetrics.horizontalAdvance(index.data().toString()) + 1);
     textRect.setLeft(nameRect.right() + SC_DPI(6));
 
-    paintCalculator.addRect(nameRect, [ = ](QRectF paintBounds) {
+    paintCalculator.addRect(nameRect, [=](QRectF paintBounds) {
         painter->setFont(option.font);
         painter->setPen(drawAsError ? transientColor : option.palette.color(QPalette::WindowText));
         painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());
     });
 
-    //Draw the extra details
+    // Draw the extra details
     QString artist = index.data(LibraryModel::ArtistRole).toString();
     QString album = index.data(LibraryModel::AlbumRole).toString();
 
@@ -201,17 +201,17 @@ void LibraryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
     detailsRect.setWidth(option.fontMetrics.horizontalAdvance(detailsText) + 1);
     detailsRect.moveTop(nameRect.bottom());
 
-    paintCalculator.addRect(detailsRect, [ = ](QRectF paintBounds) {
+    paintCalculator.addRect(detailsRect, [=](QRectF paintBounds) {
         painter->setPen(transientColor);
         painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, detailsText);
     });
 
-    //Draw the track duration
+    // Draw the track duration
     int duration = index.data(LibraryModel::DurationRole).toInt();
     if (duration != 0) {
-        paintCalculator.addRect(textRect, [ = ](QRectF paintBounds) {
+        paintCalculator.addRect(textRect, [=](QRectF paintBounds) {
             painter->setPen(transientColor);
-            painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, "· " + Common::durationToString(duration));
+            painter->drawText(paintBounds, Qt::AlignLeft | Qt::AlignVCenter, "· " + TheBeatCommon::durationToString(duration));
         });
     }
 
@@ -236,7 +236,6 @@ QMimeData* LibraryModel::mimeData(const QModelIndexList& indexes) const {
     data->setData("X-theBeat-LibraryFlag", "true");
     return data;
 }
-
 
 Qt::ItemFlags LibraryModel::flags(const QModelIndex& index) const {
     Qt::ItemFlags defaultFlags = QSqlQueryModel::flags(index);

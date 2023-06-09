@@ -20,20 +20,20 @@
 #include "trackswidget.h"
 #include "ui_trackswidget.h"
 
-#include <QUrl>
-#include <statemanager.h>
-#include <playlist.h>
-#include <tpopover.h>
-#include "libraryerrorpopover.h"
-#include <urlmanager.h>
 #include "library/librarymanager.h"
+#include "libraryerrorpopover.h"
+#include <QUrl>
+#include <playlist.h>
+#include <statemanager.h>
+#include <tpopover.h>
+#include <urlmanager.h>
 
 struct TracksWidgetPrivate {
-    LibraryModel* model = nullptr;
+        LibraryModel* model = nullptr;
 };
 
 TracksWidget::TracksWidget(QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::TracksWidget) {
     ui->setupUi(this);
 
@@ -51,6 +51,28 @@ TracksWidget::TracksWidget(QWidget* parent) :
 TracksWidget::~TracksWidget() {
     delete d;
     delete ui;
+}
+
+AbstractLibraryBrowser::ListInformation TracksWidget::currentListInformation() {
+    ListInformation info;
+    if (ui->searchBox->text().isEmpty()) {
+        info.name = tr("Tracks in Library");
+    } else {
+        info.name = tr("Search for %1").arg(QLocale().quoteString(ui->searchBox->text()));
+    }
+
+    for (int i = 0; i < d->model->rowCount(); i++) {
+        QModelIndex index = d->model->index(i, 0);
+        TrackInformation trackInfo;
+        trackInfo.title = index.data(LibraryModel::TitleRole).toString();
+        trackInfo.artist = index.data(LibraryModel::ArtistRole).toString();
+        trackInfo.album = index.data(LibraryModel::AlbumRole).toString();
+        trackInfo.trackNumber = index.data(LibraryModel::TrackRole).toInt();
+        trackInfo.duration = index.data(LibraryModel::DurationRole).toULongLong();
+        info.tracks.append(trackInfo);
+    }
+
+    return info;
 }
 
 void TracksWidget::setTopPadding(int padding) {
@@ -77,7 +99,7 @@ void TracksWidget::updateProcessing() {
     if (LibraryManager::instance()->isProcessing() && LibraryManager::instance()->countTracks() == 0) {
         ui->stackedWidget->setCurrentWidget(ui->processingPage);
     } else {
-        QTimer::singleShot(500, this, [ = ] {
+        QTimer::singleShot(500, this, [this] {
             ui->stackedWidget->setCurrentWidget(ui->libraryPage);
         });
     }

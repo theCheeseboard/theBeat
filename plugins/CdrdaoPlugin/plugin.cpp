@@ -19,16 +19,17 @@
  * *************************************/
 #include "plugin.h"
 
+#include "drivewatcher.h"
 #include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
 #include <QIcon>
+#include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
 #include <tapplication.h>
-#include "burndevice.h"
+
+#include <tlogger.h>
 
 struct PluginPrivate {
-
 };
 
 Plugin::Plugin() {
@@ -40,13 +41,9 @@ Plugin::~Plugin() {
     delete d;
 }
 
-
 void Plugin::activate() {
-    new BurnDevice("sr0");
-    new BurnDevice("sr1");
-    new BurnDevice("sr2");
+    new DriveWatcher();
 }
 
 void Plugin::deactivate() {
-
 }

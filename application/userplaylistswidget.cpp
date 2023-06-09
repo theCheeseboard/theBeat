@@ -20,33 +20,32 @@
 #include "userplaylistswidget.h"
 #include "ui_userplaylistswidget.h"
 
-#include <QMenu>
-#include <tinputdialog.h>
-#include <QUrl>
-#include <statemanager.h>
-#include <playlist.h>
-#include <burnmanager.h>
-#include <burnbackend.h>
-#include <QFileDialog>
-#include <QMediaPlaylist>
-#include <urlmanager.h>
-#include "library/librarymanager.h"
 #include "common.h"
+#include "library/librarymanager.h"
+#include <QFileDialog>
+#include <QMenu>
+#include <QUrl>
+#include <burnbackend.h>
+#include <burnmanager.h>
+#include <playlist.h>
+#include <statemanager.h>
+#include <tinputdialog.h>
+#include <urlmanager.h>
 
 struct UserPlaylistsWidgetPrivate {
-    int currentPlaylist = -1;
-    QString currentPlaylistName;
+        int currentPlaylist = -1;
+        QString currentPlaylistName;
 };
 
 UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent) :
-    QWidget(parent),
+    AbstractLibraryBrowser(parent),
     ui(new Ui::UserPlaylistsWidget) {
     ui->setupUi(this);
 
     d = new UserPlaylistsWidgetPrivate();
 
     connect(LibraryManager::instance(), &LibraryManager::playlistsChanged, this, &UserPlaylistsWidget::updatePlaylists);
-    connect(LibraryManager::instance(), &LibraryManager::playlistChanged, this, [ = ](int id) {
+    connect(LibraryManager::instance(), &LibraryManager::playlistChanged, this, [this](int id) {
         if (id == d->currentPlaylist) loadPlaylist(id);
     });
     updatePlaylists();
@@ -68,6 +67,26 @@ void UserPlaylistsWidget::setTopPadding(int padding) {
     ui->tracksTopWidget->setContentsMargins(0, padding, 0, 0);
 }
 
+AbstractLibraryBrowser::ListInformation UserPlaylistsWidget::currentListInformation() {
+    if (ui->stackedWidget->currentWidget() == ui->mainPage) return ListInformation();
+
+    ListInformation info;
+    info.name = d->currentPlaylistName;
+
+    for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
+        QModelIndex index = ui->tracksList->model()->index(i, 0);
+        TrackInformation trackInfo;
+        trackInfo.title = index.data(LibraryModel::TitleRole).toString();
+        trackInfo.artist = index.data(LibraryModel::ArtistRole).toString();
+        trackInfo.album = index.data(LibraryModel::AlbumRole).toString();
+        trackInfo.trackNumber = index.data(LibraryModel::TrackRole).toInt();
+        trackInfo.duration = index.data(LibraryModel::DurationRole).toULongLong();
+        info.tracks.append(trackInfo);
+    }
+
+    return info;
+}
+
 void UserPlaylistsWidget::on_createButton_clicked() {
     bool ok;
     QString playlistName = tInputDialog::getText(this->window(), tr("New Playlist"), tr("What name do you want to give to this playlist?"), QLineEdit::Normal, "", &ok);
@@ -78,10 +97,20 @@ void UserPlaylistsWidget::on_createButton_clicked() {
 
 void UserPlaylistsWidget::updatePlaylists() {
     ui->playlistsList->clear();
+
+    for (int i = 0; i < LibraryManager::LastSmartPlaylist; i++) {
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(LibraryManager::instance()->smartPlaylistName(static_cast<LibraryManager::SmartPlaylist>(i)));
+        item->setData(Qt::UserRole, i);
+        item->setData(Qt::UserRole + 1, true);
+        ui->playlistsList->addItem(item);
+    }
+
     for (QPair<int, QString> playlist : LibraryManager::instance()->playlists()) {
         QListWidgetItem* item = new QListWidgetItem();
         item->setText(playlist.second);
         item->setData(Qt::UserRole, playlist.first);
+        item->setData(Qt::UserRole + 1, false);
         ui->playlistsList->addItem(item);
     }
 }
@@ -93,8 +122,20 @@ void UserPlaylistsWidget::loadPlaylist(int id) {
 
     ui->tracksList->setCurrentPlaylistId(id);
     ui->playlistMenuButton->setMenu(playlistManagementMenu({id}));
+    ui->playlistMenuButton->setVisible(true);
 
     d->currentPlaylist = id;
+}
+
+void UserPlaylistsWidget::loadSmartPlaylist(LibraryManager::SmartPlaylist smartPlaylist) {
+    LibraryModel* model = LibraryManager::instance()->smartPlaylist(smartPlaylist);
+    ui->tracksList->setModel(model);
+    ui->stackedWidget->setCurrentWidget(ui->tracksPage);
+
+    ui->tracksList->setCurrentPlaylistId(-1);
+    ui->playlistMenuButton->setVisible(false);
+
+    d->currentPlaylist = smartPlaylist;
 }
 
 void UserPlaylistsWidget::updateBurn() {
@@ -112,7 +153,7 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
             }
         }
         menu->addSection(tr("For %1").arg(QLocale().quoteString(playlistName)));
-        menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, [ = ] {
+        menu->addAction(QIcon::fromTheme("edit-rename"), tr("Rename"), this, [this, playlists, playlistName] {
             bool ok;
             QString name = tInputDialog::getText(this->window(), tr("Rename"), tr("What name do you want to give to this playlist?"), QLineEdit::Normal, playlistName, &ok);
             if (ok) {
@@ -120,27 +161,28 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
                 if (d->currentPlaylist == playlists.first()) ui->tracksTitle->setText(tr("Tracks in %1").arg(name));
             }
         });
-        menu->addAction(QIcon::fromTheme("document-export"), tr("Export"), this, [ = ] {
-            QFileDialog* dialog = new QFileDialog(this);
-            dialog->setAcceptMode(QFileDialog::AcceptOpen);
-            dialog->setNameFilters({"M3U8 Playlists (*.m3u8)"});
-            dialog->setFileMode(QFileDialog::AnyFile);
-            connect(dialog, &QFileDialog::fileSelected, this, [ = ](QString file) {
-                QMediaPlaylist playlist;
-                LibraryModel* model = LibraryManager::instance()->tracksByPlaylist(playlists.first());
 
-                for (int i = 0; i < model->rowCount(); i++) {
-                    QModelIndex index = model->index(i, 0);
-                    playlist.addMedia(QMediaContent(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString())));
-                }
-
-                model->deleteLater();
-                playlist.save(QUrl::fromLocalFile(file), "m3u8");
-            });
-            connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
-            dialog->open();
-
-        });
+        // TODO: Reimplement file export
+        //        menu->addAction(QIcon::fromTheme("document-export"), tr("Export"), this, [=] {
+        //            QFileDialog* dialog = new QFileDialog(this);
+        //            dialog->setAcceptMode(QFileDialog::AcceptOpen);
+        //            dialog->setNameFilters({"M3U8 Playlists (*.m3u8)"});
+        //            dialog->setFileMode(QFileDialog::AnyFile);
+        //            connect(dialog, &QFileDialog::fileSelected, this, [=](QString file) {
+        //                QMediaPlaylist playlist;
+        //                LibraryModel* model = LibraryManager::instance()->tracksByPlaylist(playlists.first());
+        //
+        //                for (int i = 0; i < model->rowCount(); i++) {
+        //                    QModelIndex index = model->index(i, 0);
+        //                    playlist.addMedia(QMediaContent(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString())));
+        //                }
+        //
+        //                model->deleteLater();
+        //                playlist.save(QUrl::fromLocalFile(file), "m3u8");
+        //            });
+        //            connect(dialog, &QFileDialog::finished, dialog, &QFileDialog::deleteLater);
+        //            dialog->open();
+        //        });
 
         menu->addSeparator();
 
@@ -148,7 +190,7 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
         removeMenu->setIcon(QIcon::fromTheme("edit-delete"));
         removeMenu->setTitle(tr("Remove"));
         removeMenu->addSection(tr("Are you sure?"));
-        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [ = ] {
+        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [this, playlists] {
             LibraryManager::instance()->removePlaylist(playlists.first());
             if (d->currentPlaylist == playlists.first()) ui->stackedWidget->setCurrentWidget(ui->mainPage);
         });
@@ -160,7 +202,7 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
         removeMenu->setIcon(QIcon::fromTheme("edit-delete"));
         removeMenu->setTitle(tr("Remove"));
         removeMenu->addSection(tr("Are you sure?"));
-        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [ = ] {
+        removeMenu->addAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this, [playlists] {
             for (int playlist : playlists) {
                 LibraryManager::instance()->removePlaylist(playlist);
             }
@@ -171,9 +213,17 @@ QMenu* UserPlaylistsWidget::playlistManagementMenu(QList<int> playlists) {
 }
 
 void UserPlaylistsWidget::on_playlistsList_itemActivated(QListWidgetItem* item) {
-    ui->tracksTitle->setText(tr("Tracks in %1").arg(QLocale().quoteString(item->text())));
-    loadPlaylist(item->data(Qt::UserRole).toInt());
-    d->currentPlaylistName = item->text();
+    if (item->data(Qt::UserRole + 1) == true) {
+        // Smart playlist
+        LibraryManager::SmartPlaylist smartPlaylist = static_cast<LibraryManager::SmartPlaylist>(item->data(Qt::UserRole).toInt());
+        ui->tracksTitle->setText(LibraryManager::instance()->smartPlaylistName(smartPlaylist));
+        loadSmartPlaylist(smartPlaylist);
+        d->currentPlaylistName = LibraryManager::instance()->smartPlaylistName(smartPlaylist);
+    } else {
+        ui->tracksTitle->setText(tr("Tracks in %1").arg(QLocale().quoteString(item->text())));
+        loadPlaylist(item->data(Qt::UserRole).toInt());
+        d->currentPlaylistName = item->text();
+    }
 }
 
 void UserPlaylistsWidget::on_backButton_clicked() {
@@ -193,7 +243,7 @@ void UserPlaylistsWidget::on_burnButton_clicked() {
     QStringList files;
     for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
         if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) {
-            //TODO: Do something!!!
+            // TODO: Do something!!!
             continue;
         }
 
@@ -206,6 +256,7 @@ void UserPlaylistsWidget::on_burnButton_clicked() {
 void UserPlaylistsWidget::on_playlistsList_customContextMenuRequested(const QPoint& pos) {
     QList<int> selectedPlaylists;
     for (QListWidgetItem* item : ui->playlistsList->selectedItems()) {
+        if (item->data(Qt::UserRole + 1).toBool()) return;
         selectedPlaylists.append(item->data(Qt::UserRole).toInt());
     }
 

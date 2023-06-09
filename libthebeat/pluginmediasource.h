@@ -22,13 +22,14 @@
 
 #include "libthebeat_global.h"
 #include <QWidget>
+#include <abstractlibrarybrowser.h>
 #include <QIcon>
 
 struct PluginMediaSourcePrivate;
 class LIBTHEBEAT_EXPORT PluginMediaSource : public QObject {
         Q_OBJECT
     public:
-        explicit PluginMediaSource(QWidget* widget, QObject* parent = nullptr);
+        explicit PluginMediaSource(AbstractLibraryBrowser* widget, QObject* parent = nullptr);
         ~PluginMediaSource();
 
         void setName(QString name);
@@ -37,7 +38,7 @@ class LIBTHEBEAT_EXPORT PluginMediaSource : public QObject {
         void setIcon(QIcon icon);
         QIcon icon() const;
 
-        QWidget* widget() const;
+        AbstractLibraryBrowser* widget() const;
 
     signals:
         void nameChanged(QString name);
