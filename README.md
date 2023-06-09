@@ -31,15 +31,14 @@ theBeat is an audio player.
 ## Build
 Run the following commands in your terminal. 
 ```
-mkdir build
-qmake ../theBeat.pro
-make
+cmake -B build -S .
+cmake --build .
 ```
 
 ## Install
 On Linux, run the following command in your terminal (with superuser permissions)
 ```
-make install
+cmake --install build
 ```
 
 ## Docs
