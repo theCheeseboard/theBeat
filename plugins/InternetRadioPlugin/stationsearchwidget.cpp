@@ -26,7 +26,6 @@
 #include <QException>
 
 struct StationSearchWidgetPrivate {
-        //    QList<RadioInfoClient::Station> topVotedStations;
         QList<StationWidget*> topVotedWidgets;
 
         QList<StationWidget*> searchWidgets;
@@ -40,9 +39,6 @@ StationSearchWidget::StationSearchWidget(QWidget* parent) :
 
     d = new StationSearchWidgetPrivate();
 
-    //    ui->titleLabel->setBackButtonShown(true);
-
-    //    QList<RadioInfoClient::Station> stations = RadioInfoClient::topVoted();
     connect(RadioInfoClient::instance(), &RadioInfoClient::ready, this, [this]() -> QCoro::Task<> {
         try {
             auto stations = co_await RadioInfoClient::topVoted();

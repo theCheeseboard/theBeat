@@ -7,6 +7,7 @@ finish-args:
   - --socket=wayland
   - --socket=fallback-x11
   - --socket=pulseaudio
+  - --share=ipc
   - --share=network
   - --own-name=org.mpris.MediaPlayer2.theBeat
   - --filesystem=home
@@ -22,7 +23,6 @@ cleanup:
   - '/bin/mmc-tool'
   - '/bin/taglib-config'
   - '/bin/tltrdesktop'
-  - '/lib/debug'
   - '/lib/pkgconfig'
 modules:
   - name: taglib
@@ -57,13 +57,13 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: git
-        url: https://github.com/vicr123/libcontemporary
+        url: https://github.com/theCheeseboard/libcontemporary
         tag: v6.0
   - name: contemporary
     buildsystem: cmake-ninja
     sources:
       - type: git
-        url: https://github.com/vicr123/contemporary-theme
+        url: https://github.com/theCheeseboard/contemporary-theme
         tag: v2.0
   - name: contemporary-icons
     buildsystem: simple
@@ -72,14 +72,14 @@ modules:
       - cp -r * /app/share/icons/contemporary/
     sources:
       - type: git
-        url: https://github.com/vicr123/contemporary-icons
+        url: https://github.com/theCheeseboard/contemporary-icons
         tag: v1.11
   - name: thefrisbee
     buildsystem: cmake-ninja
     builddir: true
     sources:
       - type: git
-        url: https://github.com/vicr123/thefrisbee
+        url: https://github.com/theCheeseboard/thefrisbee
         tag: v2.0
     config-opts:
       - -DFORCE_STABLE=ON
@@ -88,7 +88,7 @@ modules:
     builddir: true
     sources:
       - type: git
-        url: https://github.com/vicr123/thebeat
+        url: https://github.com/theCheeseboard/thebeat
         branch: master
     config-opts:
       - -DFORCE_STABLE=ON

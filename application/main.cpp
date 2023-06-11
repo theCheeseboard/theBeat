@@ -56,12 +56,11 @@ int main(int argc, char* argv[]) {
 
     QString dir = SYSTEM_PREFIX_DIRECTORY;
 
-    a.setApplicationVersion("4.0");
+    a.setApplicationVersion("4.0.1");
     a.setGenericName(QApplication::translate("main", "Audio Player"));
-    a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/aboutsplash.svg"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
     a.setCopyrightHolder("Victor Tran");
-    a.setCopyrightYear("2022");
+    a.setCopyrightYear("2023");
     a.setOrganizationName("theSuite");
     a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thebeat/intro"));
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theBeat"));
@@ -115,7 +114,7 @@ int main(int argc, char* argv[]) {
         if (launchMessage.contains("files")) {
             QJsonArray files = launchMessage.value("files").toArray();
             MediaItem* firstItem = nullptr;
-            for (QJsonValue file : files) {
+            for (const QJsonValue& file : files) {
                 MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(file.toString()));
                 StateManager::instance()->playlist()->addItem(item);
                 if (!firstItem) firstItem = item;
@@ -141,7 +140,7 @@ int main(int argc, char* argv[]) {
     });
 
     QStringList files;
-    for (QString arg : parser.positionalArguments()) {
+    for (const QString& arg : parser.positionalArguments()) {
         if (QUrl::fromLocalFile(arg).isValid()) {
             files.append(QUrl::fromLocalFile(arg).toEncoded());
         } else {

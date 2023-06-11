@@ -49,6 +49,17 @@
   </provides>
   
   <releases>
+    <release version="4.0" date="2023-06-09">
+      <description>
+        <p>theBeat 4.0 contains some major improvements and changes:</p>
+        <ul>
+          <li>The new Command Palette allows you to zip between your audio tracks quickly</li>
+          <li>For tracks that have timed lyrics, they can be viewed in Zen Mode</li>
+          <li>Update to Qt 6</li>
+          <li>Podcasting support</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.0.1" date="2021-12-15">
       <description>
         <p>Contains updated translations and fixes</p>
