@@ -1,7 +1,7 @@
 on:
   push:
-    tags-ignore:
-      - v*
+    branches:
+      - '**'
   release:
     types: [published]
   pull_request:
