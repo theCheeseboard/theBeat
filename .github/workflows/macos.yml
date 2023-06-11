@@ -2,7 +2,7 @@ name: "macOS CI"
 on:
   push:
     tags-ignore:
-      - *
+      - v*
   release:
     types: [published]
   pull_request:
