@@ -1,7 +1,8 @@
 name: "Windows CI"
 on:
   push:
-    branches: [blueprint]
+    tags-ignore:
+      - *
   release:
     types: [published]
   pull_request:
