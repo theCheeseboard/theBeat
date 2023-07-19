@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TS version="2.1">
+<TS version="2.1" language="vi_VN">
   <context>
     <name>CdChecker</name>
     <message>
@@ -62,12 +62,12 @@
       <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Không thể nhổ đĩa ra</translation>
       <location filename="../cd/cdchecker-objc.mm" line="31" />
       <source>Couldn't eject the disc</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đảm bảo rằng ứng dụng khác không cố truy cập đĩa, rồi thử lại.</translation>
       <location filename="../cd/cdchecker-objc.mm" line="32" />
       <source>Make sure no other applications are accessing the disc, and then try again.</source>
     </message>
@@ -75,43 +75,43 @@
   <context>
     <name>MacBurnJob</name>
     <message>
-      <translation></translation>
+      <translation>Ghi đĩa hoàn thành</translation>
       <location filename="../burn/macburnjob.mm" line="79" />
       <source>Burn Complete</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ghi đĩa bị hủy</translation>
       <location filename="../burn/macburnjob.mm" line="82" />
       <source>Burn cancelled</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Không thể ghi đĩa: %1</translation>
       <location filename="../burn/macburnjob.mm" line="84" />
       <source>Failed to burn: %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đang xóa đĩa</translation>
       <location filename="../burn/macburnjob.mm" line="87" />
       <source>Erasing disc</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đang hoàn thành đĩa</translation>
       <location filename="../burn/macburnjob.mm" line="91" />
       <source>Finalising disc</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đang chuẩn bị ghi</translation>
       <location filename="../burn/macburnjob.mm" line="95" />
       <location filename="../burn/macburnjob.mm" line="97" />
       <source>Preparing to burn</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đang ghi bài %1</translation>
       <location filename="../burn/macburnjob.mm" line="99" />
       <source>Burning track %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Đang ghi đĩa</translation>
       <location filename="../burn/macburnjob.mm" line="101" />
       <source>Burning</source>
     </message>
@@ -119,22 +119,22 @@
   <context>
     <name>MacBurnJobPrivate</name>
     <message>
-      <translation></translation>
+      <translation>Ghi đĩa thành công</translation>
       <location filename="../burn/macburnjob.mm" line="69" />
       <source>Burn Successful</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Được ghi %1 vào đĩa</translation>
       <location filename="../burn/macburnjob.mm" line="69" />
       <source>Burned %1 to disc</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Ghi đĩa không thành công</translation>
       <location filename="../burn/macburnjob.mm" line="72" />
       <source>Burn Failure</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Không thể ghi %1 vào đĩa</translation>
       <location filename="../burn/macburnjob.mm" line="72" />
       <source>Failed to burn %1 to disc</source>
     </message>
@@ -155,7 +155,7 @@
       <source>Burn on macOS</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Vui lòng chèn một đĩa CD-R hoặc CD-RW</translation>
       <location filename="../burn/macburnprovider-objc.mm" line="90" />
       <source>Insert a CD-R or CD-RW</source>
     </message>
@@ -163,17 +163,17 @@
   <context>
     <name>MusicBrainzReleaseModel</name>
     <message>
-      <translation></translation>
+      <translation>Phát hành: %1</translation>
       <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="71" />
       <source>Released: %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Mã vạch %1</translation>
       <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="73" />
       <source>Barcode: %1</source>
     </message>
     <message>
-      <translation></translation>
+      <translation>Quốc gia: %1</translation>
       <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="75" />
       <source>Country: %1</source>
     </message>

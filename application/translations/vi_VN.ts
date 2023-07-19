@@ -6,12 +6,12 @@
     <message>
         <location filename="../commandpalette/artistsalbumscommandpalettescope.cpp" line="+35"/>
         <source>Artists</source>
-        <translation type="unfinished">Nghệ sĩ</translation>
+        <translation>Nghệ sĩ</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Albums</source>
-        <translation type="unfinished">Đĩa nhạc</translation>
+        <translation>Đĩa nhạc</translation>
     </message>
 </context>
 <context>
@@ -296,12 +296,12 @@
     <message>
         <location filename="../library/librarymanager.cpp" line="+455"/>
         <source>20 Most Played Tracks</source>
-        <translation></translation>
+        <translation>20 Bài Được Phát Nhiều Nhất</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>20 Random Tracks</source>
-        <translation></translation>
+        <translation>20 Bài Ngẫu Nhiên</translation>
     </message>
 </context>
 <context>
@@ -405,7 +405,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location line="+16"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Xem</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -522,37 +522,37 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location line="+8"/>
         <source>Zen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Chế độ Thiền</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Increase Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Tăng âm lượng</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Up</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Decrease Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Giảm âm lượng</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Down</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Pause after current track</source>
-        <translation type="unfinished">Tạm dừng sau bài hát này</translation>
+        <translation>Tạm dừng sau bài hát này</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Shift+Esc</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Esc</translation>
     </message>
     <message>
         <location line="-120"/>
@@ -577,7 +577,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../mainwindow.cpp" line="-3"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Tạm dừng</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -690,7 +690,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location line="+23"/>
         <source>Album</source>
-        <translation>Album</translation>
+        <translation>Đĩa nhạc</translation>
     </message>
 </context>
 <context>
@@ -740,17 +740,17 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../print/printsettings.ui" line="+25"/>
         <source>PRINT TYPE</source>
-        <translation></translation>
+        <translation>KIỂU IN</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Track Listing</source>
-        <translation></translation>
+        <translation>Danh sách bài</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Jewel Case Insert</source>
-        <translation></translation>
+        <translation>Giấy hộp đĩa</translation>
     </message>
 </context>
 <context>
@@ -763,19 +763,21 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location line="+21"/>
         <source>Reset Library</source>
-        <translation></translation>
+        <translation>Đặt lại thư viện</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>This is it!</source>
-        <translation></translation>
+        <translation>Sẵn sàng chưa?</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Resetting the library will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
-        <translation></translation>
+        <translation>Khi bạn đặt lại thư viện của bạn, các bài nhạc sẽ bị thêm vào theBeat sẽ bị quên, và theBeat sẽ quét lại thư mục nhạc của bạn lần sau theBeat khởi chạy.
+
+theBeat sẽ khởi chạy lại sau khi hoạt động đặt lại hoàn thành. Hoạt động này không thể bị hoàn tác.</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -855,32 +857,32 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../tageditor/tageditor.ui" line="+35"/>
         <source>Track Properties</source>
-        <translation></translation>
+        <translation>Thuộc tính bài</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>DETAILS MODIFIED</source>
-        <translation></translation>
+        <translation>CHI TIẾT BỊ THAY ĐỔI</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Save your changes to this track to keep them saved.</source>
-        <translation></translation>
+        <translation>Lưu các thay đổi của bạn để giữ nó.</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Revert</source>
-        <translation></translation>
+        <translation>Hoàn nguyên</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Save</source>
-        <translation></translation>
+        <translation>Lưu</translation>
     </message>
     <message>
         <location line="+82"/>
         <source>Track #</source>
-        <translation></translation>
+        <translation># Bài</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -890,22 +892,22 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location line="+7"/>
         <source>Genre</source>
-        <translation></translation>
+        <translation>Thể loại</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Length</source>
-        <translation></translation>
+        <translation>Độ dài</translation>
     </message>
     <message>
         <location line="-67"/>
         <source>Artist</source>
-        <translation></translation>
+        <translation>Nghệ sĩ</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Disc #</source>
-        <translation></translation>
+        <translation># Đĩa</translation>
     </message>
     <message>
         <location line="-24"/>
@@ -915,7 +917,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location line="+10"/>
         <source>Album</source>
-        <translation></translation>
+        <translation>Đĩa nhạc</translation>
     </message>
 </context>
 <context>
@@ -941,7 +943,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
         <source>Tracks</source>
-        <translation type="unfinished">Bài hát</translation>
+        <translation>Bài hát</translation>
     </message>
 </context>
 <context>
@@ -975,7 +977,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location filename="../trackswidget.cpp" line="+2"/>
         <source>Search for %1</source>
-        <translation></translation>
+        <translation>Tìm kiếm cho %1</translation>
     </message>
 </context>
 <context>
@@ -1085,17 +1087,17 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     <message>
         <location line="+68"/>
         <source>General</source>
-        <translation type="unfinished">Chung</translation>
+        <translation>Chung</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Appearance</source>
-        <translation type="unfinished">Giao diện</translation>
+        <translation>Giao diện</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Library</source>
-        <translation type="unfinished">Thư viện</translation>
+        <translation>Thư viện</translation>
     </message>
 </context>
 </TS>
