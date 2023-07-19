@@ -42,6 +42,7 @@ OtherSourcesWidget::OtherSourcesWidget(QWidget* parent) :
 
     ui->mainStack->setCurrentAnimation(tStackedWidget::Fade);
     ui->mainStack->setCurrentWidget(ui->noSourcesPage, false);
+    ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideVertical);
 
     for (auto source : StateManager::instance()->sources()->sources()) {
         addSource(source);
