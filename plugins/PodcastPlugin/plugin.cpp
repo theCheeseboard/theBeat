@@ -39,7 +39,7 @@ inline void initResources() {
 Plugin::Plugin() {
     d = new PluginPrivate();
 
-    tApplication::addPluginTranslator("podcast");
+    tApplication::addPluginTranslator(CNTP_SHARE_DIR);
 }
 
 Plugin::~Plugin() {

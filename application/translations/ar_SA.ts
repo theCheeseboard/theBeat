@@ -1104,7 +1104,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>مشغل الصوت</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>file</source>
         <translation>ملف</translation>
     </message>

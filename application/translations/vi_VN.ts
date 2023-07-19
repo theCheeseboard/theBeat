@@ -1073,7 +1073,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <translation>Bộ nghe nhạc</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>file</source>
         <translation>tệp</translation>
     </message>

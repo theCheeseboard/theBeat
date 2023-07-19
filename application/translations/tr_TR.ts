@@ -1069,7 +1069,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>Ses oynatıcı</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>file</source>
         <translation>dosya</translation>
     </message>

@@ -1072,7 +1072,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <translation>Musikafspiller</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>file</source>
         <translation>fil</translation>
     </message>

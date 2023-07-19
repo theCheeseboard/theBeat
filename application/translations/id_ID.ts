@@ -1065,7 +1065,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <translation>Pemutar Audio</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>

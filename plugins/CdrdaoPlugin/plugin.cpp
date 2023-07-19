@@ -34,7 +34,7 @@ struct PluginPrivate {
 
 Plugin::Plugin() {
     d = new PluginPrivate();
-    tApplication::addPluginTranslator("cdrdaoplugin");
+    tApplication::addPluginTranslator(CNTP_SHARE_DIR);
 }
 
 Plugin::~Plugin() {

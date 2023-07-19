@@ -1076,7 +1076,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Audio Player</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>file</source>
         <translation>Datei</translation>
     </message>

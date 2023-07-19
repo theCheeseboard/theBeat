@@ -972,7 +972,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>

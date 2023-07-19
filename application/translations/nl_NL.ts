@@ -1068,7 +1068,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <translation>Audiospeler</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>file</source>
         <translation>bestand</translation>
     </message>

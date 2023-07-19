@@ -19,22 +19,22 @@
  * *************************************/
 #include "plugin.h"
 
-#include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
-#include <QIcon>
-#include <tapplication.h>
 #include "radiopane.h"
+#include <QDebug>
+#include <QIcon>
+#include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
+#include <tapplication.h>
 
 struct PluginPrivate {
-    RadioPane* radioPane;
+        RadioPane* radioPane;
 };
 
 Plugin::Plugin() {
     d = new PluginPrivate();
 
-    tApplication::addPluginTranslator("internetradioplugin");
+    tApplication::addPluginTranslator(CNTP_SHARE_DIR);
 }
 
 Plugin::~Plugin() {

@@ -40,7 +40,7 @@ Plugin::Plugin() {
     int argc = 0;
     gst_init(&argc, nullptr);
 
-    tApplication::addPluginTranslator("gstplugin");
+    tApplication::addPluginTranslator(CNTP_SHARE_DIR);
 }
 
 Plugin::~Plugin() {

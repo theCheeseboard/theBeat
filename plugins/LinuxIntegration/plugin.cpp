@@ -19,36 +19,33 @@
  * *************************************/
 #include "plugin.h"
 
-#include <QDebug>
-#include <statemanager.h>
-#include <sourcemanager.h>
-#include <pluginmediasource.h>
-#include <QIcon>
-#include <tapplication.h>
-#include "nativeevents.h"
 #include "mpriswrapper.h"
+#include "nativeevents.h"
+#include <QDebug>
+#include <QIcon>
+#include <pluginmediasource.h>
+#include <sourcemanager.h>
+#include <statemanager.h>
+#include <tapplication.h>
 
 struct PluginPrivate {
-
 };
 
 Plugin::Plugin() {
     d = new PluginPrivate();
 
-    tApplication::addPluginTranslator("linuxintegration");
+    tApplication::addPluginTranslator(CNTP_SHARE_DIR);
 }
 
 Plugin::~Plugin() {
     delete d;
 }
 
-
 void Plugin::activate() {
-    //Capture keys
+    // Capture keys
     new NativeEvents();
     new MprisWrapper();
 }
 
 void Plugin::deactivate() {
-
 }
