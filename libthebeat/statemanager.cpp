@@ -69,7 +69,7 @@ VisualisationManager* StateManager::visualisation() {
     return d->visualisation;
 }
 
-UrlManager* StateManager::url() {
+IUrlManager* StateManager::url() {
     return d->url;
 }
 

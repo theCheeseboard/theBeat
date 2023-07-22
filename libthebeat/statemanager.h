@@ -28,7 +28,7 @@ class SourceManager;
 class BurnManager;
 class VisualisationManager;
 class ControlStripManager;
-class UrlManager;
+class IUrlManager;
 
 struct StateManagerPrivate;
 class MainWindow;
@@ -43,7 +43,7 @@ class LIBTHEBEAT_EXPORT StateManager : public QObject {
         SourceManager* sources();
         BurnManager* burn();
         VisualisationManager* visualisation();
-        UrlManager* url();
+        IUrlManager* url();
         ControlStripManager* controlStrip();
 
         QWidget* mainWindow();

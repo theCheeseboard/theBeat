@@ -23,9 +23,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(LIBTHEBEAT_LIBRARY)
-#  define LIBTHEBEAT_EXPORT Q_DECL_EXPORT
+    #define LIBTHEBEAT_EXPORT Q_DECL_EXPORT
 #else
-#  define LIBTHEBEAT_EXPORT Q_DECL_IMPORT
+    #define LIBTHEBEAT_EXPORT Q_DECL_IMPORT
 #endif
 
 #endif // LIBTHEBEAT_GLOBAL_H

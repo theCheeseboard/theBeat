@@ -1064,12 +1064,12 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+60"/>
+        <location filename="../main.cpp" line="+61"/>
         <source>Audio Player</source>
         <translation>Ses oynatıcı</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+35"/>
         <source>file</source>
         <translation>dosya</translation>
     </message>

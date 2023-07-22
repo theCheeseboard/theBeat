@@ -1071,12 +1071,12 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+60"/>
+        <location filename="../main.cpp" line="+61"/>
         <source>Audio Player</source>
         <translation>Audio Player</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+35"/>
         <source>file</source>
         <translation>Datei</translation>
     </message>

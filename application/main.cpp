@@ -35,6 +35,7 @@
 #include <plugins/tpluginmanagerpane.h>
 #include <statemanager.h>
 #include <tapplication.h>
+#include <thebeatcommon.h>
 #include <thebeatplugininterface.h>
 #include <tsettings.h>
 #include <tsettingswindow/tsettingswindow.h>
@@ -75,6 +76,8 @@ int main(int argc, char* argv[]) {
 #elif defined(Q_OS_MAC)
     a.setQuitOnLastWindowClosed(false);
 #endif
+
+    TheBeatCommon::addLibTheBeat(&a);
 
     tSettings settings;
 

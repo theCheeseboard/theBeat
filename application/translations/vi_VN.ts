@@ -1070,12 +1070,12 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+60"/>
+        <location filename="../main.cpp" line="+61"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+35"/>
         <source>file</source>
         <translation>tệp</translation>
     </message>

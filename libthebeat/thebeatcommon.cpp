@@ -1,5 +1,12 @@
 #include "thebeatcommon.h"
 
+#include "urlmanager.h"
+#include <dependencyinjection/tdimanager.h>
+
+void TheBeatCommon::addLibTheBeat(tApplication* application) {
+    application->dependencies()->addSingleton<IUrlManager, UrlManager>();
+}
+
 QString TheBeatCommon::durationToString(quint64 ms, bool zeroIsInfinity) {
     if (zeroIsInfinity && ms == 0) return "∞";
     QStringList parts;

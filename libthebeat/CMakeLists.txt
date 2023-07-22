@@ -41,7 +41,7 @@ set(HEADERS
         sourcemanager.h
         statemanager.h
         urlhandler.h
-        urlmanager.h
+        iurlmanager.h urlmanager.h
         visualisationengine.h
         visualisationmanager.h
         headerbackgroundcontroller.h

@@ -20,20 +20,21 @@
 #ifndef URLMANAGER_H
 #define URLMANAGER_H
 
+#include "iurlmanager.h"
 #include "libthebeat_global.h"
 #include <QObject>
 
 class UrlHandler;
 class MediaItem;
 struct UrlManagerPrivate;
-class LIBTHEBEAT_EXPORT UrlManager : public QObject {
+class LIBTHEBEAT_EXPORT UrlManager : public QObject,
+                                     public IUrlManager {
         Q_OBJECT
     public:
         explicit UrlManager(QObject* parent = nullptr);
 
-        MediaItem* itemForUrl(QUrl url);
-
-        void registerHandler(UrlHandler* handler);
+        MediaItem* itemForUrl(QUrl url) override;
+        void registerHandler(UrlHandler* handler) override;
 
     signals:
 
