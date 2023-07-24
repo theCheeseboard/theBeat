@@ -6,15 +6,16 @@
 #include <mediaitem.h>
 #include <playlist.h>
 #include <statemanager.h>
-#include <urlmanager.h>
 
 struct TracksCommandPaletteScopePrivate {
+        T_INJECTED(IUrlManager);
         QSharedPointer<LibraryModel> libraryModel;
 };
 
-TracksCommandPaletteScope::TracksCommandPaletteScope(QObject* parent) :
+TracksCommandPaletteScope::TracksCommandPaletteScope(QObject* parent, T_INJECTED(IUrlManager)) :
     tCommandPaletteScope{parent} {
     d = new TracksCommandPaletteScopePrivate();
+    T_INJECT_SAVE_D(IUrlManager);
     d->libraryModel.reset(LibraryManager::instance()->allTracks());
 }
 
@@ -47,7 +48,7 @@ void TracksCommandPaletteScope::filter(QString filter) {
 void TracksCommandPaletteScope::activate(QModelIndex index) {
     auto modelIndex = d->libraryModel->index(index.row(), index.column());
 
-    MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
+    MediaItem* item = T_INJECTED_SERVICE(IUrlManager)->itemForUrl(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
     StateManager::instance()->playlist()->addItem(item);
     StateManager::instance()->playlist()->setCurrentItem(item);
 }

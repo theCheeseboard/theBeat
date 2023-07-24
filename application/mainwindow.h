@@ -21,6 +21,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <dependencyinjection/tdibaseinterface.h>
+#include <dependencyinjection/tinjectedpointer.h>
+#include <iurlmanager.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,12 +31,14 @@ namespace Ui {
 }
 QT_END_NAMESPACE
 
+class IUrlManager;
 struct MainWindowPrivate;
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow,
+                   public tDIBaseInterface {
         Q_OBJECT
 
     public:
-        MainWindow(QWidget* parent = nullptr);
+        T_DI_CONSTRUCTOR MainWindow(QWidget* parent = nullptr, T_INJECT(IUrlManager));
         ~MainWindow();
 
         void show();

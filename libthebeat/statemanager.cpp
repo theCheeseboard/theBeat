@@ -32,7 +32,7 @@ struct StateManagerPrivate {
         BurnManager* burn;
         VisualisationManager* visualisation;
         ControlStripManager* controlStrip;
-        UrlManager* url;
+//        UrlManager* url;
 
         QWidget* mainWindow = nullptr;
 };
@@ -45,7 +45,7 @@ StateManager::StateManager(QObject* parent) :
     d->burn = new BurnManager();
     d->visualisation = new VisualisationManager();
     d->controlStrip = new ControlStripManager();
-    d->url = new UrlManager();
+//    d->url = new UrlManager();
 }
 
 StateManager* StateManager::instance() {
@@ -69,9 +69,9 @@ VisualisationManager* StateManager::visualisation() {
     return d->visualisation;
 }
 
-IUrlManager* StateManager::url() {
-    return d->url;
-}
+// IUrlManager* StateManager::url() {
+//     return d->url;
+// }
 
 ControlStripManager* StateManager::controlStrip() {
     return d->controlStrip;

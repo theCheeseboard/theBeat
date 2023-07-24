@@ -31,7 +31,7 @@ class LIBTHEBEAT_EXPORT UrlManager : public QObject,
                                      public IUrlManager {
         Q_OBJECT
     public:
-        explicit UrlManager(QObject* parent = nullptr);
+        T_DI_CONSTRUCTOR explicit UrlManager(QObject* parent = nullptr);
 
         MediaItem* itemForUrl(QUrl url) override;
         void registerHandler(UrlHandler* handler) override;

@@ -43,7 +43,7 @@
         <translation>برن ڈسک</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+69"/>
+        <location filename="../artistsalbumswidget.cpp" line="+71"/>
         <source>Albums in Library</source>
         <translation>لائبریری میں البمز</translation>
     </message>
@@ -238,7 +238,7 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="+31"/>
+        <location filename="../library/librarylistview.cpp" line="+33"/>
         <source>Add to Playlist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -342,7 +342,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+125"/>
+        <location filename="../mainwindow.cpp" line="+126"/>
         <source>Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -837,7 +837,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>TracksCommandPaletteScope</name>
     <message>
-        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
+        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+35"/>
         <source>Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -846,7 +846,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <name>TracksWidget</name>
     <message>
         <location filename="../trackswidget.ui" line="+65"/>
-        <location filename="../trackswidget.cpp" line="+59"/>
+        <location filename="../trackswidget.cpp" line="+60"/>
         <source>Tracks in Library</source>
         <translation type="unfinished">لائبریری میں پٹریوں</translation>
     </message>
@@ -914,7 +914,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished">قطار میں تمام فائلیں ڈال دیں</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="+191"/>
+        <location filename="../userplaylistswidget.cpp" line="+192"/>
         <location line="+2"/>
         <location line="+10"/>
         <location line="+2"/>
@@ -967,12 +967,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+61"/>
+        <location filename="../main.cpp" line="+63"/>
         <source>Audio Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+37"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>

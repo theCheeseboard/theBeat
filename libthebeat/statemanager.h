@@ -43,7 +43,7 @@ class LIBTHEBEAT_EXPORT StateManager : public QObject {
         SourceManager* sources();
         BurnManager* burn();
         VisualisationManager* visualisation();
-        IUrlManager* url();
+        //        IUrlManager* url();
         ControlStripManager* controlStrip();
 
         QWidget* mainWindow();

@@ -43,7 +43,7 @@
         <translation>حرق</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+69"/>
+        <location filename="../artistsalbumswidget.cpp" line="+71"/>
         <source>Albums in Library</source>
         <translation>ألبومات في المكتبة</translation>
     </message>
@@ -250,7 +250,7 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="+31"/>
+        <location filename="../library/librarylistview.cpp" line="+33"/>
         <source>Add to Playlist</source>
         <translation>أضف إلى قائمة التشغيل</translation>
     </message>
@@ -373,7 +373,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+125"/>
+        <location filename="../mainwindow.cpp" line="+126"/>
         <source>Tracks</source>
         <translation>المسارات</translation>
     </message>
@@ -965,7 +965,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
 <context>
     <name>TracksCommandPaletteScope</name>
     <message>
-        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
+        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+35"/>
         <source>Tracks</source>
         <translation type="unfinished">المسارات</translation>
     </message>
@@ -974,7 +974,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     <name>TracksWidget</name>
     <message>
         <location filename="../trackswidget.ui" line="+65"/>
-        <location filename="../trackswidget.cpp" line="+59"/>
+        <location filename="../trackswidget.cpp" line="+60"/>
         <source>Tracks in Library</source>
         <translation>المسارات في المكتبة</translation>
     </message>
@@ -1042,7 +1042,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <translation>حرق</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="+92"/>
+        <location filename="../userplaylistswidget.cpp" line="+93"/>
         <source>New Playlist</source>
         <translation>قائمة تشغيل جديدة</translation>
     </message>
@@ -1099,12 +1099,12 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+61"/>
+        <location filename="../main.cpp" line="+63"/>
         <source>Audio Player</source>
         <translation>مشغل الصوت</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+37"/>
         <source>file</source>
         <translation>ملف</translation>
     </message>

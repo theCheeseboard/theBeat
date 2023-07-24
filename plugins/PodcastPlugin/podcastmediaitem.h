@@ -3,13 +3,15 @@
 
 #include "podcastitem.h"
 #include <QObject>
+#include <dependencyinjection/tinjectedpointer.h>
+#include <iurlmanager.h>
 #include <mediaitem.h>
 
 struct PodcastMediaItemPrivate;
 class PodcastMediaItem : public MediaItem {
         Q_OBJECT
     public:
-        PodcastMediaItem(PodcastItemPtr podcastItem);
+        PodcastMediaItem(PodcastItemPtr podcastItem, T_INJECT(IUrlManager));
         ~PodcastMediaItem();
 
     private:

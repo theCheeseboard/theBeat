@@ -43,7 +43,7 @@
         <translation>Brennen</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+69"/>
+        <location filename="../artistsalbumswidget.cpp" line="+71"/>
         <source>Albums in Library</source>
         <translation>Alben in der Bibliothek</translation>
     </message>
@@ -242,7 +242,7 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="+31"/>
+        <location filename="../library/librarylistview.cpp" line="+33"/>
         <source>Add to Playlist</source>
         <translation>Zur Playlist hinzufügen</translation>
     </message>
@@ -361,7 +361,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+125"/>
+        <location filename="../mainwindow.cpp" line="+126"/>
         <source>Tracks</source>
         <translation>Titel</translation>
     </message>
@@ -941,7 +941,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
 <context>
     <name>TracksCommandPaletteScope</name>
     <message>
-        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
+        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+35"/>
         <source>Tracks</source>
         <translation type="unfinished">Titel</translation>
     </message>
@@ -950,7 +950,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     <name>TracksWidget</name>
     <message>
         <location filename="../trackswidget.ui" line="+65"/>
-        <location filename="../trackswidget.cpp" line="+59"/>
+        <location filename="../trackswidget.cpp" line="+60"/>
         <source>Tracks in Library</source>
         <translation>Titel in der Bibliothek</translation>
     </message>
@@ -1018,7 +1018,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <translation>Alle einreihen</translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="+191"/>
+        <location filename="../userplaylistswidget.cpp" line="+192"/>
         <location line="+2"/>
         <location line="+10"/>
         <location line="+2"/>
@@ -1071,12 +1071,12 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+61"/>
+        <location filename="../main.cpp" line="+63"/>
         <source>Audio Player</source>
         <translation>Audio Player</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+37"/>
         <source>file</source>
         <translation>Datei</translation>
     </message>

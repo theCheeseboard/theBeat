@@ -23,6 +23,8 @@
 #include "library/librarymanager.h"
 #include <QListWidgetItem>
 #include <abstractlibrarybrowser.h>
+#include <dependencyinjection/tinjectedpointer.h>
+#include <iurlmanager.h>
 
 namespace Ui {
     class UserPlaylistsWidget;
@@ -33,7 +35,7 @@ class UserPlaylistsWidget : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
-        explicit UserPlaylistsWidget(QWidget* parent = nullptr);
+        explicit UserPlaylistsWidget(QWidget* parent = nullptr, T_INJECT(IUrlManager));
         ~UserPlaylistsWidget();
 
         void setTopPadding(int padding);

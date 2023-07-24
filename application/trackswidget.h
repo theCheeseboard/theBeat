@@ -21,6 +21,8 @@
 #define TRACKSWIDGET_H
 
 #include <abstractlibrarybrowser.h>
+#include <dependencyinjection/tinjectedpointer.h>
+#include <iurlmanager.h>
 
 namespace Ui {
     class TracksWidget;
@@ -31,7 +33,7 @@ class TracksWidget : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
-        explicit TracksWidget(QWidget* parent = nullptr);
+        explicit TracksWidget(QWidget* parent = nullptr, T_INJECT(IUrlManager));
         ~TracksWidget();
 
         ListInformation currentListInformation();

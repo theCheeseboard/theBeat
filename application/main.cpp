@@ -30,6 +30,8 @@
 #include <QDir>
 #include <QJsonArray>
 #include <QUrl>
+#include <dependencyinjection/tdimanager.h>
+#include <dependencyinjection/tinjectedpointer.h>
 #include <playlist.h>
 #include <plugins/tpluginmanager.h>
 #include <plugins/tpluginmanagerpane.h>
@@ -81,7 +83,9 @@ int main(int argc, char* argv[]) {
 
     tSettings settings;
 
-    StateManager::instance()->url()->registerHandler(new QtMultimediaUrlHandler());
+    auto urlManager = a.dependencies()->tBaseDIManager::requiredService<IUrlManager>();
+
+    urlManager->registerHandler(new QtMultimediaUrlHandler());
 
     StateManager::instance()->visualisation()->registerEngine("scope", new ScopeVisualisation());
     StateManager::instance()->visualisation()->setCurrentEngine("scope");
@@ -111,14 +115,14 @@ int main(int argc, char* argv[]) {
     });
     tStyleManager::setOverrideStyleForApplication(settings.value("theme/mode").toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
 
-    MainWindow* w = new MainWindow();
+    auto w = a.dependencies()->construct<MainWindow>();
 
     QObject::connect(&a, &tApplication::singleInstanceMessage, [=](QJsonObject launchMessage) {
         if (launchMessage.contains("files")) {
             QJsonArray files = launchMessage.value("files").toArray();
             MediaItem* firstItem = nullptr;
             for (const QJsonValue& file : files) {
-                MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(file.toString()));
+                MediaItem* item = urlManager->itemForUrl(QUrl(file.toString()));
                 StateManager::instance()->playlist()->addItem(item);
                 if (!firstItem) firstItem = item;
             }
@@ -136,7 +140,7 @@ int main(int argc, char* argv[]) {
         w->activateWindow();
     });
     QObject::connect(&a, &tApplication::openFile, [=](QString file) {
-        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
+        MediaItem* item = urlManager->itemForUrl(QUrl::fromLocalFile(file));
         StateManager::instance()->playlist()->addItem(item);
         StateManager::instance()->playlist()->setCurrentItem(item);
         StateManager::instance()->playlist()->play();
@@ -189,7 +193,7 @@ int main(int argc, char* argv[]) {
 
     MediaItem* firstItem = nullptr;
     for (QString file : files) {
-        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(file));
+        MediaItem* item = urlManager->itemForUrl(QUrl(file));
         StateManager::instance()->playlist()->addItem(item);
         if (!firstItem) firstItem = item;
     }

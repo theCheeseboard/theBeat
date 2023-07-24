@@ -30,19 +30,20 @@
 #include <playlist.h>
 #include <statemanager.h>
 #include <tinputdialog.h>
-#include <urlmanager.h>
 
 struct UserPlaylistsWidgetPrivate {
+        T_INJECTED(IUrlManager);
         int currentPlaylist = -1;
         QString currentPlaylistName;
 };
 
-UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent) :
+UserPlaylistsWidget::UserPlaylistsWidget(QWidget* parent, T_INJECTED(IUrlManager)) :
     AbstractLibraryBrowser(parent),
     ui(new Ui::UserPlaylistsWidget) {
     ui->setupUi(this);
 
     d = new UserPlaylistsWidgetPrivate();
+    T_INJECT_SAVE_D(IUrlManager);
 
     connect(LibraryManager::instance(), &LibraryManager::playlistsChanged, this, &UserPlaylistsWidget::updatePlaylists);
     connect(LibraryManager::instance(), &LibraryManager::playlistChanged, this, [this](int id) {
@@ -234,7 +235,7 @@ void UserPlaylistsWidget::on_enqueueAllButton_clicked() {
     for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
         if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) continue;
 
-        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
+        MediaItem* item = T_INJECTED_SERVICE(IUrlManager)->itemForUrl(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
     }
 }

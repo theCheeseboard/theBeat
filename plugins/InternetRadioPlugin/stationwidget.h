@@ -23,6 +23,8 @@
 #include "radioinfoclient.h"
 #include <QCoroTask>
 #include <QWidget>
+#include <dependencyinjection/tinjectedpointer.h>
+#include <iurlmanager.h>
 
 namespace Ui {
     class StationWidget;
@@ -33,7 +35,7 @@ class StationWidget : public QWidget {
         Q_OBJECT
 
     public:
-        explicit StationWidget(RadioInfoClient::Station station, QWidget* parent = nullptr);
+        explicit StationWidget(RadioInfoClient::Station station, QWidget* parent = nullptr, T_INJECT(IUrlManager));
         ~StationWidget();
 
     private slots:

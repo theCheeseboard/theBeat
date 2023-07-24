@@ -21,6 +21,8 @@
 #define ARTISTSALBUMSWIDGET_H
 
 #include <abstractlibrarybrowser.h>
+#include <dependencyinjection/tinjectedpointer.h>
+#include <iurlmanager.h>
 
 namespace Ui {
     class ArtistsAlbumsWidget;
@@ -32,7 +34,7 @@ class ArtistsAlbumsWidget : public AbstractLibraryBrowser {
         Q_OBJECT
 
     public:
-        explicit ArtistsAlbumsWidget(QWidget* parent = nullptr);
+        explicit ArtistsAlbumsWidget(QWidget* parent = nullptr, T_INJECT(IUrlManager));
         ~ArtistsAlbumsWidget();
 
         enum Type {

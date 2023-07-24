@@ -21,23 +21,24 @@
 #include "ui_stationwidget.h"
 
 #include "radioinfoclient.h"
-#include <playlist.h>
-#include <statemanager.h>
-#include <urlmanager.h>
 #include <QException>
 #include <QPointer>
+#include <playlist.h>
+#include <statemanager.h>
 
 struct StationWidgetPrivate {
-    RadioInfoClient::Station station;
+        T_INJECTED(IUrlManager);
+        RadioInfoClient::Station station;
 };
 
-StationWidget::StationWidget(RadioInfoClient::Station station, QWidget* parent) :
+StationWidget::StationWidget(RadioInfoClient::Station station, QWidget* parent, T_INJECTED(IUrlManager)) :
     QWidget(parent),
     ui(new Ui::StationWidget) {
     ui->setupUi(this);
 
     d = new StationWidgetPrivate();
     d->station = station;
+    T_INJECT_SAVE_D(IUrlManager);
 
     ui->nameLabel->setText(station.name);
     ui->secondaryLabel->setText(station.country);
@@ -59,7 +60,7 @@ void StationWidget::on_playButton_clicked() {
     RadioInfoClient::countClick(d->station);
 
     // Add the station URL to the queue and play it
-    MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(d->station.streamUrl));
+    MediaItem* item = T_INJECTED_SERVICE(IUrlManager)->itemForUrl(QUrl(d->station.streamUrl));
     StateManager::instance()->playlist()->addItem(item);
     StateManager::instance()->playlist()->setCurrentItem(item);
 }

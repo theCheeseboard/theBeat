@@ -12,9 +12,10 @@
 #include <statemanager.h>
 #include <tinputdialog.h>
 #include <tpopover.h>
-#include <urlmanager.h>
 
 struct LibraryListViewPrivate {
+        T_INJECTED(IUrlManager);
+
         QMenu* addToPlaylistOptions;
         QMenu* removeFromPlaylistMenu;
         QMenu* removeFromLibraryMenu;
@@ -22,9 +23,10 @@ struct LibraryListViewPrivate {
         int playlistId = -1;
 };
 
-LibraryListView::LibraryListView(QWidget* parent) :
+LibraryListView::LibraryListView(QWidget* parent, T_INJECTED(IUrlManager)) :
     QListView(parent) {
     d = new LibraryListViewPrivate();
+    T_INJECT_SAVE_D(IUrlManager);
 
     d->addToPlaylistOptions = new QMenu(this);
     d->addToPlaylistOptions->setIcon(QIcon::fromTheme("list-add"));
@@ -65,7 +67,7 @@ LibraryListView::LibraryListView(QWidget* parent) :
             popover->setPopoverWidth(400);
             connect(p, &LibraryErrorPopover::rejected, popover, &tPopover::dismiss);
             connect(p, &LibraryErrorPopover::accepted, popover, [=](QString newPath) {
-                MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(newPath));
+                MediaItem* item = T_INJECTED_SERVICE(IUrlManager)->itemForUrl(QUrl::fromLocalFile(newPath));
                 StateManager::instance()->playlist()->addItem(item);
                 StateManager::instance()->playlist()->setCurrentItem(item);
 
@@ -77,7 +79,7 @@ LibraryListView::LibraryListView(QWidget* parent) :
             return;
         }
 
-        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
+        MediaItem* item = T_INJECTED_SERVICE(IUrlManager)->itemForUrl(QUrl::fromLocalFile(index.data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
         StateManager::instance()->playlist()->setCurrentItem(item);
     };

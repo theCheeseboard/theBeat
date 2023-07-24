@@ -36,6 +36,7 @@
 #include <urlmanager.h>
 
 struct ArtistsAlbumsWidgetPrivate {
+        T_INJECTED(IUrlManager);
         ArtistsAlbumsWidget::Type type;
         int topPadding = 0;
 
@@ -43,12 +44,13 @@ struct ArtistsAlbumsWidgetPrivate {
         QString listName;
 };
 
-ArtistsAlbumsWidget::ArtistsAlbumsWidget(QWidget* parent) :
+ArtistsAlbumsWidget::ArtistsAlbumsWidget(QWidget* parent, T_INJECTED(IUrlManager)) :
     AbstractLibraryBrowser(parent),
     ui(new Ui::ArtistsAlbumsWidget) {
     ui->setupUi(this);
 
     d = new ArtistsAlbumsWidgetPrivate();
+    T_INJECT_SAVE_D(IUrlManager);
     connect(LibraryManager::instance(), &LibraryManager::libraryChanged, this, &ArtistsAlbumsWidget::updateData);
 
     connect(StateManager::instance()->burn(), &BurnManager::backendRegistered, this, &ArtistsAlbumsWidget::updateBurn);
@@ -217,7 +219,7 @@ void ArtistsAlbumsWidget::on_enqueueAllButton_clicked() {
     for (int i = 0; i < ui->tracksList->model()->rowCount(); i++) {
         if (ui->tracksList->model()->index(i, 0).data(LibraryModel::ErrorRole).value<LibraryModel::Errors>() != LibraryModel::NoError) continue;
 
-        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
+        MediaItem* item = T_INJECTED_SERVICE(IUrlManager)->itemForUrl(QUrl::fromLocalFile(ui->tracksList->model()->index(i, 0).data(LibraryModel::PathRole).toString()));
         StateManager::instance()->playlist()->addItem(item);
     }
 }

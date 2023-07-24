@@ -6,9 +6,9 @@
 #include <QTimer>
 #include <QUrl>
 #include <statemanager.h>
-#include <urlmanager.h>
 
 struct PodcastMediaItemPrivate {
+        T_INJECTED(IUrlManager);
         MediaItem* parent;
         PodcastItemPtr podcastItem;
         QImage podcastArt;
@@ -19,10 +19,11 @@ struct PodcastMediaItemPrivate {
         bool playDone = false;
 };
 
-PodcastMediaItem::PodcastMediaItem(PodcastItemPtr podcastItem) {
+PodcastMediaItem::PodcastMediaItem(PodcastItemPtr podcastItem, T_INJECTED(IUrlManager)) {
     d = new PodcastMediaItemPrivate();
+    T_INJECT_SAVE_D(IUrlManager);
     d->podcastItem = podcastItem;
-    d->parent = StateManager::instance()->url()->itemForUrl(QUrl(podcastItem->playUrl()));
+    d->parent = T_INJECTED_SERVICE(IUrlManager)->itemForUrl(QUrl(podcastItem->playUrl()));
     d->podcastArt = QCoro::waitFor(podcastItem->image());
     d->initialPlayed = d->podcastItem->played();
 

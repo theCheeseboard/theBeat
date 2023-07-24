@@ -43,7 +43,7 @@
         <translation>Vypálit CD</translation>
     </message>
     <message>
-        <location filename="../artistsalbumswidget.cpp" line="+69"/>
+        <location filename="../artistsalbumswidget.cpp" line="+71"/>
         <source>Albums in Library</source>
         <translation>Alba v knihovně</translation>
     </message>
@@ -229,7 +229,7 @@
 <context>
     <name>LibraryListView</name>
     <message>
-        <location filename="../library/librarylistview.cpp" line="+31"/>
+        <location filename="../library/librarylistview.cpp" line="+33"/>
         <source>Add to Playlist</source>
         <translation>Přidat to playlistu</translation>
     </message>
@@ -334,7 +334,7 @@
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+125"/>
+        <location filename="../mainwindow.cpp" line="+126"/>
         <source>Tracks</source>
         <translation></translation>
     </message>
@@ -831,7 +831,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>TracksCommandPaletteScope</name>
     <message>
-        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
+        <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+35"/>
         <source>Tracks</source>
         <translation></translation>
     </message>
@@ -840,7 +840,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     <name>TracksWidget</name>
     <message>
         <location filename="../trackswidget.ui" line="+65"/>
-        <location filename="../trackswidget.cpp" line="+59"/>
+        <location filename="../trackswidget.cpp" line="+60"/>
         <source>Tracks in Library</source>
         <translation></translation>
     </message>
@@ -908,7 +908,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation></translation>
     </message>
     <message>
-        <location filename="../userplaylistswidget.cpp" line="+92"/>
+        <location filename="../userplaylistswidget.cpp" line="+93"/>
         <source>New Playlist</source>
         <translation></translation>
     </message>
@@ -962,12 +962,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+61"/>
+        <location filename="../main.cpp" line="+63"/>
         <source>Audio Player</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+37"/>
         <source>file</source>
         <translation></translation>
     </message>

@@ -2,11 +2,12 @@
 #define IURLMANAGER_H
 
 #include <QUrl>
+#include <dependencyinjection/tdibaseinterface.h>
 
 class MediaItem;
 class UrlHandler;
 
-class IUrlManager {
+class IUrlManager : public tDIBaseInterface {
         Q_GADGET
 
     public:

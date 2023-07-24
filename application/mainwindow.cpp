@@ -59,9 +59,9 @@
     #include "updatechecker.h"
 #endif
 
-#include <urlmanager.h>
-
 struct MainWindowPrivate {
+        T_INJECTED(IUrlManager);
+
         tCsdTools csd;
 
         tSettings settings;
@@ -69,13 +69,14 @@ struct MainWindowPrivate {
         QFrame* topBarLine;
 };
 
-MainWindow::MainWindow(QWidget* parent) :
+MainWindow::MainWindow(QWidget* parent, T_INJECTED(IUrlManager)) :
     QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
     StateManager::instance()->setMainWindow(this);
 
     d = new MainWindowPrivate();
+    T_INJECT_SAVE_D(IUrlManager);
 
     d->topBarLine = new QFrame(this);
     d->topBarLine->setFrameShape(QFrame::VLine);
@@ -290,7 +291,7 @@ void MainWindow::on_actionOpen_File_triggered() {
     dialog->setFileMode(QFileDialog::ExistingFiles);
     connect(dialog, &QFileDialog::filesSelected, this, [=](QStringList files) {
         for (QString file : files) {
-            MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
+            MediaItem* item = T_INJECTED_SERVICE(IUrlManager)->itemForUrl(QUrl::fromLocalFile(file));
             StateManager::instance()->playlist()->addItem(item);
         }
     });
@@ -351,7 +352,7 @@ bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
             e->setDropAction(Qt::CopyAction);
             if (e->mimeData()->hasUrls()) {
                 for (QUrl url : e->mimeData()->urls()) {
-                    StateManager::instance()->playlist()->addItem(StateManager::instance()->url()->itemForUrl(url));
+                    StateManager::instance()->playlist()->addItem(T_INJECTED_SERVICE(IUrlManager)->itemForUrl(url));
                 }
                 e->acceptProposedAction();
             }
@@ -453,7 +454,7 @@ void MainWindow::on_actionOpen_URL_triggered() {
     QString url = tInputDialog::getText(this, tr("Open URL"), tr("Enter the URL you'd like to open"), QLineEdit::Normal, "", &ok);
 
     if (ok) {
-        MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl(url));
+        MediaItem* item = T_INJECTED_SERVICE(IUrlManager)->itemForUrl(QUrl(url));
         if (!item) {
             tMessageBox messageBox(this);
             messageBox.setTitleBarText(tr("Can't open that URL"));
