@@ -4,7 +4,7 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
-  <Identity Name="35258VictorTran.theBeatAudioPlayer" Version="4.0.1.0" Publisher="CN=9DF264BB-CC81-436C-BAAA-0CC89B464F60, OID.2.25.311729368913984317654407730594956997722=1" ProcessorArchitecture="${APPX_ARCH}" />
+  <Identity Name="35258VictorTran.theBeatAudioPlayer" Version="${APPX_VERSION}" Publisher="CN=9DF264BB-CC81-436C-BAAA-0CC89B464F60" ProcessorArchitecture="${APPX_ARCH}" />
   <Properties>
     <DisplayName>theBeat Audio Player</DisplayName>
     <PublisherDisplayName>Victor Tran</PublisherDisplayName>
