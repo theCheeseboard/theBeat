@@ -58,6 +58,7 @@ jobs:
           version: ${{ steps.vars.outputs.qtVersion }}
           arch: ${{ matrix.qtArch }}
           modules: addons.qtmultimedia addons.qtwebsockets qt5compat
+          cache: true
       - name: Set up MSVC
         uses: ilammy/msvc-dev-cmd@v1.12.0
         with:
