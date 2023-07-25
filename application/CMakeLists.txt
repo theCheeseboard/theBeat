@@ -119,6 +119,7 @@ cntp_target_appstream_metainfo_file(thebeat
     BLUEPRINT_METAINFO_FILE com.vicr123.thebeat_blueprint.metainfo.xml)
 cntp_defaults_file(thebeat
     DEFAULTS_FILE thebeat.conf)
+cntp_winappx(thebeat appxmanifest.xml)
 
 target_link_libraries(thebeat Qt::Widgets Qt::DBus Qt::Sql Qt::PrintSupport libcontemporary libthebeat)
 target_include_directories(thebeat PUBLIC ../libthebeat/)

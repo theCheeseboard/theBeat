@@ -67,7 +67,7 @@ jobs:
         uses: vicr123/libcontemporary/install-libcontemporary@actions
         with:
           qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
-          commitish: features/win-aarch64
+          commitish: features/winappx
           arch: ${{ matrix.buildArch }}
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build contemporary-theme"
@@ -109,6 +109,11 @@ jobs:
         with:
           name: ${{ format('thebeat-win-{0}', matrix.buildArch) }}
           path: ${{ steps.deploy.outputs.package }}
+      - uses: actions/upload-artifact@v1
+        name: Upload appx Artifact to GitHub Actions
+        with:
+          name: "thebeat-win-appx"
+          path: ${{ steps.deploy.outputs.appxPackage }}
   release:
     permissions:
       contents: write
