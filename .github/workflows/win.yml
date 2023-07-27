@@ -13,6 +13,12 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest]
+        arch: [amd64, amd64_arm64]
+        include:
+          - arch: amd64
+            qtArch: win64_msvc2019_64
+          - arch: amd64_arm64
+            qtArch: win64_msvc2019_arm64
     runs-on: ${{ matrix.os }}
     steps:
       - uses: vicr123/libcontemporary/prepare-vars@actions
@@ -24,15 +30,17 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{ steps.vars.outputs.qtVersion }}
-          arch: win64_msvc2019_64
+          arch: ${{ matrix.qtArch }}
           modules: addons.qtmultimedia addons.qtwebsockets qt5compat
       - name: Set up MSVC
         uses: ilammy/msvc-dev-cmd@v1.12.0
         with:
           sdk: 10.0.22000.0
+          arch: ${{ matrix.arch }}
       - uses: vicr123/libcontemporary/install-libcontemporary@actions
         with:
           qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
+          commitish: features/win-aarch64
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build contemporary-theme"
         with:
