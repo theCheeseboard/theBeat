@@ -26,6 +26,13 @@ jobs:
       - name: Install ninja
         run: |
           choco install ninja
+      - name: Install Host Qt
+        uses: jurplel/install-qt-action@v3
+        if: matrix.qtArch != 'win64_msvc2019_64'
+        with:
+          version: ${{ steps.vars.outputs.qtVersion }}
+          arch: win64_msvc2019_64
+          modules: addons.qtmultimedia addons.qtwebsockets qt5compat
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
