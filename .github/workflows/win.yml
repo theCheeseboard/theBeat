@@ -90,7 +90,7 @@ jobs:
         with:
           project: "."
           arch: ${{ matrix.buildArch }}
-          extra-cmake-args: ${{ format('-DTAGLIB_ROOT=D:\a\theBeat\cmake-install\{0}', 'x64') }}
+          extra-cmake-args: ${{ format('-DTAGLIB_ROOT={0}/cmake-install/{1}', env.RUNNER_WORKSPACE, matrix.buildArch) }}
       - name: "Prepare for deployment"
         shell: bash
         run: |
