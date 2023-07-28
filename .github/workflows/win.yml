@@ -33,6 +33,18 @@ jobs:
           version: ${{ steps.vars.outputs.qtVersion }}
           arch: win64_msvc2019_64
           modules: addons.qtmultimedia addons.qtwebsockets qt5compat
+      - name: Set up Host MSVC
+        uses: ilammy/msvc-dev-cmd@v1.12.0
+        if: matrix.qtArch != 'win64_msvc2019_64'
+        with:
+          sdk: 10.0.22000.0
+          arch: amd64
+      - name: Build Host libcontemporary
+        uses: vicr123/libcontemporary/install-libcontemporary@actions
+        if: matrix.qtArch != 'win64_msvc2019_64'
+        with:
+          qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
+          commitish: features/win-aarch64
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -44,7 +56,8 @@ jobs:
         with:
           sdk: 10.0.22000.0
           arch: ${{ matrix.arch }}
-      - uses: vicr123/libcontemporary/install-libcontemporary@actions
+      - name: Build libcontemporary
+        uses: vicr123/libcontemporary/install-libcontemporary@actions
         with:
           qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
           commitish: features/win-aarch64
