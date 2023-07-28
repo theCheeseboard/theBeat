@@ -17,8 +17,10 @@ jobs:
         include:
           - arch: amd64
             qtArch: win64_msvc2019_64
+            buildArch: x64
           - arch: amd64_arm64
             qtArch: win64_msvc2019_arm64
+            buildArch: arm64
     runs-on: ${{ matrix.os }}
     steps:
       - uses: vicr123/libcontemporary/prepare-vars@actions
@@ -45,6 +47,7 @@ jobs:
         with:
           qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
           commitish: features/win-aarch64
+          arch: x64
       - name: Install Qt
         uses: vicr123/install-qt-action@win-aarch64-test
         with:
@@ -61,17 +64,20 @@ jobs:
         with:
           qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
           commitish: features/win-aarch64
+          arch: ${{ matrix.buildArch }}
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build contemporary-theme"
         with:
           project: "vicr123/contemporary-theme"
           commitish: "blueprint"
+          arch: ${{ matrix.buildArch }}
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build taglib"
         with:
           project: "taglib/taglib"
           commitish: "v1.12"
           extra-cmake-args: -DBUILD_SHARED_LIBS=ON
+          arch: ${{ matrix.buildArch }}
       - uses: actions/checkout@v1
         with:
           submodules: 'recursive'
@@ -79,6 +85,7 @@ jobs:
         name: "Build project"
         with:
           project: "."
+          arch: ${{ matrix.buildArch }}
           extra-cmake-args: ${{ format('-DTAGLIB_ROOT=D:\a\theBeat\cmake-install\{0}', 'x64') }}
       - name: "Prepare for deployment"
         shell: bash
