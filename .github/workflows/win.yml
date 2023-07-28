@@ -38,7 +38,7 @@ jobs:
       - name: "Set Qt path"
         shell: bash
         run: |
-          echo "QT_HOST_PATH=$Qt6_PATH" >> $GITHUB_ENV
+          echo "QT_HOST_PATH=$Qt6_DIR" >> $GITHUB_ENV
       - name: Set up Host MSVC
         uses: ilammy/msvc-dev-cmd@v1.12.0
         if: matrix.qtArch != 'win64_msvc2019_64'
