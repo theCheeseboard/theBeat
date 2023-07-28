@@ -27,7 +27,7 @@ jobs:
         run: |
           choco install ninja
       - name: Install Host Qt
-        uses: jurplel/install-qt-action@v3
+        uses: vicr123/install-qt-action@win-aarch64-test
         if: matrix.qtArch != 'win64_msvc2019_64'
         with:
           version: ${{ steps.vars.outputs.qtVersion }}
@@ -46,7 +46,7 @@ jobs:
           qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
           commitish: features/win-aarch64
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: vicr123/install-qt-action@win-aarch64-test
         with:
           version: ${{ steps.vars.outputs.qtVersion }}
           arch: ${{ matrix.qtArch }}
