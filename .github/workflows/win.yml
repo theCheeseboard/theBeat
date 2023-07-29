@@ -107,7 +107,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         name: Upload Artifact to GitHub Actions
         with:
-          name: ${{ format('thebeat-win-', matrix.buildArch) }}
+          name: ${{ format('thebeat-win-{0}', matrix.buildArch) }}
           path: ${{ steps.deploy.outputs.package }}
   release:
     permissions:
