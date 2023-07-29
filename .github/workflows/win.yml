@@ -103,10 +103,11 @@ jobs:
         name: "Deploy project"
         with:
           subdir: "application"
+          arch: ${{ matrix.buildArch }}
       - uses: actions/upload-artifact@v1
         name: Upload Artifact to GitHub Actions
         with:
-          name: "thebeat-win"
+          name: ${{ format('thebeat-win-', matrix.buildArch) }}
           path: ${{ steps.deploy.outputs.package }}
   release:
     permissions:
