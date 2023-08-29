@@ -1,6 +1,7 @@
 name = "thebeat-integrations"
 main = "src/worker.ts"
 compatibility_date = "2023-08-21"
+account_id = "a51358e61277b82b08340a0f0b4f297a"
 
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
 # Note: Use secrets to store sensitive data.
