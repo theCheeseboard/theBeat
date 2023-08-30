@@ -32,7 +32,7 @@
 #include <urlmanager.h>
 
 struct PluginPrivate {
-        ScrobbleService* scrobbleService;
+    ScrobbleService* scrobbleService;
 };
 
 Plugin::Plugin() {

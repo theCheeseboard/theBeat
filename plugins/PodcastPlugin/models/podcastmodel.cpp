@@ -7,9 +7,10 @@
 #include <limits.h>
 #include <tapplication.h>
 #include <thebeatcommon.h>
+#include <QPointer>
 
 struct PodcastModelPrivate {
-        QPointer<Podcast> podcast;
+    QPointer<Podcast> podcast;
 };
 
 PodcastModel::PodcastModel(QObject* parent) :

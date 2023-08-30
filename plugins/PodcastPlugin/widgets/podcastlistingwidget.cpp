@@ -12,11 +12,12 @@
 #include <statemanager.h>
 #include <ticon.h>
 #include <tmessagebox.h>
+#include <QPointer>
 
 struct PodcastListingWidgetPrivate {
-        QPointer<Podcast> podcast;
-        HeaderBackgroundController* backgroundController;
-        PodcastModel* model;
+    QPointer<Podcast> podcast;
+    HeaderBackgroundController* backgroundController;
+    PodcastModel* model;
 };
 
 PodcastListingWidget::PodcastListingWidget(QWidget* parent) :

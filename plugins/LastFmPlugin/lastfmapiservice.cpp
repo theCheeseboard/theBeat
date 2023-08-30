@@ -10,12 +10,12 @@
 #include <tsettings.h>
 
 struct LastFmApiServicePrivate {
-        static constexpr const char* baseUrl = "https://api.thebeat.vicr123.com/lastfm";
-        QNetworkAccessManager mgr;
-        QString apiKey;
+    static constexpr const char* baseUrl = "https://api.thebeat.vicr123.com/lastfm";
+    QNetworkAccessManager mgr;
+    QString apiKey;
 
-        QList<LastFmApiService::Scrobble> pendingScrobbles;
-        bool sendingScrobbles = false;
+    QList<LastFmApiService::Scrobble> pendingScrobbles;
+    bool sendingScrobbles = false;
 };
 
 QString LastFmApiService::apiKey() {
@@ -48,7 +48,7 @@ QCoro::Task<QString> LastFmApiService::getUnauthenticatedToken() {
 
 QCoro::Task<> LastFmApiService::attemptLoginWithToken(QString token) {
     auto response = co_await LastFmApiService::instance()->get("auth.getSession", {
-                                                                                      {"token", token}
+        {"token", token}
     });
 
     auto session = response.value("session").toObject();
@@ -59,6 +59,8 @@ QCoro::Task<> LastFmApiService::attemptLoginWithToken(QString token) {
 }
 
 QCoro::Task<> LastFmApiService::scrobble() {
+    instance();
+
     auto sk = LastFmApiService::loggedInSessionKey();
     if (sk.isEmpty()) co_return;
 
@@ -154,23 +156,23 @@ QCoro::Task<QJsonObject> LastFmApiService::post(QString method, QJsonObject argu
 
 void LastFmApiService::loadPendingScrobbles() {
     tSettings settings;
-    d->pendingScrobbles = tRange(settings.delimitedList("lastfm/pending")).filter([](const QString& pendingScrobbleData) {
-                                                                              return !pendingScrobbleData.isEmpty();
-                                                                          })
-                              .map<Scrobble>([](const QString& scrobbleData) {
-                                  return Scrobble(QJsonDocument::fromJson(QByteArray::fromBase64(scrobbleData.toUtf8())).object());
-                              })
-                              .toList();
+    d->pendingScrobbles = tRange(settings.delimitedList("lastfm/pending")).filter([](const QString & pendingScrobbleData) {
+        return !pendingScrobbleData.isEmpty();
+    })
+    .map<Scrobble>([](const QString & scrobbleData) {
+        return Scrobble(QJsonDocument::fromJson(QByteArray::fromBase64(scrobbleData.toUtf8())).object());
+    })
+    .toList();
 }
 
 void LastFmApiService::savePendingScrobbles() {
     tSettings settings;
-    settings.setDelimitedList("lastfm/pending", tRange(d->pendingScrobbles).map<QString>([](const Scrobble& scrobble) {
-                                                                               QJsonObject obj;
-                                                                               scrobble.write(&obj, 0);
-                                                                               return QJsonDocument(obj).toJson(QJsonDocument::Compact).toBase64();
-                                                                           })
-                                                    .toList());
+    settings.setDelimitedList("lastfm/pending", tRange(d->pendingScrobbles).map<QString>([](const Scrobble & scrobble) {
+        QJsonObject obj;
+        scrobble.write(&obj, 0);
+        return QJsonDocument(obj).toJson(QJsonDocument::Compact).toBase64();
+    })
+    .toList());
 }
 
 LastFmApiException::LastFmApiException(int error, QString reason) {

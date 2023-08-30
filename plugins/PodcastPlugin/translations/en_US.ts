@@ -71,17 +71,17 @@
 <context>
     <name>PodcastItemDelegate</name>
     <message>
-        <location filename="../models/podcastmodel.cpp" line="94"/>
+        <location filename="../models/podcastmodel.cpp" line="95"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/podcastmodel.cpp" line="90"/>
+        <location filename="../models/podcastmodel.cpp" line="91"/>
         <source>Listened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../models/podcastmodel.cpp" line="96"/>
+        <location filename="../models/podcastmodel.cpp" line="97"/>
         <source>%1 remaining</source>
         <translation type="unfinished"></translation>
     </message>
@@ -137,21 +137,21 @@
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../widgets/podcastlistingwidget.cpp" line="61"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="62"/>
         <source>%n episodes</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../widgets/podcastlistingwidget.cpp" line="91"/>
-        <location filename="../widgets/podcastlistingwidget.cpp" line="108"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="92"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="109"/>
         <source>Up to date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/podcastlistingwidget.cpp" line="92"/>
-        <location filename="../widgets/podcastlistingwidget.cpp" line="109"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="93"/>
+        <location filename="../widgets/podcastlistingwidget.cpp" line="110"/>
         <source>You&apos;ve listened to every episode in this podcast.</source>
         <translation type="unfinished"></translation>
     </message>
