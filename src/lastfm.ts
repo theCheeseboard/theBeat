@@ -1,8 +1,8 @@
 import { Router } from 'itty-router'
 import { Env } from './worker';
 
-interface LastFmQuery {
-	method: "auth.getToken";
+interface LastFmGetQuery {
+	method: "auth.getToken" | "auth.getSession";
 }
 
 export const LastFmRouter = Router({
@@ -10,10 +10,11 @@ export const LastFmRouter = Router({
 });
 
 LastFmRouter.get("/", async (request, env: Env) => {
-	const query = request.query as unknown as LastFmQuery;
+	const query = request.query as unknown as LastFmGetQuery;
 
 	switch (query.method) {
 		case 'auth.getToken':
+		case 'auth.getSession':
 			break;
 		default:
 			return new Response("Bad Method", {
@@ -24,16 +25,24 @@ LastFmRouter.get("/", async (request, env: Env) => {
 	const response = await callLastFm({
 		...query
 	}, env);
-	return response;
+
+	const body = await response.arrayBuffer();
+
+	return new Response(body, {
+		status: response.status,
+		headers: {
+			"X-theBeat-Api-Key": env.LASTFM_API_KEY,
+			"Content-Type": "application/json"
+		}
+	});
 })
 
 async function callLastFm(args: any, env: Env) {
 	const modifiedArgs = {
 		...args,
-		"format": "json",
 		"api_key": env.LASTFM_API_KEY
 	};
-	const params = Object.keys(modifiedArgs).map(key => `${key}${modifiedArgs[key]}`).join("") + env.LASTFM_SHARED_SECRET;
+	const params = Object.keys(modifiedArgs).sort().map(key => `${key}${modifiedArgs[key]}`).join("") + env.LASTFM_SHARED_SECRET;
 
 	const encoder = new TextEncoder();
 	const data = encoder.encode(params);
@@ -42,8 +51,18 @@ async function callLastFm(args: any, env: Env) {
 
 	const argsWithSig = {
 		...modifiedArgs,
+		"format": "json",
 		"api_sig": hex
 	};
 
-	return await fetch(`https://ws.audioscrobbler.com/2.0/?${new URLSearchParams(argsWithSig).toString()}`)
+	console.log(params);
+
+	const url = `https://ws.audioscrobbler.com/2.0/?${new URLSearchParams(argsWithSig).toString()}`;
+	console.log(url);
+
+	return await fetch(url, {
+		headers: {
+			"User-Agent": "theBeatProxy/1.0 (vicr12345@gmail.com)"
+		}
+	})
 }
