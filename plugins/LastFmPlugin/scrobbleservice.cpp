@@ -58,7 +58,7 @@ void ScrobbleService::tryScrobble() {
     LastFmApiService::Scrobble scrobble;
     scrobble.artist = d->currentItem->authors().constFirst();
     scrobble.track = d->currentItem->title();
-    scrobble.timestamp = QString::number(QDateTime::currentSecsSinceEpoch());
+    scrobble.timestamp = QString::number(QDateTime::currentDateTimeUtc().addMSecs(-d->currentItem->elapsed()).toSecsSinceEpoch());
 
     LastFmApiService::pushScrobble(scrobble);
 
