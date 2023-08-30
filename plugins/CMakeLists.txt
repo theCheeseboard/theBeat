@@ -1,5 +1,6 @@
 add_subdirectory(InternetRadioPlugin)
 add_subdirectory(PodcastPlugin)
+add_subdirectory(LastFmPlugin)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 #    add_subdirectory(AvFoundationPlugin)
