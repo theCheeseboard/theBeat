@@ -201,7 +201,9 @@ LastFmApiService::Scrobble::Scrobble(QJsonObject object) {
 }
 
 LastFmApiService::Scrobble::Scrobble(MediaItem* mediaItem) {
-    artist = mediaItem->authors().constFirst();
+    if (!mediaItem->authors().isEmpty()) {
+        artist = mediaItem->authors().constFirst();
+    }
     track = mediaItem->title();
     timestamp = QString::number(QDateTime::currentDateTimeUtc().addMSecs(-mediaItem->elapsed()).toSecsSinceEpoch());
     album = mediaItem->album();
