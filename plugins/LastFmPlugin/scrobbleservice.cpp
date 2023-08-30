@@ -7,8 +7,8 @@
 #include <tlogger.h>
 
 struct ScrobbleServicePrivate {
-        MediaItem* currentItem = nullptr;
-        bool scrobbled = false;
+    MediaItem* currentItem = nullptr;
+    bool scrobbled = false;
 };
 
 ScrobbleService::ScrobbleService(QObject* parent) :
@@ -51,7 +51,7 @@ void ScrobbleService::tryScrobble() {
     if (d->currentItem->elapsed() < scrobbleThreshold) return; // Track should have played for at least 4 minutes or half the duration
 
     // Track should have valid metadata
-    if (d->currentItem->authors().isEmpty()) return;
+    if (d->currentItem->authors().isEmpty() && d->currentItem->album().isEmpty()) return;
 
     // We're okay to scrobble this
     tDebug("ScrobbleService") << "Enqueueing " << d->currentItem->title() << " for scrobble";
