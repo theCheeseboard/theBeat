@@ -4,19 +4,22 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus Network)
 find_package(libcontemporary)
 
 set(SOURCES
+        lastfmapiservice.cpp
+        scrobbleservice.cpp
         settings/lastfmloginpopover.cpp settings/lastfmloginpopover.ui
         settings/lastfmsettingspane.cpp settings/lastfmsettingspane.ui
         plugin.cpp
     )
 
 set(HEADERS
+        lastfmapiservice.h
+        scrobbleservice.h
         settings/lastfmloginpopover.h
         settings/lastfmsettingspane.h
         plugin.h
     )
 
-add_library(plugin-lastfm SHARED ${SOURCES} ${HEADERS}
-    lastfmapiservice.h lastfmapiservice.cpp)
+add_library(plugin-lastfm SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-lastfm PUBLIC ../../libthebeat/)
 
 cntp_init_plugin(thebeat plugin-lastfm 20 lastfm)

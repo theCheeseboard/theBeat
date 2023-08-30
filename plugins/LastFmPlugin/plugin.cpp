@@ -19,6 +19,8 @@
  * *************************************/
 #include "plugin.h"
 
+#include "lastfmapiservice.h"
+#include "scrobbleservice.h"
 #include "settings/lastfmsettingspane.h"
 #include <QDebug>
 #include <QIcon>
@@ -30,6 +32,7 @@
 #include <urlmanager.h>
 
 struct PluginPrivate {
+        ScrobbleService* scrobbleService;
 };
 
 Plugin::Plugin() {
@@ -46,7 +49,13 @@ void Plugin::activate() {
     tSettingsWindow::addStaticPane(10, "lastfm", [] {
         return new LastFmSettingsPane();
     });
+
+    d->scrobbleService = new ScrobbleService();
+
+    // Attempt to scrobble any remaining pending scrobbles
+    LastFmApiService::scrobble();
 }
 
 void Plugin::deactivate() {
+    delete d->scrobbleService;
 }

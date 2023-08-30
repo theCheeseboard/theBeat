@@ -14,12 +14,26 @@ class LastFmApiService : public QObject {
                 QString username;
         };
 
+        struct Scrobble {
+                Scrobble() = default;
+                explicit Scrobble(QJsonObject object);
+
+                QString artist;
+                QString track;
+                QString timestamp;
+
+                void write(QJsonObject* object, int index) const;
+        };
+
         static QString apiKey();
         static QString loggedInUser();
         static QString loggedInSessionKey();
         static void logout();
         static QCoro::Task<QString> getUnauthenticatedToken();
         static QCoro::Task<> attemptLoginWithToken(QString token);
+        static QCoro::Task<> scrobble();
+
+        static void pushScrobble(Scrobble scrobble);
 
     signals:
 
@@ -28,6 +42,10 @@ class LastFmApiService : public QObject {
 
         static LastFmApiService* instance();
         QCoro::Task<QJsonObject> get(QString method, QMap<QString, QString> arguments);
+        QCoro::Task<QJsonObject> post(QString method, QJsonObject arguments);
+
+        void loadPendingScrobbles();
+        void savePendingScrobbles();
 
         LastFmApiServicePrivate* d;
 };

@@ -85,7 +85,7 @@
 <context>
     <name>Plugin</name>
     <message>
-        <location filename="../plugin.cpp" line="45"/>
+        <location filename="../plugin.cpp" line="48"/>
         <source>last.fm</source>
         <translation type="unfinished"></translation>
     </message>
