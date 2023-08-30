@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QUrlQuery>
+#include <mediaitem.h>
 #include <ranges/trange.h>
 #include <tlogger.h>
 #include <tsettings.h>
@@ -194,12 +195,32 @@ LastFmApiService::Scrobble::Scrobble(QJsonObject object) {
     artist = object.value("artist[0]").toString();
     track = object.value("track[0]").toString();
     timestamp = object.value("timestamp[0]").toString();
+    album = object.value("album[0]").toString();
+    trackNumber = object.value("trackNumber[0]").toString();
+    duration = object.value("duration[0]").toString();
+}
+
+LastFmApiService::Scrobble::Scrobble(MediaItem* mediaItem) {
+    artist = mediaItem->authors().constFirst();
+    track = mediaItem->title();
+    timestamp = QString::number(QDateTime::currentDateTimeUtc().addMSecs(-mediaItem->elapsed()).toSecsSinceEpoch());
+    album = mediaItem->album();
+
+    auto trackNumber = mediaItem->metadata(QMediaMetaData::TrackNumber).toInt();
+    if (trackNumber != 0) {
+        this->trackNumber = QString::number(trackNumber);
+    }
+
+    duration = QString::number(mediaItem->duration() / 1000);
 }
 
 void LastFmApiService::Scrobble::write(QJsonObject* object, int index) const {
     object->insert(QStringLiteral("artist[%1]").arg(index), artist);
     object->insert(QStringLiteral("track[%1]").arg(index), track);
     object->insert(QStringLiteral("timestamp[%1]").arg(index), timestamp);
+    if (!album.isEmpty()) object->insert(QStringLiteral("album[%1]").arg(index), album);
+    if (!trackNumber.isEmpty()) object->insert(QStringLiteral("trackNumber[%1]").arg(index), trackNumber);
+    if (!duration.isEmpty()) object->insert(QStringLiteral("duration[%1]").arg(index), duration);
 }
 
 T_EXCEPTION_IMPL(LastFmApiException)

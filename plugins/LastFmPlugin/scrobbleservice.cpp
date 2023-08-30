@@ -55,11 +55,7 @@ void ScrobbleService::tryScrobble() {
 
     // We're okay to scrobble this
     tDebug("ScrobbleService") << "Enqueueing " << d->currentItem->title() << " for scrobble";
-    LastFmApiService::Scrobble scrobble;
-    scrobble.artist = d->currentItem->authors().constFirst();
-    scrobble.track = d->currentItem->title();
-    scrobble.timestamp = QString::number(QDateTime::currentDateTimeUtc().addMSecs(-d->currentItem->elapsed()).toSecsSinceEpoch());
-
+    LastFmApiService::Scrobble scrobble(d->currentItem);
     LastFmApiService::pushScrobble(scrobble);
 
     d->scrobbled = true;

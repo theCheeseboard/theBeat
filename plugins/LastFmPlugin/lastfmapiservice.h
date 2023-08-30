@@ -5,6 +5,7 @@
 #include <QObject>
 #include <texception.h>
 
+class MediaItem;
 struct LastFmApiServicePrivate;
 class LastFmApiService : public QObject {
         Q_OBJECT
@@ -17,10 +18,14 @@ class LastFmApiService : public QObject {
         struct Scrobble {
                 Scrobble() = default;
                 explicit Scrobble(QJsonObject object);
+                explicit Scrobble(MediaItem* mediaItem);
 
                 QString artist;
                 QString track;
                 QString timestamp;
+                QString album;
+                QString trackNumber;
+                QString duration;
 
                 void write(QJsonObject* object, int index) const;
         };
