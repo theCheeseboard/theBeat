@@ -84,6 +84,12 @@
             "type": "qt",
             "path": "/plugins/WinIntegration/translations/{lang}.ts",
             "baseLang": "en_US"
+        },
+        {
+            "name": "theBeat last.fm Integration",
+            "type": "qt",
+            "path": "/plugins/LastFmPlugin/translations/{lang}.ts",
+            "baseLang": "en_US"
         }
     ]
 }
