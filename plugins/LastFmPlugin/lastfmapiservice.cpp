@@ -49,9 +49,9 @@ QCoro::Task<QString> LastFmApiService::getUnauthenticatedToken() {
 }
 
 QCoro::Task<> LastFmApiService::attemptLoginWithToken(QString token) {
-    auto response = co_await LastFmApiService::instance()->get("auth.getSession", {
-                                                                                      {"token", token}
-    });
+    QMap<QString, QString> arguments;
+    arguments.insert("token", token);
+    auto response = co_await LastFmApiService::instance()->get("auth.getSession", arguments);
 
     auto session = response.value("session").toObject();
 
