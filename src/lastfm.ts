@@ -2,7 +2,7 @@ import { Router } from 'itty-router'
 import { Env } from './worker';
 
 interface LastFmPostQuery {
-	method: "track.scrobble"
+	method: "track.scrobble" | "track.updateNowPlaying";
 	[key: string]: any
 }
 
@@ -47,6 +47,7 @@ LastFmRouter.post("/", async (request, env: Env) => {
 
 	switch (json.method) {
 		case 'track.scrobble':
+		case 'track.updateNowPlaying':
 			break;
 		default:
 			return new Response("Bad Method", {
