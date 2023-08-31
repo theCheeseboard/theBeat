@@ -68,14 +68,13 @@ QCoro::Task<> LastFmApiService::scrobble() {
 
     instance()->d->sendingScrobbles = true;
 
+    auto toScrobble = tRange(instance()->d->pendingScrobbles).take(50).toList();
+    if (toScrobble.isEmpty()) {
+        instance()->d->sendingScrobbles = false;
+        co_return;
+    }
+
     try {
-        auto toScrobble = tRange(instance()->d->pendingScrobbles).take(50).toList();
-
-        if (toScrobble.isEmpty()) {
-            instance()->d->sendingScrobbles = false;
-            co_return;
-        }
-
         QJsonObject object;
         for (auto i = 0; i < toScrobble.length(); i++) {
             toScrobble.at(i).write(&object, i);
@@ -93,14 +92,38 @@ QCoro::Task<> LastFmApiService::scrobble() {
         tWarn("LastFmApiService") << "Sending scrobbles failed:";
         tWarn("LastFmApiService") << "Error " << ex.error();
         tWarn("LastFmApiService") << "Reason: " << ex.reason();
-        tWarn("LastFmApiService") << instance()->d->pendingScrobbles.length() << " scrobble(s) pending.";
 
-        if (ex.error() == 9) { // Session key has expired
-            // TODO: Ask the user to reauthenticate
+        if (ex.error() == 11 || ex.error() == 16 || ex.error() == 9) { // Session key has expired
+            if (ex.error() == 9) {
+                // TODO: Ask the user to reauthenticate
+            }
+        } else {
+            // If we get here, there was an error with the sent scrobble data, so remove them
+            instance()->d->pendingScrobbles.remove(0, toScrobble.length());
+            instance()->savePendingScrobbles();
         }
+
+        tWarn("LastFmApiService") << instance()->d->pendingScrobbles.length() << " scrobble(s) pending.";
     }
 
     instance()->d->sendingScrobbles = false;
+}
+
+QCoro::Task<> LastFmApiService::nowPlaying(Scrobble nowPlaying) {
+    auto sk = LastFmApiService::loggedInSessionKey();
+    if (sk.isEmpty()) co_return;
+
+    QJsonObject object;
+    nowPlaying.write(&object, -1);
+    object.insert("sk", sk);
+
+    try {
+        co_await LastFmApiService::instance()->post("track.updateNowPlaying", object);
+    } catch (LastFmApiException& ex) {
+        if (ex.error() == 9) {
+            // TODO: Ask the user to reauthenticate
+        }
+    }
 }
 
 void LastFmApiService::pushScrobble(Scrobble scrobble) {
@@ -134,9 +157,11 @@ QCoro::Task<QJsonObject> LastFmApiService::get(QString method, QMap<QString, QSt
     url.setQuery(query);
 
     auto reply = co_await d->mgr.get(QNetworkRequest(url));
-    d->apiKey = reply->rawHeader("X-theBeat-Api-Key");
+    if (reply->error() != QNetworkReply::NoError) {
+        throw LastFmApiException(-1, reply->errorString());
+    }
 
-    // TODO: Error handling
+    d->apiKey = reply->rawHeader("X-theBeat-Api-Key");
 
     auto json = QJsonDocument::fromJson(reply->readAll()).object();
     if (json.contains("error")) {
@@ -150,9 +175,12 @@ QCoro::Task<QJsonObject> LastFmApiService::post(QString method, QJsonObject argu
     arguments.insert("method", method);
 
     auto reply = co_await d->mgr.post(QNetworkRequest(url), QJsonDocument(arguments).toJson(QJsonDocument::Compact));
-    d->apiKey = reply->rawHeader("X-theBeat-Api-Key");
+    auto statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    if (reply->error() != QNetworkReply::NoError && statusCode == 0) {
+        throw LastFmApiException(-1, reply->errorString());
+    }
 
-    // TODO: Error handling
+    d->apiKey = reply->rawHeader("X-theBeat-Api-Key");
 
     auto json = QJsonDocument::fromJson(reply->readAll()).object();
     if (json.contains("error")) {
@@ -176,7 +204,7 @@ void LastFmApiService::savePendingScrobbles() {
     tSettings settings;
     settings.setDelimitedList("lastfm/pending", tRange(d->pendingScrobbles).map<QString>([](const Scrobble& scrobble) {
                                                                                QJsonObject obj;
-                                                                               scrobble.write(&obj, 0);
+                                                                               scrobble.write(&obj, -1);
                                                                                return QJsonDocument(obj).toJson(QJsonDocument::Compact).toBase64();
                                                                            })
                                                     .toList());
@@ -192,12 +220,12 @@ int LastFmApiException::error() {
 }
 
 LastFmApiService::Scrobble::Scrobble(QJsonObject object) {
-    artist = object.value("artist[0]").toString();
-    track = object.value("track[0]").toString();
-    timestamp = object.value("timestamp[0]").toString();
-    album = object.value("album[0]").toString();
-    trackNumber = object.value("trackNumber[0]").toString();
-    duration = object.value("duration[0]").toString();
+    artist = object.value("artist").toString();
+    track = object.value("track").toString();
+    timestamp = object.value("timestamp").toString();
+    album = object.value("album").toString();
+    trackNumber = object.value("trackNumber").toString();
+    duration = object.value("duration").toString();
 }
 
 LastFmApiService::Scrobble::Scrobble(MediaItem* mediaItem) {
@@ -217,12 +245,16 @@ LastFmApiService::Scrobble::Scrobble(MediaItem* mediaItem) {
 }
 
 void LastFmApiService::Scrobble::write(QJsonObject* object, int index) const {
-    object->insert(QStringLiteral("artist[%1]").arg(index), artist);
-    object->insert(QStringLiteral("track[%1]").arg(index), track);
-    object->insert(QStringLiteral("timestamp[%1]").arg(index), timestamp);
-    if (!album.isEmpty()) object->insert(QStringLiteral("album[%1]").arg(index), album);
-    if (!trackNumber.isEmpty()) object->insert(QStringLiteral("trackNumber[%1]").arg(index), trackNumber);
-    if (!duration.isEmpty()) object->insert(QStringLiteral("duration[%1]").arg(index), duration);
+    QString indexer;
+    if (index >= 0) {
+        indexer = QStringLiteral("[%1]").arg(index);
+    }
+    object->insert(QStringLiteral("artist%1").arg(index), artist);
+    object->insert(QStringLiteral("track%1").arg(index), track);
+    object->insert(QStringLiteral("timestamp%1").arg(index), timestamp);
+    if (!album.isEmpty()) object->insert(QStringLiteral("album%1").arg(index), album);
+    if (!trackNumber.isEmpty()) object->insert(QStringLiteral("trackNumber%1").arg(index), trackNumber);
+    if (!duration.isEmpty()) object->insert(QStringLiteral("duration%1").arg(index), duration);
 }
 
 T_EXCEPTION_IMPL(LastFmApiException)

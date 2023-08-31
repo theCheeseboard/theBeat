@@ -37,6 +37,7 @@ class LastFmApiService : public QObject {
         static QCoro::Task<QString> getUnauthenticatedToken();
         static QCoro::Task<> attemptLoginWithToken(QString token);
         static QCoro::Task<> scrobble();
+        static QCoro::Task<> nowPlaying(Scrobble nowPlaying);
 
         static void pushScrobble(Scrobble scrobble);
 

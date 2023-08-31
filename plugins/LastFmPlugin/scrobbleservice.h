@@ -17,6 +17,7 @@ class ScrobbleService : public QObject {
 
         void updateCurrentItem();
         void tryScrobble();
+        void tryNowPlaying();
 };
 
 #endif // SCROBBLESERVICE_H

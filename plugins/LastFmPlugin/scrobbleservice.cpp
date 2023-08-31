@@ -7,8 +7,8 @@
 #include <tlogger.h>
 
 struct ScrobbleServicePrivate {
-    MediaItem* currentItem = nullptr;
-    bool scrobbled = false;
+        MediaItem* currentItem = nullptr;
+        bool scrobbled = false;
 };
 
 ScrobbleService::ScrobbleService(QObject* parent) :
@@ -16,6 +16,11 @@ ScrobbleService::ScrobbleService(QObject* parent) :
     d = new ScrobbleServicePrivate();
 
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, &ScrobbleService::updateCurrentItem);
+    connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [this](Playlist::State newState, Playlist::State oldState) {
+        if (newState == Playlist::Playing) {
+            tryNowPlaying();
+        }
+    });
     this->updateCurrentItem();
 }
 
@@ -59,4 +64,12 @@ void ScrobbleService::tryScrobble() {
     LastFmApiService::pushScrobble(scrobble);
 
     d->scrobbled = true;
+}
+
+void ScrobbleService::tryNowPlaying() {
+    if (!d->currentItem) return;
+
+    // Send the now playing event
+    LastFmApiService::Scrobble scrobble(d->currentItem);
+    LastFmApiService::nowPlaying(scrobble);
 }
