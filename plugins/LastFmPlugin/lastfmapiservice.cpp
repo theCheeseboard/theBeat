@@ -249,12 +249,12 @@ void LastFmApiService::Scrobble::write(QJsonObject* object, int index) const {
     if (index >= 0) {
         indexer = QStringLiteral("[%1]").arg(index);
     }
-    object->insert(QStringLiteral("artist%1").arg(index), artist);
-    object->insert(QStringLiteral("track%1").arg(index), track);
-    object->insert(QStringLiteral("timestamp%1").arg(index), timestamp);
-    if (!album.isEmpty()) object->insert(QStringLiteral("album%1").arg(index), album);
-    if (!trackNumber.isEmpty()) object->insert(QStringLiteral("trackNumber%1").arg(index), trackNumber);
-    if (!duration.isEmpty()) object->insert(QStringLiteral("duration%1").arg(index), duration);
+    object->insert(QStringLiteral("artist%1").arg(indexer), artist);
+    object->insert(QStringLiteral("track%1").arg(indexer), track);
+    object->insert(QStringLiteral("timestamp%1").arg(indexer), timestamp);
+    if (!album.isEmpty()) object->insert(QStringLiteral("album%1").arg(indexer), album);
+    if (!trackNumber.isEmpty()) object->insert(QStringLiteral("trackNumber%1").arg(indexer), trackNumber);
+    if (!duration.isEmpty()) object->insert(QStringLiteral("duration%1").arg(indexer), duration);
 }
 
 T_EXCEPTION_IMPL(LastFmApiException)
