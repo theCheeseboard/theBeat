@@ -14,7 +14,7 @@
    <string>theBeat</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="com.vicr123.thebeat" resource="resources.qrc">
+   <iconset theme="com.vicr123.thebeat">
     <normaloff>:/icons/com.vicr123.thebeat.svg</normaloff>:/icons/com.vicr123.thebeat.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -579,8 +579,6 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
