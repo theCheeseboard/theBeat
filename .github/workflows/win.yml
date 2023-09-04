@@ -13,6 +13,14 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest]
+        arch: [amd64, amd64_arm64]
+        include:
+          - arch: amd64
+            qtArch: win64_msvc2019_64
+            buildArch: x64
+          - arch: amd64_arm64
+            qtArch: win64_msvc2019_arm64
+            buildArch: arm64
     runs-on: ${{ matrix.os }}
     steps:
       - uses: vicr123/libcontemporary/prepare-vars@actions
@@ -20,30 +28,60 @@ jobs:
       - name: Install ninja
         run: |
           choco install ninja
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+      - name: Install Host Qt
+        uses: vicr123/install-qt-action@win-aarch64-test
+        if: matrix.qtArch != 'win64_msvc2019_64'
         with:
           version: ${{ steps.vars.outputs.qtVersion }}
           arch: win64_msvc2019_64
+          modules: addons.qtmultimedia addons.qtwebsockets qt5compat
+      - name: "Set Qt path"
+        shell: bash
+        run: |
+          echo "QT_HOST_PATH=$Qt6_DIR" >> $GITHUB_ENV
+      - name: Set up Host MSVC
+        uses: ilammy/msvc-dev-cmd@v1.12.0
+        if: matrix.qtArch != 'win64_msvc2019_64'
+        with:
+          sdk: 10.0.22000.0
+          arch: amd64
+      - name: Build Host libcontemporary
+        uses: vicr123/libcontemporary/install-libcontemporary@actions
+        if: matrix.qtArch != 'win64_msvc2019_64'
+        with:
+          qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
+          commitish: features/win-aarch64
+          arch: x64
+      - name: Install Qt
+        uses: vicr123/install-qt-action@win-aarch64-test
+        with:
+          version: ${{ steps.vars.outputs.qtVersion }}
+          arch: ${{ matrix.qtArch }}
           modules: addons.qtmultimedia addons.qtwebsockets qt5compat
       - name: Set up MSVC
         uses: ilammy/msvc-dev-cmd@v1.12.0
         with:
           sdk: 10.0.22000.0
-      - uses: vicr123/libcontemporary/install-libcontemporary@actions
+          arch: ${{ matrix.arch }}
+      - name: Build libcontemporary
+        uses: vicr123/libcontemporary/install-libcontemporary@actions
         with:
           qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
+          commitish: features/win-aarch64
+          arch: ${{ matrix.buildArch }}
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build contemporary-theme"
         with:
           project: "vicr123/contemporary-theme"
           commitish: "blueprint"
+          arch: ${{ matrix.buildArch }}
       - uses: vicr123/libcontemporary/build-project@actions
         name: "Build taglib"
         with:
           project: "taglib/taglib"
           commitish: "v1.12"
           extra-cmake-args: -DBUILD_SHARED_LIBS=ON
+          arch: ${{ matrix.buildArch }}
       - uses: actions/checkout@v1
         with:
           submodules: 'recursive'
@@ -51,7 +89,8 @@ jobs:
         name: "Build project"
         with:
           project: "."
-          extra-cmake-args: ${{ format('-DTAGLIB_ROOT=D:\a\theBeat\cmake-install\{0}', 'x64') }}
+          arch: ${{ matrix.buildArch }}
+          extra-cmake-args: ${{ format('-DTAGLIB_ROOT=D:\a\theBeat\cmake-install\{0} -DCNTP_TARGET_ARCH={0}', matrix.buildArch) }}
       - name: "Prepare for deployment"
         shell: bash
         run: |
@@ -64,10 +103,11 @@ jobs:
         name: "Deploy project"
         with:
           subdir: "application"
+          arch: ${{ matrix.buildArch }}
       - uses: actions/upload-artifact@v1
         name: Upload Artifact to GitHub Actions
         with:
-          name: "thebeat-win"
+          name: ${{ format('thebeat-win-{0}', matrix.buildArch) }}
           path: ${{ steps.deploy.outputs.package }}
   release:
     permissions:
