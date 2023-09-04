@@ -3,6 +3,8 @@ project(lib VERSION 1.0.0 LANGUAGES CXX)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Concurrent)
 find_package(libcontemporary REQUIRED)
 
+set(CNTP_TARGET_ARCH ${CMAKE_SYSTEM_PROCESSOR} CACHE STRING "Architecture to build for")
+
 include(ExternalProject)
 
 function(translate_arch arch)
@@ -24,7 +26,7 @@ if(";${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION};$ENV{UCRTVersion};$ENV{WindowsS
     set(CPPWINRT_PATH "${WINDOWS_KITS_BASE_DIR}/bin/${WINDOWS_SDK_VERSION}/${RESULT_ARCH}/cppwinrt.exe")
 endif()
 
-translate_arch(CMAKE_SYSTEM_PROCESSOR)
+translate_arch(${CNTP_TARGET_ARCH})
 
 ExternalProject_Add(CDLib
   GIT_REPOSITORY    https://github.com/reflectronic/cdlib.git
