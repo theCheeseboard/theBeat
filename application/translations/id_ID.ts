@@ -19,26 +19,32 @@
     <message>
         <location filename="../artistsalbumswidget.ui" line="+65"/>
         <location line="+123"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+273"/>
+        <location line="+1"/>
         <source>Tracks in Library</source>
         <translation>Trek dalam Pustaka</translation>
     </message>
     <message>
         <location line="+49"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation>Antri Semua</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Play All</source>
         <translation>Putar Semua</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Shuffle All</source>
         <translation>Acak Semua</translation>
     </message>
     <message>
         <location line="+24"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_artistsalbumswidget.h" line="+1"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
@@ -116,11 +122,13 @@
     <name>ControlStrip</name>
     <message>
         <location filename="../controlstrip.ui" line="+101"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+310"/>
         <source>Title</source>
         <translation>Judul</translation>
     </message>
     <message>
         <location line="+27"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_controlstrip.h" line="+1"/>
         <source>Metadata</source>
         <translation type="unfinished"></translation>
     </message>
@@ -191,21 +199,25 @@
     <name>LibraryErrorPopover</name>
     <message>
         <location filename="../libraryerrorpopover.ui" line="+35"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+129"/>
         <source>Hmm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+99"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>ACTIONS</source>
         <translation>AKSI</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>Locate File</source>
         <translation>Cari File</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_libraryerrorpopover.h" line="+1"/>
         <source>Remove from Library</source>
         <translation>Hapus dari Pustaka</translation>
     </message>
@@ -350,6 +362,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="+14"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+454"/>
         <source>theBeat</source>
         <translation type="unfinished"></translation>
     </message>
@@ -380,183 +393,219 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+141"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+59"/>
         <source>Queue</source>
         <translation>Antrian</translation>
     </message>
     <message>
         <location line="+70"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Nothing Here!</source>
         <translation>Tidak Ada!</translation>
     </message>
     <message>
         <location line="+62"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Playback</source>
         <translation>Pemutaran</translation>
     </message>
     <message>
         <location line="+16"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+14"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-63"/>
         <source>File Bug</source>
         <translation>Laporkan Bug</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Sources</source>
         <translation>Kode Sumber</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>About</source>
         <translation>Tentang</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Exit</source>
         <translation>Keluar</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Open File</source>
         <translation>Buka File</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../mainwindow.cpp" line="+324"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Open URL</source>
         <translation>Buka URL</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Skip Back</source>
         <translation>Lompat Mundur</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shift+Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+4"/>
         <source>Shift+Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+21"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+5"/>
         <source>Add to Library</source>
         <translation>Tambahkan ke Pustaka</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>theBeat Help</source>
         <translation>Bantuan theBeat</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Repeat One</source>
         <translation>Ulangi Satu</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shuffle</source>
         <translation>Acak</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
         <location filename="../mainwindow.cpp" line="+71"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Zen Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+1"/>
         <source>Increase Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Decrease Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Pause after current track</source>
         <translation type="unfinished">Pause setelah trek saat ini</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+2"/>
         <source>Shift+Esc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-120"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-39"/>
         <source>Skip Forward</source>
         <translation>Lompat Maju</translation>
     </message>
     <message>
         <location line="-168"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="+44"/>
         <source>Select a track or drop something here!</source>
         <translation>Pilih trek atau drop file di sini!</translation>
     </message>
@@ -567,6 +616,7 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     </message>
     <message>
         <location filename="../mainwindow.ui" line="+183"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_mainwindow.h" line="-39"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
@@ -663,11 +713,13 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     <name>OtherSourcesWidget</name>
     <message>
         <location filename="../othersourceswidget.ui" line="+103"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+125"/>
         <source>No other sources available</source>
         <translation>Tidak ada sumber lain</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_othersourceswidget.h" line="+1"/>
         <source>There&apos;s nothing else to play right now</source>
         <translation>Saat ini tidak ada lagi yang dapat dimainkan</translation>
     </message>
@@ -749,21 +801,25 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     <name>ResetLibraryPopover</name>
     <message>
         <location filename="../resetlibrarypopover.ui" line="+14"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+93"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+21"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+1"/>
         <source>Reset Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+1"/>
         <source>This is it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+1"/>
         <source>Resetting the library will clear all tracks that have been added to theBeat, and theBeat will rescan your Music folder upon startup.
 
 theBeat will restart once the reset is complete. This action is irreversible.</source>
@@ -771,6 +827,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
     </message>
     <message>
         <location line="+12"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_resetlibrarypopover.h" line="+3"/>
         <source>Reset theBeat Library</source>
         <translation type="unfinished">Setel ulang Pustaka</translation>
     </message>
@@ -941,26 +998,31 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     <message>
         <location filename="../trackswidget.ui" line="+65"/>
         <location filename="../trackswidget.cpp" line="+59"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+199"/>
         <source>Tracks in Library</source>
         <translation>Trek dalam Pustaka</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation>Antri Semua</translation>
     </message>
     <message>
         <location line="+45"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Search</source>
         <translation>Cari</translation>
     </message>
     <message>
         <location line="+57"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Processing Library</source>
         <translation>Memproses Pustaka</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_trackswidget.h" line="+1"/>
         <source>Depending on the number of tracks in your library, this could take a while. This should only happen the first time you start theBeat.</source>
         <translation>Lama pemrosesan tergantung banyaknya trek dalam pustaka. Pemrosesan ini seharusnya dilakukan saat theBeat dijalankan untuk kali pertama.</translation>
     </message>
@@ -974,36 +1036,43 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     <name>UserPlaylistsWidget</name>
     <message>
         <location filename="../userplaylistswidget.ui" line="+62"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+300"/>
         <source>Playlists</source>
         <translation>Playlist</translation>
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Create Playlist</source>
         <translation>Buat Playlist</translation>
     </message>
     <message>
         <location line="+190"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+3"/>
         <source>Play All</source>
         <translation>Mainkan Semua</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Shuffle All</source>
         <translation>Acak Semua</translation>
     </message>
     <message>
         <location line="+44"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-94"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="-4"/>
         <source>Tracks in Library</source>
         <translation>Trek dalam Pustaka</translation>
     </message>
     <message>
         <location line="+28"/>
+        <location filename="../../../build-thebeat-Chroot_6-Debug/application/thebeat_autogen/include/ui_userplaylistswidget.h" line="+1"/>
         <source>Enqueue All</source>
         <translation>Antri Semua</translation>
     </message>

@@ -91,5 +91,6 @@
             "path": "/plugins/LastFmPlugin/translations/{lang}.ts",
             "baseLang": "en_US"
         }
-    ]
+    ],
+    "deadline": 1705273200000
 }
