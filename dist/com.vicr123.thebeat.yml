@@ -58,7 +58,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/theCheeseboard/libcontemporary
-        tag: v6.0
+        tag: v6.1
   - name: contemporary
     buildsystem: cmake-ninja
     sources:
