@@ -1,12 +1,12 @@
 {
     "GenericName": {
-        "message": "Audio Player\r"
+        "message": "Audio Player"
     },
     "Keywords": {
-        "description": "A list of words that can be searched for. Please ensure that the list also ends with a semicolon!\r",
-        "message": "audio;music;cd;player;\r"
+        "description": "A list of words that can be searched for. Please ensure that the list also ends with a semicolon!",
+        "message": "audio;music;cd;player;"
     },
     "Name": {
-        "message": "theBeat\r"
+        "message": "theBeat"
     }
 }

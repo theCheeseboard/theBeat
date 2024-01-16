@@ -56,11 +56,11 @@ int main(int argc, char* argv[]) {
 
     QString dir = SYSTEM_PREFIX_DIRECTORY;
 
-    a.setApplicationVersion("4.0.1");
+    a.setApplicationVersion("4.1");
     a.setGenericName(QApplication::translate("main", "Audio Player"));
     a.setApplicationLicense(tApplication::Gpl3OrLater);
     a.setCopyrightHolder("Victor Tran");
-    a.setCopyrightYear("2023");
+    a.setCopyrightYear("2024");
     a.setOrganizationName("theSuite");
     a.setApplicationUrl(tApplication::HelpContents, QUrl("https://help.vicr123.com/docs/thebeat/intro"));
     a.setApplicationUrl(tApplication::Sources, QUrl("http://github.com/vicr123/theBeat"));
