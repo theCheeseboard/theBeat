@@ -117,14 +117,26 @@ jobs:
     if: github.event_name == 'release'
     steps:
       - uses: actions/download-artifact@v3
-        name: "Download Artifact"
-        id: download
+        name: "Download x64 Artifact"
+        id: download_x64
         with:
-          name: "thebeat-win"
-          path: "thebeat-win"
+          name: "thebeat-win-x64"
+          path: "thebeat-win-x64"
+
+      - uses: actions/download-artifact@v3
+        name: "Download arm64 Artifact"
+        id: download_arm64
+        with:
+          name: "thebeat-win-arm64"
+          path: "thebeat-win-arm64"
+          
       - run: |
-          zip -r thebeat-win.zip thebeat-win
+          zip -r thebeat-win-x64.zip thebeat-win-x64
+          zip -r thebeat-win-arm64.zip thebeat-win-arm64
       - name: "Upload to Release"
         uses: softprops/action-gh-release@v1
         with:
-          files: thebeat-win.zip
+          files: |
+            thebeat-win-x64.zip
+            thebeat-win-arm64.zip
+          
