@@ -19,11 +19,22 @@
  * *************************************/
 #include "mediaitem.h"
 
-#include <QVariant>
 #include "helpers.h"
+#include <QBuffer>
+#include <QImage>
+#include <QVariant>
 
-MediaItem::MediaItem() : QObject(nullptr) {
+MediaItem::MediaItem() :
+    QObject(nullptr) {
+}
 
+QString MediaItem::albumArtUrl() {
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    buffer.open(QIODevice::WriteOnly);
+    albumArt().save(&buffer, "png");
+    auto base64 = QString::fromUtf8(byteArray.toBase64());
+    return QStringLiteral("data:image/png;base64,%1").arg(base64);
 }
 
 QVariant MediaItem::metadata(QString key) {
@@ -32,5 +43,5 @@ QVariant MediaItem::metadata(QString key) {
 }
 
 QVariant MediaItem::metadata(QMediaMetaData::Key key) {
-  return metadata(Helpers::stringForMetadataKey(key));
+    return metadata(Helpers::stringForMetadataKey(key));
 }

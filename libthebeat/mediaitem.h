@@ -31,6 +31,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         Q_PROPERTY(QStringList authors READ authors NOTIFY metadataChanged FINAL)
         Q_PROPERTY(QString album READ album NOTIFY metadataChanged FINAL)
         Q_PROPERTY(QImage albumArt READ albumArt NOTIFY metadataChanged FINAL)
+        Q_PROPERTY(QString albumArtUrl READ albumArtUrl NOTIFY metadataChanged FINAL)
         Q_PROPERTY(quint64 elapsed READ elapsed NOTIFY elapsedChanged FINAL)
         Q_PROPERTY(quint64 duration READ duration NOTIFY durationChanged FINAL)
         Q_PROPERTY(QString lyrics READ lyrics NOTIFY metadataChanged FINAL)
@@ -49,6 +50,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         virtual QStringList authors() = 0;
         virtual QString album() = 0;
         virtual QImage albumArt() = 0;
+        QString albumArtUrl();
         Q_SCRIPTABLE virtual QVariant metadata(QString key);
 
         QVariant metadata(QMediaMetaData::Key key);

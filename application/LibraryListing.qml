@@ -104,7 +104,9 @@ ListView {
             hoverEnabled: true
 
             onClicked: () => {
-                           PlaylistManager.addItem(UrlManager.itemForUrl(Qt.url(`file://${trackItem.path}`)))
+                           const mediaItem = UrlManager.itemForUrl(Qt.url(`file://${trackItem.path}`));
+                           PlaylistManager.addItem(mediaItem)
+                           PlaylistManager.currentItem = mediaItem;
                        }
         }
     }

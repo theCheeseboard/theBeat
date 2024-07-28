@@ -22,12 +22,20 @@ Layer {
         width: root.width - 18
 
         RowLayout {
+            spacing: 6
             Layout.fillWidth: true
 
+            Image {
+                Layout.preferredWidth: height
+                Layout.preferredHeight: playPauseButton.implicitHeight
+                source: PlaylistManager.currentItem.albumArtUrl
+            }
+
             ColumnLayout {
+                spacing: 6
                 Label {
                     text: PlaylistManager.currentItem.title
-                    font.pointSize: 20
+                    font.pointSize: 15
                 }
                 Label {
                     id: currentItemMeta
@@ -79,6 +87,7 @@ Layer {
                 }
             }
             Button {
+                id: playPauseButton
                 flat: true
                 icon.name: PlaylistManager.state === PlaylistManager.Playing ? "media-playback-pause" : "media-playback-start"
                 icon.height: 32
@@ -95,6 +104,30 @@ Layer {
                 onClicked: () => {
                     PlaylistManager.next();
                 }
+            }
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+
+            Label {
+                text: "elapsed"
+            }
+
+            Slider {
+                Layout.fillWidth: true
+                id: progressSlider
+                from: 0
+                to: PlaylistManager.currentItem.duration
+                value: PlaylistManager.currentItem.elapsed
+
+                onMoved: () => {
+                    PlaylistManager.currentItem.seek(progressSlider.value)
+                }
+            }
+
+            Label {
+                text: "total"
             }
         }
     }
