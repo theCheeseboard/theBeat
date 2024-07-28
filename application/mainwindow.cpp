@@ -178,6 +178,7 @@ MainWindow::MainWindow(QWidget* parent) :
     commandPaletteActionScope->addMenuBar(ui->menuBar);
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
+    // ui->stackedWidget->setAutoNavigable(true);
     ui->queueStack->setCurrentAnimation(tStackedWidget::Fade);
     this->setWindowIcon(ui->menuButton->windowIcon());
 
@@ -257,7 +258,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(StateManager::instance()->playlist(), &Playlist::stateChanged, this, [this] {
         updatePlayState();
     });
-    connect(StateManager::instance()->playlist(), &Playlist::pauseAfterCurrentTrackChanged, this, [=](bool pauseAfterCurrentTrack) {
+    connect(StateManager::instance()->playlist(), &Playlist::pauseAfterCurrentTrackChanged, this, [=, this](bool pauseAfterCurrentTrack) {
         ui->actionPause_after_current_track->setChecked(pauseAfterCurrentTrack);
     });
     ui->actionPause_after_current_track->setChecked(StateManager::instance()->playlist()->pauseAfterCurrentTrack());

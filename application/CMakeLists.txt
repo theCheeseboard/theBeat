@@ -1,6 +1,8 @@
 project(thebeat VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus Sql PrintSupport)
+set(CMAKE_AUTOMOC ON)
+
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus Sql PrintSupport Quick QuickControls2)
 find_package(libcontemporary REQUIRED)
 
 set(SOURCES
@@ -95,6 +97,14 @@ set(SOURCES ${SOURCES} ${LPROJ_SOURCES})
 
 add_executable(thebeat ${SOURCES} ${HEADERS})
 
+qt_add_qml_module(thebeat
+    URI com.vicr123.thebeat
+    VERSION 1.0
+    QML_FILES
+        Main.qml
+    NO_CACHEGEN
+)
+
 set_target_properties(thebeat PROPERTIES
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in
@@ -120,7 +130,7 @@ cntp_target_appstream_metainfo_file(thebeat
 cntp_defaults_file(thebeat
     DEFAULTS_FILE thebeat.conf)
 
-target_link_libraries(thebeat Qt::Widgets Qt::DBus Qt::Sql Qt::PrintSupport libcontemporary libthebeat)
+target_link_libraries(thebeat PUBLIC Qt::Widgets Qt::DBus Qt::Sql Qt::PrintSupport Qt::Quick Qt::QuickControls2 libcontemporary libthebeat)
 target_include_directories(thebeat PUBLIC ../libthebeat/)
 
 install(TARGETS thebeat

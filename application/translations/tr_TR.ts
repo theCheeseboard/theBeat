@@ -351,6 +351,91 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
 </context>
 <context>
+    <name>Main</name>
+    <message>
+        <location filename="../Main.qml" line="+14"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+14"/>
+        <source>theBeat</source>
+        <translation type="unfinished">theBeat</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+13"/>
+        <source>File</source>
+        <translation type="unfinished">Dosya</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+4"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+34"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+3"/>
+        <location line="+34"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-29"/>
+        <location line="+35"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="-29"/>
+        <location line="+35"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-29"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="-29"/>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+3"/>
+        <source>About</source>
+        <translation type="unfinished">Hakkında</translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+34"/>
+        <source>Tracks</source>
+        <translation type="unfinished">Şarkılar</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <source>Artists</source>
+        <translation type="unfinished">Sanatçılar</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <source>Albums</source>
+        <translation type="unfinished">Albümler</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <source>Playlists</source>
+        <translation type="unfinished">Oynatma listeleri</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <source>Other Sources</source>
+        <translation type="unfinished">Diğer kaynaklar</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="+14"/>
@@ -444,7 +529,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../mainwindow.cpp" line="+324"/>
+        <location filename="../mainwindow.cpp" line="+325"/>
         <source>Open URL</source>
         <translation>Link Aç</translation>
     </message>
@@ -1064,7 +1149,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+60"/>
+        <location filename="../main.cpp" line="+62"/>
         <source>Audio Player</source>
         <translation>Ses oynatıcı</translation>
     </message>
@@ -1079,7 +1164,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>Açılacak dosya</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+69"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>

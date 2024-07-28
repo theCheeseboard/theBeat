@@ -29,6 +29,8 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QJsonArray>
+#include <QQmlApplicationEngine>
+#include <QQuickStyle>
 #include <QUrl>
 #include <playlist.h>
 #include <plugins/tpluginmanager.h>
@@ -107,8 +109,9 @@ int main(int argc, char* argv[]) {
         }
     });
     tStyleManager::setOverrideStyleForApplication(settings.value("theme/mode").toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
+    QQuickStyle::setStyle("com.vicr123.Contemporary.CoreStyles");
 
-    MainWindow* w = new MainWindow();
+    // MainWindow* w = new MainWindow();
 
     QObject::connect(&a, &tApplication::singleInstanceMessage, [=](QJsonObject launchMessage) {
         if (launchMessage.contains("files")) {
@@ -123,14 +126,14 @@ int main(int argc, char* argv[]) {
                 StateManager::instance()->playlist()->setCurrentItem(firstItem);
                 StateManager::instance()->playlist()->play();
             } else {
-                w->show();
-                w->activateWindow();
+                // w->show();
+                // w->activateWindow();
             }
         }
     });
     QObject::connect(&a, &tApplication::dockIconClicked, [=] {
-        w->show();
-        w->activateWindow();
+        // w->show();
+        // w->activateWindow();
     });
     QObject::connect(&a, &tApplication::openFile, [=](QString file) {
         MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
@@ -182,7 +185,19 @@ int main(int argc, char* argv[]) {
         return new LibraryResetSettingsPane();
     });
 
-    w->show();
+    // w->show();
+
+    QQmlApplicationEngine engine;
+    const QUrl url(u"qrc:/qt/qml/com/vicr123/thebeat/Main.qml"_qs);
+    QObject::connect(
+        &engine, &QQmlApplicationEngine::objectCreationFailed, &a, [](QUrl url) {
+        QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
+    QObject::connect(
+        &engine, &QQmlApplicationEngine::warnings, &a, [](const QList<QQmlError>& warnings) {
+
+    }, Qt::QueuedConnection);
+    engine.load(url);
 
     MediaItem* firstItem = nullptr;
     for (QString file : files) {
