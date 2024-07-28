@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
         return new LibraryResetSettingsPane();
     });
 
-    w->show();
+    // w->show();
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/com/vicr123/thebeat/Main.qml"_qs);
@@ -197,6 +197,7 @@ int main(int argc, char* argv[]) {
         &engine, &QQmlApplicationEngine::warnings, &a, [](const QList<QQmlError>& warnings) {
 
     }, Qt::QueuedConnection);
+    qmlRegisterType<Playlist>("com.vicr123.thebeat", 1, 0, "PlaylistManager");
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "LibraryManager", LibraryManager::instance());
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "UrlManager", StateManager::instance()->url());
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "PlaylistManager", StateManager::instance()->playlist());

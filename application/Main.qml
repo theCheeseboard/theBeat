@@ -120,11 +120,21 @@ ContemporaryWindow {
             }
             overlayActionBar: true
 
-            Pager {
-                id: stack
+            ColumnLayout {
                 anchors.fill: parent
+                spacing: 0
 
-                TracksPane { }
+                Pager {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    id: stack
+
+                    TracksPane { }
+                }
+
+                ControlStrip {
+                    Layout.fillWidth: true
+                }
             }
         }
 

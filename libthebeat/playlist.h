@@ -27,6 +27,17 @@
 struct PlaylistPrivate;
 class LIBTHEBEAT_EXPORT Playlist : public QObject {
         Q_OBJECT
+    public:
+        enum State {
+            Playing,
+            Paused,
+            Stopped
+        };
+        Q_ENUM(State)
+
+    private:
+        Q_PROPERTY(MediaItem* currentItem READ currentItem WRITE setCurrentItem NOTIFY currentItemChanged FINAL)
+        Q_PROPERTY(State state READ state NOTIFY stateChanged FINAL)
         Q_PROPERTY(bool repeatOne READ repeatOne WRITE setRepeatOne NOTIFY repeatOneChanged FINAL)
         Q_PROPERTY(bool repeatAll READ repeatAll WRITE setRepeatAll NOTIFY repeatAllChanged FINAL)
         Q_PROPERTY(bool shuffle READ shuffle WRITE setShuffle NOTIFY shuffleChanged FINAL)
@@ -36,12 +47,6 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
 
     public:
         explicit Playlist(QObject* parent = nullptr);
-
-        enum State {
-            Playing,
-            Paused,
-            Stopped
-        };
 
         Q_SCRIPTABLE void addItem(MediaItem* item);
         Q_SCRIPTABLE void removeItem(MediaItem* item);

@@ -19,21 +19,27 @@
  * *************************************/
 #include "urlmanager.h"
 
+#include "mediaitem.h"
 #include "urlhandler.h"
+#include <QQmlEngine>
 #include <QUrl>
 
 struct UrlManagerPrivate {
-    QList<UrlHandler*> handlers;
+        QList<UrlHandler*> handlers;
 };
 
-UrlManager::UrlManager(QObject* parent) : QObject(parent) {
+UrlManager::UrlManager(QObject* parent) :
+    QObject(parent) {
     d = new UrlManagerPrivate();
 }
 
 MediaItem* UrlManager::itemForUrl(QUrl url) {
     for (UrlHandler* handler : d->handlers) {
         MediaItem* item = handler->itemForUrl(url);
-        if (item) return item;
+        if (item) {
+            QQmlEngine::setObjectOwnership(item, QQmlEngine::CppOwnership);
+            return item;
+        }
     }
     return nullptr;
 }

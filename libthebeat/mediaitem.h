@@ -21,19 +21,27 @@
 #define MEDIAITEM_H
 
 #include "libthebeat_global.h"
+#include <QMediaMetaData>
 #include <QObject>
 #include <QSharedPointer>
-#include <QMediaMetaData>
 
 class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         Q_OBJECT
+        Q_PROPERTY(QString title READ title NOTIFY metadataChanged FINAL)
+        Q_PROPERTY(QStringList authors READ authors NOTIFY metadataChanged FINAL)
+        Q_PROPERTY(QString album READ album NOTIFY metadataChanged FINAL)
+        Q_PROPERTY(QImage albumArt READ albumArt NOTIFY metadataChanged FINAL)
+        Q_PROPERTY(quint64 elapsed READ elapsed NOTIFY elapsedChanged FINAL)
+        Q_PROPERTY(quint64 duration READ duration NOTIFY durationChanged FINAL)
+        Q_PROPERTY(QString lyrics READ lyrics NOTIFY metadataChanged FINAL)
+        Q_PROPERTY(QString lyricFormat READ lyricFormat NOTIFY metadataChanged FINAL)
     public:
         explicit MediaItem();
 
-        virtual void play() = 0;
-        virtual void pause() = 0;
-        virtual void stop() = 0;
-        virtual void seek(quint64 ms) = 0;
+        Q_SCRIPTABLE virtual void play() = 0;
+        Q_SCRIPTABLE virtual void pause() = 0;
+        Q_SCRIPTABLE virtual void stop() = 0;
+        Q_SCRIPTABLE virtual void seek(quint64 ms) = 0;
         virtual quint64 elapsed() = 0;
         virtual quint64 duration() = 0;
 
@@ -41,7 +49,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         virtual QStringList authors() = 0;
         virtual QString album() = 0;
         virtual QImage albumArt() = 0;
-        virtual QVariant metadata(QString key);
+        Q_SCRIPTABLE virtual QVariant metadata(QString key);
 
         QVariant metadata(QMediaMetaData::Key key);
 
@@ -56,7 +64,6 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         void durationChanged();
 
     private:
-
 };
 
 #endif // MEDIAITEM_H

@@ -100,6 +100,7 @@ qt_add_qml_module(thebeat
     VERSION 1.0
     QML_FILES
         Main.qml
+        ControlStrip.qml
         LibraryListing.qml
         TracksPane.qml
     NO_CACHEGEN
