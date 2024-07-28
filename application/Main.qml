@@ -99,20 +99,20 @@ ContemporaryWindow {
                     ActionBarTabber.Button {
                         text: qsTr("Albums")
                         icon.name: "media-album-cover"
-                        checked: stack.currentIndex === 1
-                        onActivated: stack.currentIndex = 1
+                        checked: stack.currentIndex === 2
+                        onActivated: stack.currentIndex = 2
                     }
                     ActionBarTabber.Button {
                         text: qsTr("Playlists")
                         icon.name: "view-media-playlist"
-                        checked: stack.currentIndex === 1
-                        onActivated: stack.currentIndex = 1
+                        checked: stack.currentIndex === 3
+                        onActivated: stack.currentIndex = 3
                     }
                     ActionBarTabber.Button {
                         text: qsTr("Other Sources")
                         icon.name: "view-list-details"
-                        checked: stack.currentIndex === 1
-                        onActivated: stack.currentIndex = 1
+                        checked: stack.currentIndex === 4
+                        onActivated: stack.currentIndex = 4
                     }
                 }
 
@@ -124,7 +124,7 @@ ContemporaryWindow {
                 id: stack
                 anchors.fill: parent
 
-
+                TracksPane { }
             }
         }
 

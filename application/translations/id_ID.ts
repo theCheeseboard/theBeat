@@ -218,19 +218,16 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
-        <translation>oleh %1</translation>
+        <translation type="vanished">oleh %1</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>on %1</source>
-        <translation>dalam %1</translation>
+        <translation type="vanished">dalam %1</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Track</source>
-        <translation>Trek</translation>
+        <translation type="vanished">Trek</translation>
     </message>
 </context>
 <context>
@@ -285,6 +282,27 @@
         <translation>
             <numerusform>Untuk %n item</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>LibraryListing</name>
+    <message>
+        <location filename="../LibraryListing.qml" line="+89"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+89"/>
+        <source>by %1</source>
+        <translation type="unfinished">oleh %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+1"/>
+        <source>on %1</source>
+        <translation type="unfinished">dalam %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+2"/>
+        <source>Track</source>
+        <translation type="unfinished">Trek</translation>
     </message>
 </context>
 <context>
@@ -1014,11 +1032,27 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
     </message>
 </context>
 <context>
+    <name>TrackList</name>
+    <message>
+        <source>Tracks in Library</source>
+        <translation type="obsolete">Trek dalam Pustaka</translation>
+    </message>
+</context>
+<context>
     <name>TracksCommandPaletteScope</name>
     <message>
         <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
         <source>Tracks</source>
         <translation type="unfinished">Trek</translation>
+    </message>
+</context>
+<context>
+    <name>TracksPane</name>
+    <message>
+        <location filename="../TracksPane.qml" line="+25"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+25"/>
+        <source>Tracks in Library</source>
+        <translation type="unfinished">Trek dalam Pustaka</translation>
     </message>
 </context>
 <context>

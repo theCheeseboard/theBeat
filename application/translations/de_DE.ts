@@ -224,19 +224,16 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
-        <translation>von %1</translation>
+        <translation type="vanished">von %1</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>on %1</source>
-        <translation>auf %1</translation>
+        <translation type="vanished">auf %1</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Track</source>
-        <translation>Titel</translation>
+        <translation type="vanished">Titel</translation>
     </message>
 </context>
 <context>
@@ -292,6 +289,27 @@
             <numerusform>Für %n Item</numerusform>
             <numerusform>Für %n Items</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>LibraryListing</name>
+    <message>
+        <location filename="../LibraryListing.qml" line="+89"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+89"/>
+        <source>by %1</source>
+        <translation type="unfinished">von %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+1"/>
+        <source>on %1</source>
+        <translation type="unfinished">auf %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+2"/>
+        <source>Track</source>
+        <translation type="unfinished">Titel</translation>
     </message>
 </context>
 <context>
@@ -1024,11 +1042,27 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
 </context>
 <context>
+    <name>TrackList</name>
+    <message>
+        <source>Tracks in Library</source>
+        <translation type="obsolete">Titel in der Bibliothek</translation>
+    </message>
+</context>
+<context>
     <name>TracksCommandPaletteScope</name>
     <message>
         <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
         <source>Tracks</source>
         <translation type="unfinished">Titel</translation>
+    </message>
+</context>
+<context>
+    <name>TracksPane</name>
+    <message>
+        <location filename="../TracksPane.qml" line="+25"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+25"/>
+        <source>Tracks in Library</source>
+        <translation type="unfinished">Titel in der Bibliothek</translation>
     </message>
 </context>
 <context>

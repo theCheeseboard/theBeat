@@ -222,19 +222,16 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
-        <translation>bởi %1</translation>
+        <translation type="vanished">bởi %1</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>on %1</source>
-        <translation>trên %1</translation>
+        <translation type="vanished">trên %1</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Track</source>
-        <translation>Bài hát</translation>
+        <translation type="vanished">Bài hát</translation>
     </message>
 </context>
 <context>
@@ -289,6 +286,27 @@
         <translation>
             <numerusform>Cho %n mục</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>LibraryListing</name>
+    <message>
+        <location filename="../LibraryListing.qml" line="+89"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+89"/>
+        <source>by %1</source>
+        <translation type="unfinished">bởi %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+1"/>
+        <source>on %1</source>
+        <translation type="unfinished">trên %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+2"/>
+        <source>Track</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1024,11 +1042,27 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     </message>
 </context>
 <context>
+    <name>TrackList</name>
+    <message>
+        <source>Tracks in Library</source>
+        <translation type="obsolete">Bài hát trong thư viện</translation>
+    </message>
+</context>
+<context>
     <name>TracksCommandPaletteScope</name>
     <message>
         <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
         <source>Tracks</source>
         <translation>Bài hát</translation>
+    </message>
+</context>
+<context>
+    <name>TracksPane</name>
+    <message>
+        <location filename="../TracksPane.qml" line="+25"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+25"/>
+        <source>Tracks in Library</source>
+        <translation type="unfinished">Bài hát trong thư viện</translation>
     </message>
 </context>
 <context>

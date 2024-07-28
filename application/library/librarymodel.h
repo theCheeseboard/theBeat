@@ -20,12 +20,14 @@
 #ifndef LIBRARYMODEL_H
 #define LIBRARYMODEL_H
 
+#include <QQmlComponent>
 #include <QSqlQueryModel>
 #include <QStyledItemDelegate>
 
 struct LibraryModelPrivate;
 class LibraryModel : public QSqlQueryModel {
         Q_OBJECT
+        QML_ELEMENT
 
     public:
         explicit LibraryModel(QObject* parent = nullptr);
@@ -60,6 +62,9 @@ class LibraryModel : public QSqlQueryModel {
     private:
         LibraryModelPrivate* d;
 
+        // QAbstractItemModel interface
+    public:
+        QHash<int, QByteArray> roleNames() const;
 };
 Q_DECLARE_METATYPE(LibraryModel::Errors)
 

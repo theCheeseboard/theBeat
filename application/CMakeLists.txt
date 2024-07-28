@@ -14,7 +14,6 @@ set(SOURCES
         library/libraryenumeratedirectoryjobwidget.cpp library/libraryenumeratedirectoryjobwidget.ui
         library/librarylistview.cpp
         library/librarymanager.cpp
-        library/librarymodel.cpp
         libraryerrorpopover.cpp libraryerrorpopover.ui
         lyrics/abstractlyricformat.cpp
         lyrics/basiclrcfilelyricformat.cpp
@@ -55,7 +54,6 @@ set(HEADERS
         library/libraryenumeratedirectoryjobwidget.h
         library/librarylistview.h
         library/librarymanager.h
-        library/librarymodel.h
         libraryerrorpopover.h
         lyrics/abstractlyricformat.h
         lyrics/basiclrcfilelyricformat.h
@@ -102,6 +100,8 @@ qt_add_qml_module(thebeat
     VERSION 1.0
     QML_FILES
         Main.qml
+        LibraryListing.qml
+        TracksPane.qml
     NO_CACHEGEN
 )
 
@@ -136,3 +136,5 @@ target_include_directories(thebeat PUBLIC ../libthebeat/)
 install(TARGETS thebeat
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         BUNDLE DESTINATION /Applications)
+
+add_subdirectory(library)

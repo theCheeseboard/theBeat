@@ -222,19 +222,16 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
-        <translation>%1 tarafından</translation>
+        <translation type="vanished">%1 tarafından</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>on %1</source>
-        <translation>%1&apos;de</translation>
+        <translation type="vanished">%1&apos;de</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Track</source>
-        <translation>Şarkı</translation>
+        <translation type="vanished">Şarkı</translation>
     </message>
 </context>
 <context>
@@ -289,6 +286,27 @@
         <translation>
             <numerusform>%n öğe için</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>LibraryListing</name>
+    <message>
+        <location filename="../LibraryListing.qml" line="+89"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+89"/>
+        <source>by %1</source>
+        <translation type="unfinished">%1 tarafından</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+1"/>
+        <source>on %1</source>
+        <translation type="unfinished">%1&apos;de</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+2"/>
+        <source>Track</source>
+        <translation type="unfinished">Şarkı</translation>
     </message>
 </context>
 <context>
@@ -1018,11 +1036,27 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     </message>
 </context>
 <context>
+    <name>TrackList</name>
+    <message>
+        <source>Tracks in Library</source>
+        <translation type="obsolete">Kitaplıktaki Şarkılar</translation>
+    </message>
+</context>
+<context>
     <name>TracksCommandPaletteScope</name>
     <message>
         <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
         <source>Tracks</source>
         <translation type="unfinished">Şarkılar</translation>
+    </message>
+</context>
+<context>
+    <name>TracksPane</name>
+    <message>
+        <location filename="../TracksPane.qml" line="+25"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+25"/>
+        <source>Tracks in Library</source>
+        <translation type="unfinished">Kitaplıktaki Şarkılar</translation>
     </message>
 </context>
 <context>

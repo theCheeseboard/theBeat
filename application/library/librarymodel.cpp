@@ -19,7 +19,7 @@
  * *************************************/
 #include "librarymodel.h"
 
-#include "common.h"
+// #include "common.h"
 #include "librarymanager.h"
 #include <QFile>
 #include <QFileInfo>
@@ -261,4 +261,18 @@ bool LibraryModel::dropMimeData(const QMimeData* data, Qt::DropAction action, in
         }
     }
     return false;
+}
+
+QHash<int, QByteArray> LibraryModel::roleNames() const {
+    return {
+        {PathRole,     "path"    },
+        {TitleRole,    "title"   },
+        {ArtistRole,   "artist"  },
+        {AlbumRole,    "album"   },
+        {DurationRole, "duration"},
+        {TrackRole,    "track"   },
+        {AlbumArtRole, "albumArt"},
+        {ErrorRole,    "error"   },
+        {SortRole,     "sort"    }
+    };
 }

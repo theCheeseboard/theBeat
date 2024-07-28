@@ -216,19 +216,16 @@
 <context>
     <name>LibraryItemDelegate</name>
     <message>
-        <location filename="../library/librarymodel.cpp" line="+195"/>
         <source>by %1</source>
-        <translation>door %1</translation>
+        <translation type="vanished">door %1</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>on %1</source>
-        <translation>op %1</translation>
+        <translation type="vanished">op %1</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Track</source>
-        <translation>Nummer</translation>
+        <translation type="vanished">Nummer</translation>
     </message>
 </context>
 <context>
@@ -284,6 +281,27 @@
             <numerusform>Voor %n ding</numerusform>
             <numerusform>Voor %n dingen</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>LibraryListing</name>
+    <message>
+        <location filename="../LibraryListing.qml" line="+89"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+89"/>
+        <source>by %1</source>
+        <translation type="unfinished">door %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+1"/>
+        <source>on %1</source>
+        <translation type="unfinished">op %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+2"/>
+        <source>Track</source>
+        <translation type="unfinished">Nummer</translation>
     </message>
 </context>
 <context>
@@ -1016,11 +1034,27 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
     </message>
 </context>
 <context>
+    <name>TrackList</name>
+    <message>
+        <source>Tracks in Library</source>
+        <translation type="obsolete">Nummers in Bibliotheek</translation>
+    </message>
+</context>
+<context>
     <name>TracksCommandPaletteScope</name>
     <message>
         <location filename="../commandpalette/trackscommandpalettescope.cpp" line="+34"/>
         <source>Tracks</source>
         <translation type="unfinished">Nummers</translation>
+    </message>
+</context>
+<context>
+    <name>TracksPane</name>
+    <message>
+        <location filename="../TracksPane.qml" line="+25"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+25"/>
+        <source>Tracks in Library</source>
+        <translation type="unfinished">Nummers in Bibliotheek</translation>
     </message>
 </context>
 <context>

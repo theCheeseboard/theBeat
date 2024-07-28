@@ -57,7 +57,7 @@ class LibraryManager : public QObject {
         void bumpTrackPlayCount(QString path);
         int trackPlayCount(QString path);
 
-        LibraryModel* allTracks();
+        Q_SCRIPTABLE LibraryModel* allTracks();
         LibraryModel* searchTracks(QString query);
         int countTracks();
 
