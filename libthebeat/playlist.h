@@ -27,6 +27,13 @@
 struct PlaylistPrivate;
 class LIBTHEBEAT_EXPORT Playlist : public QObject {
         Q_OBJECT
+        Q_PROPERTY(bool repeatOne READ repeatOne WRITE setRepeatOne NOTIFY repeatOneChanged FINAL)
+        Q_PROPERTY(bool repeatAll READ repeatAll WRITE setRepeatAll NOTIFY repeatAllChanged FINAL)
+        Q_PROPERTY(bool shuffle READ shuffle WRITE setShuffle NOTIFY shuffleChanged FINAL)
+        Q_PROPERTY(double volume READ volume WRITE setVolume NOTIFY volumeChanged FINAL)
+        Q_PROPERTY(double logAdjustedVolume READ logAdjustedVolume NOTIFY logAdjustedVolumeChanged FINAL)
+        Q_PROPERTY(bool pauseAfterCurrentTrack READ pauseAfterCurrentTrack WRITE setPauseAfterCurrentTrack NOTIFY pauseAfterCurrentTrackChanged FINAL)
+
     public:
         explicit Playlist(QObject* parent = nullptr);
 
@@ -36,11 +43,11 @@ class LIBTHEBEAT_EXPORT Playlist : public QObject {
             Stopped
         };
 
-        void addItem(MediaItem* item);
-        void removeItem(MediaItem* item);
-        void insertItem(int index, MediaItem* item);
+        Q_SCRIPTABLE void addItem(MediaItem* item);
+        Q_SCRIPTABLE void removeItem(MediaItem* item);
+        Q_SCRIPTABLE void insertItem(int index, MediaItem* item);
         MediaItem* takeItem(int index);
-        void clear();
+        Q_SCRIPTABLE void clear();
 
         State state();
 

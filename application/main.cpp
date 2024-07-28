@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) {
     tStyleManager::setOverrideStyleForApplication(settings.value("theme/mode").toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
     QQuickStyle::setStyle("com.vicr123.Contemporary.CoreStyles");
 
-    // MainWindow* w = new MainWindow();
+    MainWindow* w = new MainWindow();
 
     QObject::connect(&a, &tApplication::singleInstanceMessage, [=](QJsonObject launchMessage) {
         if (launchMessage.contains("files")) {
@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
         return new LibraryResetSettingsPane();
     });
 
-    // w->show();
+    w->show();
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/com/vicr123/thebeat/Main.qml"_qs);
@@ -198,6 +198,8 @@ int main(int argc, char* argv[]) {
 
     }, Qt::QueuedConnection);
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "LibraryManager", LibraryManager::instance());
+    qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "UrlManager", StateManager::instance()->url());
+    qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "PlaylistManager", StateManager::instance()->playlist());
     engine.load(url);
 
     MediaItem* firstItem = nullptr;

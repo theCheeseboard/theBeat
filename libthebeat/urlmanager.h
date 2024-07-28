@@ -22,6 +22,7 @@
 
 #include "libthebeat_global.h"
 #include <QObject>
+#include <QUrl>
 
 class UrlHandler;
 class MediaItem;
@@ -31,7 +32,7 @@ class LIBTHEBEAT_EXPORT UrlManager : public QObject {
     public:
         explicit UrlManager(QObject* parent = nullptr);
 
-        MediaItem* itemForUrl(QUrl url);
+        Q_SCRIPTABLE MediaItem* itemForUrl(QUrl url);
 
         void registerHandler(UrlHandler* handler);
 

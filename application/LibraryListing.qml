@@ -12,6 +12,7 @@ ListView {
         implicitWidth: containerRect.implicitWidth
         implicitHeight: containerRect.implicitHeight
 
+        required property string path
         required property string title
         required property string artist
         required property string album
@@ -101,6 +102,10 @@ ListView {
             id: mouseArea
             anchors.fill: parent
             hoverEnabled: true
+
+            onClicked: () => {
+                           PlaylistManager.addItem(UrlManager.itemForUrl(Qt.url(`file://${trackItem.path}`)))
+                       }
         }
     }
 }

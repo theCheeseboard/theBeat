@@ -290,8 +290,8 @@
 <context>
     <name>LibraryListing</name>
     <message>
-        <location filename="../LibraryListing.qml" line="+89"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+89"/>
+        <location filename="../LibraryListing.qml" line="+90"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+90"/>
         <source>by %1</source>
         <translation type="unfinished">by %1</translation>
     </message>
