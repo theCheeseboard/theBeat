@@ -1088,6 +1088,12 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <source>Tracks in Library</source>
         <translation type="unfinished">المسارات في المكتبة</translation>
     </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+18"/>
+        <source>Search</source>
+        <translation type="unfinished">بحث</translation>
+    </message>
 </context>
 <context>
     <name>TracksWidget</name>

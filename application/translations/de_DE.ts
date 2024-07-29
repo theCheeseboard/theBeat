@@ -1064,6 +1064,12 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
         <source>Tracks in Library</source>
         <translation type="unfinished">Titel in der Bibliothek</translation>
     </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+18"/>
+        <source>Search</source>
+        <translation type="unfinished">Suchen</translation>
+    </message>
 </context>
 <context>
     <name>TracksWidget</name>

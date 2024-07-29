@@ -1056,6 +1056,12 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <source>Tracks in Library</source>
         <translation type="unfinished">Nummers in Bibliotheek</translation>
     </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+18"/>
+        <source>Search</source>
+        <translation type="unfinished">Zoeken</translation>
+    </message>
 </context>
 <context>
     <name>TracksWidget</name>

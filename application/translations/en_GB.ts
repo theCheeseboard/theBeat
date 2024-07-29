@@ -1060,6 +1060,12 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
         <source>Tracks in Library</source>
         <translation type="unfinished">Tracks in Library</translation>
     </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+18"/>
+        <source>Search</source>
+        <translation type="unfinished">Search</translation>
+    </message>
 </context>
 <context>
     <name>TracksWidget</name>

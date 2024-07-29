@@ -57,6 +57,7 @@ Layer {
             }
 
             Button {
+                Layout.alignment: Qt.AlignCenter
                 id: shuffleButton
                 flat: true
                 icon.name: "media-playlist-shuffle"
@@ -68,6 +69,7 @@ Layer {
                 }
             }
             Button {
+                Layout.alignment: Qt.AlignCenter
                 id: repeatOneButton
                 flat: true
                 icon.name: "media-repeat-single"
@@ -79,6 +81,7 @@ Layer {
                 }
             }
             Button {
+                Layout.alignment: Qt.AlignCenter
                 flat: true
                 icon.name: "media-skip-backward"
                 implicitWidth: height
@@ -87,17 +90,19 @@ Layer {
                 }
             }
             Button {
+                Layout.alignment: Qt.AlignCenter
                 id: playPauseButton
                 flat: true
                 icon.name: PlaylistManager.state === PlaylistManager.Playing ? "media-playback-pause" : "media-playback-start"
-                icon.height: 32
-                icon.width: 32
+                icon.height: 40
+                icon.width: 40
                 implicitWidth: height
                 onClicked: () => {
                     PlaylistManager.playPause();
                 }
             }
             Button {
+                Layout.alignment: Qt.AlignCenter
                 flat: true
                 icon.name: "media-skip-forward"
                 implicitWidth: height

@@ -58,14 +58,14 @@ class LibraryManager : public QObject {
         int trackPlayCount(QString path);
 
         Q_SCRIPTABLE LibraryModel* allTracks();
-        LibraryModel* searchTracks(QString query);
-        int countTracks();
+        Q_SCRIPTABLE LibraryModel* searchTracks(QString query);
+        Q_SCRIPTABLE int countTracks();
 
-        QStringList artists();
-        QStringList albums();
+        Q_SCRIPTABLE QStringList artists();
+        Q_SCRIPTABLE QStringList albums();
 
-        LibraryModel* tracksByArtist(QString artist);
-        LibraryModel* tracksByAlbum(QString album);
+        Q_SCRIPTABLE LibraryModel* tracksByArtist(QString artist);
+        Q_SCRIPTABLE LibraryModel* tracksByAlbum(QString album);
 
         int createPlaylist(QString playlistName);
         QList<QPair<int, QString>> playlists();

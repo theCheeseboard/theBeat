@@ -26,27 +26,44 @@ Item {
         color: layer1.color
     }
 
-    LibraryModel {
-        id: model
-    }
-
     Pager {
         anchors.top: grandstand.bottom
-        anchors.topMargin: 6
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: SafeZone.bottom
 
         currentAnimation: Pager.Fade
 
-        LibraryListing {
+        ColumnLayout {
             anchors.fill: parent
-            id: trackList
+
+            TextField {
+                id: searchBox
+                Layout.fillWidth: true
+                placeholderText: qsTr("Search")
+
+                background: Rectangle {
+                    implicitHeight: 40
+                    color: Contemporary.background
+                }
+
+                z: 1
+            }
+
+            LibraryListing {
+                id: trackList
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+            }
         }
     }
 
     Component.onCompleted: () => {
-        trackList.model = LibraryManager.allTracks()
+        trackList.model = Qt.binding(() => {
+            if (searchBox.text !== "") {
+                return LibraryManager.searchTracks(searchBox.text);
+            }
+            return LibraryManager.allTracks();
+        });
     }
 }

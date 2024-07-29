@@ -1058,6 +1058,12 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <source>Tracks in Library</source>
         <translation type="unfinished">Kitaplıktaki Şarkılar</translation>
     </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+18"/>
+        <source>Search</source>
+        <translation type="unfinished">Ara</translation>
+    </message>
 </context>
 <context>
     <name>TracksWidget</name>

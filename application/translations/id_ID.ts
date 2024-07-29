@@ -1054,6 +1054,12 @@ theBeat akan restart seusai penyetelan ulang. Aksi ini tidak dapat dikembalikan.
         <source>Tracks in Library</source>
         <translation type="unfinished">Trek dalam Pustaka</translation>
     </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+18"/>
+        <source>Search</source>
+        <translation type="unfinished">Cari</translation>
+    </message>
 </context>
 <context>
     <name>TracksWidget</name>

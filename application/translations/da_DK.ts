@@ -1060,6 +1060,12 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
         <source>Tracks in Library</source>
         <translation type="unfinished">Sange i bibliotek</translation>
     </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+18"/>
+        <source>Search</source>
+        <translation type="unfinished">Søg</translation>
+    </message>
 </context>
 <context>
     <name>TracksWidget</name>

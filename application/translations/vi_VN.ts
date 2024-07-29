@@ -1064,6 +1064,12 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <source>Tracks in Library</source>
         <translation type="unfinished">Bài hát trong thư viện</translation>
     </message>
+    <message>
+        <location line="+18"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+18"/>
+        <source>Search</source>
+        <translation type="unfinished">Tìm kiếm</translation>
+    </message>
 </context>
 <context>
     <name>TracksWidget</name>
