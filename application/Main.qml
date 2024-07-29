@@ -34,7 +34,7 @@ ContemporaryWindow {
             }
         }
         Labs.Menu {
-            title: qsTr("Edit");
+            title: qsTr("Edit")
 
             Labs.MenuItem {
                 text: qsTr("Copy")
@@ -122,14 +122,28 @@ ContemporaryWindow {
 
             ColumnLayout {
                 anchors.fill: parent
-                spacing: 0
+                spacing: 3
 
-                Pager {
+                RowLayout {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
-                    id: stack
 
-                    TracksPane { }
+                    Pager {
+                        id: stack
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+
+                        TracksPane {}
+                    }
+
+                    Layer {
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: 300
+
+                        QueuePane {
+                            anchors.fill: parent
+                        }
+                    }
                 }
 
                 ControlStrip {
@@ -140,14 +154,12 @@ ContemporaryWindow {
 
         Component {
             id: aboutSurface
-            AboutSurface {
-            }
+            AboutSurface {}
         }
 
         Component {
             id: settingsSurface
-            Item {
-            }
+            Item {}
         }
     }
 }

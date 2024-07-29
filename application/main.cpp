@@ -20,6 +20,7 @@
 #include "mainwindow.h"
 
 #include "library/librarymanager.h"
+#include "playlistmodel.h"
 #include "qtmultimedia/qtmultimediaurlhandler.h"
 #include "settingspanes/colourssettingspane.h"
 #include "settingspanes/libraryresetsettingspane.h"
@@ -201,6 +202,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "LibraryManager", LibraryManager::instance());
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "UrlManager", StateManager::instance()->url());
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "PlaylistManager", StateManager::instance()->playlist());
+    qmlRegisterType<PlaylistModel>("com.vicr123.thebeat", 1, 0, "PlaylistModel");
     engine.load(url);
 
     MediaItem* firstItem = nullptr;

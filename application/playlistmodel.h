@@ -21,11 +21,13 @@
 #define PLAYLISTMODEL_H
 
 #include <QAbstractListModel>
+#include <QQmlComponent>
 #include <QStyledItemDelegate>
 
 struct PlaylistModelPrivate;
 class PlaylistModel : public QAbstractListModel {
         Q_OBJECT
+        QML_ELEMENT
 
     public:
         explicit PlaylistModel(QObject* parent = nullptr);
@@ -62,6 +64,10 @@ class PlaylistModel : public QAbstractListModel {
 
     private:
         PlaylistModelPrivate* d;
+
+        // QAbstractItemModel interface
+    public:
+        QHash<int, QByteArray> roleNames() const;
 };
 Q_DECLARE_METATYPE(PlaylistModel::DrawType);
 

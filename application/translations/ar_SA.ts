@@ -802,7 +802,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="+316"/>
+        <location filename="../playlistmodel.cpp" line="+319"/>
         <source>Track</source>
         <translation>مسار</translation>
     </message>
@@ -880,6 +880,27 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
         <location line="+10"/>
         <source>Jewel Case Insert</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QueuePane</name>
+    <message>
+        <location filename="../QueuePane.qml" line="+22"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+22"/>
+        <source>Queue</source>
+        <translation type="unfinished">أنتظر</translation>
+    </message>
+    <message>
+        <location line="+132"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+132"/>
+        <source>Track</source>
+        <translation type="unfinished">مسار</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+6"/>
+        <source>Album</source>
+        <translation type="unfinished">ألبوم</translation>
     </message>
 </context>
 <context>
@@ -1224,7 +1245,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+62"/>
+        <location filename="../main.cpp" line="+63"/>
         <source>Audio Player</source>
         <translation>مشغل الصوت</translation>
     </message>

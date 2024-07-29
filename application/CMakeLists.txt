@@ -21,7 +21,6 @@ set(SOURCES
         main.cpp
         mainwindow.cpp mainwindow.ui
         othersourceswidget.cpp othersourceswidget.ui
-        playlistmodel.cpp
         print/printcontroller.cpp
         print/printsettings.cpp print/printsettings.ui
         qtmultimedia/qtmultimediamediaitem.cpp
@@ -60,7 +59,6 @@ set(HEADERS
         lyrics/lyricsdisplaywidget.h
         mainwindow.h
         othersourceswidget.h
-        playlistmodel.h
         print/printcontroller.h
         print/printsettings.h
         qtmultimedia/qtmultimediamediaitem.h
@@ -103,6 +101,9 @@ qt_add_qml_module(thebeat
         ControlStrip.qml
         LibraryListing.qml
         TracksPane.qml
+        QueuePane.qml
+    SOURCES
+        playlistmodel.h playlistmodel.cpp
     NO_CACHEGEN
 )
 

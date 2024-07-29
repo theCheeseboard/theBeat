@@ -786,7 +786,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="+316"/>
+        <location filename="../playlistmodel.cpp" line="+319"/>
         <source>Track</source>
         <translation>Bài hát</translation>
     </message>
@@ -854,6 +854,27 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
         <location line="+10"/>
         <source>Jewel Case Insert</source>
         <translation>Giấy hộp đĩa</translation>
+    </message>
+</context>
+<context>
+    <name>QueuePane</name>
+    <message>
+        <location filename="../QueuePane.qml" line="+22"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+22"/>
+        <source>Queue</source>
+        <translation type="unfinished">Hàng phát</translation>
+    </message>
+    <message>
+        <location line="+132"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+132"/>
+        <source>Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+6"/>
+        <source>Album</source>
+        <translation type="unfinished">Đĩa nhạc</translation>
     </message>
 </context>
 <context>
@@ -1195,7 +1216,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+62"/>
+        <location filename="../main.cpp" line="+63"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>

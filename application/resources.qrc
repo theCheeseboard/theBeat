@@ -5,6 +5,5 @@
         <file>resources/Silly.ogg</file>
         <file>icons/com.vicr123.thebeat_blueprint.svg</file>
         <file>icons/com.vicr123.thebeat.svg</file>
-        <file>LibraryListing.qml</file>
     </qresource>
 </RCC>

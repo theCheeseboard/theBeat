@@ -45,9 +45,12 @@ PlaylistModel::PlaylistModel(QObject* parent) :
     d = new PlaylistModelPrivate();
 
     connect(StateManager::instance()->playlist(), &Playlist::currentItemChanged, this, [this] {
+        beginResetModel();
+        endResetModel();
         emit dataChanged(index(0), index(rowCount()));
     });
     connect(StateManager::instance()->playlist(), &Playlist::itemsChanged, this, [this] {
+        beginResetModel();
         for (MediaItem* item : StateManager::instance()->playlist()->items()) {
             if (!d->knownItems.contains(item)) {
                 connect(item, &MediaItem::metadataChanged, this, [this] {
@@ -60,7 +63,7 @@ PlaylistModel::PlaylistModel(QObject* parent) :
             }
         }
         invalidateDrawTypes(0);
-        emit dataChanged(index(0), index(rowCount()));
+        endResetModel();
     });
 
     connect(this, &PlaylistModel::dataChanged, this, [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
@@ -428,4 +431,12 @@ QSize PlaylistDelegate::sizeHint(const QStyleOptionViewItem& option, const QMode
             break;
     }
     return sizeHint;
+}
+
+QHash<int, QByteArray> PlaylistModel::roleNames() const {
+    return {
+        {MediaItemRole,    "mediaItem"   },
+        {DrawTypeRole,     "drawType"    },
+        {PriorHeadersRole, "priorHeaders"}
+    };
 }

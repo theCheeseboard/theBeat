@@ -744,7 +744,7 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../playlistmodel.cpp" line="+316"/>
+        <location filename="../playlistmodel.cpp" line="+319"/>
         <source>Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -805,6 +805,27 @@
     <message>
         <location line="+10"/>
         <source>Jewel Case Insert</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QueuePane</name>
+    <message>
+        <location filename="../QueuePane.qml" line="+22"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+22"/>
+        <source>Queue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+132"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+132"/>
+        <source>Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+6"/>
+        <source>Album</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1087,7 +1108,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+62"/>
+        <location filename="../main.cpp" line="+63"/>
         <source>Audio Player</source>
         <translation type="unfinished"></translation>
     </message>

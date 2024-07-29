@@ -37,6 +37,10 @@ QString MediaItem::albumArtUrl() {
     return QStringLiteral("data:image/png;base64,%1").arg(base64);
 }
 
+int MediaItem::trackNumber() {
+    return metadata(QMediaMetaData::TrackNumber).toInt();
+}
+
 QVariant MediaItem::metadata(QString key) {
     Q_UNUSED(key);
     return QVariant();
