@@ -7,6 +7,16 @@ import com.vicr123.Contemporary
 
 Item {
     LayerCalculator {
+        id: layer1
+        layer: 1
+    }
+
+    LayerCalculator {
+        id: layer2
+        layer: 2
+    }
+
+    LayerCalculator {
         id: layer3
         layer: 3
     }
@@ -54,13 +64,16 @@ Item {
                     width: queueList.width
 
                     Item {
+                        id: queueItemChild
                         height: parent.height
                         width: parent.width - 6
                         x: 3
 
+                        property var backgroundColor: mouseArea.containsMouse ? (queueItem.drawType === 2 ? layer2.color : layer3.color) : (queueItem.drawType === 2 ? layer1.color : layer2.color)
+
                         Rectangle {
                             anchors.fill: parent
-                            color: queueItem.drawType === 2 ? Qt.rgba(0, 0, 0, 0) : Contemporary.layer
+                            color: queueItemChild.backgroundColor
                             radius: 4
                         }
 
@@ -164,6 +177,16 @@ Item {
                                         }
                                     });
                                 }
+                            }
+                        }
+
+                        MouseArea {
+                            id: mouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+
+                            onClicked: () => {
+                                PlaylistManager.currentItem = queueItem.mediaItem;
                             }
                         }
                     }

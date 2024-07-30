@@ -853,14 +853,14 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
 <context>
     <name>QueuePane</name>
     <message>
-        <location filename="../QueuePane.qml" line="+22"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+22"/>
+        <location filename="../QueuePane.qml" line="+32"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+32"/>
         <source>Queue</source>
         <translation type="unfinished">Wachtrij</translation>
     </message>
     <message>
-        <location line="+132"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+132"/>
+        <location line="+136"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+136"/>
         <source>Track</source>
         <translation type="unfinished">Nummer</translation>
     </message>
