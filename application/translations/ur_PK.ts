@@ -15,6 +15,55 @@
     </message>
 </context>
 <context>
+    <name>ArtistsAlbumsPane</name>
+    <message>
+        <source>Tracks in Library</source>
+        <translation type="obsolete">لائبریری میں پٹریوں</translation>
+    </message>
+    <message>
+        <location filename="../ArtistsAlbumsPane.qml" line="+41"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+41"/>
+        <source>Artists in Library</source>
+        <translation type="unfinished">لائبریری میں فنکار</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+0"/>
+        <source>Albums in Library</source>
+        <translation type="unfinished">لائبریری میں البمز</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+38"/>
+        <source>Tracks by %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+0"/>
+        <source>Tracks in %1</source>
+        <translation type="unfinished">%1 میں میوزک ٹریک</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+12"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished">قطار میں تمام فائلیں ڈال دیں</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+6"/>
+        <source>Play All</source>
+        <translation type="unfinished">سارے کھیلو</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+9"/>
+        <source>Shuffle All</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ArtistsAlbumsWidget</name>
     <message>
         <location filename="../artistsalbumswidget.ui" line="+65"/>
@@ -967,8 +1016,14 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
         <translation type="unfinished">لائبریری میں پٹریوں</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+18"/>
+        <location line="+8"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+8"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished">قطار میں تمام فائلیں ڈال دیں</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+30"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>

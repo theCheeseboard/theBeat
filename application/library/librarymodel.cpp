@@ -263,6 +263,10 @@ bool LibraryModel::dropMimeData(const QMimeData* data, Qt::DropAction action, in
     return false;
 }
 
+QUrl LibraryModel::path(const int& row) const {
+    return QUrl::fromLocalFile(data(this->index(row, 0), PathRole).toString());
+}
+
 QHash<int, QByteArray> LibraryModel::roleNames() const {
     return {
         {PathRole,     "path"    },

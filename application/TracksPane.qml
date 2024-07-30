@@ -14,7 +14,7 @@ Item {
         layer: 1
     }
 
-    Grandstand {
+    LibraryHeader {
         id: grandstand
         anchors.top: parent.top
         anchors.left: parent.left
@@ -24,6 +24,26 @@ Item {
 
         text: qsTr("Tracks in Library")
         color: layer1.color
+
+        RowLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            Button {
+                text: qsTr("Enqueue All")
+                icon.name: "view-media-playlist"
+
+                onClicked: () => {
+                    for (var i = 0; i < trackList.model.rowCount(); i++) {
+                        const mediaItem = UrlManager.itemForUrl(trackList.model.path(i));
+                        PlaylistManager.addItem(mediaItem);
+                    }
+                }
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+        }
     }
 
     Pager {

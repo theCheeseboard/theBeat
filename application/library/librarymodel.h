@@ -59,6 +59,8 @@ class LibraryModel : public QSqlQueryModel {
         bool canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const override;
         bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 
+        Q_SCRIPTABLE QUrl path(const int& row) const;
+
     private:
         LibraryModelPrivate* d;
 

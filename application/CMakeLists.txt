@@ -102,6 +102,8 @@ qt_add_qml_module(thebeat
         LibraryListing.qml
         TracksPane.qml
         QueuePane.qml
+        ArtistsAlbumsPane.qml
+        LibraryHeader.qml
     SOURCES
         playlistmodel.h playlistmodel.cpp
     NO_CACHEGEN

@@ -134,6 +134,12 @@ ContemporaryWindow {
                         Layout.fillWidth: true
 
                         TracksPane {}
+                        ArtistsAlbumsPane {
+                            isArtists: true
+                        }
+                        ArtistsAlbumsPane {
+                            isArtists: false
+                        }
                     }
 
                     Layer {
