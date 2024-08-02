@@ -1,4 +1,4 @@
-name: "Windows CI"
+name: "Linux (AppImage) CI"
 on:
   push:
     branches:
@@ -10,19 +10,20 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Install Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
-      - uses: TheMrMilchmann/setup-msvc-dev@v3
-        with:
-          arch: x64
+      - name: Install mpc
+        run: |
+          sudo apt-get install libmpc-dev libutf8proc-dev
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
           aqtversion: '==3.1.*'
-          version: '6.7.0'
+          version: '6.6.3'
           target: 'desktop'
+          arch: 'gcc_64'
           cache: true
           modules: 'qt3d qtcharts qtconnectivity qtdatavis3d qtgraphs qtgrpc qthttpserver qtimageformats qtlanguageserver qtlocation qtlottie qtmultimedia qtnetworkauth qtpdf qtpositioning qtquick3dphysics qtquickeffectmaker qtremoteobjects qtscxml qtsensors qtserialbus qtserialport qtspeech qtvirtualkeyboard qtwebchannel qtwebengine qtwebsockets qtwebview qt5compat qtquick3d qtquicktimeline qtshadertools'
       - name: Install QCoro
@@ -45,6 +46,7 @@ jobs:
         with:
           project: theCheeseboard/contemporary-qml
           commitish: main
+          extra-cmake-args: -DCNTP_BUNDLE_ICONS=ON
       - name: Install thebeat
         id: thebeat
         uses: theCheeseboard/actions/build-cmake-project@actions
@@ -52,19 +54,7 @@ jobs:
           project: .
           commitish: .
       - name: Deploy thebeat
-        env:
-          SOURCE_DIRECTORY: ${{ steps.thebeat.outputs.source-directory }}
-          BUILD_DIRECTORY: ${{ steps.thebeat.outputs.build-directory }}
-          INSTALL_DIRECTORY: ${{ steps.thebeat.outputs.install-directory }}
-          VCPKG_DIRECTORY: ${{ github.workspace }}/vcpkg
-        run: |
-          New-Item -ItemType Directory -Force -Path output
-          $executable = Move-Item -Path "$env:BUILD_DIRECTORY/thebeat*.exe" -Destination output -Force -PassThru
-          windeployqt output --qmldir="$env:SOURCE_DIRECTORY" -printsupport
-          copy $env:INSTALL_DIRECTORY/bin/*.dll output
-          copy $env:VCPKG_DIRECTORY/installed/*/bin/*.dll output
-      - name: Upload thebeat artifact
-        uses: actions/upload-artifact@v4
+        uses: theCheeseboard/actions/deploy-project@actions
         with:
-          name: thebeat-win
-          path: output
+          sourceDirectory: ${{ steps.thebeat.outputs.source-directory }}
+          buildDirectory: ${{ steps.thebeat.outputs.build-directory }}
