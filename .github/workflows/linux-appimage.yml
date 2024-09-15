@@ -40,7 +40,7 @@ jobs:
         uses: theCheeseboard/actions/build-cmake-project@actions
         with:
           project: taglib/taglib
-          commitish: v1.13.1
+          commitish: v2.0.1
       - name: Install libcontemporary
         uses: theCheeseboard/actions/build-cmake-project@actions
         with:
