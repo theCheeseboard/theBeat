@@ -41,6 +41,7 @@ jobs:
         with:
           project: taglib/taglib
           commitish: v2.0.1
+          extra-cmake-args: -DBUILD_SHARED_LIBS=ON
       - name: Install libcontemporary
         uses: theCheeseboard/actions/build-cmake-project@actions
         with:
