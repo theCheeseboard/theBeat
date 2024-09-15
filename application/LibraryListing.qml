@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Contemporary
+import "common.js" as Common
 
 ListView {
     id: root
@@ -41,14 +42,13 @@ ListView {
                 rowSpacing: 3
 
                 Label {
+                    id: trackNumberLabel
                     Layout.row: 0
                     Layout.column: 0
                     Layout.rowSpan: 2
 
                     Layout.fillHeight: true
                     Layout.preferredWidth: implicitHeight
-
-                    id: trackNumberLabel
                     text: trackItem.track === 0 ? "-" : trackItem.track
                     color: Contemporary.disabled(Contemporary.foreground)
                     verticalAlignment: Qt.AlignVCenter
@@ -69,30 +69,31 @@ ListView {
 
                     Label {
                         id: trackDurationLabel
-                        text: trackItem.duration
+                        text: Common.durationToString(trackItem.duration)
                         color: Contemporary.disabled(Contemporary.foreground)
                     }
                 }
 
                 Label {
+                    id: trackMetaLabel
                     Layout.row: 1
                     Layout.column: 1
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-
-                    id: trackMetaLabel
                     text: "."
                     color: Contemporary.disabled(Contemporary.foreground)
 
                     Component.onCompleted: () => {
                         trackMetaLabel.text = Qt.binding(() => {
                             const list = [];
-                            if (trackItem.artist !== "") list.push(qsTr("by %1").arg(trackItem.artist));
-                            if (trackItem.album !== "") list.push(qsTr("on %1").arg(trackItem.album));
-
-                            if (list.length == 0) return qsTr("Track");
-                            return list.join(" · ")
-                        })
+                            if (trackItem.artist !== "")
+                                list.push(qsTr("by %1").arg(trackItem.artist));
+                            if (trackItem.album !== "")
+                                list.push(qsTr("on %1").arg(trackItem.album));
+                            if (list.length == 0)
+                                return qsTr("Track");
+                            return list.join(" · ");
+                        });
                     }
                 }
             }
@@ -104,10 +105,10 @@ ListView {
             hoverEnabled: true
 
             onClicked: () => {
-                           const mediaItem = UrlManager.itemForUrl(Qt.url(`file://${trackItem.path}`));
-                           PlaylistManager.addItem(mediaItem)
-                           PlaylistManager.currentItem = mediaItem;
-                       }
+                const mediaItem = UrlManager.itemForUrl(Qt.url(`file://${trackItem.path}`));
+                PlaylistManager.addItem(mediaItem);
+                PlaylistManager.currentItem = mediaItem;
+            }
         }
     }
 }

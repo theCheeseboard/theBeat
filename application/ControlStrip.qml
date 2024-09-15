@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import com.vicr123.Contemporary
 import com.vicr123.thebeat
 import Contemporary
+import "common.js" as Common
 
 Layer {
     id: root
@@ -44,10 +45,12 @@ Layer {
                     Component.onCompleted: () => {
                         currentItemMeta.text = Qt.binding(() => {
                             const list = [];
-                            if (PlaylistManager.currentItem.authors.length !== 0) list.push(Contemporary.createSeparatedList(PlaylistManager.currentItem.authors))
-                            if (PlaylistManager.currentItem.album !== "") list.push(PlaylistManager.currentItem.album)
-                            return list.join(" · ")
-                        })
+                            if (PlaylistManager.currentItem.authors.length !== 0)
+                                list.push(Contemporary.createSeparatedList(PlaylistManager.currentItem.authors));
+                            if (PlaylistManager.currentItem.album !== "")
+                                list.push(PlaylistManager.currentItem.album);
+                            return list.join(" · ");
+                        });
                     }
                 }
             }
@@ -57,27 +60,27 @@ Layer {
             }
 
             Button {
-                Layout.alignment: Qt.AlignCenter
                 id: shuffleButton
+                Layout.alignment: Qt.AlignCenter
                 flat: true
                 icon.name: "media-playlist-shuffle"
                 implicitWidth: height
                 checked: PlaylistManager.shuffle
                 checkable: true
                 onCheckedChanged: () => {
-                    PlaylistManager.shuffle = shuffleButton.checked
+                    PlaylistManager.shuffle = shuffleButton.checked;
                 }
             }
             Button {
-                Layout.alignment: Qt.AlignCenter
                 id: repeatOneButton
+                Layout.alignment: Qt.AlignCenter
                 flat: true
                 icon.name: "media-repeat-single"
                 implicitWidth: height
                 checked: PlaylistManager.repeatOne
                 checkable: true
                 onCheckedChanged: () => {
-                    PlaylistManager.repeatOne = repeatOneButton.checked
+                    PlaylistManager.repeatOne = repeatOneButton.checked;
                 }
             }
             Button {
@@ -90,8 +93,8 @@ Layer {
                 }
             }
             Button {
-                Layout.alignment: Qt.AlignCenter
                 id: playPauseButton
+                Layout.alignment: Qt.AlignCenter
                 flat: true
                 icon.name: PlaylistManager.state === PlaylistManager.Playing ? "media-playback-pause" : "media-playback-start"
                 icon.height: 40
@@ -116,23 +119,24 @@ Layer {
             Layout.fillWidth: true
 
             Label {
-                text: "elapsed"
+                id: elapsedText
+                text: Common.durationToString(PlaylistManager.currentItem.elapsed)
             }
 
             Slider {
-                Layout.fillWidth: true
                 id: progressSlider
+                Layout.fillWidth: true
                 from: 0
                 to: PlaylistManager.currentItem.duration
                 value: PlaylistManager.currentItem.elapsed
 
                 onMoved: () => {
-                    PlaylistManager.currentItem.seek(progressSlider.value)
+                    PlaylistManager.currentItem.seek(progressSlider.value);
                 }
             }
 
             Label {
-                text: "total"
+                text: Common.durationToString(PlaylistManager.currentItem.duration, true)
             }
         }
     }
