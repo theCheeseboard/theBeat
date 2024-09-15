@@ -52,6 +52,12 @@ jobs:
           project: theCheeseboard/contemporary-qml
           commitish: main
           extra-cmake-args: -DCNTP_BUNDLE_ICONS=ON
+      - name: Install theFrisbee
+        id: thefrisbee
+        uses: theCheeseboard/actions/build-cmake-project@actions
+        with:
+          project: theCheeseboard/thefrisbee
+          commitish: v3.0
       - name: Install thebeat
         id: thebeat
         uses: theCheeseboard/actions/build-cmake-project@actions
