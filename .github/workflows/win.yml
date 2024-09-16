@@ -37,6 +37,7 @@ jobs:
           commitish: v4.0.5
       - name: Install taglib
         uses: theCheeseboard/actions/build-cmake-project@actions
+        id: taglib
         with:
           project: taglib/taglib
           commitish: v2.0.1
@@ -57,6 +58,7 @@ jobs:
         with:
           project: .
           commitish: .
+          extra-cmake-args: '-DTAGLIB_ROOT=${{ steps.taglib.outputs.install-directory }}'
       - name: Deploy thebeat
         env:
           SOURCE_DIRECTORY: ${{ steps.thebeat.outputs.source-directory }}
