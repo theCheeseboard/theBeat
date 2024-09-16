@@ -70,7 +70,6 @@ jobs:
           $executable = Move-Item -Path "$env:BUILD_DIRECTORY/thebeat*.exe" -Destination output -Force -PassThru
           windeployqt output --qmldir="$env:SOURCE_DIRECTORY" -printsupport
           copy $env:INSTALL_DIRECTORY/bin/*.dll output
-          copy $env:VCPKG_DIRECTORY/installed/*/bin/*.dll output
       - name: Upload thebeat artifact
         uses: actions/upload-artifact@v4
         with:
