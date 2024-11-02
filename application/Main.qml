@@ -140,6 +140,7 @@ ContemporaryWindow {
                         ArtistsAlbumsPane {
                             isArtists: false
                         }
+                        PlaylistPane {}
                     }
 
                     Layer {

@@ -27,6 +27,7 @@
 #include "settingspanes/notificationssettingspane.h"
 #include "settingspanes/titlebarsettingspane.h"
 #include "thememanager.h"
+#include "userplaylistmodel.h"
 #include <QCommandLineParser>
 #include <QDir>
 #include <QJsonArray>
@@ -203,6 +204,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "UrlManager", StateManager::instance()->url());
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "PlaylistManager", StateManager::instance()->playlist());
     qmlRegisterType<PlaylistModel>("com.vicr123.thebeat", 1, 0, "PlaylistModel");
+    qmlRegisterType<UserPlaylistModel>("com.vicr123.thebeat", 1, 0, "UserPlaylistModel");
     engine.load(url);
 
     MediaItem* firstItem = nullptr;

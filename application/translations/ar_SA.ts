@@ -866,6 +866,33 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
     </message>
 </context>
 <context>
+    <name>PlaylistPane</name>
+    <message>
+        <location filename="../PlaylistPane.qml" line="+40"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+40"/>
+        <source>Playlists</source>
+        <translation type="unfinished">قوائم التشغيل</translation>
+    </message>
+    <message>
+        <location line="+56"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+56"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished">طابور الكل</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+6"/>
+        <source>Play All</source>
+        <translation type="unfinished">لعب الكل</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+9"/>
+        <source>Shuffle All</source>
+        <translation type="unfinished">خلط الكل</translation>
+    </message>
+</context>
+<context>
     <name>PrintController</name>
     <message>
         <location filename="../print/printcontroller.cpp" line="+60"/>
@@ -1304,7 +1331,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+63"/>
+        <location filename="../main.cpp" line="+64"/>
         <source>Audio Player</source>
         <translation>مشغل الصوت</translation>
     </message>

@@ -850,6 +850,33 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
     </message>
 </context>
 <context>
+    <name>PlaylistPane</name>
+    <message>
+        <location filename="../PlaylistPane.qml" line="+40"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+40"/>
+        <source>Playlists</source>
+        <translation type="unfinished">Danh sách phát</translation>
+    </message>
+    <message>
+        <location line="+56"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+56"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished">Đặt tất cả vào hàng phát</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+6"/>
+        <source>Play All</source>
+        <translation type="unfinished">Phát tất cả</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+9"/>
+        <source>Shuffle All</source>
+        <translation type="unfinished">Phát ngẫu nhiên</translation>
+    </message>
+</context>
+<context>
     <name>PrintController</name>
     <message>
         <location filename="../print/printcontroller.cpp" line="+60"/>
@@ -1275,7 +1302,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+63"/>
+        <location filename="../main.cpp" line="+64"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>

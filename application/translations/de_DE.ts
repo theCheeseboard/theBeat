@@ -850,6 +850,33 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
     </message>
 </context>
 <context>
+    <name>PlaylistPane</name>
+    <message>
+        <location filename="../PlaylistPane.qml" line="+40"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+40"/>
+        <source>Playlists</source>
+        <translation type="unfinished">Playlists</translation>
+    </message>
+    <message>
+        <location line="+56"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+56"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished">Alle einreihen</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+6"/>
+        <source>Play All</source>
+        <translation type="unfinished">Alle abspielen</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+9"/>
+        <source>Shuffle All</source>
+        <translation type="unfinished">Alle in Zufallswiedergabe</translation>
+    </message>
+</context>
+<context>
     <name>PrintController</name>
     <message>
         <location filename="../print/printcontroller.cpp" line="+60"/>
@@ -1276,7 +1303,7 @@ theBeat wird nach dem beenden des Vorganges neustarten. Dieser Vorgang ist irrev
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+63"/>
+        <location filename="../main.cpp" line="+64"/>
         <source>Audio Player</source>
         <translation>Audio Player</translation>
     </message>

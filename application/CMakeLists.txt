@@ -35,6 +35,7 @@ set(SOURCES
         settingspanes/colourssettingspane.cpp settingspanes/colourssettingspane.ui
         settingspanes/notificationssettingspane.cpp settingspanes/notificationssettingspane.ui
         resetlibrarypopover.cpp resetlibrarypopover.ui
+        userplaylistmodel.cpp
 
         commandpalette/artistsalbumscommandpalettescope.cpp
         commandpalette/trackscommandpalettescope.cpp
@@ -75,6 +76,7 @@ set(HEADERS
         commandpalette/artistsalbumscommandpalettescope.h
         commandpalette/trackscommandpalettescope.h
         resetlibrarypopover.h
+        userplaylistmodel.h
     )
 
 # Find Apple lproj files
@@ -104,6 +106,7 @@ qt_add_qml_module(thebeat
         QueuePane.qml
         ArtistsAlbumsPane.qml
         LibraryHeader.qml
+        PlaylistPane.qml
         common.js
     SOURCES
         playlistmodel.h playlistmodel.cpp

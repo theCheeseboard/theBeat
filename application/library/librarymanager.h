@@ -67,18 +67,18 @@ class LibraryManager : public QObject {
         Q_SCRIPTABLE LibraryModel* tracksByArtist(QString artist);
         Q_SCRIPTABLE LibraryModel* tracksByAlbum(QString album);
 
-        int createPlaylist(QString playlistName);
-        QList<QPair<int, QString>> playlists();
-        void removePlaylist(int playlist);
-        void renamePlaylist(int playlist, QString name);
+        Q_SCRIPTABLE int createPlaylist(QString playlistName);
+        Q_SCRIPTABLE QList<QPair<int, QString>> playlists();
+        Q_SCRIPTABLE void removePlaylist(int playlist);
+        Q_SCRIPTABLE void renamePlaylist(int playlist, QString name);
 
-        void addTrackToPlaylist(int playlist, QString path);
-        void removeTrackFromPlaylist(int playlist, int sort);
-        LibraryModel* tracksByPlaylist(int playlist);
-        void normalisePlaylistSort(int playlist);
+        Q_SCRIPTABLE void addTrackToPlaylist(int playlist, QString path);
+        Q_SCRIPTABLE void removeTrackFromPlaylist(int playlist, int sort);
+        Q_SCRIPTABLE LibraryModel* tracksByPlaylist(int playlist);
+        Q_SCRIPTABLE void normalisePlaylistSort(int playlist);
 
-        LibraryModel* smartPlaylist(SmartPlaylist smartPlaylist);
-        QString smartPlaylistName(SmartPlaylist smartPlaylist);
+        Q_SCRIPTABLE LibraryModel* smartPlaylist(SmartPlaylist smartPlaylist);
+        Q_SCRIPTABLE QString smartPlaylistName(SmartPlaylist smartPlaylist);
 
         bool isProcessing();
 
