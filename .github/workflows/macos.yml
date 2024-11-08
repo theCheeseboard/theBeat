@@ -38,6 +38,11 @@ jobs:
         with:
           project: theCheeseboard/contemporary-qml
           commitish: main
+      - name: Install utfcpp
+        uses: theCheeseboard/actions/build-cmake-project@actions
+        with:
+          project: nemtrif/utfcpp
+          commitish: v4.0.5
       - name: Install taglib
         uses: theCheeseboard/actions/build-cmake-project@actions
         with:
