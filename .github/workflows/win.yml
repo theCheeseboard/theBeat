@@ -40,7 +40,7 @@ jobs:
         id: taglib
         with:
           project: taglib/taglib
-          commitish: v2.0.1
+          commitish: v2.0.2
           extra-cmake-args: -DBUILD_SHARED_LIBS=ON
       - name: Install libcontemporary
         uses: theCheeseboard/actions/build-cmake-project@actions

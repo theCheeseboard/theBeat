@@ -10,55 +10,54 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [macOS-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: macOS-latest
     steps:
-      - uses: vicr123/libcontemporary/prepare-vars@actions
-        id: vars
-      - uses: vicr123/libcontemporary/brew-universalinstall@actions
-        name: "Install Dependencies"
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
         with:
-          packages: "qt:taglib:libmusicbrainz:cmake:ninja:pkg-config"
-      - uses: vicr123/libcontemporary/install-libcontemporary@actions
+          aqtversion: '==3.1.*'
+          version: '6.7.0'
+          target: 'desktop'
+          arch: 'clang_64'
+          cache: true
+          modules: 'qt3d qtcharts qtconnectivity qtdatavis3d qtgraphs qtgrpc qthttpserver qtimageformats qtlanguageserver qtlocation qtlottie qtmultimedia qtnetworkauth qtpdf qtpositioning qtquick3dphysics qtquickeffectmaker qtremoteobjects qtscxml qtsensors qtserialbus qtserialport qtspeech qtvirtualkeyboard qtwebchannel qtwebengine qtwebsockets qtwebview qt5compat qtquick3d qtquicktimeline qtshadertools'
+      - name: Install QCoro
+        uses: theCheeseboard/actions/build-cmake-project@actions
         with:
-          qcoroVersion: ${{ steps.vars.outputs.qcoroVersion }}
-      - uses: vicr123/libcontemporary/build-project@actions
-        name: "Build contemporary-theme"
+          project: danvratil/qcoro
+          commitish: v0.10.0
+      - name: Install libcontemporary
+        uses: theCheeseboard/actions/build-cmake-project@actions
         with:
-          project: "vicr123/contemporary-theme"
-          commitish: "blueprint"
-      - uses: actions/checkout@v1
+          project: theCheeseboard/libcontemporary
+          commitish: features/qml
+      - name: Install contemporary-qml
+        uses: theCheeseboard/actions/build-cmake-project@actions
         with:
-          submodules: 'recursive'
-      - uses: vicr123/libcontemporary/build-project@actions
-        name: "Build project"
+          project: theCheeseboard/contemporary-qml
+          commitish: main
+      - name: Install taglib
+        uses: theCheeseboard/actions/build-cmake-project@actions
         with:
-          project: "."
-      - uses: vicr123/libcontemporary/deploy-project@actions
-        id: deploy
-        name: "Deploy project"
+          project: taglib/taglib
+          commitish: v2.0.2
+          extra-cmake-args: -DBUILD_SHARED_LIBS=ON
+      - name: Install libmusicbrainz
+        uses: theCheeseboard/actions/build-cmake-project@actions
         with:
-          subdir: "application"
-      - uses: actions/upload-artifact@v3
-        name: Upload Artifact to GitHub Actions
+          project: metabrainz/libmusicbrainz
+          commitish: release-5.1.0
+          extra-cmake-args: -DBUILD_SHARED_LIBS=ON
+      - name: Install thebeat
+        id: thebeat
+        uses: theCheeseboard/actions/build-cmake-project@actions
         with:
-          name: "theBeat-macOS"
-          path: ${{ steps.deploy.outputs.package }}
-  release:
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'release'
-    steps:
-      - uses: actions/download-artifact@v3
-        name: "Download Artifact"
-        id: download
+          project: .
+          commitish: .
+      - name: Deploy thebeat
+        uses: theCheeseboard/actions/deploy-project@actions
         with:
-          name: "theBeat-macOS"
-      - name: "Upload to Release"
-        uses: softprops/action-gh-release@v1
-        with:
-          files: "*.dmg"
+          sourceDirectory: ${{ steps.thebeat.outputs.source-directory }}
+          buildDirectory: ${{ steps.thebeat.outputs.build-directory }}
