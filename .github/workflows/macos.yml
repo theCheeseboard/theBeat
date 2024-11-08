@@ -49,6 +49,10 @@ jobs:
           project: taglib/taglib
           commitish: v2.0.2
           extra-cmake-args: -DBUILD_SHARED_LIBS=ON
+      - uses: vicr123/libcontemporary/brew-universalinstall@actions
+        name: Install neon
+        with:
+          packages: "neon"
       - name: Install libmusicbrainz
         uses: theCheeseboard/actions/build-cmake-project@actions
         with:
