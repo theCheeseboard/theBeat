@@ -820,6 +820,27 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
 </context>
 <context>
+    <name>OtherSourcesPane</name>
+    <message>
+        <location filename="../OtherSourcesPane.qml" line="+138"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+138"/>
+        <source>Other Sources</source>
+        <translation type="unfinished">Andre kilder</translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+45"/>
+        <source>No other sources available</source>
+        <translation type="unfinished">Ingen andre kilder tilgængelig</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+1"/>
+        <source>There&apos;s nothing else to play right now</source>
+        <translation type="unfinished">Der er intet andet at afspille lige nu</translation>
+    </message>
+</context>
+<context>
     <name>OtherSourcesWidget</name>
     <message>
         <location filename="../othersourceswidget.ui" line="+103"/>
@@ -1299,7 +1320,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+64"/>
+        <location filename="../main.cpp" line="+65"/>
         <source>Audio Player</source>
         <translation>Musikafspiller</translation>
     </message>

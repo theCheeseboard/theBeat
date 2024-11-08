@@ -37,5 +37,12 @@ set_target_properties(plugin-internetradio PROPERTIES
 cntp_init_plugin(thebeat plugin-internetradio 20 internetradioplugin)
 cntp_translate(plugin-internetradio)
 
+qt_add_qml_module(plugin-internetradio
+    URI com.vicr123.thebeat.plugin.internetradio
+    VERSION 1.0
+    QML_FILES
+        InternetRadioPane.qml
+    NO_CACHEGEN
+)
 
-target_link_libraries(plugin-internetradio Qt::Widgets Qt::DBus libcontemporary libthebeat)
+target_link_libraries(plugin-internetradio PUBLIC Qt::Widgets Qt::DBus libcontemporary libthebeat)

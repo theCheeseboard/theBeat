@@ -34,7 +34,7 @@ RadioPane::RadioPane(QWidget* parent) :
     ui->setupUi(this);
 
     d = new RadioPanePrivate();
-    d->source = new PluginMediaSource(this);
+    d->source = new PluginMediaSource(this, QUrl(u"qrc:/qt/qml/com/vicr123/thebeat/plugin/internetradio/InternetRadioPane.qml"_qs));
     d->source->setName(tr("Internet Radio"));
     d->source->setIcon(QIcon::fromTheme("radio"));
 

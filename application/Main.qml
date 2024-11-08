@@ -141,6 +141,7 @@ ContemporaryWindow {
                             isArtists: false
                         }
                         PlaylistPane {}
+                        OtherSourcesPane {}
                     }
 
                     Layer {

@@ -37,6 +37,7 @@
 #include <playlist.h>
 #include <plugins/tpluginmanager.h>
 #include <plugins/tpluginmanagerpane.h>
+#include <sourcemanager.h>
 #include <statemanager.h>
 #include <tapplication.h>
 #include <thebeatplugininterface.h>
@@ -203,6 +204,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "LibraryManager", LibraryManager::instance());
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "UrlManager", StateManager::instance()->url());
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "PlaylistManager", StateManager::instance()->playlist());
+    qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "SourceManager", StateManager::instance()->sources());
     qmlRegisterType<PlaylistModel>("com.vicr123.thebeat", 1, 0, "PlaylistModel");
     qmlRegisterType<UserPlaylistModel>("com.vicr123.thebeat", 1, 0, "UserPlaylistModel");
     engine.load(url);

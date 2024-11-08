@@ -21,15 +21,20 @@
 #define PLUGINMEDIASOURCE_H
 
 #include "libthebeat_global.h"
+#include <QIcon>
+#include <QUrl>
 #include <QWidget>
 #include <abstractlibrarybrowser.h>
-#include <QIcon>
 
 struct PluginMediaSourcePrivate;
 class LIBTHEBEAT_EXPORT PluginMediaSource : public QObject {
         Q_OBJECT
+        Q_PROPERTY(QUrl qmlFile READ qmlFile FINAL CONSTANT)
+        Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)
+        Q_PROPERTY(QIcon icon READ icon WRITE setIcon NOTIFY iconChanged FINAL)
+
     public:
-        explicit PluginMediaSource(AbstractLibraryBrowser* widget, QObject* parent = nullptr);
+        explicit PluginMediaSource(AbstractLibraryBrowser* widget, QUrl qmlFile = QUrl(), QObject* parent = nullptr);
         ~PluginMediaSource();
 
         void setName(QString name);
@@ -39,6 +44,7 @@ class LIBTHEBEAT_EXPORT PluginMediaSource : public QObject {
         QIcon icon() const;
 
         AbstractLibraryBrowser* widget() const;
+        QUrl qmlFile() const;
 
     signals:
         void nameChanged(QString name);

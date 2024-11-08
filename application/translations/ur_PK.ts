@@ -778,6 +778,27 @@
     </message>
 </context>
 <context>
+    <name>OtherSourcesPane</name>
+    <message>
+        <location filename="../OtherSourcesPane.qml" line="+138"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+138"/>
+        <source>Other Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+45"/>
+        <source>No other sources available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+1"/>
+        <source>There&apos;s nothing else to play right now</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OtherSourcesWidget</name>
     <message>
         <location filename="../othersourceswidget.ui" line="+103"/>
@@ -1180,7 +1201,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</s
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+64"/>
+        <location filename="../main.cpp" line="+65"/>
         <source>Audio Player</source>
         <translation type="unfinished"></translation>
     </message>

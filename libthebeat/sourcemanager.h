@@ -33,14 +33,14 @@ class LIBTHEBEAT_EXPORT SourceManager : public QObject {
         void addSource(PluginMediaSource* source);
         void removeSource(PluginMediaSource* source);
 
-        QList<PluginMediaSource*> sources();
+        Q_SCRIPTABLE QList<PluginMediaSource*> sources();
 
         int padTop();
         void setPadTop(int padTop);
 
     signals:
-        void sourceAdded(PluginMediaSource* source);
-        void sourceRemoved(PluginMediaSource* source);
+        Q_SCRIPTABLE void sourceAdded(PluginMediaSource* source);
+        Q_SCRIPTABLE void sourceRemoved(PluginMediaSource* source);
         void padTopChanged(int padTop);
 
     private:

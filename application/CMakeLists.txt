@@ -107,6 +107,7 @@ qt_add_qml_module(thebeat
         ArtistsAlbumsPane.qml
         LibraryHeader.qml
         PlaylistPane.qml
+        OtherSourcesPane.qml
         common.js
     SOURCES
         playlistmodel.h playlistmodel.cpp
