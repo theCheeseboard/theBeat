@@ -20,6 +20,22 @@
     </message>
 </context>
 <context>
+    <name>InternetRadioPane</name>
+    <message>
+        <location filename="../InternetRadioPane.qml" line="20"/>
+        <source>Internet Radio</source>
+        <translation type="unfinished">Internetradio</translation>
+    </message>
+</context>
+<context>
+    <name>Plugin</name>
+    <message>
+        <location filename="../plugin.cpp" line="49"/>
+        <source>Internet Radio</source>
+        <translation type="unfinished">Internetradio</translation>
+    </message>
+</context>
+<context>
     <name>RadioPane</name>
     <message>
         <location filename="../radiopane.cpp" line="38"/>

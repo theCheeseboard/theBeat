@@ -33,7 +33,10 @@ Item {
 
     function finaliseAddSource(source, component) {
         if (component.status === Component.Ready) {
-            stack.push(component);
+            const object = component.createObject(stack, {
+                source: source
+            });
+            stack.push(object);
             const sidebarItem = sidebarDelegate.createObject(sidebarModel, {
                 source: source
             });
@@ -41,12 +44,26 @@ Item {
             d.sources.push({
                 source: source,
                 sidebarItem: sidebarItem,
-                component: component
+                component: object
             });
-        } else if (component.status === Component.Error) {
-            console.error(`Unable to add source with QML file ${source.qmlFile}`);
-            console.error(component.errorString);
+        } else {
+            addSourceErrorPane(source, component.errorString);
         }
+    }
+
+    function addSourceErrorPane(source, error) {
+        console.error(`Unable to add source with QML file ${source.qmlFile}`);
+        console.error(error);
+        stack.push(errorComponent);
+        const sidebarItem = sidebarDelegate.createObject(sidebarModel, {
+            source: source
+        });
+        sidebarModel.append(sidebarItem);
+        d.sources.push({
+            source: source,
+            sidebarItem: sidebarItem,
+            component: errorComponent
+        });
     }
 
     function removeSource(source) {
@@ -74,6 +91,15 @@ Item {
         }
         function onSourceRemoved(source) {
             root.removeSource(source);
+        }
+    }
+
+    Component {
+        id: errorComponent
+
+        Interstitial {
+            text: qsTr("Oh, bonkers!")
+            subtitle: qsTr("This source can't be loaded right now")
         }
     }
 

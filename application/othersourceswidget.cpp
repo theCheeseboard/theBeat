@@ -73,6 +73,9 @@ void OtherSourcesWidget::on_sourcesList_currentRowChanged(int currentRow) {
 }
 
 void OtherSourcesWidget::addSource(PluginMediaSource* source) {
+    // Ignore QML only plugins
+    if (!source->widget()) return;
+
     QListWidgetItem* item = new QListWidgetItem();
     ui->sourcesList->addItem(item);
 
@@ -92,6 +95,9 @@ void OtherSourcesWidget::addSource(PluginMediaSource* source) {
 }
 
 void OtherSourcesWidget::removeSource(PluginMediaSource* source) {
+    // Ignore QML only plugins
+    if (!source->widget()) return;
+
     QListWidgetItem* item = ui->sourcesList->takeItem(ui->sourcesList->row(d->listItems.key(source)));
     d->listItems.remove(item);
     ui->stackedWidget->removeWidget(source->widget());

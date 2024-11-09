@@ -822,8 +822,20 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>OtherSourcesPane</name>
     <message>
-        <location filename="../OtherSourcesPane.qml" line="+138"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+138"/>
+        <location filename="../OtherSourcesPane.qml" line="+101"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+101"/>
+        <source>Oh, bonkers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+1"/>
+        <source>This source can&apos;t be loaded right now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+62"/>
         <source>Other Sources</source>
         <translation type="unfinished">Andre kilder</translation>
     </message>

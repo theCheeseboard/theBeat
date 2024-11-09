@@ -29,6 +29,7 @@
 
 struct PluginPrivate {
         RadioPane* radioPane;
+        PluginMediaSource* source;
 };
 
 Plugin::Plugin() {
@@ -43,8 +44,15 @@ Plugin::~Plugin() {
 
 void Plugin::activate() {
     d->radioPane = new RadioPane();
+
+    d->source = new PluginMediaSource(nullptr, QUrl(u"qrc:/qt/qml/com/vicr123/thebeat/plugin/internetradio/InternetRadioPane.qml"_qs));
+    d->source->setName(tr("Internet Radio"));
+    d->source->setIcon(QIcon::fromTheme("radio"));
+    StateManager::instance()->sources()->addSource(d->source);
 }
 
 void Plugin::deactivate() {
+    d->radioPane->deleteLater();
+    StateManager::instance()->sources()->removeSource(d->source);
     d->radioPane->deleteLater();
 }
