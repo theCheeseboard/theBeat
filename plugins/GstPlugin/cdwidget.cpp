@@ -22,7 +22,7 @@ CdWidget::CdWidget(DiskObject* disk, QWidget* parent) :
     d = new CdWidgetPrivate();
     d->disk = disk;
 
-    d->source = new PluginMediaSource(this, this);
+    d->source = new PluginMediaSource(this, {}, this);
     d->source->setName(tr("CD"));
     d->source->setIcon(QIcon::fromTheme("media-optical-audio"));
     ui->albumTitleLabel->setText(tr("CD"));
