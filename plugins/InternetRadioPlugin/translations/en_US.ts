@@ -22,8 +22,13 @@
 <context>
     <name>InternetRadioPane</name>
     <message>
-        <location filename="../InternetRadioPane.qml" line="20"/>
+        <location filename="../InternetRadioPane.qml" line="26"/>
         <source>Internet Radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../InternetRadioPane.qml" line="39"/>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

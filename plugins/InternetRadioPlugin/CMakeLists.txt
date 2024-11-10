@@ -11,6 +11,7 @@ set(SOURCES
         radiopane.cpp
         stationsearchwidget.cpp
         stationwidget.cpp
+        stationlistmodel.cpp
 
         favouritestationswidget.ui
         radiopane.ui
@@ -23,7 +24,8 @@ set(HEADERS
         radioinfoclient.h
         radiopane.h
         stationsearchwidget.h
-        stationwidget.h)
+        stationwidget.h
+        stationlistmodel.h)
 
 add_library(plugin-internetradio SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-internetradio PUBLIC ../../libthebeat/)

@@ -43,7 +43,7 @@ Plugin::~Plugin() {
 }
 
 void Plugin::activate() {
-    d->radioPane = new RadioPane();
+    // d->radioPane = new RadioPane();
 
     d->source = new PluginMediaSource(nullptr, QUrl(u"qrc:/qt/qml/com/vicr123/thebeat/plugin/internetradio/InternetRadioPane.qml"_qs));
     d->source->setName(tr("Internet Radio"));
@@ -52,7 +52,7 @@ void Plugin::activate() {
 }
 
 void Plugin::deactivate() {
-    d->radioPane->deleteLater();
+    // d->radioPane->deleteLater();
     StateManager::instance()->sources()->removeSource(d->source);
-    d->radioPane->deleteLater();
+    d->source->deleteLater();
 }
