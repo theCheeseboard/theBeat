@@ -47,6 +47,7 @@ Item {
         anchors.bottom: parent.bottom
 
         currentAnimation: Pager.Fade
+        currentIndex: PlaylistManager.currentItem ? 0 : 1
 
         ColumnLayout {
             anchors.fill: parent
@@ -221,6 +222,11 @@ Item {
                     }
                 }
             }
+        }
+
+        Interstitial {
+            text: qsTr("Nothing here!")
+            subtitle: qsTr("Select a track or drop something here!")
         }
     }
 
