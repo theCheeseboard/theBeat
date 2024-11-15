@@ -5,6 +5,7 @@ import com.vicr123.Contemporary
 import Contemporary
 import Qt.labs.platform as Labs
 import com.vicr123.Contemporary.CoreStyles
+import com.vicr123.thebeat
 
 ContemporaryWindow {
     id: window
@@ -27,29 +28,119 @@ ContemporaryWindow {
             title: qsTr("File")
 
             Labs.MenuItem {
-                shortcut: hk_`Ctrl+Q`
-                text: qsTr("Quit")
-                role: Labs.MenuItem.QuitRole
-                onTriggered: Qt.quit()
+                shortcut: hk_`Ctrl+O`
+                text: qsTr("Open File")
+                onTriggered: () => {}
+            }
+            Labs.MenuItem {
+                text: qsTr("Open URL")
+                onTriggered: () => {}
+            }
+            Labs.MenuSeparator {}
+            Labs.MenuItem {
+                text: qsTr("Add to Library")
+                onTriggered: () => {}
+            }
+            Labs.MenuSeparator {}
+            Labs.MenuItem {
+                shortcut: hk_`Ctrl+P`
+                text: qsTr("Print")
+                onTriggered: () => {}
             }
         }
         Labs.Menu {
-            title: qsTr("Edit")
+            title: qsTr("Playback")
 
             Labs.MenuItem {
-                text: qsTr("Copy")
-                shortcut: hk_`Ctrl+C`
-                onTriggered: stack.pages[stack.currentIndex].copy()
+                text: qsTr("Play")
+                shortcut: hk_`Space`
+                onTriggered: () => PlaylistManager.playPause()
+                enabled: !!PlaylistManager.currentItem
             }
             Labs.MenuItem {
-                text: qsTr("Paste")
-                shortcut: hk_`Ctrl+V`
-                onTriggered: stack.pages[stack.currentIndex].paste()
+                text: qsTr("Skip Back")
+                shortcut: hk_`Shift+Left`
+                onTriggered: () => PlaylistManager.previous()
+                enabled: !!PlaylistManager.currentItem
+            }
+            Labs.MenuItem {
+                text: qsTr("Skip Forward")
+                shortcut: hk_`Shift+Right`
+                onTriggered: () => PlaylistManager.next()
+                enabled: !!PlaylistManager.currentItem
+            }
+            Labs.MenuSeparator {}
+            Labs.MenuItem {
+                text: qsTr("Increase Volume")
+                shortcut: hk_`Up`
+                onTriggered: () => {
+                    const newVolume = PlaylistManager.volume;
+                    newVolume += 0.1;
+                    if (newVolume > 1)
+                        newVolume = 1;
+                    PlaylistManager.volume = newVolume;
+                }
+            }
+            Labs.MenuItem {
+                text: qsTr("Decrease Volume")
+                shortcut: hk_`Down`
+                onTriggered: () => {
+                    const newVolume = PlaylistManager.volume;
+                    newVolume -= 0.1;
+                    if (newVolume < 0)
+                        newVolume = 0;
+                    PlaylistManager.volume = newVolume;
+                }
+            }
+            Labs.MenuSeparator {}
+            Labs.MenuItem {
+                id: repeatOneMenuItem
+                text: qsTr("Repeat One")
+                shortcut: hk_`Ctrl+R`
+                checked: PlaylistManager.repeatOne
+                checkable: true
+                onCheckedChanged: () => {
+                    PlaylistManager.repeatOne = repeatOneMenuItem.checked;
+                }
+            }
+            Labs.MenuItem {
+                id: shuffleMenuItem
+                text: qsTr("Shuffle")
+                shortcut: hk_`Ctrl+S`
+                checked: PlaylistManager.shuffle
+                checkable: true
+                onCheckedChanged: () => {
+                    PlaylistManager.shuffle = shuffleMenuItem.checked;
+                }
+            }
+            Labs.MenuSeparator {}
+            Labs.MenuItem {
+                id: pauseAfterCurrentTrackMenuItem
+                text: qsTr("Pause after current track")
+                shortcut: hk_`Shift+Escape`
+                checked: PlaylistManager.pauseAfterCurrentTrack
+                checkable: true
+                onCheckedChanged: () => {
+                    PlaylistManager.pauseAfterCurrentTrack = pauseAfterCurrentTrackMenuItem.checked;
+                }
+            }
+        }
+        Labs.Menu {
+            title: qsTr("View")
+
+            Labs.MenuItem {
+                text: qsTr("Zen Mode")
+                onTriggered: () => {}
             }
         }
         Labs.Menu {
             title: qsTr("Help")
 
+            Labs.MenuItem {
+                shortcut: hk_`F1`
+                text: qsTr("theBeat Help")
+                onTriggered: () => {}
+            }
             Labs.MenuItem {
                 text: qsTr("About")
                 role: Labs.MenuItem.AboutRole

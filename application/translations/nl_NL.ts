@@ -419,8 +419,8 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
 <context>
     <name>Main</name>
     <message>
-        <location filename="../Main.qml" line="+14"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+14"/>
+        <location filename="../Main.qml" line="+15"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+15"/>
         <source>theBeat</source>
         <translation type="unfinished">theBeat</translation>
     </message>
@@ -433,40 +433,120 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
     <message>
         <location line="+4"/>
         <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+4"/>
-        <source>Quit</source>
+        <source>Open File</source>
+        <translation type="unfinished">Bestand Openen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+4"/>
+        <source>Open URL</source>
+        <translation type="unfinished">URL Openen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+5"/>
+        <source>Add to Library</source>
+        <translation type="unfinished">Toevoegen aan Bibliotheek</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+5"/>
+        <source>Playback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+3"/>
+        <source>Play</source>
+        <translation type="unfinished">Afspelen</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <source>Skip Back</source>
+        <translation type="unfinished">Terug Springen</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <source>Skip Forward</source>
+        <translation type="unfinished">Vooruit Springen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+7"/>
+        <source>Increase Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+11"/>
+        <source>Decrease Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+13"/>
+        <source>Repeat One</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+10"/>
+        <source>Shuffle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+11"/>
+        <source>Pause after current track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+10"/>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+3"/>
+        <source>Zen Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+9"/>
+        <source>theBeat Help</source>
+        <translation type="unfinished">theBeat-hulp</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+24"/>
+        <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+34"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+3"/>
-        <location line="+34"/>
-        <source>Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-29"/>
-        <location line="+35"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="-29"/>
-        <location line="+35"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-29"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="-29"/>
+        <location line="-34"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="-34"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+3"/>
+        <location line="+8"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+8"/>
         <source>About</source>
         <translation type="unfinished">Over</translation>
     </message>
