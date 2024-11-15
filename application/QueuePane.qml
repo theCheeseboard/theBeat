@@ -156,7 +156,7 @@ Item {
                                 Layout.rowSpan: 2
                                 Layout.preferredWidth: fontMetrics.height * 2 + multiRowItem.columnSpacing + 6
                                 Layout.preferredHeight: fontMetrics.height * 2 + multiRowItem.columnSpacing + 6
-                                source: queueItem.mediaItem.albumArtUrl
+                                source: queueItem.mediaItem.qmlAlbumArtUrl
 
                                 Rectangle {
                                     visible: queueItem.drawType === 3 && PlaylistManager.currentItem === queueItem.mediaItem

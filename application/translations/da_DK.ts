@@ -214,7 +214,7 @@
 <context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+154"/>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
         <source>Folder Added</source>
         <translation>Mappe tilføjet</translation>
     </message>
@@ -1396,7 +1396,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+65"/>
+        <location filename="../main.cpp" line="+66"/>
         <source>Audio Player</source>
         <translation>Musikafspiller</translation>
     </message>

@@ -48,7 +48,8 @@ set(HEADERS
         thebeatcommon.h
     )
 
-add_library(libthebeat SHARED ${SOURCES} ${HEADERS})
+add_library(libthebeat SHARED ${SOURCES} ${HEADERS}
+    albumartimageprovider.h albumartimageprovider.cpp)
 cntp_init(libthebeat 20)
 set_target_properties(libthebeat PROPERTIES
         OUTPUT_NAME thebeat

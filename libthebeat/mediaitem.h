@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QSharedPointer>
 
+struct MediaItemPrivate;
 class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         Q_OBJECT
         Q_PROPERTY(QString title READ title NOTIFY metadataChanged FINAL)
@@ -32,6 +33,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         Q_PROPERTY(QString album READ album NOTIFY metadataChanged FINAL)
         Q_PROPERTY(QImage albumArt READ albumArt NOTIFY metadataChanged FINAL)
         Q_PROPERTY(QString albumArtUrl READ albumArtUrl NOTIFY metadataChanged FINAL)
+        Q_PROPERTY(QString qmlAlbumArtUrl READ qmlAlbumArtUrl NOTIFY metadataChanged FINAL)
         Q_PROPERTY(quint64 elapsed READ elapsed NOTIFY elapsedChanged FINAL)
         Q_PROPERTY(quint64 duration READ duration NOTIFY durationChanged FINAL)
         Q_PROPERTY(QString lyrics READ lyrics NOTIFY metadataChanged FINAL)
@@ -39,6 +41,9 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         Q_PROPERTY(int trackNumber READ trackNumber NOTIFY metadataChanged FINAL)
     public:
         explicit MediaItem();
+        ~MediaItem();
+
+        QUuid uuid();
 
         Q_SCRIPTABLE virtual void play() = 0;
         Q_SCRIPTABLE virtual void pause() = 0;
@@ -52,6 +57,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         virtual QString album() = 0;
         virtual QImage albumArt() = 0;
         QString albumArtUrl();
+        QString qmlAlbumArtUrl();
         int trackNumber();
         virtual QVariant metadata(QString key);
 
@@ -68,6 +74,7 @@ class LIBTHEBEAT_EXPORT MediaItem : public QObject {
         void durationChanged();
 
     private:
+        MediaItemPrivate* d;
 };
 
 #endif // MEDIAITEM_H

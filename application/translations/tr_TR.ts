@@ -217,7 +217,7 @@
 <context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+154"/>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
         <source>Folder Added</source>
         <translation>Klasör Eklendi</translation>
     </message>
@@ -1393,7 +1393,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+65"/>
+        <location filename="../main.cpp" line="+66"/>
         <source>Audio Player</source>
         <translation>Ses oynatıcı</translation>
     </message>

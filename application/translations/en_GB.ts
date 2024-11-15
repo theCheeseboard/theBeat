@@ -214,7 +214,7 @@
 <context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+154"/>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
         <source>Folder Added</source>
         <translation>Folder Added</translation>
     </message>
@@ -1396,7 +1396,7 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+65"/>
+        <location filename="../main.cpp" line="+66"/>
         <source>Audio Player</source>
         <translation>Audio Player</translation>
     </message>

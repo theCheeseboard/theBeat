@@ -210,7 +210,7 @@
 <context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+154"/>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
         <source>Folder Added</source>
         <translation>Map Toegevoegd</translation>
     </message>
@@ -1392,7 +1392,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+65"/>
+        <location filename="../main.cpp" line="+66"/>
         <source>Audio Player</source>
         <translation>Audiospeler</translation>
     </message>

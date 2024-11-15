@@ -22,10 +22,25 @@
 #include "helpers.h"
 #include <QBuffer>
 #include <QImage>
+#include <QUuid>
 #include <QVariant>
 
+using namespace Qt::Literals;
+
+struct MediaItemPrivate {
+        QUuid uuid = QUuid::createUuid();
+};
+
 MediaItem::MediaItem() :
-    QObject(nullptr) {
+    QObject(nullptr), d{new MediaItemPrivate()} {
+}
+
+MediaItem::~MediaItem() {
+    delete d;
+}
+
+QUuid MediaItem::uuid() {
+    return d->uuid;
 }
 
 QString MediaItem::albumArtUrl() {
@@ -35,6 +50,10 @@ QString MediaItem::albumArtUrl() {
     albumArt().scaled(QSize(256, 256), Qt::KeepAspectRatio, Qt::SmoothTransformation).save(&buffer, "png");
     auto base64 = QString::fromUtf8(byteArray.toBase64());
     return QStringLiteral("data:image/png;base64,%1").arg(base64);
+}
+
+QString MediaItem::qmlAlbumArtUrl() {
+    return u"image://albumart/%1"_s.arg(d->uuid.toString(QUuid::WithoutBraces));
 }
 
 int MediaItem::trackNumber() {

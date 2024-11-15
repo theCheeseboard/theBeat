@@ -217,7 +217,7 @@
 <context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+154"/>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
         <source>Folder Added</source>
         <translation>Được thêm thư mục</translation>
     </message>
@@ -1399,7 +1399,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+65"/>
+        <location filename="../main.cpp" line="+66"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>

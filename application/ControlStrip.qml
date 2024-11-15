@@ -29,7 +29,7 @@ Layer {
             Image {
                 Layout.preferredWidth: height
                 Layout.preferredHeight: playPauseButton.implicitHeight
-                source: PlaylistManager.currentItem.albumArtUrl
+                source: PlaylistManager.currentItem.qmlAlbumArtUrl
             }
 
             ColumnLayout {
