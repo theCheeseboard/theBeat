@@ -188,7 +188,7 @@ int main(int argc, char* argv[]) {
         return new LibraryResetSettingsPane();
     });
 
-    w->show();
+    // w->show();
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/com/vicr123/thebeat/Main.qml"_qs);
