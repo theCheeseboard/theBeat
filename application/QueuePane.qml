@@ -7,6 +7,12 @@ import com.vicr123.thebeat
 import com.vicr123.Contemporary
 
 Item {
+    QtObject {
+        id: d
+
+        property var contextMenuItem
+    }
+
     LayerCalculator {
         id: layer1
         layer: 1
@@ -47,6 +53,21 @@ Item {
             anchors.topMargin: 3
             anchors.bottomMargin: 3
             clip: true
+
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: {
+                    d.contextMenuItem = null;
+                    if (mouse.button === Qt.RightButton)
+                        contextMenu.popup();
+                }
+                onPressAndHold: {
+                    d.contextMenuItem = null;
+                    if (mouse.source === Qt.MouseEventNotSynthesized)
+                        contextMenu.popup();
+                }
+            }
 
             ListView {
                 id: queueList
@@ -185,13 +206,59 @@ Item {
                             id: mouseArea
                             anchors.fill: parent
                             hoverEnabled: true
+                            propagateComposedEvents: false
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-                            onClicked: () => {
-                                PlaylistManager.currentItem = queueItem.mediaItem;
+                            onClicked: mouse => {
+                                if (mouse.button === Qt.RightButton) {
+                                    d.contextMenuItem = queueItem.mediaItem;
+                                    contextMenu.popup();
+                                } else {
+                                    PlaylistManager.currentItem = queueItem.mediaItem;
+                                }
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    Menu {
+        id: contextMenu
+
+        Instantiator {
+            active: !!d.contextMenuItem
+            delegate: MenuSection {
+                text: qsTr("For %1").arg(Contemporary.quoteString(d.contextMenuItem?.title ?? ""))
+                visible: !!d.contextMenuItem
+            }
+
+            onObjectAdded: (index, object) => contextMenu.insertItem(index, object)
+            onObjectRemoved: (index, object) => contextMenu.removeItem(object)
+        }
+        Instantiator {
+            active: !!d.contextMenuItem
+            delegate: MenuItem {
+                text: qsTr("Remove from Queue")
+                icon.name: "list-remove"
+                onClicked: () => {
+                    PlaylistManager.removeItem(d.contextMenuItem);
+                }
+            }
+
+            onObjectAdded: (index, object) => contextMenu.insertItem(index, object)
+            onObjectRemoved: (index, object) => contextMenu.removeItem(object)
+        }
+
+        MenuSection {
+            text: qsTr("For Queue")
+        }
+        MenuItem {
+            text: qsTr("Clear Queue")
+            icon.name: "list-remove"
+            onClicked: () => {
+                PlaylistManager.clear();
             }
         }
     }
