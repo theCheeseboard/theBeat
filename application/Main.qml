@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
 import com.vicr123.Contemporary
 import Contemporary
 import Qt.labs.platform as Labs
@@ -23,6 +24,17 @@ ContemporaryWindow {
         }
     }
 
+    FileDialog {
+        id: openFileDialog
+        fileMode: FileDialog.OpenFiles
+        onAccepted: () => {
+            for (const file of openFileDialog.selectedFiles) {
+                const mediaItem = UrlManager.itemForUrl(file);
+                PlaylistManager.addItem(mediaItem);
+            }
+        }
+    }
+
     NativeMenuBar {
         Labs.Menu {
             title: qsTr("File")
@@ -30,7 +42,7 @@ ContemporaryWindow {
             Labs.MenuItem {
                 shortcut: hk_`Ctrl+O`
                 text: qsTr("Open File")
-                onTriggered: () => {}
+                onTriggered: openFileDialog.open()
             }
             Labs.MenuItem {
                 text: qsTr("Open URL")
@@ -39,12 +51,14 @@ ContemporaryWindow {
             Labs.MenuSeparator {}
             Labs.MenuItem {
                 text: qsTr("Add to Library")
+                enabled: false
                 onTriggered: () => {}
             }
             Labs.MenuSeparator {}
             Labs.MenuItem {
                 shortcut: hk_`Ctrl+P`
                 text: qsTr("Print")
+                enabled: false
                 onTriggered: () => {}
             }
         }

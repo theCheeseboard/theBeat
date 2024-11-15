@@ -423,14 +423,14 @@ theBeat will restart once the reset is complete. This action is irreversible.</t
 <context>
     <name>Main</name>
     <message>
-        <location filename="../Main.qml" line="+15"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+15"/>
+        <location filename="../Main.qml" line="+16"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+16"/>
         <source>theBeat</source>
         <translation type="unfinished">theBeat</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+13"/>
+        <location line="+24"/>
+        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+24"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
