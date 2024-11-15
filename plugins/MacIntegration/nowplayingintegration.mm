@@ -6,7 +6,9 @@
 #include <QVariant>
 #include <QUrl>
 #include <QLocale>
+#include <QImage>
 #import <MediaPlayer/MediaPlayer.h>
+#import <AppKit/AppKit.h>
 
 struct NowPlayingIntegrationPrivate {
     MediaItem* currentItem = nullptr;
@@ -120,6 +122,12 @@ void NowPlayingIntegration::updateMetadata() {
         [dict setObject:[NSNumber numberWithBool:d->currentItem->duration() == 0 ? YES : NO] forKey:MPNowPlayingInfoPropertyIsLiveStream];
         [dict setObject:[NSNumber numberWithUnsignedInt:StateManager::instance()->playlist()->items().count()] forKey:MPNowPlayingInfoPropertyPlaybackQueueCount];
         [dict setObject:[NSNumber numberWithUnsignedInt:StateManager::instance()->playlist()->items().indexOf(d->currentItem)] forKey:MPNowPlayingInfoPropertyPlaybackQueueIndex];
+        if (!d->currentItem->albumArt().isNull()) {
+            auto albumArt = [[MPMediaItemArtwork alloc] initWithBoundsSize:d->currentItem->albumArt().size().toCGSize() requestHandler:^(CGSize size) {
+              return [[NSImage alloc] initWithCGImage:d->currentItem->albumArt().toCGImage() size:NSSizeFromCGSize(size)];
+            }];
+            [dict setObject:albumArt forKey:MPMediaItemPropertyArtwork];
+        }
 
         [dict setObject:d->currentItem->title().toNSString() forKey:MPMediaItemPropertyTitle];
         [dict setObject:QLocale().createSeparatedList(d->currentItem->authors()).toNSString() forKey:MPMediaItemPropertyArtist];
