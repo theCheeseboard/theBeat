@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import QtQuick.Controls.impl
 import Contemporary
 import com.vicr123.thebeat
 import com.vicr123.Contemporary

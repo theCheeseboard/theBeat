@@ -153,9 +153,9 @@ int main(int argc, char* argv[]) {
             files.append(QUrl(arg).toEncoded());
         }
     }
-    a.ensureSingleInstance({
-        {"files", QJsonArray::fromStringList(files)}
-    });
+    // a.ensureSingleInstance({
+    //     {"files", QJsonArray::fromStringList(files)}
+    // });
 
 #ifdef HAVE_THEINSTALLER
     if (a.currentPlatform() != tApplication::WindowsAppPackage) {
@@ -188,7 +188,7 @@ int main(int argc, char* argv[]) {
         return new LibraryResetSettingsPane();
     });
 
-    // w->show();
+    w->show();
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/com/vicr123/thebeat/Main.qml"_qs);

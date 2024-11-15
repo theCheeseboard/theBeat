@@ -17,11 +17,7 @@ ContemporaryWindow {
     visible: true
 
     function hk_(shortcut) {
-        if (Qt.platform.os === "osx") {
-            return shortcut[0];
-        } else {
-            return `Shift+${shortcut[0]}`;
-        }
+        return shortcut[0];
     }
 
     FileDialog {
@@ -66,7 +62,7 @@ ContemporaryWindow {
             title: qsTr("Playback")
 
             Labs.MenuItem {
-                text: qsTr("Play")
+                text: PlaylistManager.state === PlaylistManager.Playing ? qsTr("Pause") : qsTr("Play")
                 shortcut: hk_`Space`
                 onTriggered: () => PlaylistManager.playPause()
                 enabled: !!PlaylistManager.currentItem
@@ -175,16 +171,83 @@ ContemporaryWindow {
             actionBar: ActionBar {
                 menu: Menu {
                     Action {
-                        shortcut: hk_`Ctrl+C`
-                        text: qsTr("Copy")
-                        icon.name: "edit-copy"
-                        onTriggered: stack.pages[stack.currentIndex].copy()
+                        shortcut: hk_`Ctrl+O`
+                        text: qsTr("Open File")
+                        icon.name: "document-open"
+                        onTriggered: openFileDialog.open()
                     }
                     Action {
-                        shortcut: hk_`Ctrl+V`
-                        text: qsTr("Paste")
-                        icon.name: "edit-paste"
-                        onTriggered: stack.pages[stack.currentIndex].paste()
+                        text: qsTr("Open URL")
+                        onTriggered: () => {}
+                        enabled: false
+                    }
+                    Action {
+                        text: qsTr("Add to Library")
+                        onTriggered: () => {}
+                        enabled: false
+                    }
+                    MenuSeparator {}
+                    Action {
+                        shortcut: hk_`Space`
+                        text: PlaylistManager.state === PlaylistManager.Playing ? qsTr("Pause") : qsTr("Play")
+                        icon.name: PlaylistManager.state === PlaylistManager.Playing ? "media-playback-pause" : "media-playback-start"
+                        onTriggered: () => PlaylistManager.playPause()
+                        enabled: !!PlaylistManager.currentItem
+                    }
+                    Action {
+                        text: qsTr("Skip Back")
+                        shortcut: hk_`Shift+Left`
+                        icon.name: "media-skip-backward"
+                        onTriggered: () => PlaylistManager.previous()
+                        enabled: !!PlaylistManager.currentItem
+                    }
+                    Action {
+                        text: qsTr("Skip Forward")
+                        shortcut: hk_`Shift+Right`
+                        icon.name: "media-skip-forward"
+                        onTriggered: () => PlaylistManager.next()
+                        enabled: !!PlaylistManager.currentItem
+                    }
+                    MenuSeparator {}
+                    Action {
+                        id: repeatOneActionBarItem
+                        text: qsTr("Repeat One")
+                        icon.name: "media-repeat-single"
+                        shortcut: hk_`Ctrl+R`
+                        checked: PlaylistManager.repeatOne
+                        checkable: true
+                        onCheckedChanged: () => {
+                            PlaylistManager.repeatOne = repeatOneActionBarItem.checked;
+                        }
+                    }
+                    Action {
+                        id: shuffleActionBarItem
+                        text: qsTr("Shuffle")
+                        icon.name: "media-playlist-shuffle"
+                        shortcut: hk_`Ctrl+S`
+                        checked: PlaylistManager.shuffle
+                        checkable: true
+                        onCheckedChanged: () => {
+                            PlaylistManager.shuffle = shuffleActionBarItem.checked;
+                        }
+                    }
+                    Action {
+                        id: pauseAfterCurrentTrackActionBarItem
+                        text: qsTr("Pause after current track")
+                        shortcut: hk_`Shift+Escape`
+                        checked: PlaylistManager.pauseAfterCurrentTrack
+                        checkable: true
+                        onCheckedChanged: () => {
+                            PlaylistManager.pauseAfterCurrentTrack = pauseAfterCurrentTrackActionBarItem.checked;
+                        }
+                    }
+                    MenuSeparator {}
+                    Action {
+                        text: qsTr("Print")
+                        shortcut: hk_`Ctrl+P`
+                        icon.name: "document-print"
+                        onTriggered: () => {}
+                        enabled: false
                     }
                 }
 

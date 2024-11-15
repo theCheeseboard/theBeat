@@ -20,6 +20,7 @@
 #ifndef LIBRARYENUMERATEDIRECTORYJOB_H
 #define LIBRARYENUMERATEDIRECTORYJOB_H
 
+#include <QCoroTask>
 #include <tjob.h>
 
 struct LibraryEnumerateDirectoryJobPrivate;
@@ -34,7 +35,7 @@ class LibraryEnumerateDirectoryJob : public tJob {
     private:
         LibraryEnumerateDirectoryJobPrivate* d;
 
-        void performEnumeration();
+        QCoro::Task<> performEnumeration();
 
         // tJob interface
     public:

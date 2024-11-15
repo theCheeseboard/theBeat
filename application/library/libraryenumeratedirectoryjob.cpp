@@ -21,6 +21,7 @@
 
 #include "libraryenumeratedirectoryjobwidget.h"
 #include "librarymanager.h"
+#include <QCoroFuture>
 #include <QDirIterator>
 #include <QSqlQuery>
 #include <taglib/audioproperties.h>
@@ -57,16 +58,15 @@ LibraryEnumerateDirectoryJob::LibraryEnumerateDirectoryJob(QString path, bool ig
 LibraryEnumerateDirectoryJob::~LibraryEnumerateDirectoryJob() {
 }
 
-void LibraryEnumerateDirectoryJob::performEnumeration() {
+QCoro::Task<> LibraryEnumerateDirectoryJob::performEnumeration() {
+    co_return;
     QString blacklistedPaths;
     QSqlQuery blacklistQuery("SELECT * FROM blacklist");
     while (blacklistQuery.next()) {
         blacklistedPaths.append(blacklistQuery.value("path").toString());
     }
 
-    tPromise<int>::runOnNewThread([this, blacklistedPaths](tPromiseFunctions<int>::SuccessFunction res, tPromiseFunctions<int>::FailureFunction rej) {
-        Q_UNUSED(rej)
-
+    auto rowsAffected = co_await QtConcurrent::run([this](QString blacklistedPaths) {
         // Lock the mutex
         d->mutex.lock();
 
@@ -146,18 +146,18 @@ void LibraryEnumerateDirectoryJob::performEnumeration() {
 
         d->mutex.unlock();
 
-        res(rowsAffected);
-    })->then([this](int result) {
-        if (d->isUserAction) {
-            tNotification* notification = new tNotification();
-            notification->setSummary(tr("Folder Added"));
-            notification->setText(tr("%n tracks added/updated", nullptr, result));
-            notification->post();
-        }
+        return rowsAffected;
+    }, blacklistedPaths);
 
-        d->state = tJob::Finished;
-        emit stateChanged(tJob::Finished);
-    });
+    if (d->isUserAction) {
+        tNotification* notification = new tNotification();
+        notification->setSummary(tr("Folder Added"));
+        notification->setText(tr("%n tracks added/updated", nullptr, rowsAffected));
+        notification->post();
+    }
+
+    d->state = tJob::Finished;
+    emit stateChanged(tJob::Finished);
 }
 
 quint64 LibraryEnumerateDirectoryJob::progress() {

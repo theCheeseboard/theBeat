@@ -26,43 +26,36 @@
     </message>
     <message>
         <location filename="../ArtistsAlbumsPane.qml" line="+41"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+41"/>
         <source>Artists in Library</source>
         <translation type="unfinished">Kitaplıktaki Sanatçılar</translation>
     </message>
     <message>
         <location line="+0"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+0"/>
         <source>Albums in Library</source>
         <translation type="unfinished">Kitaplıktaki Albümler</translation>
     </message>
     <message>
         <location line="+38"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+38"/>
         <source>Tracks by %1</source>
         <translation type="unfinished">%1 şarkılar</translation>
     </message>
     <message>
         <location line="+0"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+0"/>
         <source>Tracks in %1</source>
         <translation type="unfinished">%1 içindeki parçalar</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+12"/>
         <source>Enqueue All</source>
         <translation type="unfinished">Tümünü Sırala</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+6"/>
         <source>Play All</source>
         <translation type="unfinished">Hepsini Oynat</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/ArtistsAlbumsPane.qml" line="+9"/>
         <source>Shuffle All</source>
         <translation type="unfinished">Tümünü Karıştır</translation>
     </message>
@@ -224,7 +217,7 @@
 <context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+154"/>
         <source>Folder Added</source>
         <translation>Klasör Eklendi</translation>
     </message>
@@ -345,19 +338,16 @@
     <name>LibraryListing</name>
     <message>
         <location filename="../LibraryListing.qml" line="+90"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+90"/>
         <source>by %1</source>
         <translation type="unfinished">%1 tarafından</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+2"/>
         <source>on %1</source>
         <translation type="unfinished">%1&apos;de</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/LibraryListing.qml" line="+2"/>
         <source>Track</source>
         <translation type="unfinished">Şarkı</translation>
     </message>
@@ -425,163 +415,142 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     <name>Main</name>
     <message>
         <location filename="../Main.qml" line="+16"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+16"/>
         <source>theBeat</source>
         <translation type="unfinished">theBeat</translation>
     </message>
     <message>
-        <location line="+24"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+24"/>
+        <location line="+20"/>
         <source>File</source>
         <translation type="unfinished">Dosya</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+4"/>
+        <location line="+135"/>
         <source>Open File</source>
         <translation type="unfinished">Dosya Aç</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+4"/>
+        <location line="-131"/>
+        <location line="+136"/>
         <source>Open URL</source>
         <translation type="unfinished">Link Aç</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+5"/>
+        <location line="-131"/>
+        <location line="+136"/>
         <source>Add to Library</source>
         <translation type="unfinished">Kütüphaneye ekle</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <location line="-129"/>
+        <location line="+190"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+5"/>
+        <location line="-184"/>
         <source>Playback</source>
         <translation type="unfinished">Geri çalma</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+3"/>
+        <location line="+127"/>
         <source>Play</source>
         <translation type="unfinished">Oyna</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <location line="-127"/>
+        <location line="+127"/>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-121"/>
+        <location line="+127"/>
         <source>Skip Back</source>
         <translation type="unfinished">Geriye Atla</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
+        <location line="-121"/>
+        <location line="+128"/>
         <source>Skip Forward</source>
         <translation type="unfinished">Ileri atlamak</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+7"/>
+        <location line="-121"/>
         <source>Increase Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+11"/>
         <source>Decrease Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+13"/>
+        <location line="+106"/>
         <source>Repeat One</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+10"/>
+        <location line="-96"/>
+        <location line="+107"/>
         <source>Shuffle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+11"/>
+        <location line="-96"/>
+        <location line="+107"/>
         <source>Pause after current track</source>
         <translation type="unfinished">Geçerli şarkıdan sonra duraklat</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+10"/>
+        <location line="-97"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+3"/>
         <source>Zen Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+9"/>
         <source>theBeat Help</source>
         <translation type="unfinished">theBeat Yardım</translation>
     </message>
     <message>
-        <location line="+24"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+24"/>
-        <source>Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
-        <source>Paste</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-34"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="-34"/>
+        <location line="-4"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+8"/>
         <source>About</source>
         <translation type="unfinished">Hakkında</translation>
     </message>
     <message>
-        <location line="+34"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+34"/>
+        <location line="+101"/>
         <source>Tracks</source>
         <translation type="unfinished">Şarkılar</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
         <source>Artists</source>
         <translation type="unfinished">Sanatçılar</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
         <source>Albums</source>
         <translation type="unfinished">Albümler</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
         <source>Playlists</source>
         <translation type="unfinished">Oynatma listeleri</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/Main.qml" line="+6"/>
         <source>Other Sources</source>
         <translation type="unfinished">Diğer kaynaklar</translation>
     </message>
@@ -903,31 +872,26 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     <name>OtherSourcesPane</name>
     <message>
         <location filename="../OtherSourcesPane.qml" line="+101"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+101"/>
         <source>Oh, bonkers!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+1"/>
         <source>This source can&apos;t be loaded right now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+62"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+62"/>
         <source>Other Sources</source>
         <translation type="unfinished">Diğer kaynaklar</translation>
     </message>
     <message>
         <location line="+45"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+45"/>
         <source>No other sources available</source>
         <translation type="unfinished">Başka kaynak yok</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/OtherSourcesPane.qml" line="+1"/>
         <source>There&apos;s nothing else to play right now</source>
         <translation type="unfinished">Şu anda oynayacak başka bir şey yok</translation>
     </message>
@@ -962,25 +926,21 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     <name>PlaylistPane</name>
     <message>
         <location filename="../PlaylistPane.qml" line="+40"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+40"/>
         <source>Playlists</source>
         <translation type="unfinished">Oynatma listeleri</translation>
     </message>
     <message>
         <location line="+56"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+56"/>
         <source>Enqueue All</source>
         <translation type="unfinished">Tümünü Sırala</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+6"/>
         <source>Play All</source>
         <translation type="unfinished">Hepsini Oynat</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/PlaylistPane.qml" line="+9"/>
         <source>Shuffle All</source>
         <translation type="unfinished">Tümünü Karıştır</translation>
     </message>
@@ -1048,20 +1008,17 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>QueuePane</name>
     <message>
-        <location filename="../QueuePane.qml" line="+32"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+32"/>
+        <location filename="../QueuePane.qml" line="+33"/>
         <source>Queue</source>
         <translation type="unfinished">Kuyruk</translation>
     </message>
     <message>
         <location line="+136"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+136"/>
         <source>Track</source>
         <translation type="unfinished">Şarkı</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/QueuePane.qml" line="+6"/>
         <source>Album</source>
         <translation type="unfinished">Albüm</translation>
     </message>
@@ -1268,19 +1225,16 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
     <name>TracksPane</name>
     <message>
         <location filename="../TracksPane.qml" line="+25"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+25"/>
         <source>Tracks in Library</source>
         <translation type="unfinished">Kitaplıktaki Şarkılar</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+8"/>
         <source>Enqueue All</source>
         <translation type="unfinished">Tümünü Sırala</translation>
     </message>
     <message>
         <location line="+30"/>
-        <location filename="../../../build-theBeat-Desktop_ARM-Debug/application/com/vicr123/thebeat/TracksPane.qml" line="+30"/>
         <source>Search</source>
         <translation type="unfinished">Ara</translation>
     </message>
