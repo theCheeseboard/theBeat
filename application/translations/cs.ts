@@ -324,7 +324,7 @@
 <context>
     <name>LibraryListing</name>
     <message>
-        <location filename="../LibraryListing.qml" line="+90"/>
+        <location filename="../LibraryListing.qml" line="+89"/>
         <source>by %1</source>
         <translation type="unfinished">od %1</translation>
     </message>
@@ -342,7 +342,7 @@
 <context>
     <name>LibraryManager</name>
     <message>
-        <location filename="../library/librarymanager.cpp" line="+455"/>
+        <location filename="../library/librarymanager.cpp" line="+456"/>
         <source>20 Most Played Tracks</source>
         <translation>20 nejvíce přehraných stop</translation>
     </message>
@@ -397,13 +397,13 @@
     </message>
     <message>
         <location line="+4"/>
-        <location line="+135"/>
+        <location line="+137"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-131"/>
-        <location line="+136"/>
+        <location line="-133"/>
+        <location line="+138"/>
         <source>Open URL</source>
         <translation type="unfinished"></translation>
     </message>

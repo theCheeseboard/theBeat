@@ -55,12 +55,13 @@ LibraryManager::LibraryManager(QObject* parent) :
     db.setDatabaseName(dbPath);
     if (!db.open()) return;
 
-    db.exec("PRAGMA foreign_keys = ON");
-    db.exec("PRAGMA journal_mode = WAL");
+    QSqlQuery query(db);
+
+    query.exec("PRAGMA foreign_keys = ON");
+    query.exec("PRAGMA journal_mode = WAL");
 
     // Initialise the tables
-    QStringList tables = db.tables();
-    db.exec("CREATE TABLE IF NOT EXISTS version(version INTEGER)");
+    query.exec("CREATE TABLE IF NOT EXISTS version(version INTEGER)");
 
     int version = -1;
     QSqlQuery versionQuery("SELECT version FROM version");
@@ -70,11 +71,11 @@ LibraryManager::LibraryManager(QObject* parent) :
 
     if (version == -1) {
         // Initialise a new database; this is the first time we're running theBeat
-        db.exec("CREATE TABLE tracks(id INTEGER PRIMARY KEY, path TEXT UNIQUE, title TEXT, artist TEXT, album TEXT, duration INTEGER, trackNumber INTEGER)");
-        db.exec("CREATE TABLE blacklist(path TEXT PRIMARY KEY)");
-        db.exec("CREATE TABLE playlists(id INTEGER PRIMARY KEY, name TEXT UNIQUE)");
-        db.exec("CREATE TABLE playlistTracks(playlistid INTEGER REFERENCES playlists(id) ON DELETE CASCADE, trackid INTEGER REFERENCES tracks(id) ON DELETE CASCADE ON UPDATE CASCADE, sort INTEGER, CONSTRAINT playlistTracks_pk PRIMARY KEY(playlistid, trackid, sort))");
-        db.exec("INSERT INTO version(version) VALUES(1)");
+        query.exec("CREATE TABLE tracks(id INTEGER PRIMARY KEY, path TEXT UNIQUE, title TEXT, artist TEXT, album TEXT, duration INTEGER, trackNumber INTEGER)");
+        query.exec("CREATE TABLE blacklist(path TEXT PRIMARY KEY)");
+        query.exec("CREATE TABLE playlists(id INTEGER PRIMARY KEY, name TEXT UNIQUE)");
+        query.exec("CREATE TABLE playlistTracks(playlistid INTEGER REFERENCES playlists(id) ON DELETE CASCADE, trackid INTEGER REFERENCES tracks(id) ON DELETE CASCADE ON UPDATE CASCADE, sort INTEGER, CONSTRAINT playlistTracks_pk PRIMARY KEY(playlistid, trackid, sort))");
+        query.exec("INSERT INTO version(version) VALUES(1)");
 
         // Also add Silly to the playlist
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
@@ -87,9 +88,9 @@ LibraryManager::LibraryManager(QObject* parent) :
 
     if (version <= 1) {
         // Upgrade to database version 2
-        db.exec("CREATE TABLE playTime(id INTEGER PRIMARY KEY, trackId INTEGER REFERENCES tracks(id) ON DELETE CASCADE ON UPDATE CASCADE, date INTEGER)");
-        db.exec("DELETE FROM version");
-        db.exec("INSERT INTO version(version) VALUES(2)");
+        query.exec("CREATE TABLE playTime(id INTEGER PRIMARY KEY, trackId INTEGER REFERENCES tracks(id) ON DELETE CASCADE ON UPDATE CASCADE, date INTEGER)");
+        query.exec("DELETE FROM version");
+        query.exec("INSERT INTO version(version) VALUES(2)");
     }
 
     if (version <= 2) {
@@ -97,9 +98,9 @@ LibraryManager::LibraryManager(QObject* parent) :
     }
 
     // Enumerate the Music directory
-    QTimer::singleShot(0, [this] {
+    QTimer::singleShot(0, this, [this] {
         QStringList musicDirectories = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
-        for (QString dir : musicDirectories) {
+        for (const QString& dir : musicDirectories) {
             this->enumerateDirectory(dir, false, false);
         }
     });
@@ -466,7 +467,7 @@ bool LibraryManager::isProcessing() {
 
 void LibraryManager::erase() {
     QStringList connections = QSqlDatabase::connectionNames();
-    for (QString connection : connections) {
+    for (const QString& connection : connections) {
         QSqlDatabase db = QSqlDatabase::database(connection);
         db.close();
         QSqlDatabase::removeDatabase(connection);
@@ -507,8 +508,9 @@ TemporaryDatabase::TemporaryDatabase() {
     db.setDatabaseName(dbPath);
     if (!db.open()) return;
 
-    db.exec("PRAGMA foreign_keys = ON");
-    db.exec("PRAGMA journal_mode = WAL");
+    QSqlQuery query(db);
+    query.exec("PRAGMA foreign_keys = ON");
+    query.exec("PRAGMA journal_mode = WAL");
 }
 
 TemporaryDatabase::~TemporaryDatabase() {

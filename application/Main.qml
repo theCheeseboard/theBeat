@@ -42,7 +42,9 @@ ContemporaryWindow {
             }
             Labs.MenuItem {
                 text: qsTr("Open URL")
-                onTriggered: () => {}
+                onTriggered: () => {
+                    Qt.gc();
+                }
             }
             Labs.MenuSeparator {}
             Labs.MenuItem {

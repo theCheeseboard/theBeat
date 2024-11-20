@@ -336,7 +336,7 @@
 <context>
     <name>LibraryListing</name>
     <message>
-        <location filename="../LibraryListing.qml" line="+90"/>
+        <location filename="../LibraryListing.qml" line="+89"/>
         <source>by %1</source>
         <translation type="unfinished">af %1</translation>
     </message>
@@ -354,7 +354,7 @@
 <context>
     <name>LibraryManager</name>
     <message>
-        <location filename="../library/librarymanager.cpp" line="+455"/>
+        <location filename="../library/librarymanager.cpp" line="+456"/>
         <source>20 Most Played Tracks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -424,13 +424,13 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
     </message>
     <message>
         <location line="+4"/>
-        <location line="+135"/>
+        <location line="+137"/>
         <source>Open File</source>
         <translation type="unfinished">Åben fil</translation>
     </message>
     <message>
-        <location line="-131"/>
-        <location line="+136"/>
+        <location line="-133"/>
+        <location line="+138"/>
         <source>Open URL</source>
         <translation type="unfinished">Åben URL</translation>
     </message>

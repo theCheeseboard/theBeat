@@ -19,7 +19,6 @@ ListView {
         required property string album
         required property int duration
         required property int track
-        // required property var albumArt
         required property int error
 
         Rectangle {

@@ -93,7 +93,10 @@ void QtMultimediaMediaItem::preparePlayer() {
     });
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::metadataChanged);
     connect(d->player, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &QtMultimediaMediaItem::updateAlbumArt);
-    connect(d->player, &QMediaPlayer::positionChanged, this, &QtMultimediaMediaItem::elapsedChanged);
+    connect(d->player, &QMediaPlayer::positionChanged, this, [this] {
+        // for (int i = 0; i < 1000; i++)
+        emit elapsedChanged();
+    }, Qt::QueuedConnection);
     connect(d->player, &QMediaPlayer::durationChanged, this, &QtMultimediaMediaItem::durationChanged);
     connect(d->player, &QMediaPlayer::errorOccurred, this, [this](QMediaPlayer::Error error, QString errorString) {
 #ifdef Q_OS_WIN
