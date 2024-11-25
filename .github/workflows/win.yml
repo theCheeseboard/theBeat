@@ -22,6 +22,7 @@ jobs:
         with:
           aqtversion: '>=3.1.18'
           version: '6.8.0'
+          arch: 'win64_msvc2022_64'
           target: 'desktop'
           cache: true
           modules: 'qt3d qtcharts qtconnectivity qtdatavis3d qtgraphs qtgrpc qthttpserver qtimageformats qtlanguageserver qtlocation qtlottie qtmultimedia qtnetworkauth qtpositioning qtquick3dphysics qtquickeffectmaker qtremoteobjects qtscxml qtsensors qtserialbus qtserialport qtspeech qtvirtualkeyboard qtwebchannel qtwebsockets qtwebview qt5compat qtquick3d qtquicktimeline qtshadertools'
