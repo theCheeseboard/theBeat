@@ -226,6 +226,11 @@
             <numerusform>%n tracks added/updated</numerusform>
         </translation>
     </message>
+    <message>
+        <location line="+29"/>
+        <source>Discovering audio tracks</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LibraryEnumerateDirectoryJobWidget</name>
@@ -336,7 +341,7 @@
 <context>
     <name>LibraryListing</name>
     <message>
-        <location filename="../LibraryListing.qml" line="+89"/>
+        <location filename="../LibraryListing.qml" line="+92"/>
         <source>by %1</source>
         <translation type="unfinished">by %1</translation>
     </message>

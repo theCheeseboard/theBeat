@@ -228,6 +228,11 @@
             <numerusform>%n bài được thêm/cập nhật</numerusform>
         </translation>
     </message>
+    <message>
+        <location line="+29"/>
+        <source>Discovering audio tracks</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LibraryEnumerateDirectoryJobWidget</name>
@@ -337,7 +342,7 @@
 <context>
     <name>LibraryListing</name>
     <message>
-        <location filename="../LibraryListing.qml" line="+89"/>
+        <location filename="../LibraryListing.qml" line="+92"/>
         <source>by %1</source>
         <translation type="unfinished">bởi %1</translation>
     </message>

@@ -74,6 +74,12 @@ Item {
                 id: trackList
                 Layout.fillHeight: true
                 Layout.fillWidth: true
+
+                onEnqueueItem: index => {
+                    const mediaItem = UrlManager.itemForUrl(trackList.model.path(index));
+                    PlaylistManager.addItem(mediaItem);
+                    PlaylistManager.currentItem = mediaItem;
+                }
             }
         }
     }

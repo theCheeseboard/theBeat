@@ -123,6 +123,12 @@ Item {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
+                onEnqueueItem: index => {
+                    const mediaItem = UrlManager.itemForUrl(trackList.model.path(index));
+                    PlaylistManager.addItem(mediaItem);
+                    PlaylistManager.currentItem = mediaItem;
+                }
+
                 function enqueueAll() {
                     for (var i = 0; i < trackList.model.rowCount(); i++) {
                         const mediaItem = UrlManager.itemForUrl(trackList.model.path(i));

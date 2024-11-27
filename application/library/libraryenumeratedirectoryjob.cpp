@@ -178,3 +178,7 @@ QWidget* LibraryEnumerateDirectoryJob::makeProgressWidget() {
 bool LibraryEnumerateDirectoryJob::isTransient() {
     return true;
 }
+
+QString LibraryEnumerateDirectoryJob::titleString() {
+    return tr("Discovering audio tracks");
+}

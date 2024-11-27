@@ -44,6 +44,10 @@ class LibraryEnumerateDirectoryJob : public tJob {
         State state();
         QWidget* makeProgressWidget();
         bool isTransient();
+
+        // tJob interface
+    public:
+        QString titleString();
 };
 
 #endif // LIBRARYENUMERATEDIRECTORYJOB_H

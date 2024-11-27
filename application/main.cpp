@@ -208,7 +208,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "SourceManager", StateManager::instance()->sources());
     qmlRegisterType<PlaylistModel>("com.vicr123.thebeat", 1, 0, "PlaylistModel");
     qmlRegisterType<UserPlaylistModel>("com.vicr123.thebeat", 1, 0, "UserPlaylistModel");
-    // engine.addImageProvider("albumart", new AlbumArtImageProvider());
+    engine.addImageProvider("albumart", new AlbumArtImageProvider());
     engine.load(url);
 
     MediaItem* firstItem = nullptr;

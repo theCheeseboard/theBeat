@@ -20,54 +20,58 @@
 #ifndef CDCHECKER_H
 #define CDCHECKER_H
 
-#include <abstractlibrarybrowser.h>
+#include <QAbstractListModel>
+#include <QCoroTask>
 
-namespace Ui {
-    class CdChecker;
-}
-
+class MediaItem;
 class QListWidgetItem;
 struct CdCheckerPrivate;
-class CdChecker : public AbstractLibraryBrowser {
+class CdChecker : public QAbstractListModel {
         Q_OBJECT
+        Q_PROPERTY(QString albumName READ albumName NOTIFY albumNameChanged FINAL)
     public:
-        explicit CdChecker(QString directory, QWidget* parent = nullptr);
+        explicit CdChecker(QString directory, QObject* parent = nullptr);
         ~CdChecker();
 
-        ListInformation currentListInformation();
+        enum Roles {
+            PathRole = Qt::UserRole,
+            TitleRole,
+            ArtistRole,
+            AlbumRole,
+            DurationRole,
+            TrackRole,
+            AlbumArtRole,
+            ErrorRole,
+            SortRole
+        };
+
+        QString albumName();
+
+        Q_SCRIPTABLE QCoro::Task<> eject();
+        Q_SCRIPTABLE MediaItem* mediaItem(int row);
 
     signals:
+        void albumNameChanged();
+        void ejectError();
 
     private slots:
-        void on_tracksWidget_itemActivated(QListWidgetItem* item);
-        void checkCd();
-
-        void on_enqueueAllButton_clicked();
-
-        void on_ejectButton_clicked();
+        QCoro::Task<> checkCd();
 
         void on_importCdButton_clicked();
 
-        void on_musicBrainzStack_currentChanged(int arg1);
-
-        void on_releaseBox_currentIndexChanged(int index);
-
-        void on_playAllButton_clicked();
-
-        void on_shuffleAllButton_clicked();
-
     private:
-        Ui::CdChecker* ui;
         CdCheckerPrivate* d;
-
-        void resizeEvent(QResizeEvent* event);
-        bool eventFilter(QObject* watched, QEvent* event);
 
         QString calculateMbDiscId();
 
-        void updateTrackListing();
-        void loadMusicbrainzData(QString discId);
-        void selectMusicbrainzRelease(QString release);
+        QCoro::Task<> loadMusicbrainzData(QString discId);
+        QCoro::Task<> selectMusicbrainzRelease(QString release);
+
+        // QAbstractItemModel interface
+    public:
+        int rowCount(const QModelIndex& parent = {}) const;
+        QVariant data(const QModelIndex& index, int role) const;
+        QHash<int, QByteArray> roleNames() const;
 };
 
 #endif // CDCHECKER_H

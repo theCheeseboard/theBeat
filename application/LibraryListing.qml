@@ -8,11 +8,14 @@ ListView {
     id: root
     spacing: 3
 
+    signal enqueueItem(int row)
+
     delegate: Item {
         id: trackItem
         implicitWidth: containerRect.implicitWidth
         implicitHeight: containerRect.implicitHeight
 
+        required property int index
         required property string path
         required property string title
         required property string artist
@@ -104,9 +107,7 @@ ListView {
             hoverEnabled: true
 
             onClicked: () => {
-                const mediaItem = UrlManager.itemForUrl(Qt.url(`file://${trackItem.path}`));
-                PlaylistManager.addItem(mediaItem);
-                PlaylistManager.currentItem = mediaItem;
+                root.enqueueItem(index);
             }
         }
     }

@@ -7,6 +7,8 @@
 #include <QDir>
 #include <QJsonDocument>
 #include <QCryptographicHash>
+#include <QCoroFuture>
+#include <QtConcurrent>
 
 #include "maccdmediaitem.h"
 #include <tlogger.h>
@@ -14,25 +16,20 @@
 #include <tmessagebox.h>
 #include <statemanager.h>
 
-void CdChecker::on_ejectButton_clicked() {
+QCoro::Task<> CdChecker::eject()
+{
     MacCdMediaItem::volumeGone(d->directory);
 
-    TPROMISE_CREATE_NEW_THREAD(void, {
+    auto result = co_await QtConcurrent::run([](QString directory) {
         NSError* error;
-        BOOL ejected = [[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtURL:QUrl::fromLocalFile(d->directory).toNSURL() error:&error];
+        BOOL ejected = [[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtURL:QUrl::fromLocalFile(directory).toNSURL() error:&error];
 
-        if (ejected == NO) {
-            rej(QString::fromNSString([error description]));
-        } else {
-            res();
-        }
-    })->error([ = ](QString error) {
-        tMessageBox* warning = new tMessageBox(StateManager::instance()->mainWindow());
-        warning->setTitleBarText(tr("Couldn't eject the disc"));
-        warning->setMessageText(tr("Make sure no other applications are accessing the disc, and then try again."));
-        warning->setIcon(QMessageBox::Warning);
-        warning->show(true);
-    });
+        return ejected == YES;
+    }, d->directory);
+
+    if (!result) {
+       emit ejectError();
+    }
 }
 
 QString CdChecker::calculateMbDiscId() {

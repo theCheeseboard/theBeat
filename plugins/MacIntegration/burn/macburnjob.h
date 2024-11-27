@@ -33,6 +33,11 @@ class MacBurnJob : public tJob {
         quint64 totalProgress();
         State state();
         QWidget* makeProgressWidget();
+
+        // tJob interface
+    public:
+        QString titleString();
+        QString statusString();
 };
 
 #endif // MACBURNJOB_H

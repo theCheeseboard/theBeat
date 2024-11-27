@@ -28,7 +28,6 @@ set(SOURCES
         plugin.cpp
 
         burn/macburnjobwidget.ui
-        cd/cdchecker.ui
     )
 
 set(HEADERS
@@ -57,9 +56,18 @@ set_target_properties(plugin-macintegration PROPERTIES
         OUTPUT_NAME macIntegrationPlugin
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-macintegration Qt::Widgets Qt::Multimedia libcontemporary libthebeat ${AVFOUNDATION_FRAMEWORK} ${DISCRECORDING_FRAMEWORK} ${DISCRECORDINGUI_FRAMEWORK} ${MEDIAPLAYER_FRAMEWORK})
+target_link_libraries(plugin-macintegration PRIVATE Qt::Widgets Qt::Multimedia libcontemporary libthebeat ${AVFOUNDATION_FRAMEWORK} ${DISCRECORDING_FRAMEWORK} ${DISCRECORDINGUI_FRAMEWORK} ${MEDIAPLAYER_FRAMEWORK})
+
+qt_add_qml_module(plugin-macintegration
+    URI com.vicr123.thebeat.plugin.macintegration
+    VERSION 1.0
+    QML_FILES
+        MacCdPane.qml
+    NO_CACHEGEN
+    SOURCES cd/maccdpluginmediasource.h cd/maccdpluginmediasource.cpp
+)
 
 IF(${MusicBrainz_FOUND})
-    target_link_libraries(plugin-macintegration PkgConfig::MusicBrainz)
+    target_link_libraries(plugin-macintegration PRIVATE PkgConfig::MusicBrainz)
     target_compile_definitions(plugin-macintegration PUBLIC HAVE_MUSICBRAINZ)
 ENDIF()

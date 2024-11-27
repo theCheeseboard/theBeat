@@ -39,6 +39,8 @@ MacBurnJob::MacBurnJob(void* burn, QString title, QObject* parent) : tJob(parent
     d->observer = [[MacBurnJobObserver alloc] init:this];
     updateState([d->burn status]);
 
+    connect(this, &MacBurnJob::descriptionChanged, this, &MacBurnJob::statusStringChanged);
+
     [[DRNotificationCenter currentRunLoopCenter] addObserver:d->observer selector:@selector(burnStatusChanged:) name:DRBurnStatusChangedNotification object:d->burn];
 }
 
@@ -137,4 +139,14 @@ tJob::State MacBurnJob::state() {
 
 QWidget* MacBurnJob::makeProgressWidget() {
     return new MacBurnJobWidget(this);
+}
+
+QString MacBurnJob::titleString()
+{
+    return d->title;
+}
+
+QString MacBurnJob::statusString()
+{
+    return this->description();
 }

@@ -4,115 +4,93 @@
 <context>
     <name>CdChecker</name>
     <message>
-        <location filename="../cd/cdchecker.ui" line="43"/>
-        <location filename="../cd/cdchecker.cpp" line="62"/>
-        <location filename="../cd/cdchecker.cpp" line="135"/>
-        <location filename="../cd/cdchecker.cpp" line="136"/>
-        <location filename="../cd/cdchecker.cpp" line="137"/>
+        <location filename="../cd/cdchecker.cpp" line="60"/>
+        <location filename="../cd/cdchecker.cpp" line="125"/>
+        <location filename="../cd/cdchecker.cpp" line="126"/>
         <source>CD</source>
         <translation>CD</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="68"/>
         <source>Enqueue All</source>
-        <translation>Alle einreihen</translation>
+        <translation type="vanished">Alle einreihen</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="79"/>
         <source>Play All</source>
-        <translation>Alle abspielen</translation>
+        <translation type="vanished">Alle abspielen</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="89"/>
         <source>Shuffle All</source>
-        <translation>Alle in Zufallswiedergabe</translation>
+        <translation type="vanished">Alle in Zufallswiedergabe</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="112"/>
         <source>Import</source>
-        <translation>Importieren</translation>
+        <translation type="vanished">Importieren</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="123"/>
         <source>Eject</source>
-        <translation>Auswerfen</translation>
+        <translation type="vanished">Auswerfen</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="213"/>
         <source>Accessing MusicBrainz...</source>
-        <translation>Auf MusicBrainz zugreifen...</translation>
+        <translation type="vanished">Auf MusicBrainz zugreifen...</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="230"/>
         <source>CD NOT FOUND</source>
-        <translation>CD NICHT GEFUNDEN</translation>
+        <translation type="vanished">CD NICHT GEFUNDEN</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="237"/>
         <source>This CD was not found on the MusicBrainz CD Database.</source>
-        <translation>Diese CD wurde nicht in der MusicBrainz CD-Datenbank gefunden.</translation>
+        <translation type="vanished">Diese CD wurde nicht in der MusicBrainz CD-Datenbank gefunden.</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="257"/>
         <source>SELECT CORRECT ALBUM</source>
-        <translation>WÄHLE RICHTIGES ALBUM AUS</translation>
+        <translation type="vanished">WÄHLE RICHTIGES ALBUM AUS</translation>
     </message>
     <message>
-        <location filename="../cd/cdchecker.ui" line="264"/>
         <source>More than one result was found on MusicBrainz for this CD. Select the correct CD for accurate track information.</source>
-        <translation>Für diese CD wurde mehr als ein Ergebnis auf MusicBrainz gefuden. Wähle für genaue Information die korrekte CD aus.</translation>
-    </message>
-    <message>
-        <location filename="../cd/cdchecker-objc.mm" line="31"/>
-        <source>Couldn&apos;t eject the disc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cd/cdchecker-objc.mm" line="32"/>
-        <source>Make sure no other applications are accessing the disc, and then try again.</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Für diese CD wurde mehr als ein Ergebnis auf MusicBrainz gefuden. Wähle für genaue Information die korrekte CD aus.</translation>
     </message>
 </context>
 <context>
     <name>MacBurnJob</name>
     <message>
-        <location filename="../burn/macburnjob.mm" line="79"/>
+        <location filename="../burn/macburnjob.mm" line="81"/>
         <source>Burn Complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="82"/>
+        <location filename="../burn/macburnjob.mm" line="84"/>
         <source>Burn cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="84"/>
+        <location filename="../burn/macburnjob.mm" line="86"/>
         <source>Failed to burn: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="87"/>
+        <location filename="../burn/macburnjob.mm" line="89"/>
         <source>Erasing disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="91"/>
+        <location filename="../burn/macburnjob.mm" line="93"/>
         <source>Finalising disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="95"/>
         <location filename="../burn/macburnjob.mm" line="97"/>
+        <location filename="../burn/macburnjob.mm" line="99"/>
         <source>Preparing to burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="99"/>
+        <location filename="../burn/macburnjob.mm" line="101"/>
         <source>Burning track %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="101"/>
+        <location filename="../burn/macburnjob.mm" line="103"/>
         <source>Burning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -120,22 +98,22 @@
 <context>
     <name>MacBurnJobPrivate</name>
     <message>
-        <location filename="../burn/macburnjob.mm" line="69"/>
+        <location filename="../burn/macburnjob.mm" line="71"/>
         <source>Burn Successful</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="69"/>
+        <location filename="../burn/macburnjob.mm" line="71"/>
         <source>Burned %1 to disc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="72"/>
+        <location filename="../burn/macburnjob.mm" line="74"/>
         <source>Burn Failure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/macburnjob.mm" line="72"/>
+        <location filename="../burn/macburnjob.mm" line="74"/>
         <source>Failed to burn %1 to disc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -158,6 +136,43 @@
     <message>
         <location filename="../burn/macburnprovider-objc.mm" line="90"/>
         <source>Insert a CD-R or CD-RW</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MacCdPane</name>
+    <message>
+        <source>CD</source>
+        <translation type="obsolete">CD</translation>
+    </message>
+    <message>
+        <location filename="../MacCdPane.qml" line="31"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished">Alle einreihen</translation>
+    </message>
+    <message>
+        <location filename="../MacCdPane.qml" line="37"/>
+        <source>Play All</source>
+        <translation type="unfinished">Alle abspielen</translation>
+    </message>
+    <message>
+        <location filename="../MacCdPane.qml" line="46"/>
+        <source>Shuffle All</source>
+        <translation type="unfinished">Alle in Zufallswiedergabe</translation>
+    </message>
+    <message>
+        <location filename="../MacCdPane.qml" line="59"/>
+        <source>Eject</source>
+        <translation type="unfinished">Auswerfen</translation>
+    </message>
+    <message>
+        <location filename="../MacCdPane.qml" line="108"/>
+        <source>Couldn&apos;t eject the disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MacCdPane.qml" line="109"/>
+        <source>Make sure no other applications are accessing the disc, and then try again.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
