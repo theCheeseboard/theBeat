@@ -59,6 +59,7 @@ LibraryEnumerateDirectoryJob::~LibraryEnumerateDirectoryJob() {
 }
 
 QCoro::Task<> LibraryEnumerateDirectoryJob::performEnumeration() {
+    co_return;
     QString blacklistedPaths;
     QSqlQuery blacklistQuery("SELECT * FROM blacklist");
     while (blacklistQuery.next()) {
