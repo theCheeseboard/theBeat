@@ -1,6 +1,6 @@
 #include "cdmonitor.h"
 
-#include "cdwidget.h"
+#include "gstcdcontroller.h"
 #include <DriveObjects/blockinterface.h>
 #include <DriveObjects/diskobject.h>
 #include <DriveObjects/driveinterface.h>
@@ -8,7 +8,7 @@
 #include <statemanager.h>
 
 struct CdMonitorPrivate {
-        QMap<DiskObject*, CdWidget*> panes;
+        QMap<DiskObject*, GstCdController*> panes;
 };
 
 CdMonitor::CdMonitor(QObject* parent) :
@@ -37,7 +37,7 @@ void CdMonitor::updateDisks() {
         if (drive->audioTracks() == 0) continue;
 
         if (!d->panes.contains(disk)) {
-            auto widget = new CdWidget(disk);
+            auto widget = new GstCdController(disk);
             d->panes.insert(disk, widget);
         }
 

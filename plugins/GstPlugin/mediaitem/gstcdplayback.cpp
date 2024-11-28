@@ -5,13 +5,15 @@ struct GstCdPlaybackPrivate {
 
         QString device;
         int track;
+        GstTrackInfoPtr trackInfo;
 };
 
-GstCdPlayback::GstCdPlayback(QString device, int track) :
+GstCdPlayback::GstCdPlayback(QString device, int track, GstTrackInfoPtr trackInfo) :
     GstMediaItem() {
     d = new GstCdPlaybackPrivate();
     d->track = track;
     d->device = device;
+    d->trackInfo = trackInfo;
 }
 
 GstCdPlayback::~GstCdPlayback() {
@@ -27,10 +29,7 @@ GstElement* GstCdPlayback::pipeline() {
 }
 
 QString GstCdPlayback::title() {
-    auto title = GstMediaItem::title();
-    if (!title.isEmpty()) return title;
-
-    return tr("Track %1").arg(d->track);
+    return d->trackInfo->title();
 }
 
 void GstCdPlayback::preparePlayer() {
@@ -50,4 +49,12 @@ QVariant GstCdPlayback::metadata(QString key) {
     }
 
     return QVariant();
+}
+
+QStringList GstCdPlayback::authors() {
+    return d->trackInfo->artist();
+}
+
+QString GstCdPlayback::album() {
+    return d->trackInfo->album();
 }

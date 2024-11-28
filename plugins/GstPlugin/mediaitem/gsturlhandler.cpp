@@ -9,7 +9,7 @@ GstUrlHandler::GstUrlHandler(QObject* parent) :
 
 MediaItem* GstUrlHandler::itemForUrl(QUrl url) {
     if (url.scheme() == "gst") {
-        return new GstCdPlayback("sr1", 2);
+        // return new GstCdPlayback("sr1", 2);
     }
     return nullptr;
 }
