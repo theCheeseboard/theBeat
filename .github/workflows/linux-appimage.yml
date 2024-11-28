@@ -22,11 +22,11 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           aqtversion: '==3.1.*'
-          version: '6.6.3'
+          version: '6.8.0'
           target: 'desktop'
-          arch: 'gcc_64'
+          arch: 'linux_gcc_64'
           cache: true
-          modules: 'qt3d qtcharts qtconnectivity qtdatavis3d qtgraphs qtgrpc qthttpserver qtimageformats qtlanguageserver qtlocation qtlottie qtmultimedia qtnetworkauth qtpdf qtpositioning qtquick3dphysics qtquickeffectmaker qtremoteobjects qtscxml qtsensors qtserialbus qtserialport qtspeech qtvirtualkeyboard qtwebchannel qtwebengine qtwebsockets qtwebview qt5compat qtquick3d qtquicktimeline qtshadertools'
+          modules: 'qt3d qtcharts qtconnectivity qtdatavis3d qtgraphs qtgrpc qthttpserver qtimageformats qtlanguageserver qtlocation qtlottie qtmultimedia qtnetworkauth qtpositioning qtquick3dphysics qtquickeffectmaker qtremoteobjects qtscxml qtsensors qtserialbus qtserialport qtspeech qtvirtualkeyboard qtwebchannel qtwebsockets qtwebview qt5compat qtquick3d qtquicktimeline qtshadertools'
       - name: Install QCoro
         uses: theCheeseboard/actions/build-cmake-project@actions
         with:
