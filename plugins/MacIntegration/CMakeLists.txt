@@ -8,10 +8,7 @@ find_library(DISCRECORDING_FRAMEWORK DiscRecording REQUIRED)
 find_library(DISCRECORDINGUI_FRAMEWORK DiscRecordingUI REQUIRED)
 find_library(MEDIAPLAYER_FRAMEWORK MediaPlayer REQUIRED)
 
-pkg_check_modules(MusicBrainz IMPORTED_TARGET libmusicbrainz5)
-
 set(SOURCES
-        ../PhononPlugin/musicbrainzreleasemodel.cpp
         burn/macburnjob.mm
         burn/macburnjobwidget.cpp
         burn/macburnprovider-objc.mm
@@ -31,7 +28,6 @@ set(SOURCES
     )
 
 set(HEADERS
-        ../PhononPlugin/musicbrainzreleasemodel.h
         burn/macburnjob.h
         burn/macburnjobwidget.h
         burn/macburnprovider.h
@@ -66,8 +62,3 @@ qt_add_qml_module(plugin-macintegration
     NO_CACHEGEN
     SOURCES cd/maccdpluginmediasource.h cd/maccdpluginmediasource.cpp
 )
-
-IF(${MusicBrainz_FOUND})
-    target_link_libraries(plugin-macintegration PRIVATE PkgConfig::MusicBrainz)
-    target_compile_definitions(plugin-macintegration PUBLIC HAVE_MUSICBRAINZ)
-ENDIF()

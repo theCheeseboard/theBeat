@@ -62,7 +62,7 @@ class CdChecker : public QAbstractListModel {
     private:
         CdCheckerPrivate* d;
 
-        QString calculateMbDiscId();
+        void setupMusicBrainzClient();
 
         QCoro::Task<> loadMusicbrainzData(QString discId);
         QCoro::Task<> selectMusicbrainzRelease(QString release);

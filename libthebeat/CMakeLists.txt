@@ -4,10 +4,12 @@ set(TAGLIB_ROOT "C:/Program Files (x86)/taglib" CACHE PATH "Path to taglib on Wi
 
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Multimedia Quick)
 find_package(libcontemporary REQUIRED)
+find_package(PkgConfig REQUIRED)
 cntp_find_pkgconfig(tag taglib REQUIRED
         WIN_FALLBACK_DLL "${TAGLIB_ROOT}/bin/tag.dll"
         WIN_FALLBACK_IMPLIB "${TAGLIB_ROOT}/lib/tag.lib"
         WIN_FALLBACK_INCLUDE "${TAGLIB_ROOT}/include")
+pkg_check_modules(MusicBrainz IMPORTED_TARGET libmusicbrainz5)
 
 set(SOURCES
         burnbackend.cpp
@@ -49,7 +51,8 @@ set(HEADERS
     )
 
 add_library(libthebeat SHARED ${SOURCES} ${HEADERS}
-    albumartimageprovider.h albumartimageprovider.cpp)
+    albumartimageprovider.h albumartimageprovider.cpp
+    musicbrainzclient.h musicbrainzclient.cpp)
 cntp_init(libthebeat 20)
 set_target_properties(libthebeat PROPERTIES
         OUTPUT_NAME thebeat
@@ -58,8 +61,13 @@ set_target_properties(libthebeat PROPERTIES
         VERSION 1.0.0
         PUBLIC_HEADER "${HEADERS}")
 
-target_link_libraries(libthebeat Qt::Widgets Qt::DBus Qt::Multimedia Qt::Quick libcontemporary PkgConfig::tag)
+target_link_libraries(libthebeat PUBLIC Qt::Widgets Qt::DBus Qt::Multimedia Qt::Quick libcontemporary PkgConfig::tag)
 target_compile_definitions(libthebeat PRIVATE LIBTHEBEAT_LIBRARY)
+
+IF(${MusicBrainz_FOUND})
+    target_link_libraries(libthebeat PRIVATE PkgConfig::MusicBrainz)
+    target_compile_definitions(libthebeat PUBLIC HAVE_MUSICBRAINZ)
+ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKECONFIG_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/libthebeat.framework/Resources/CMake)

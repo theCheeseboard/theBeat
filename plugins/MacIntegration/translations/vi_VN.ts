@@ -4,9 +4,9 @@
 <context>
     <name>CdChecker</name>
     <message>
-        <location filename="../cd/cdchecker.cpp" line="60"/>
-        <location filename="../cd/cdchecker.cpp" line="125"/>
-        <location filename="../cd/cdchecker.cpp" line="126"/>
+        <location filename="../cd/cdchecker.cpp" line="48"/>
+        <location filename="../cd/cdchecker.cpp" line="97"/>
+        <location filename="../cd/cdchecker.cpp" line="98"/>
         <source>CD</source>
         <translation>CD</translation>
     </message>
@@ -187,19 +187,16 @@
 <context>
     <name>MusicBrainzReleaseModel</name>
     <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="71"/>
         <source>Released: %1</source>
-        <translation>Phát hành: %1</translation>
+        <translation type="vanished">Phát hành: %1</translation>
     </message>
     <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="73"/>
         <source>Barcode: %1</source>
-        <translation>Mã vạch %1</translation>
+        <translation type="vanished">Mã vạch %1</translation>
     </message>
     <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="75"/>
         <source>Country: %1</source>
-        <translation>Quốc gia: %1</translation>
+        <translation type="vanished">Quốc gia: %1</translation>
     </message>
 </context>
 <context>

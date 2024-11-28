@@ -4,9 +4,9 @@
 <context>
     <name>CdChecker</name>
     <message>
-        <location filename="../cd/cdchecker.cpp" line="60"/>
-        <location filename="../cd/cdchecker.cpp" line="125"/>
-        <location filename="../cd/cdchecker.cpp" line="126"/>
+        <location filename="../cd/cdchecker.cpp" line="48"/>
+        <location filename="../cd/cdchecker.cpp" line="97"/>
+        <location filename="../cd/cdchecker.cpp" line="98"/>
         <source>CD</source>
         <translation>CD</translation>
     </message>
@@ -173,24 +173,6 @@
     <message>
         <location filename="../MacCdPane.qml" line="109"/>
         <source>Make sure no other applications are accessing the disc, and then try again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MusicBrainzReleaseModel</name>
-    <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="71"/>
-        <source>Released: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="73"/>
-        <source>Barcode: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../PhononPlugin/musicbrainzreleasemodel.cpp" line="75"/>
-        <source>Country: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
