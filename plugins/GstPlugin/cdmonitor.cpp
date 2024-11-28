@@ -21,6 +21,7 @@ CdMonitor::CdMonitor(QObject* parent) :
     connect(DriveObjectManager::instance(), &DriveObjectManager::driveAdded, this, [this](DriveInterface* drive) {
         connect(drive, &DriveInterface::changed, this, &CdMonitor::updateDisks);
     });
+    QTimer::singleShot(0, this, &CdMonitor::updateDisks);
     updateDisks();
 }
 
