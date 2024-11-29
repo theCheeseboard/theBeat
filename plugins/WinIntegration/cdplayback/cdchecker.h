@@ -1,42 +1,53 @@
 #ifndef CDCHECKER_H
 #define CDCHECKER_H
 
-#include <abstractlibrarybrowser.h>
+#include <QAbstractListModel>
 #include <QListWidgetItem>
+#include <QCoroTask>
 #include <winrt/CDLib.h>
 
-namespace Ui {
-    class CdChecker;
-}
-
+class MediaItem;
 struct CdCheckerPrivate;
-class CdChecker : public AbstractLibraryBrowser {
+class CdChecker : public QAbstractListModel {
         Q_OBJECT
+        Q_PROPERTY(QString albumName READ albumName NOTIFY albumNameChanged FINAL)
 
     public:
         explicit CdChecker(QChar driveLetter, QWidget* parent = nullptr);
         ~CdChecker();
 
-        ListInformation currentListInformation();
+        enum Roles {
+            PathRole = Qt::UserRole,
+            TitleRole,
+            ArtistRole,
+            AlbumRole,
+            DurationRole,
+            TrackRole,
+            AlbumArtRole,
+            ErrorRole,
+            SortRole
+        };
 
-    private slots:
-        void on_ejectButton_clicked();
+        QString albumName();
 
-        void on_tracksWidget_itemActivated(QListWidgetItem* item);
+        Q_SCRIPTABLE QCoro::Task<> eject();
+        Q_SCRIPTABLE MediaItem* mediaItem(int row);
 
-        void on_enqueueAllButton_clicked();
-
-        void on_playAllButton_clicked();
-
-        void on_shuffleAllButton_clicked();
+    signals:
+        void albumNameChanged();
 
     private:
-        Ui::CdChecker* ui;
         CdCheckerPrivate* d;
 
         void checkCd();
         void getMetadata();
         void updateTrackListing();
+
+        // QAbstractItemModel interface
+    public:
+        int rowCount(const QModelIndex& parent = {}) const;
+        QVariant data(const QModelIndex& index, int role) const;
+        QHash<int, QByteArray> roleNames() const;
 };
 
 #endif // CDCHECKER_H

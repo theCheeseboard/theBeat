@@ -4,41 +4,8 @@
 <context>
     <name>CdChecker</name>
     <message>
-        <location filename="../cdplayback/cdchecker.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cdplayback/cdchecker.ui" line="43"/>
-        <location filename="../cdplayback/cdchecker.cpp" line="51"/>
-        <location filename="../cdplayback/cdchecker.cpp" line="134"/>
-        <location filename="../cdplayback/cdchecker.cpp" line="135"/>
+        <location filename="../cdplayback/cdchecker.cpp" line="86"/>
         <source>CD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cdplayback/cdchecker.ui" line="68"/>
-        <source>Enqueue All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cdplayback/cdchecker.ui" line="79"/>
-        <source>Play All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cdplayback/cdchecker.ui" line="90"/>
-        <source>Shuffle All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cdplayback/cdchecker.ui" line="114"/>
-        <source>Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cdplayback/cdchecker.ui" line="125"/>
-        <source>Eject</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -143,22 +110,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="170"/>
+        <location filename="../burn/winburnpopover.ui" line="169"/>
         <source>BURN OPTIONS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="177"/>
+        <location filename="../burn/winburnpopover.ui" line="176"/>
         <source>Burn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="188"/>
+        <location filename="../burn/winburnpopover.ui" line="187"/>
         <source>Album Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../burn/winburnpopover.ui" line="212"/>
+        <location filename="../burn/winburnpopover.ui" line="211"/>
         <source>MP3 CD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -195,6 +162,39 @@
     <message>
         <location filename="../burn/winburnpopover.cpp" line="145"/>
         <source>Can&apos;t burn to this disc. Try again with a different disc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WinCdPane</name>
+    <message>
+        <location filename="../WinCdPane.qml" line="31"/>
+        <source>Enqueue All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../WinCdPane.qml" line="37"/>
+        <source>Play All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../WinCdPane.qml" line="46"/>
+        <source>Shuffle All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../WinCdPane.qml" line="59"/>
+        <source>Eject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../WinCdPane.qml" line="108"/>
+        <source>Couldn&apos;t eject the disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../WinCdPane.qml" line="109"/>
+        <source>Make sure no other applications are accessing the disc, and then try again.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

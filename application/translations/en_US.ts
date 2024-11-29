@@ -194,7 +194,7 @@
 <context>
     <name>LibraryEnumerateDirectoryJob</name>
     <message>
-        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+153"/>
+        <location filename="../library/libraryenumeratedirectoryjob.cpp" line="+154"/>
         <source>Folder Added</source>
         <translation type="unfinished"></translation>
     </message>

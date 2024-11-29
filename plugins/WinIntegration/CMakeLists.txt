@@ -58,7 +58,7 @@ set(SOURCES
 
         burn/winburnjobwidget.ui
         burn/winburnpopover.ui
-        cdplayback/cdchecker.ui)
+    )
 
 set(HEADERS
         burn/cdtextcrcgenerator.h
@@ -82,6 +82,15 @@ add_library(plugin-winintegration SHARED ${SOURCES} ${HEADERS})
 target_include_directories(plugin-winintegration PUBLIC ../../libthebeat/ ${INSTALL_DIR}/Include)
 add_dependencies(plugin-winintegration CDLib)
 
+qt_add_qml_module(plugin-winintegration
+    URI com.vicr123.thebeat.plugin.winintegration
+    VERSION 1.0
+    QML_FILES
+        WinCdPane.qml
+    NO_CACHEGEN
+    SOURCES cdplayback/wincdpluginmediasource.h cdplayback/wincdpluginmediasource.cpp
+)
+
 cntp_init_plugin(thebeat plugin-winintegration 20 linuxintegration)
 cntp_translate(plugin-winintegration)
 
@@ -89,4 +98,4 @@ set_target_properties(plugin-winintegration PROPERTIES
         OUTPUT_NAME winIntegration
         FRAMEWORK FALSE)
 
-target_link_libraries(plugin-winintegration Qt::Widgets Qt::DBus Qt::Concurrent libcontemporary libthebeat User32 windowsapp comsuppwd shlwapi)
+target_link_libraries(plugin-winintegration PRIVATE Qt::Widgets Qt::DBus Qt::Concurrent libcontemporary libthebeat User32 windowsapp comsuppwd shlwapi)
