@@ -129,7 +129,7 @@
 <context>
     <name>MacBurnProvider</name>
     <message>
-        <location filename="../burn/macburnprovider.cpp" line="11"/>
+        <location filename="../burn/macburnprovider.cpp" line="12"/>
         <source>Burn on macOS</source>
         <translation>Burn pada macOS</translation>
     </message>

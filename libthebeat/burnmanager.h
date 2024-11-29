@@ -20,13 +20,14 @@
 #ifndef BURNMANAGER_H
 #define BURNMANAGER_H
 
-#include <QObject>
 #include "libthebeat_global.h"
+#include <QObject>
 
 class BurnBackend;
 struct BurnManagerPrivate;
 class LIBTHEBEAT_EXPORT BurnManager : public QObject {
         Q_OBJECT
+        Q_PROPERTY(QList<BurnBackend*> availableBackends READ availableBackends NOTIFY availableBackendsChanged FINAL)
     public:
         explicit BurnManager(QObject* parent = nullptr);
 
@@ -38,6 +39,7 @@ class LIBTHEBEAT_EXPORT BurnManager : public QObject {
     signals:
         void backendRegistered(BurnBackend* backend);
         void backendDeregistered(BurnBackend* backend);
+        void availableBackendsChanged();
 
     private:
         BurnManagerPrivate* d;

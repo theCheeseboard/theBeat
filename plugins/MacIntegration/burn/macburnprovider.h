@@ -10,10 +10,10 @@ class MacBurnProvider : public BurnBackend {
 
     signals:
 
-
         // BurnBackend interface
     public:
         void burn(QStringList files, QString albumName, QWidget* parentWindow);
+        QString burn(QStringList files, QString albumName, QQuickWindow* parentWindow);
         QString displayName();
 };
 

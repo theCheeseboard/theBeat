@@ -108,6 +108,7 @@ qt_add_qml_module(thebeat
         LibraryHeader.qml
         PlaylistPane.qml
         OtherSourcesPane.qml
+        BurnButton.qml
         common.js
     SOURCES
         playlistmodel.h playlistmodel.cpp

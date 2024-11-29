@@ -110,3 +110,28 @@ void MacBurnProvider::burn(QStringList files, QString albumName, QWidget* parent
     [setupPanel setCanSelectAppendableMedia:NO];
     [setupPanel beginSetupSheetForWindow:details.parentWindow modalDelegate:delegate didEndSelector:@selector(burnSetupPanelDidEnd:returnCode:contextInfo:) contextInfo:nullptr];
 }
+
+QString MacBurnProvider::burn(QStringList files, QString albumName, QQuickWindow *parentWindow)
+{
+    BurnDetails details;
+    details.albumName = albumName;
+    details.parentWindow = [reinterpret_cast<NSView*>(parentWindow->winId()) window];
+
+    for (auto file : files) {
+        QUrl fileUrl(file);
+        if (fileUrl.isLocalFile()) {
+            details.files.append(fileUrl.toLocalFile());
+        } else {
+            details.files.append(file);
+        }
+    }
+
+    DRBurnSetupPanel* setupPanel = [DRBurnSetupPanel setupPanel];
+    BurnPanelDelegate* delegate = [[BurnPanelDelegate alloc] init:details];
+
+    [setupPanel setDelegate:delegate];
+    [setupPanel setCanSelectTestBurn:YES];
+    [setupPanel setCanSelectAppendableMedia:NO];
+    [setupPanel beginSetupSheetForWindow:details.parentWindow modalDelegate:delegate didEndSelector:@selector(burnSetupPanelDidEnd:returnCode:contextInfo:) contextInfo:nullptr];
+    return {};
+}

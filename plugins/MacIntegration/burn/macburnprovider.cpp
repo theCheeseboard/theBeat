@@ -1,9 +1,10 @@
 #include "macburnprovider.h"
 
-#include <statemanager.h>
 #include <burnmanager.h>
+#include <statemanager.h>
 
-MacBurnProvider::MacBurnProvider(QObject* parent) : BurnBackend(parent) {
+MacBurnProvider::MacBurnProvider(QObject* parent) :
+    BurnBackend(parent) {
     StateManager::instance()->burn()->registerBackend(this);
 }
 

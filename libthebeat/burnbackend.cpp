@@ -19,7 +19,10 @@
  * *************************************/
 #include "burnbackend.h"
 
-BurnBackend::BurnBackend(QObject *parent) : QObject(parent)
-{
+BurnBackend::BurnBackend(QObject* parent) :
+    QObject(parent) {
+}
 
+QString BurnBackend::burn(QStringList files, QString albumName, QQuickWindow* window) {
+    return {};
 }

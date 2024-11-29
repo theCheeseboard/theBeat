@@ -37,12 +37,14 @@ void BurnManager::registerBackend(BurnBackend* backend) {
     });
     d->backends.append(backend);
     emit backendRegistered(backend);
+    emit availableBackendsChanged();
 }
 
 void BurnManager::deregisterBackend(BurnBackend* backend) {
     backend->disconnect(this);
     d->backends.removeOne(backend);
     emit backendDeregistered(backend);
+    emit availableBackendsChanged();
 }
 
 QList<BurnBackend*> BurnManager::availableBackends() {

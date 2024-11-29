@@ -117,6 +117,19 @@
     </message>
 </context>
 <context>
+    <name>BurnButton</name>
+    <message>
+        <location filename="../BurnButton.qml" line="+11"/>
+        <source>Burn</source>
+        <translation type="unfinished">Ghi đĩa</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Select Device</source>
+        <translation type="unfinished">Chọn thiết bị</translation>
+    </message>
+</context>
+<context>
     <name>CdChecker</name>
     <message>
         <source>Play All</source>
@@ -1404,7 +1417,7 @@ theBeat sẽ khởi chạy lại sau khi việc đặt lại hoàn tất. Hoạt
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+66"/>
+        <location filename="../main.cpp" line="+67"/>
         <source>Audio Player</source>
         <translation>Bộ nghe nhạc</translation>
     </message>

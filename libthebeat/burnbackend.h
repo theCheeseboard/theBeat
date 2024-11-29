@@ -21,18 +21,20 @@
 #define BURNBACKEND_H
 
 #include "libthebeat_global.h"
+#include <QQuickWindow>
 #include <QWidget>
 
 class LIBTHEBEAT_EXPORT BurnBackend : public QObject {
         Q_OBJECT
+        Q_PROPERTY(QString displayName READ displayName FINAL CONSTANT)
     public:
         explicit BurnBackend(QObject* parent = nullptr);
 
         virtual void burn(QStringList files, QString albumName, QWidget* parentWindow) = 0;
+        Q_SCRIPTABLE virtual QString burn(QStringList files, QString albumName, QQuickWindow* parentWindow);
         virtual QString displayName() = 0;
 
     signals:
-
 };
 
 #endif // BURNBACKEND_H

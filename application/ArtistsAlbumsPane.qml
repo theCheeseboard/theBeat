@@ -115,6 +115,10 @@ Item {
                     Item {
                         Layout.fillWidth: true
                     }
+                    BurnButton {
+                        model: trackList.model
+                        albumName: grandstand2.text
+                    }
                 }
             }
 

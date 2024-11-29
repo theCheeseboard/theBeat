@@ -118,6 +118,19 @@
     </message>
 </context>
 <context>
+    <name>BurnButton</name>
+    <message>
+        <location filename="../BurnButton.qml" line="+11"/>
+        <source>Burn</source>
+        <translation type="unfinished">Brænd</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Select Device</source>
+        <translation type="unfinished">Vælg enhed</translation>
+    </message>
+</context>
+<context>
     <name>CdChecker</name>
     <message>
         <source>Play All</source>
@@ -1401,7 +1414,7 @@ theBeat vil genstarte når nulstillingen er færdig. Dette kan ikke fortrydes.</
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+66"/>
+        <location filename="../main.cpp" line="+67"/>
         <source>Audio Player</source>
         <translation>Musikafspiller</translation>
     </message>

@@ -117,6 +117,19 @@
     </message>
 </context>
 <context>
+    <name>BurnButton</name>
+    <message>
+        <location filename="../BurnButton.qml" line="+11"/>
+        <source>Burn</source>
+        <translation type="unfinished">Yan</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Select Device</source>
+        <translation type="unfinished">Cihaz seç</translation>
+    </message>
+</context>
+<context>
     <name>CdChecker</name>
     <message>
         <source>Play All</source>
@@ -1398,7 +1411,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+66"/>
+        <location filename="../main.cpp" line="+67"/>
         <source>Audio Player</source>
         <translation>Ses oynatıcı</translation>
     </message>

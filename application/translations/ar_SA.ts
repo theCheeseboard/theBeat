@@ -122,6 +122,19 @@
     </message>
 </context>
 <context>
+    <name>BurnButton</name>
+    <message>
+        <location filename="../BurnButton.qml" line="+11"/>
+        <source>Burn</source>
+        <translation type="unfinished">حرق</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Select Device</source>
+        <translation type="unfinished">اختر جهاز</translation>
+    </message>
+</context>
+<context>
     <name>CdChecker</name>
     <message>
         <source>Play All</source>
@@ -1433,7 +1446,7 @@ theBeat ستتم إعادة التشغيل بمجرد اكتمال إعادة ا
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+66"/>
+        <location filename="../main.cpp" line="+67"/>
         <source>Audio Player</source>
         <translation>مشغل الصوت</translation>
     </message>

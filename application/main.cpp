@@ -35,6 +35,7 @@
 #include <QQuickStyle>
 #include <QUrl>
 #include <albumartimageprovider.h>
+#include <burnmanager.h>
 #include <playlist.h>
 #include <plugins/tpluginmanager.h>
 #include <plugins/tpluginmanagerpane.h>
@@ -107,7 +108,7 @@ int main(int argc, char* argv[]) {
     //        new ThemeManager();
     //    }
 
-    QObject::connect(&settings, &tSettings::settingChanged, [ = ](QString key, QVariant value) {
+    QObject::connect(&settings, &tSettings::settingChanged, [=](QString key, QVariant value) {
         if (key == "theme/mode") {
             tStyleManager::setOverrideStyleForApplication(value.toString() == "light" ? tStyleManager::ContemporaryLight : tStyleManager::ContemporaryDark);
         }
@@ -117,7 +118,7 @@ int main(int argc, char* argv[]) {
 
     MainWindow* w = new MainWindow();
 
-    QObject::connect(&a, &tApplication::singleInstanceMessage, [ = ](QJsonObject launchMessage) {
+    QObject::connect(&a, &tApplication::singleInstanceMessage, [=](QJsonObject launchMessage) {
         if (launchMessage.contains("files")) {
             QJsonArray files = launchMessage.value("files").toArray();
             MediaItem* firstItem = nullptr;
@@ -135,11 +136,11 @@ int main(int argc, char* argv[]) {
             }
         }
     });
-    QObject::connect(&a, &tApplication::dockIconClicked, [ = ] {
+    QObject::connect(&a, &tApplication::dockIconClicked, [=] {
         // w->show();
         // w->activateWindow();
     });
-    QObject::connect(&a, &tApplication::openFile, [ = ](QString file) {
+    QObject::connect(&a, &tApplication::openFile, [=](QString file) {
         MediaItem* item = StateManager::instance()->url()->itemForUrl(QUrl::fromLocalFile(file));
         StateManager::instance()->playlist()->addItem(item);
         StateManager::instance()->playlist()->setCurrentItem(item);
@@ -194,11 +195,11 @@ int main(int argc, char* argv[]) {
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/com/vicr123/thebeat/Main.qml"_qs);
     QObject::connect(
-    &engine, &QQmlApplicationEngine::objectCreationFailed, &a, [](QUrl url) {
+        &engine, &QQmlApplicationEngine::objectCreationFailed, &a, [](QUrl url) {
         QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     QObject::connect(
-    &engine, &QQmlApplicationEngine::warnings, &a, [](const QList<QQmlError>& warnings) {
+        &engine, &QQmlApplicationEngine::warnings, &a, [](const QList<QQmlError>& warnings) {
 
     }, Qt::QueuedConnection);
     qmlRegisterType<Playlist>("com.vicr123.thebeat", 1, 0, "PlaylistManager");
@@ -206,6 +207,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "UrlManager", StateManager::instance()->url());
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "PlaylistManager", StateManager::instance()->playlist());
     qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "SourceManager", StateManager::instance()->sources());
+    qmlRegisterSingletonInstance("com.vicr123.thebeat", 1, 0, "BurnManager", StateManager::instance()->burn());
     qmlRegisterType<PlaylistModel>("com.vicr123.thebeat", 1, 0, "PlaylistModel");
     qmlRegisterType<UserPlaylistModel>("com.vicr123.thebeat", 1, 0, "UserPlaylistModel");
     engine.addImageProvider("albumart", new AlbumArtImageProvider());
