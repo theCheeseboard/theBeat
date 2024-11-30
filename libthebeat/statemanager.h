@@ -31,7 +31,7 @@ class ControlStripManager;
 class UrlManager;
 
 struct StateManagerPrivate;
-class MainWindow;
+class QQuickWindow;
 class LIBTHEBEAT_EXPORT StateManager : public QObject {
         Q_OBJECT
     public:
@@ -46,14 +46,11 @@ class LIBTHEBEAT_EXPORT StateManager : public QObject {
         UrlManager* url();
         ControlStripManager* controlStrip();
 
-        QWidget* mainWindow();
+        QQuickWindow* mainWindow();
+        void setMainWindow(QQuickWindow* mainWindow);
 
     signals:
-        void mainWindowAvailable(QWidget* mainWindow);
-
-    protected:
-        friend MainWindow;
-        void setMainWindow(QWidget* mainWindow);
+        void mainWindowAvailable(QQuickWindow* mainWindow);
 
     private:
         StateManagerPrivate* d;

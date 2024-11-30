@@ -27,14 +27,14 @@
 #include "visualisationmanager.h"
 
 struct StateManagerPrivate {
-        Playlist* playlist;
-        SourceManager* sources;
-        BurnManager* burn;
-        VisualisationManager* visualisation;
-        ControlStripManager* controlStrip;
-        UrlManager* url;
+    Playlist* playlist;
+    SourceManager* sources;
+    BurnManager* burn;
+    VisualisationManager* visualisation;
+    ControlStripManager* controlStrip;
+    UrlManager* url;
 
-        QWidget* mainWindow = nullptr;
+    QQuickWindow* mainWindow = nullptr;
 };
 
 StateManager::StateManager(QObject* parent) :
@@ -77,11 +77,11 @@ ControlStripManager* StateManager::controlStrip() {
     return d->controlStrip;
 }
 
-QWidget* StateManager::mainWindow() {
+QQuickWindow* StateManager::mainWindow() {
     return d->mainWindow;
 }
 
-void StateManager::setMainWindow(QWidget* mainWindow) {
+void StateManager::setMainWindow(QQuickWindow* mainWindow) {
     d->mainWindow = mainWindow;
     emit mainWindowAvailable(mainWindow);
 }

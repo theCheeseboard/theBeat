@@ -581,7 +581,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+125"/>
+        <location filename="../mainwindow.cpp" line="+123"/>
         <source>Tracks</source>
         <translation>Şarkılar</translation>
     </message>
@@ -1411,7 +1411,7 @@ Sıfırlama tamamlandığında theBeat yeniden başlayacaktır. Bu eylem geri al
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+67"/>
+        <location filename="../main.cpp" line="+68"/>
         <source>Audio Player</source>
         <translation>Ses oynatıcı</translation>
     </message>

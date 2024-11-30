@@ -1,14 +1,14 @@
 #ifndef SMTCINTEGRATION_H
 #define SMTCINTEGRATION_H
 
-#include <QWidget>
+#include <QQuickWindow>
 #include <QScopedPointer>
 
 struct SmtcIntegrationPrivate;
 class SmtcIntegration : public QObject {
-    Q_OBJECT
+        Q_OBJECT
     public:
-        explicit SmtcIntegration(QWidget *parent);
+        explicit SmtcIntegration(QQuickWindow* parent);
         ~SmtcIntegration();
 
     signals:

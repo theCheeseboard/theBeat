@@ -65,7 +65,7 @@ class QByteArrayBackedIBuffer : public winrt::implements<QByteArrayBackedIBuffer
 
 struct SmtcIntegrationPrivate {
     MediaItem* currentItem{ };
-    QWidget* parentWindow{ };
+    QQuickWindow* parentWindow{ };
 
     SystemMediaTransportControls smtc{ nullptr };
 
@@ -73,7 +73,7 @@ struct SmtcIntegrationPrivate {
     winrt::fire_and_forget updateSMTC();
 };
 
-SmtcIntegration::SmtcIntegration(QWidget* parent) : QObject(parent), d(new SmtcIntegrationPrivate) {
+SmtcIntegration::SmtcIntegration(QQuickWindow* parent) : QObject(parent), d(new SmtcIntegrationPrivate) {
     d->parentWindow = parent;
 
     IActivationFactory factory = winrt::get_activation_factory<SystemMediaTransportControls>();
@@ -81,7 +81,7 @@ SmtcIntegration::SmtcIntegration(QWidget* parent) : QObject(parent), d(new SmtcI
 
     interop->GetForWindow(reinterpret_cast<HWND>(d->parentWindow->winId()), winrt::guid_of<abi::ISystemMediaTransportControls>(), winrt::put_abi(d->smtc));
 
-    d->smtc.ButtonPressed([=](SystemMediaTransportControls smtc, SystemMediaTransportControlsButtonPressedEventArgs e) {
+    d->smtc.ButtonPressed([ = ](SystemMediaTransportControls smtc, SystemMediaTransportControlsButtonPressedEventArgs e) {
         Playlist* playlist = StateManager::instance()->playlist();
         switch (e.Button()) {
             case SystemMediaTransportControlsButton::Play:

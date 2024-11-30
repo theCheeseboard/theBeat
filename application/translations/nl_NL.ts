@@ -576,7 +576,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
         <translation>theBeat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="+125"/>
+        <location filename="../mainwindow.cpp" line="+123"/>
         <source>Tracks</source>
         <translation>Nummers</translation>
     </message>
@@ -1410,7 +1410,7 @@ theBeat zal opnieuw starten zodra de reset klaar is. Deze actie is niet terug te
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="+67"/>
+        <location filename="../main.cpp" line="+68"/>
         <source>Audio Player</source>
         <translation>Audiospeler</translation>
     </message>
