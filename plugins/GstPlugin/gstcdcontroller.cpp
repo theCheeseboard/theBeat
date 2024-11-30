@@ -69,30 +69,32 @@ void GstCdController::readCd() {
 
     auto cdText = device.getCdtext();
     QMap<QString, QString> discFields;
-    for (auto i = static_cast<cdtext_field_t>(0); i < MAX_CDTEXT_FIELDS; i++) {
-        auto field = cdText->getConst(i, 0);
-        if (field) {
-            auto fieldName = QString::fromLatin1(cdText->field2str(i));
-            auto fieldValue = QString::fromLatin1(field);
-            discFields.insert(fieldName, fieldValue);
-        }
-    }
-
-    for (auto track = 1; track < d->trackInfo.length() + 1; track++) {
-        QMap<QString, QString> trackFields;
-
+    if (cdText) {
         for (auto i = static_cast<cdtext_field_t>(0); i < MAX_CDTEXT_FIELDS; i++) {
-            auto field = cdText->getConst(i, track);
+            auto field = cdText->getConst(i, 0);
             if (field) {
                 auto fieldName = QString::fromLatin1(cdText->field2str(i));
                 auto fieldValue = QString::fromLatin1(field);
-                trackFields.insert(fieldName, fieldValue);
+                discFields.insert(fieldName, fieldValue);
             }
         }
 
-        auto trackInfo = d->trackInfo.at(track - 1);
-        if (trackFields.contains("TITLE") && discFields.contains("TITLE") && discFields.contains("PERFORMER")) {
-            trackInfo->setData(trackFields.value("TITLE"), {discFields.value("PERFORMER")}, discFields.value("TITLE"));
+        for (auto track = 1; track < d->trackInfo.length() + 1; track++) {
+            QMap<QString, QString> trackFields;
+
+            for (auto i = static_cast<cdtext_field_t>(0); i < MAX_CDTEXT_FIELDS; i++) {
+                auto field = cdText->getConst(i, track);
+                if (field) {
+                    auto fieldName = QString::fromLatin1(cdText->field2str(i));
+                    auto fieldValue = QString::fromLatin1(field);
+                    trackFields.insert(fieldName, fieldValue);
+                }
+            }
+
+            auto trackInfo = d->trackInfo.at(track - 1);
+            if (trackFields.contains("TITLE") && discFields.contains("TITLE") && discFields.contains("PERFORMER")) {
+                trackInfo->setData(trackFields.value("TITLE"), {discFields.value("PERFORMER")}, discFields.value("TITLE"));
+            }
         }
     }
 
