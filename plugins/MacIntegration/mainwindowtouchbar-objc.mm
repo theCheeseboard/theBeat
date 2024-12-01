@@ -40,7 +40,7 @@ typedef QSharedPointer<MainWindowTouchBarItem> TouchBarItemPtr;
 
 @property (strong) NSObject *qtDelegate;
 @property QObject *parentQObject;
-@property QWidget *mainWindow;
+@property QQuickWindow *mainWindow;
 //@property Ui::MainWindow *mainWindowUi;
 @property QList<TouchBarItemPtr> touchBarActionMapping;
 
@@ -53,7 +53,7 @@ static NSTouchBarItemIdentifier skipNextIdentifier = @"com.vicr123.thebeat.skipf
 
 @implementation MainWindowTouchBarProvider
 
-- (id)init: (QWidget*)mainWin  {
+- (id)init: (QQuickWindow*)mainWin  {
     if (self = [super init]) {
         self.parentQObject = new QObject();
 

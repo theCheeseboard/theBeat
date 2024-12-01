@@ -2,13 +2,13 @@
 #define MAINWINDOWTOUCHBAR_H
 
 #include <QObject>
+#include <QQuickWindow>
 
 struct MainWindowTouchBarPrivate;
-class MainWindowTouchBar : public QObject
-{
-    Q_OBJECT
+class MainWindowTouchBar : public QObject {
+        Q_OBJECT
     public:
-        explicit MainWindowTouchBar(QWidget *parent = nullptr);
+        explicit MainWindowTouchBar(QQuickWindow* parent = nullptr);
         ~MainWindowTouchBar();
 
     signals:
@@ -17,7 +17,6 @@ class MainWindowTouchBar : public QObject
         MainWindowTouchBarPrivate* d;
 
         void setupTouchBar();
-
 };
 
 #endif // MAINWINDOWTOUCHBAR_H

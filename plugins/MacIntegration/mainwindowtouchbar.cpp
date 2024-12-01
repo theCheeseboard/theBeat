@@ -1,7 +1,7 @@
 #include "mainwindowtouchbar.h"
 #include "mainwindowtouchbar_p.h"
 
-MainWindowTouchBar::MainWindowTouchBar(QWidget *parent) : QObject(parent)
+MainWindowTouchBar::MainWindowTouchBar(QQuickWindow *parent) : QObject(parent)
 {
     d = new MainWindowTouchBarPrivate();
     d->parentWidget = parent;
