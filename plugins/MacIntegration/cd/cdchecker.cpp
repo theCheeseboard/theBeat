@@ -163,7 +163,9 @@ QVariant CdChecker::data(const QModelIndex& index, int role) const {
 }
 
 MediaItem* CdChecker::mediaItem(int row) {
-    return new MacCdMediaItem(d->directory, d->trackInfo.at(row));
+    auto item = new MacCdMediaItem(d->directory, d->trackInfo.at(row));
+    StateManager::instance()->qmlEngine()->setObjectOwnership(item, QQmlEngine::CppOwnership);
+    return item;
 }
 
 QHash<int, QByteArray> CdChecker::roleNames() const {

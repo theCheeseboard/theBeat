@@ -67,7 +67,7 @@ quint64 ParanoiaMediaItem::duration() {
 }
 
 QImage ParanoiaMediaItem::albumArt() {
-    return {};
+    return QImage();
 }
 
 QString ParanoiaMediaItem::lyrics() {

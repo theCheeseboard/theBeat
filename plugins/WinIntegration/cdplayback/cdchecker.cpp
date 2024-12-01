@@ -124,7 +124,9 @@ QCoro::Task<> CdChecker::eject() {
 
 MediaItem* CdChecker::mediaItem(int row) {
     winrt::CDLib::IAudioCDTrack track = d->drive.InsertedMedia().Tracks().GetAt(row);
-    return new WinCdMediaItem(d->drive.DriveLetter().Value(), track);
+    auto item = new WinCdMediaItem(d->drive.DriveLetter().Value(), track);
+    StateManager::instance()->qmlEngine()->setObjectOwnership(item, QQmlEngine::CppOwnership);
+    return item;
 }
 
 int CdChecker::rowCount(const QModelIndex& parent) const {

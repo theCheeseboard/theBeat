@@ -13,6 +13,7 @@
 #include <statemanager.h>
 
 #include <QAudioSink>
+#include <QQmlEngine>
 
 #include <cdio++/cdio.hpp>
 
@@ -82,7 +83,9 @@ QCoro::Task<> ParanoiaCdController::eject() {
 }
 
 MediaItem* ParanoiaCdController::mediaItem(int row) {
-    return new ParanoiaMediaItem(d->player, row, d->sink, d->trackInfo.at(row));
+    auto item = new ParanoiaMediaItem(d->player, row, d->sink, d->trackInfo.at(row));
+    StateManager::instance()->qmlEngine()->setObjectOwnership(item, QQmlEngine::CppOwnership);
+    return item;
 }
 
 void ParanoiaCdController::readCd() {

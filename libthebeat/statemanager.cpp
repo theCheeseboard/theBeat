@@ -27,14 +27,15 @@
 #include "visualisationmanager.h"
 
 struct StateManagerPrivate {
-    Playlist* playlist;
-    SourceManager* sources;
-    BurnManager* burn;
-    VisualisationManager* visualisation;
-    ControlStripManager* controlStrip;
-    UrlManager* url;
+        Playlist* playlist;
+        SourceManager* sources;
+        BurnManager* burn;
+        VisualisationManager* visualisation;
+        ControlStripManager* controlStrip;
+        UrlManager* url;
 
-    QQuickWindow* mainWindow = nullptr;
+        QQuickWindow* mainWindow = nullptr;
+        QQmlEngine* qmlEngine = nullptr;
 };
 
 StateManager::StateManager(QObject* parent) :
@@ -84,4 +85,12 @@ QQuickWindow* StateManager::mainWindow() {
 void StateManager::setMainWindow(QQuickWindow* mainWindow) {
     d->mainWindow = mainWindow;
     emit mainWindowAvailable(mainWindow);
+}
+
+QQmlEngine* StateManager::qmlEngine() {
+    return d->qmlEngine;
+}
+
+void StateManager::setQmlEngine(QQmlEngine* qmlEngine) {
+    d->qmlEngine = qmlEngine;
 }

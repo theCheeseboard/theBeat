@@ -22,6 +22,7 @@
 
 #include "libthebeat_global.h"
 #include <QObject>
+#include <QQmlEngine>
 
 class Playlist;
 class SourceManager;
@@ -48,6 +49,9 @@ class LIBTHEBEAT_EXPORT StateManager : public QObject {
 
         QQuickWindow* mainWindow();
         void setMainWindow(QQuickWindow* mainWindow);
+
+        QQmlEngine* qmlEngine();
+        void setQmlEngine(QQmlEngine* qmlEngine);
 
     signals:
         void mainWindowAvailable(QQuickWindow* mainWindow);
