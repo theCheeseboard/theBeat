@@ -8,6 +8,7 @@
 #include <DriveObjects/diskobject.h>
 #include <DriveObjects/driveinterface.h>
 // #include <mediaitem/paranoiacdplayback.h>
+#include <musicbrainzclient.h>
 #include <pluginmediasource.h>
 #include <sourcemanager.h>
 #include <statemanager.h>
@@ -23,6 +24,7 @@ struct ParanoiaCdControllerPrivate {
         ParanoiaPlayer* player = nullptr;
         QAudioSink* sink = nullptr;
         QIODevice* sinkOutput = nullptr;
+        MusicBrainzClient* musicBrainzClient = nullptr;
 
         QString albumName;
         QList<ParanoiaTrackInfoPtr> trackInfo;
@@ -77,6 +79,10 @@ QString ParanoiaCdController::albumName() {
     return d->albumName;
 }
 
+MusicBrainzClient* ParanoiaCdController::musicBrainzClient() {
+    return d->musicBrainzClient;
+}
+
 QCoro::Task<> ParanoiaCdController::eject() {
     auto drive = d->disk->interface<BlockInterface>()->drive();
     co_await drive->eject();
@@ -91,6 +97,42 @@ MediaItem* ParanoiaCdController::mediaItem(int row) {
 void ParanoiaCdController::readCd() {
     if (!d->device.open(d->disk->interface<BlockInterface>()->blockName().toUtf8().constData(), DRIVER_DEVICE)) return;
 
+    this->setCdTextMetadata();
+    d->player = new ParanoiaPlayer(&d->device, this);
+    this->setupMusicBrainzClient();
+    if (d->musicBrainzClient) {
+        connect(d->musicBrainzClient, &MusicBrainzClient::albumNameChanged, this, [this] {
+            d->albumName = d->musicBrainzClient->albumName();
+            emit albumNameChanged();
+        });
+        connect(d->musicBrainzClient, &MusicBrainzClient::albumArtChanged, this, [this] {
+            for (auto track : d->trackInfo) {
+                track->setAlbumArt(d->musicBrainzClient->albumArt());
+            }
+            emit dataChanged(index(0), index(rowCount() - 1));
+        });
+        connect(d->musicBrainzClient, &MusicBrainzClient::tracksChanged, this, [this] {
+            for (auto i = 0; i < d->trackInfo.length(); i++) {
+                if (d->musicBrainzClient->trackCount() <= i) return;
+
+                auto track = d->trackInfo.at(i);
+                auto mbTrack = d->musicBrainzClient->track(i);
+                track->setData(mbTrack.title, mbTrack.artists, mbTrack.album);
+            }
+            emit dataChanged(index(0), index(rowCount() - 1));
+        });
+    }
+
+    emit dataChanged(index(0), index(rowCount() - 1));
+}
+
+void ParanoiaCdController::feedSink() {
+    while (d->sink->bytesFree() >= 2342 && d->player->isFrameAvailable()) {
+        d->sinkOutput->write(d->player->nextFrame(1));
+    }
+}
+
+void ParanoiaCdController::setCdTextMetadata() {
     auto cdText = d->device.getCdtext();
     QMap<QString, QString> discFields;
     if (cdText) {
@@ -122,20 +164,27 @@ void ParanoiaCdController::readCd() {
         }
     }
 
-    d->player = new ParanoiaPlayer(&d->device, this);
-
-    emit dataChanged(index(0), index(rowCount() - 1));
-
     if (discFields.contains("TITLE")) {
         d->albumName = discFields.value("TITLE");
         emit albumNameChanged();
     }
 }
 
-void ParanoiaCdController::feedSink() {
-    while (d->sink->bytesFree() >= 2342 && d->player->isFrameAvailable()) {
-        d->sinkOutput->write(d->player->nextFrame(1));
+void ParanoiaCdController::setupMusicBrainzClient() {
+    auto firstTrack = d->device.getFirstTrackNum();
+    auto lastTrack = d->device.getLastTrackNum();
+    auto leadOut = d->device.getLastTrack()->getLastLsn() + 151;
+    int frameOffsets[99];
+    for (int i = 0; i < 99; i++) {
+        int frameOffset = 0;
+        if (i + 1 >= firstTrack && i + 1 <= lastTrack) {
+            auto track = d->device.getTrackFromNum(i + 1);
+            frameOffset = track->getLba();
+        }
+        frameOffsets[i] = frameOffset;
     }
+    d->musicBrainzClient = new MusicBrainzClient(firstTrack, lastTrack, leadOut, frameOffsets, this);
+    emit musicBrainzClientChanged();
 }
 
 int ParanoiaCdController::rowCount(const QModelIndex& parent) const {

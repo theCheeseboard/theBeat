@@ -68,8 +68,7 @@
             <string>Enqueue All</string>
            </property>
            <property name="icon">
-            <iconset theme="view-media-playlist">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="view-media-playlist"/>
            </property>
           </widget>
          </item>
@@ -96,7 +95,7 @@
          <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -112,8 +111,7 @@
             <string>Import</string>
            </property>
            <property name="icon">
-            <iconset theme="media-cd-import">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="media-cd-import"/>
            </property>
           </widget>
          </item>
@@ -123,8 +121,7 @@
             <string>Eject</string>
            </property>
            <property name="icon">
-            <iconset theme="media-eject">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="media-eject"/>
            </property>
           </widget>
          </item>
@@ -143,14 +140,14 @@
       </size>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QListWidget" name="tracksWidget">
      <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
+      <enum>QFrame::Shape::NoFrame</enum>
      </property>
     </widget>
    </item>
@@ -181,7 +178,7 @@
          </size>
         </property>
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -222,7 +219,6 @@
            <widget class="QLabel" name="label_2">
             <property name="font">
              <font>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -249,7 +245,6 @@
            <widget class="QLabel" name="label_4">
             <property name="font">
              <font>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>

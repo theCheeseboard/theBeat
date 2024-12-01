@@ -7,6 +7,12 @@ import com.vicr123.thebeat
 Item {
     property var source
     readonly property var controller: source.controller
+    readonly property var musicBrainz: controller.musicBrainzClient
+
+    LayerCalculator {
+        id: layer1
+        layer: 1
+    }
 
     Pager {
         anchors.fill: parent
@@ -91,7 +97,123 @@ Item {
                         }
                     }
                 }
+
+                Layer {
+                    Layout.fillWidth: true
+                    color: layer1.color
+
+                    visible: musicBrainz?.loading && musicBrainz?.supported
+                    implicitHeight: childrenRect.height + 20
+
+                    RowLayout {
+                        x: 10
+                        y: 10
+
+                        BusyIndicator {
+                            Layout.preferredWidth: 16
+                            Layout.preferredHeight: 16
+                        }
+
+                        Label {
+                            Layout.fillWidth: true
+                            text: qsTr("Querying MusicBrainz CD Database...")
+                        }
+                    }
+                }
+
+                Layer {
+                    Layout.fillWidth: true
+                    color: layer1.color
+
+                    visible: !musicBrainz?.loading && musicBrainz?.supported && releaseSelectionBox.count > 1
+                    implicitHeight: childrenRect.height + 20
+
+                    ColumnLayout {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.leftMargin: 10
+                        anchors.rightMargin: 10
+                        anchors.topMargin: 10
+
+                        SubtitleLabel {
+                            Layout.fillWidth: true
+                            text: qsTr("Select Correct Album")
+                        }
+
+                        Label {
+                            Layout.fillWidth: true
+                            text: qsTr("More than one match was found on MusicBrainz for this CD. Select the correct album for accurate track information.")
+                            wrapMode: Text.WordWrap
+                        }
+
+                        ComboBox {
+                            id: releaseSelectionBox
+                            Layout.fillWidth: true
+                            model: musicBrainz
+                            textRole: "comboBoxLabel"
+                            valueRole: "releaseId"
+                            currentIndex: indexOfValue(musicBrainz?.selectedReleaseId)
+
+                            onCurrentValueChanged: () => {
+                                musicBrainz.selectMusicbrainzRelease(releaseSelectionBox.currentValue);
+                            }
+
+                            delegate: ItemDelegate {
+                                id: releaseDelegate
+
+                                required property string releaseTitle
+                                required property string releaseDate
+                                required property string releaseBarcode
+                                required property string releaseCountry
+                                required property string releaseId
+
+                                height: delegateLayout.implicitHeight + 20
+                                width: releaseSelectionBox.width
+
+                                ColumnLayout {
+                                    x: 10
+                                    y: 10
+                                    id: delegateLayout
+
+                                    Label {
+                                        text: releaseDelegate.releaseTitle
+                                        font.pointSize: 15
+                                    }
+                                    Label {
+                                        text: `Released: ${releaseDelegate.releaseDate}`
+                                    }
+                                    Label {
+                                        text: `Barcode: ${releaseDelegate.releaseBarcode}`
+                                    }
+                                    Label {
+                                        text: `Country: ${releaseDelegate.releaseCountry}`
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Layer {
+                    Layout.fillWidth: true
+                    color: layer1.color
+
+                    visible: !musicBrainz?.loading && musicBrainz?.supported && releaseSelectionBox.count == 0
+                    implicitHeight: childrenRect.height + 20
+
+                    RowLayout {
+                        x: 10
+                        y: 10
+
+                        Label {
+                            Layout.fillWidth: true
+                            text: qsTr("This CD was not found on the MusicBrainz CD database")
+                        }
+                    }
+                }
             }
+
         }
     }
 

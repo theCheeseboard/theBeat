@@ -28,6 +28,8 @@ struct MusicBrainzClientPrivate {
         QString albumName;
         QList<MusicBrainzClient::MusicBrainzTrack> tracks;
 
+        bool loading = false;
+
 #ifdef HAVE_MUSICBRAINZ
         QString currentReleaseId;
         MusicBrainz5::CReleaseList releases;
@@ -35,7 +37,7 @@ struct MusicBrainzClientPrivate {
 };
 
 MusicBrainzClient::MusicBrainzClient(int firstTrack, int lastTrack, int leadOut, int frameOffsets[99], QObject* parent) :
-    QObject{parent}, d{new MusicBrainzClientPrivate} {
+    QAbstractListModel{parent}, d{new MusicBrainzClientPrivate} {
     QString data;
     data.append(QString::asprintf("%02X", firstTrack));
     data.append(QString::asprintf("%02X", lastTrack));
@@ -71,11 +73,29 @@ int MusicBrainzClient::trackCount() {
     return d->tracks.length();
 }
 
+bool MusicBrainzClient::loading() {
+    return d->loading;
+}
+
+bool MusicBrainzClient::supported() {
+#ifdef HAVE_MUSICBRAINZ
+    return true;
+#else
+    return false;
+#endif
+}
+
+QString MusicBrainzClient::selectedReleaseId() {
+    return d->currentReleaseId;
+}
+
 QCoro::Task<> MusicBrainzClient::loadMusicbrainzData() {
     // Load information from MusicBrainz
 #ifdef HAVE_MUSICBRAINZ
     QPointer<QObject> context = this;
 
+    d->loading = true;
+    emit loadingChanged();
     auto releases = co_await QtConcurrent::run([](QString discId) {
         MusicBrainz5::CQuery query("thebeat-3.0");
         try {
@@ -84,9 +104,14 @@ QCoro::Task<> MusicBrainzClient::loadMusicbrainzData() {
             return MusicBrainz5::CReleaseList{};
         }
     }, d->discId);
+    d->loading = false;
+    emit loadingChanged();
 
     if (!context) co_return;
+
+    this->beginResetModel();
     d->releases = releases;
+    this->endResetModel();
 
     if (d->releases.Count() > 0) {
         selectMusicbrainzRelease(QString::fromStdString(d->releases.Item(0)->ID()));
@@ -99,6 +124,7 @@ QCoro::Task<> MusicBrainzClient::loadMusicbrainzData() {
 QCoro::Task<> MusicBrainzClient::selectMusicbrainzRelease(QString release) {
 #ifdef HAVE_MUSICBRAINZ
     d->currentReleaseId = release;
+    emit selectedReleaseIdChanged();
     d->albumArt = QImage();
     emit albumArtChanged();
 
@@ -169,4 +195,42 @@ QCoro::Task<> MusicBrainzClient::selectMusicbrainzRelease(QString release) {
 #else
     co_return;
 #endif
+}
+
+int MusicBrainzClient::rowCount(const QModelIndex& parent) const {
+    if (parent.isValid()) return 0;
+    return d->releases.Count();
+}
+
+QVariant MusicBrainzClient::data(const QModelIndex& index, int role) const {
+    if (index.parent().isValid()) return {};
+
+    auto release = d->releases.Item(index.row());
+    switch (role) {
+        case ComboBoxLabel:
+            return u"%1 [%2]"_s.arg(QString::fromStdString(release->Title()), QString::fromStdString(release->Country()));
+        case ReleaseTitle:
+            return QString::fromStdString(release->Title());
+        case ReleaseCountry:
+            return QString::fromStdString(release->Country());
+        case ReleaseDate:
+            return QString::fromStdString(release->Date());
+        case ReleaseBarcode:
+            return QString::fromStdString(release->Barcode());
+        case ReleaseId:
+            return QString::fromStdString(release->ID());
+    }
+
+    return {};
+}
+
+QHash<int, QByteArray> MusicBrainzClient::roleNames() const {
+    return {
+        {ComboBoxLabel,  "comboBoxLabel" },
+        {ReleaseTitle,   "releaseTitle"  },
+        {ReleaseCountry, "releaseCountry"},
+        {ReleaseDate,    "releaseDate"   },
+        {ReleaseBarcode, "releaseBarcode"},
+        {ReleaseId,      "releaseId"     }
+    };
 }

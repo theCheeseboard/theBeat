@@ -4,6 +4,7 @@
 #include <QAbstractListModel>
 #include <QCoroTask>
 #include <QWidget>
+#include <musicbrainzclient.h>
 
 class MediaItem;
 class DiskObject;
@@ -11,6 +12,7 @@ struct ParanoiaCdControllerPrivate;
 class ParanoiaCdController : public QAbstractListModel {
         Q_OBJECT
         Q_PROPERTY(QString albumName READ albumName NOTIFY albumNameChanged FINAL)
+        Q_PROPERTY(MusicBrainzClient* musicBrainzClient READ musicBrainzClient NOTIFY musicBrainzClientChanged FINAL)
 
     public:
         explicit ParanoiaCdController(DiskObject* disk, QWidget* parent = nullptr);
@@ -29,18 +31,22 @@ class ParanoiaCdController : public QAbstractListModel {
         };
 
         QString albumName();
+        MusicBrainzClient* musicBrainzClient();
 
         Q_SCRIPTABLE QCoro::Task<> eject();
         Q_SCRIPTABLE MediaItem* mediaItem(int row);
 
     signals:
         void albumNameChanged();
+        void musicBrainzClientChanged();
 
     private:
         ParanoiaCdControllerPrivate* d;
 
         void readCd();
         void feedSink();
+        void setCdTextMetadata();
+        void setupMusicBrainzClient();
 
         // QAbstractItemModel interface
     public:
