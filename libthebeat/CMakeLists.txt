@@ -1,13 +1,9 @@
 project(lib VERSION 1.0.0 LANGUAGES CXX)
 
-set(TAGLIB_ROOT "C:/Program Files (x86)/taglib" CACHE PATH "Path to taglib on Windows")
-
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Multimedia Quick)
 find_package(libcontemporary REQUIRED)
-cntp_find_pkgconfig(tag taglib REQUIRED
-        WIN_FALLBACK_DLL "${TAGLIB_ROOT}/bin/tag.dll"
-        WIN_FALLBACK_IMPLIB "${TAGLIB_ROOT}/lib/tag.lib"
-        WIN_FALLBACK_INCLUDE "${TAGLIB_ROOT}/include")
+find_package(taglib REQUIRED)
+
 cntp_find_pkgconfig(MusicBrainz libmusicbrainz5)
 
 set(SOURCES
@@ -60,7 +56,7 @@ set_target_properties(libthebeat PROPERTIES
         VERSION 1.0.0
         PUBLIC_HEADER "${HEADERS}")
 
-target_link_libraries(libthebeat PUBLIC Qt::Widgets Qt::DBus Qt::Multimedia Qt::Quick libcontemporary PkgConfig::tag)
+target_link_libraries(libthebeat PUBLIC Qt::Widgets Qt::DBus Qt::Multimedia Qt::Quick libcontemporary TagLib::TagLib)
 target_compile_definitions(libthebeat PRIVATE LIBTHEBEAT_LIBRARY)
 
 IF(${MusicBrainz_FOUND})
