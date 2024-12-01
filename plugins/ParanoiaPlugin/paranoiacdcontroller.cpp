@@ -65,8 +65,6 @@ ParanoiaCdController::ParanoiaCdController(DiskObject* disk, QWidget* parent) :
     sinkFeedTimer->start();
 
     StateManager::instance()->sources()->addSource(d->source);
-
-    updateTracks();
 }
 
 ParanoiaCdController::~ParanoiaCdController() {
@@ -131,26 +129,11 @@ void ParanoiaCdController::readCd() {
     }
 }
 
-void ParanoiaCdController::updateTracks() {
-    auto drive = d->disk->interface<BlockInterface>()->drive();
-    // ui->tracksWidget->clear();
-    // for (auto i = 0; i < drive->audioTracks(); i++) {
-    //     QListWidgetItem* item = new QListWidgetItem();
-    //     item->setText(tr("Track %1").arg(i + 1));
-    //     item->setData(Qt::UserRole, i + 1);
-    //     ui->tracksWidget->addItem(item);
-    // }
-}
-
 void ParanoiaCdController::feedSink() {
     while (d->sink->bytesFree() >= 2342 && d->player->isFrameAvailable()) {
         d->sinkOutput->write(d->player->nextFrame(1));
     }
 }
-// void ParanoiaCdController::on_tracksWidget_itemActivated(QListWidgetItem* item) {
-//     int track = item->data(Qt::UserRole).toInt();
-//     StateManager::instance()->playlist()->addItem(new ParanoiaCdPlayback(d->disk->interface<BlockInterface>()->blockName(), track));
-// }
 
 int ParanoiaCdController::rowCount(const QModelIndex& parent) const {
     if (parent.isValid()) return 0;
@@ -169,6 +152,8 @@ QVariant ParanoiaCdController::data(const QModelIndex& index, int role) const {
             return track->artist();
         case AlbumRole:
             return track->album();
+        case TrackRole:
+            return index.row() + 1;
     }
 
     return {};

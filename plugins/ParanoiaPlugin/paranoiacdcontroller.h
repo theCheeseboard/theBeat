@@ -40,7 +40,6 @@ class ParanoiaCdController : public QAbstractListModel {
         ParanoiaCdControllerPrivate* d;
 
         void readCd();
-        void updateTracks();
         void feedSink();
 
         // QAbstractItemModel interface
