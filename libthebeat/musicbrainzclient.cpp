@@ -86,7 +86,11 @@ bool MusicBrainzClient::supported() {
 }
 
 QString MusicBrainzClient::selectedReleaseId() {
+#ifdef HAVE_MUSICBRAINZ
     return d->currentReleaseId;
+#else
+    return "";
+#endif
 }
 
 QCoro::Task<> MusicBrainzClient::loadMusicbrainzData() {
@@ -199,10 +203,16 @@ QCoro::Task<> MusicBrainzClient::selectMusicbrainzRelease(QString release) {
 
 int MusicBrainzClient::rowCount(const QModelIndex& parent) const {
     if (parent.isValid()) return 0;
+
+#ifdef HAVE_MUSICBRAINZ
     return d->releases.Count();
+#else
+    return 0;
+#endif
 }
 
 QVariant MusicBrainzClient::data(const QModelIndex& index, int role) const {
+#ifdef HAVE_MUSICBRAINZ
     if (index.parent().isValid()) return {};
 
     auto release = d->releases.Item(index.row());
@@ -220,6 +230,7 @@ QVariant MusicBrainzClient::data(const QModelIndex& index, int role) const {
         case ReleaseId:
             return QString::fromStdString(release->ID());
     }
+#endif
 
     return {};
 }
