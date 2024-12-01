@@ -4,12 +4,11 @@ set(TAGLIB_ROOT "C:/Program Files (x86)/taglib" CACHE PATH "Path to taglib on Wi
 
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Multimedia Quick)
 find_package(libcontemporary REQUIRED)
-find_package(PkgConfig REQUIRED)
 cntp_find_pkgconfig(tag taglib REQUIRED
         WIN_FALLBACK_DLL "${TAGLIB_ROOT}/bin/tag.dll"
         WIN_FALLBACK_IMPLIB "${TAGLIB_ROOT}/lib/tag.lib"
         WIN_FALLBACK_INCLUDE "${TAGLIB_ROOT}/include")
-pkg_check_modules(MusicBrainz IMPORTED_TARGET libmusicbrainz5)
+cntp_find_pkgconfig(MusicBrainz libmusicbrainz5)
 
 set(SOURCES
         burnbackend.cpp
