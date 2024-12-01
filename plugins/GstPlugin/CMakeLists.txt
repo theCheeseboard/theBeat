@@ -6,6 +6,7 @@ find_package(libthefrisbee)
 pkg_check_modules(gstreamer IMPORTED_TARGET REQUIRED gstreamer-1.0)
 pkg_check_modules(cdio IMPORTED_TARGET libcdio++)
 pkg_check_modules(MusicBrainz IMPORTED_TARGET libmusicbrainz5)
+pkg_check_modules(cdio-paranoia IMPORTED_TARGET libcdio_paranoia)
 
 set(SOURCES
         mediaitem/gstmediaitem.cpp
@@ -45,7 +46,7 @@ qt_add_qml_module(plugin-gst
     SOURCES gsttrackinfo.h gsttrackinfo.cpp
 )
 
-target_link_libraries(plugin-gst PRIVATE Qt::Widgets Qt::DBus PkgConfig::gstreamer libcontemporary libthefrisbee libthebeat)
+target_link_libraries(plugin-gst PRIVATE Qt::Widgets Qt::DBus PkgConfig::gstreamer PkgConfig::cdio-paranoia libcontemporary libthefrisbee libthebeat)
 
 IF(${cdio_FOUND})
     target_link_libraries(plugin-gst PRIVATE PkgConfig::cdio)

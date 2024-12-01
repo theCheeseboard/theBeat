@@ -55,7 +55,7 @@
 <context>
     <name>GstCdController</name>
     <message>
-        <location filename="../gstcdcontroller.cpp" line="30"/>
+        <location filename="../gstcdcontroller.cpp" line="33"/>
         <source>CD</source>
         <translation type="unfinished">CD</translation>
     </message>

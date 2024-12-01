@@ -19,11 +19,10 @@
  * *************************************/
 #include "plugin.h"
 #include "cdmonitor.h"
-#include "mediaitem/gsturlhandler.h"
+// #include "mediaitem/gsturlhandler.h"
 
 #include <QDebug>
 #include <QIcon>
-#include <gst/gst.h>
 #include <pluginmediasource.h>
 #include <sourcemanager.h>
 #include <statemanager.h>
@@ -38,8 +37,6 @@ Plugin::Plugin() {
     d = new PluginPrivate();
 
     int argc = 0;
-    gst_init(&argc, nullptr);
-
     tApplication::addPluginTranslator(CNTP_SHARE_DIR);
 }
 
@@ -48,11 +45,9 @@ Plugin::~Plugin() {
 }
 
 void Plugin::activate() {
-    StateManager::instance()->url()->registerHandler(new GstUrlHandler());
-
-    // d->monitor = new CdMonitor();
+    d->monitor = new CdMonitor();
 }
 
 void Plugin::deactivate() {
-    // d->monitor->deleteLater();
+    d->monitor->deleteLater();
 }

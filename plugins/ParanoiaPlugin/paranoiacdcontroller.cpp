@@ -1,76 +1,96 @@
-#include "gstcdcontroller.h"
+#include "paranoiacdcontroller.h"
 
-#include "gsttrackinfo.h"
-#include "mediaitem/gstcdpluginmediasource.h"
+#include "paranoiacdpluginmediasource.h"
+#include "paranoiamediaitem.h"
+#include "paranoiaplayer.h"
+#include "paranoiatrackinfo.h"
 #include <DriveObjects/blockinterface.h>
 #include <DriveObjects/diskobject.h>
 #include <DriveObjects/driveinterface.h>
-#include <mediaitem/gstcdplayback.h>
+// #include <mediaitem/paranoiacdplayback.h>
 #include <pluginmediasource.h>
 #include <sourcemanager.h>
 #include <statemanager.h>
 
 #include <QAudioSink>
 
-#ifdef HAVE_CDIO
-    #include <cdio++/cdio.hpp>
-    #include <cdio/paranoia/paranoia.h>
-#endif
+#include <cdio++/cdio.hpp>
 
-struct GstCdControllerPrivate {
+struct ParanoiaCdControllerPrivate {
         PluginMediaSource* source;
         DiskObject* disk;
+        ParanoiaPlayer* player = nullptr;
+        QAudioSink* sink = nullptr;
+        QIODevice* sinkOutput = nullptr;
 
         QString albumName;
-        QList<GstTrackInfoPtr> trackInfo;
+        QList<ParanoiaTrackInfoPtr> trackInfo;
+        CdioDevice device;
 };
 
-GstCdController::GstCdController(DiskObject* disk, QWidget* parent) :
+ParanoiaCdController::ParanoiaCdController(DiskObject* disk, QWidget* parent) :
     QAbstractListModel(parent) {
-    d = new GstCdControllerPrivate();
+    d = new ParanoiaCdControllerPrivate();
     d->disk = disk;
 
     d->albumName = tr("CD");
 
-    d->source = new GstCdPluginMediaSource(this);
+    d->source = new ParanoiaCdPluginMediaSource(this);
     d->source->setIcon(QIcon::fromTheme("media-optical-audio"));
 
     auto drive = d->disk->interface<BlockInterface>()->drive();
     for (auto i = 0; i < drive->audioTracks(); i++) {
-        d->trackInfo.append(GstTrackInfoPtr(new GstTrackInfo(i)));
+        d->trackInfo.append(ParanoiaTrackInfoPtr(new ParanoiaTrackInfo(i)));
     }
 
     readCd();
+
+    QAudioFormat format;
+    format.setChannelCount(2);
+    format.setSampleRate(44100);
+    format.setSampleFormat(QAudioFormat::Int16);
+
+    d->sink = new QAudioSink(format, this);
+    d->sinkOutput = d->sink->start();
+    d->sink->suspend();
+    connect(d->player, &ParanoiaPlayer::frameAvailable, this, &ParanoiaCdController::feedSink);
+    connect(d->player, &ParanoiaPlayer::epochChanged, this, [this] {
+        d->sinkOutput = d->sink->start();
+    });
+
+    QTimer* sinkFeedTimer = new QTimer(this);
+    sinkFeedTimer->setTimerType(Qt::PreciseTimer);
+    sinkFeedTimer->setInterval(20);
+    connect(sinkFeedTimer, &QTimer::timeout, this, &ParanoiaCdController::feedSink);
+    sinkFeedTimer->start();
 
     StateManager::instance()->sources()->addSource(d->source);
 
     updateTracks();
 }
 
-GstCdController::~GstCdController() {
+ParanoiaCdController::~ParanoiaCdController() {
     StateManager::instance()->sources()->removeSource(d->source);
     delete d;
 }
 
-QString GstCdController::albumName() {
+QString ParanoiaCdController::albumName() {
     return d->albumName;
 }
 
-QCoro::Task<> GstCdController::eject() {
+QCoro::Task<> ParanoiaCdController::eject() {
     auto drive = d->disk->interface<BlockInterface>()->drive();
     co_await drive->eject();
 }
 
-MediaItem* GstCdController::mediaItem(int row) {
-    return new GstCdPlayback(d->disk->interface<BlockInterface>()->blockName(), row + 1, d->trackInfo.at(row));
+MediaItem* ParanoiaCdController::mediaItem(int row) {
+    return new ParanoiaMediaItem(d->player, row, d->sink, d->trackInfo.at(row));
 }
 
-void GstCdController::readCd() {
-#ifdef HAVE_CDIO
-    CdioDevice device;
-    if (!device.open(d->disk->interface<BlockInterface>()->blockName().toUtf8().constData(), DRIVER_DEVICE)) return;
+void ParanoiaCdController::readCd() {
+    if (!d->device.open(d->disk->interface<BlockInterface>()->blockName().toUtf8().constData(), DRIVER_DEVICE)) return;
 
-    auto cdText = device.getCdtext();
+    auto cdText = d->device.getCdtext();
     QMap<QString, QString> discFields;
     if (cdText) {
         for (auto i = static_cast<cdtext_field_t>(0); i < MAX_CDTEXT_FIELDS; i++) {
@@ -101,41 +121,7 @@ void GstCdController::readCd() {
         }
     }
 
-    auto drive = cdio_cddap_identify_cdio(device.getCdIo(), CDDA_MESSAGE_PRINTIT, nullptr);
-    cdio_cddap_open(drive);
-    // auto drive = cdio_cddap_find_a_cdrom(CDDA_MESSAGE_PRINTIT, nullptr);
-    auto firstSector = cdda_disc_firstsector(drive);
-    cdda_verbose_set(drive, CDDA_MESSAGE_PRINTIT, CDDA_MESSAGE_PRINTIT);
-
-    auto paranoia = cdio_paranoia_init(drive);
-    cdio_paranoia_modeset(paranoia, PARANOIA_MODE_FULL);
-    cdio_paranoia_seek(paranoia, firstSector, SEEK_SET);
-
-    QAudioFormat format;
-    format.setChannelCount(2);
-    format.setSampleRate(44100);
-    format.setSampleFormat(QAudioFormat::Int16);
-
-    QAudioSink sink(format);
-    auto audioOut = sink.start();
-
-    for (auto i = 0; i < 1000; i++) {
-        auto buf = cdio_paranoia_read(paranoia, nullptr);
-        char* psz_err = cdda_errors(drive);
-        char* psz_mes = cdda_messages(drive);
-
-        if (psz_mes || psz_err)
-            printf("%s%s\n", psz_mes ? psz_mes : "", psz_err ? psz_err : "");
-
-        while (sink.bytesFree() < CDIO_CD_FRAMESIZE_RAW);
-        if (!buf) continue;
-        audioOut->write(reinterpret_cast<const char*>(buf), CDIO_CD_FRAMESIZE_RAW);
-
-        free(psz_err);
-        free(psz_mes);
-    }
-
-    cdio_paranoia_free(paranoia);
+    d->player = new ParanoiaPlayer(&d->device, this);
 
     emit dataChanged(index(0), index(rowCount() - 1));
 
@@ -143,10 +129,9 @@ void GstCdController::readCd() {
         d->albumName = discFields.value("TITLE");
         emit albumNameChanged();
     }
-#endif
 }
 
-void GstCdController::updateTracks() {
+void ParanoiaCdController::updateTracks() {
     auto drive = d->disk->interface<BlockInterface>()->drive();
     // ui->tracksWidget->clear();
     // for (auto i = 0; i < drive->audioTracks(); i++) {
@@ -156,18 +141,24 @@ void GstCdController::updateTracks() {
     //     ui->tracksWidget->addItem(item);
     // }
 }
-// void GstCdController::on_tracksWidget_itemActivated(QListWidgetItem* item) {
+
+void ParanoiaCdController::feedSink() {
+    while (d->sink->bytesFree() >= 2342 && d->player->isFrameAvailable()) {
+        d->sinkOutput->write(d->player->nextFrame(1));
+    }
+}
+// void ParanoiaCdController::on_tracksWidget_itemActivated(QListWidgetItem* item) {
 //     int track = item->data(Qt::UserRole).toInt();
-//     StateManager::instance()->playlist()->addItem(new GstCdPlayback(d->disk->interface<BlockInterface>()->blockName(), track));
+//     StateManager::instance()->playlist()->addItem(new ParanoiaCdPlayback(d->disk->interface<BlockInterface>()->blockName(), track));
 // }
 
-int GstCdController::rowCount(const QModelIndex& parent) const {
+int ParanoiaCdController::rowCount(const QModelIndex& parent) const {
     if (parent.isValid()) return 0;
 
     return d->trackInfo.length();
 }
 
-QVariant GstCdController::data(const QModelIndex& index, int role) const {
+QVariant ParanoiaCdController::data(const QModelIndex& index, int role) const {
     if (index.parent().isValid()) return {};
 
     auto track = d->trackInfo.at(index.row());
@@ -183,7 +174,7 @@ QVariant GstCdController::data(const QModelIndex& index, int role) const {
     return {};
 }
 
-QHash<int, QByteArray> GstCdController::roleNames() const {
+QHash<int, QByteArray> ParanoiaCdController::roleNames() const {
     return {
         {PathRole,     "path"    },
         {TitleRole,    "title"   },

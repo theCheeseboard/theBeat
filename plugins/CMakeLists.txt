@@ -11,6 +11,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     add_subdirectory(CdrdaoPlugin)
     add_subdirectory(LinuxIntegration)
     add_subdirectory(GstPlugin)
+    add_subdirectory(ParanoiaPlugin)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
