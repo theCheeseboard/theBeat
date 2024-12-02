@@ -1,0 +1,21 @@
+diff --git a/configure.ac b/configure.ac
+index 5f9f9e78..2fe74107 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -482,14 +482,8 @@ int has_timeout=sizeof(test.timeout);],
+ 	## Cross-platform LFS support in MinGW requires an override of off_t
+ 	if test "x$enable_largefile" != "xno"; then
+ 	  AC_MSG_RESULT([enabling support for large files (_FILE_OFFSET_BITS=64)])
+-          if test "x$MINGW_W64_HEADERS" = "xyes"
+-          then
+-	    LIBCDIO_CFLAGS+=' -D_FILE_OFFSET_BITS=64 '
+-	    LIBISO9660_CFLAGS+=' -D_FILE_OFFSET_BITS=64 '
+-          else
+-	    LIBCDIO_CFLAGS+=' -D_FILE_OFFSET_BITS=64 -D_OFF_T_DEFINED -D_OFF_T_ -D_off_t=off64_t -Doff_t=off64_t'
+-	    LIBISO9660_CFLAGS+=' -D_FILE_OFFSET_BITS=64 -D_OFF_T_DEFINED -D_OFF_T_ -D_off_t=off64_t -Doff_t=off64_t'
+-          fi
++	  LIBCDIO_CFLAGS+=' -D_FILE_OFFSET_BITS=64 '
++	  LIBISO9660_CFLAGS+=' -D_FILE_OFFSET_BITS=64 '
+ 	fi
+ 	joliet_supported="yes"
+ 	if test "x$enable_cdda_player" = "xyes"; then

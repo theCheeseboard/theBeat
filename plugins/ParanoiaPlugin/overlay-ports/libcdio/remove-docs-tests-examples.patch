@@ -1,0 +1,13 @@
+diff --git a/Makefile.am b/Makefile.am
+index 24769c60..76de6dfb 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -40,7 +40,7 @@ EXTRA_DIST = \
+        make-check-filter.rb \
+        package/libcdio.spec.in
+
+-SUBDIRS = doc include lib src test example
++SUBDIRS = include lib src
+
+ # pkg-config(1) related rules
+ pkgconfigdir = $(libdir)/pkgconfig

@@ -1,0 +1,409 @@
+diff --git a/include/cdio/device.h b/include/cdio/device.h
+index af8d4105..a1604b2f 100644
+--- a/include/cdio/device.h
++++ b/include/cdio/device.h
+@@ -173,13 +173,13 @@ extern "C" {
+       A null-terminated (that is DRIVER_UNKNOWN-terminated) ordered (in
+       order of preference) array of drivers.
+   */
+-  extern const driver_id_t cdio_drivers[];
++  LIBCDIO_SCOPE_VAR const driver_id_t cdio_drivers[];
+ 
+   /**
+      A null-terminated (that is DRIVER_UNKNOWN-terminated) ordered (in
+      order of preference) array of device drivers.
+   */
+-  extern const driver_id_t cdio_device_drivers[];
++  LIBCDIO_SCOPE_VAR const driver_id_t cdio_device_drivers[];
+ 
+   /**
+       There will generally be only one hardware for a given
+@@ -187,8 +187,7 @@ extern "C" {
+       below to determine which you've got. If the build doesn't make an
+       hardware driver, then the value will be DRIVER_UNKNOWN.
+   */
+-  extern const driver_id_t cdio_os_driver;
+-
++  LIBCDIO_SCOPE_VAR const driver_id_t cdio_os_driver;
+ 
+   /**
+       The following are status codes for completion of a given cdio
+diff --git a/include/cdio/disc.h b/include/cdio/disc.h
+index e6933ebe..1a21a9ac 100644
+--- a/include/cdio/disc.h
++++ b/include/cdio/disc.h
+@@ -56,7 +56,7 @@ extern "C" {
+     CDIO_DISC_MODE_CD_I         /**< CD-i. */
+   } discmode_t;
+ 
+-  extern const char *discmode2str[];
++  LIBCDIO_SCOPE_VAR const char *discmode2str[];
+ 
+   /**
+     Read cdtext information for a cdtext_t object.
+diff --git a/include/cdio/ecma_167.h b/include/cdio/ecma_167.h
+index 81a12209..d11a3485 100644
+--- a/include/cdio/ecma_167.h
++++ b/include/cdio/ecma_167.h
+@@ -202,12 +202,12 @@ struct vol_struct_desc_s
+ 
+ /* The below const definitions are to faciltate debugging of the
+    values #define'd below. */
+-extern const char VSD_STD_ID_BEA01[sizeof("BEA01")-1];
+-extern const char VSD_STD_ID_BOOT2[sizeof("BOOT2")-1];
+-extern const char VSD_STD_ID_CD001[sizeof("CD001")-1];
+-extern const char VSD_STD_ID_CDW01[sizeof("CDW02")-1];
+-extern const char VSD_STD_ID_NSR03[sizeof("NSR03")-1];
+-extern const char VSD_STD_ID_TEA01[sizeof("TEA01")-1];
++LIBUDF_SCOPE_VAR const char VSD_STD_ID_BEA01[sizeof("BEA01")-1];
++LIBUDF_SCOPE_VAR const char VSD_STD_ID_BOOT2[sizeof("BOOT2")-1];
++LIBUDF_SCOPE_VAR const char VSD_STD_ID_CD001[sizeof("CD001")-1];
++LIBUDF_SCOPE_VAR const char VSD_STD_ID_CDW01[sizeof("CDW02")-1];
++LIBUDF_SCOPE_VAR const char VSD_STD_ID_NSR03[sizeof("NSR03")-1];
++LIBUDF_SCOPE_VAR const char VSD_STD_ID_TEA01[sizeof("TEA01")-1];
+ 
+ #define VSD_STD_ID_BEA01                "BEA01" /**< ECMA-167 2/9.2 */
+ #define VSD_STD_ID_BOOT2                "BOOT2" /**< ECMA-167 2/9.4 */
+diff --git a/include/cdio/iso9660.h b/include/cdio/iso9660.h
+index c653cdb8..87ac2dc5 100644
+--- a/include/cdio/iso9660.h
++++ b/include/cdio/iso9660.h
+@@ -159,7 +159,7 @@ extern enum iso_vd_enum_s {
+ /*! String inside frame which identifies an ISO 9660 filesystem. This
+     string is the "id" field of an iso9660_pvd_t or an iso9660_svd_t.
+ */
+-extern const char ISO_STANDARD_ID[sizeof("CD001")-1];
++LIBISO9660_SCOPE_VAR const char ISO_STANDARD_ID[sizeof("CD001")-1];
+ 
+ #define ISO_STANDARD_ID      "CD001"
+ 
+diff --git a/include/cdio/mmc_util.h b/include/cdio/mmc_util.h
+index 980b4480..74872491 100644
+--- a/include/cdio/mmc_util.h
++++ b/include/cdio/mmc_util.h
+@@ -130,7 +130,7 @@ extern "C" {
+     /**
+        Maps a mmc_sense_key_t into a string name.
+     */
+-    extern const char mmc_sense_key2str[16][40];
++    LIBCDIO_SCOPE_VAR const char mmc_sense_key2str[16][40];
+ 
+     /**
+        The default timeout (non-read) is 6 seconds. 
+diff --git a/include/cdio/sector.h b/include/cdio/sector.h
+index c26fbd10..010aa4f6 100644
+--- a/include/cdio/sector.h
++++ b/include/cdio/sector.h
+@@ -167,7 +167,7 @@
+       
+       /*! String of bytes used to identify the beginning of a Mode 1 or
+           Mode 2 sector. */
+-      extern const uint8_t CDIO_SECTOR_SYNC_HEADER[CDIO_CD_SYNC_SIZE];
++      LIBCDIO_SCOPE_VAR const uint8_t CDIO_SECTOR_SYNC_HEADER[CDIO_CD_SYNC_SIZE];
+       /**<  
+         {0, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0};
+       */
+diff --git a/include/cdio/track.h b/include/cdio/track.h
+index d0ba6002..9bfecd97 100644
+--- a/include/cdio/track.h
++++ b/include/cdio/track.h
+@@ -26,7 +26,7 @@ extern "C" {
+ #endif /* __cplusplus */
+ 
+   /*! Printable tags for track_format_t enumeration.  */
+-  extern const char *track_format2str[6];
++  LIBCDIO_SCOPE_VAR const char *track_format2str[6];
+ 
+   typedef enum  {
+     TRACK_FORMAT_AUDIO,   /**< Audio track, e.g. CD-DA */
+diff --git a/include/cdio/types.h b/include/cdio/types.h
+index fd735786..f01d14f6 100644
+--- a/include/cdio/types.h
++++ b/include/cdio/types.h
+@@ -35,6 +35,24 @@ extern "C" {
+ #include <sys/types.h>
+ #endif
+ 
++#if defined(WIN32) && !defined(__GNUC__) && !defined(LIBCDIO_BUILD)
++#  define LIBCDIO_SCOPE_VAR extern __declspec(dllimport)
++#else
++#  define LIBCDIO_SCOPE_VAR extern
++#endif 
++
++#if defined(WIN32) && !defined(__GNUC__) && !defined(LIBISO9660_BUILD)
++#  define LIBISO9660_SCOPE_VAR extern __declspec(dllimport)
++#else
++#  define LIBISO9660_SCOPE_VAR extern
++#endif 
++
++#if defined(WIN32) && !defined(__GNUC__) && !defined(LIBUDF_BUILD)
++#  define LIBUDF_SCOPE_VAR extern __declspec(dllimport)
++#else
++#  define LIBUDF_SCOPE_VAR extern
++#endif 
++
+ #if defined(AMIGA)
+ typedef u_int8_t uint8_t;
+ typedef u_int16_t uint16_t;
+diff --git a/include/cdio/version.h.in b/include/cdio/version.h.in
+index 1ecc0510..27163be4 100644
+--- a/include/cdio/version.h.in
++++ b/include/cdio/version.h.in
+@@ -4,11 +4,13 @@
+  *  number (@LIBCDIO_VERSION_NUM@) and OS build name.
+  */
+ 
++#include <cdio/types.h>
++
+ /*! CDIO_VERSION is a C-Preprocessor macro of a string that shows what
+     version is used.  cdio_version_string has the same value, but it is a
+     constant variable that can be accessed at run time. */
+ #define CDIO_VERSION "@VERSION@ @build@"
+-extern const char *cdio_version_string; /**< = CDIO_VERSION */
++LIBCDIO_SCOPE_VAR const char *cdio_version_string; /**< = CDIO_VERSION */
+ 
+ /*! LIBCDIO_VERSION_NUM is a C-Preprocessor macro that can be used for
+     testing in the C preprocessor. libcdio_version_num has the same
+@@ -16,4 +18,4 @@ extern const char *cdio_version_string; /**< = CDIO_VERSION */
+     time.  */
+ #define LIBCDIO_VERSION_NUM @LIBCDIO_VERSION_NUM@
+ 
+-extern const unsigned int libcdio_version_num; /**< = LIBCDIO_VERSION_NUM */
++LIBCDIO_SCOPE_VAR const unsigned int libcdio_version_num; /**< = LIBCDIO_VERSION_NUM */
+diff --git a/include/cdio/xa.h b/include/cdio/xa.h
+index c9e091f0..e6d54a76 100644
+--- a/include/cdio/xa.h
++++ b/include/cdio/xa.h
+@@ -71,7 +71,7 @@ extern "C" {
+     XA_FORM2_FILE =  (XA_ATTR_MODE2FORM2 | XA_PERM_ALL_ALL)
+   } xa_misc_enum_t;
+   
+-extern const char ISO_XA_MARKER_STRING[sizeof("CD-XA001")-1];
++LIBISO9660_SCOPE_VAR const char ISO_XA_MARKER_STRING[sizeof("CD-XA001")-1];
+ 
+ #define ISO_XA_MARKER_STRING    "CD-XA001"
+ 
+diff --git a/lib/driver/Makefile.am b/lib/driver/Makefile.am
+index 4254fb95..677ceac3 100644
+--- a/lib/driver/Makefile.am
++++ b/lib/driver/Makefile.am
+@@ -109,7 +109,7 @@ libcdio_la_LIBADD  = $(LTLIBICONV)
+ libcdio_la_SOURCES = $(libcdio_sources)
+ libcdio_la_ldflags = -version-info $(libcdio_la_CURRENT):$(libcdio_la_REVISION):$(libcdio_la_AGE) @LT_NO_UNDEFINED@ $(DARWIN_PKG_LIB_HACK)
+ 
+-AM_CPPFLAGS = $(LIBCDIO_CFLAGS)
++AM_CPPFLAGS = $(LIBCDIO_CFLAGS) -DLIBCDIO_BUILD
+ 
+ ########################################################
+ # Things to version the symbols in the libraries
+diff --git a/lib/driver/device.c b/lib/driver/device.c
+index 547de58f..6d26900c 100644
+--- a/lib/driver/device.c
++++ b/lib/driver/device.c
+@@ -59,21 +59,21 @@
+ int CdIo_last_driver = CDIO_DRIVER_UNINIT;
+ 
+ #ifdef HAVE_AIX_CDROM
+-const driver_id_t cdio_os_driver = DRIVER_AIX;
++extern const driver_id_t cdio_os_driver = DRIVER_AIX;
+ #elif  defined(HAVE_FREEBSD_CDROM)
+-const driver_id_t cdio_os_driver = DRIVER_FREEBSD;
++extern const driver_id_t cdio_os_driver = DRIVER_FREEBSD;
+ #elif  defined(HAVE_LINUX_CDROM)
+-const driver_id_t cdio_os_driver = DRIVER_LINUX;
++extern const driver_id_t cdio_os_driver = DRIVER_LINUX;
+ #elif  defined(HAVE_NETBSD_CDROM)
+-const driver_id_t cdio_os_driver = DRIVER_NETBSD;
++extern const driver_id_t cdio_os_driver = DRIVER_NETBSD;
+ #elif  defined(HAVE_DARWIN_CDROM)
+-const driver_id_t cdio_os_driver = DRIVER_OSX;
++extern const driver_id_t cdio_os_driver = DRIVER_OSX;
+ #elif  defined(HAVE_SOLARIS_CDROM)
+-const driver_id_t cdio_os_driver = DRIVER_SOLARIS;
++extern const driver_id_t cdio_os_driver = DRIVER_SOLARIS;
+ #elif  defined(HAVE_WIN32_CDROM)
+-const driver_id_t cdio_os_driver = DRIVER_WIN32;
++extern const driver_id_t cdio_os_driver = DRIVER_WIN32;
+ #else
+-const driver_id_t cdio_os_driver = DRIVER_UNKNOWN;
++extern const driver_id_t cdio_os_driver = DRIVER_UNKNOWN;
+ #endif
+ 
+ /** The below variables are trickery to force enum symbol values to be
+diff --git a/lib/driver/sector.c b/lib/driver/sector.c
+index ebfb4dc3..d17f7ffb 100644
+--- a/lib/driver/sector.c
++++ b/lib/driver/sector.c
+@@ -39,7 +39,7 @@
+ 
+ /*! String of bytes used to identify the beginning of a Mode 1 or
+   Mode 2 sector. */
+-const uint8_t CDIO_SECTOR_SYNC_HEADER[CDIO_CD_SYNC_SIZE] =
++extern const uint8_t CDIO_SECTOR_SYNC_HEADER[CDIO_CD_SYNC_SIZE] =
+   {0, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0};
+ 
+ /* Variables to hold debugger-helping enumerations */
+diff --git a/lib/driver/util.c b/lib/driver/util.c
+index 5108457e..6c35bf79 100644
+--- a/lib/driver/util.c
++++ b/lib/driver/util.c
+@@ -178,8 +178,8 @@ cdio_from_bcd8(uint8_t p)
+   return (0xf & p)+(10*(p >> 4));
+ }
+ 
+-const char *cdio_version_string = CDIO_VERSION;
+-const unsigned int libcdio_version_num = LIBCDIO_VERSION_NUM;
++extern const char *cdio_version_string = CDIO_VERSION;
++extern const unsigned int libcdio_version_num = LIBCDIO_VERSION_NUM;
+ 
+ 
+ /*
+diff --git a/lib/iso9660/Makefile.am b/lib/iso9660/Makefile.am
+index b80cc90f..25d3efa6 100644
+--- a/lib/iso9660/Makefile.am
++++ b/lib/iso9660/Makefile.am
+@@ -67,7 +67,7 @@ libiso9660_la_LIBADD = @LIBCDIO_LIBS@
+ libiso9660_la_ldflags = -version-info $(libiso9660_la_CURRENT):$(libiso9660_la_REVISION):$(libiso9660_la_AGE) @LT_NO_UNDEFINED@
+ libiso9660_la_dependencies = $(top_builddir)/lib/driver/libcdio.la
+ 
+-AM_CPPFLAGS = $(LIBCDIO_CFLAGS)
++AM_CPPFLAGS = -DLIBISO9660_BUILD $(LIBCDIO_CFLAGS)
+ 
+ ########################################################
+ # Things to version the symbols in the libraries
+diff --git a/lib/iso9660/iso9660.c b/lib/iso9660/iso9660.c
+index bb514d95..6f03235a 100644
+--- a/lib/iso9660/iso9660.c
++++ b/lib/iso9660/iso9660.c
+@@ -22,7 +22,7 @@
+     Note should come *before* #include <cdio/iso9660.h> which does
+     a #define of this name.
+ */
+-const char ISO_STANDARD_ID[] = {'C', 'D', '0', '0', '1'};
++extern const char ISO_STANDARD_ID[] = {'C', 'D', '0', '0', '1'};
+ 
+ /* Private headers */
+ #include "iso9660_private.h"
+diff --git a/lib/iso9660/xa.c b/lib/iso9660/xa.c
+index 93bf634e..1a1f5939 100644
+--- a/lib/iso9660/xa.c
++++ b/lib/iso9660/xa.c
+@@ -34,7 +34,7 @@
+     come *before* public headers which does a #define of
+     this name.
+ */
+-const char ISO_XA_MARKER_STRING[] = {'C', 'D', '-', 'X', 'A', '0', '0', '1'};
++extern const char ISO_XA_MARKER_STRING[] = {'C', 'D', '-', 'X', 'A', '0', '0', '1'};
+ 
+ /* Public headers */
+ #include <cdio/iso9660.h>
+diff --git a/lib/udf/Makefile.am b/lib/udf/Makefile.am
+index 1d752eb2..3ed2b2a2 100644
+--- a/lib/udf/Makefile.am
++++ b/lib/udf/Makefile.am
+@@ -54,4 +54,4 @@ libudf_la_SOURCES = udf.c udf_file.c udf_fs.c udf_time.c filemode.c
+ 
+ libudf_la_LIBADD = @LIBCDIO_LIBS@ @LT_NO_UNDEFINED@
+ 
+-AM_CPPFLAGS = $(LIBCDIO_CFLAGS)
++AM_CPPFLAGS = -DLIBUDF_BUILD $(LIBCDIO_CFLAGS)
+diff --git a/lib/udf/udf_fs.c b/lib/udf/udf_fs.c
+index c692bfb9..e135d6ad 100644
+--- a/lib/udf/udf_fs.c
++++ b/lib/udf/udf_fs.c
+@@ -65,12 +65,12 @@
+    have to come *before* #include <cdio/ecma_167.h> which sets
+    #defines for these.
+ */
+-const char VSD_STD_ID_BEA01[] = {'B', 'E', 'A', '0', '1'};
+-const char VSD_STD_ID_BOOT2[] = {'B', 'O', 'O', 'T', '2'};
+-const char VSD_STD_ID_CD001[] = {'C', 'D', '0', '0', '1'};
+-const char VSD_STD_ID_CDW01[] = {'C', 'D', 'W', '0', '2'};
+-const char VSD_STD_ID_NSR03[] = {'N', 'S', 'R', '0', '3'};
+-const char VSD_STD_ID_TEA01[] = {'T', 'E', 'A', '0', '1'};
++extern const char VSD_STD_ID_BEA01[] = {'B', 'E', 'A', '0', '1'};
++extern const char VSD_STD_ID_BOOT2[] = {'B', 'O', 'O', 'T', '2'};
++extern const char VSD_STD_ID_CD001[] = {'C', 'D', '0', '0', '1'};
++extern const char VSD_STD_ID_CDW01[] = {'C', 'D', 'W', '0', '2'};
++extern const char VSD_STD_ID_NSR03[] = {'N', 'S', 'R', '0', '3'};
++extern const char VSD_STD_ID_TEA01[] = {'T', 'E', 'A', '0', '1'};
+ 
+ #include <cdio/bytesex.h>
+ #include <cdio/utf8.h>
+diff --git a/src/cdinfo-linux.c b/src/cdinfo-linux.c
+index 6ff8e940..61c4b10b 100644
+--- a/src/cdinfo-linux.c
++++ b/src/cdinfo-linux.c
+@@ -3,7 +3,7 @@
+ 
+   Copyright (C) 2003,2008 Rocky Bernstein <rocky@gnu.org>
+   Copyright (C) 1996,1997,1998  Gerd Knorr <kraxel@bytesex.org>
+-        and Heiko Eißfeldt <heiko@hexco.de>
++        and Heiko Eiï¿½feldt <heiko@hexco.de>
+ 
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+@@ -217,15 +217,15 @@ int                        num_audio = 0;              /* # of audio tracks */
+ char *devname = NULL;
+ char *program_name;
+ 
+-const char *argp_program_version     = PROGRAM_NAME CDINFO_VERSION;
+-const char *argp_program_bug_address = "rocky@gnu.org";
++extern const char *argp_program_version     = PROGRAM_NAME CDINFO_VERSION;
++extern const char *argp_program_bug_address = "rocky@gnu.org";
+ 
+ /* Program documentation. */
+ const char doc[] = 
+   PROGRAM_NAME " -- Get information about a Compact Disk or CD image.";
+ 
+ /* A description of the arguments we accept. */
+-const char args_doc[] = "[DEVICE or DISK-IMAGE]";
++extern const char args_doc[] = "[DEVICE or DISK-IMAGE]";
+ 
+ static struct argp_option options[] =
+ {
+@@ -295,7 +295,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
+ static void
+ print_version (void)
+ {
+-  printf( _("CD Info %s | (c) 2003 Gerd Knorr, Heiko Eißfeldt & R. Bernstein\n\
++  printf( _("CD Info %s | (c) 2003 Gerd Knorr, Heiko Eiï¿½feldt & R. Bernstein\n\
+ This is free software; see the source for copying conditions.\n\
+ There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A\n\
+ PARTICULAR PURPOSE.\n\
+diff --git a/test/driver/helper.c b/test/driver/helper.c
+index 37aecfb4..7e8e4f11 100644
+--- a/test/driver/helper.c
++++ b/test/driver/helper.c
+@@ -34,10 +34,10 @@ unsigned int info_msg_count=0;
+ unsigned int debug_msg_count=0;
+ unsigned int warn_msg_count=0;
+ unsigned int error_msg_count=0;
+-const char *info_messages[6] = {NULL, NULL, NULL, NULL, NULL, NULL};
+-const char *debug_messages[6] = {NULL, NULL, NULL, NULL, NULL, NULL};
+-const char *warn_messages[6] = {NULL, NULL, NULL, NULL, NULL, NULL};
+-const char *error_messages[6] = {NULL, NULL, NULL, NULL, NULL, NULL};
++extern const char *info_messages[6] = {NULL, NULL, NULL, NULL, NULL, NULL};
++extern const char *debug_messages[6] = {NULL, NULL, NULL, NULL, NULL, NULL};
++extern const char *warn_messages[6] = {NULL, NULL, NULL, NULL, NULL, NULL};
++extern const char *error_messages[6] = {NULL, NULL, NULL, NULL, NULL, NULL};
+ 
+ void 
+ assert_equal_int(int expect, int got, const char *msg)
+diff --git a/test/driver/helper.h b/test/driver/helper.h
+index cffd303e..3b4b52da 100644
+--- a/test/driver/helper.h
++++ b/test/driver/helper.h
+@@ -27,9 +27,9 @@ void log_handler(cdio_log_level_t level, const char message[]);
+ extern unsigned int info_msg_count;
+ extern unsigned int debug_msg_count;
+ extern unsigned int warn_msg_count;
+-extern const char *info_messages[6];
+-extern const char *debug_messages[6];
+-extern const char *warn_messages[6];
++LIBCDIO_SCOPE_VAR const char *info_messages[6];
++LIBCDIO_SCOPE_VAR const char *debug_messages[6];
++LIBCDIO_SCOPE_VAR const char *warn_messages[6];
+ extern void assert_equal_int(int expect, int got, const char *msg);
+ extern void reset_counts(void);
+ extern void assert_warn(const char *msg);

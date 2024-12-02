@@ -1,0 +1,30 @@
+diff --git a/include/cdio/types.h b/include/cdio/types.h
+index fd735786..28a215df 100644
+--- a/include/cdio/types.h
++++ b/include/cdio/types.h
+@@ -55,7 +55,12 @@ typedef uint8_t ubyte;
+    unistd.h that defines them. Such a file is provided with
+    the libcdio source, in the MSVC/missing directory */
+ #if defined(_MSC_VER)
+-#include <unistd.h>
++
++#include <BaseTsd.h>
++typedef SSIZE_T ssize_t;
++
++typedef unsigned short mode_t;
++
+ #endif
+ 
+   /* default HP/UX macros are broken */
+diff --git a/lib/driver/MSWindows/aspi32.c b/lib/driver/MSWindows/aspi32.c
+index 20ec8c36..4beecae2 100644
+--- a/lib/driver/MSWindows/aspi32.c
++++ b/lib/driver/MSWindows/aspi32.c
+@@ -41,7 +41,6 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <errno.h>
+-#include <unistd.h>
+ #include <fcntl.h>
+ 
+ #include <windows.h>

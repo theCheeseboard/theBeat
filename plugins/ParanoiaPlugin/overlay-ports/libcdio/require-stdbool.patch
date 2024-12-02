@@ -1,0 +1,56 @@
+diff --git a/configure.ac b/configure.ac
+index d57bdbec..8186827c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -194,7 +194,8 @@ AC_DEFINE(LIBCDIO_CONFIG_H, 1,
+ dnl headers
+ 
+ AC_HEADER_STDC
+-AC_CHECK_HEADERS(alloca.h errno.h fcntl.h glob.h limits.h pwd.h stdbool.h)
++AC_CHECK_HEADERS(stdbool.h, [], [AC_MSG_ERROR(["Couldn't find or include stdbool.h"])])
++AC_CHECK_HEADERS(alloca.h errno.h fcntl.h glob.h limits.h pwd.h)
+ AC_CHECK_HEADERS(stdarg.h stdbool.h stdio.h sys/cdio.h sys/param.h \
+ 		 sys/time.h sys/timeb.h sys/utsname.h)
+ AC_STRUCT_TIMEZONE
+diff --git a/include/cdio/types.h b/include/cdio/types.h
+index fd735786..dc0f90cf 100644
+--- a/include/cdio/types.h
++++ b/include/cdio/types.h
+@@ -27,6 +27,8 @@
+ 
+ #ifdef __cplusplus
+ extern "C" {
++#else
++# include <stdbool.h>
+ #endif /* __cplusplus */
+ 
+ /* If <sys/types.h> is not available on your platform please
+@@ -103,27 +105,6 @@ typedef uint8_t ubyte;
+ # endif
+ #endif
+ 
+-#ifndef __cplusplus
+-
+-/* All the stdbool.h seem to define those */
+-#ifndef __bool_true_false_are_defined
+-#define __bool_true_false_are_defined 1
+-
+-#undef bool
+-#undef true
+-#undef false
+-
+-#ifdef _Bool
+-#define bool _Bool
+-#else
+-#define bool unsigned char
+-#endif
+-#define true 1
+-#define false 0
+-
+-#endif /* __bool_true_false_are_defined */
+-#endif /*C++*/
+-
+   /* some GCC optimizations -- gcc 2.5+ */
+ 
+ #if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
+ 

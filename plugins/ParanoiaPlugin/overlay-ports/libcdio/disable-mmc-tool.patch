@@ -1,0 +1,41 @@
+diff --git a/configure.ac b/configure.ac
+index 5f9f9e78..4d53f351 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -66,6 +66,11 @@ AC_ARG_WITH(iso-read,
+ 	AC_HELP_STRING([--without-iso-read], [don't build program iso-read (default with)]),
+ enable_iso_read="${withval}", enable_iso_read=yes)
+ 
++AC_ARG_WITH(mmc-tool,
++	AC_HELP_STRING([--without-mmc-tool], [don't build program mmc-tool (default with)]),
++enable_mmc_tool="${withval}", enable_mmc_tool=yes)
++
++
+ AC_ARG_WITH(versioned-libs,
+ 	AC_HELP_STRING([--without-versioned-libs], [build versioned library symbols (default enabled if you have GNU ld)]),
+ enable_versioned_libs="${withval}", enable_versioned_libs=yes)
+@@ -320,6 +325,7 @@ AM_CONDITIONAL(BUILD_CDINFO, test "x$enable_cd_info" = "xyes")
+ AM_CONDITIONAL(BUILD_CD_READ, test "x$enable_cd_read" = "xyes")
+ AM_CONDITIONAL(BUILD_ISO_INFO, test "x$enable_iso_info" = "xyes")
+ AM_CONDITIONAL(BUILD_ISO_READ, test "x$enable_iso_read" = "xyes")
++AM_CONDITIONAL(BUILD_MMC_TOOL, test "x$enable_mmc_tool" = "xyes")
+ AM_CONDITIONAL(BUILD_CDINFO_LINUX, test "x$enable_cd_info_linux" = "xyes")
+ AM_CONDITIONAL(BUILD_CDIOTEST, test "x$enable_cdiotest" = "xyes")
+ AM_CONDITIONAL(BUILD_VERSIONED_LIBS, test "x$enable_versioned_libs" = "xyes")
+diff --git a/src/Makefile.am b/src/Makefile.am
+index dcea939f..c6b46b09 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -81,10 +81,12 @@ man_iso_read     = iso-read.1
+ check_programs  += iso-read
+ endif
+ 
++if BUILD_MMC_TOOL
+ mmc_tool_SOURCES = mmc-tool.c util.c util.h $(GETOPT_C)
+ mmc_tool_LDADD   = $(LIBISO9660_LIBS) $(LIBCDIO_LIBS) $(LTLIBICONV)
+ bin_mmc_tool     = mmc-tool
+ check_programs  += mmc-tool
++endif
+ 
+ bin_PROGRAMS = $(bin_cd_drive) $(bin_cd_info)  $(bin_cdinfo_linux) $(bin_cd_read) $(bin_iso_info) $(bin_iso_read) $(bin_cdda_player) $(bin_mmc_tool)
+ 
