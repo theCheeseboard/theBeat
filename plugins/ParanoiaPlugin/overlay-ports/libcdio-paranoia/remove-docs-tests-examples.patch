@@ -1,0 +1,13 @@
+diff --git a/Makefile.am b/Makefile.am
+index 1a3016e..c43cefb 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -20,7 +20,7 @@ EXTRA_DIST = \
+ 	$(wildcard test/data/*.iso) \
+ 	$(wildcard test/*.right)
+ 
+-SUBDIRS = doc include lib src test example
++SUBDIRS = include lib
+ 
+ paranoiapcs = libcdio_paranoia.pc libcdio_cdda.pc
+ 

@@ -1,0 +1,14 @@
+diff --git a/lib/paranoia/paranoia.c b/lib/paranoia/paranoia.c
+index 4175723..6eb2d3f 100644
+--- a/lib/paranoia/paranoia.c
++++ b/lib/paranoia/paranoia.c
+@@ -94,7 +94,9 @@
+ #ifdef HAVE_STDLIB_H
+ #include <stdlib.h>
+ #endif
++#ifdef HAVE_UNISTD_H
+ #include <unistd.h>
++#endif
+ #include <stdio.h>
+ #include <limits.h>
+ #ifdef HAVE_STRING_H

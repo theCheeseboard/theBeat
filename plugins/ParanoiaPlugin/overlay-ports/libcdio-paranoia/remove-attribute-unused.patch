@@ -1,0 +1,40 @@
+diff --git a/lib/cdda_interface/utils.c b/lib/cdda_interface/utils.c
+index 9aed89d..eca5a9e 100644
+--- a/lib/cdda_interface/utils.c
++++ b/lib/cdda_interface/utils.c
+@@ -31,7 +31,7 @@
+ void
+ cderror(cdrom_drive_t *d,const char *s)
+ {
+-  ssize_t bytes_ret __attribute__((unused));
++  ssize_t bytes_ret;
+   if(s && d){
+     switch(d->errordest){
+     case CDDA_MESSAGE_PRINTIT:
+@@ -52,7 +52,7 @@ cderror(cdrom_drive_t *d,const char *s)
+ void
+ cdmessage(cdrom_drive_t *d, const char *s)
+ {
+-  ssize_t bytes_ret __attribute__((unused));
++  ssize_t bytes_ret;
+   if(s && d){
+     switch(d->messagedest){
+     case CDDA_MESSAGE_PRINTIT:
+@@ -87,7 +87,7 @@ idperror(int messagedest,char **messages,const char *f,
+     }
+ 
+   if(buffer){
+-    ssize_t bytes_ret __attribute__((unused));
++    ssize_t bytes_ret;
+     switch(messagedest){
+     case CDDA_MESSAGE_PRINTIT:
+       bytes_ret = write(STDERR_FILENO,buffer,strlen(buffer));
+@@ -121,7 +121,7 @@ idmessage(int messagedest,char **messages,const char *f,
+ {
+   char *buffer;
+   int malloced=0;
+-  ssize_t bytes_ret __attribute__((unused));
++  ssize_t bytes_ret;
+   if(!f)
+     buffer=(char *)s;
+   else

@@ -1,0 +1,15 @@
+diff --git a/lib/cdda_interface/utils.c b/lib/cdda_interface/utils.c
+index 9aed89d..d6c276b 100644
+--- a/lib/cdda_interface/utils.c
++++ b/lib/cdda_interface/utils.c
+@@ -26,6 +26,10 @@
+ # include <sys/time.h>
+ #endif
+ 
++#ifndef STDERR_FILENO
++#define STDERR_FILENO _fileno(stderr)
++#endif
++
+ #include "common_interface.h"
+ #include "utils.h"
+ void
