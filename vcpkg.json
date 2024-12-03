@@ -1,0 +1,10 @@
+{
+  "dependencies": [
+    "libcdio",
+    "libcdio-paranoia",
+    {
+      "name": "pkgconf",
+      "host": true
+    }
+  ]
+}

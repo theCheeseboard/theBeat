@@ -2,7 +2,8 @@ project(lib VERSION 1.0.0 LANGUAGES CXX)
 
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets DBus)
 find_package(libcontemporary)
-find_package(libthefrisbee)
+
+find_package(PkgConfig REQUIRED)
 pkg_check_modules(cdio IMPORTED_TARGET libcdio++)
 pkg_check_modules(MusicBrainz IMPORTED_TARGET libmusicbrainz5)
 pkg_check_modules(cdio-paranoia IMPORTED_TARGET libcdio_paranoia)

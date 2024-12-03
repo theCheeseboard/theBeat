@@ -1,6 +1,0 @@
-{
-  "dependencies": [
-    "libcdio",
-    "libcdio-paranoia"
-  ]
-}
