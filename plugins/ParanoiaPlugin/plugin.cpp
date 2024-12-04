@@ -27,7 +27,7 @@
 #include <tapplication.h>
 #include <urlmanager.h>
 
-#ifdef HAVE_FRISBEE
+#ifdef HAVE_THEFRISBEE
     #include "cdmonitor.h"
     #define MONITOR_TYPE CdMonitor
 #endif
@@ -38,7 +38,7 @@
 #endif
 
 struct PluginPrivate {
-    MONITOR_TYPE* monitor;
+        MONITOR_TYPE* monitor;
 };
 
 Plugin::Plugin() {
