@@ -166,6 +166,11 @@ void ParanoiaPlayerWorker::tryReadNextFrame() {
         {
             QMutexLocker locker(&d->framesMutex);
             if (thisEpoch != d->epoch) return;
+            if (!buf) {
+                // Couldn't read anything - bail out now
+                d->reading = false;
+                return;
+            }
             d->frames.enqueue(QByteArray(reinterpret_cast<const char*>(buf), CDIO_CD_FRAMESIZE_RAW));
         }
 
