@@ -4,13 +4,11 @@
 #include "paranoiamediaitem.h"
 #include "paranoiaplayer.h"
 #include "paranoiatrackinfo.h"
-#include <DriveObjects/blockinterface.h>
-#include <DriveObjects/diskobject.h>
-#include <DriveObjects/driveinterface.h>
 // #include <mediaitem/paranoiacdplayback.h>
 #include <musicbrainzclient.h>
 #include <pluginmediasource.h>
 #include <sourcemanager.h>
+#include <QTimer>
 #include <statemanager.h>
 
 #include <QAudioSink>
@@ -19,34 +17,29 @@
 #include <cdio++/cdio.hpp>
 
 struct ParanoiaCdControllerPrivate {
-        PluginMediaSource* source;
-        DiskObject* disk;
-        ParanoiaPlayer* player = nullptr;
-        QAudioSink* sink = nullptr;
-        QIODevice* sinkOutput = nullptr;
-        MusicBrainzClient* musicBrainzClient = nullptr;
+    PluginMediaSource* source;
+    ParanoiaPlayer* player = nullptr;
+    QAudioSink* sink = nullptr;
+    QIODevice* sinkOutput = nullptr;
+    MusicBrainzClient* musicBrainzClient = nullptr;
 
-        QString albumName;
-        QList<ParanoiaTrackInfoPtr> trackInfo;
-        CdioDevice device;
+    QString albumName;
+    QList<ParanoiaTrackInfoPtr> trackInfo;
+    CdioDevice device;
 };
 
-ParanoiaCdController::ParanoiaCdController(DiskObject* disk, QWidget* parent) :
+ParanoiaCdController::ParanoiaCdController(QString deviceDescriptor, QWidget* parent) :
     QAbstractListModel(parent) {
     d = new ParanoiaCdControllerPrivate();
-    d->disk = disk;
 
     d->albumName = tr("CD");
 
     d->source = new ParanoiaCdPluginMediaSource(this);
     d->source->setIcon(QIcon::fromTheme("media-optical-audio"));
 
-    auto drive = d->disk->interface<BlockInterface>()->drive();
-    for (auto i = 0; i < drive->audioTracks(); i++) {
-        d->trackInfo.append(ParanoiaTrackInfoPtr(new ParanoiaTrackInfo(i)));
+    if (d->device.open(deviceDescriptor.toUtf8().constData(), DRIVER_DEVICE)) {
+        readCd();
     }
-
-    readCd();
 
     QAudioFormat format;
     format.setChannelCount(2);
@@ -58,7 +51,9 @@ ParanoiaCdController::ParanoiaCdController(DiskObject* disk, QWidget* parent) :
     d->sink->suspend();
     connect(d->player, &ParanoiaPlayer::frameAvailable, this, &ParanoiaCdController::feedSink);
     connect(d->player, &ParanoiaPlayer::epochChanged, this, [this] {
-        d->sinkOutput = d->sink->start();
+        if (d->sink->state() != QAudio::SuspendedState) {
+            d->sinkOutput = d->sink->start();
+        }
     });
 
     QTimer* sinkFeedTimer = new QTimer(this);
@@ -84,8 +79,10 @@ MusicBrainzClient* ParanoiaCdController::musicBrainzClient() {
 }
 
 QCoro::Task<> ParanoiaCdController::eject() {
-    auto drive = d->disk->interface<BlockInterface>()->drive();
-    co_await drive->eject();
+    // auto drive = d->disk->interface<BlockInterface>()->drive();
+    // co_await drive->eject();
+    d->device.ejectMedia();
+    co_return;
 }
 
 MediaItem* ParanoiaCdController::mediaItem(int row) {
@@ -95,7 +92,14 @@ MediaItem* ParanoiaCdController::mediaItem(int row) {
 }
 
 void ParanoiaCdController::readCd() {
-    if (!d->device.open(d->disk->interface<BlockInterface>()->blockName().toUtf8().constData(), DRIVER_DEVICE)) return;
+    // if (!d->device.open(d->disk->interface<BlockInterface>()->blockName().toUtf8().constData(), DRIVER_DEVICE)) return;
+
+    auto firstTrack = d->device.getFirstTrackNum();
+    auto lastTrack = d->device.getLastTrackNum();
+    // auto drive = d->disk->interface<BlockInterface>()->drive();
+    for (auto i = firstTrack; i <= lastTrack; i++) {
+        d->trackInfo.append(ParanoiaTrackInfoPtr(new ParanoiaTrackInfo(i - 1)));
+    }
 
     this->setCdTextMetadata();
     d->player = new ParanoiaPlayer(&d->device, this);
@@ -127,7 +131,7 @@ void ParanoiaCdController::readCd() {
 }
 
 void ParanoiaCdController::feedSink() {
-    while (d->sink->bytesFree() >= 2342 && d->player->isFrameAvailable()) {
+    while (d->sink->bytesFree() >= 2342 && d->player->isFrameAvailable() && d->sink->state() != QAudio::SuspendedState) {
         d->sinkOutput->write(d->player->nextFrame(1));
     }
 }

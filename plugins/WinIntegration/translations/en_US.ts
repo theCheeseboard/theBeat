@@ -2,27 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>CdChecker</name>
-    <message>
-        <location filename="../cdplayback/cdchecker.cpp" line="86"/>
-        <source>CD</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TrackInfo</name>
-    <message>
-        <location filename="../cdplayback/trackinfo.cpp" line="39"/>
-        <source>Track %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cdplayback/trackinfo.cpp" line="40"/>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>WinBurnJob</name>
     <message>
         <location filename="../burn/winburnjob.cpp" line="143"/>

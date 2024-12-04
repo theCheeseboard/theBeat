@@ -4,10 +4,10 @@
 #include <QAbstractListModel>
 #include <QCoroTask>
 #include <QWidget>
+#include <cdio++/cdio.hpp>
 #include <musicbrainzclient.h>
 
 class MediaItem;
-class DiskObject;
 struct ParanoiaCdControllerPrivate;
 class ParanoiaCdController : public QAbstractListModel {
         Q_OBJECT
@@ -15,7 +15,7 @@ class ParanoiaCdController : public QAbstractListModel {
         Q_PROPERTY(MusicBrainzClient* musicBrainzClient READ musicBrainzClient NOTIFY musicBrainzClientChanged FINAL)
 
     public:
-        explicit ParanoiaCdController(DiskObject* disk, QWidget* parent = nullptr);
+        explicit ParanoiaCdController(QString deviceDescriptor, QWidget* parent = nullptr);
         ~ParanoiaCdController();
 
         enum Roles {

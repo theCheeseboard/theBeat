@@ -8,7 +8,7 @@
 #include <statemanager.h>
 
 struct CdMonitorPrivate {
-        QMap<DiskObject*, ParanoiaCdController*> panes;
+    QMap<DiskObject*, ParanoiaCdController*> panes;
 };
 
 CdMonitor::CdMonitor(QObject* parent) :
@@ -18,7 +18,7 @@ CdMonitor::CdMonitor(QObject* parent) :
     for (auto drive : DriveObjectManager::drives()) {
         connect(drive, &DriveInterface::changed, this, &CdMonitor::updateDisks);
     }
-    connect(DriveObjectManager::instance(), &DriveObjectManager::driveAdded, this, [this](DriveInterface* drive) {
+    connect(DriveObjectManager::instance(), &DriveObjectManager::driveAdded, this, [this](DriveInterface * drive) {
         connect(drive, &DriveInterface::changed, this, &CdMonitor::updateDisks);
     });
     QTimer::singleShot(0, this, &CdMonitor::updateDisks);
@@ -37,7 +37,7 @@ void CdMonitor::updateDisks() {
         if (drive->audioTracks() == 0) continue;
 
         if (!d->panes.contains(disk)) {
-            auto widget = new ParanoiaCdController(disk);
+            auto widget = new ParanoiaCdController(disk->interface<BlockInterface>()->blockName());
             d->panes.insert(disk, widget);
         }
 

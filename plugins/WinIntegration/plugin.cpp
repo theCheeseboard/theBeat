@@ -24,7 +24,6 @@
 #include <QMainWindow>
 #include <statemanager.h>
 
-#include "cdplayback/diskwatcher.h"
 #include "burn/winburnmanager.h"
 #include "smtcintegration.h"
 
@@ -42,7 +41,7 @@ Plugin::~Plugin() {
 }
 
 void Plugin::activate() {
-    new DiskWatcher();
+    // new DiskWatcher();
     d->burnManager = new WinBurnManager();
 
     connect(StateManager::instance(), &StateManager::mainWindowAvailable, this, [] {

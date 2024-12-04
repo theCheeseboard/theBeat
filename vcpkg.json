@@ -1,10 +1,17 @@
 {
   "dependencies": [
-    "libcdio",
-    "libcdio-paranoia",
+    {
+      "name": "libcdio",
+        "platform": "windows"
+    },
+    {
+      "name": "libcdio-paranoia",
+      "platform": "windows"
+    },
     {
       "name": "pkgconf",
-      "host": true
+      "host": true,
+      "platform": "windows"
     }
   ]
 }

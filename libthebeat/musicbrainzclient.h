@@ -3,9 +3,10 @@
 
 #include <QAbstractListModel>
 #include <QCoroTask>
+#include "libthebeat_global.h"
 
 struct MusicBrainzClientPrivate;
-class MusicBrainzClient : public QAbstractListModel {
+class LIBTHEBEAT_EXPORT MusicBrainzClient : public QAbstractListModel {
         Q_OBJECT
         Q_PROPERTY(QString albumName READ albumName NOTIFY albumNameChanged FINAL)
         Q_PROPERTY(QImage albumArt READ albumArt NOTIFY albumArtChanged FINAL)
@@ -17,9 +18,9 @@ class MusicBrainzClient : public QAbstractListModel {
         ~MusicBrainzClient();
 
         struct MusicBrainzTrack {
-                QString title;
-                QStringList artists;
-                QString album;
+            QString title;
+            QStringList artists;
+            QString album;
         };
 
         enum Role {

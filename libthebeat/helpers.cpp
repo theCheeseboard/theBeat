@@ -72,7 +72,7 @@ QMap<QMediaMetaData::Key, QString> Helpers::metadataStrings = {
 };
 
 QImage findAlbumArtWorker(QUrl url) {
-    auto extractID3v2 = [](TagLib::ID3v2::Tag* tag) {
+    auto extractID3v2 = [](TagLib::ID3v2::Tag * tag) {
         TagLib::ID3v2::FrameList frameList = tag->frameListMap()["APIC"];
         if (frameList.isEmpty()) return QImage();
 
@@ -87,7 +87,7 @@ QImage findAlbumArtWorker(QUrl url) {
         return QImage();
     };
 
-    auto extractXiph = [](TagLib::Ogg::XiphComment* xiph) {
+    auto extractXiph = [](TagLib::Ogg::XiphComment * xiph) {
         for (TagLib::FLAC::Picture* picture : xiph->pictureList()) {
             if (picture->type() == TagLib::FLAC::Picture::FrontCover) {
                 return QImage::fromData(reinterpret_cast<const uchar*>(picture->data().data()), picture->data().size());
@@ -160,7 +160,7 @@ QCoro::Task<QImage> Helpers::albumArt(QUrl url) {
         co_return artCache.object(url)->copy();
     }
 
-    QImage art = co_await QtConcurrent::run([=]() {
+    QImage art = co_await QtConcurrent::run([ = ]() {
         return findAlbumArtWorker(url);
     });
 

@@ -18,8 +18,6 @@
  *
  * *************************************/
 #include "plugin.h"
-#include "cdmonitor.h"
-// #include "mediaitem/gsturlhandler.h"
 
 #include <QDebug>
 #include <QIcon>
@@ -29,8 +27,18 @@
 #include <tapplication.h>
 #include <urlmanager.h>
 
+#ifdef HAVE_FRISBEE
+    #include "cdmonitor.h"
+    #define MONITOR_TYPE CdMonitor
+#endif
+
+#ifdef Q_OS_WIN
+    #include "wincdmonitor.h"
+    #define MONITOR_TYPE WinCdMonitor
+#endif
+
 struct PluginPrivate {
-        CdMonitor* monitor;
+    MONITOR_TYPE* monitor;
 };
 
 Plugin::Plugin() {
@@ -45,7 +53,7 @@ Plugin::~Plugin() {
 }
 
 void Plugin::activate() {
-    d->monitor = new CdMonitor();
+    d->monitor = new MONITOR_TYPE();
 }
 
 void Plugin::deactivate() {
