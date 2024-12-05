@@ -340,4 +340,21 @@ ContemporaryWindow {
             Item {}
         }
     }
+
+    Repeater {
+        id: burnRepeater
+        model: BurnManager.availableBackends
+        delegate: Item {
+            required property var modelData
+            Loader {
+                id: uiLoader
+            }
+
+            Component.onCompleted: () => {
+                uiLoader.setSource(modelData.qmlFile, {
+                    controller: modelData
+                });
+            }
+        }
+    }
 }

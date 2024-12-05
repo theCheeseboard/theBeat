@@ -39,6 +39,7 @@ qt_add_qml_module(plugin-winintegration
     URI com.vicr123.thebeat.plugin.winintegration
     VERSION 1.0
     QML_FILES
+        WinBurnPopover.qml
         WinCdPane.qml
     NO_CACHEGEN
 )

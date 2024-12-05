@@ -27,12 +27,14 @@
 class LIBTHEBEAT_EXPORT BurnBackend : public QObject {
         Q_OBJECT
         Q_PROPERTY(QString displayName READ displayName FINAL CONSTANT)
+        Q_PROPERTY(QUrl qmlFile READ qmlFile FINAL CONSTANT)
     public:
         explicit BurnBackend(QObject* parent = nullptr);
 
         virtual void burn(QStringList files, QString albumName, QWidget* parentWindow) = 0;
         Q_SCRIPTABLE virtual QString burn(QStringList files, QString albumName, QQuickWindow* parentWindow);
         virtual QString displayName() = 0;
+        virtual QUrl qmlFile();
 
     signals:
 };

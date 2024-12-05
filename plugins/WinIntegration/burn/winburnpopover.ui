@@ -135,7 +135,7 @@
          </property>
         </widget>
        </item>
-       <item alignment="Qt::AlignmentFlag::AlignHCenter">
+       <item alignment="">
         <widget class="QWidget" name="burnOptionsWidget" native="true">
          <layout class="QGridLayout" name="gridLayout">
           <item row="2" column="1">

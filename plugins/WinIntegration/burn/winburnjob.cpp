@@ -2,7 +2,6 @@
 
 #include "winburnjobwidget.h"
 
-#include <tpromise.h>
 #include <imapi2.h>
 #include <comutil.h>
 #include <comdef.h>
@@ -15,6 +14,7 @@
 #include <Windows.Storage.Streams.h>
 
 #include <QAudioDecoder>
+#include <QCoroFuture>
 #include "winburndaoimage.h"
 #include "daoformatlocker.h"
 
@@ -140,6 +140,9 @@ WinBurnJob::WinBurnJob(WinBurnDaoImagePtr daoImage, _bstr_t driveId, QString alb
 
     d->burnEvents = winrt::agile_ref<DDiscFormat2RawCDEvents> {winrt::make_self<DAOBurnEvents>(this)};
 
+    connect(this, &WinBurnJob::titleChanged, this, &WinBurnJob::titleStringChanged);
+    connect(this, &WinBurnJob::descriptionChanged, this, &WinBurnJob::statusStringChanged);
+
     d->title = tr("Burn %1").arg(QLocale().quoteString(albumTitle));
     emit titleChanged(d->title);
 
@@ -154,37 +157,46 @@ WinBurnJob::~WinBurnJob() {
     delete d;
 }
 
-void WinBurnJob::run() {
-    TPROMISE_CREATE_NEW_THREAD(void, {
-        try {
-            auto discMaster = winrt::create_instance<IDiscMaster2>(CLSID_MsftDiscMaster2);
-            auto discRecorder = winrt::create_instance<IDiscRecorder2>(CLSID_MsftDiscRecorder2);
-            winrt::check_hresult(discRecorder->InitializeDiscRecorder(d->driveId.GetBSTR()));
+QCoro::Task<> WinBurnJob::run() {
+    try {
+        auto discMaster = winrt::create_instance<IDiscMaster2>(CLSID_MsftDiscMaster2);
+        auto discRecorder = winrt::create_instance<IDiscRecorder2>(CLSID_MsftDiscRecorder2);
+        winrt::check_hresult(discRecorder->InitializeDiscRecorder(d->driveId.GetBSTR()));
 
-            auto discFormatDAO = winrt::create_instance<IDiscFormat2RawCD>(CLSID_MsftDiscFormat2RawCD);
-            discFormatDAO->put_ClientName(_bstr_t("theBeat"));
-            winrt::check_hresult(discFormatDAO->put_Recorder(discRecorder.get()));
+        auto discFormatDAO = winrt::create_instance<IDiscFormat2RawCD>(CLSID_MsftDiscFormat2RawCD);
+        discFormatDAO->put_ClientName(_bstr_t("theBeat"));
+        winrt::check_hresult(discFormatDAO->put_Recorder(discRecorder.get()));
 
-            auto container = discFormatDAO.as<IConnectionPointContainer>();
-            winrt::check_hresult(container->FindConnectionPoint(winrt::guid_of<DDiscFormat2RawCDEvents>(), d->connectionPoint.put()));
-            winrt::check_hresult(d->connectionPoint->Advise(d->burnEvents.get().get(), &d->eventToken));
+        auto container = discFormatDAO.as<IConnectionPointContainer>();
+        winrt::check_hresult(container->FindConnectionPoint(winrt::guid_of<DDiscFormat2RawCDEvents>(), d->connectionPoint.put()));
+        winrt::check_hresult(d->connectionPoint->Advise(d->burnEvents.get().get(), &d->eventToken));
 
-            tDebug("WinBurnJob") << "Preparing media for burn";
-            DaoFormatLocker locker(discFormatDAO);
-            winrt::check_hresult(discFormatDAO->put_BufferUnderrunFreeDisabled(true));
+        tDebug("WinBurnJob") << "Preparing media for burn";
+        DaoFormatLocker locker(discFormatDAO);
+        winrt::check_hresult(discFormatDAO->put_BufferUnderrunFreeDisabled(true));
 
-            tDebug("WinBurnJob") << "Burning disc";
-            winrt::com_ptr<IStream> daoImageStream;
-            winrt::check_hresult(d->daoImage->daoImage()->CreateResultImage(daoImageStream.put()));
-            winrt::check_hresult(discFormatDAO->WriteMedia(daoImageStream.get()));
+        tDebug("WinBurnJob") << "Burning disc";
+        winrt::com_ptr<IStream> daoImageStream;
+        winrt::check_hresult(d->daoImage->daoImage()->CreateResultImage(daoImageStream.put()));
 
-            res();
-        } catch (...) {
-            _com_error err(winrt::to_hresult());
-            LPCTSTR errMsg = err.ErrorMessage();
-            rej(QString::fromWCharArray(errMsg));
-        }
-    })->then([ = ] {
+        winrt::agile_ref<IDiscFormat2RawCD> discFormatDAOAgile(discFormatDAO);
+        winrt::agile_ref<IStream> daoImageStreamAgile(daoImageStream);
+
+        co_await QtConcurrent::run([discFormatDAOAgile, daoImageStreamAgile] {
+            try {
+                winrt::check_hresult(discFormatDAOAgile.get()->WriteMedia(daoImageStreamAgile.get().get()));
+            } catch (...) {
+                _com_error err(winrt::to_hresult());
+                LPCTSTR errMsg = err.ErrorMessage();
+                auto errorText = QString::fromWCharArray(errMsg);
+
+                tWarn("WinBurnJob") << "Burn job threw exception:";
+                tWarn("WinBurnJob") << errorText;
+
+                throw;
+            }
+        });
+
         d->state = tJob::Finished;
         emit stateChanged(d->state);
 
@@ -200,7 +212,11 @@ void WinBurnJob::run() {
 
         tNotification* notification = new tNotification(tr("Burn Successful"), tr("Burned %1 to disc").arg(QLocale().quoteString(d->albumTitle)));
         notification->post();
-    })->error([ = ](QString errorText) {
+    } catch (...) {
+        _com_error err(winrt::to_hresult());
+        LPCTSTR errMsg = err.ErrorMessage();
+        auto errorText = QString::fromWCharArray(errMsg);
+
         d->state = tJob::Failed;
         emit stateChanged(d->state);
 
@@ -217,7 +233,7 @@ void WinBurnJob::run() {
 
         tNotification* notification = new tNotification(tr("Burn Failure"), tr("Failed to burn %1 to disc").arg(QLocale().quoteString(d->albumTitle)));
         notification->post();
-    });
+    }
 }
 
 QString WinBurnJob::title() {
@@ -318,4 +334,15 @@ tJob::State WinBurnJob::state() {
 
 QWidget* WinBurnJob::makeProgressWidget() {
     return new WinBurnJobWidget(this);
+}
+
+T_EXCEPTION_IMPL(WinBurnJobException)
+
+
+QString WinBurnJob::titleString() {
+    return d->title;
+}
+
+QString WinBurnJob::statusString() {
+    return d->description;
 }

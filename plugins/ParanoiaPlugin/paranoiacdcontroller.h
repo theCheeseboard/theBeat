@@ -43,6 +43,7 @@ class ParanoiaCdController : public QAbstractListModel {
     private:
         ParanoiaCdControllerPrivate* d;
 
+        QCoro::Task<> openCd();
         void readCd();
         void feedSink();
         void setCdTextMetadata();

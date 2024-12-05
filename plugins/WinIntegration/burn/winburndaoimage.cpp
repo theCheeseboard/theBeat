@@ -6,6 +6,8 @@
 #include <QAudioFormat>
 #include <QAudioDecoder>
 #include <QtConcurrent>
+#include <QCoroFuture>
+#include <QCoroSignal>
 #include "cdtextgenerator.h"
 
 #include <taglib/fileref.h>
@@ -27,92 +29,86 @@ WinBurnDaoImage::~WinBurnDaoImage() {
     delete d;
 }
 
-QByteArray transcode(const QString& file) {
-    tPromiseResults<QByteArray> decodeResults = TPROMISE_CREATE_SAME_THREAD(QByteArray, {
-        QAudioFormat format;
-//        format.setCodec("audio/pcm");
-//        format.setByteOrder(QAudioFormat::LittleEndian);
-//        format.setSampleSize(16);
-        format.setSampleFormat(QAudioFormat::Int16);
-        format.setSampleRate(44100);
-        format.setChannelCount(2);
+QCoro::Task<QByteArray> transcode(const QString& file) {
+    tDebug("WinBurnDaoImage") << "Start transcode " << file;
+    QAudioFormat format;
+    format.setSampleFormat(QAudioFormat::Int16);
+    format.setSampleRate(44100);
+    format.setChannelCount(2);
 
-        QAudioDecoder* decoder = new QAudioDecoder();
+    QAudioDecoder decoder;
 
-        decoder->setAudioFormat(format);
-        decoder->setSource(QUrl::fromLocalFile(file));
+    decoder.setAudioFormat(format);
+    decoder.setSource(QUrl(file));
 
-        QByteArray* audioData = new QByteArray();
+    QByteArray audioData;
 
-        QObject::connect(decoder, &QAudioDecoder::finished, [ = ] {
-            int extraBytes = audioData->size() % 2352;
-            int paddingBytes = 2352 - extraBytes;
-            audioData->append(QByteArray(paddingBytes, 0));
-
-            decoder->deleteLater();
-
-            res(QByteArray(*audioData));
-            delete audioData;
-        });
-        QObject::connect(decoder, &QAudioDecoder::bufferReady, [ = ] {
-            QAudioBuffer buf = decoder->read();
-            audioData->append(QByteArray(buf.data<char>(), buf.byteCount()));
-        });
-        QObject::connect(decoder, QOverload<QAudioDecoder::Error>::of(&QAudioDecoder::error), [ = ](QAudioDecoder::Error error) {
-            delete audioData;
-            rej(decoder->errorString());
-        });
-        decoder->start();
-    })->await();
-
-    if (!decodeResults.error.isEmpty()) {
-        return QByteArray();
+    QObject::connect(&decoder, &QAudioDecoder::bufferReady, [ &decoder, &audioData, file ] {
+        QAudioBuffer buf = decoder.read();
+        audioData.append(QByteArray(buf.data<char>(), buf.byteCount()));
+    });
+    auto finishConnection = qCoro(&decoder, &QAudioDecoder::finished);
+    decoder.start();
+    if (decoder.error() == QAudioDecoder::NoError) {
+        co_await finishConnection;
     }
-    return decodeResults.result;
+
+    if (decoder.error() != QAudioDecoder::NoError) {
+        tWarn("WinBurnDaoImage") << "Transcode error " << file;
+        tWarn("WinBurnDaoImage") << decoder.errorString();
+        co_return {};
+    }
+
+    tDebug("WinBurnDaoImage") << "Finish transcode " << file;
+
+    int extraBytes = audioData.size() % 2352;
+    int paddingBytes = 2352 - extraBytes;
+    audioData.append(QByteArray(paddingBytes, 0));
+
+    co_return audioData;
 }
 
-tPromise<void>* WinBurnDaoImage::createImageFromFiles(QStringList files) {
-    return TPROMISE_CREATE_NEW_THREAD(void, {
-        QPointer<WinBurnDaoImage> thisPtr(this);
+QCoro::Task<> WinBurnDaoImage::createImageFromFiles(QStringList files) {
+    QPointer<WinBurnDaoImage> thisPtr(this);
 
-        auto daoImage = winrt::create_instance<IRawCDImageCreator>(CLSID_MsftRawCDImageCreator);
-        QList<qint64> trackOffsets;
+    auto daoImage = winrt::create_instance<IRawCDImageCreator>(CLSID_MsftRawCDImageCreator);
+    QList<qint64> trackOffsets;
 
-        QList<QByteArray> transcoded = QtConcurrent::blockingMapped<QList<QByteArray>>(files.begin(), files.end(), &transcode);
-        for (QByteArray transcoding : transcoded) {
-            if (transcoding.isNull()) {
-                rej("Transcoding Error");
-                return;
-            }
+    std::vector<QCoro::Task<QByteArray>> transcodeTasks;
+    for (const auto& file : files) {
+        transcodeTasks.push_back(std::move(transcode(file)));
+    }
 
-            winrt::com_ptr<IStream> stream;
-            stream.attach(SHCreateMemStream(reinterpret_cast<const uchar*>(transcoding.constData()), transcoding.count()));
+    for (const auto& transcodingCoro : transcodeTasks) {
+        auto transcoding = co_await transcodingCoro;
 
-            LONG resultantTrack;
-            winrt::check_hresult(daoImage->AddTrack(IMAPI_CD_SECTOR_AUDIO, stream.get(), &resultantTrack));
+        tDebug("WinBurnDaoImage") << "Transcode track complete";
 
-            winrt::com_ptr<IRawCDImageTrackInfo> trackInfo;
-            winrt::check_hresult(daoImage->get_TrackInfo(resultantTrack, trackInfo.put()));
+        winrt::com_ptr<IStream> stream;
+        stream.attach(SHCreateMemStream(reinterpret_cast<const uchar*>(transcoding.constData()), transcoding.length()));
 
-            LONG startingLba;
-            winrt::check_hresult(trackInfo->get_StartingLba(&startingLba));
+        LONG resultantTrack;
+        winrt::check_hresult(daoImage->AddTrack(IMAPI_CD_SECTOR_AUDIO, stream.get(), &resultantTrack));
 
-            trackOffsets.append(startingLba);
-        }
+        winrt::com_ptr<IRawCDImageTrackInfo> trackInfo;
+        winrt::check_hresult(daoImage->get_TrackInfo(resultantTrack, trackInfo.put()));
 
-        LONG startOfLeadout;
-        winrt::check_hresult(daoImage->get_StartOfLeadout(&startOfLeadout));
+        LONG startingLba;
+        winrt::check_hresult(trackInfo->get_StartingLba(&startingLba));
 
-        //TODO: Fix race condition
-        if (!thisPtr) return;
+        trackOffsets.append(startingLba);
+    }
 
-        d->daoImage = daoImage;
-        d->trackOffsets = trackOffsets;
-        d->leadout = startOfLeadout;
-        d->files = files;
+    LONG startOfLeadout;
+    winrt::check_hresult(daoImage->get_StartOfLeadout(&startOfLeadout));
 
-        res();
-    });
+    //TODO: Fix race condition
+    if (!thisPtr) co_return;
+
+    d->daoImage = daoImage;
+    d->trackOffsets = trackOffsets;
+    d->leadout = startOfLeadout;
+    d->files = files;
 }
 
 winrt::com_ptr<IRawCDImageCreator> WinBurnDaoImage::daoImage() {

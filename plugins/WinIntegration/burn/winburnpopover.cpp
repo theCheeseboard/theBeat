@@ -52,12 +52,12 @@ WinBurnPopover::WinBurnPopover(QStringList files, _bstr_t driveId, QString album
     pal.setColor(QPalette::WindowText, Qt::white);
     ui->warningFrame->setPalette(pal);
 
-    d->burnImage->createImageFromFiles(files)->then([ = ] {
-        updateCd();
+    // d->burnImage->createImageFromFiles(files)->then([ = ] {
+    //     updateCd();
 
-        ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
-        ui->stackedWidget->setCurrentWidget(ui->optionsPage);
-    });
+    //     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
+    //     ui->stackedWidget->setCurrentWidget(ui->optionsPage);
+    // });
 
     ui->warningFrame->setTitle(tr("Heads up!").toUpper());
 

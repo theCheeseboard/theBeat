@@ -44,6 +44,16 @@ Button {
                 onTriggered: () => {
                     burn(modelData);
                 }
+
+                Loader {
+                    id: uiLoader
+                }
+
+                Component.onCompleted: () => {
+                    uiLoader.setSource(modelData.qmlFile, {
+                        controller: modelData
+                    });
+                }
             }
 
             onObjectAdded: (index, object) => burnMenu.insertItem(index + 1, object)

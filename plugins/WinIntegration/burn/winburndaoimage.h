@@ -2,6 +2,7 @@
 #define WINBURNDAOIMAGE_H
 
 #include <QObject>
+#include <QCoroTask>
 
 #include <imapi2.h>
 #include <winrt/Windows.Foundation.h>
@@ -14,7 +15,7 @@ class WinBurnDaoImage : public QObject {
         explicit WinBurnDaoImage(QObject* parent = nullptr);
         ~WinBurnDaoImage();
 
-        tPromise<void>* createImageFromFiles(QStringList files);
+        QCoro::Task<> createImageFromFiles(QStringList files);
         winrt::com_ptr<IRawCDImageCreator> daoImage();
         int trackNumberFromLba(qint64 lba);
         qint64 leadoutLba();

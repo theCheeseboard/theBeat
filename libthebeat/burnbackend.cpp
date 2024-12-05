@@ -26,3 +26,7 @@ BurnBackend::BurnBackend(QObject* parent) :
 QString BurnBackend::burn(QStringList files, QString albumName, QQuickWindow* window) {
     return {};
 }
+
+QUrl BurnBackend::qmlFile() {
+    return {};
+}
