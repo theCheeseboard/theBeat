@@ -18,7 +18,6 @@ vcpkg_from_git(
 vcpkg_configure_make(
     SOURCE_PATH ${SOURCE_PATH}
     AUTOCONFIG
-    ADDITIONAL_MSYS_PACKAGES texinfo
     OPTIONS
         ${OPTIONS}
         --without-cd-drive

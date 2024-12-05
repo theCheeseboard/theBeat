@@ -2,7 +2,7 @@
   "dependencies": [
     {
       "name": "libcdio",
-        "platform": "windows"
+      "platform": "windows"
     },
     {
       "name": "libcdio-paranoia",
