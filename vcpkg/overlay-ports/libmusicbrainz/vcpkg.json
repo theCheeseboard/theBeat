@@ -1,0 +1,8 @@
+{
+  "name": "libmusicbrainz",
+  "version": "5.1.0",
+  "dependencies": [
+    "vcpkg-cmake",
+    "neon"
+  ]
+}

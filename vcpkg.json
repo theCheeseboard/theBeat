@@ -12,6 +12,10 @@
       "name": "pkgconf",
       "host": true,
       "platform": "windows"
+    },
+    {
+      "name": "libmusicbrainz",
+      "platform": "windows"
     }
   ]
 }
