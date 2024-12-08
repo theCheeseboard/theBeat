@@ -57,7 +57,10 @@ jobs:
         uses: lukka/run-vcpkg@v11
         with:
             vcpkgDirectory: "C:/vcpkg"
+            doNotUpdateVcpkg: true
             runVcpkgInstall: true
+            vcpkgJsonGlob: vcpkg.json
+            vcpkgConfigurationJsonGlob: vcpkg-configuration.json
       - name: Install thebeat
         id: thebeat
         uses: theCheeseboard/actions/build-cmake-project@actions
