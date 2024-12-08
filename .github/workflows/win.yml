@@ -21,7 +21,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           aqtversion: '>=3.1.18'
-          version: '6.8.0'
+          version: '6.8.1'
           arch: 'win64_msvc2022_64'
           target: 'desktop'
           cache: true
@@ -53,19 +53,26 @@ jobs:
         with:
           project: theCheeseboard/contemporary-qml
           commitish: main
+      - name: Install vcpkg dependencies
+        uses: lukka/run-vcpkg@v11
+        with:
+            vcpkgDirectory: "C:/vcpkg"
+            runVcpkgInstall: true
       - name: Install thebeat
         id: thebeat
         uses: theCheeseboard/actions/build-cmake-project@actions
         with:
           project: .
           commitish: .
-          extra-cmake-args: '-DTAGLIB_ROOT=${{ steps.taglib.outputs.install-directory }}'
+          extra-cmake-args: |
+              -DTAGLIB_ROOT=${{ steps.taglib.outputs.install-directory }}
+              -DCMAKE_TOOLCHAIN_FILE="${{ env.VCPKG_INSTALLATION_ROOT }}scripts/buildsystems/vcpkg.cmake"
+              -DVCPKG_INSTALLED_DIR=${{ github.workspace }}/vcpkg_installed
       - name: Deploy thebeat
         env:
           SOURCE_DIRECTORY: ${{ steps.thebeat.outputs.source-directory }}
           BUILD_DIRECTORY: ${{ steps.thebeat.outputs.build-directory }}
           INSTALL_DIRECTORY: ${{ steps.thebeat.outputs.install-directory }}
-          VCPKG_DIRECTORY: ${{ github.workspace }}/vcpkg
         run: |
           New-Item -ItemType Directory -Force -Path output
           $executable = Move-Item -Path "$env:BUILD_DIRECTORY/thebeat*.exe" -Destination output -Force -PassThru
@@ -76,3 +83,8 @@ jobs:
         with:
           name: thebeat-win
           path: output
+    env:
+      VCPKG_DEFAULT_TRIPLET: x64-windows-mixed-release
+      VCPKG_DEFAULT_HOST_TRIPLET: x64-windows
+      VCPKG_FORCE_SYSTEM_BINARIES: 1
+
