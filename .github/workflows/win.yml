@@ -53,14 +53,6 @@ jobs:
         with:
           project: theCheeseboard/contemporary-qml
           commitish: main
-      - name: Install vcpkg dependencies
-        uses: lukka/run-vcpkg@v11
-        with:
-            vcpkgDirectory: "C:/vcpkg"
-            doNotUpdateVcpkg: true
-            runVcpkgInstall: true
-            vcpkgJsonGlob: vcpkg.json
-            vcpkgConfigurationJsonGlob: vcpkg-configuration.json
       - name: Install thebeat
         id: thebeat
         uses: theCheeseboard/actions/build-cmake-project@actions
@@ -69,8 +61,7 @@ jobs:
           commitish: .
           extra-cmake-args: |
               -DTAGLIB_ROOT=${{ steps.taglib.outputs.install-directory }}
-              -DCMAKE_TOOLCHAIN_FILE="${{ env.VCPKG_INSTALLATION_ROOT }}scripts/buildsystems/vcpkg.cmake"
-              -DVCPKG_INSTALLED_DIR=${{ github.workspace }}/vcpkg_installed
+              -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
       - name: Deploy thebeat
         env:
           SOURCE_DIRECTORY: ${{ steps.thebeat.outputs.source-directory }}
@@ -90,4 +81,3 @@ jobs:
       VCPKG_DEFAULT_TRIPLET: x64-windows-mixed-release
       VCPKG_DEFAULT_HOST_TRIPLET: x64-windows
       VCPKG_FORCE_SYSTEM_BINARIES: 1
-
