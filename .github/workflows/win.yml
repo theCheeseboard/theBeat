@@ -59,8 +59,9 @@ jobs:
         with:
           project: .
           commitish: .
+          use-vcpkg: "true"
           extra-cmake-args: |
-              -DTAGLIB_ROOT=${{ steps.taglib.outputs.install-directory }} "-DCMAKE_TOOLCHAIN_FILE=${{ env.VCPKG_ROOT }}/scripts/buildsystems/vcpkg.cmake"
+              -DTAGLIB_ROOT=${{ steps.taglib.outputs.install-directory }}
       - name: Deploy thebeat
         env:
           SOURCE_DIRECTORY: ${{ steps.thebeat.outputs.source-directory }}
