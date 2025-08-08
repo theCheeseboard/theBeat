@@ -1,0 +1,19 @@
+[config]
+i18n_dir = "dist/contemporary_toml_translations"
+
+[application]
+theme_colors = ["#ff6400", "#ffc800"]
+
+[deployment]
+application_name = "t:APPLICATION_NAME"
+application_generic_name = "t:APPLICATION_GENERIC_NAME"
+desktop_entry = "com.vicr123.thebeat"
+contemporary_base_icon = "dist/baseicon.svg"
+disk_image_background = "dist/app-dmg-background.svg"
+desktop_entry_categories = ["Audio", "Music", "Player", "AudioVideo", "X-Multimedia"]
+
+[deployment."aarch64-apple-darwin"]
+contemporary_base_icon = "dist/baseicon-mac.svg"
+
+[deployment."x86_64-apple-darwin"]
+contemporary_base_icon = "dist/baseicon-mac.svg"

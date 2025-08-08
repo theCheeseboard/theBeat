@@ -1,0 +1,142 @@
+use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlists, Tracks};
+use cntp_i18n::tr;
+use contemporary::components::application_menu::ApplicationMenu;
+use contemporary::components::button::button;
+use contemporary::components::icon_text::icon_text;
+use contemporary::components::pager::pager;
+use contemporary::styling::theme::Theme;
+use contemporary::surface::surface;
+use gpui::{
+    App, AppContext, Context, Entity, InteractiveElement, IntoElement, Menu, MenuItem,
+    ParentElement, Render, Styled, Window, div, px,
+};
+use std::path::Components;
+
+pub struct MainSurface {
+    application_menu: Entity<ApplicationMenu>,
+    selected_tab: MainSurfaceTab,
+}
+
+#[derive(PartialEq)]
+enum MainSurfaceTab {
+    Tracks,
+    Artists,
+    Albums,
+    Playlists,
+    OtherSources,
+}
+
+impl MainSurfaceTab {
+    fn index(&self) -> usize {
+        match self {
+            Tracks => 0,
+            MainSurfaceTab::Artists => 1,
+            MainSurfaceTab::Albums => 2,
+            MainSurfaceTab::Playlists => 3,
+            MainSurfaceTab::OtherSources => 4,
+        }
+    }
+}
+
+impl MainSurface {
+    pub fn new(cx: &mut App) -> Entity<MainSurface> {
+        cx.new(|cx| MainSurface {
+            application_menu: ApplicationMenu::new(
+                cx,
+                Menu {
+                    name: "Application Menu".into(),
+                    items: vec![MenuItem::submenu(Menu {
+                        name: tr!("MENU_FILE").into(),
+                        items: vec![],
+                    })],
+                },
+            ),
+            selected_tab: Tracks,
+        })
+    }
+}
+
+impl Render for MainSurface {
+    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        let theme = cx.global::<Theme>();
+
+        surface()
+            .actions(
+                div().occlude().flex().content_stretch().child(
+                    div()
+                        .flex()
+                        .id("action-bar")
+                        .bg(theme.button_background)
+                        .rounded(theme.border_radius)
+                        .gap(px(2.))
+                        .content_stretch()
+                        .child(
+                            button("tracks-button")
+                                .child(icon_text(
+                                    "view-media-track".into(),
+                                    tr!("TRACKS_BUTTON", "Tracks").into(),
+                                ))
+                                .checked_when(self.selected_tab == Tracks)
+                                .on_click(cx.listener(|this, _, _, cx| {
+                                    this.selected_tab = Tracks;
+                                    cx.notify();
+                                })),
+                        )
+                        .child(
+                            button("artists-button")
+                                .child(icon_text(
+                                    "view-media-artist".into(),
+                                    tr!("ARTISTS_BUTTON", "Artists").into(),
+                                ))
+                                .checked_when(self.selected_tab == Artists)
+                                .on_click(cx.listener(|this, _, _, cx| {
+                                    this.selected_tab = Artists;
+                                    cx.notify();
+                                })),
+                        )
+                        .child(
+                            button("albums-button")
+                                .child(icon_text(
+                                    "media-album-cover".into(),
+                                    tr!("ALBUMS_BUTTON", "Albums").into(),
+                                ))
+                                .checked_when(self.selected_tab == Albums)
+                                .on_click(cx.listener(|this, _, _, cx| {
+                                    this.selected_tab = Albums;
+                                    cx.notify();
+                                })),
+                        )
+                        .child(
+                            button("playlists-button")
+                                .child(icon_text(
+                                    "view-media-playlist".into(),
+                                    tr!("PLAYLISTS_BUTTON", "Playlists").into(),
+                                ))
+                                .checked_when(self.selected_tab == Playlists)
+                                .on_click(cx.listener(|this, _, _, cx| {
+                                    this.selected_tab = Playlists;
+                                    cx.notify();
+                                })),
+                        )
+                        .child(
+                            button("other-sources-button")
+                                .child(icon_text(
+                                    "view-list-details".into(),
+                                    tr!("OTHER_SOURCES_BUTTON", "Other Sources").into(),
+                                ))
+                                .checked_when(self.selected_tab == OtherSources)
+                                .on_click(cx.listener(|this, _, _, cx| {
+                                    this.selected_tab = OtherSources;
+                                    cx.notify();
+                                })),
+                        ),
+                ),
+            )
+            .child(
+                pager("main-pager", self.selected_tab.index())
+                    .w_full()
+                    .h_full(),
+            )
+            .application_menu(self.application_menu.clone())
+    }
+}
