@@ -1,22 +1,24 @@
-use std::cell::RefCell;
-use std::sync::Arc;
+use crate::audio_processing::audio_pipeline::audio_format::AudioFormat;
+use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE, plug};
 use crate::audio_processing::mute::Mute;
 use crate::audio_processing::output_drivers::{OutputDevice, Sample, Sink};
+use crate::audio_processing::resamplers::rubato::RubatoResampler;
 use crate::audio_processing::sample::UnwrapSample;
 use async_ringbuf::traits::{AsyncConsumer, AsyncProducer, Consumer, Split};
 use async_ringbuf::{AsyncHeapRb, AsyncRb};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
-use cpal::{BufferSize, ChannelCount, Device, SampleFormat, SampleRate, SizedSample, Stream, StreamConfig};
+use cpal::{
+    BufferSize, ChannelCount, Device, SampleFormat, SampleRate, SizedSample, Stream, StreamConfig,
+};
 use gpui::http_client::anyhow;
 use gpui::private::anyhow;
 use log::warn;
 use rb::{Producer, RB, RbConsumer, RbInspector, RbProducer, SpscRb};
 use smol::stream::StreamExt;
+use std::cell::RefCell;
+use std::sync::Arc;
 use std::time::Duration;
 use tracing::{error, info};
-use crate::audio_processing::audio_pipeline::audio_format::AudioFormat;
-use crate::audio_processing::audio_pipeline::{plug, PipelineSample, SAMPLE_BUFFER_SIZE};
-use crate::audio_processing::resamplers::rubato::RubatoResampler;
 
 const BUFFER_DURATION: Duration = Duration::from_millis(200);
 const BUFFER_DURATION_MSEC: usize = BUFFER_DURATION.as_millis() as usize;
@@ -98,25 +100,35 @@ impl CpalOutputDevice {
 
 impl OutputDevice for CpalOutputDevice {
     fn pause(&self) {
-        self.streams.borrow().iter().for_each(|stream| stream.pause().unwrap());
+        self.streams
+            .borrow()
+            .iter()
+            .for_each(|stream| stream.pause().unwrap());
     }
 
     fn play(&self) {
-        self.streams.borrow().iter().for_each(|stream| stream.play().unwrap());
+        self.streams
+            .borrow()
+            .iter()
+            .for_each(|stream| stream.play().unwrap());
     }
 
     fn open_sink(&self) -> anyhow::Result<Sink> {
-        let mut supported_configs = self.device.supported_output_configs()?;
-        let supported_stream_config_range = supported_configs.find(|c| c.channels() == 2).unwrap();
-        let sample_format = supported_stream_config_range.sample_format();
-        let config = supported_stream_config_range
-            .with_sample_rate(SampleRate(44100))
-            .config();
+        // let mut supported_configs = self.device.supported_output_configs()?;
+        // let supported_stream_config_range = supported_configs.find(|c| c.channels() == 2).unwrap();
+        // let sample_format = supported_stream_config_range.sample_format();
+        // let config = supported_stream_config_range
+        //     // .with_sample_rate(SampleRate(44100))
+        //     .with_max_sample_rate()
+        //     .config();
+        let supported_stream_config = self.device.default_output_config().unwrap();
+        let sample_format = supported_stream_config.sample_format();
+        let config = supported_stream_config.config();
 
         let mut resampler = RubatoResampler::new(AudioFormat {
             sample_rate: config.sample_rate.0,
             channels: config.channels,
-            sample: sample_format.into()
+            sample: sample_format.into(),
         });
 
         let audio_device_sink = match sample_format {
@@ -164,20 +176,48 @@ pub fn cpal_output_devices() -> Vec<Box<dyn OutputDevice>> {
         .collect::<Vec<_>>()
 }
 
+pub fn cpal_default_output_device() -> Box<dyn OutputDevice> {
+    Box::new(CpalOutputDevice::new(
+        cpal::default_host().default_output_device().unwrap(),
+    ))
+}
+
 impl From<SampleFormat> for crate::audio_processing::audio_pipeline::audio_format::SampleFormat {
     fn from(value: SampleFormat) -> Self {
         match value {
-            SampleFormat::I8 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed8,
-            SampleFormat::I16 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed16,
-            SampleFormat::I24 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed24,
-            SampleFormat::I32 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed32,
-            SampleFormat::I64 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed64,
-            SampleFormat::U8 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Unsigned8,
-            SampleFormat::U16 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Unsigned16,
-            SampleFormat::U32 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Unsigned32,
-            SampleFormat::U64 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Unsigned64,
-            SampleFormat::F32 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Float32,
-            SampleFormat::F64 => crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Float64,
+            SampleFormat::I8 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed8
+            }
+            SampleFormat::I16 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed16
+            }
+            SampleFormat::I24 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed24
+            }
+            SampleFormat::I32 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed32
+            }
+            SampleFormat::I64 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Signed64
+            }
+            SampleFormat::U8 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Unsigned8
+            }
+            SampleFormat::U16 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Unsigned16
+            }
+            SampleFormat::U32 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Unsigned32
+            }
+            SampleFormat::U64 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Unsigned64
+            }
+            SampleFormat::F32 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Float32
+            }
+            SampleFormat::F64 => {
+                crate::audio_processing::audio_pipeline::audio_format::SampleFormat::Float64
+            }
             _ => panic!("Unknown sample format"),
         }
     }

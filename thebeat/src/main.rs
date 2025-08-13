@@ -1,28 +1,25 @@
-mod main_window;
-mod main_surface;
 mod actions;
+mod main_surface;
+mod main_window;
 
-use std::rc::Rc;
-use cntp_i18n::{tr, tr_load, I18N_MANAGER};
-use cntp_icon_tool_macros::application_icon;
-use contemporary::application::{new_contemporary_application, ApplicationLink, Details, License};
-use contemporary::macros::application_details;
-use contemporary::setup::{setup_contemporary, Contemporary, ContemporaryMenus};
-use contemporary::window::contemporary_window_options;
-use gpui::{px, size, App, Bounds, Menu, MenuItem, Radians, WindowBounds, WindowOptions};
-use smol_macros::main;
-use lthebeat::audio_processing::audio_controller::{AudioController, GlobalAudioController};
-use crate::actions::{register_actions, OpenFileAction, OpenUrlAction};
+use crate::actions::{OpenFileAction, OpenUrlAction, register_actions};
 use crate::main_window::MainWindow;
+use cntp_i18n::{I18N_MANAGER, tr, tr_load};
+use cntp_icon_tool_macros::application_icon;
+use contemporary::application::{ApplicationLink, Details, License, new_contemporary_application};
+use contemporary::macros::application_details;
+use contemporary::setup::{Contemporary, ContemporaryMenus, setup_contemporary};
+use contemporary::window::contemporary_window_options;
+use gpui::{App, Bounds, Menu, MenuItem, Radians, WindowBounds, WindowOptions, px, size};
+use lthebeat::audio_processing::audio_controller::{AudioController, GlobalAudioController};
+use smol_macros::main;
+use std::rc::Rc;
 
 fn mane() {
     application_icon!("../dist/baseicon.svg");
 
     // TODO: Move to Contemporary
-    tracing_subscriber::fmt()
-        .with_target(false)
-        .without_time()
-        .init();
+    tracing_subscriber::fmt().without_time().init();
 
     new_contemporary_application().run(|cx: &mut App| {
         I18N_MANAGER.write().unwrap().load_source(tr_load!());
@@ -41,7 +38,7 @@ fn mane() {
             |w, cx| {
                 let window = MainWindow::new(cx);
                 let weak_window = window.downgrade();
-                
+
                 setup_contemporary(
                     cx,
                     Contemporary {
@@ -61,14 +58,17 @@ fn mane() {
                                     "https://github.com/vicr123/thecalculator",
                                 ),
                             ]
-                                .into(),
+                            .into(),
                         },
                         menus: ContemporaryMenus {
                             menus: vec![Menu {
                                 name: tr!("MENU_FILE", "File").into(),
                                 items: vec![
                                     MenuItem::action(tr!("FILE_OPEN", "Open"), OpenFileAction),
-                                    MenuItem::action(tr!("FILE_OPEN_URL", "Open URL"), OpenUrlAction)
+                                    MenuItem::action(
+                                        tr!("FILE_OPEN_URL", "Open URL"),
+                                        OpenUrlAction,
+                                    ),
                                 ],
                             }],
                             on_about: Rc::new(move |cx| {
@@ -85,10 +85,9 @@ fn mane() {
                 window
             },
         )
-            .unwrap();
+        .unwrap();
         cx.activate(true);
     });
-
 }
 
 main! {

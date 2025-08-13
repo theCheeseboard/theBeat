@@ -13,19 +13,19 @@
   },
   "FILE_OPEN": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:70",
+    "definedIn": "src/main.rs:67",
     "plural": false,
     "description": null
   },
   "FILE_OPEN_URL": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:71",
+    "definedIn": "src/main.rs:69",
     "plural": false,
     "description": null
   },
   "MENU_FILE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:68",
+    "definedIn": "src/main.rs:65",
     "plural": false,
     "description": null
   },

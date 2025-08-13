@@ -1,19 +1,19 @@
 mod http_source;
 
-use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
+use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
 use crate::audio_processing::input_engines::symphonia_engine::http_source::HttpSource;
 use crate::audio_processing::sample::{Sample, SampleData};
 use async_ringbuf::AsyncHeapRb;
 use async_ringbuf::traits::{AsyncProducer, Split};
 use isahc::RequestExt;
 use isahc::config::Configurable;
+use log::warn;
 use rb::RB;
 use smol::io::AsyncWriteExt;
 use smol::stream::StreamExt;
 use std::fs::File;
 use std::thread;
-use log::warn;
 use symphonia::core::audio::{AudioBufferRef, Signal};
 use symphonia::core::codecs::Decoder;
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
@@ -66,7 +66,7 @@ impl SymphoniaEngine {
                             warn!("SymphoniaEngine: error while reading packet: {}", err);
                             smol::block_on(rb_prod.push(Err(FaucetError::UnknownError))).unwrap();
                             return;
-                        },
+                        }
                     };
 
                     let decoded = decoder.decode(&next_packet).unwrap();
@@ -166,10 +166,12 @@ impl SymphoniaEngine {
                         AudioBufferRef::F64(v) => {
                             let mut samples: Vec<f64> =
                                 Vec::with_capacity(v.spec().channels.count() * v.capacity());
+                            samples.resize(v.spec().channels.count() * v.capacity(), 0.);
 
                             for i in 0..channel_count {
-                                for sample in v.chan(i) {
-                                    samples[i * channel_count + i] = *sample;
+                                let chan = v.chan(i);
+                                for sample_i in 0..chan.len() {
+                                    samples[sample_i * channel_count + i] = chan[sample_i];
                                 }
                             }
 
@@ -196,6 +198,8 @@ impl SymphoniaEngine {
     }
 
     pub fn faucet(&mut self) -> Faucet {
-        self.faucet.take().expect("SymphoniaEngine: tried to take faucet twice")
+        self.faucet
+            .take()
+            .expect("SymphoniaEngine: tried to take faucet twice")
     }
 }

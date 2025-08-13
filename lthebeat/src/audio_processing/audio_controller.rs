@@ -1,11 +1,6 @@
-use crate::audio_processing::audio_pipeline::faucet::Faucet;
-use crate::audio_processing::audio_pipeline::plug;
-use crate::audio_processing::audio_pipeline::sink::Sink;
-use crate::audio_processing::input_engines::faucet_for_url;
-use crate::audio_processing::output_drivers::cpal_driver::cpal_output_devices;
-use crate::audio_processing::sample::Sample;
-use gpui::{App, Global};
-use std::str::FromStr;
+use crate::audio_processing::output_drivers::cpal_driver::cpal_default_output_device;
+use crate::audio_processing::{audio_pipeline::plug, input_engines::faucet_for_url};
+use gpui::Global;
 use std::sync::Arc;
 use url::Url;
 
@@ -28,7 +23,7 @@ impl AudioController {
     }
 
     pub fn play_url(&self, url: Url) {
-        let device = cpal_output_devices().into_iter().next().unwrap();
+        let device = cpal_default_output_device();
         let sink = device.open_sink().unwrap();
 
         let engine = faucet_for_url(url).unwrap();

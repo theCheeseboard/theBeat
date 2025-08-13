@@ -37,7 +37,9 @@ impl RubatoResampler {
                         if resampler.is_resampling_required() {
                             let resampler = &mut resampler.resampler;
                             sample_buffer.append(&mut next_sample.into_f32());
-                            if resampler.input_frames_next() * channels as usize <= sample_buffer.len() {
+                            if resampler.input_frames_next() * channels as usize
+                                <= sample_buffer.len()
+                            {
                                 // Deinterleave samples
                                 let mut processed_samples = Vec::new();
                                 processed_samples.resize(channels as usize, Vec::new());
@@ -45,21 +47,24 @@ impl RubatoResampler {
                                 for i in 0..resampler.input_frames_next() * channels as usize {
                                     processed_samples[i % channels as usize].push(sample_buffer[i]);
                                 }
-                                sample_buffer = sample_buffer[resampler.input_frames_next()..].to_vec();
+                                sample_buffer = sample_buffer
+                                    [(resampler.input_frames_next() * channels as usize)..]
+                                    .to_vec();
 
+                                // Rudimentary up/downmixing
                                 if channels == 1 && target_audio_format.channels != 1 {
                                     // Special case: mono to n channels
                                     for _ in 0..target_audio_format.channels - 1 {
                                         processed_samples.push(processed_samples[0].clone());
                                     }
                                 } else if target_audio_format.channels < channels {
-                                    processed_samples.truncate(target_audio_format.channels as usize);
+                                    processed_samples
+                                        .truncate(target_audio_format.channels as usize);
                                 }
 
-                                let resample_result = resampler.process(
-                                    &processed_samples,
-                                    None,
-                                ).unwrap();
+                                // Resample!
+                                let resample_result =
+                                    resampler.process(&processed_samples, None).unwrap();
 
                                 // Interleave samples
                                 let mut resampled_buffer = Vec::new();
@@ -69,7 +74,49 @@ impl RubatoResampler {
                                     }
                                 }
 
-                                let next_sample = Sample::new(target_audio_format.sample_rate, target_audio_format.channels, match target_audio_format.sample {
+                                // Build sample object
+                                let next_sample = Sample::new(
+                                    target_audio_format.sample_rate,
+                                    target_audio_format.channels,
+                                    match target_audio_format.sample {
+                                        SampleFormat::Signed8 => SampleData::Signed8(Vec::new()),
+                                        SampleFormat::Unsigned8 => {
+                                            SampleData::Unsigned8(Vec::new())
+                                        }
+                                        SampleFormat::Unsigned16 => {
+                                            SampleData::Unsigned16(Vec::new())
+                                        }
+                                        SampleFormat::Signed16 => SampleData::Signed16(Vec::new()),
+                                        SampleFormat::Unsigned24 => {
+                                            SampleData::Unsigned24(Vec::new())
+                                        }
+                                        SampleFormat::Signed24 => SampleData::Signed24(Vec::new()),
+                                        SampleFormat::Unsigned32 => {
+                                            SampleData::Unsigned32(Vec::new())
+                                        }
+                                        SampleFormat::Signed32 => SampleData::Signed32(Vec::new()),
+                                        SampleFormat::Unsigned64 => {
+                                            SampleData::Unsigned64(Vec::new())
+                                        }
+                                        SampleFormat::Signed64 => SampleData::Signed64(Vec::new()),
+                                        SampleFormat::Float32 => SampleData::Float32(Vec::new()),
+                                        SampleFormat::Float64 => SampleData::Float64(Vec::new()),
+                                    },
+                                );
+                                let next_sample = next_sample.convert_from_f64(resampled_buffer);
+                                rb_faucet_prod
+                                    .push(Ok(next_sample))
+                                    .await
+                                    .expect("failed to push sample to sink");
+                            }
+                        } else if SampleFormat::from(next_sample.clone())
+                            != target_audio_format.sample
+                        {
+                            let f32_samples = next_sample.into_f32();
+                            let next_sample = Sample::new(
+                                target_audio_format.sample_rate,
+                                target_audio_format.channels,
+                                match target_audio_format.sample {
                                     SampleFormat::Signed8 => SampleData::Signed8(Vec::new()),
                                     SampleFormat::Unsigned8 => SampleData::Unsigned8(Vec::new()),
                                     SampleFormat::Unsigned16 => SampleData::Unsigned16(Vec::new()),
@@ -82,35 +129,13 @@ impl RubatoResampler {
                                     SampleFormat::Signed64 => SampleData::Signed64(Vec::new()),
                                     SampleFormat::Float32 => SampleData::Float32(Vec::new()),
                                     SampleFormat::Float64 => SampleData::Float64(Vec::new()),
-                                });
-                                let next_sample = next_sample.convert_from_f64(resampled_buffer);
-                                rb_faucet_prod
-                                    .push(Ok(next_sample))
-                                    .await
-                                    .expect("failed to push sample to sink");
-                            }
-                        } else if SampleFormat::from(next_sample.clone()) != target_audio_format.sample {
-                            let f32_samples = next_sample.into_f32();
-                            let next_sample = Sample::new(target_audio_format.sample_rate, target_audio_format.channels, match target_audio_format.sample {
-                                SampleFormat::Signed8 => SampleData::Signed8(Vec::new()),
-                                SampleFormat::Unsigned8 => SampleData::Unsigned8(Vec::new()),
-                                SampleFormat::Unsigned16 => SampleData::Unsigned16(Vec::new()),
-                                SampleFormat::Signed16 => SampleData::Signed16(Vec::new()),
-                                SampleFormat::Unsigned24 => SampleData::Unsigned24(Vec::new()),
-                                SampleFormat::Signed24 => SampleData::Signed24(Vec::new()),
-                                SampleFormat::Unsigned32 => SampleData::Unsigned32(Vec::new()),
-                                SampleFormat::Signed32 => SampleData::Signed32(Vec::new()),
-                                SampleFormat::Unsigned64 => SampleData::Unsigned64(Vec::new()),
-                                SampleFormat::Signed64 => SampleData::Signed64(Vec::new()),
-                                SampleFormat::Float32 => SampleData::Float32(Vec::new()),
-                                SampleFormat::Float64 => SampleData::Float64(Vec::new()),
-                            });
+                                },
+                            );
                             let next_sample = next_sample.convert_from_f64(f32_samples);
                             rb_faucet_prod
                                 .push(Ok(next_sample))
                                 .await
                                 .expect("failed to push sample to sink");
-
                         } else {
                             rb_faucet_prod
                                 .push(Ok(next_sample))
@@ -194,7 +219,7 @@ impl RubatoResamplerWrapper {
                 input_sample_rate as usize,
                 self.output_format.sample_rate as usize,
                 1024,
-                input_channels as usize,
+                2,
                 self.output_format.channels as usize,
             )
             .unwrap();
