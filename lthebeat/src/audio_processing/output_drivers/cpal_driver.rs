@@ -6,7 +6,7 @@ use crate::audio_processing::sample::UnwrapSample;
 use async_ringbuf::traits::{AsyncConsumer, AsyncProducer, Consumer, Split};
 use async_ringbuf::{AsyncHeapRb, AsyncRb};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
-use cpal::{BufferSize, Device, SampleFormat, SampleRate, SizedSample, Stream, StreamConfig};
+use cpal::{BufferSize, ChannelCount, Device, SampleFormat, SampleRate, SizedSample, Stream, StreamConfig};
 use gpui::http_client::anyhow;
 use gpui::private::anyhow;
 use log::warn;
@@ -107,10 +107,10 @@ impl OutputDevice for CpalOutputDevice {
 
     fn open_sink(&self) -> anyhow::Result<Sink> {
         let mut supported_configs = self.device.supported_output_configs()?;
-        let supported_stream_config_range = supported_configs.next().unwrap();
+        let supported_stream_config_range = supported_configs.find(|c| c.channels() == 2).unwrap();
         let sample_format = supported_stream_config_range.sample_format();
         let config = supported_stream_config_range
-            .with_max_sample_rate()
+            .with_sample_rate(SampleRate(44100))
             .config();
 
         let mut resampler = RubatoResampler::new(AudioFormat {
