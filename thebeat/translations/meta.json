@@ -13,19 +13,19 @@
   },
   "FILE_OPEN": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:67",
+    "definedIn": "src/main.rs:76",
     "plural": false,
     "description": null
   },
   "FILE_OPEN_URL": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:69",
+    "definedIn": "src/main.rs:78",
     "plural": false,
     "description": null
   },
   "MENU_FILE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:65",
+    "definedIn": "src/main.rs:74",
     "plural": false,
     "description": null
   },
@@ -49,13 +49,13 @@
   },
   "URL_OPEN_TEXT": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:70",
+    "definedIn": "src/main_window.rs:69",
     "plural": false,
     "description": null
   },
   "URL_OPEN_TITLE": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:63",
+    "definedIn": "src/main_window.rs:62",
     "plural": false,
     "description": null
   },

@@ -2,6 +2,7 @@ mod actions;
 mod main_surface;
 mod main_window;
 
+use std::any::TypeId;
 use crate::actions::{OpenFileAction, OpenUrlAction, register_actions};
 use crate::main_window::MainWindow;
 use cntp_i18n::{I18N_MANAGER, tr, tr_load};
@@ -38,6 +39,14 @@ fn mane() {
             |w, cx| {
                 let window = MainWindow::new(cx);
                 let weak_window = window.downgrade();
+                let weak_windew = window.downgrade();
+                
+                cx.on_action(move |_: &OpenUrlAction, cx| {
+                    weak_windew.upgrade().unwrap().update(cx, |window, cx| {
+                        window.url_dialog_open(true);
+                        cx.notify()
+                    })
+                });
 
                 setup_contemporary(
                     cx,
@@ -46,7 +55,7 @@ fn mane() {
                             generatable: application_details!(),
                             copyright_holder: "Victor Tran",
                             copyright_year: "2025",
-                            application_version: "3.0",
+                            application_version: "1.0",
                             license: License::Gpl3OrLater,
                             links: [
                                 (

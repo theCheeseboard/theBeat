@@ -6,7 +6,7 @@ use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE
 use crate::audio_processing::input_engines::symphonia_engine::http_source::HttpSource;
 use crate::audio_processing::sample::{Sample, SampleData};
 use async_ringbuf::AsyncHeapRb;
-use async_ringbuf::traits::{AsyncProducer, Split};
+use async_ringbuf::traits::{AsyncProducer, Consumer, Split};
 use isahc::RequestExt;
 use isahc::config::Configurable;
 use log::warn;
@@ -18,6 +18,7 @@ use std::thread;
 use symphonia::core::audio::{AudioBufferRef, Signal};
 use symphonia::core::codecs::Decoder;
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
+use symphonia::core::meta::MetadataRevision;
 use symphonia::core::probe::Hint;
 use symphonia::default::{get_codecs, get_probe};
 use url::Url;
@@ -53,15 +54,16 @@ impl SymphoniaEngine {
             probe.format(&hint, media_source_stream, &format_opts, &meta_opts)?;
 
         let codec_registry = get_codecs();
-        let first_track = probe_result.format.default_track().unwrap();
+        let mut format = probe_result.format;
+        let first_track = format.default_track().unwrap();
         let decoder_opts = Default::default();
         let mut decoder = codec_registry.make(&first_track.codec_params, &decoder_opts)?;
-        
+
         let (mut rb_prod, rb_cons) = AsyncHeapRb::<PipelineSample>::new(SAMPLE_BUFFER_SIZE).split();
         thread::spawn(move || {
             loop {
                 let next_sample = {
-                    let next_packet = match probe_result.format.next_packet() {
+                    let next_packet = match format.next_packet() {
                         Ok(packet) => packet,
                         Err(err) => {
                             warn!("SymphoniaEngine: error while reading packet: {}", err);
@@ -180,7 +182,19 @@ impl SymphoniaEngine {
                         }
                         _ => panic!("Panic"),
                     };
-                    
+
+                    let mut metadata = format.metadata();
+                    if !metadata.is_latest() {
+                        match metadata.skip_to_latest() {
+                            None => {}
+                            Some(meta) => {
+                                for tag in meta.tags() {
+                                    info!("tag: {}, {}", tag.key, tag.value.to_string())
+                                }
+                            }
+                        }
+                    }
+
                     Some(Sample::new(rate, channel_count as u16, sample_data))
                 };
 

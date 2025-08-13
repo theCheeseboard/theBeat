@@ -25,7 +25,7 @@ impl MainWindow {
         cx.new(|cx| MainWindow {
             main_surface: MainSurface::new(cx),
             is_about_surface_open: false,
-            is_url_dialog_open: true,
+            is_url_dialog_open: false,
             url_text_field: TextField::new(
                 cx,
                 "url_text_field",
@@ -37,6 +37,11 @@ impl MainWindow {
 
     pub fn about_surface_open(&mut self, is_open: bool) -> &Self {
         self.is_about_surface_open = is_open;
+        self
+    }
+    
+    pub fn url_dialog_open(&mut self, is_open: bool) -> &Self {
+        self.is_url_dialog_open = is_open;
         self
     }
 }
@@ -51,12 +56,6 @@ impl Render for MainWindow {
                     cx.notify();
                 })))
             })
-            .child(
-                div().on_action(cx.listener(|this, _: &OpenUrlAction, window, cx| {
-                    this.is_url_dialog_open = true;
-                    cx.notify();
-                })),
-            )
             .child(
                 dialog_box("open_url_dialog_box")
                     .visible(self.is_url_dialog_open)
