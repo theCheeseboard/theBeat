@@ -1,13 +1,11 @@
 use std::io::{Read, Seek, SeekFrom};
-use std::rc::Rc;
 use std::str::FromStr;
 use std::sync::Arc;
-use std::time::Duration;
 use isahc::config::{Configurable, RedirectPolicy};
-use isahc::{Request, RequestExt, ResponseExt};
+use isahc::{Request, RequestExt};
 use isahc::http::Uri;
 use log::warn;
-use rb::{RbConsumer, RbError, RbInspector, RbProducer, SpscRb, RB};
+use rb::{RbConsumer, RbInspector, RbProducer, SpscRb, RB};
 use smol::io::AsyncReadExt;
 use symphonia::core::io::MediaSource;
 use tracing::debug;

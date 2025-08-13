@@ -1,26 +1,19 @@
 mod http_source;
 
-use tracing::info;
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
 use crate::audio_processing::input_engines::symphonia_engine::http_source::HttpSource;
 use crate::audio_processing::sample::{Sample, SampleData};
 use async_ringbuf::AsyncHeapRb;
-use async_ringbuf::traits::{AsyncProducer, Consumer, Split};
-use isahc::RequestExt;
-use isahc::config::Configurable;
+use async_ringbuf::traits::{AsyncProducer, Split};
 use log::warn;
-use rb::RB;
-use smol::io::AsyncWriteExt;
-use smol::stream::StreamExt;
 use std::fs::File;
 use std::thread;
 use symphonia::core::audio::{AudioBufferRef, Signal};
-use symphonia::core::codecs::Decoder;
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
-use symphonia::core::meta::MetadataRevision;
 use symphonia::core::probe::Hint;
 use symphonia::default::{get_codecs, get_probe};
+use tracing::info;
 use url::Url;
 
 pub struct SymphoniaEngine {
@@ -50,8 +43,7 @@ impl SymphoniaEngine {
         let meta_opts = Default::default();
         let format_opts = Default::default();
         let probe = get_probe();
-        let mut probe_result =
-            probe.format(&hint, media_source_stream, &format_opts, &meta_opts)?;
+        let probe_result = probe.format(&hint, media_source_stream, &format_opts, &meta_opts)?;
 
         let codec_registry = get_codecs();
         let mut format = probe_result.format;
@@ -66,7 +58,7 @@ impl SymphoniaEngine {
                     let next_packet = match format.next_packet() {
                         Ok(packet) => packet,
                         Err(err) => {
-                            warn!("SymphoniaEngine: error while reading packet: {}", err);
+                            warn!("SymphoniaEngine: error while reading packet: {err}");
                             smol::block_on(rb_prod.push(Err(FaucetError::UnknownError))).unwrap();
                             return;
                         }
@@ -140,8 +132,7 @@ impl SymphoniaEngine {
                         }
                         AudioBufferRef::S32(v) => {
                             let mut samples: Vec<i32> =
-                                Vec::with_capacity(v.spec().channels.count() * v.capacity());
-                            samples.resize(v.spec().channels.count() * v.capacity(), 0);
+                                vec![0; v.spec().channels.count() * v.capacity()];
 
                             for i in 0..channel_count {
                                 let chan = v.chan(i);
@@ -154,8 +145,7 @@ impl SymphoniaEngine {
                         }
                         AudioBufferRef::F32(v) => {
                             let mut samples: Vec<f32> =
-                                Vec::with_capacity(v.spec().channels.count() * v.capacity());
-                            samples.resize(v.spec().channels.count() * v.capacity(), 0.);
+                                vec![0.; v.spec().channels.count() * v.capacity()];
 
                             for i in 0..channel_count {
                                 let chan = v.chan(i);
@@ -168,8 +158,7 @@ impl SymphoniaEngine {
                         }
                         AudioBufferRef::F64(v) => {
                             let mut samples: Vec<f64> =
-                                Vec::with_capacity(v.spec().channels.count() * v.capacity());
-                            samples.resize(v.spec().channels.count() * v.capacity(), 0.);
+                                vec![0.; v.spec().channels.count() * v.capacity()];
 
                             for i in 0..channel_count {
                                 let chan = v.chan(i);
@@ -180,7 +169,7 @@ impl SymphoniaEngine {
 
                             SampleData::Float64(samples)
                         }
-                        _ => panic!("Panic"),
+                        _ => panic!("SymphoniaEngine: unsupported sample format"),
                     };
 
                     let mut metadata = format.metadata();

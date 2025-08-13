@@ -2,7 +2,7 @@ use crate::audio_processing::audio_pipeline::audio_format::{AudioFormat, SampleF
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::sink::Sink;
 use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
-use crate::audio_processing::sample::{Sample, SampleData, UnwrapSample};
+use crate::audio_processing::sample::{Sample, SampleData};
 use async_ringbuf::AsyncHeapRb;
 use async_ringbuf::traits::{AsyncProducer, Split};
 use rubato::{FftFixedIn, Resampler};
@@ -69,8 +69,8 @@ impl RubatoResampler {
                                 // Interleave samples
                                 let mut resampled_buffer = Vec::new();
                                 for i in 0..resample_result.first().unwrap().len() {
-                                    for channel in 0..resample_result.len() {
-                                        resampled_buffer.push(resample_result[channel][i]);
+                                    for channel_samples in &resample_result {
+                                        resampled_buffer.push(channel_samples[i]);
                                     }
                                 }
 

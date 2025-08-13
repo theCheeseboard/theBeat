@@ -1,15 +1,14 @@
-use crate::actions::OpenUrlAction;
 use crate::main_surface::MainSurface;
 use cntp_i18n::tr;
 use contemporary::about_surface::about_surface;
-use contemporary::components::dialog_box::{StandardButton, dialog_box};
+use contemporary::components::dialog_box::{dialog_box, StandardButton};
 use contemporary::components::text_field::TextField;
 use contemporary::window::contemporary_window;
 use gpui::http_client::Url;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    App, AppContext, Context, Entity, InteractiveElement, IntoElement, ParentElement, Render,
-    Styled, Window, div, px,
+    div, px, App, AppContext, Context, Entity, IntoElement,
+    ParentElement, Render, Styled, Window,
 };
 use lthebeat::audio_processing::audio_controller::GlobalAudioController;
 

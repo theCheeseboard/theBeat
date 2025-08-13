@@ -1,8 +1,7 @@
-use gpui::{AppContext, Global, Window};
-use std::path::Path;
-use gpui::{actions, App, KeyBinding, PathPromptOptions};
 use gpui::http_client::Url;
-use lthebeat::audio_processing::audio_controller::{AudioController, GlobalAudioController};
+use gpui::{actions, App, KeyBinding, PathPromptOptions};
+use gpui::AppContext;
+use lthebeat::audio_processing::audio_controller::GlobalAudioController;
 
 actions!(thebeat, [OpenFileAction, OpenUrlAction]);
 
@@ -24,16 +23,9 @@ fn open_file(_: &OpenFileAction, cx: &mut App) {
     cx.spawn(async |cx| {
         let result = future.await;
         cx.read_global::<GlobalAudioController, ()>(|global_audio_controller: &GlobalAudioController, _| {
-            match result {
-                Ok(Ok(Some(x))) => {
-                    global_audio_controller.audio_controller.play_url(Url::from_file_path(x.first().unwrap().as_path()).unwrap())
-                }
-                _ => {}
+            if let Ok(Ok(Some(x))) = result {
+                global_audio_controller.audio_controller.play_url(Url::from_file_path(x.first().unwrap().as_path()).unwrap())
             }
         }).unwrap();
     }).detach()
-}
-
-fn open_url(_: &OpenUrlAction, cx: &mut App) {
-
 }

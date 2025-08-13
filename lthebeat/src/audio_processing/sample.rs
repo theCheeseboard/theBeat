@@ -1,7 +1,6 @@
 use cpal::U24;
 use intx::I24;
 use std::fmt::Debug;
-use std::slice::Iter;
 
 #[derive(Clone, Debug)]
 pub struct Sample {
@@ -76,29 +75,29 @@ impl Sample {
     pub fn convert_from_f64(self, f: Vec<f64>) -> Self {
         let new_sample_data = match self.data {
             SampleData::Signed8(_) => {
-                SampleData::Signed8(f.into_iter().map(|s| i8::sample_from(s)).collect())
+                SampleData::Signed8(f.into_iter().map(i8::sample_from).collect())
             }
             SampleData::Unsigned8(_) => {
-                SampleData::Unsigned8(f.into_iter().map(|s| u8::sample_from(s)).collect())
+                SampleData::Unsigned8(f.into_iter().map(u8::sample_from).collect())
             }
             SampleData::Unsigned16(_) => {
-                SampleData::Unsigned16(f.into_iter().map(|s| u16::sample_from(s)).collect())
+                SampleData::Unsigned16(f.into_iter().map(u16::sample_from).collect())
             }
             SampleData::Signed16(_) => {
-                SampleData::Signed16(f.into_iter().map(|s| i16::sample_from(s)).collect())
+                SampleData::Signed16(f.into_iter().map(i16::sample_from).collect())
             }
             SampleData::Unsigned24(_) => todo!(),
             SampleData::Signed24(_) => todo!(),
             SampleData::Unsigned32(_) => {
-                SampleData::Unsigned32(f.into_iter().map(|s| u32::sample_from(s)).collect())
+                SampleData::Unsigned32(f.into_iter().map(u32::sample_from).collect())
             }
             SampleData::Signed32(_) => {
-                SampleData::Signed32(f.into_iter().map(|s| i32::sample_from(s)).collect())
+                SampleData::Signed32(f.into_iter().map(i32::sample_from).collect())
             }
             SampleData::Unsigned64(_) => todo!(),
             SampleData::Signed64(_) => todo!(),
             SampleData::Float32(_) => {
-                SampleData::Float32(f.into_iter().map(|s| f32::sample_from(s)).collect())
+                SampleData::Float32(f.into_iter().map(f32::sample_from).collect())
             }
             SampleData::Float64(_) => SampleData::Float64(f),
         };

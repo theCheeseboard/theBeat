@@ -5,8 +5,8 @@ use crate::audio_processing::audio_pipeline::faucet::Faucet;
 mod symphonia_engine;
 
 pub fn faucet_for_url(url: Url) -> Option<Faucet> {
-    if let Ok(symphonia_engine) = SymphoniaEngine::new(url) {
-        return Some(Box::new(symphonia_engine).faucet());
+    if let Ok(mut symphonia_engine) = SymphoniaEngine::new(url) {
+        return Some(symphonia_engine.faucet());
     };
 
     None

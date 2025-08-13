@@ -7,10 +7,9 @@ use contemporary::components::pager::pager;
 use contemporary::styling::theme::Theme;
 use contemporary::surface::surface;
 use gpui::{
-    App, AppContext, Context, Entity, InteractiveElement, IntoElement, Menu, MenuItem,
-    ParentElement, Render, Styled, Window, div, px,
+    div, px, App, AppContext, Context, Entity, InteractiveElement, IntoElement,
+    Menu, MenuItem, ParentElement, Render, Styled, Window,
 };
-use std::path::Components;
 
 pub struct MainSurface {
     application_menu: Entity<ApplicationMenu>,
@@ -57,7 +56,7 @@ impl MainSurface {
 }
 
 impl Render for MainSurface {
-    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let theme = cx.global::<Theme>();
 
         surface()

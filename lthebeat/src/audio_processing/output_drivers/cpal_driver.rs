@@ -4,19 +4,15 @@ use crate::audio_processing::mute::Mute;
 use crate::audio_processing::output_drivers::{OutputDevice, Sample, Sink};
 use crate::audio_processing::resamplers::rubato::RubatoResampler;
 use crate::audio_processing::sample::UnwrapSample;
-use async_ringbuf::traits::{AsyncConsumer, AsyncProducer, Consumer, Split};
-use async_ringbuf::{AsyncHeapRb, AsyncRb};
+use async_ringbuf::AsyncHeapRb;
+use async_ringbuf::traits::{AsyncProducer, Consumer, Split};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
-use cpal::{
-    BufferSize, ChannelCount, Device, SampleFormat, SampleRate, SizedSample, Stream, StreamConfig,
-};
+use cpal::{Device, SampleFormat, SizedSample, Stream, StreamConfig};
 use gpui::http_client::anyhow;
 use gpui::private::anyhow;
 use log::warn;
-use rb::{Producer, RB, RbConsumer, RbInspector, RbProducer, SpscRb};
 use smol::stream::StreamExt;
 use std::cell::RefCell;
-use std::sync::Arc;
 use std::time::Duration;
 use tracing::{error, info};
 
@@ -77,7 +73,7 @@ impl CpalOutputDevice {
                 match samples {
                     Some(Ok(samples)) => {
                         let samples_vec = samples.unwrap();
-                        producer.push_exact(&samples_vec).await.unwrap();
+                        producer.push_exact(samples_vec).await.unwrap();
                     }
                     Some(Err(err)) => {
                         info!("CpalOutputDevice: error in samples producer: {:?}", err);

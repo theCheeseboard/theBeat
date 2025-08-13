@@ -1,7 +1,6 @@
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::sink::Sink;
 use crate::audio_processing::sample::Sample;
-use log::info;
 
 pub mod audio_format;
 pub mod faucet;

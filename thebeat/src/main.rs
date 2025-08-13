@@ -2,7 +2,6 @@ mod actions;
 mod main_surface;
 mod main_window;
 
-use std::any::TypeId;
 use crate::actions::{OpenFileAction, OpenUrlAction, register_actions};
 use crate::main_window::MainWindow;
 use cntp_i18n::{I18N_MANAGER, tr, tr_load};
@@ -11,7 +10,7 @@ use contemporary::application::{ApplicationLink, Details, License, new_contempor
 use contemporary::macros::application_details;
 use contemporary::setup::{Contemporary, ContemporaryMenus, setup_contemporary};
 use contemporary::window::contemporary_window_options;
-use gpui::{App, Bounds, Menu, MenuItem, Radians, WindowBounds, WindowOptions, px, size};
+use gpui::{App, Bounds, Menu, MenuItem, WindowBounds, WindowOptions, px, size};
 use lthebeat::audio_processing::audio_controller::{AudioController, GlobalAudioController};
 use smol_macros::main;
 use std::rc::Rc;
@@ -36,7 +35,7 @@ fn mane() {
                 window_bounds: Some(WindowBounds::Windowed(bounds)),
                 ..default_window_options
             },
-            |w, cx| {
+            |_, cx| {
                 let window = MainWindow::new(cx);
                 let weak_window = window.downgrade();
                 let weak_windew = window.downgrade();

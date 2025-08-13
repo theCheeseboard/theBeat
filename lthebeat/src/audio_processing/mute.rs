@@ -18,7 +18,7 @@ macro_rules! mute_impl {
 mute_impl!(f64, 0.0);
 mute_impl!(f32, 0.0);
 mute_impl!(u32, 2147483647);
-mute_impl!(U24, U24::try_from(8388607).unwrap());
+mute_impl!(U24, U24::from(8388607));
 mute_impl!(u16, 32767);
 mute_impl!(u8, 127);
 mute_impl!(i32, 0);

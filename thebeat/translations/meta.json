@@ -1,67 +1,67 @@
 {
   "ALBUMS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:101",
+    "definedIn": "src/main_surface.rs:100",
     "plural": false,
     "description": null
   },
   "ARTISTS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:89",
+    "definedIn": "src/main_surface.rs:88",
     "plural": false,
     "description": null
   },
   "FILE_OPEN": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:76",
+    "definedIn": "src/main.rs:75",
     "plural": false,
     "description": null
   },
   "FILE_OPEN_URL": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:78",
+    "definedIn": "src/main.rs:77",
     "plural": false,
     "description": null
   },
   "MENU_FILE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:74",
+    "definedIn": "src/main.rs:73",
     "plural": false,
     "description": null
   },
   "OTHER_SOURCES_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:125",
+    "definedIn": "src/main_surface.rs:124",
     "plural": false,
     "description": null
   },
   "PLAYLISTS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:113",
+    "definedIn": "src/main_surface.rs:112",
     "plural": false,
     "description": null
   },
   "TRACKS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:77",
+    "definedIn": "src/main_surface.rs:76",
     "plural": false,
     "description": null
   },
   "URL_OPEN_TEXT": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:69",
+    "definedIn": "src/main_window.rs:68",
     "plural": false,
     "description": null
   },
   "URL_OPEN_TITLE": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:62",
+    "definedIn": "src/main_window.rs:61",
     "plural": false,
     "description": null
   },
   "URL_TEXT_FIELD_PLACEHOLDER": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:33",
+    "definedIn": "src/main_window.rs:32",
     "plural": false,
     "description": null
   }
