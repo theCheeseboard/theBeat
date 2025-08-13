@@ -37,19 +37,19 @@ impl RubatoResampler {
                         if resampler.is_resampling_required() {
                             let resampler = &mut resampler.resampler;
                             sample_buffer.append(&mut next_sample.into_f32());
-                            if resampler.input_frames_next() * channels as usize
-                                <= sample_buffer.len()
-                            {
+
+                            let required_samples =
+                                resampler.input_frames_next() * channels as usize;
+
+                            while required_samples <= sample_buffer.len() {
                                 // Deinterleave samples
                                 let mut processed_samples = Vec::new();
                                 processed_samples.resize(channels as usize, Vec::new());
 
-                                for i in 0..resampler.input_frames_next() * channels as usize {
+                                for i in 0..required_samples {
                                     processed_samples[i % channels as usize].push(sample_buffer[i]);
                                 }
-                                sample_buffer = sample_buffer
-                                    [(resampler.input_frames_next() * channels as usize)..]
-                                    .to_vec();
+                                sample_buffer = sample_buffer[required_samples..].to_vec();
 
                                 // Rudimentary up/downmixing
                                 if channels == 1 && target_audio_format.channels != 1 {

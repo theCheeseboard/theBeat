@@ -114,13 +114,6 @@ impl OutputDevice for CpalOutputDevice {
     }
 
     fn open_sink(&self) -> anyhow::Result<Sink> {
-        // let mut supported_configs = self.device.supported_output_configs()?;
-        // let supported_stream_config_range = supported_configs.find(|c| c.channels() == 2).unwrap();
-        // let sample_format = supported_stream_config_range.sample_format();
-        // let config = supported_stream_config_range
-        //     // .with_sample_rate(SampleRate(44100))
-        //     .with_max_sample_rate()
-        //     .config();
         let supported_stream_config = self.device.default_output_config().unwrap();
         let sample_format = supported_stream_config.sample_format();
         let config = supported_stream_config.config();

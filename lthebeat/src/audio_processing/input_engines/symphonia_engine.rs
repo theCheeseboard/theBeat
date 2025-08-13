@@ -1,5 +1,6 @@
 mod http_source;
 
+use tracing::info;
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
 use crate::audio_processing::input_engines::symphonia_engine::http_source::HttpSource;
@@ -55,6 +56,8 @@ impl SymphoniaEngine {
         let first_track = probe_result.format.default_track().unwrap();
         let decoder_opts = Default::default();
         let mut decoder = codec_registry.make(&first_track.codec_params, &decoder_opts)?;
+
+        let timebase = first_track.codec_params.time_base.unwrap();
 
         let (mut rb_prod, rb_cons) = AsyncHeapRb::<PipelineSample>::new(SAMPLE_BUFFER_SIZE).split();
         thread::spawn(move || {
@@ -179,6 +182,9 @@ impl SymphoniaEngine {
                         }
                         _ => panic!("Panic"),
                     };
+
+                    let tm = timebase.calc_time(next_packet.ts).seconds;
+                    info!("{}", tm);
 
                     Some(Sample::new(rate, channel_count as u16, sample_data))
                 };

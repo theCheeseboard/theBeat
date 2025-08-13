@@ -7,7 +7,7 @@ pub mod audio_format;
 pub mod faucet;
 pub mod sink;
 
-pub const SAMPLE_BUFFER_SIZE: usize = 128;
+pub const SAMPLE_BUFFER_SIZE: usize = 16;
 
 pub type PipelineSample = Result<Sample, FaucetError>;
 
