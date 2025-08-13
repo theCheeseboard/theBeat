@@ -1,0 +1,22 @@
+[package]
+name = "lthebeat"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+gpui = { workspace = true }
+cpal = { workspace = true }
+rb = { workspace = true }
+intx = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+log = "0.4.27"
+anyhow = "1"
+symphonia = { workspace = true, features = ["all-codecs"] }
+rubato = { workspace = true }
+url = { workspace = true }
+isahc = "1"
+smol = { workspace = true }
+async-channel = "2"
+async-ringbuf = "0.3.4"
+cancellation-token = "0.1"

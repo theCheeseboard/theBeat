@@ -10,6 +10,9 @@ smol-macros = { workspace = true }
 contemporary = { workspace = true }
 cntp_i18n = { workspace = true }
 cntp_icon_tool_macros = { workspace = true }
+lthebeat = { path = "../lthebeat" }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
 
 [build-dependencies]
 cntp_i18n_gen = { workspace = true }

@@ -1,8 +1,13 @@
 {
   "ALBUMS_BUTTON": "Albums",
   "ARTISTS_BUTTON": "Artists",
+  "FILE_OPEN": "Open",
+  "FILE_OPEN_URL": "Open URL",
   "MENU_FILE": "File",
   "OTHER_SOURCES_BUTTON": "Other Sources",
   "PLAYLISTS_BUTTON": "Playlists",
-  "TRACKS_BUTTON": "Tracks"
+  "TRACKS_BUTTON": "Tracks",
+  "URL_OPEN_TEXT": "Enter the URL to open",
+  "URL_OPEN_TITLE": "Open URL",
+  "URL_TEXT_FIELD_PLACEHOLDER": "URL"
 }

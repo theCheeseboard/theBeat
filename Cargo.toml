@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["thebeat"]
+members = [ "lthebeat","thebeat"]
 
 [workspace.dependencies]
 gpui = { git = "https://github.com/zed-industries/zed" }
@@ -10,3 +10,12 @@ contemporary = { git = "https://github.com/vicr123/contemporary-rs" }
 cntp_i18n = { git = "https://github.com/vicr123/contemporary-rs", features = ["gpui"] }
 cntp_icon_tool_macros = { git = "https://github.com/vicr123/contemporary-rs" }
 cntp_i18n_gen = { git = "https://github.com/vicr123/contemporary-rs" }
+cpal = "0.16"
+rb = "0.4"
+intx = "0.1"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+anyhow = "1"
+symphonia = "0.5"
+rubato = "0.16"
+url = "2.5"

@@ -11,9 +11,21 @@
     "plural": false,
     "description": null
   },
+  "FILE_OPEN": {
+    "context": "main.rs",
+    "definedIn": "src/main.rs:70",
+    "plural": false,
+    "description": null
+  },
+  "FILE_OPEN_URL": {
+    "context": "main.rs",
+    "definedIn": "src/main.rs:71",
+    "plural": false,
+    "description": null
+  },
   "MENU_FILE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:54",
+    "definedIn": "src/main.rs:68",
     "plural": false,
     "description": null
   },
@@ -32,6 +44,24 @@
   "TRACKS_BUTTON": {
     "context": "main_surface.rs",
     "definedIn": "src/main_surface.rs:77",
+    "plural": false,
+    "description": null
+  },
+  "URL_OPEN_TEXT": {
+    "context": "main_window.rs",
+    "definedIn": "src/main_window.rs:70",
+    "plural": false,
+    "description": null
+  },
+  "URL_OPEN_TITLE": {
+    "context": "main_window.rs",
+    "definedIn": "src/main_window.rs:63",
+    "plural": false,
+    "description": null
+  },
+  "URL_TEXT_FIELD_PLACEHOLDER": {
+    "context": "main_window.rs",
+    "definedIn": "src/main_window.rs:33",
     "plural": false,
     "description": null
   }
