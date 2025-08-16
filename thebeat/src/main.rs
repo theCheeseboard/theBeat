@@ -14,6 +14,7 @@ use gpui::{App, Bounds, Menu, MenuItem, WindowBounds, WindowOptions, px, size};
 use lthebeat::audio_processing::audio_controller::{AudioController, GlobalAudioController};
 use smol_macros::main;
 use std::rc::Rc;
+use lthebeat::playlist::Playlist;
 
 fn mane() {
     application_icon!("../dist/baseicon.svg");
@@ -27,6 +28,7 @@ fn mane() {
 
         let audio_controller = AudioController::new();
         cx.set_global(GlobalAudioController::new(audio_controller.clone()));
+        cx.set_global(Playlist::new());
 
         let default_window_options = contemporary_window_options(cx);
         register_actions(cx);

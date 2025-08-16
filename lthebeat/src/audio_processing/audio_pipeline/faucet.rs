@@ -9,7 +9,7 @@ pub struct Faucet {
     metadata: Arc<RwLock<AudioMetadata>>
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum FaucetError {
     UnknownError,
     EndOfStream
