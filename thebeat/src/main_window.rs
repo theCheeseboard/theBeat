@@ -11,6 +11,8 @@ use gpui::{
     ParentElement, Render, Styled, Window,
 };
 use lthebeat::audio_processing::audio_controller::GlobalAudioController;
+use lthebeat::play_queue::media_item::MediaItem;
+use lthebeat::play_queue::PlayQueue;
 
 pub struct MainWindow {
     main_surface: Entity<MainSurface>,
@@ -82,9 +84,10 @@ impl Render for MainWindow {
                             let current_text = text_field.current_text(cx);
                             match Url::parse(current_text.to_string().as_str()) {
                                 Ok(url) => {
-                                    let global_audio_controller =
-                                        cx.global::<GlobalAudioController>();
-                                    global_audio_controller.audio_controller.play_url(url);
+                                    let item = MediaItem::new(url, cx);
+                                    let play_queue =
+                                        cx.global_mut::<PlayQueue>();
+                                    play_queue.add_item(item);
                                     this.is_url_dialog_open = false;
                                     cx.notify();
                                 }

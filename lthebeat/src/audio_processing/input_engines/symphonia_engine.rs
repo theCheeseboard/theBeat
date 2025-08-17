@@ -192,7 +192,11 @@ impl SymphoniaEngine {
                     return;
                 }
 
-                smol::block_on(rb_prod.push(next_sample.ok_or(FaucetError::UnknownError))).unwrap();
+                if smol::block_on(rb_prod.push(next_sample.ok_or(FaucetError::UnknownError))).is_err() {
+                    warn!("SymphoniaEngine: error while pushing sample to buffer");
+                    warn!("SymphoniaEngine: stopping");
+                    return;
+                }
             }
         });
 

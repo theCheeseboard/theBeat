@@ -14,7 +14,12 @@ use gpui::{App, Bounds, Menu, MenuItem, WindowBounds, WindowOptions, px, size};
 use lthebeat::audio_processing::audio_controller::{AudioController, GlobalAudioController};
 use smol_macros::main;
 use std::rc::Rc;
-use lthebeat::playlist::Playlist;
+use lthebeat::audio_processing::audio_pipeline::duplicator::Duplicator;
+use lthebeat::audio_processing::audio_pipeline::plug;
+use lthebeat::audio_processing::audio_pipeline::sink::create_dummy_sink;
+use lthebeat::audio_processing::input_engines::faucet_for_url;
+use lthebeat::audio_processing::output_drivers::cpal_driver::{cpal_default_output_device, cpal_output_devices};
+use lthebeat::play_queue::PlayQueue;
 
 fn mane() {
     application_icon!("../dist/baseicon.svg");
@@ -28,7 +33,18 @@ fn mane() {
 
         let audio_controller = AudioController::new();
         cx.set_global(GlobalAudioController::new(audio_controller.clone()));
-        cx.set_global(Playlist::new());
+
+        let mut play_queue = PlayQueue::new(cx);
+        
+        let device = cpal_default_output_device();
+        let sink = device.open_sink().unwrap();
+        
+        plug(play_queue.open_faucet(), sink);
+        
+        device.play();
+        Box::leak(device);
+
+        cx.set_global(play_queue);
 
         let default_window_options = contemporary_window_options(cx);
         register_actions(cx);

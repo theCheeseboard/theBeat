@@ -1,7 +1,9 @@
-use gpui::http_client::Url;
-use gpui::{actions, App, KeyBinding, PathPromptOptions};
 use gpui::AppContext;
+use gpui::http_client::Url;
+use gpui::{App, AsyncApp, KeyBinding, PathPromptOptions, actions};
 use lthebeat::audio_processing::audio_controller::GlobalAudioController;
+use lthebeat::play_queue::PlayQueue;
+use lthebeat::play_queue::media_item::MediaItem;
 
 actions!(thebeat, [OpenFileAction, OpenUrlAction]);
 
@@ -10,7 +12,7 @@ pub fn register_actions(cx: &mut App) {
     // cx.on_action(open_url);
     cx.bind_keys([
         KeyBinding::new("secondary-o", OpenFileAction, None),
-        KeyBinding::new("secondary-shift-o", OpenUrlAction, None)
+        KeyBinding::new("secondary-shift-o", OpenUrlAction, None),
     ])
 }
 
@@ -20,12 +22,18 @@ fn open_file(_: &OpenFileAction, cx: &mut App) {
         directories: false,
         multiple: false,
     });
-    cx.spawn(async |cx| {
+    cx.spawn(async |cx: &mut AsyncApp| {
         let result = future.await;
-        cx.read_global::<GlobalAudioController, ()>(|global_audio_controller: &GlobalAudioController, _| {
+        cx.update_global::<PlayQueue, ()>(|play_queue: &mut PlayQueue, cx| {
             if let Ok(Ok(Some(x))) = result {
-                global_audio_controller.audio_controller.play_url(Url::from_file_path(x.first().unwrap().as_path()).unwrap())
+                let item = MediaItem::new(
+                    Url::from_file_path(x.first().unwrap().as_path()).unwrap(),
+                    cx,
+                );
+                play_queue.add_item(item);
             }
-        }).unwrap();
-    }).detach()
+        })
+        .unwrap();
+    })
+    .detach()
 }

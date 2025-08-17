@@ -1,3 +1,3 @@
 pub mod audio_processing;
-pub mod playlist;
+pub mod play_queue;
 mod cyclic_cursor_vec;

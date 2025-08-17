@@ -13,19 +13,19 @@
   },
   "FILE_OPEN": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:77",
+    "definedIn": "src/main.rs:93",
     "plural": false,
     "description": null
   },
   "FILE_OPEN_URL": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:79",
+    "definedIn": "src/main.rs:95",
     "plural": false,
     "description": null
   },
   "MENU_FILE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:75",
+    "definedIn": "src/main.rs:91",
     "plural": false,
     "description": null
   },
@@ -49,19 +49,19 @@
   },
   "URL_OPEN_TEXT": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:68",
+    "definedIn": "src/main_window.rs:70",
     "plural": false,
     "description": null
   },
   "URL_OPEN_TITLE": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:61",
+    "definedIn": "src/main_window.rs:63",
     "plural": false,
     "description": null
   },
   "URL_TEXT_FIELD_PLACEHOLDER": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:32",
+    "definedIn": "src/main_window.rs:34",
     "plural": false,
     "description": null
   }

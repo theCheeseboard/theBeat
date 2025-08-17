@@ -10,6 +10,7 @@ use std::cell::RefCell;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
 use std::sync::{Arc, RwLock};
+use std::time::Duration;
 use async_channel::Sender;
 use log::warn;
 use rand::random;
@@ -46,11 +47,16 @@ impl Duplicator {
                 let faucets_read = faucets.read().unwrap().clone();
                 let faucets = faucets_read.values().clone();
 
-                for faucet_buffer in faucets {
-                    if faucet_buffer.send(next_sample.clone()).await.is_err() {
-                        warn!("Faucet buffer is closed");
+                if faucets.len() == 0 {
+                    // TODO: better way to do this
+                    smol::Timer::after(Duration::from_millis(100)).await;
+                } else {
+                    for faucet_buffer in faucets {
+                        if faucet_buffer.send(next_sample.clone()).await.is_err() {
+                            warn!("Faucet buffer is closed");
 
-                        // TODO: ?
+                            // TODO: ?
+                        }
                     }
                 }
             }
@@ -66,7 +72,7 @@ impl Duplicator {
 
         let id = random();
         let (tx, rx) = async_channel::bounded(SAMPLE_BUFFER_SIZE);
-        
+
         let faucets = self.faucets.clone();
         faucets.write().unwrap().insert(id, tx);
 
