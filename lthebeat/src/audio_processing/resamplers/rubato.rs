@@ -1,13 +1,14 @@
 use crate::audio_processing::audio_pipeline::audio_format::{AudioFormat, SampleFormat};
-use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
-use crate::audio_processing::audio_pipeline::sink::Sink;
-use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
+use crate::audio_processing::audio_pipeline::faucet::{create_faucet, Faucet, FaucetError};
+use crate::audio_processing::audio_pipeline::sink::{create_sink, Sink};
 use crate::audio_processing::sample::{Sample, SampleData};
 use async_ringbuf::AsyncHeapRb;
 use async_ringbuf::traits::{AsyncProducer, Split};
 use rubato::{FftFixedIn, Resampler};
+use smol::io::AsyncWriteExt;
 use smol::stream::StreamExt;
 use tracing::info;
+use crate::audio_processing::audio_pipeline::PipelineSample;
 
 pub struct RubatoResampler {
     sink: Option<Sink>,
@@ -16,17 +17,15 @@ pub struct RubatoResampler {
 
 impl RubatoResampler {
     pub fn new(target_audio_format: AudioFormat) -> Self {
-        let (mut rb_faucet_prod, rb_faucet_cons) =
-            AsyncHeapRb::<PipelineSample>::new(SAMPLE_BUFFER_SIZE).split();
-        let (rb_sink_prod, mut rb_sink_cons) =
-            AsyncHeapRb::<PipelineSample>::new(SAMPLE_BUFFER_SIZE).split();
+        let (faucet, mut rb_faucet_prod) = create_faucet();
+        let (sink, mut rb_sink_cons) = create_sink();
 
         smol::spawn(async move {
             let mut resampler = RubatoResamplerWrapper::new(target_audio_format);
             let mut sample_buffer = Vec::new();
             loop {
                 match rb_sink_cons.next().await {
-                    Some(Ok(next_sample)) => {
+                    Some(Ok(PipelineSample::Sample(next_sample))) => {
                         let channels = next_sample.channels;
                         if resampler
                             .reconfigure_if_required(next_sample.sample_rate, next_sample.channels)
@@ -105,7 +104,7 @@ impl RubatoResampler {
                                 );
                                 let next_sample = next_sample.convert_from_f64(resampled_buffer);
                                 rb_faucet_prod
-                                    .push(Ok(next_sample))
+                                    .push(Ok(PipelineSample::Sample(next_sample)))
                                     .await
                                     .expect("failed to push sample to sink");
                             }
@@ -133,15 +132,27 @@ impl RubatoResampler {
                             );
                             let next_sample = next_sample.convert_from_f64(f32_samples);
                             rb_faucet_prod
-                                .push(Ok(next_sample))
+                                .push(Ok(PipelineSample::Sample(next_sample)))
                                 .await
                                 .expect("failed to push sample to sink");
                         } else {
                             rb_faucet_prod
-                                .push(Ok(next_sample))
+                                .push(Ok(PipelineSample::Sample(next_sample)))
                                 .await
                                 .expect("failed to push sample to sink");
                         }
+                    }
+                    Some(Ok(PipelineSample::Reset)) => {
+                        info!("Reset packet received");
+
+                        // Flush the resampler
+                        sample_buffer.clear();
+
+                        // Propagate the reset
+                        rb_faucet_prod
+                            .push(Ok(PipelineSample::Reset))
+                            .await
+                            .expect("failed to push sample to sink");
                     }
                     Some(Err(err)) => {
                         // Propagate the sample
@@ -162,8 +173,8 @@ impl RubatoResampler {
         .detach();
 
         RubatoResampler {
-            sink: Some(Sink::new(rb_sink_prod)),
-            faucet: Some(Faucet::new(rb_faucet_cons)),
+            sink: Some(sink),
+            faucet: Some(faucet),
         }
     }
 

@@ -1,7 +1,9 @@
 mod http_source;
 
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
-use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
+use crate::audio_processing::audio_pipeline::{
+    PipelineSample, PipelineSampleResult, SAMPLE_BUFFER_SIZE,
+};
 use crate::audio_processing::input_engines::symphonia_engine::http_source::HttpSource;
 use crate::audio_processing::sample::{Sample, SampleData};
 use async_ringbuf::AsyncHeapRb;
@@ -51,7 +53,8 @@ impl SymphoniaEngine {
         let decoder_opts = Default::default();
         let mut decoder = codec_registry.make(&first_track.codec_params, &decoder_opts)?;
 
-        let (mut rb_prod, rb_cons) = AsyncHeapRb::<PipelineSample>::new(SAMPLE_BUFFER_SIZE).split();
+        let (mut rb_prod, rb_cons) =
+            AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();
         thread::spawn(move || {
             loop {
                 let next_sample = {
@@ -72,7 +75,7 @@ impl SymphoniaEngine {
                     let sample_data = match decoded {
                         AudioBufferRef::U8(v) => {
                             let mut samples: Vec<u8> =
-                                Vec::with_capacity(v.spec().channels.count() * v.capacity());
+                                vec![0; v.spec().channels.count() * v.capacity()];
 
                             for i in 0..channel_count {
                                 for sample in v.chan(i) {
@@ -84,7 +87,7 @@ impl SymphoniaEngine {
                         }
                         AudioBufferRef::U16(v) => {
                             let mut samples: Vec<u16> =
-                                Vec::with_capacity(v.spec().channels.count() * v.capacity());
+                                vec![0; v.spec().channels.count() * v.capacity()];
 
                             for i in 0..channel_count {
                                 for sample in v.chan(i) {
@@ -96,7 +99,7 @@ impl SymphoniaEngine {
                         }
                         AudioBufferRef::U32(v) => {
                             let mut samples: Vec<u32> =
-                                Vec::with_capacity(v.spec().channels.count() * v.capacity());
+                                vec![0; v.spec().channels.count() * v.capacity()];
 
                             for i in 0..channel_count {
                                 for sample in v.chan(i) {
@@ -108,7 +111,7 @@ impl SymphoniaEngine {
                         }
                         AudioBufferRef::S8(v) => {
                             let mut samples: Vec<i8> =
-                                Vec::with_capacity(v.spec().channels.count() * v.capacity());
+                                vec![0; v.spec().channels.count() * v.capacity()];
 
                             for i in 0..channel_count {
                                 for sample in v.chan(i) {
@@ -120,7 +123,7 @@ impl SymphoniaEngine {
                         }
                         AudioBufferRef::S16(v) => {
                             let mut samples: Vec<i16> =
-                                Vec::with_capacity(v.spec().channels.count() * v.capacity());
+                                vec![0; v.spec().channels.count() * v.capacity()];
 
                             for i in 0..channel_count {
                                 for sample in v.chan(i) {
@@ -192,7 +195,15 @@ impl SymphoniaEngine {
                     return;
                 }
 
-                if smol::block_on(rb_prod.push(next_sample.ok_or(FaucetError::UnknownError))).is_err() {
+                if smol::block_on(
+                    rb_prod.push(
+                        next_sample
+                            .ok_or(FaucetError::UnknownError)
+                            .map(PipelineSample::Sample),
+                    ),
+                )
+                .is_err()
+                {
                     warn!("SymphoniaEngine: error while pushing sample to buffer");
                     warn!("SymphoniaEngine: stopping");
                     return;

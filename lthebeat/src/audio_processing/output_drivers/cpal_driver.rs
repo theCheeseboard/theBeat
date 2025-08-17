@@ -1,11 +1,11 @@
 use crate::audio_processing::audio_pipeline::audio_format::AudioFormat;
-use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE, plug};
+use crate::audio_processing::audio_pipeline::{SAMPLE_BUFFER_SIZE, plug, PipelineSampleResult, PipelineSample};
 use crate::audio_processing::mute::Mute;
 use crate::audio_processing::output_drivers::{OutputDevice, Sample, Sink};
 use crate::audio_processing::resamplers::rubato::RubatoResampler;
 use crate::audio_processing::sample::UnwrapSample;
 use async_ringbuf::AsyncHeapRb;
-use async_ringbuf::traits::{AsyncProducer, Consumer, Split};
+use async_ringbuf::traits::{AsyncProducer, Based, Consumer, Split};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use cpal::{Device, SampleFormat, SizedSample, Stream, StreamConfig};
 use gpui::http_client::anyhow;
@@ -15,6 +15,7 @@ use smol::stream::StreamExt;
 use std::cell::RefCell;
 use std::time::Duration;
 use tracing::{error, info};
+use crate::audio_processing::audio_pipeline::sink::create_sink;
 
 const BUFFER_DURATION: Duration = Duration::from_millis(200);
 const BUFFER_DURATION_MSEC: usize = BUFFER_DURATION.as_millis() as usize;
@@ -65,15 +66,18 @@ impl CpalOutputDevice {
             None,
         )?;
 
-        let samples_buffer = AsyncHeapRb::<PipelineSample>::new(SAMPLE_BUFFER_SIZE);
-        let (samples_producer, mut samples_consumer) = samples_buffer.split();
+        let (sink, mut samples_consumer) = create_sink();
         smol::spawn(async move {
             loop {
                 let samples = samples_consumer.next().await;
                 match samples {
-                    Some(Ok(samples)) => {
+                    Some(Ok(PipelineSample::Sample(samples))) => {
                         let samples_vec = samples.unwrap();
                         producer.push_exact(samples_vec).await.unwrap();
+                    }
+                    Some(Ok(PipelineSample::Reset)) => {
+                        // Clear the pipeline
+
                     }
                     Some(Err(err)) => {
                         info!("CpalOutputDevice: error in samples producer: {:?}", err);
@@ -90,7 +94,7 @@ impl CpalOutputDevice {
 
         self.streams.borrow_mut().push(stream);
 
-        Ok(Sink::new(samples_producer))
+        Ok(sink)
     }
 }
 

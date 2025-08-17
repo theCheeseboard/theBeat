@@ -1,7 +1,7 @@
 use crate::audio_processing::audio_pipeline::audio_format::SampleFormat;
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::sink::Sink;
-use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
+use crate::audio_processing::audio_pipeline::{PipelineSampleResult, SAMPLE_BUFFER_SIZE};
 use crate::audio_processing::sample::{Sample, SampleData};
 use async_ringbuf::traits::{AsyncProducer, Split};
 use async_ringbuf::{AsyncHeapProd, AsyncHeapRb};
@@ -17,7 +17,7 @@ use rand::random;
 
 pub struct Duplicator {
     sink: Option<Sink>,
-    faucets: Arc<RwLock<HashMap<u64, Sender<PipelineSample>>>>,
+    faucets: Arc<RwLock<HashMap<u64, Sender<PipelineSampleResult>>>>,
 }
 
 impl Default for Duplicator {
@@ -29,7 +29,7 @@ impl Default for Duplicator {
 impl Duplicator {
     pub fn new() -> Self {
         let (rb_sink_prod, mut rb_sink_cons) =
-            AsyncHeapRb::<PipelineSample>::new(SAMPLE_BUFFER_SIZE).split();
+            AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();
 
         let faucets = Arc::new(RwLock::new(HashMap::new()));
         let duplicator = Duplicator {
@@ -68,7 +68,7 @@ impl Duplicator {
 
     pub fn open_faucet(&mut self) -> Faucet {
         let (mut rb_faucet_prod, rb_faucet_cons) =
-            AsyncHeapRb::<PipelineSample>::new(SAMPLE_BUFFER_SIZE).split();
+            AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();
 
         let id = random();
         let (tx, rx) = async_channel::bounded(SAMPLE_BUFFER_SIZE);

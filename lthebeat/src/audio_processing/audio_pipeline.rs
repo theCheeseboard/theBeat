@@ -8,9 +8,15 @@ pub mod faucet;
 pub mod sink;
 pub mod duplicator;
 
-pub const SAMPLE_BUFFER_SIZE: usize = 16;
+pub const SAMPLE_BUFFER_SIZE: usize = 2;
 
-pub type PipelineSample = Result<Sample, FaucetError>;
+pub type PipelineSampleResult = Result<PipelineSample, FaucetError>;
+
+#[derive(Debug, Clone)]
+pub enum PipelineSample {
+    Sample(Sample),
+    Reset
+}
 
 struct Plug {
     faucet: Faucet,

@@ -13,25 +13,43 @@
   },
   "FILE_OPEN": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:93",
+    "definedIn": "src/main.rs:98",
     "plural": false,
     "description": null
   },
   "FILE_OPEN_URL": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:95",
+    "definedIn": "src/main.rs:100",
     "plural": false,
     "description": null
   },
   "MENU_FILE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:91",
+    "definedIn": "src/main.rs:96",
+    "plural": false,
+    "description": null
+  },
+  "MENU_PLAYBACK": {
+    "context": "main.rs",
+    "definedIn": "src/main.rs:106",
     "plural": false,
     "description": null
   },
   "OTHER_SOURCES_BUTTON": {
     "context": "main_surface.rs",
     "definedIn": "src/main_surface.rs:124",
+    "plural": false,
+    "description": null
+  },
+  "PLAYBACK_SKIP_NEXT": {
+    "context": "main.rs",
+    "definedIn": "src/main.rs:113",
+    "plural": false,
+    "description": null
+  },
+  "PLAYBACK_SKIP_PREVIOUS": {
+    "context": "main.rs",
+    "definedIn": "src/main.rs:109",
     "plural": false,
     "description": null
   },
