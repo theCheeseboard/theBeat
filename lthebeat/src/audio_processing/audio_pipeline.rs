@@ -8,7 +8,7 @@ pub mod faucet;
 pub mod sink;
 pub mod duplicator;
 
-pub const SAMPLE_BUFFER_SIZE: usize = 2;
+pub const SAMPLE_BUFFER_SIZE: usize = 4;
 
 pub type PipelineSampleResult = Result<PipelineSample, FaucetError>;
 

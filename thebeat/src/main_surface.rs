@@ -1,3 +1,7 @@
+use crate::OpenFileAction;
+use crate::OpenUrlAction;
+use crate::SkipNextAction;
+use crate::SkipPreviousAction;
 use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlists, Tracks};
 use cntp_i18n::tr;
 use contemporary::components::application_menu::ApplicationMenu;
@@ -7,8 +11,8 @@ use contemporary::components::pager::pager;
 use contemporary::styling::theme::Theme;
 use contemporary::surface::surface;
 use gpui::{
-    div, px, App, AppContext, Context, Entity, InteractiveElement, IntoElement,
-    Menu, MenuItem, ParentElement, Render, Styled, Window,
+    App, AppContext, Context, Entity, InteractiveElement, IntoElement, Menu, MenuItem,
+    ParentElement, Render, Styled, Window, div, px,
 };
 
 pub struct MainSurface {
@@ -44,10 +48,13 @@ impl MainSurface {
                 cx,
                 Menu {
                     name: "Application Menu".into(),
-                    items: vec![MenuItem::submenu(Menu {
-                        name: tr!("MENU_FILE").into(),
-                        items: vec![],
-                    })],
+                    items: vec![
+                        MenuItem::action(tr!("FILE_OPEN"), OpenFileAction),
+                        MenuItem::action(tr!("FILE_OPEN_URL"), OpenUrlAction),
+                        MenuItem::separator(),
+                        MenuItem::action(tr!("PLAYBACK_SKIP_PREVIOUS"), SkipPreviousAction),
+                        MenuItem::action(tr!("PLAYBACK_SKIP_NEXT"), SkipNextAction),
+                    ],
                 },
             ),
             selected_tab: Tracks,
