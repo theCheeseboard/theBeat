@@ -23,17 +23,19 @@ fn open_file(_: &OpenFileAction, cx: &mut App) {
     let future = cx.prompt_for_paths(PathPromptOptions {
         files: true,
         directories: false,
-        multiple: false,
+        multiple: true,
     });
     cx.spawn(async |cx: &mut AsyncApp| {
         let result = future.await;
         cx.update_global::<PlayQueue, ()>(|play_queue: &mut PlayQueue, cx| {
-            if let Ok(Ok(Some(x))) = result {
-                let item = MediaItem::new(
-                    Url::from_file_path(x.first().unwrap().as_path()).unwrap(),
-                    cx,
-                );
-                play_queue.add_item(item);
+            if let Ok(Ok(Some(paths))) = result {
+                for path in paths {
+                    let item = MediaItem::new(
+                        Url::from_file_path(path.as_path()).unwrap(),
+                        cx,
+                    );
+                    play_queue.add_item(item);
+                }
             }
         })
         .unwrap();
