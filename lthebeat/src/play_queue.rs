@@ -25,7 +25,7 @@ pub struct PlayQueue {
     shown_items: Vec<Entity<MediaItem>>,
     played_items: Arc<RwLock<CyclicCursorVec<Entity<MediaItem>>>>,
     shuffle: bool,
-    faucet_queue: Arc<RwLock<Vec<RwLock<FaucetQueueItem>>>>,
+    faucet_queue: Arc<RwLock<Vec<FaucetQueueItem>>>,
     faucet_input: Arc<RwLock<AsyncHeapProd<PipelineSampleResult>>>,
     duplicator: Duplicator
 }
@@ -67,10 +67,10 @@ impl PlayQueue {
                     if let Some(faucet) = next_media_item.update(cx, |next_media_item, cx| {
                         faucet_for_url(next_media_item.url.clone())
                     }).ok().flatten() {
-                        faucet_queue_borrow.push(RwLock::new(FaucetQueueItem {
+                        faucet_queue_borrow.push(FaucetQueueItem {
                             faucet,
                             associated_item: next_media_item.clone(),
-                        }))
+                        })
                     }
                 }
 
@@ -83,7 +83,7 @@ impl PlayQueue {
 
                 let mut next_sample = None;
                 {
-                    let faucet_arc = &mut faucet_queue_borrow.first().unwrap().write().await.faucet;
+                    let faucet_arc = &mut faucet_queue_borrow.first_mut().unwrap().faucet;
                     if faucet_arc.samples_waiting() > 0 {
                         next_sample = Some(smol::block_on(faucet_arc.next_sample()));
                     }
@@ -124,7 +124,7 @@ impl PlayQueue {
 
         let current_item = played_items.current();
         if !faucet_queue_borrow.is_empty() {
-            if faucet_queue_borrow.first().unwrap().read_blocking().associated_item.entity_id() != current_item.entity_id() {
+            if faucet_queue_borrow.first().unwrap().associated_item.entity_id() != current_item.entity_id() {
                 // We've already started streaming the next item, so reset everything and jump straight to the next item
                 faucet_queue_borrow.clear();
 
