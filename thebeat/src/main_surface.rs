@@ -3,6 +3,8 @@ use crate::OpenUrlAction;
 use crate::SkipNextAction;
 use crate::SkipPreviousAction;
 use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlists, Tracks};
+use crate::play_queue::play_queue;
+use crate::transport_controls::transport_controls;
 use cntp_i18n::tr;
 use contemporary::components::application_menu::ApplicationMenu;
 use contemporary::components::button::button;
@@ -139,9 +141,24 @@ impl Render for MainSurface {
                 ),
             )
             .child(
-                pager("main-pager", self.selected_tab.index())
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(4.))
                     .w_full()
-                    .h_full(),
+                    .h_full()
+                    .child(
+                        div()
+                            .flex()
+                            .flex_grow()
+                            .child(
+                                pager("main-pager", self.selected_tab.index())
+                                    .flex_grow()
+                                    .h_full(),
+                            )
+                            .child(play_queue()),
+                    )
+                    .child(transport_controls()),
             )
             .application_menu(self.application_menu.clone())
     }

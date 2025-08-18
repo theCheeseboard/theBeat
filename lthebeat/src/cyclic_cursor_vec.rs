@@ -1,6 +1,6 @@
 #[derive(Clone)]
 pub struct CyclicCursorVec<T> {
-    vec: Vec<T>,
+    pub vec: Vec<T>,
     current_index: usize,
 }
 
@@ -39,6 +39,10 @@ impl<T> CyclicCursorVec<T> {
             self.current_index -= 1
         }
         self.current()
+    }
+
+    pub fn set_current(&mut self, index: usize) {
+        self.current_index = index;
     }
     
     pub fn peek(&self) -> &T {

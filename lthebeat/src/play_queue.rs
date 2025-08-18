@@ -22,7 +22,7 @@ struct FaucetQueueItem {
 }
 
 pub struct PlayQueue {
-    shown_items: Vec<Entity<MediaItem>>,
+    pub shown_items: Vec<Entity<MediaItem>>,
     played_items: Arc<RwLock<CyclicCursorVec<Entity<MediaItem>>>>,
     shuffle: bool,
     faucet_queue: Arc<RwLock<Vec<FaucetQueueItem>>>,
@@ -168,6 +168,26 @@ impl PlayQueue {
             played_items.prev();
         }
         played_items.prev();
+        faucet_queue_borrow.clear();
+
+        let faucet_input = self.faucet_input.clone();
+        smol::spawn(async move {
+            faucet_input.write().await.push(Ok(PipelineSample::Reset)).await.unwrap();
+        }).detach()
+    }
+
+    pub fn skip_to_item(&mut self, item: Entity<MediaItem>) {
+        let mut played_items = self.played_items.write_blocking();
+        if played_items.is_empty() {
+            return;
+        }
+
+        let new_position = played_items.vec.iter().position(|i| i.entity_id() == item.entity_id()).unwrap();
+        played_items.set_current(new_position);
+        // Skip back again because the play thread will call next() on the current item
+        played_items.prev();
+
+        let mut faucet_queue_borrow = self.faucet_queue.write_blocking();
         faucet_queue_borrow.clear();
 
         let faucet_input = self.faucet_input.clone();

@@ -1,6 +1,8 @@
 mod actions;
 mod main_surface;
 mod main_window;
+mod play_queue;
+mod transport_controls;
 
 use crate::actions::{
     OpenFileAction, OpenUrlAction, SkipNextAction, SkipPreviousAction, register_actions,
@@ -50,7 +52,7 @@ fn mane() {
 
         cx.set_global(play_queue);
 
-        let default_window_options = contemporary_window_options(cx);
+        let default_window_options = contemporary_window_options(cx, "theBeat".into());
         register_actions(cx);
         cx.open_window(
             WindowOptions {
