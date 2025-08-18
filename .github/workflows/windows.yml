@@ -34,10 +34,10 @@ jobs:
         run: cargo build --verbose --release
       - name: Bundle
         run: cargo cntp-bundle
-        working-directory: playground
+        working-directory: thebeat
       - name: Deploy
         run: cargo cntp-deploy --output-file "$env:GITHUB_WORKSPACE/theBeat-$env:ARCH.exe"
-        working-directory: playground
+        working-directory: thebeat
       - uses: actions/upload-artifact@v4
         with:
           name: theBeat-windows-${{ env.ARCH }}
