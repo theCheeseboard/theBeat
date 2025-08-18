@@ -1,5 +1,6 @@
 mod http_source;
 
+use std::borrow::Cow;
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::{
     PipelineSample, PipelineSampleResult, SAMPLE_BUFFER_SIZE,
@@ -11,7 +12,8 @@ use async_ringbuf::traits::{AsyncProducer, Split};
 use log::warn;
 use std::fs::File;
 use std::thread;
-use symphonia::core::audio::{AudioBufferRef, Signal};
+use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Signal};
+use symphonia::core::codecs::{CodecParameters, CodecType, CODEC_TYPE_PCM_S16BE, CODEC_TYPE_PCM_S16BE_PLANAR, CODEC_TYPE_PCM_S16LE, CODEC_TYPE_PCM_S16LE_PLANAR};
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
 use symphonia::core::probe::Hint;
 use symphonia::default::{get_codecs, get_probe};
@@ -74,103 +76,28 @@ impl SymphoniaEngine {
 
                     let sample_data = match decoded {
                         AudioBufferRef::U8(v) => {
-                            let mut samples: Vec<u8> =
-                                vec![0; v.spec().channels.count() * v.capacity()];
-
-                            for i in 0..channel_count {
-                                for sample in v.chan(i) {
-                                    samples[i * channel_count + i] = *sample;
-                                }
-                            }
-
-                            SampleData::Unsigned8(samples)
+                            SampleData::Unsigned8(create_sample_data(v))
                         }
                         AudioBufferRef::U16(v) => {
-                            let mut samples: Vec<u16> =
-                                vec![0; v.spec().channels.count() * v.capacity()];
-
-                            for i in 0..channel_count {
-                                for sample in v.chan(i) {
-                                    samples[i * channel_count + i] = *sample;
-                                }
-                            }
-
-                            SampleData::Unsigned16(samples)
+                            SampleData::Unsigned16(create_sample_data(v))
                         }
                         AudioBufferRef::U32(v) => {
-                            let mut samples: Vec<u32> =
-                                vec![0; v.spec().channels.count() * v.capacity()];
-
-                            for i in 0..channel_count {
-                                for sample in v.chan(i) {
-                                    samples[i * channel_count + i] = *sample;
-                                }
-                            }
-
-                            SampleData::Unsigned32(samples)
+                            SampleData::Unsigned32(create_sample_data(v))
                         }
                         AudioBufferRef::S8(v) => {
-                            let mut samples: Vec<i8> =
-                                vec![0; v.spec().channels.count() * v.capacity()];
-
-                            for i in 0..channel_count {
-                                for sample in v.chan(i) {
-                                    samples[i * channel_count + i] = *sample;
-                                }
-                            }
-
-                            SampleData::Signed8(samples)
+                            SampleData::Signed8(create_sample_data(v))
                         }
                         AudioBufferRef::S16(v) => {
-                            let mut samples: Vec<i16> =
-                                vec![0; v.spec().channels.count() * v.capacity()];
-
-                            for i in 0..channel_count {
-                                for sample in v.chan(i) {
-                                    samples[i * channel_count + i] = *sample;
-                                }
-                            }
-
-                            SampleData::Signed16(samples)
+                            SampleData::Signed16(create_sample_data(v))
                         }
                         AudioBufferRef::S32(v) => {
-                            let mut samples: Vec<i32> =
-                                vec![0; v.spec().channels.count() * v.capacity()];
-
-                            for i in 0..channel_count {
-                                let chan = v.chan(i);
-                                for sample_i in 0..chan.len() {
-                                    samples[sample_i * channel_count + i] = chan[sample_i];
-                                }
-                            }
-
-                            SampleData::Signed32(samples)
+                            SampleData::Signed32(create_sample_data(v))
                         }
                         AudioBufferRef::F32(v) => {
-                            let mut samples: Vec<f32> =
-                                vec![0.; v.spec().channels.count() * v.capacity()];
-
-                            for i in 0..channel_count {
-                                let chan = v.chan(i);
-                                for sample_i in 0..chan.len() {
-                                    samples[sample_i * channel_count + i] = chan[sample_i];
-                                }
-                            }
-
-                            SampleData::Float32(samples)
+                            SampleData::Float32(create_sample_data(v))
                         }
                         AudioBufferRef::F64(v) => {
-                            let mut samples: Vec<f64> =
-                                vec![0.; v.spec().channels.count() * v.capacity()];
-
-                            for i in 0..channel_count {
-                                let chan = v.chan(i);
-                                for sample_i in 0..chan.len() {
-                                    samples[sample_i * channel_count + i] = chan[sample_i];
-                                }
-                            }
-
-                            SampleData::Float64(samples)
+                            SampleData::Float64(create_sample_data(v))
                         }
                         _ => panic!("SymphoniaEngine: unsupported sample format"),
                     };
@@ -221,4 +148,20 @@ impl SymphoniaEngine {
             .take()
             .expect("SymphoniaEngine: tried to take faucet twice")
     }
+}
+
+fn create_sample_data<T>(v: Cow<AudioBuffer<T>>) -> Vec<T>
+where T: symphonia::core::sample::Sample {
+    let channel_count = v.spec().channels.count();
+    let mut samples: Vec<T> =
+        vec![T::default(); channel_count * v.capacity()];
+
+    for i in 0..channel_count {
+        let chan = v.chan(i);
+        for sample_i in 0..chan.len() {
+            samples[sample_i * channel_count + i] = chan[sample_i];
+        }
+    }
+
+    samples
 }

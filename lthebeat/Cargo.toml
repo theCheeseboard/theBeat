@@ -12,7 +12,7 @@ tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 log = "0.4.27"
 anyhow = "1"
-symphonia = { workspace = true, features = ["all-codecs"] }
+symphonia = { workspace = true, features = ["all"] }
 rubato = { workspace = true }
 url = { workspace = true }
 isahc = { version = "1", features = ["static-ssl"] }
