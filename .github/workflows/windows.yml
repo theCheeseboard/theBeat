@@ -2,7 +2,7 @@ name: Build on Windows
 on:
   push:
     branches:
-      - master
+      - rust
 
 jobs:
   build:
