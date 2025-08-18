@@ -15,7 +15,7 @@ anyhow = "1"
 symphonia = { workspace = true, features = ["all-codecs"] }
 rubato = { workspace = true }
 url = { workspace = true }
-isahc = "1"
+isahc = { version = "1", features = ["static-ssl"] }
 smol = { workspace = true }
 async-channel = "2"
 async-ringbuf = "0.3.4"
