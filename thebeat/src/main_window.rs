@@ -10,7 +10,6 @@ use gpui::{
     div, px, App, AppContext, Context, Entity, IntoElement,
     ParentElement, Render, Styled, Window,
 };
-use lthebeat::audio_processing::audio_controller::GlobalAudioController;
 use lthebeat::play_queue::media_item::MediaItem;
 use lthebeat::play_queue::PlayQueue;
 

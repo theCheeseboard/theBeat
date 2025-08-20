@@ -1,7 +1,6 @@
 use gpui::AppContext;
 use gpui::http_client::Url;
 use gpui::{App, AsyncApp, KeyBinding, PathPromptOptions, actions};
-use lthebeat::audio_processing::audio_controller::GlobalAudioController;
 use lthebeat::play_queue::PlayQueue;
 use lthebeat::play_queue::media_item::MediaItem;
 

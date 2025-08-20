@@ -15,22 +15,22 @@ use contemporary::macros::application_details;
 use contemporary::setup::{Contemporary, ContemporaryMenus, setup_contemporary};
 use contemporary::window::contemporary_window_options;
 use gpui::{App, Bounds, Menu, MenuItem, WindowBounds, WindowOptions, px, size};
-use lthebeat::audio_processing::audio_controller::{AudioController, GlobalAudioController};
+use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::audio_processing::audio_pipeline::duplicator::Duplicator;
+use lthebeat::audio_processing::audio_pipeline::faucet::{Faucet, create_faucet};
 use lthebeat::audio_processing::audio_pipeline::plug;
-use lthebeat::audio_processing::audio_pipeline::sink::{create_dummy_sink, create_sink, Sink};
+use lthebeat::audio_processing::audio_pipeline::sink::{Sink, create_dummy_sink, create_sink};
+use lthebeat::audio_processing::audio_pipeline::sync_lock_sync::SyncLockSync;
 use lthebeat::audio_processing::input_engines::faucet_for_url;
+use lthebeat::audio_processing::output_drivers::OutputDevice;
 use lthebeat::audio_processing::output_drivers::cpal_driver::{
     cpal_default_output_device, cpal_output_devices,
 };
 use lthebeat::play_queue::PlayQueue;
+use smol::stream::StreamExt;
 use smol_macros::main;
 use std::rc::Rc;
 use std::time::Duration;
-use smol::stream::StreamExt;
-use lthebeat::audio_processing::audio_pipeline::faucet::{create_faucet, Faucet};
-use lthebeat::audio_processing::audio_pipeline::sync_lock_sync::SyncLockSync;
-use lthebeat::audio_processing::output_drivers::OutputDevice;
 
 fn mane() {
     application_icon!("../dist/baseicon.svg");
@@ -42,32 +42,29 @@ fn mane() {
         I18N_MANAGER.write().unwrap().load_source(tr_load!());
         let bounds = Bounds::centered(None, size(px(800.0), px(600.0)), cx);
 
-        let audio_controller = AudioController::new();
-        cx.set_global(GlobalAudioController::new(audio_controller.clone()));
+        let mut audio_controller = AudioController::new();
 
         let mut play_queue = PlayQueue::new(cx);
 
-        let mut sync_lock_sync = Box::new(SyncLockSync::new());
+        // for device in cpal_output_devices() {
+        //     let sink = device.open_sink().unwrap();
+        // 
+        //     plug(play_queue.open_faucet(), sink.sink);
+        //     audio_controller.sync_lock_sync.manage(sink.sync_lock);
+        // 
+        //     device.play();
+        //     Box::leak(device);
+        // }
+        let device = cpal_default_output_device();
+        let sink = device.open_sink().unwrap();
 
-        for device in cpal_output_devices() {
-            let sink = device.open_sink().unwrap();
+        plug(play_queue.open_faucet(), sink.sink);
+        audio_controller.sync_lock_sync.manage(sink.sync_lock);
 
+        device.play();
+        Box::leak(device);
 
-            plug(play_queue.open_faucet(), sink.sink);
-            sync_lock_sync.manage(sink.sync_lock);
-
-            device.play();
-            Box::leak(device);
-        }
-        Box::leak(sync_lock_sync);
-        // let device = cpal_default_output_device();
-        // let sink = device.open_sink().unwrap();
-
-        // plug(play_queue.open_faucet(), sink.sink);
-
-        // device.play();
-        // Box::leak(device);
-
+        cx.set_global(audio_controller);
         cx.set_global(play_queue);
 
         let default_window_options = contemporary_window_options(cx, "theBeat".into());

@@ -11,7 +11,7 @@ use crate::audio_processing::audio_pipeline::PipelineSample;
 use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
 
 pub struct SyncLockSync {
-    current_meta: Arc<RwLock<AudioMetadata>>,
+    pub current_meta: Arc<RwLock<AudioMetadata>>,
     under_management: Arc<RwLock<Vec<Arc<SyncLock>>>>,
 }
 
@@ -89,8 +89,6 @@ impl SyncLockSync {
                         // Send out the packet
                         sync_lock.write_buffer.send(PipelineSample::Sample(packet)).await.unwrap();
                     }
-
-                    println!("Playing sample from {:?} id {:?}", meta, current_sample_id.unwrap());
                     *current_meta.write().unwrap() = meta;
                 }
             }

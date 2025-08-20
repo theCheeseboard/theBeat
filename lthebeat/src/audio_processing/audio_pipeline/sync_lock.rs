@@ -29,7 +29,7 @@ impl SyncLock {
         let (sink, mut rb_sink_cons) = create_sink();
 
         let (mut packet_buffer_prod, packet_buffer_cons) = async_channel::bounded(SAMPLE_BUFFER_SIZE);
-        let (write_buffer_prod, write_buffer_cons) = async_channel::unbounded();
+        let (write_buffer_prod, write_buffer_cons) = async_channel::bounded(SAMPLE_BUFFER_SIZE);
 
         let sync_lock = Arc::new(SyncLock {
             packet_buffer: packet_buffer_cons,

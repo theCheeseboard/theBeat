@@ -1,32 +1,22 @@
-use crate::audio_processing::output_drivers::cpal_driver::{cpal_default_output_device, cpal_output_devices};
-use crate::audio_processing::{audio_pipeline::plug, input_engines::faucet_for_url};
+use crate::audio_processing::audio_metadata::AudioMetadata;
+use crate::audio_processing::audio_pipeline::sync_lock_sync::SyncLockSync;
 use gpui::Global;
-use std::sync::Arc;
-use url::Url;
-use crate::audio_processing::audio_pipeline::duplicator::Duplicator;
-use crate::audio_processing::output_drivers::OutputDevice;
 
-pub struct AudioController {}
+pub struct AudioController {
+    pub sync_lock_sync: SyncLockSync
+}
+
+impl Default for AudioController {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 impl AudioController {
-    pub fn new() -> Arc<AudioController> {
-        Arc::new(AudioController {})
-    }
-
-    pub fn play_url(&self, url: Url) {
-        let engine = faucet_for_url(url).unwrap();
-        let mut duplicator = Duplicator::new();
-
-        for device in cpal_output_devices() {
-            let sink = device.open_sink().unwrap();
-
-            plug(duplicator.open_faucet(), sink.sink);
-
-            device.play();
-            Box::leak(device);
+    pub fn new() -> AudioController {
+        AudioController {
+            sync_lock_sync: SyncLockSync::new()
         }
-
-        plug(engine, duplicator.sink());
     }
 
     pub fn play() {}
@@ -36,16 +26,10 @@ impl AudioController {
     pub fn enqueue() {}
 
     pub fn default_audio_device() {}
-}
 
-pub struct GlobalAudioController {
-    pub audio_controller: Arc<AudioController>,
-}
-
-impl GlobalAudioController {
-    pub fn new(audio_controller: Arc<AudioController>) -> GlobalAudioController {
-        GlobalAudioController { audio_controller }
+    pub fn current_metadata(&self) -> AudioMetadata {
+        self.sync_lock_sync.current_meta.read().unwrap().clone()
     }
 }
 
-impl Global for GlobalAudioController {}
+impl Global for AudioController {}

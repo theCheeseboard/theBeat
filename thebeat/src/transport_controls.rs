@@ -1,4 +1,5 @@
 use crate::actions::{SkipNextAction, SkipPreviousAction};
+use cntp_i18n::tr;
 use contemporary::components::button::button;
 use contemporary::components::icon::icon;
 use contemporary::components::layer::layer;
@@ -9,7 +10,9 @@ use gpui::{
     Action, Animation, App, IntoElement, ParentElement, Refineable, RenderOnce, StyleRefinement,
     Styled, Window, div, px, rgb,
 };
+use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
+use std::path::Path;
 
 #[derive(IntoElement)]
 pub struct TransportControls {
@@ -23,9 +26,23 @@ pub fn transport_controls() -> TransportControls {
 }
 
 impl RenderOnce for TransportControls {
-    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
+    fn render(self, _: &mut Window, cx: &mut App) -> impl IntoElement {
         let play_queue = cx.global::<PlayQueue>();
         let platform_settings = cx.global::<PlatformSettings>();
+        let audio_controller = cx.global::<AudioController>();
+
+        let meta = audio_controller.current_metadata();
+        let title = meta.get_title();
+        let supplementary = {
+            let mut s = Vec::new();
+            if let Some(artist) = meta.artist {
+                s.push(artist);
+            }
+            if let Some(album) = meta.album {
+                s.push(album);
+            }
+            s.join(" • ")
+        };
 
         let mut div = layer()
             .flex()
@@ -45,8 +62,8 @@ impl RenderOnce for TransportControls {
                             .flex()
                             .flex_col()
                             .flex_grow()
-                            .child(div().text_size(px(18.)).child("Something playing"))
-                            .child(div().child("Something playing")),
+                            .child(div().text_size(px(18.)).child(title))
+                            .child(div().child(supplementary)),
                     )
                     // TODO: Volume
                     .child(div())

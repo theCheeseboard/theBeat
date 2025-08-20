@@ -3544,6 +3544,8 @@ dependencies = [
  "async-lock",
  "async-ringbuf",
  "cancellation-token",
+ "cntp_i18n",
+ "cntp_i18n_gen",
  "cpal",
  "gpui",
  "intx",

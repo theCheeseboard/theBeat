@@ -39,7 +39,7 @@ impl SymphoniaEngine {
                 (Box::new(File::open(path)?) as Box<dyn MediaSource>, hint)
             }
             "http" | "https" => (
-                Box::new(HttpSource::new(url)) as Box<dyn MediaSource>,
+                Box::new(HttpSource::new(url.clone())) as Box<dyn MediaSource>,
                 Hint::new(),
             ),
             _ => return Err(anyhow::anyhow!("Unsupported scheme")),
@@ -61,7 +61,10 @@ impl SymphoniaEngine {
         let (mut rb_prod, rb_cons) =
             AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();
         thread::spawn(move || {
-            let mut file_meta = AudioMetadata::default();
+            let mut file_meta = AudioMetadata {
+                url: Some(url),
+                ..AudioMetadata::default()
+            };
             if let Some(probe_meta) = probe_result.metadata.get().as_ref().and_then(|m| m.current()) {
                 populate_metadata(&mut file_meta, probe_meta);
             }
