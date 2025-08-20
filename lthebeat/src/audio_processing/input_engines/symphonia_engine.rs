@@ -12,13 +12,16 @@ use async_ringbuf::traits::{AsyncProducer, Split};
 use log::warn;
 use std::fs::File;
 use std::thread;
+use rand::random;
 use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Signal};
 use symphonia::core::codecs::{CodecParameters, CodecType, CODEC_TYPE_PCM_S16BE, CODEC_TYPE_PCM_S16BE_PLANAR, CODEC_TYPE_PCM_S16LE, CODEC_TYPE_PCM_S16LE_PLANAR};
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
+use symphonia::core::meta::{MetadataRevision, StandardTagKey};
 use symphonia::core::probe::Hint;
 use symphonia::default::{get_codecs, get_probe};
 use tracing::info;
 use url::Url;
+use crate::audio_processing::audio_metadata::AudioMetadata;
 
 pub struct SymphoniaEngine {
     faucet: Option<Faucet>,
@@ -47,7 +50,7 @@ impl SymphoniaEngine {
         let meta_opts = Default::default();
         let format_opts = Default::default();
         let probe = get_probe();
-        let probe_result = probe.format(&hint, media_source_stream, &format_opts, &meta_opts)?;
+        let mut probe_result = probe.format(&hint, media_source_stream, &format_opts, &meta_opts)?;
 
         let codec_registry = get_codecs();
         let mut format = probe_result.format;
@@ -58,6 +61,15 @@ impl SymphoniaEngine {
         let (mut rb_prod, rb_cons) =
             AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();
         thread::spawn(move || {
+            let mut file_meta = AudioMetadata::default();
+            if let Some(probe_meta) = probe_result.metadata.get().as_ref().and_then(|m| m.current()) {
+                populate_metadata(&mut file_meta, probe_meta);
+            }
+            if let Some(next_meta) = format.metadata().current() {
+                populate_metadata(&mut file_meta, next_meta);
+            }
+
+            let mut pushed_first_sample = false;
             loop {
                 let next_sample = {
                     let next_packet = match format.next_packet() {
@@ -68,6 +80,13 @@ impl SymphoniaEngine {
                             return;
                         }
                     };
+
+                    while !format.metadata().is_latest() {
+                        format.metadata().pop();
+                        if let Some(next_meta) = format.metadata().current() {
+                            populate_metadata(&mut file_meta, next_meta);
+                        }
+                    }
 
                     let decoded = decoder.decode(&next_packet).unwrap();
 
@@ -114,7 +133,22 @@ impl SymphoniaEngine {
                         }
                     }
 
-                    Some(Sample::new(rate, channel_count as u16, sample_data))
+                    if !pushed_first_sample {
+                        if smol::block_on(
+                            rb_prod.push(
+                                Ok(PipelineSample::Sample(Sample::new(rate, channel_count as u16, file_meta.clone(), None, SampleData::Empty)))
+                            ),
+                        )
+                            .is_err()
+                        {
+                            warn!("SymphoniaEngine: error while pushing sample to buffer");
+                            warn!("SymphoniaEngine: stopping");
+                            return;
+                        }
+                        pushed_first_sample = true
+                    }
+
+                    Some(Sample::new(rate, channel_count as u16, file_meta.clone(), None, sample_data))
                 };
 
                 if next_sample.is_none() {
@@ -164,4 +198,15 @@ where T: symphonia::core::sample::Sample {
     }
 
     samples
+}
+
+fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &MetadataRevision) {
+    for tag in symphonia_metadata.tags() {
+        match tag.std_key {
+            Some(StandardTagKey::TrackTitle) => metadata.title = Some(tag.value.to_string()),
+            Some(StandardTagKey::Artist) => metadata.artist = Some(tag.value.to_string()),
+            Some(StandardTagKey::Album) => metadata.album = Some(tag.value.to_string()),
+            _ => {}
+        }
+    }
 }

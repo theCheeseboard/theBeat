@@ -1,4 +1,4 @@
-#[derive(Default)]
+#[derive(Default, Clone, Debug)]
 pub struct AudioMetadata {
     pub title: Option<String>,
     pub artist: Option<String>,

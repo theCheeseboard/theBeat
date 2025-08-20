@@ -26,6 +26,16 @@ impl RubatoResampler {
             loop {
                 match rb_sink_cons.next().await {
                     Some(Ok(PipelineSample::Sample(next_sample))) => {
+                        if matches!(next_sample.data, SampleData::Empty) {
+                            // Propagate the empty sample
+                            rb_faucet_prod
+                                .push(Ok(PipelineSample::Sample(next_sample)))
+                                .await
+                                .expect("failed to push sample to sink");
+                            
+                            continue;
+                        }
+                        
                         let channels = next_sample.channels;
                         if resampler
                             .reconfigure_if_required(next_sample.sample_rate, next_sample.channels)
@@ -33,6 +43,8 @@ impl RubatoResampler {
                             // The resampler had to be reconfigured
                             sample_buffer.clear();
                         }
+                        let meta = next_sample.meta.clone();
+                        let sample_id = next_sample.sample_id;
                         if resampler.is_resampling_required() {
                             let resampler = &mut resampler.resampler;
                             sample_buffer.append(&mut next_sample.into_f32());
@@ -77,6 +89,8 @@ impl RubatoResampler {
                                 let next_sample = Sample::new(
                                     target_audio_format.sample_rate,
                                     target_audio_format.channels,
+                                    meta.clone(),
+                                    Some(sample_id),
                                     match target_audio_format.sample {
                                         SampleFormat::Signed8 => SampleData::Signed8(Vec::new()),
                                         SampleFormat::Unsigned8 => {
@@ -115,6 +129,8 @@ impl RubatoResampler {
                             let next_sample = Sample::new(
                                 target_audio_format.sample_rate,
                                 target_audio_format.channels,
+                                meta,
+                                Some(sample_id),
                                 match target_audio_format.sample {
                                     SampleFormat::Signed8 => SampleData::Signed8(Vec::new()),
                                     SampleFormat::Unsigned8 => SampleData::Unsigned8(Vec::new()),

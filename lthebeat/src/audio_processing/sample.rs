@@ -1,16 +1,24 @@
 use cpal::U24;
 use intx::I24;
 use std::fmt::Debug;
+use cpal::BufferSize::Default;
+use rand::random;
+use crate::audio_processing::audio_metadata::AudioMetadata;
 
 #[derive(Clone, Debug)]
 pub struct Sample {
     pub sample_rate: u32,
     pub channels: u16,
+    pub meta: AudioMetadata,
+    
+    /// A random number to keep track of this sample as it moves through the audio pipeline
+    pub sample_id: u64,
     pub data: SampleData,
 }
 
 #[derive(Clone, Debug)]
 pub enum SampleData {
+    Empty,
     Signed8(Vec<i8>),
     Unsigned8(Vec<u8>),
     Unsigned16(Vec<u16>),
@@ -26,16 +34,19 @@ pub enum SampleData {
 }
 
 impl Sample {
-    pub fn new(sample_rate: u32, channels: u16, data: SampleData) -> Self {
+    pub fn new(sample_rate: u32, channels: u16, meta: AudioMetadata, sample_id: Option<u64>, data: SampleData) -> Self {
         Sample {
             sample_rate,
             channels,
+            meta,
+            sample_id: sample_id.unwrap_or_else(|| random()),
             data,
         }
     }
 
     pub fn len(&self) -> usize {
         match &self.data {
+            SampleData::Empty => 0,
             SampleData::Signed8(vec) => vec.len(),
             SampleData::Unsigned8(vec) => vec.len(),
             SampleData::Unsigned16(vec) => vec.len(),
@@ -57,6 +68,7 @@ impl Sample {
 
     pub fn into_f32(self) -> Vec<f64> {
         match self.data {
+            SampleData::Empty => Vec::new(),
             SampleData::Signed8(v) => v.into_iter().map(|s| s.sample_into()).collect(),
             SampleData::Unsigned8(v) => v.into_iter().map(|s| s.sample_into()).collect(),
             SampleData::Unsigned16(v) => v.into_iter().map(|s| s.sample_into()).collect(),
@@ -74,6 +86,7 @@ impl Sample {
 
     pub fn convert_from_f64(self, f: Vec<f64>) -> Self {
         let new_sample_data = match self.data {
+            SampleData::Empty => SampleData::Empty,
             SampleData::Signed8(_) => {
                 SampleData::Signed8(f.into_iter().map(i8::sample_from).collect())
             }
@@ -105,6 +118,8 @@ impl Sample {
         Self {
             channels: self.channels,
             sample_rate: self.sample_rate,
+            meta: self.meta,
+            sample_id: self.sample_id,
             data: new_sample_data,
         }
     }

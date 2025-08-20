@@ -3,7 +3,7 @@ use crate::audio_processing::audio_pipeline::{SAMPLE_BUFFER_SIZE, plug, Pipeline
 use crate::audio_processing::mute::Mute;
 use crate::audio_processing::output_drivers::{OutputDevice, Sample, Sink};
 use crate::audio_processing::resamplers::rubato::RubatoResampler;
-use crate::audio_processing::sample::UnwrapSample;
+use crate::audio_processing::sample::{SampleData, UnwrapSample};
 use async_ringbuf::AsyncHeapRb;
 use async_ringbuf::traits::{AsyncProducer, Based, Consumer, Split};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
@@ -72,8 +72,11 @@ impl CpalOutputDevice {
                 let samples = samples_consumer.next().await;
                 match samples {
                     Some(Ok(PipelineSample::Sample(samples))) => {
-                        let samples_vec = samples.unwrap();
-                        producer.push_exact(samples_vec).await.unwrap();
+                        if !matches!(samples.data, SampleData::Empty) {
+                            let samples_vec = samples.unwrap();
+                            producer.push_exact(samples_vec).await.unwrap();
+                        }
+                        println!("Playing sample from {:?} id {:?}", samples.meta, samples.sample_id);
                     }
                     Some(Ok(PipelineSample::Reset)) => {
                         // Clear the pipeline

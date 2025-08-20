@@ -26,6 +26,7 @@ pub enum SampleFormat {
 impl From<Sample> for SampleFormat {
     fn from(value: Sample) -> Self {
         match value.data {
+            SampleData::Empty => panic!("Tried to convert empty sample"),
             SampleData::Signed8(_) => SampleFormat::Signed8,
             SampleData::Unsigned8(_) => SampleFormat::Unsigned8,
             SampleData::Unsigned16(_) => SampleFormat::Unsigned16,
