@@ -1,22 +1,22 @@
+use crate::audio_processing::audio_metadata::AudioMetadata;
+use cpal::BufferSize::Default;
 use cpal::U24;
 use intx::I24;
-use std::fmt::Debug;
-use cpal::BufferSize::Default;
 use rand::random;
-use crate::audio_processing::audio_metadata::AudioMetadata;
+use std::fmt::{Debug, Formatter};
 
 #[derive(Clone, Debug)]
 pub struct Sample {
     pub sample_rate: u32,
     pub channels: u16,
     pub meta: AudioMetadata,
-    
+
     /// A random number to keep track of this sample as it moves through the audio pipeline
     pub sample_id: u64,
     pub data: SampleData,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub enum SampleData {
     Empty,
     Signed8(Vec<i8>),
@@ -33,8 +33,60 @@ pub enum SampleData {
     Float64(Vec<f64>),
 }
 
+impl Debug for SampleData {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SampleData::Empty => {
+                write!(f, "empty")
+            }
+            SampleData::Signed8(v) => {
+                write!(f, "Signed8, len: {}", v.len())
+            }
+            SampleData::Unsigned8(v) => {
+                write!(f, "Unsigned8, len: {}", v.len())
+            }
+            SampleData::Unsigned16(v) => {
+                write!(f, "Unsigned16, len: {}", v.len())
+            }
+            SampleData::Signed16(v) => {
+                write!(f, "Signed16, len: {}", v.len())
+            }
+            SampleData::Unsigned24(v) => {
+                write!(f, "Unsigned24, len: {}", v.len())
+            }
+            SampleData::Signed24(v) => {
+                write!(f, "Signed24, len: {}", v.len())
+            }
+            SampleData::Unsigned32(v) => {
+                write!(f, "Unsigned32, len: {}", v.len())
+            }
+            SampleData::Signed32(v) => {
+                write!(f, "Signed32, len: {}", v.len())
+            }
+            SampleData::Unsigned64(v) => {
+                write!(f, "Unsigned64, len: {}", v.len())
+            }
+            SampleData::Signed64(v) => {
+                write!(f, "Signed64, len: {}", v.len())
+            }
+            SampleData::Float32(v) => {
+                write!(f, "Float32, len: {}", v.len())
+            }
+            SampleData::Float64(v) => {
+                write!(f, "Float64, len: {}", v.len())
+            }
+        }
+    }
+}
+
 impl Sample {
-    pub fn new(sample_rate: u32, channels: u16, meta: AudioMetadata, sample_id: Option<u64>, data: SampleData) -> Self {
+    pub fn new(
+        sample_rate: u32,
+        channels: u16,
+        meta: AudioMetadata,
+        sample_id: Option<u64>,
+        data: SampleData,
+    ) -> Self {
         Sample {
             sample_rate,
             channels,

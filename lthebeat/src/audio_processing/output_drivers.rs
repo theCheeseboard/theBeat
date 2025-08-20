@@ -8,6 +8,4 @@ pub trait OutputDevice {
     fn pause(&self);
 
     fn play(&self);
-
-    fn open_sink(&self) -> anyhow::Result<Sink>;
 }

@@ -13,16 +13,23 @@ use gpui::private::anyhow;
 use log::warn;
 use smol::stream::StreamExt;
 use std::cell::RefCell;
+use std::sync::Arc;
 use std::time::Duration;
 use tracing::{error, info};
 use crate::audio_processing::audio_pipeline::sink::create_sink;
+use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
 
 const BUFFER_DURATION: Duration = Duration::from_millis(200);
 const BUFFER_DURATION_MSEC: usize = BUFFER_DURATION.as_millis() as usize;
 
-struct CpalOutputDevice {
+pub struct CpalOutputDevice {
     device: Device,
     streams: RefCell<Vec<Stream>>,
+}
+
+pub struct CpalOutputStream {
+    pub sink: Sink,
+    pub sync_lock: Arc<SyncLock>
 }
 
 impl CpalOutputDevice {
@@ -76,7 +83,6 @@ impl CpalOutputDevice {
                             let samples_vec = samples.unwrap();
                             producer.push_exact(samples_vec).await.unwrap();
                         }
-                        println!("Playing sample from {:?} id {:?}", samples.meta, samples.sample_id);
                     }
                     Some(Ok(PipelineSample::Reset)) => {
                         // Clear the pipeline
@@ -99,24 +105,9 @@ impl CpalOutputDevice {
 
         Ok(sink)
     }
-}
 
-impl OutputDevice for CpalOutputDevice {
-    fn pause(&self) {
-        self.streams
-            .borrow()
-            .iter()
-            .for_each(|stream| stream.pause().unwrap());
-    }
-
-    fn play(&self) {
-        self.streams
-            .borrow()
-            .iter()
-            .for_each(|stream| stream.play().unwrap());
-    }
-
-    fn open_sink(&self) -> anyhow::Result<Sink> {
+    pub fn open_sink(&self) -> anyhow::Result<CpalOutputStream> {
+        let mut sync_lock = SyncLock::create_sync_lock();
         let supported_stream_config = self.device.default_output_config().unwrap();
         let sample_format = supported_stream_config.sample_format();
         let config = supported_stream_config.config();
@@ -127,7 +118,7 @@ impl OutputDevice for CpalOutputDevice {
             sample: sample_format.into(),
         });
 
-        let audio_device_sink = match sample_format {
+        let output_sink = match sample_format {
             SampleFormat::I8 => self.create_stream::<i8>(config),
             SampleFormat::I16 => self.create_stream::<i16>(config),
             SampleFormat::I24 => Err(anyhow!(
@@ -150,29 +141,50 @@ impl OutputDevice for CpalOutputDevice {
             )),
         }?;
 
-        plug(resampler.faucet(), audio_device_sink);
+        plug(resampler.faucet(), sync_lock.sink);
+        plug(sync_lock.faucet, output_sink);
 
-        Ok(resampler.sink())
+        Ok(CpalOutputStream {
+            sink: resampler.sink(),
+            sync_lock: sync_lock.sync_lock,
+        })
     }
+}
+
+impl OutputDevice for CpalOutputDevice {
+    fn pause(&self) {
+        self.streams
+            .borrow()
+            .iter()
+            .for_each(|stream| stream.pause().unwrap());
+    }
+
+    fn play(&self) {
+        self.streams
+            .borrow()
+            .iter()
+            .for_each(|stream| stream.play().unwrap());
+    }
+
 }
 
 trait CpalSample: SizedSample + Default + Send + Sized + 'static + Mute {}
 
 impl<T> CpalSample for T where T: SizedSample + Default + Send + Sized + 'static + Mute {}
 
-pub fn cpal_output_devices() -> Vec<Box<dyn OutputDevice>> {
+pub fn cpal_output_devices() -> Vec<Box<CpalOutputDevice>> {
     let Ok(output_devices) = cpal::default_host().output_devices() else {
         return Vec::new();
     };
 
     output_devices
         .map(|output_device| {
-            Box::new(CpalOutputDevice::new(output_device)) as Box<dyn OutputDevice>
+            Box::new(CpalOutputDevice::new(output_device))
         })
         .collect::<Vec<_>>()
 }
 
-pub fn cpal_default_output_device() -> Box<dyn OutputDevice> {
+pub fn cpal_default_output_device() -> Box<CpalOutputDevice> {
     Box::new(CpalOutputDevice::new(
         cpal::default_host().default_output_device().unwrap(),
     ))

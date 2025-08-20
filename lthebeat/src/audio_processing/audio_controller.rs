@@ -4,6 +4,7 @@ use gpui::Global;
 use std::sync::Arc;
 use url::Url;
 use crate::audio_processing::audio_pipeline::duplicator::Duplicator;
+use crate::audio_processing::output_drivers::OutputDevice;
 
 pub struct AudioController {}
 
@@ -19,7 +20,7 @@ impl AudioController {
         for device in cpal_output_devices() {
             let sink = device.open_sink().unwrap();
 
-            plug(duplicator.open_faucet(), sink);
+            plug(duplicator.open_faucet(), sink.sink);
 
             device.play();
             Box::leak(device);

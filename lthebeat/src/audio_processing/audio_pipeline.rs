@@ -7,6 +7,8 @@ pub mod audio_format;
 pub mod faucet;
 pub mod sink;
 pub mod duplicator;
+pub mod sync_lock;
+pub mod sync_lock_sync;
 
 pub const SAMPLE_BUFFER_SIZE: usize = 4;
 
