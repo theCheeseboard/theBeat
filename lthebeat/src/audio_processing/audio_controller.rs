@@ -3,7 +3,7 @@ use crate::audio_processing::audio_pipeline::sync_lock_sync::SyncLockSync;
 use gpui::Global;
 
 pub struct AudioController {
-    pub sync_lock_sync: SyncLockSync
+    pub sync_lock_sync: SyncLockSync,
 }
 
 impl Default for AudioController {
@@ -15,7 +15,7 @@ impl Default for AudioController {
 impl AudioController {
     pub fn new() -> AudioController {
         AudioController {
-            sync_lock_sync: SyncLockSync::new()
+            sync_lock_sync: SyncLockSync::new(),
         }
     }
 

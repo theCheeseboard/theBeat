@@ -16,21 +16,12 @@ use contemporary::setup::{Contemporary, ContemporaryMenus, setup_contemporary};
 use contemporary::window::contemporary_window_options;
 use gpui::{App, Bounds, Menu, MenuItem, WindowBounds, WindowOptions, px, size};
 use lthebeat::audio_processing::audio_controller::AudioController;
-use lthebeat::audio_processing::audio_pipeline::duplicator::Duplicator;
-use lthebeat::audio_processing::audio_pipeline::faucet::{Faucet, create_faucet};
 use lthebeat::audio_processing::audio_pipeline::plug;
-use lthebeat::audio_processing::audio_pipeline::sink::{Sink, create_dummy_sink, create_sink};
-use lthebeat::audio_processing::audio_pipeline::sync_lock_sync::SyncLockSync;
-use lthebeat::audio_processing::input_engines::faucet_for_url;
 use lthebeat::audio_processing::output_drivers::OutputDevice;
-use lthebeat::audio_processing::output_drivers::cpal_driver::{
-    cpal_default_output_device, cpal_output_devices,
-};
+use lthebeat::audio_processing::output_drivers::cpal_driver::cpal_default_output_device;
 use lthebeat::play_queue::PlayQueue;
-use smol::stream::StreamExt;
 use smol_macros::main;
 use std::rc::Rc;
-use std::time::Duration;
 
 fn mane() {
     application_icon!("../dist/baseicon.svg");
@@ -48,10 +39,10 @@ fn mane() {
 
         // for device in cpal_output_devices() {
         //     let sink = device.open_sink().unwrap();
-        // 
+        //
         //     plug(play_queue.open_faucet(), sink.sink);
         //     audio_controller.sync_lock_sync.manage(sink.sync_lock);
-        // 
+        //
         //     device.play();
         //     Box::leak(device);
         // }

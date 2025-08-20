@@ -1,11 +1,10 @@
-use async_ringbuf::traits::Split;
 use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::audio_processing::audio_pipeline::{PipelineSampleResult, SAMPLE_BUFFER_SIZE};
 use async_ringbuf::traits::AsyncProducer;
+use async_ringbuf::traits::Split;
 use async_ringbuf::{AsyncHeapCons, AsyncHeapProd, AsyncHeapRb};
-use std::sync::{Arc, RwLock};
-use async_ringbuf::wrap::AsyncCons;
 use smol::stream::StreamExt;
+use std::sync::{Arc, RwLock};
 
 pub struct Sink {
     rb_producer: AsyncHeapProd<PipelineSampleResult>,
@@ -20,7 +19,10 @@ impl Sink {
         }
     }
 
-    pub async fn push_sample(&mut self, sample: PipelineSampleResult) -> Result<(), PipelineSampleResult> {
+    pub async fn push_sample(
+        &mut self,
+        sample: PipelineSampleResult,
+    ) -> Result<(), PipelineSampleResult> {
         self.rb_producer.push(sample).await
     }
 
@@ -33,7 +35,7 @@ pub fn create_sink() -> (Sink, AsyncHeapCons<PipelineSampleResult>) {
     let (rb_sink_prod, rb_sink_cons) =
         AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();
     let sink = Sink::new(rb_sink_prod);
-    
+
     (sink, rb_sink_cons)
 }
 
@@ -47,6 +49,7 @@ pub fn create_dummy_sink() -> Sink {
                 return;
             }
         }
-    }).detach();
+    })
+        .detach();
     Sink::new(samples_producer)
 }

@@ -1,11 +1,13 @@
 use crate::audio_processing::audio_pipeline::audio_format::AudioFormat;
-use crate::audio_processing::audio_pipeline::{SAMPLE_BUFFER_SIZE, plug, PipelineSampleResult, PipelineSample};
+use crate::audio_processing::audio_pipeline::sink::create_sink;
+use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
+use crate::audio_processing::audio_pipeline::{PipelineSample, plug};
 use crate::audio_processing::mute::Mute;
 use crate::audio_processing::output_drivers::{OutputDevice, Sample, Sink};
 use crate::audio_processing::resamplers::rubato::RubatoResampler;
 use crate::audio_processing::sample::{SampleData, UnwrapSample};
 use async_ringbuf::AsyncHeapRb;
-use async_ringbuf::traits::{AsyncProducer, Based, Consumer, Split};
+use async_ringbuf::traits::{AsyncProducer, Consumer, Split};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use cpal::{Device, SampleFormat, SizedSample, Stream, StreamConfig};
 use gpui::http_client::anyhow;
@@ -16,8 +18,6 @@ use std::cell::RefCell;
 use std::sync::Arc;
 use std::time::Duration;
 use tracing::{error, info};
-use crate::audio_processing::audio_pipeline::sink::create_sink;
-use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
 
 const BUFFER_DURATION: Duration = Duration::from_millis(200);
 const BUFFER_DURATION_MSEC: usize = BUFFER_DURATION.as_millis() as usize;
@@ -29,7 +29,7 @@ pub struct CpalOutputDevice {
 
 pub struct CpalOutputStream {
     pub sink: Sink,
-    pub sync_lock: Arc<SyncLock>
+    pub sync_lock: Arc<SyncLock>,
 }
 
 impl CpalOutputDevice {
@@ -86,7 +86,6 @@ impl CpalOutputDevice {
                     }
                     Some(Ok(PipelineSample::Reset)) => {
                         // Clear the pipeline
-
                     }
                     Some(Err(err)) => {
                         info!("CpalOutputDevice: error in samples producer: {:?}", err);
@@ -107,8 +106,8 @@ impl CpalOutputDevice {
     }
 
     pub fn open_sink(&self) -> anyhow::Result<CpalOutputStream> {
-        let mut sync_lock = SyncLock::create_sync_lock();
-        let supported_stream_config = self.device.default_output_config().unwrap();
+        let sync_lock = SyncLock::create_sync_lock();
+        let supported_stream_config = self.device.default_output_config()?;
         let sample_format = supported_stream_config.sample_format();
         let config = supported_stream_config.config();
 
@@ -165,7 +164,6 @@ impl OutputDevice for CpalOutputDevice {
             .iter()
             .for_each(|stream| stream.play().unwrap());
     }
-
 }
 
 trait CpalSample: SizedSample + Default + Send + Sized + 'static + Mute {}
@@ -178,9 +176,7 @@ pub fn cpal_output_devices() -> Vec<Box<CpalOutputDevice>> {
     };
 
     output_devices
-        .map(|output_device| {
-            Box::new(CpalOutputDevice::new(output_device))
-        })
+        .map(|output_device| Box::new(CpalOutputDevice::new(output_device)))
         .collect::<Vec<_>>()
 }
 

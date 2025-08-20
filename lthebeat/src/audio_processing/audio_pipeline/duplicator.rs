@@ -1,19 +1,15 @@
-use crate::audio_processing::audio_pipeline::audio_format::SampleFormat;
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::sink::Sink;
 use crate::audio_processing::audio_pipeline::{PipelineSampleResult, SAMPLE_BUFFER_SIZE};
-use crate::audio_processing::sample::{Sample, SampleData};
-use async_ringbuf::traits::{AsyncProducer, Split};
-use async_ringbuf::{AsyncHeapProd, AsyncHeapRb};
-use smol::stream::StreamExt;
-use std::cell::RefCell;
-use std::collections::{HashMap, VecDeque};
-use std::rc::Rc;
-use std::sync::{Arc, RwLock};
-use std::time::Duration;
 use async_channel::Sender;
+use async_ringbuf::AsyncHeapRb;
+use async_ringbuf::traits::{AsyncProducer, Split};
 use log::warn;
 use rand::random;
+use smol::stream::StreamExt;
+use std::collections::HashMap;
+use std::sync::{Arc, RwLock};
+use std::time::Duration;
 
 pub struct Duplicator {
     sink: Option<Sink>,
@@ -87,7 +83,8 @@ impl Duplicator {
             }
 
             faucets.write().unwrap().remove(&id);
-        }).detach();
+        })
+            .detach();
         Faucet::new(rb_faucet_cons)
     }
 

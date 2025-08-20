@@ -1,20 +1,18 @@
-use std::ptr::write;
-use crate::audio_processing::audio_pipeline::{PipelineSample, PipelineSampleResult, Sample, SAMPLE_BUFFER_SIZE};
-use std::sync::{Arc, RwLock};
-use async_channel::{Receiver, RecvError, Sender};
-use async_ringbuf::{AsyncHeapCons, AsyncHeapProd, AsyncHeapRb, AsyncRb};
-use async_ringbuf::traits::{AsyncProducer, Split};
+use crate::audio_processing::audio_pipeline::faucet::{Faucet, create_faucet};
+use crate::audio_processing::audio_pipeline::sink::{Sink, create_sink};
+use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
+use async_channel::{Receiver, Sender};
+use async_ringbuf::traits::AsyncProducer;
 use log::warn;
 use rand::random;
 use smol::stream::StreamExt;
-use crate::audio_processing::audio_pipeline::faucet::{create_faucet, Faucet};
-use crate::audio_processing::audio_pipeline::sink::{create_sink, Sink};
+use std::sync::{Arc, RwLock};
 
 pub struct SyncLock {
     pub(crate) packet_buffer: Receiver<PipelineSample>,
     pub(crate) write_buffer: Sender<PipelineSample>,
     pub(crate) is_under_management: RwLock<bool>,
-    pub(crate) id: u64
+    pub(crate) id: u64,
 }
 
 pub struct SyncLockCreate {
@@ -28,14 +26,14 @@ impl SyncLock {
         let (faucet, mut rb_faucet_prod) = create_faucet();
         let (sink, mut rb_sink_cons) = create_sink();
 
-        let (mut packet_buffer_prod, packet_buffer_cons) = async_channel::bounded(SAMPLE_BUFFER_SIZE);
+        let (packet_buffer_prod, packet_buffer_cons) = async_channel::bounded(SAMPLE_BUFFER_SIZE);
         let (write_buffer_prod, write_buffer_cons) = async_channel::bounded(SAMPLE_BUFFER_SIZE);
 
         let sync_lock = Arc::new(SyncLock {
             packet_buffer: packet_buffer_cons,
             write_buffer: write_buffer_prod.clone(),
             is_under_management: RwLock::new(false),
-            id: random()
+            id: random(),
         });
 
         smol::spawn(async move {
@@ -48,9 +46,9 @@ impl SyncLock {
                         return;
                     }
                 }
-
             }
-        }).detach();
+        })
+            .detach();
         smol::spawn(async move {
             loop {
                 match write_buffer_cons.recv().await {
@@ -59,16 +57,17 @@ impl SyncLock {
                     }
                     Err(_) => {
                         warn!("could not receive packet");
-                        return
+                        return;
                     }
                 }
             }
-        }).detach();
+        })
+            .detach();
 
         SyncLockCreate {
             sink,
             faucet,
-            sync_lock
+            sync_lock,
         }
     }
 }

@@ -1,17 +1,16 @@
 use crate::main_surface::MainSurface;
 use cntp_i18n::tr;
 use contemporary::about_surface::about_surface;
-use contemporary::components::dialog_box::{dialog_box, StandardButton};
+use contemporary::components::dialog_box::{StandardButton, dialog_box};
 use contemporary::components::text_field::TextField;
 use contemporary::window::contemporary_window;
 use gpui::http_client::Url;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    div, px, App, AppContext, Context, Entity, IntoElement,
-    ParentElement, Render, Styled, Window,
+    App, AppContext, Context, Entity, IntoElement, ParentElement, Render, Styled, Window, div, px,
 };
-use lthebeat::play_queue::media_item::MediaItem;
 use lthebeat::play_queue::PlayQueue;
+use lthebeat::play_queue::media_item::MediaItem;
 
 pub struct MainWindow {
     main_surface: Entity<MainSurface>,
@@ -39,7 +38,7 @@ impl MainWindow {
         self.is_about_surface_open = is_open;
         self
     }
-    
+
     pub fn url_dialog_open(&mut self, is_open: bool) -> &Self {
         self.is_url_dialog_open = is_open;
         self
@@ -84,8 +83,7 @@ impl Render for MainWindow {
                             match Url::parse(current_text.to_string().as_str()) {
                                 Ok(url) => {
                                     let item = MediaItem::new(url, cx);
-                                    let play_queue =
-                                        cx.global_mut::<PlayQueue>();
+                                    let play_queue = cx.global_mut::<PlayQueue>();
                                     play_queue.add_item(item);
                                     this.is_url_dialog_open = false;
                                     cx.notify();

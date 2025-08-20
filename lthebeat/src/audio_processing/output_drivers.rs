@@ -1,6 +1,5 @@
 use crate::audio_processing::audio_pipeline::sink::Sink;
 use crate::audio_processing::sample::Sample;
-use gpui::private::anyhow;
 
 pub mod cpal_driver;
 

@@ -1,6 +1,6 @@
 mod http_source;
 
-use std::borrow::Cow;
+use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::{
     PipelineSample, PipelineSampleResult, SAMPLE_BUFFER_SIZE,
@@ -10,18 +10,16 @@ use crate::audio_processing::sample::{Sample, SampleData};
 use async_ringbuf::AsyncHeapRb;
 use async_ringbuf::traits::{AsyncProducer, Split};
 use log::warn;
+use std::borrow::Cow;
 use std::fs::File;
 use std::thread;
-use rand::random;
 use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Signal};
-use symphonia::core::codecs::{CodecParameters, CodecType, CODEC_TYPE_PCM_S16BE, CODEC_TYPE_PCM_S16BE_PLANAR, CODEC_TYPE_PCM_S16LE, CODEC_TYPE_PCM_S16LE_PLANAR};
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
 use symphonia::core::meta::{MetadataRevision, StandardTagKey};
 use symphonia::core::probe::Hint;
 use symphonia::default::{get_codecs, get_probe};
 use tracing::info;
 use url::Url;
-use crate::audio_processing::audio_metadata::AudioMetadata;
 
 pub struct SymphoniaEngine {
     faucet: Option<Faucet>,
@@ -50,7 +48,8 @@ impl SymphoniaEngine {
         let meta_opts = Default::default();
         let format_opts = Default::default();
         let probe = get_probe();
-        let mut probe_result = probe.format(&hint, media_source_stream, &format_opts, &meta_opts)?;
+        let mut probe_result =
+            probe.format(&hint, media_source_stream, &format_opts, &meta_opts)?;
 
         let codec_registry = get_codecs();
         let mut format = probe_result.format;
@@ -65,7 +64,12 @@ impl SymphoniaEngine {
                 url: Some(url),
                 ..AudioMetadata::default()
             };
-            if let Some(probe_meta) = probe_result.metadata.get().as_ref().and_then(|m| m.current()) {
+            if let Some(probe_meta) = probe_result
+                .metadata
+                .get()
+                .as_ref()
+                .and_then(|m| m.current())
+            {
                 populate_metadata(&mut file_meta, probe_meta);
             }
             if let Some(next_meta) = format.metadata().current() {
@@ -97,30 +101,14 @@ impl SymphoniaEngine {
                     let channel_count = decoded.spec().channels.count();
 
                     let sample_data = match decoded {
-                        AudioBufferRef::U8(v) => {
-                            SampleData::Unsigned8(create_sample_data(v))
-                        }
-                        AudioBufferRef::U16(v) => {
-                            SampleData::Unsigned16(create_sample_data(v))
-                        }
-                        AudioBufferRef::U32(v) => {
-                            SampleData::Unsigned32(create_sample_data(v))
-                        }
-                        AudioBufferRef::S8(v) => {
-                            SampleData::Signed8(create_sample_data(v))
-                        }
-                        AudioBufferRef::S16(v) => {
-                            SampleData::Signed16(create_sample_data(v))
-                        }
-                        AudioBufferRef::S32(v) => {
-                            SampleData::Signed32(create_sample_data(v))
-                        }
-                        AudioBufferRef::F32(v) => {
-                            SampleData::Float32(create_sample_data(v))
-                        }
-                        AudioBufferRef::F64(v) => {
-                            SampleData::Float64(create_sample_data(v))
-                        }
+                        AudioBufferRef::U8(v) => SampleData::Unsigned8(create_sample_data(v)),
+                        AudioBufferRef::U16(v) => SampleData::Unsigned16(create_sample_data(v)),
+                        AudioBufferRef::U32(v) => SampleData::Unsigned32(create_sample_data(v)),
+                        AudioBufferRef::S8(v) => SampleData::Signed8(create_sample_data(v)),
+                        AudioBufferRef::S16(v) => SampleData::Signed16(create_sample_data(v)),
+                        AudioBufferRef::S32(v) => SampleData::Signed32(create_sample_data(v)),
+                        AudioBufferRef::F32(v) => SampleData::Float32(create_sample_data(v)),
+                        AudioBufferRef::F64(v) => SampleData::Float64(create_sample_data(v)),
                         _ => panic!("SymphoniaEngine: unsupported sample format"),
                     };
 
@@ -137,11 +125,13 @@ impl SymphoniaEngine {
                     }
 
                     if !pushed_first_sample {
-                        if smol::block_on(
-                            rb_prod.push(
-                                Ok(PipelineSample::Sample(Sample::new(rate, channel_count as u16, file_meta.clone(), None, SampleData::Empty)))
-                            ),
-                        )
+                        if smol::block_on(rb_prod.push(Ok(PipelineSample::Sample(Sample::new(
+                            rate,
+                            channel_count as u16,
+                            file_meta.clone(),
+                            None,
+                            SampleData::Empty,
+                        )))))
                             .is_err()
                         {
                             warn!("SymphoniaEngine: error while pushing sample to buffer");
@@ -151,7 +141,13 @@ impl SymphoniaEngine {
                         pushed_first_sample = true
                     }
 
-                    Some(Sample::new(rate, channel_count as u16, file_meta.clone(), None, sample_data))
+                    Some(Sample::new(
+                        rate,
+                        channel_count as u16,
+                        file_meta.clone(),
+                        None,
+                        sample_data,
+                    ))
                 };
 
                 if next_sample.is_none() {
@@ -188,10 +184,11 @@ impl SymphoniaEngine {
 }
 
 fn create_sample_data<T>(v: Cow<AudioBuffer<T>>) -> Vec<T>
-where T: symphonia::core::sample::Sample {
+where
+    T: symphonia::core::sample::Sample,
+{
     let channel_count = v.spec().channels.count();
-    let mut samples: Vec<T> =
-        vec![T::default(); channel_count * v.capacity()];
+    let mut samples: Vec<T> = vec![T::default(); channel_count * v.capacity()];
 
     for i in 0..channel_count {
         let chan = v.chan(i);

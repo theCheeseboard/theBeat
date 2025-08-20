@@ -1,6 +1,6 @@
+use crate::audio_processing::audio_pipeline::faucet::Faucet;
 use crate::audio_processing::input_engines::symphonia_engine::SymphoniaEngine;
 use url::Url;
-use crate::audio_processing::audio_pipeline::faucet::Faucet;
 
 mod symphonia_engine;
 

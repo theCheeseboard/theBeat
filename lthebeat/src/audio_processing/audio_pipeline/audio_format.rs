@@ -20,7 +20,7 @@ pub enum SampleFormat {
     Unsigned64,
     Signed64,
     Float32,
-    Float64
+    Float64,
 }
 
 impl From<Sample> for SampleFormat {

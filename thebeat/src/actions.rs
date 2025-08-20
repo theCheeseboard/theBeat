@@ -1,10 +1,17 @@
-use gpui::AppContext;
 use gpui::http_client::Url;
 use gpui::{App, AsyncApp, KeyBinding, PathPromptOptions, actions};
 use lthebeat::play_queue::PlayQueue;
 use lthebeat::play_queue::media_item::MediaItem;
 
-actions!(thebeat, [OpenFileAction, OpenUrlAction, SkipNextAction, SkipPreviousAction]);
+actions!(
+    thebeat,
+    [
+        OpenFileAction,
+        OpenUrlAction,
+        SkipNextAction,
+        SkipPreviousAction
+    ]
+);
 
 pub fn register_actions(cx: &mut App) {
     cx.on_action(open_file);
@@ -29,10 +36,7 @@ fn open_file(_: &OpenFileAction, cx: &mut App) {
         cx.update_global::<PlayQueue, ()>(|play_queue: &mut PlayQueue, cx| {
             if let Ok(Ok(Some(paths))) = result {
                 for path in paths {
-                    let item = MediaItem::new(
-                        Url::from_file_path(path.as_path()).unwrap(),
-                        cx,
-                    );
+                    let item = MediaItem::new(Url::from_file_path(path.as_path()).unwrap(), cx);
                     play_queue.add_item(item);
                 }
             }

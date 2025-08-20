@@ -1,14 +1,10 @@
-use std::collections::HashMap;
-use std::sync::{Arc, RwLock};
-use std::time::Duration;
-use async_channel::RecvError;
-use async_ringbuf::traits::{AsyncProducer, Consumer};
-use log::{error, warn};
-use smol::io::AsyncReadExt;
-use smol::stream::{pending, StreamExt};
 use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::audio_processing::audio_pipeline::PipelineSample;
 use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
+use log::warn;
+use std::collections::HashMap;
+use std::sync::{Arc, RwLock};
+use std::time::Duration;
 
 pub struct SyncLockSync {
     pub current_meta: Arc<RwLock<AudioMetadata>>,
@@ -102,7 +98,10 @@ impl SyncLockSync {
         if *is_under_management {
             panic!("Tried to manage SyncLock twice");
         }
-        self.under_management.write().unwrap().push(sync_lock.clone());
+        self.under_management
+            .write()
+            .unwrap()
+            .push(sync_lock.clone());
         *is_under_management = true;
     }
 
@@ -111,7 +110,10 @@ impl SyncLockSync {
         *is_under_management = false;
 
         let mut under_management = self.under_management.write().unwrap();
-        let index = under_management.iter().position(|s| Arc::ptr_eq(s, &sync_lock)).unwrap();
+        let index = under_management
+            .iter()
+            .position(|s| Arc::ptr_eq(s, &sync_lock))
+            .unwrap();
         under_management.remove(index);
     }
 }

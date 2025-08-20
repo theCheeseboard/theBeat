@@ -1,8 +1,8 @@
 pub mod audio_controller;
-pub mod output_drivers;
-mod mute;
-mod sample;
-pub mod input_engines;
-pub mod audio_pipeline;
 mod audio_metadata;
+pub mod audio_pipeline;
+pub mod input_engines;
+mod mute;
+pub mod output_drivers;
 mod resamplers;
+mod sample;

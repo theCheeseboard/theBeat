@@ -1,20 +1,18 @@
 pub mod media_item;
 
-use async_lock::RwLock;
-use std::sync::{Arc};
-use std::time::Duration;
-use async_ringbuf::AsyncHeapProd;
-use async_ringbuf::traits::AsyncProducer;
-use async_ringbuf::wrap::AsyncProd;
+use crate::audio_processing::audio_pipeline::duplicator::Duplicator;
+use crate::audio_processing::audio_pipeline::faucet::{Faucet, create_faucet};
+use crate::audio_processing::audio_pipeline::{PipelineSample, PipelineSampleResult, plug};
+use crate::audio_processing::input_engines::faucet_for_url;
 use crate::cyclic_cursor_vec::CyclicCursorVec;
 use crate::play_queue::media_item::MediaItem;
-use gpui::{App, AppContext, AsyncApp, Entity, Global};
-use url::Url;
-use rand::{random, random_range};
-use crate::audio_processing::audio_pipeline::duplicator::Duplicator;
-use crate::audio_processing::audio_pipeline::faucet::{create_faucet, Faucet};
-use crate::audio_processing::audio_pipeline::{plug, PipelineSample, PipelineSampleResult};
-use crate::audio_processing::input_engines::faucet_for_url;
+use async_lock::RwLock;
+use async_ringbuf::AsyncHeapProd;
+use async_ringbuf::traits::AsyncProducer;
+use gpui::{App, AsyncApp, Entity, Global};
+use rand::random_range;
+use std::sync::Arc;
+use std::time::Duration;
 
 struct FaucetQueueItem {
     associated_item: Entity<MediaItem>,
@@ -27,12 +25,12 @@ pub struct PlayQueue {
     shuffle: bool,
     faucet_queue: Arc<RwLock<Vec<FaucetQueueItem>>>,
     faucet_input: Arc<RwLock<AsyncHeapProd<PipelineSampleResult>>>,
-    duplicator: Duplicator
+    duplicator: Duplicator,
 }
 
 impl PlayQueue {
     pub fn new(cx: &mut App) -> Self {
-        let (faucet, mut faucet_input) = create_faucet();
+        let (faucet, faucet_input) = create_faucet();
         let mut duplicator = Duplicator::new();
 
         let faucet_input = Arc::new(RwLock::new(faucet_input));
@@ -48,7 +46,7 @@ impl PlayQueue {
             shuffle: false,
             faucet_queue: faucet_queue.clone(),
             faucet_input: faucet_input.clone(),
-            duplicator
+            duplicator,
         };
 
         cx.spawn(async move |cx: &mut AsyncApp| {
@@ -64,9 +62,13 @@ impl PlayQueue {
 
                     let next_media_item = played_items.next();
 
-                    if let Some(faucet) = next_media_item.update(cx, |next_media_item, cx| {
-                        faucet_for_url(next_media_item.url.clone())
-                    }).ok().flatten() {
+                    if let Some(faucet) = next_media_item
+                        .update(cx, |next_media_item, _| {
+                            faucet_for_url(next_media_item.url.clone())
+                        })
+                        .ok()
+                        .flatten()
+                    {
                         faucet_queue_borrow.push(FaucetQueueItem {
                             faucet,
                             associated_item: next_media_item.clone(),
@@ -103,7 +105,8 @@ impl PlayQueue {
                     faucet_queue_borrow.remove(0);
                 }
             }
-        }).detach();
+        })
+            .detach();
 
         play_queue
     }
@@ -124,14 +127,26 @@ impl PlayQueue {
 
         let current_item = played_items.current();
         if !faucet_queue_borrow.is_empty() {
-            if faucet_queue_borrow.first().unwrap().associated_item.entity_id() != current_item.entity_id() {
+            if faucet_queue_borrow
+                .first()
+                .unwrap()
+                .associated_item
+                .entity_id()
+                != current_item.entity_id()
+            {
                 // We've already started streaming the next item, so reset everything and jump straight to the next item
                 faucet_queue_borrow.clear();
 
                 let faucet_input = self.faucet_input.clone();
                 smol::spawn(async move {
-                    faucet_input.write().await.push(Ok(PipelineSample::Reset)).await.unwrap();
-                }).detach()
+                    faucet_input
+                        .write()
+                        .await
+                        .push(Ok(PipelineSample::Reset))
+                        .await
+                        .unwrap();
+                })
+                    .detach()
             } else {
                 // Enqueue new faucets
                 while faucet_queue_borrow.len() >= 2 {
@@ -152,8 +167,14 @@ impl PlayQueue {
 
             let faucet_input = self.faucet_input.clone();
             smol::spawn(async move {
-                faucet_input.write().await.push(Ok(PipelineSample::Reset)).await.unwrap();
-            }).detach()
+                faucet_input
+                    .write()
+                    .await
+                    .push(Ok(PipelineSample::Reset))
+                    .await
+                    .unwrap();
+            })
+                .detach()
         }
     }
 
@@ -172,8 +193,14 @@ impl PlayQueue {
 
         let faucet_input = self.faucet_input.clone();
         smol::spawn(async move {
-            faucet_input.write().await.push(Ok(PipelineSample::Reset)).await.unwrap();
-        }).detach()
+            faucet_input
+                .write()
+                .await
+                .push(Ok(PipelineSample::Reset))
+                .await
+                .unwrap();
+        })
+            .detach()
     }
 
     pub fn skip_to_item(&mut self, item: Entity<MediaItem>) {
@@ -182,7 +209,11 @@ impl PlayQueue {
             return;
         }
 
-        let new_position = played_items.vec.iter().position(|i| i.entity_id() == item.entity_id()).unwrap();
+        let new_position = played_items
+            .vec
+            .iter()
+            .position(|i| i.entity_id() == item.entity_id())
+            .unwrap();
         played_items.set_current(new_position);
         // Skip back again because the play thread will call next() on the current item
         played_items.prev();
@@ -192,8 +223,14 @@ impl PlayQueue {
 
         let faucet_input = self.faucet_input.clone();
         smol::spawn(async move {
-            faucet_input.write().await.push(Ok(PipelineSample::Reset)).await.unwrap();
-        }).detach()
+            faucet_input
+                .write()
+                .await
+                .push(Ok(PipelineSample::Reset))
+                .await
+                .unwrap();
+        })
+            .detach()
     }
 }
 

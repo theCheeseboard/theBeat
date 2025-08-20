@@ -1,5 +1,4 @@
 use crate::audio_processing::audio_metadata::AudioMetadata;
-use cpal::BufferSize::Default;
 use cpal::U24;
 use intx::I24;
 use rand::random;

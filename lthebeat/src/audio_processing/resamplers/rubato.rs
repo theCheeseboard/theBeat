@@ -1,14 +1,12 @@
+use crate::audio_processing::audio_pipeline::PipelineSample;
 use crate::audio_processing::audio_pipeline::audio_format::{AudioFormat, SampleFormat};
-use crate::audio_processing::audio_pipeline::faucet::{create_faucet, Faucet, FaucetError};
-use crate::audio_processing::audio_pipeline::sink::{create_sink, Sink};
+use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError, create_faucet};
+use crate::audio_processing::audio_pipeline::sink::{Sink, create_sink};
 use crate::audio_processing::sample::{Sample, SampleData};
-use async_ringbuf::AsyncHeapRb;
-use async_ringbuf::traits::{AsyncProducer, Split};
+use async_ringbuf::traits::AsyncProducer;
 use rubato::{FftFixedIn, Resampler};
-use smol::io::AsyncWriteExt;
 use smol::stream::StreamExt;
 use tracing::info;
-use crate::audio_processing::audio_pipeline::PipelineSample;
 
 pub struct RubatoResampler {
     sink: Option<Sink>,
@@ -32,10 +30,10 @@ impl RubatoResampler {
                                 .push(Ok(PipelineSample::Sample(next_sample)))
                                 .await
                                 .expect("failed to push sample to sink");
-                            
+
                             continue;
                         }
-                        
+
                         let channels = next_sample.channels;
                         if resampler
                             .reconfigure_if_required(next_sample.sample_rate, next_sample.channels)

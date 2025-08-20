@@ -1,12 +1,12 @@
+use isahc::config::{Configurable, RedirectPolicy};
+use isahc::http::Uri;
+use isahc::{Request, RequestExt};
+use log::warn;
+use rb::{RB, RbConsumer, RbInspector, RbProducer, SpscRb};
+use smol::io::AsyncReadExt;
 use std::io::{Read, Seek, SeekFrom};
 use std::str::FromStr;
 use std::sync::Arc;
-use isahc::config::{Configurable, RedirectPolicy};
-use isahc::{Request, RequestExt};
-use isahc::http::Uri;
-use log::warn;
-use rb::{RbConsumer, RbInspector, RbProducer, SpscRb, RB};
-use smol::io::AsyncReadExt;
 use symphonia::core::io::MediaSource;
 use tracing::debug;
 use url::Url;
@@ -16,7 +16,7 @@ const HTTP_SOURCE_BUFFER_SIZE: usize = 1048576 * 32;
 pub struct HttpSource {
     url: Url,
     rb: Arc<SpscRb<u8>>,
-    content_length: Option<u64>
+    content_length: Option<u64>,
 }
 
 impl HttpSource {
@@ -24,7 +24,7 @@ impl HttpSource {
         let mut source = HttpSource {
             url,
             rb: Arc::new(SpscRb::new(HTTP_SOURCE_BUFFER_SIZE)),
-            content_length: None
+            content_length: None,
         };
         source.start_stream();
         source
@@ -42,7 +42,8 @@ impl HttpSource {
                 .redirect_policy(RedirectPolicy::Follow)
                 .body(())
                 .unwrap()
-                .send_async().await;
+                .send_async()
+                .await;
 
             let Ok(response) = response else {
                 return;
@@ -53,7 +54,7 @@ impl HttpSource {
             loop {
                 let mut buf = vec![0; 2048];
                 let Ok(result) = response.read(&mut buf).await else {
-                    break
+                    break;
                 };
                 debug!("Read {} bytes", result);
                 buf.truncate(result);
@@ -63,10 +64,11 @@ impl HttpSource {
                     // TODO: Restart the stream when the buffer is empty
                     warn!("HttpSource: Buffer is full, stopping download");
                     drop(response);
-                    break
+                    break;
                 }
             }
-        }).detach();
+        })
+            .detach();
     }
 }
 
@@ -74,7 +76,7 @@ impl Read for HttpSource {
     fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
         match self.rb.consumer().read_blocking(buf) {
             Some(bytes_read) => Ok(bytes_read),
-            _ => Ok(0)
+            _ => Ok(0),
         }
     }
 }

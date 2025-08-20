@@ -1,5 +1,5 @@
-use std::path::Path;
 use cntp_i18n::tr;
+use std::path::Path;
 use url::Url;
 
 #[derive(Default, Clone, Debug)]
@@ -13,7 +13,8 @@ pub struct AudioMetadata {
 impl AudioMetadata {
     pub fn get_title(&self) -> String {
         self.title.clone().unwrap_or_else(|| {
-            self.url.clone()
+            self.url
+                .clone()
                 .and_then(|url| {
                     let path = url.path();
                     let path = Path::new(path);

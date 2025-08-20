@@ -1,5 +1,4 @@
 use crate::actions::{SkipNextAction, SkipPreviousAction};
-use cntp_i18n::tr;
 use contemporary::components::button::button;
 use contemporary::components::icon::icon;
 use contemporary::components::layer::layer;
@@ -12,7 +11,6 @@ use gpui::{
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
-use std::path::Path;
 
 #[derive(IntoElement)]
 pub struct TransportControls {
