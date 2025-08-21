@@ -3,8 +3,10 @@ use contemporary::components::button::button;
 use contemporary::components::icon::icon;
 use contemporary::components::layer::layer;
 use contemporary::components::slider::slider;
+use contemporary::easing::ease_out_cubic;
 use contemporary::platform_support::platform_settings::PlatformSettings;
 use contemporary::transition::float_transition_element::TransitionExt;
+use gpui::prelude::FluentBuilder;
 use gpui::{
     Action, Animation, App, IntoElement, ParentElement, Refineable, RenderOnce, StyleRefinement,
     Styled, Window, div, px, rgb,
@@ -30,6 +32,7 @@ impl RenderOnce for TransportControls {
         let audio_controller = cx.global::<AudioController>();
 
         let meta = audio_controller.current_metadata();
+        let current_time = audio_controller.current_time();
         let title = meta.get_title();
         let supplementary = {
             let mut s = Vec::new();
@@ -47,6 +50,7 @@ impl RenderOnce for TransportControls {
             .flex_col()
             .gap(px(4.))
             .p(px(10.))
+            .overflow_hidden()
             .child(
                 div()
                     .flex()
@@ -102,10 +106,37 @@ impl RenderOnce for TransportControls {
                     .flex()
                     .gap(px(4.))
                     // Elapsed
-                    .child("00:00")
-                    .child(slider("seek-slider").h(px(24.)).flex_grow())
+                    .child(
+                        current_time
+                            .map(|d| {
+                                let secs = d.as_secs();
+                                format!("{:02}:{:02}", secs / 60, secs % 60)
+                            })
+                            .unwrap_or("??:??".to_string()),
+                    )
+                    .child(
+                        slider("seek-slider")
+                            .h(px(24.))
+                            .flex_grow()
+                            .when_some(meta.duration, |slider, duration| {
+                                slider.when_some(current_time, |slider, current_time| {
+                                    slider
+                                        .value(current_time.as_millis() as u32)
+                                        .max_value(duration.as_millis() as u32)
+                                })
+                            })
+                            .when_none(&meta.duration, |slider| slider.disabled())
+                            .when_none(&current_time, |slider| slider.disabled()),
+                    )
                     // Total
-                    .child("00:00"),
+                    .child(
+                        meta.duration
+                            .map(|d| {
+                                let secs = d.as_secs();
+                                format!("{:02}:{:02}", secs / 60, secs % 60)
+                            })
+                            .unwrap_or("∞".to_string()),
+                    ),
             );
         div.style().refine(&self.style);
 
@@ -116,8 +147,8 @@ impl RenderOnce for TransportControls {
             } else {
                 96.
             },
-            Animation::new(platform_settings.animation_duration),
-            |this, value| this.h(px(value)),
+            Animation::new(platform_settings.animation_duration).with_easing(ease_out_cubic),
+            |this, value| this.h(px(value)).max_h(px(value)),
         )
     }
 }

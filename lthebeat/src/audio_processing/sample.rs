@@ -3,6 +3,7 @@ use cpal::U24;
 use intx::I24;
 use rand::random;
 use std::fmt::{Debug, Formatter};
+use std::time::Duration;
 
 #[derive(Clone, Debug)]
 pub struct Sample {
@@ -13,6 +14,8 @@ pub struct Sample {
     /// A random number to keep track of this sample as it moves through the audio pipeline
     pub sample_id: u64,
     pub data: SampleData,
+
+    pub elapsed_since_start: Option<Duration>,
 }
 
 #[derive(Clone)]
@@ -84,6 +87,7 @@ impl Sample {
         channels: u16,
         meta: AudioMetadata,
         sample_id: Option<u64>,
+        elapsed: Option<Duration>,
         data: SampleData,
     ) -> Self {
         Sample {
@@ -91,6 +95,7 @@ impl Sample {
             channels,
             meta,
             sample_id: sample_id.unwrap_or_else(|| random()),
+            elapsed_since_start: elapsed,
             data,
         }
     }
@@ -171,6 +176,7 @@ impl Sample {
             sample_rate: self.sample_rate,
             meta: self.meta,
             sample_id: self.sample_id,
+            elapsed_since_start: self.elapsed_since_start,
             data: new_sample_data,
         }
     }

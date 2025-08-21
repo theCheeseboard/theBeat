@@ -43,6 +43,7 @@ impl RubatoResampler {
                         }
                         let meta = next_sample.meta.clone();
                         let sample_id = next_sample.sample_id;
+                        let elapsed = next_sample.elapsed_since_start;
                         if resampler.is_resampling_required() {
                             let resampler = &mut resampler.resampler;
                             sample_buffer.append(&mut next_sample.into_f32());
@@ -89,6 +90,7 @@ impl RubatoResampler {
                                     target_audio_format.channels,
                                     meta.clone(),
                                     Some(sample_id),
+                                    elapsed,
                                     match target_audio_format.sample {
                                         SampleFormat::Signed8 => SampleData::Signed8(Vec::new()),
                                         SampleFormat::Unsigned8 => {
@@ -129,6 +131,7 @@ impl RubatoResampler {
                                 target_audio_format.channels,
                                 meta,
                                 Some(sample_id),
+                                elapsed,
                                 match target_audio_format.sample {
                                     SampleFormat::Signed8 => SampleData::Signed8(Vec::new()),
                                     SampleFormat::Unsigned8 => SampleData::Unsigned8(Vec::new()),

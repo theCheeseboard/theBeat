@@ -13,25 +13,25 @@
   },
   "FILE_OPEN": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:106",
+    "definedIn": "src/main.rs:105",
     "plural": false,
     "description": null
   },
   "FILE_OPEN_URL": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:108",
+    "definedIn": "src/main.rs:107",
     "plural": false,
     "description": null
   },
   "MENU_FILE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:104",
+    "definedIn": "src/main.rs:103",
     "plural": false,
     "description": null
   },
   "MENU_PLAYBACK": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:114",
+    "definedIn": "src/main.rs:113",
     "plural": false,
     "description": null
   },
@@ -43,13 +43,13 @@
   },
   "PLAYBACK_SKIP_NEXT": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:121",
+    "definedIn": "src/main.rs:120",
     "plural": false,
     "description": null
   },
   "PLAYBACK_SKIP_PREVIOUS": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:117",
+    "definedIn": "src/main.rs:116",
     "plural": false,
     "description": null
   },
@@ -61,7 +61,7 @@
   },
   "QUEUE_TITLE": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:40",
+    "definedIn": "src/play_queue.rs:38",
     "plural": false,
     "description": null
   },
@@ -73,19 +73,19 @@
   },
   "URL_OPEN_TEXT": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:69",
+    "definedIn": "src/main_window.rs:68",
     "plural": false,
     "description": null
   },
   "URL_OPEN_TITLE": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:62",
+    "definedIn": "src/main_window.rs:61",
     "plural": false,
     "description": null
   },
   "URL_TEXT_FIELD_PLACEHOLDER": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:33",
+    "definedIn": "src/main_window.rs:32",
     "plural": false,
     "description": null
   }

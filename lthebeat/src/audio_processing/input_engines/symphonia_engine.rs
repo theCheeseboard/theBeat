@@ -13,12 +13,14 @@ use log::warn;
 use std::borrow::Cow;
 use std::fs::File;
 use std::thread;
+use std::time::Duration;
 use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Signal};
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
 use symphonia::core::meta::{MetadataRevision, StandardTagKey};
 use symphonia::core::probe::Hint;
 use symphonia::default::{get_codecs, get_probe};
 use tracing::info;
+use tracing_subscriber::fmt::time;
 use url::Url;
 
 pub struct SymphoniaEngine {
@@ -57,11 +59,20 @@ impl SymphoniaEngine {
         let decoder_opts = Default::default();
         let mut decoder = codec_registry.make(&first_track.codec_params, &decoder_opts)?;
 
+        let time_base = first_track.codec_params.time_base;
+        let track_duration = time_base.and_then(|time_base| {
+            first_track.codec_params.n_frames.map(|n_frames| {
+                let time = time_base.calc_time(n_frames);
+                Duration::from_secs(time.seconds) + Duration::from_secs_f64(time.frac)
+            })
+        });
+
         let (mut rb_prod, rb_cons) =
             AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();
         thread::spawn(move || {
             let mut file_meta = AudioMetadata {
                 url: Some(url),
+                duration: track_duration,
                 ..AudioMetadata::default()
             };
             if let Some(probe_meta) = probe_result
@@ -124,12 +135,18 @@ impl SymphoniaEngine {
                         }
                     }
 
+                    let elapsed = time_base.map(|time_base| {
+                        let time = time_base.calc_time(next_packet.ts);
+                        Duration::from_secs(time.seconds) + Duration::from_secs_f64(time.frac)
+                    });
+
                     if !pushed_first_sample {
                         if smol::block_on(rb_prod.push(Ok(PipelineSample::Sample(Sample::new(
                             rate,
                             channel_count as u16,
                             file_meta.clone(),
                             None,
+                            elapsed,
                             SampleData::Empty,
                         )))))
                             .is_err()
@@ -146,6 +163,7 @@ impl SymphoniaEngine {
                         channel_count as u16,
                         file_meta.clone(),
                         None,
+                        elapsed,
                         sample_data,
                     ))
                 };

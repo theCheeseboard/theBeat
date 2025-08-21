@@ -1,14 +1,17 @@
 use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::audio_processing::audio_pipeline::PipelineSample;
 use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
+use async_channel::Receiver;
 use log::warn;
 use std::collections::HashMap;
-use std::sync::{Arc, RwLock};
+use std::sync::{Arc, RwLock, mpsc};
 use std::time::Duration;
 
 pub struct SyncLockSync {
     pub current_meta: Arc<RwLock<AudioMetadata>>,
+    pub current_time: Arc<RwLock<Option<Duration>>>,
     under_management: Arc<RwLock<Vec<Arc<SyncLock>>>>,
+    event_channel: Receiver<()>,
 }
 
 impl Default for SyncLockSync {
@@ -19,11 +22,16 @@ impl Default for SyncLockSync {
 
 impl SyncLockSync {
     pub fn new() -> SyncLockSync {
+        let (event_channel_sender, event_channel_receiver) = async_channel::bounded(1);
+
         let under_management = Arc::new(RwLock::new(Vec::new()));
         let current_meta = Arc::new(RwLock::default());
+        let current_time = Arc::new(RwLock::default());
         let sync_lock_sync = SyncLockSync {
             current_meta: current_meta.clone(),
+            current_time: current_time.clone(),
             under_management: under_management.clone(),
+            event_channel: event_channel_receiver,
         };
 
         smol::spawn(async move {
@@ -74,6 +82,7 @@ impl SyncLockSync {
 
                 if !packet_sent && all_sync_locks_accounted_for {
                     let mut meta = Default::default();
+                    let mut elapsed_since_start = Default::default();
                     for sync_lock in under_management.iter() {
                         let packet = crate_packets.remove(&sync_lock.id).expect("All sync locks accounted for but found sync lock without corresponding packet");
                         // Update the current sample ID
@@ -81,11 +90,15 @@ impl SyncLockSync {
 
                         // Update the metadata
                         meta = packet.meta.clone();
+                        elapsed_since_start = packet.elapsed_since_start;
 
                         // Send out the packet
                         sync_lock.write_buffer.send(PipelineSample::Sample(packet)).await.unwrap();
                     }
                     *current_meta.write().unwrap() = meta;
+                    *current_time.write().unwrap() = elapsed_since_start;
+
+                    let _ = event_channel_sender.try_send(());
                 }
             }
         }).detach();
@@ -115,6 +128,10 @@ impl SyncLockSync {
             .position(|s| Arc::ptr_eq(s, &sync_lock))
             .unwrap();
         under_management.remove(index);
+    }
+
+    pub fn event_channel(&mut self) -> Receiver<()> {
+        self.event_channel.clone()
     }
 }
 

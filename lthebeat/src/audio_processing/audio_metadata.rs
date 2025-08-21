@@ -1,5 +1,6 @@
 use cntp_i18n::tr;
 use std::path::Path;
+use std::time::Duration;
 use url::Url;
 
 #[derive(Default, Clone, Debug)]
@@ -8,6 +9,7 @@ pub struct AudioMetadata {
     pub title: Option<String>,
     pub artist: Option<String>,
     pub album: Option<String>,
+    pub duration: Option<Duration>,
 }
 
 impl AudioMetadata {

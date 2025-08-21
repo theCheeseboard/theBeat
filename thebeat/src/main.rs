@@ -33,8 +33,7 @@ fn mane() {
         I18N_MANAGER.write().unwrap().load_source(tr_load!());
         let bounds = Bounds::centered(None, size(px(800.0), px(600.0)), cx);
 
-        let mut audio_controller = AudioController::new();
-
+        let mut audio_controller = AudioController::new(cx);
         let mut play_queue = PlayQueue::new(cx);
 
         // for device in cpal_output_devices() {
