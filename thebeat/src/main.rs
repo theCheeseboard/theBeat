@@ -5,7 +5,8 @@ mod play_queue;
 mod transport_controls;
 
 use crate::actions::{
-    OpenFileAction, OpenUrlAction, SkipNextAction, SkipPreviousAction, register_actions,
+    OpenFileAction, OpenUrlAction, PlayPauseAction, SkipNextAction, SkipPreviousAction,
+    register_actions,
 };
 use crate::main_window::MainWindow;
 use cntp_i18n::{I18N_MANAGER, tr, tr_load};
@@ -33,29 +34,13 @@ fn mane() {
         I18N_MANAGER.write().unwrap().load_source(tr_load!());
         let bounds = Bounds::centered(None, size(px(800.0), px(600.0)), cx);
 
-        let mut audio_controller = AudioController::new(cx);
         let mut play_queue = PlayQueue::new(cx);
+        let mut audio_controller = AudioController::new(cx);
 
-        // for device in cpal_output_devices() {
-        //     let sink = device.open_sink().unwrap();
-        //
-        //     plug(play_queue.open_faucet(), sink.sink);
-        //     audio_controller.sync_lock_sync.manage(sink.sync_lock);
-        //
-        //     device.play();
-        //     Box::leak(device);
-        // }
-        let device = cpal_default_output_device();
-        let sink = device.open_sink().unwrap();
+        plug(play_queue.open_faucet(), audio_controller.sink());
 
-        plug(play_queue.open_faucet(), sink.sink);
-        audio_controller.sync_lock_sync.manage(sink.sync_lock);
-
-        device.play();
-        Box::leak(device);
-
-        cx.set_global(audio_controller);
         cx.set_global(play_queue);
+        cx.set_global(audio_controller);
 
         let default_window_options = contemporary_window_options(cx, "theBeat".into());
         register_actions(cx);
@@ -112,6 +97,11 @@ fn mane() {
                                 Menu {
                                     name: tr!("MENU_PLAYBACK", "Playback").into(),
                                     items: vec![
+                                        MenuItem::action(
+                                            tr!("PLAYBACK_PLAY_PAUSE", "Play/Pause"),
+                                            PlayPauseAction,
+                                        ),
+                                        MenuItem::separator(),
                                         MenuItem::action(
                                             tr!("PLAYBACK_SKIP_PREVIOUS", "Skip Back"),
                                             SkipPreviousAction,

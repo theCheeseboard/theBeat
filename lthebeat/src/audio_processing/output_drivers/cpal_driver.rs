@@ -3,7 +3,9 @@ use crate::audio_processing::audio_pipeline::sink::create_sink;
 use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
 use crate::audio_processing::audio_pipeline::{PipelineSample, plug};
 use crate::audio_processing::mute::Mute;
-use crate::audio_processing::output_drivers::{OutputDevice, Sample, Sink};
+use crate::audio_processing::output_drivers::{
+    OutputDevice, OutputDeviceOutputStream, Sample, Sink,
+};
 use crate::audio_processing::resamplers::rubato::RubatoResampler;
 use crate::audio_processing::sample::{SampleData, UnwrapSample};
 use async_ringbuf::AsyncHeapRb;
@@ -25,11 +27,6 @@ const BUFFER_DURATION_MSEC: usize = BUFFER_DURATION.as_millis() as usize;
 pub struct CpalOutputDevice {
     device: Device,
     streams: RefCell<Vec<Stream>>,
-}
-
-pub struct CpalOutputStream {
-    pub sink: Sink,
-    pub sync_lock: Arc<SyncLock>,
 }
 
 impl CpalOutputDevice {
@@ -104,8 +101,24 @@ impl CpalOutputDevice {
 
         Ok(sink)
     }
+}
 
-    pub fn open_sink(&self) -> anyhow::Result<CpalOutputStream> {
+impl OutputDevice for CpalOutputDevice {
+    fn pause(&self) {
+        self.streams
+            .borrow()
+            .iter()
+            .for_each(|stream| stream.pause().unwrap());
+    }
+
+    fn play(&self) {
+        self.streams
+            .borrow()
+            .iter()
+            .for_each(|stream| stream.play().unwrap());
+    }
+
+    fn open_sink(&self) -> anyhow::Result<OutputDeviceOutputStream> {
         let sync_lock = SyncLock::create_sync_lock();
         let supported_stream_config = self.device.default_output_config()?;
         let sample_format = supported_stream_config.sample_format();
@@ -143,26 +156,10 @@ impl CpalOutputDevice {
         plug(resampler.faucet(), sync_lock.sink);
         plug(sync_lock.faucet, output_sink);
 
-        Ok(CpalOutputStream {
+        Ok(OutputDeviceOutputStream {
             sink: resampler.sink(),
             sync_lock: sync_lock.sync_lock,
         })
-    }
-}
-
-impl OutputDevice for CpalOutputDevice {
-    fn pause(&self) {
-        self.streams
-            .borrow()
-            .iter()
-            .for_each(|stream| stream.pause().unwrap());
-    }
-
-    fn play(&self) {
-        self.streams
-            .borrow()
-            .iter()
-            .for_each(|stream| stream.play().unwrap());
     }
 }
 

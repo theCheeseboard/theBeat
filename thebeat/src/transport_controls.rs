@@ -8,8 +8,8 @@ use contemporary::platform_support::platform_settings::PlatformSettings;
 use contemporary::transition::float_transition_element::TransitionExt;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    Action, Animation, App, IntoElement, ParentElement, Refineable, RenderOnce, StyleRefinement,
-    Styled, Window, div, px, rgb,
+    Action, Animation, App, BorrowAppContext, IntoElement, ParentElement, Refineable, RenderOnce,
+    StyleRefinement, Styled, Window, div, px, rgb,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
@@ -90,7 +90,20 @@ impl RenderOnce for TransportControls {
                     .child(
                         button("play-pause-button")
                             .flat()
-                            .child(icon("media-playback-pause".into()).size(32.)),
+                            .when_else(
+                                audio_controller.is_playing(),
+                                |button| {
+                                    button.child(icon("media-playback-pause".into()).size(32.))
+                                },
+                                |button| {
+                                    button.child(icon("media-playback-start".into()).size(32.))
+                                },
+                            )
+                            .on_click(|_, _, cx| {
+                                cx.update_global::<AudioController, ()>(|audio_controller, _| {
+                                    audio_controller.play_pause()
+                                })
+                            }),
                     )
                     .child(
                         button("skip-forward-button")
