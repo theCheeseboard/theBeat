@@ -13,7 +13,7 @@ use log::warn;
 use std::borrow::Cow;
 use std::fs::File;
 use std::thread;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Signal};
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
 use symphonia::core::meta::{MetadataRevision, StandardTagKey};
@@ -70,6 +70,7 @@ impl SymphoniaEngine {
         let (mut rb_prod, rb_cons) =
             AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();
         thread::spawn(move || {
+            let mut start_instant = None;
             let mut file_meta = AudioMetadata {
                 url: Some(url),
                 duration: track_duration,
@@ -135,10 +136,12 @@ impl SymphoniaEngine {
                         }
                     }
 
-                    let elapsed = time_base.map(|time_base| {
-                        let time = time_base.calc_time(next_packet.ts);
-                        Duration::from_secs(time.seconds) + Duration::from_secs_f64(time.frac)
-                    });
+                    let elapsed = time_base
+                        .map(|time_base| {
+                            let time = time_base.calc_time(next_packet.ts);
+                            Duration::from_secs(time.seconds) + Duration::from_secs_f64(time.frac)
+                        })
+                        .or_else(|| start_instant.map(|instant: Instant| instant.elapsed()));
 
                     if !pushed_first_sample {
                         if smol::block_on(rb_prod.push(Ok(PipelineSample::Sample(Sample::new(
@@ -155,7 +158,8 @@ impl SymphoniaEngine {
                             warn!("SymphoniaEngine: stopping");
                             return;
                         }
-                        pushed_first_sample = true
+                        pushed_first_sample = true;
+                        start_instant = Some(Instant::now());
                     }
 
                     Some(Sample::new(
