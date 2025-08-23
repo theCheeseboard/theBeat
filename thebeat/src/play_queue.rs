@@ -4,12 +4,12 @@ use contemporary::components::grandstand::grandstand;
 use contemporary::components::icon::icon;
 use contemporary::components::layer::layer;
 use contemporary::styling::theme::{Theme, VariableColor};
-use gpui::ListSizingBehavior::Infer;
 use gpui::prelude::FluentBuilder;
+use gpui::ListSizingBehavior::Infer;
 use gpui::{
-    App, ElementId, ImageSource, InteractiveElement, IntoElement, ListAlignment, ListState,
-    ParentElement, Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled,
-    Window, div, img, list, px, rgb, rgba,
+    div, img, list, px, rgba, App, ElementId,
+    ImageSource, InteractiveElement, IntoElement, ListAlignment, ListState, ParentElement,
+    Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled, Window,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::DisplayQueueItem;
@@ -53,7 +53,6 @@ impl RenderOnce for PlayQueue {
                 div().id("queue").overflow_y_scroll().flex_grow().child(
                     list(list_state.clone(), move |i, _, cx| {
                         let theme = cx.global::<Theme>();
-                        let play_queue = cx.global::<lthebeat::play_queue::PlayQueue>();
                         match display_queue.get(i).unwrap().clone() {
                             DisplayQueueItem::SingleItemGroup(item_entity) => {
                                 let item = item_entity.read(cx);

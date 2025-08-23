@@ -6,11 +6,12 @@ use contemporary::components::layer::layer;
 use contemporary::components::slider::slider;
 use contemporary::easing::ease_out_cubic;
 use contemporary::platform_support::platform_settings::PlatformSettings;
+use contemporary::styling::theme::Theme;
 use contemporary::transition::float_transition_element::TransitionExt;
 use gpui::prelude::FluentBuilder;
 use gpui::{
     Action, Animation, App, BorrowAppContext, ImageSource, IntoElement, ParentElement, Refineable,
-    RenderOnce, StyleRefinement, Styled, Window, div, img, px, rgb,
+    RenderOnce, Rgba, StyleRefinement, Styled, Window, div, img, px, rgb,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
@@ -31,6 +32,7 @@ impl RenderOnce for TransportControls {
         let play_queue = cx.global::<PlayQueue>();
         let platform_settings = cx.global::<PlatformSettings>();
         let audio_controller = cx.global::<AudioController>();
+        let theme = cx.global::<Theme>();
 
         let meta = audio_controller.current_metadata();
         let current_time = audio_controller.current_time();
@@ -39,15 +41,27 @@ impl RenderOnce for TransportControls {
 
         let cover = meta
             .album_cover
+            .clone()
             .and_then(|album_cover| album_cover.render_image())
             .clone();
+        let average_color = meta
+            .album_cover
+            .and_then(|album_cover| album_cover.average_color());
 
-        let mut div = layer()
+        let mut div = div()
+            .rounded(theme.border_radius)
             .flex()
             .flex_col()
             .gap(px(4.))
             .p(px(10.))
             .overflow_hidden()
+            .when_some(average_color, |layer, average_color| {
+                layer.bg(Rgba {
+                    a: 0.2,
+                    ..average_color
+                })
+            })
+            .when_none(&average_color, |layer| layer.bg(theme.layer_background))
             .child(
                 div()
                     .flex()
