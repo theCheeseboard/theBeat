@@ -1,6 +1,6 @@
 mod http_source;
 
-use crate::audio_processing::audio_metadata::AudioMetadata;
+use crate::audio_processing::audio_metadata::{Art, AudioMetadata};
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::{
     PipelineSample, PipelineSampleResult, SAMPLE_BUFFER_SIZE,
@@ -15,11 +15,12 @@ use log::warn;
 use regex::Regex;
 use std::borrow::Cow;
 use std::fs::File;
+use std::sync::Arc;
 use std::thread;
 use std::time::{Duration, Instant};
 use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Signal};
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
-use symphonia::core::meta::{MetadataRevision, StandardTagKey, Value};
+use symphonia::core::meta::{MetadataRevision, StandardTagKey, StandardVisualKey, Value};
 use symphonia::core::probe::Hint;
 use symphonia::default::{get_codecs, get_probe};
 use tracing::info;
@@ -319,5 +320,14 @@ fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &Metadata
             },
             _ => {}
         }
+    }
+
+    if !symphonia_metadata.visuals().is_empty() {
+        let album_cover = symphonia_metadata
+            .visuals()
+            .iter()
+            .find(|visual| visual.usage == Some(StandardVisualKey::FrontCover))
+            .unwrap_or_else(|| symphonia_metadata.visuals().first().unwrap());
+        metadata.album_cover = Some(Arc::new(Art::new(album_cover.data.clone())));
     }
 }

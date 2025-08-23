@@ -9,8 +9,8 @@ use contemporary::platform_support::platform_settings::PlatformSettings;
 use contemporary::transition::float_transition_element::TransitionExt;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    Action, Animation, App, BorrowAppContext, IntoElement, ParentElement, Refineable, RenderOnce,
-    StyleRefinement, Styled, Window, div, px, rgb,
+    Action, Animation, App, BorrowAppContext, ImageSource, IntoElement, ParentElement, Refineable,
+    RenderOnce, StyleRefinement, Styled, Window, div, img, px, rgb,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
@@ -37,6 +37,11 @@ impl RenderOnce for TransportControls {
         let title = meta.get_title();
         let supplementary = meta.supplementary_text();
 
+        let cover = meta
+            .album_cover
+            .and_then(|album_cover| album_cover.render_image())
+            .clone();
+
         let mut div = layer()
             .flex()
             .flex_col()
@@ -49,7 +54,14 @@ impl RenderOnce for TransportControls {
                     .items_center()
                     .gap(px(4.))
                     // Album Art
-                    .child(div().size(px(48.)).bg(rgb(0xFF0000)))
+                    .child(
+                        div()
+                            .size(px(48.))
+                            .when_some(cover.clone(), |div, album_cover| {
+                                div.child(img(ImageSource::Render(album_cover)).h_full().w_full())
+                            })
+                            .when_none(&cover, |div| div.bg(rgb(0xFF0000))),
+                    )
                     // Text
                     .child(
                         div()

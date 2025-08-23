@@ -7,9 +7,9 @@ use contemporary::styling::theme::{Theme, VariableColor};
 use gpui::ListSizingBehavior::Infer;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    App, ElementId, InteractiveElement, IntoElement, ListAlignment, ListState, ParentElement,
-    Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled, Window, div, list,
-    px, rgb, rgba,
+    App, ElementId, ImageSource, InteractiveElement, IntoElement, ListAlignment, ListState,
+    ParentElement, Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled,
+    Window, div, img, list, px, rgb, rgba,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::DisplayQueueItem;
@@ -58,24 +58,47 @@ impl RenderOnce for PlayQueue {
                             DisplayQueueItem::SingleItemGroup(item_entity) => {
                                 let item = item_entity.read(cx);
 
+                                let cover = item
+                                    .meta
+                                    .clone()
+                                    .album_cover
+                                    .and_then(|album_cover| album_cover.render_image())
+                                    .clone();
+
                                 div()
                                     .id(ElementId::from(i))
                                     .flex()
                                     .gap(px(3.))
-                                    .child(div().size(px(48.)).bg(rgb(0xFF0000)).when(
-                                        current_track == Some(item_entity.entity_id()),
-                                        |david| {
-                                            david.child(
-                                                div()
-                                                    .size_full()
-                                                    .flex()
-                                                    .items_center()
-                                                    .justify_center()
-                                                    .bg(rgba(0x00000070))
-                                                    .child(icon("media-playback-start".into())),
-                                            )
-                                        },
-                                    ))
+                                    .child(
+                                        div()
+                                            .size(px(48.))
+                                            .when_some(cover, |div, album_cover| {
+                                                div.child(
+                                                    img(ImageSource::Render(album_cover))
+                                                        .h_full()
+                                                        .w_full(),
+                                                )
+                                            })
+                                            .when(
+                                                current_track == Some(item_entity.entity_id()),
+                                                |david| {
+                                                    david.child(
+                                                        div()
+                                                            .absolute()
+                                                            .left_0()
+                                                            .top_0()
+                                                            .size_full()
+                                                            .flex()
+                                                            .items_center()
+                                                            .justify_center()
+                                                            .bg(rgba(0x00000070))
+                                                            .child(icon(
+                                                                "media-playback-start".into(),
+                                                            )),
+                                                    )
+                                                },
+                                            ),
+                                    )
                                     .child(
                                         div()
                                             .flex()
@@ -139,11 +162,27 @@ impl RenderOnce for PlayQueue {
                             DisplayQueueItem::GroupHeader(item_entity) => {
                                 let item = item_entity.read(cx);
 
+                                let cover = item
+                                    .meta
+                                    .clone()
+                                    .album_cover
+                                    .and_then(|album_cover| album_cover.render_image())
+                                    .clone();
+
                                 div()
                                     .id(ElementId::from(i))
                                     .flex()
                                     .gap(px(3.))
-                                    .child(div().size(px(48.)).bg(rgb(0xFF0000)))
+                                    .child(div().size(px(48.)).when_some(
+                                        cover,
+                                        |div, album_cover| {
+                                            div.child(
+                                                img(ImageSource::Render(album_cover))
+                                                    .h_full()
+                                                    .w_full(),
+                                            )
+                                        },
+                                    ))
                                     .child(
                                         div()
                                             .flex()

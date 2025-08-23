@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = [ "lthebeat","thebeat"]
+members = ["lthebeat", "thebeat"]
 
 [workspace.dependencies]
 gpui = { git = "https://github.com/zed-industries/zed" }
@@ -20,3 +20,5 @@ symphonia = "0.5"
 rubato = "0.16"
 url = "2.5"
 async-ringbuf = "0.3.4"
+image = "0.25"
+smallvec = "1"
