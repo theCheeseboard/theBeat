@@ -29,21 +29,7 @@ pub struct SymphoniaEngine {
 
 impl SymphoniaEngine {
     pub fn new(url: Url) -> anyhow::Result<Self> {
-        let (music, hint) = match url.scheme() {
-            "file" => {
-                let path = url
-                    .to_file_path()
-                    .map_err(|_| anyhow::anyhow!("Unable to decode file path from URL"))?;
-                let mut hint = Hint::new();
-                hint.with_extension(path.extension().unwrap().to_str().unwrap());
-                (Box::new(File::open(path)?) as Box<dyn MediaSource>, hint)
-            }
-            "http" | "https" => (
-                Box::new(HttpSource::new(url.clone())) as Box<dyn MediaSource>,
-                Hint::new(),
-            ),
-            _ => return Err(anyhow::anyhow!("Unsupported scheme")),
-        };
+        let (music, hint) = open_media_source(&url)?;
 
         let media_source_stream =
             MediaSourceStream::new(music, MediaSourceStreamOptions::default());
@@ -198,10 +184,70 @@ impl SymphoniaEngine {
         })
     }
 
+    pub async fn audio_metadata(url: Url) -> anyhow::Result<AudioMetadata> {
+        let (music, hint) = open_media_source(&url)?;
+
+        let media_source_stream =
+            MediaSourceStream::new(music, MediaSourceStreamOptions::default());
+        let meta_opts = Default::default();
+        let format_opts = Default::default();
+        let probe = get_probe();
+        let mut probe_result =
+            probe.format(&hint, media_source_stream, &format_opts, &meta_opts)?;
+
+        let mut format = probe_result.format;
+        let first_track = format.default_track().unwrap();
+
+        let time_base = first_track.codec_params.time_base;
+        let track_duration = time_base.and_then(|time_base| {
+            first_track.codec_params.n_frames.map(|n_frames| {
+                let time = time_base.calc_time(n_frames);
+                Duration::from_secs(time.seconds) + Duration::from_secs_f64(time.frac)
+            })
+        });
+
+        let mut file_meta = AudioMetadata {
+            url: Some(url),
+            duration: track_duration,
+            ..AudioMetadata::default()
+        };
+        if let Some(probe_meta) = probe_result
+            .metadata
+            .get()
+            .as_ref()
+            .and_then(|m| m.current())
+        {
+            populate_metadata(&mut file_meta, probe_meta);
+        }
+        if let Some(next_meta) = format.metadata().current() {
+            populate_metadata(&mut file_meta, next_meta);
+        }
+
+        Ok(file_meta)
+    }
+
     pub fn faucet(&mut self) -> Faucet {
         self.faucet
             .take()
             .expect("SymphoniaEngine: tried to take faucet twice")
+    }
+}
+
+fn open_media_source(url: &Url) -> anyhow::Result<(Box<dyn MediaSource>, Hint)> {
+    match url.scheme() {
+        "file" => {
+            let path = url
+                .to_file_path()
+                .map_err(|_| anyhow::anyhow!("Unable to decode file path from URL"))?;
+            let mut hint = Hint::new();
+            hint.with_extension(path.extension().unwrap().to_str().unwrap());
+            Ok((Box::new(File::open(path)?) as Box<dyn MediaSource>, hint))
+        }
+        "http" | "https" => Ok((
+            Box::new(HttpSource::new(url.clone())) as Box<dyn MediaSource>,
+            Hint::new(),
+        )),
+        _ => Err(anyhow::anyhow!("Unsupported scheme")),
     }
 }
 

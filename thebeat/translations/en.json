@@ -12,6 +12,8 @@
   "PLAYLISTS_BUTTON": "Playlists",
   "QUEUE_TITLE": "Queue",
   "TRACKS_BUTTON": "Tracks",
+  "UNKNOWN_ALBUM": "Unknown Album",
+  "UNKNOWN_ARTIST": "Unknown Artist",
   "URL_OPEN_TEXT": "Enter the URL to open",
   "URL_OPEN_TITLE": "Open URL",
   "URL_TEXT_FIELD_PLACEHOLDER": "URL"

@@ -9,7 +9,7 @@ use crate::audio_processing::output_drivers::{
 use crate::audio_processing::resamplers::rubato::RubatoResampler;
 use crate::audio_processing::sample::{SampleData, UnwrapSample};
 use async_ringbuf::AsyncHeapRb;
-use async_ringbuf::traits::{AsyncProducer, Consumer, Split};
+use async_ringbuf::traits::{AsyncProducer, Based, Consumer, Split};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use cpal::{Device, SampleFormat, SizedSample, Stream, StreamConfig};
 use gpui::http_client::anyhow;

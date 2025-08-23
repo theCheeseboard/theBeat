@@ -1,12 +1,15 @@
+use crate::track_metadata::TrackMetadata;
 use cntp_i18n::tr;
 use contemporary::components::grandstand::grandstand;
 use contemporary::components::layer::layer;
+use contemporary::styling::theme::{Theme, VariableColor};
 use gpui::ListSizingBehavior::Infer;
 use gpui::{
     App, ElementId, InteractiveElement, IntoElement, ListAlignment, ListState, ParentElement,
     Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled, Window, div, list,
-    px,
+    px, rgb,
 };
+use lthebeat::play_queue::DisplayQueueItem;
 
 #[derive(IntoElement)]
 pub struct PlayQueue {
@@ -25,8 +28,9 @@ impl RenderOnce for PlayQueue {
 
         let play_queue = cx.global::<lthebeat::play_queue::PlayQueue>();
         let list_state = list_state.read(cx);
-        if play_queue.shown_items.len() != list_state.item_count() {
-            list_state.reset(play_queue.shown_items.len());
+        let display_queue = play_queue.display_queue(cx);
+        if display_queue.len() != list_state.item_count() {
+            list_state.reset(display_queue.len());
         }
 
         let mut div = layer()
@@ -40,20 +44,102 @@ impl RenderOnce for PlayQueue {
             )
             .child(
                 div().id("queue").overflow_y_scroll().flex_grow().child(
-                    list(list_state.clone(), |i, _, cx| {
+                    list(list_state.clone(), move |i, _, cx| {
+                        let theme = cx.global::<Theme>();
                         let play_queue = cx.global::<lthebeat::play_queue::PlayQueue>();
-                        let item_entity = play_queue.shown_items.get(i).unwrap().clone();
-                        let item = item_entity.read(cx);
+                        match display_queue.get(i).unwrap().clone() {
+                            DisplayQueueItem::SingleItemGroup(item_entity) => {
+                                let item = item_entity.read(cx);
 
-                        div()
-                            .id(ElementId::from(i))
-                            .child(item.url.to_string())
-                            .on_click(move |_, _, cx| {
-                                // Jump to this track
-                                let play_queue = cx.global_mut::<lthebeat::play_queue::PlayQueue>();
-                                play_queue.skip_to_item(item_entity.clone());
-                            })
-                            .into_any_element()
+                                div()
+                                    .id(ElementId::from(i))
+                                    .flex()
+                                    .gap(px(3.))
+                                    .child(div().size(px(48.)).bg(rgb(0xFF0000)))
+                                    .child(
+                                        div()
+                                            .flex()
+                                            .flex_col()
+                                            .gap(px(3.))
+                                            .child(item.meta.get_title())
+                                            .child(
+                                                div()
+                                                    .text_color(theme.foreground.disabled())
+                                                    .child(item.meta.supplementary_text()),
+                                            ),
+                                    )
+                                    .on_click(move |_, _, cx| {
+                                        // Jump to this track
+                                        let play_queue =
+                                            cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                        play_queue.skip_to_item(item_entity.clone());
+                                    })
+                                    .into_any_element()
+                            }
+                            DisplayQueueItem::GroupItem(item_entity) => {
+                                let item = item_entity.read(cx);
+
+                                div()
+                                    .id(ElementId::from(i))
+                                    .flex()
+                                    .gap(px(3.))
+                                    .child(
+                                        div()
+                                            .size(px(20.))
+                                            .flex()
+                                            .items_center()
+                                            .justify_center()
+                                            .child(
+                                                div()
+                                                    .text_color(theme.foreground.disabled())
+                                                    .child("-"),
+                                            ),
+                                    )
+                                    .child(item.meta.get_title())
+                                    .on_click(move |_, _, cx| {
+                                        // Jump to this track
+                                        let play_queue =
+                                            cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                        play_queue.skip_to_item(item_entity.clone());
+                                    })
+                                    .into_any_element()
+                            }
+                            DisplayQueueItem::GroupHeader(item_entity) => {
+                                let item = item_entity.read(cx);
+
+                                div()
+                                    .id(ElementId::from(i))
+                                    .flex()
+                                    .gap(px(3.))
+                                    .child(div().size(px(48.)).bg(rgb(0xFF0000)))
+                                    .child(
+                                        div()
+                                            .flex()
+                                            .flex_col()
+                                            .gap(px(3.))
+                                            .child(item.meta.album.clone().unwrap_or(
+                                                tr!("UNKNOWN_ALBUM", "Unknown Album").into(),
+                                            ))
+                                            .child(
+                                                div()
+                                                    .text_color(theme.foreground.disabled())
+                                                    .child(
+                                                        item.meta.artist.clone().unwrap_or(
+                                                            tr!("UNKNOWN_ARTIST", "Unknown Artist")
+                                                                .into(),
+                                                        ),
+                                                    ),
+                                            ),
+                                    )
+                                    .on_click(move |_, _, cx| {
+                                        // Jump to this track
+                                        let play_queue =
+                                            cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                        play_queue.skip_to_item(item_entity.clone());
+                                    })
+                                    .into_any_element()
+                            }
+                        }
                     })
                         .with_sizing_behavior(Infer)
                         .h_full(),

@@ -1,4 +1,5 @@
 use crate::actions::{SkipNextAction, SkipPreviousAction};
+use crate::track_metadata::TrackMetadata;
 use contemporary::components::button::button;
 use contemporary::components::icon::icon;
 use contemporary::components::layer::layer;
@@ -34,16 +35,7 @@ impl RenderOnce for TransportControls {
         let meta = audio_controller.current_metadata();
         let current_time = audio_controller.current_time();
         let title = meta.get_title();
-        let supplementary = {
-            let mut s = Vec::new();
-            if let Some(artist) = meta.artist {
-                s.push(artist);
-            }
-            if let Some(album) = meta.album {
-                s.push(album);
-            }
-            s.join(" • ")
-        };
+        let supplementary = meta.supplementary_text();
 
         let mut div = layer()
             .flex()
