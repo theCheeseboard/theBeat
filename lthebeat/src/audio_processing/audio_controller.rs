@@ -6,7 +6,8 @@ use crate::audio_processing::audio_pipeline::sync_lock_sync::SyncLockSync;
 use crate::audio_processing::output_drivers::OutputDevice;
 use crate::audio_processing::output_drivers::cpal_driver::cpal_default_output_device;
 use crate::play_queue::PlayQueue;
-use gpui::{App, AsyncApp, Global};
+use crate::play_queue::media_item::MediaItem;
+use gpui::{App, AsyncApp, Entity, Global};
 use std::time::Duration;
 
 pub struct AudioController {
@@ -29,11 +30,11 @@ impl AudioController {
                 cx.update_global::<AudioController, ()>(|_, _| {
                     // Do nothing
                 })
-                    .unwrap();
+                .unwrap();
                 cx.refresh().unwrap();
             }
         })
-            .detach();
+        .detach();
 
         let mut audio_controller = AudioController {
             sync_lock_sync,
@@ -103,6 +104,10 @@ impl AudioController {
 
     pub fn current_time(&self) -> Option<Duration> {
         *self.sync_lock_sync.current_time.read().unwrap()
+    }
+
+    pub fn current_track(&self) -> Option<Entity<MediaItem>> {
+        self.sync_lock_sync.current_track.read().unwrap().clone()
     }
 
     pub fn sink(&mut self) -> Sink {

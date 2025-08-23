@@ -44,6 +44,7 @@ impl RubatoResampler {
                         let meta = next_sample.meta.clone();
                         let sample_id = next_sample.sample_id;
                         let elapsed = next_sample.elapsed_since_start;
+                        let associated_track = next_sample.associated_track.clone();
                         if resampler.is_resampling_required() {
                             let resampler = &mut resampler.resampler;
                             sample_buffer.append(&mut next_sample.into_f32());
@@ -115,6 +116,7 @@ impl RubatoResampler {
                                         SampleFormat::Float32 => SampleData::Float32(Vec::new()),
                                         SampleFormat::Float64 => SampleData::Float64(Vec::new()),
                                     },
+                                    associated_track.clone(),
                                 );
                                 let next_sample = next_sample.convert_from_f64(resampled_buffer);
                                 rb_faucet_prod
@@ -146,6 +148,7 @@ impl RubatoResampler {
                                     SampleFormat::Float32 => SampleData::Float32(Vec::new()),
                                     SampleFormat::Float64 => SampleData::Float64(Vec::new()),
                                 },
+                                associated_track,
                             );
                             let next_sample = next_sample.convert_from_f64(f32_samples);
                             rb_faucet_prod

@@ -6,10 +6,14 @@ use log::warn;
 use std::collections::HashMap;
 use std::sync::{Arc, RwLock, mpsc};
 use std::time::Duration;
+use gpui::Entity;
+use smol::io::AsyncWriteExt;
+use crate::play_queue::media_item::MediaItem;
 
 pub struct SyncLockSync {
     pub current_meta: Arc<RwLock<AudioMetadata>>,
     pub current_time: Arc<RwLock<Option<Duration>>>,
+    pub current_track: Arc<RwLock<Option<Entity<MediaItem>>>>,
     under_management: Arc<RwLock<Vec<Arc<SyncLock>>>>,
     event_channel: Receiver<()>,
 }
@@ -26,10 +30,12 @@ impl SyncLockSync {
 
         let under_management = Arc::new(RwLock::new(Vec::new()));
         let current_meta = Arc::new(RwLock::default());
+        let current_track = Arc::new(RwLock::default());
         let current_time = Arc::new(RwLock::default());
         let sync_lock_sync = SyncLockSync {
             current_meta: current_meta.clone(),
             current_time: current_time.clone(),
+            current_track: current_track.clone(),
             under_management: under_management.clone(),
             event_channel: event_channel_receiver,
         };
@@ -83,6 +89,7 @@ impl SyncLockSync {
                 if !packet_sent && all_sync_locks_accounted_for {
                     let mut meta = Default::default();
                     let mut elapsed_since_start = Default::default();
+                    let mut associated_track = Default::default();
                     for sync_lock in under_management.iter() {
                         let packet = crate_packets.remove(&sync_lock.id).expect("All sync locks accounted for but found sync lock without corresponding packet");
                         // Update the current sample ID
@@ -91,12 +98,14 @@ impl SyncLockSync {
                         // Update the metadata
                         meta = packet.meta.clone();
                         elapsed_since_start = packet.elapsed_since_start;
+                        associated_track = packet.associated_track.clone();
 
                         // Send out the packet
                         sync_lock.write_buffer.send(PipelineSample::Sample(packet)).await.unwrap();
                     }
                     *current_meta.write().unwrap() = meta;
                     *current_time.write().unwrap() = elapsed_since_start;
+                    *current_track.write().unwrap() = associated_track;
 
                     let _ = event_channel_sender.try_send(());
                 }

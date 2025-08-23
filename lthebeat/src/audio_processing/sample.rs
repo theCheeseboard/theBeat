@@ -4,6 +4,8 @@ use intx::I24;
 use rand::random;
 use std::fmt::{Debug, Formatter};
 use std::time::Duration;
+use gpui::Entity;
+use crate::play_queue::media_item::MediaItem;
 
 #[derive(Clone, Debug)]
 pub struct Sample {
@@ -16,6 +18,7 @@ pub struct Sample {
     pub data: SampleData,
 
     pub elapsed_since_start: Option<Duration>,
+    pub associated_track: Option<Entity<MediaItem>>
 }
 
 #[derive(Clone)]
@@ -89,6 +92,7 @@ impl Sample {
         sample_id: Option<u64>,
         elapsed: Option<Duration>,
         data: SampleData,
+        associated_track: Option<Entity<MediaItem>>
     ) -> Self {
         Sample {
             sample_rate,
@@ -97,6 +101,7 @@ impl Sample {
             sample_id: sample_id.unwrap_or_else(|| random()),
             elapsed_since_start: elapsed,
             data,
+            associated_track,
         }
     }
 
@@ -178,6 +183,7 @@ impl Sample {
             sample_id: self.sample_id,
             elapsed_since_start: self.elapsed_since_start,
             data: new_sample_data,
+            associated_track: self.associated_track,       
         }
     }
 }

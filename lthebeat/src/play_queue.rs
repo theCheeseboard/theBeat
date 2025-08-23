@@ -60,18 +60,18 @@ impl PlayQueue {
                         break;
                     }
 
-                    let next_media_item = played_items.next();
+                    let next_media_item_entity = played_items.next();
 
-                    if let Some(faucet) = next_media_item
+                    if let Some(faucet) = next_media_item_entity
                         .update(cx, |next_media_item, _| {
-                            faucet_for_url(next_media_item.url.clone())
+                            faucet_for_url(next_media_item.url.clone(), Some(next_media_item_entity.clone()))
                         })
                         .ok()
                         .flatten()
                     {
                         faucet_queue_borrow.push(FaucetQueueItem {
                             faucet,
-                            associated_item: next_media_item.clone(),
+                            associated_item: next_media_item_entity.clone(),
                         })
                     }
                 }

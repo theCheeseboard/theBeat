@@ -1,14 +1,17 @@
 use crate::track_metadata::TrackMetadata;
 use cntp_i18n::tr;
 use contemporary::components::grandstand::grandstand;
+use contemporary::components::icon::icon;
 use contemporary::components::layer::layer;
 use contemporary::styling::theme::{Theme, VariableColor};
 use gpui::ListSizingBehavior::Infer;
+use gpui::prelude::FluentBuilder;
 use gpui::{
     App, ElementId, InteractiveElement, IntoElement, ListAlignment, ListState, ParentElement,
     Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled, Window, div, list,
-    px, rgb,
+    px, rgb, rgba,
 };
+use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::DisplayQueueItem;
 
 #[derive(IntoElement)]
@@ -26,12 +29,16 @@ impl RenderOnce for PlayQueue {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
         let list_state = window.use_state(cx, |_, _| ListState::new(0, ListAlignment::Top, px(0.)));
 
+        let audio_controller = cx.global::<AudioController>();
         let play_queue = cx.global::<lthebeat::play_queue::PlayQueue>();
         let list_state = list_state.read(cx);
         let display_queue = play_queue.display_queue(cx);
         if display_queue.len() != list_state.item_count() {
             list_state.reset(display_queue.len());
         }
+        let current_track = audio_controller
+            .current_track()
+            .map(|current_track| current_track.entity_id());
 
         let mut div = layer()
             .w(px(300.))
@@ -55,7 +62,20 @@ impl RenderOnce for PlayQueue {
                                     .id(ElementId::from(i))
                                     .flex()
                                     .gap(px(3.))
-                                    .child(div().size(px(48.)).bg(rgb(0xFF0000)))
+                                    .child(div().size(px(48.)).bg(rgb(0xFF0000)).when(
+                                        current_track == Some(item_entity.entity_id()),
+                                        |david| {
+                                            david.child(
+                                                div()
+                                                    .size_full()
+                                                    .flex()
+                                                    .items_center()
+                                                    .justify_center()
+                                                    .bg(rgba(0x00000070))
+                                                    .child(icon("media-playback-start".into())),
+                                            )
+                                        },
+                                    ))
                                     .child(
                                         div()
                                             .flex()
@@ -89,11 +109,23 @@ impl RenderOnce for PlayQueue {
                                             .flex()
                                             .items_center()
                                             .justify_center()
-                                            .child(
-                                                div()
-                                                    .text_color(theme.foreground.disabled())
-                                                    .child("-"),
-                                            ),
+                                            .child(div().when_else(
+                                                current_track == Some(item_entity.entity_id()),
+                                                |div| {
+                                                    div.child(icon("media-playback-start".into()))
+                                                },
+                                                |div| {
+                                                    div.text_color(theme.foreground.disabled())
+                                                        .child(
+                                                            item.meta
+                                                                .track_number
+                                                                .map(|track_number| {
+                                                                    track_number.to_string()
+                                                                })
+                                                                .unwrap_or("-".to_string()),
+                                                        )
+                                                },
+                                            )),
                                     )
                                     .child(item.meta.get_title())
                                     .on_click(move |_, _, cx| {

@@ -7,16 +7,19 @@ use crate::audio_processing::audio_pipeline::{
 };
 use crate::audio_processing::input_engines::symphonia_engine::http_source::HttpSource;
 use crate::audio_processing::sample::{Sample, SampleData};
+use crate::play_queue::media_item::MediaItem;
 use async_ringbuf::AsyncHeapRb;
 use async_ringbuf::traits::{AsyncProducer, Split};
+use gpui::Entity;
 use log::warn;
+use regex::Regex;
 use std::borrow::Cow;
 use std::fs::File;
 use std::thread;
 use std::time::{Duration, Instant};
 use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Signal};
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
-use symphonia::core::meta::{MetadataRevision, StandardTagKey};
+use symphonia::core::meta::{MetadataRevision, StandardTagKey, Value};
 use symphonia::core::probe::Hint;
 use symphonia::default::{get_codecs, get_probe};
 use tracing::info;
@@ -28,7 +31,7 @@ pub struct SymphoniaEngine {
 }
 
 impl SymphoniaEngine {
-    pub fn new(url: Url) -> anyhow::Result<Self> {
+    pub fn new(url: Url, associated_track: Option<Entity<MediaItem>>) -> anyhow::Result<Self> {
         let (music, hint) = open_media_source(&url)?;
 
         let media_source_stream =
@@ -137,6 +140,7 @@ impl SymphoniaEngine {
                             None,
                             elapsed,
                             SampleData::Empty,
+                            associated_track.clone(),
                         )))))
                             .is_err()
                         {
@@ -155,6 +159,7 @@ impl SymphoniaEngine {
                         None,
                         elapsed,
                         sample_data,
+                        associated_track.clone(),
                     ))
                 };
 
@@ -269,11 +274,49 @@ where
 }
 
 fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &MetadataRevision) {
+    let id3_position_in_set_regex = Regex::new(r"(\d+)/(\d+)").unwrap();
+
     for tag in symphonia_metadata.tags() {
         match tag.std_key {
             Some(StandardTagKey::TrackTitle) => metadata.title = Some(tag.value.to_string()),
             Some(StandardTagKey::Artist) => metadata.artist = Some(tag.value.to_string()),
             Some(StandardTagKey::Album) => metadata.album = Some(tag.value.to_string()),
+            Some(StandardTagKey::TrackNumber) => match &tag.value {
+                Value::String(v) => {
+                    if let Some(captures) = id3_position_in_set_regex.captures(v) {
+                        if let Some(track) = captures.get(1) {
+                            metadata.track_number = track.as_str().parse().ok()
+                        }
+                        if let Some(total) = captures.get(2) {
+                            metadata.total_track_number = total.as_str().parse().ok();
+                        }
+                    } else {
+                        metadata.track_number = v.clone().parse().ok();
+                    }
+                }
+                Value::UnsignedInt(v) => {
+                    metadata.track_number = Some(*v);
+                }
+                _ => (),
+            },
+            Some(StandardTagKey::DiscNumber) => match &tag.value {
+                Value::String(v) => {
+                    if let Some(captures) = id3_position_in_set_regex.captures(v) {
+                        if let Some(track) = captures.get(1) {
+                            metadata.disc_number = track.as_str().parse().ok()
+                        }
+                        if let Some(total) = captures.get(2) {
+                            metadata.total_disc_number = total.as_str().parse().ok();
+                        }
+                    } else {
+                        metadata.track_number = v.clone().parse().ok();
+                    }
+                }
+                Value::UnsignedInt(v) => {
+                    metadata.track_number = Some(*v);
+                }
+                _ => (),
+            },
             _ => {}
         }
     }
