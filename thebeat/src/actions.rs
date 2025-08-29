@@ -34,6 +34,7 @@ fn open_file(_: &OpenFileAction, cx: &mut App) {
         files: true,
         directories: false,
         multiple: true,
+        prompt: None,
     });
     cx.spawn(async |cx: &mut AsyncApp| {
         let result = future.await;

@@ -7,6 +7,8 @@ theme_colors = ["#ff6400", "#ffc800"]
 [deployment]
 application_name = "t:APPLICATION_NAME"
 application_generic_name = "t:APPLICATION_GENERIC_NAME"
+application_machine_name = "thebeat"
+organization_name = "theCheeseboard"
 desktop_entry = "com.vicr123.thebeat"
 contemporary_base_icon = "dist/baseicon.svg"
 disk_image_background = "dist/app-dmg-background.svg"

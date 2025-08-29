@@ -6,4 +6,6 @@ fn main() {
         .into();
 
     cntp_i18n_gen::generate_default(&path);
+
+    println!("cargo::rerun-if-changed=Contemporary.toml");
 }

@@ -22,3 +22,7 @@ url = "2.5"
 async-ringbuf = "0.3.4"
 image = "0.25"
 smallvec = "1"
+sqlx = { version = "0.8", features = ["runtime-async-std", "sqlite"] }
+directories = "6"
+async-walkdir = "2"
+md5 = "0.7"

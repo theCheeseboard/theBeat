@@ -13,25 +13,25 @@
   },
   "FILE_OPEN": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:91",
+    "definedIn": "src/main.rs:90",
     "plural": false,
     "description": null
   },
   "FILE_OPEN_URL": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:93",
+    "definedIn": "src/main.rs:92",
     "plural": false,
     "description": null
   },
   "MENU_FILE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:89",
+    "definedIn": "src/main.rs:88",
     "plural": false,
     "description": null
   },
   "MENU_PLAYBACK": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:99",
+    "definedIn": "src/main.rs:98",
     "plural": false,
     "description": null
   },
@@ -43,19 +43,19 @@
   },
   "PLAYBACK_PLAY_PAUSE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:102",
+    "definedIn": "src/main.rs:101",
     "plural": false,
     "description": null
   },
   "PLAYBACK_SKIP_NEXT": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:111",
+    "definedIn": "src/main.rs:110",
     "plural": false,
     "description": null
   },
   "PLAYBACK_SKIP_PREVIOUS": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:107",
+    "definedIn": "src/main.rs:106",
     "plural": false,
     "description": null
   },

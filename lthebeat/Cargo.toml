@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 gpui = { workspace = true }
+contemporary = { workspace = true }
 cpal = { workspace = true }
 rb = { workspace = true }
 intx = { workspace = true }
@@ -26,6 +27,10 @@ cntp_i18n = { workspace = true }
 image = { workspace = true }
 smallvec = { workspace = true }
 regex = "1.11.1"
+sqlx = { workspace = true }
+directories = { workspace = true }
+async-walkdir = { workspace = true }
+md5 = { workspace = true }
 
 [build-dependencies]
 cntp_i18n_gen = { workspace = true }

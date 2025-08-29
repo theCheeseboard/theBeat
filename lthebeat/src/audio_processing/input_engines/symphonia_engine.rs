@@ -246,7 +246,9 @@ fn open_media_source(url: &Url) -> anyhow::Result<(Box<dyn MediaSource>, Hint)> 
                 .to_file_path()
                 .map_err(|_| anyhow::anyhow!("Unable to decode file path from URL"))?;
             let mut hint = Hint::new();
-            hint.with_extension(path.extension().unwrap().to_str().unwrap());
+            if let Some(extension) = path.extension() {
+                hint.with_extension(extension.to_str().unwrap());
+            }
             Ok((Box::new(File::open(path)?) as Box<dyn MediaSource>, hint))
         }
         "http" | "https" => Ok((
@@ -277,7 +279,10 @@ where
 fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &MetadataRevision) {
     let id3_position_in_set_regex = Regex::new(r"(\d+)/(\d+)").unwrap();
 
+    info!("metadata population");
     for tag in symphonia_metadata.tags() {
+        info!("{tag}");
+
         match tag.std_key {
             Some(StandardTagKey::TrackTitle) => metadata.title = Some(tag.value.to_string()),
             Some(StandardTagKey::Artist) => metadata.artist = Some(tag.value.to_string()),
@@ -330,4 +335,6 @@ fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &Metadata
             .unwrap_or_else(|| symphonia_metadata.visuals().first().unwrap());
         metadata.album_cover = Some(Arc::new(Art::new(album_cover.data.clone())));
     }
+
+    info!("{symphonia_metadata:?}")
 }

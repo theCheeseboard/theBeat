@@ -17,6 +17,7 @@ use contemporary::macros::application_details;
 use contemporary::setup::{Contemporary, ContemporaryMenus, setup_contemporary};
 use contemporary::window::contemporary_window_options;
 use gpui::{App, Bounds, Menu, MenuItem, WindowBounds, WindowOptions, px, size};
+use lthebeat::audio_library::database::Database;
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::audio_processing::audio_pipeline::plug;
 use lthebeat::audio_processing::output_drivers::OutputDevice;
@@ -28,11 +29,9 @@ use std::rc::Rc;
 fn mane() {
     application_icon!("../dist/baseicon.svg");
 
-    // TODO: Move to Contemporary
-    tracing_subscriber::fmt().without_time().init();
-
     new_contemporary_application().run(|cx: &mut App| {
         I18N_MANAGER.write().unwrap().load_source(tr_load!());
+        lthebeat::install_translations();
         let bounds = Bounds::centered(None, size(px(800.0), px(600.0)), cx);
 
         let mut play_queue = PlayQueue::new(cx);
@@ -124,6 +123,10 @@ fn mane() {
                         },
                     },
                 );
+
+                let database = smol::block_on(Database::new(cx)).unwrap();
+                database.start_scan(cx);
+                cx.set_global(database);
 
                 window
             },
