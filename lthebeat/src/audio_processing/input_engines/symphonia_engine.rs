@@ -15,12 +15,14 @@ use log::warn;
 use regex::Regex;
 use std::borrow::Cow;
 use std::fs::File;
-use std::sync::Arc;
+use std::sync::{Arc, RwLock};
 use std::thread;
 use std::time::{Duration, Instant};
 use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Signal};
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
-use symphonia::core::meta::{MetadataRevision, StandardTagKey, StandardVisualKey, Value};
+use symphonia::core::meta::{
+    MetadataLog, MetadataRevision, StandardTagKey, StandardVisualKey, Value,
+};
 use symphonia::core::probe::Hint;
 use symphonia::default::{get_codecs, get_probe};
 use tracing::info;
@@ -34,6 +36,8 @@ pub struct SymphoniaEngine {
 impl SymphoniaEngine {
     pub fn new(url: Url, associated_track: Option<Entity<MediaItem>>) -> anyhow::Result<Self> {
         let (music, hint) = open_media_source(&url)?;
+
+        let stream_metadata_log = music.metadata_log();
 
         let media_source_stream =
             MediaSourceStream::new(music, MediaSourceStreamOptions::default());
@@ -74,6 +78,9 @@ impl SymphoniaEngine {
             {
                 populate_metadata(&mut file_meta, probe_meta);
             }
+            if let Some(next_meta) = stream_metadata_log.write().unwrap().metadata().current() {
+                populate_metadata(&mut file_meta, next_meta);
+            }
             if let Some(next_meta) = format.metadata().current() {
                 populate_metadata(&mut file_meta, next_meta);
             }
@@ -89,6 +96,15 @@ impl SymphoniaEngine {
                             return;
                         }
                     };
+
+                    let mut stream_metadata = stream_metadata_log.write().unwrap();
+                    while !stream_metadata.metadata().is_latest() {
+                        stream_metadata.metadata().pop();
+                        if let Some(next_meta) = stream_metadata.metadata().current() {
+                            populate_metadata(&mut file_meta, next_meta);
+                        }
+                    }
+                    drop(stream_metadata);
 
                     while !format.metadata().is_latest() {
                         format.metadata().pop();
@@ -239,7 +255,7 @@ impl SymphoniaEngine {
     }
 }
 
-fn open_media_source(url: &Url) -> anyhow::Result<(Box<dyn MediaSource>, Hint)> {
+fn open_media_source(url: &Url) -> anyhow::Result<(Box<dyn ExternalMetadata>, Hint)> {
     match url.scheme() {
         "file" => {
             let path = url
@@ -249,10 +265,13 @@ fn open_media_source(url: &Url) -> anyhow::Result<(Box<dyn MediaSource>, Hint)> 
             if let Some(extension) = path.extension() {
                 hint.with_extension(extension.to_str().unwrap());
             }
-            Ok((Box::new(File::open(path)?) as Box<dyn MediaSource>, hint))
+            Ok((
+                Box::new(File::open(path)?) as Box<dyn ExternalMetadata>,
+                hint,
+            ))
         }
         "http" | "https" => Ok((
-            Box::new(HttpSource::new(url.clone())) as Box<dyn MediaSource>,
+            Box::new(HttpSource::new(url.clone())) as Box<dyn ExternalMetadata>,
             Hint::new(),
         )),
         _ => Err(anyhow::anyhow!("Unsupported scheme")),
@@ -338,3 +357,11 @@ fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &Metadata
 
     info!("{symphonia_metadata:?}")
 }
+
+trait ExternalMetadata: MediaSource {
+    fn metadata_log(&self) -> Arc<RwLock<MetadataLog>> {
+        Arc::new(RwLock::new(Default::default()))
+    }
+}
+
+impl ExternalMetadata for File {}
