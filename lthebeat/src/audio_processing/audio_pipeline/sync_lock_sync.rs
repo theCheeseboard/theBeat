@@ -1,14 +1,14 @@
 use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::audio_processing::audio_pipeline::PipelineSample;
 use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
+use crate::play_queue::media_item::MediaItem;
 use async_channel::Receiver;
+use gpui::Entity;
 use log::warn;
+use smol::io::AsyncWriteExt;
 use std::collections::HashMap;
 use std::sync::{Arc, RwLock, mpsc};
 use std::time::Duration;
-use gpui::Entity;
-use smol::io::AsyncWriteExt;
-use crate::play_queue::media_item::MediaItem;
 
 pub struct SyncLockSync {
     pub current_meta: Arc<RwLock<AudioMetadata>>,
@@ -63,10 +63,6 @@ impl SyncLockSync {
                     match sync_lock.packet_buffer.recv().await {
                         Ok(PipelineSample::Sample(next_packet)) => {
                             crate_packets.insert(sync_lock.id, next_packet);
-                        }
-                        Ok(PipelineSample::Reset) => {
-                            // Propagate the reset packet
-                            sync_lock.write_buffer.send(PipelineSample::Reset).await.unwrap();
                         }
                         Err(_) => {
                             warn!("Unable to receive packet from SyncLock")

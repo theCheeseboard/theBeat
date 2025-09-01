@@ -1,5 +1,5 @@
 use crate::audio_processing::audio_pipeline::audio_format::AudioFormat;
-use crate::audio_processing::audio_pipeline::sink::create_sink;
+use crate::audio_processing::audio_pipeline::sink::{ResetListenerGroupTrait, create_sink};
 use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
 use crate::audio_processing::audio_pipeline::{PipelineSample, plug};
 use crate::audio_processing::mute::Mute;
@@ -17,7 +17,7 @@ use gpui::private::anyhow;
 use log::warn;
 use smol::stream::StreamExt;
 use std::cell::RefCell;
-use std::sync::Arc;
+use std::sync::{Arc, RwLock};
 use std::time::Duration;
 use tracing::{error, info};
 
@@ -45,13 +45,16 @@ impl CpalOutputDevice {
         let buffer_size = ((BUFFER_DURATION_MSEC * config.sample_rate.0 as usize) / 1000)
             * config.channels as usize;
 
-        let (mut producer, mut consumer) = AsyncHeapRb::<T>::new(buffer_size).split();
+        let (mut producer, consumer) = AsyncHeapRb::<T>::new(buffer_size).split();
+
+        let consumer_arc = Arc::new(RwLock::new(consumer));
+        let consumer_arc_2 = consumer_arc.clone();
 
         let mut was_underrun = false;
         let stream = self.device.build_output_stream(
             &config,
             move |data: &mut [T], _: &cpal::OutputCallbackInfo| {
-                let written = consumer.pop_slice(data);
+                let written = consumer_arc.write().unwrap().pop_slice(data);
 
                 if written < data.len() {
                     if !was_underrun {
@@ -71,8 +74,18 @@ impl CpalOutputDevice {
         )?;
 
         let (sink, mut samples_consumer) = create_sink();
+        let reset_listeners = sink.reset_listeners();
+        reset_listeners.add_reset_listener(Box::new(move || {
+            consumer_arc_2.write().unwrap().clear();
+        }));
         smol::spawn(async move {
+            let mut ct = reset_listeners.create_cancellation_token();
             loop {
+                if ct.is_canceled() {
+                    samples_consumer.clear();
+                    ct = reset_listeners.create_cancellation_token();
+                }
+
                 let samples = samples_consumer.next().await;
                 match samples {
                     Some(Ok(PipelineSample::Sample(samples))) => {
@@ -80,9 +93,6 @@ impl CpalOutputDevice {
                             let samples_vec = samples.unwrap();
                             producer.push_exact(samples_vec).await.unwrap();
                         }
-                    }
-                    Some(Ok(PipelineSample::Reset)) => {
-                        // Clear the pipeline
                     }
                     Some(Err(err)) => {
                         info!("CpalOutputDevice: error in samples producer: {:?}", err);

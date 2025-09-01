@@ -6,6 +6,7 @@ use log::warn;
 pub mod audio_format;
 pub mod duplicator;
 pub mod faucet;
+mod resetter;
 pub mod sink;
 pub mod sync_lock;
 pub mod sync_lock_sync;
@@ -14,10 +15,11 @@ pub const SAMPLE_BUFFER_SIZE: usize = 4;
 
 pub type PipelineSampleResult = Result<PipelineSample, FaucetError>;
 
+pub type ResetPipelineFunction = Box<dyn Fn() + Send + Sync>;
+
 #[derive(Debug, Clone)]
 pub enum PipelineSample {
     Sample(Sample),
-    Reset,
 }
 
 struct Plug {
@@ -26,6 +28,7 @@ struct Plug {
 }
 
 pub fn plug(mut faucet: Faucet, mut sink: Sink) {
+    sink.set_resetter(Some(faucet.resetter()));
     smol::spawn(async move {
         loop {
             let next_sample = faucet.next_sample().await;
