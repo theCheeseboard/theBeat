@@ -130,18 +130,6 @@ impl SymphoniaEngine {
                         _ => panic!("SymphoniaEngine: unsupported sample format"),
                     };
 
-                    let mut metadata = format.metadata();
-                    if !metadata.is_latest() {
-                        match metadata.skip_to_latest() {
-                            None => {}
-                            Some(meta) => {
-                                for tag in meta.tags() {
-                                    info!("tag: {}, {}", tag.key, tag.value.to_string())
-                                }
-                            }
-                        }
-                    }
-
                     let elapsed = time_base
                         .map(|time_base| {
                             let time = time_base.calc_time(next_packet.ts);
@@ -159,7 +147,7 @@ impl SymphoniaEngine {
                             SampleData::Empty,
                             associated_track.clone(),
                         )))))
-                            .is_err()
+                        .is_err()
                         {
                             warn!("SymphoniaEngine: error while pushing sample to buffer");
                             warn!("SymphoniaEngine: stopping");
@@ -298,10 +286,7 @@ where
 fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &MetadataRevision) {
     let id3_position_in_set_regex = Regex::new(r"(\d+)/(\d+)").unwrap();
 
-    info!("metadata population");
     for tag in symphonia_metadata.tags() {
-        info!("{tag}");
-
         match tag.std_key {
             Some(StandardTagKey::TrackTitle) => metadata.title = Some(tag.value.to_string()),
             Some(StandardTagKey::Artist) => metadata.artist = Some(tag.value.to_string()),
@@ -354,8 +339,6 @@ fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &Metadata
             .unwrap_or_else(|| symphonia_metadata.visuals().first().unwrap());
         metadata.album_cover = Some(Arc::new(Art::new(album_cover.data.clone())));
     }
-
-    info!("{symphonia_metadata:?}")
 }
 
 trait ExternalMetadata: MediaSource {

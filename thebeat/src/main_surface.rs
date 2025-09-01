@@ -4,6 +4,7 @@ use crate::SkipNextAction;
 use crate::SkipPreviousAction;
 use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlists, Tracks};
 use crate::play_queue::play_queue;
+use crate::tracks_view::TracksView;
 use crate::transport_controls::transport_controls;
 use cntp_i18n::tr;
 use contemporary::components::application_menu::ApplicationMenu;
@@ -20,6 +21,8 @@ use gpui::{
 pub struct MainSurface {
     application_menu: Entity<ApplicationMenu>,
     selected_tab: MainSurfaceTab,
+
+    tracks_view: Entity<TracksView>,
 }
 
 #[derive(PartialEq)]
@@ -60,12 +63,13 @@ impl MainSurface {
                 },
             ),
             selected_tab: Tracks,
+            tracks_view: TracksView::new(cx),
         })
     }
 }
 
 impl Render for MainSurface {
-    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let theme = cx.global::<Theme>();
 
         surface()
@@ -151,10 +155,12 @@ impl Render for MainSurface {
                         div()
                             .flex()
                             .flex_grow()
+                            .gap(px(4.))
                             .child(
                                 pager("main-pager", self.selected_tab.index())
                                     .flex_grow()
-                                    .h_full(),
+                                    .h_full()
+                                    .page(self.tracks_view.clone().into_any_element()),
                             )
                             .child(play_queue()),
                     )

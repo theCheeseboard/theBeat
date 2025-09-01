@@ -3,6 +3,7 @@ mod main_surface;
 mod main_window;
 mod play_queue;
 mod track_metadata;
+mod tracks_view;
 mod transport_controls;
 
 use crate::actions::{

@@ -4,12 +4,12 @@ use contemporary::components::grandstand::grandstand;
 use contemporary::components::icon::icon;
 use contemporary::components::layer::layer;
 use contemporary::styling::theme::{Theme, VariableColor};
-use gpui::prelude::FluentBuilder;
 use gpui::ListSizingBehavior::Infer;
+use gpui::prelude::FluentBuilder;
 use gpui::{
-    div, img, list, px, rgba, App, ElementId,
-    ImageSource, InteractiveElement, IntoElement, ListAlignment, ListState, ParentElement,
-    Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled, Window,
+    App, ElementId, ImageSource, InteractiveElement, IntoElement, ListAlignment, ListState,
+    ParentElement, Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled,
+    Window, div, img, list, px, rgba,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::DisplayQueueItem;
@@ -50,170 +50,180 @@ impl RenderOnce for PlayQueue {
                     .pt(px(36.)),
             )
             .child(
-                div().id("queue").overflow_y_scroll().flex_grow().child(
-                    list(list_state.clone(), move |i, _, cx| {
-                        let theme = cx.global::<Theme>();
-                        match display_queue.get(i).unwrap().clone() {
-                            DisplayQueueItem::SingleItemGroup(item_entity) => {
-                                let item = item_entity.read(cx);
+                div()
+                    .id("queue")
+                    .overflow_y_scroll()
+                    .flex_grow()
+                    .flex()
+                    .flex_col()
+                    .child(
+                        list(list_state.clone(), move |i, _, cx| {
+                            let theme = cx.global::<Theme>();
+                            match display_queue.get(i).unwrap().clone() {
+                                DisplayQueueItem::SingleItemGroup(item_entity) => {
+                                    let item = item_entity.read(cx);
 
-                                let cover = item
-                                    .meta
-                                    .clone()
-                                    .album_cover
-                                    .and_then(|album_cover| album_cover.render_image())
-                                    .clone();
+                                    let cover = item
+                                        .meta
+                                        .clone()
+                                        .album_cover
+                                        .and_then(|album_cover| album_cover.render_image())
+                                        .clone();
 
-                                div()
-                                    .id(ElementId::from(i))
-                                    .flex()
-                                    .gap(px(3.))
-                                    .child(
-                                        div()
-                                            .size(px(48.))
-                                            .when_some(cover, |div, album_cover| {
+                                    div()
+                                        .id(ElementId::from(i))
+                                        .flex()
+                                        .gap(px(3.))
+                                        .child(
+                                            div()
+                                                .size(px(48.))
+                                                .when_some(cover, |div, album_cover| {
+                                                    div.child(
+                                                        img(ImageSource::Render(album_cover))
+                                                            .h_full()
+                                                            .w_full(),
+                                                    )
+                                                })
+                                                .when(
+                                                    current_track == Some(item_entity.entity_id()),
+                                                    |david| {
+                                                        david.child(
+                                                            div()
+                                                                .absolute()
+                                                                .left_0()
+                                                                .top_0()
+                                                                .size_full()
+                                                                .flex()
+                                                                .items_center()
+                                                                .justify_center()
+                                                                .bg(rgba(0x00000070))
+                                                                .child(icon(
+                                                                    "media-playback-start".into(),
+                                                                )),
+                                                        )
+                                                    },
+                                                ),
+                                        )
+                                        .child(
+                                            div()
+                                                .flex()
+                                                .flex_col()
+                                                .gap(px(3.))
+                                                .child(item.meta.get_title())
+                                                .child(
+                                                    div()
+                                                        .text_color(theme.foreground.disabled())
+                                                        .child(item.meta.supplementary_text()),
+                                                ),
+                                        )
+                                        .on_click(move |_, _, cx| {
+                                            // Jump to this track
+                                            let play_queue =
+                                                cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                            play_queue.skip_to_item(item_entity.clone());
+                                        })
+                                        .into_any_element()
+                                }
+                                DisplayQueueItem::GroupItem(item_entity) => {
+                                    let item = item_entity.read(cx);
+
+                                    div()
+                                        .id(ElementId::from(i))
+                                        .flex()
+                                        .gap(px(3.))
+                                        .child(
+                                            div()
+                                                .size(px(20.))
+                                                .flex()
+                                                .items_center()
+                                                .justify_center()
+                                                .child(div().when_else(
+                                                    current_track == Some(item_entity.entity_id()),
+                                                    |div| {
+                                                        div.child(icon(
+                                                            "media-playback-start".into(),
+                                                        ))
+                                                    },
+                                                    |div| {
+                                                        div.text_color(theme.foreground.disabled())
+                                                            .child(
+                                                                item.meta
+                                                                    .track_number
+                                                                    .map(|track_number| {
+                                                                        track_number.to_string()
+                                                                    })
+                                                                    .unwrap_or("-".to_string()),
+                                                            )
+                                                    },
+                                                )),
+                                        )
+                                        .child(item.meta.get_title())
+                                        .on_click(move |_, _, cx| {
+                                            // Jump to this track
+                                            let play_queue =
+                                                cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                            play_queue.skip_to_item(item_entity.clone());
+                                        })
+                                        .into_any_element()
+                                }
+                                DisplayQueueItem::GroupHeader(item_entity) => {
+                                    let item = item_entity.read(cx);
+
+                                    let cover = item
+                                        .meta
+                                        .clone()
+                                        .album_cover
+                                        .and_then(|album_cover| album_cover.render_image())
+                                        .clone();
+
+                                    div()
+                                        .id(ElementId::from(i))
+                                        .flex()
+                                        .gap(px(3.))
+                                        .child(div().size(px(48.)).when_some(
+                                            cover,
+                                            |div, album_cover| {
                                                 div.child(
                                                     img(ImageSource::Render(album_cover))
                                                         .h_full()
                                                         .w_full(),
                                                 )
-                                            })
-                                            .when(
-                                                current_track == Some(item_entity.entity_id()),
-                                                |david| {
-                                                    david.child(
-                                                        div()
-                                                            .absolute()
-                                                            .left_0()
-                                                            .top_0()
-                                                            .size_full()
-                                                            .flex()
-                                                            .items_center()
-                                                            .justify_center()
-                                                            .bg(rgba(0x00000070))
-                                                            .child(icon(
-                                                                "media-playback-start".into(),
-                                                            )),
-                                                    )
-                                                },
-                                            ),
-                                    )
-                                    .child(
-                                        div()
-                                            .flex()
-                                            .flex_col()
-                                            .gap(px(3.))
-                                            .child(item.meta.get_title())
-                                            .child(
-                                                div()
-                                                    .text_color(theme.foreground.disabled())
-                                                    .child(item.meta.supplementary_text()),
-                                            ),
-                                    )
-                                    .on_click(move |_, _, cx| {
-                                        // Jump to this track
-                                        let play_queue =
-                                            cx.global_mut::<lthebeat::play_queue::PlayQueue>();
-                                        play_queue.skip_to_item(item_entity.clone());
-                                    })
-                                    .into_any_element()
-                            }
-                            DisplayQueueItem::GroupItem(item_entity) => {
-                                let item = item_entity.read(cx);
-
-                                div()
-                                    .id(ElementId::from(i))
-                                    .flex()
-                                    .gap(px(3.))
-                                    .child(
-                                        div()
-                                            .size(px(20.))
-                                            .flex()
-                                            .items_center()
-                                            .justify_center()
-                                            .child(div().when_else(
-                                                current_track == Some(item_entity.entity_id()),
-                                                |div| {
-                                                    div.child(icon("media-playback-start".into()))
-                                                },
-                                                |div| {
-                                                    div.text_color(theme.foreground.disabled())
+                                            },
+                                        ))
+                                        .child(
+                                            div()
+                                                .flex()
+                                                .flex_col()
+                                                .gap(px(3.))
+                                                .child(item.meta.album.clone().unwrap_or(
+                                                    tr!("UNKNOWN_ALBUM", "Unknown Album").into(),
+                                                ))
+                                                .child(
+                                                    div()
+                                                        .text_color(theme.foreground.disabled())
                                                         .child(
-                                                            item.meta
-                                                                .track_number
-                                                                .map(|track_number| {
-                                                                    track_number.to_string()
-                                                                })
-                                                                .unwrap_or("-".to_string()),
-                                                        )
-                                                },
-                                            )),
-                                    )
-                                    .child(item.meta.get_title())
-                                    .on_click(move |_, _, cx| {
-                                        // Jump to this track
-                                        let play_queue =
-                                            cx.global_mut::<lthebeat::play_queue::PlayQueue>();
-                                        play_queue.skip_to_item(item_entity.clone());
-                                    })
-                                    .into_any_element()
-                            }
-                            DisplayQueueItem::GroupHeader(item_entity) => {
-                                let item = item_entity.read(cx);
-
-                                let cover = item
-                                    .meta
-                                    .clone()
-                                    .album_cover
-                                    .and_then(|album_cover| album_cover.render_image())
-                                    .clone();
-
-                                div()
-                                    .id(ElementId::from(i))
-                                    .flex()
-                                    .gap(px(3.))
-                                    .child(div().size(px(48.)).when_some(
-                                        cover,
-                                        |div, album_cover| {
-                                            div.child(
-                                                img(ImageSource::Render(album_cover))
-                                                    .h_full()
-                                                    .w_full(),
-                                            )
-                                        },
-                                    ))
-                                    .child(
-                                        div()
-                                            .flex()
-                                            .flex_col()
-                                            .gap(px(3.))
-                                            .child(item.meta.album.clone().unwrap_or(
-                                                tr!("UNKNOWN_ALBUM", "Unknown Album").into(),
-                                            ))
-                                            .child(
-                                                div()
-                                                    .text_color(theme.foreground.disabled())
-                                                    .child(
-                                                        item.meta.artist.clone().unwrap_or(
-                                                            tr!("UNKNOWN_ARTIST", "Unknown Artist")
+                                                            item.meta.artist.clone().unwrap_or(
+                                                                tr!(
+                                                                    "UNKNOWN_ARTIST",
+                                                                    "Unknown Artist"
+                                                                )
                                                                 .into(),
+                                                            ),
                                                         ),
-                                                    ),
-                                            ),
-                                    )
-                                    .on_click(move |_, _, cx| {
-                                        // Jump to this track
-                                        let play_queue =
-                                            cx.global_mut::<lthebeat::play_queue::PlayQueue>();
-                                        play_queue.skip_to_item(item_entity.clone());
-                                    })
-                                    .into_any_element()
+                                                ),
+                                        )
+                                        .on_click(move |_, _, cx| {
+                                            // Jump to this track
+                                            let play_queue =
+                                                cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                            play_queue.skip_to_item(item_entity.clone());
+                                        })
+                                        .into_any_element()
+                                }
                             }
-                        }
-                    })
-                        .with_sizing_behavior(Infer)
-                        .h_full(),
-                ),
+                        })
+                        .flex_grow(),
+                    ),
             );
         div.style().refine(&self.style);
 
