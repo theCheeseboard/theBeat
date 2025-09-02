@@ -1,3 +1,5 @@
+use crate::audio_library::database_query::DatabaseQuery;
+use crate::audio_library::track::Track;
 use crate::audio_processing::audio_metadata;
 use crate::audio_processing::input_engines::symphonia_engine::SymphoniaEngine;
 use async_walkdir::{Filtering, WalkDir};
@@ -76,7 +78,8 @@ impl Database {
                                     continue;
                                 }
 
-                                if let Err(e) = scan_file_into_pool(&pool, &entry.path()).await {
+                                if let Err(e) = scan_file_into_pool(&pool, &entry.path(), cx).await
+                                {
                                     error!(
                                         "Failed to scan file: {}: {e:?}",
                                         entry.path().to_string_lossy()
@@ -103,19 +106,33 @@ impl Database {
                     .unwrap();
             }
         })
-            .detach();
+        .detach();
 
         cx.update_global::<JobManager, ()>(|job_manager, cx| {
             job_manager.track_job(job_entity, cx);
         });
     }
 
-    pub async fn scan_file(&self, path: &Path) {
-        scan_file_into_pool(&self.pool, path).await.unwrap();
+    pub async fn scan_file(&self, path: &Path, cx: &mut AsyncApp) {
+        scan_file_into_pool(&self.pool, path, cx).await.unwrap();
+    }
+
+    pub fn query_all_tracks<'this, 'future: 'this>(
+        &'this self,
+    ) -> impl Future<Output = anyhow::Result<DatabaseQuery<Track>>> + 'future {
+        DatabaseQuery::new(
+            self.pool.clone(),
+            "SELECT * FROM tracks ORDER BY name".to_string(),
+            Default::default(),
+        )
     }
 }
 
-async fn scan_file_into_pool(pool: &SqlitePool, path: &Path) -> anyhow::Result<()> {
+async fn scan_file_into_pool(
+    pool: &SqlitePool,
+    path: &Path,
+    cx: &mut AsyncApp,
+) -> anyhow::Result<()> {
     let url = Url::from_file_path(path).unwrap();
 
     let file_metadata = metadata(path)?;
@@ -146,10 +163,10 @@ async fn scan_file_into_pool(pool: &SqlitePool, path: &Path) -> anyhow::Result<(
                 sqlx::query(
                     "INSERT INTO artist(name) VALUES (?) ON CONFLICT DO NOTHING RETURNING id",
                 )
-                    .bind(&artist)
-                    .fetch_optional(pool)
-                    .await?
-                    .map(|row| row.get::<i64, _>("id"))
+                .bind(&artist)
+                .fetch_optional(pool)
+                .await?
+                .map(|row| row.get::<i64, _>("id"))
             } else {
                 existing_artist
             }
@@ -164,16 +181,18 @@ async fn scan_file_into_pool(pool: &SqlitePool, path: &Path) -> anyhow::Result<(
                 ON CONFLICT DO
                     UPDATE SET name=?, artist=?, file_modified_date=?",
         )
-            .bind(url.as_str())
-            .bind(&audio_metadata.title)
-            .bind(artist_id)
-            .bind(modified_date)
-            .bind(&audio_metadata.title)
-            .bind(artist_id)
-            .bind(modified_date)
-            .execute(pool)
-            .await?;
+        .bind(url.as_str())
+        .bind(&audio_metadata.title)
+        .bind(artist_id)
+        .bind(modified_date)
+        .bind(&audio_metadata.title)
+        .bind(artist_id)
+        .bind(modified_date)
+        .execute(pool)
+        .await?;
     }
+
+    cx.update_global::<Database, ()>(|_, _| ()).unwrap();
 
     Ok(())
 }

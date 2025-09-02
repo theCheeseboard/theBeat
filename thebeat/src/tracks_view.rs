@@ -1,15 +1,54 @@
 use cntp_i18n::tr;
 use contemporary::components::grandstand::grandstand;
+use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::Theme;
+use gpui::private::anyhow;
 use gpui::{
-    App, AppContext, Context, Entity, IntoElement, ParentElement, Render, Styled, Window, div, px,
+    App, AppContext, AsyncApp, Context, Entity, IntoElement, ParentElement, Render, Styled,
+    Subscription, WeakEntity, Window, div, px, uniform_list,
 };
+use lthebeat::audio_library::database::Database;
+use lthebeat::audio_library::database_query::DatabaseQuery;
+use lthebeat::audio_library::track::Track;
+use std::cell::RefCell;
+use std::ops::Deref;
+use std::sync::Arc;
 
-pub struct TracksView {}
+pub struct TracksView {
+    database_subscription: Subscription,
+    tracks_query: Option<Arc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>>,
+}
 
 impl TracksView {
     pub fn new(cx: &mut App) -> Entity<Self> {
-        cx.new(|_| TracksView {})
+        cx.new(|cx| {
+            // The database is set as a global after the window is initialized, so this will
+            // always run after the window is initialized.
+            let database_subscription =
+                cx.observe_global::<Database>(|_, cx: &mut Context<TracksView>| {
+                    let database = cx.global::<Database>();
+                    let query = database.query_all_tracks();
+
+                    cx.spawn(
+                        async move |tracks_view: WeakEntity<Self>, cx: &mut AsyncApp| {
+                            let tracks_query = query.await;
+                            tracks_view
+                                .update(cx, |tracks_view, cx| {
+                                    tracks_view.tracks_query =
+                                        Some(Arc::new(RefCell::new(tracks_query)));
+                                    cx.notify();
+                                })
+                                .unwrap();
+                        },
+                    )
+                    .detach();
+                });
+
+            TracksView {
+                database_subscription,
+                tracks_query: None,
+            }
+        })
     }
 }
 
@@ -28,5 +67,33 @@ impl Render for TracksView {
                     .text(tr!("LIBRARY_TRACKS_TITLE", "Tracks in Library"))
                     .pt(px(36.)),
             )
+            .child(match self.tracks_query.as_mut() {
+                Some(tracks_query) => {
+                    let tracks_query_clone = tracks_query.clone();
+                    let tracks_query = tracks_query.borrow();
+                    match tracks_query.deref() {
+                        Ok(tracks_query) => div().flex_grow().child(
+                            uniform_list(
+                                "tracks-list",
+                                tracks_query.count(),
+                                move |range, _, cx| {
+                                    range
+                                        .map(|index| {
+                                            tracks_query_clone
+                                                .borrow_mut()
+                                                .as_mut()
+                                                .unwrap()
+                                                .get(index, cx)
+                                        })
+                                        .collect()
+                                },
+                            )
+                            .h_full(),
+                        ),
+                        Err(_) => div().child(tr!("LIBRARY_TRACKS_ERROR", "Error loading tracks")),
+                    }
+                }
+                _ => div().child(spinner()),
+            })
     }
 }
