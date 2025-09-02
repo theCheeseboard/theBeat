@@ -1,7 +1,7 @@
 use gpui::{App, AppContext, AsyncApp, Entity};
 use smol::stream::StreamExt;
 use sqlx::sqlite::{SqliteArguments, SqliteRow};
-use sqlx::{Row, SqlitePool};
+use sqlx::{Arguments, Row, SqlitePool};
 
 pub struct DatabaseQuery<RecordType>
 where
@@ -56,14 +56,12 @@ where
                 .collect();
             let base_query = self.base_query.clone();
             let pool = self.pool.clone();
-            let binds = self.binds.clone();
+            let mut binds = self.binds.clone();
             cx.spawn(async move |cx: &mut AsyncApp| {
-                let get_query_string = format!(
-                    "SELECT * FROM ({base_query}) LIMIT {} OFFSET {floored}",
-                    items.len()
-                );
-                let mut get_query =
-                    sqlx::query_with(&get_query_string, binds.clone()).fetch(&pool.clone());
+                let get_query_string = format!("SELECT * FROM ({base_query}) LIMIT ? OFFSET ?");
+                binds.add(items.len() as u32).unwrap();
+                binds.add(floored as u32).unwrap();
+                let mut get_query = sqlx::query_with(&get_query_string, binds).fetch(&pool.clone());
 
                 let mut i = 0_usize;
                 while let Some(row) = get_query.next().await {
