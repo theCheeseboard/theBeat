@@ -2,7 +2,9 @@ use crate::audio_processing::audio_pipeline::faucet::{Faucet, create_faucet};
 use crate::audio_processing::audio_pipeline::sink::{
     ResetListenerGroup, ResetListenerGroupTrait, Sink, create_sink,
 };
-use crate::audio_processing::audio_pipeline::{PipelineSample, SAMPLE_BUFFER_SIZE};
+use crate::audio_processing::audio_pipeline::{
+    PipelineSample, PipelineSampleExt, SAMPLE_BUFFER_SIZE,
+};
 use async_channel::{Receiver, Sender};
 use async_ringbuf::traits::{AsyncProducer, Consumer};
 use log::warn;
@@ -30,7 +32,7 @@ impl SyncLock {
         let (sink, mut rb_sink_cons) = create_sink();
 
         let reset_listeners = sink.reset_listeners();
-        reset_listeners.add_reset_listener(reset_faucet);
+        reset_listeners.add_reset_listener(Box::new(move |_| reset_faucet()));
 
         let reset_listeners_2 = reset_listeners.clone();
         let reset_listeners_3 = reset_listeners.clone();
@@ -65,6 +67,8 @@ impl SyncLock {
             }
         })
         .detach();
+
+        let epoch_ref = faucet.current_epoch();
         smol::spawn(async move {
             let mut ct = reset_listeners_3.create_cancellation_token();
             loop {
@@ -76,7 +80,10 @@ impl SyncLock {
                 }
                 match write_buffer_cons.recv().await {
                     Ok(next_packet) => {
-                        rb_faucet_prod.push(Ok(next_packet)).await.unwrap();
+                        rb_faucet_prod
+                            .push(Ok(next_packet.with_epoch_ref(&epoch_ref)))
+                            .await
+                            .unwrap();
                     }
                     Err(_) => {
                         warn!("could not receive packet");

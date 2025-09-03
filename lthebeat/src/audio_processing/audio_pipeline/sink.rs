@@ -93,7 +93,7 @@ impl ResetListenerGroupTrait for Arc<RwLock<Vec<ResetPipelineFunction>>> {
         let cancellation_token_source = CancellationTokenSource::new();
         let cancellation_token = cancellation_token_source.token();
 
-        self.add_reset_listener(Box::new(move || {
+        self.add_reset_listener(Box::new(move |_| {
             cancellation_token_source.cancel();
         }));
 

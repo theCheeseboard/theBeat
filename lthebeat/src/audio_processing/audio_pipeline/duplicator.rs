@@ -2,7 +2,9 @@ use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError, creat
 use crate::audio_processing::audio_pipeline::sink::{
     ResetListenerGroup, ResetListenerGroupTrait, Sink, create_sink,
 };
-use crate::audio_processing::audio_pipeline::{PipelineSampleResult, SAMPLE_BUFFER_SIZE};
+use crate::audio_processing::audio_pipeline::{
+    PipelineSampleExt, PipelineSampleResult, SAMPLE_BUFFER_SIZE,
+};
 use async_channel::Sender;
 use async_ringbuf::AsyncHeapRb;
 use async_ringbuf::traits::{AsyncProducer, Consumer, Split};
@@ -77,7 +79,7 @@ impl Duplicator {
         let (faucet, mut rb_faucet_prod, reset_faucet) = create_faucet();
 
         let reset_listeners = self.reset_listeners.clone();
-        reset_listeners.add_reset_listener(reset_faucet);
+        reset_listeners.add_reset_listener(Box::new(move |_| reset_faucet()));
 
         let id = random();
         let (tx, rx) = async_channel::bounded(SAMPLE_BUFFER_SIZE);
@@ -85,6 +87,7 @@ impl Duplicator {
         let faucets = self.faucets.clone();
         faucets.write().unwrap().insert(id, tx);
 
+        let epoch_ref = faucet.current_epoch();
         smol::spawn(async move {
             let mut ct = reset_listeners.create_cancellation_token();
             loop {
@@ -97,7 +100,7 @@ impl Duplicator {
                 let Ok(sample) = rx.recv().await else {
                     break;
                 };
-                let Ok(_) = rb_faucet_prod.push(sample).await else {
+                let Ok(_) = rb_faucet_prod.push(sample.with_epoch_ref(&epoch_ref)).await else {
                     break;
                 };
             }

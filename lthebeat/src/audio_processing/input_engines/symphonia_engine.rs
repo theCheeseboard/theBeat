@@ -1,7 +1,7 @@
 mod http_source;
 
 use crate::audio_processing::audio_metadata::{Art, AudioMetadata};
-use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
+use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError, create_faucet};
 use crate::audio_processing::audio_pipeline::{
     PipelineSample, PipelineSampleResult, SAMPLE_BUFFER_SIZE,
 };
@@ -61,8 +61,8 @@ impl SymphoniaEngine {
             })
         });
 
-        let (mut rb_prod, rb_cons) =
-            AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();
+        let (faucet, mut rb_prod, _) = create_faucet();
+        let faucet_epoch = faucet.current_epoch();
         thread::spawn(move || {
             let mut start_instant = None;
             let mut file_meta = AudioMetadata {
@@ -137,6 +137,7 @@ impl SymphoniaEngine {
                         })
                         .or_else(|| start_instant.map(|instant: Instant| instant.elapsed()));
 
+                    let faucet_epoch = *faucet_epoch.read().unwrap();
                     if !pushed_first_sample {
                         if smol::block_on(rb_prod.push(Ok(PipelineSample::Sample(Sample::new(
                             rate,
@@ -146,6 +147,7 @@ impl SymphoniaEngine {
                             elapsed,
                             SampleData::Empty,
                             associated_track.clone(),
+                            faucet_epoch,
                         )))))
                         .is_err()
                         {
@@ -165,6 +167,7 @@ impl SymphoniaEngine {
                         elapsed,
                         sample_data,
                         associated_track.clone(),
+                        faucet_epoch,
                     ))
                 };
 
@@ -190,7 +193,7 @@ impl SymphoniaEngine {
         });
 
         Ok(Self {
-            faucet: Some(Faucet::new(rb_cons)),
+            faucet: Some(faucet),
         })
     }
 

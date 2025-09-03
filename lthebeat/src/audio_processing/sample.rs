@@ -1,11 +1,11 @@
 use crate::audio_processing::audio_metadata::AudioMetadata;
+use crate::play_queue::media_item::MediaItem;
 use cpal::U24;
+use gpui::Entity;
 use intx::I24;
 use rand::random;
 use std::fmt::{Debug, Formatter};
 use std::time::Duration;
-use gpui::Entity;
-use crate::play_queue::media_item::MediaItem;
 
 #[derive(Clone, Debug)]
 pub struct Sample {
@@ -15,10 +15,11 @@ pub struct Sample {
 
     /// A random number to keep track of this sample as it moves through the audio pipeline
     pub sample_id: u64,
+    pub epoch: u16,
     pub data: SampleData,
 
     pub elapsed_since_start: Option<Duration>,
-    pub associated_track: Option<Entity<MediaItem>>
+    pub associated_track: Option<Entity<MediaItem>>,
 }
 
 #[derive(Clone)]
@@ -92,7 +93,8 @@ impl Sample {
         sample_id: Option<u64>,
         elapsed: Option<Duration>,
         data: SampleData,
-        associated_track: Option<Entity<MediaItem>>
+        associated_track: Option<Entity<MediaItem>>,
+        epoch: u16,
     ) -> Self {
         Sample {
             sample_rate,
@@ -102,6 +104,7 @@ impl Sample {
             elapsed_since_start: elapsed,
             data,
             associated_track,
+            epoch,
         }
     }
 
@@ -183,7 +186,8 @@ impl Sample {
             sample_id: self.sample_id,
             elapsed_since_start: self.elapsed_since_start,
             data: new_sample_data,
-            associated_track: self.associated_track,       
+            associated_track: self.associated_track,
+            epoch: self.epoch,
         }
     }
 }

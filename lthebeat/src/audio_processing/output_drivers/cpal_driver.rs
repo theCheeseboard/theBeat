@@ -75,7 +75,7 @@ impl CpalOutputDevice {
 
         let (sink, mut samples_consumer) = create_sink();
         let reset_listeners = sink.reset_listeners();
-        reset_listeners.add_reset_listener(Box::new(move || {
+        reset_listeners.add_reset_listener(Box::new(move |_| {
             consumer_arc_2.write().unwrap().clear();
         }));
         smol::spawn(async move {

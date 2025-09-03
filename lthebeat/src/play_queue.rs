@@ -3,7 +3,7 @@ pub mod media_item;
 use crate::audio_processing::audio_pipeline::duplicator::Duplicator;
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, create_faucet};
 use crate::audio_processing::audio_pipeline::{
-    PipelineSample, PipelineSampleResult, ResetPipelineFunction, plug,
+    PipelineSample, PipelineSampleExt, PipelineSampleResult, ResetPipelineFunction, plug,
 };
 use crate::audio_processing::input_engines::faucet_for_url;
 use crate::cyclic_cursor_vec::CyclicCursorVec;
@@ -27,7 +27,7 @@ pub struct PlayQueue {
     shuffle: bool,
     faucet_queue: Arc<RwLock<Vec<FaucetQueueItem>>>,
     faucet_input: Arc<RwLock<AsyncHeapProd<PipelineSampleResult>>>,
-    reset_faucet: ResetPipelineFunction,
+    reset_faucet: Box<dyn Fn() + Send + Sync>,
     duplicator: Duplicator,
 }
 
@@ -37,6 +37,7 @@ impl PlayQueue {
         let mut duplicator = Duplicator::new();
 
         let faucet_input = Arc::new(RwLock::new(faucet_input));
+        let epoch_ref = faucet.current_epoch();
 
         plug(faucet, duplicator.sink());
 
@@ -106,7 +107,12 @@ impl PlayQueue {
                 };
 
                 if next_sample.is_ok() {
-                    faucet_input.write().await.push(next_sample).await.unwrap();
+                    faucet_input
+                        .write()
+                        .await
+                        .push(next_sample.with_epoch_ref(&epoch_ref))
+                        .await
+                        .unwrap();
                 } else {
                     let mut faucet_queue_borrow = faucet_queue.write().await;
                     faucet_queue_borrow.remove(0);

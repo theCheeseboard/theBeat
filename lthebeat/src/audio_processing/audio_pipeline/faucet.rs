@@ -5,6 +5,7 @@ use crate::audio_processing::audio_pipeline::{
 use async_ringbuf::traits::{Based, Consumer, Observer, Split};
 use async_ringbuf::{AsyncHeapCons, AsyncHeapProd, AsyncHeapRb};
 use smol::stream::StreamExt;
+use std::sync::{Arc, RwLock};
 
 pub struct Faucet {
     rb_consumer: AsyncHeapCons<PipelineSampleResult>,
@@ -26,10 +27,21 @@ impl Faucet {
     }
 
     pub async fn next_sample(&mut self) -> PipelineSampleResult {
-        self.rb_consumer
-            .next()
-            .await
-            .ok_or(FaucetError::UnknownError)?
+        loop {
+            let sample = self
+                .rb_consumer
+                .next()
+                .await
+                .ok_or(FaucetError::UnknownError)?;
+            let current_epoch = self.resetter.current_epoch();
+            if let Ok(PipelineSample::Sample(sample)) = &sample
+                && sample.epoch != current_epoch
+            {
+                continue;
+            }
+
+            return sample;
+        }
     }
 
     pub fn resetter(&self) -> Resetter {
@@ -39,12 +51,16 @@ impl Faucet {
     pub fn samples_waiting(&self) -> usize {
         self.rb_consumer.occupied_len()
     }
+
+    pub fn current_epoch(&self) -> Arc<RwLock<u16>> {
+        self.resetter.current_epoch_ref()
+    }
 }
 
 pub fn create_faucet() -> (
     Faucet,
     AsyncHeapProd<PipelineSampleResult>,
-    ResetPipelineFunction,
+    Box<dyn Fn() + Send + Sync>,
 ) {
     let (rb_faucet_prod, rb_faucet_cons) =
         AsyncHeapRb::<PipelineSampleResult>::new(SAMPLE_BUFFER_SIZE).split();

@@ -1,9 +1,9 @@
-use crate::audio_processing::audio_pipeline::PipelineSample;
 use crate::audio_processing::audio_pipeline::audio_format::{AudioFormat, SampleFormat};
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError, create_faucet};
 use crate::audio_processing::audio_pipeline::sink::{
     ResetListenerGroup, ResetListenerGroupTrait, Sink, create_sink,
 };
+use crate::audio_processing::audio_pipeline::{PipelineSample, PipelineSampleExt};
 use crate::audio_processing::sample::{Sample, SampleData};
 use async_ringbuf::traits::AsyncProducer;
 use rubato::{FftFixedIn, Resampler};
@@ -21,8 +21,9 @@ impl RubatoResampler {
         let (sink, mut rb_sink_cons) = create_sink();
 
         let reset_listeners = sink.reset_listeners();
-        reset_listeners.add_reset_listener(reset_faucet);
+        reset_listeners.add_reset_listener(Box::new(move |_| reset_faucet()));
 
+        let epoch_ref = faucet.current_epoch();
         smol::spawn(async move {
             let mut resampler = RubatoResamplerWrapper::new(target_audio_format);
             let mut sample_buffer = Vec::new();
@@ -37,7 +38,9 @@ impl RubatoResampler {
                         if matches!(next_sample.data, SampleData::Empty) {
                             // Propagate the empty sample
                             rb_faucet_prod
-                                .push(Ok(PipelineSample::Sample(next_sample)))
+                                .push(Ok(PipelineSample::Sample(
+                                    next_sample.with_epoch_ref(&epoch_ref),
+                                )))
                                 .await
                                 .expect("failed to push sample to sink");
 
@@ -103,6 +106,8 @@ impl RubatoResampler {
                                     }
                                 }
 
+                                let epoch = *epoch_ref.read().unwrap();
+
                                 // Build sample object
                                 let next_sample = Sample::new(
                                     target_audio_format.sample_rate,
@@ -135,6 +140,7 @@ impl RubatoResampler {
                                         SampleFormat::Float64 => SampleData::Float64(Vec::new()),
                                     },
                                     associated_track.clone(),
+                                    epoch,
                                 );
                                 let next_sample = next_sample.convert_from_f64(resampled_buffer);
 
@@ -150,6 +156,7 @@ impl RubatoResampler {
                         } else if SampleFormat::from(next_sample.clone())
                             != target_audio_format.sample
                         {
+                            let epoch = *epoch_ref.read().unwrap();
                             let f32_samples = next_sample.into_f32();
                             let next_sample = Sample::new(
                                 target_audio_format.sample_rate,
@@ -172,15 +179,21 @@ impl RubatoResampler {
                                     SampleFormat::Float64 => SampleData::Float64(Vec::new()),
                                 },
                                 associated_track,
+                                epoch,
                             );
+
                             let next_sample = next_sample.convert_from_f64(f32_samples);
                             rb_faucet_prod
-                                .push(Ok(PipelineSample::Sample(next_sample)))
+                                .push(Ok(PipelineSample::Sample(
+                                    next_sample.with_epoch_ref(&epoch_ref),
+                                )))
                                 .await
                                 .expect("failed to push sample to sink");
                         } else {
                             rb_faucet_prod
-                                .push(Ok(PipelineSample::Sample(next_sample)))
+                                .push(Ok(PipelineSample::Sample(
+                                    next_sample.with_epoch_ref(&epoch_ref),
+                                )))
                                 .await
                                 .expect("failed to push sample to sink");
                         }

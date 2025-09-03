@@ -2,6 +2,7 @@ use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError};
 use crate::audio_processing::audio_pipeline::sink::Sink;
 use crate::audio_processing::sample::Sample;
 use log::warn;
+use std::sync::{Arc, RwLock};
 
 pub mod audio_format;
 pub mod duplicator;
@@ -15,7 +16,7 @@ pub const SAMPLE_BUFFER_SIZE: usize = 4;
 
 pub type PipelineSampleResult = Result<PipelineSample, FaucetError>;
 
-pub type ResetPipelineFunction = Box<dyn Fn() + Send + Sync>;
+pub type ResetPipelineFunction = Box<dyn Fn(u16) + Send + Sync>;
 
 #[derive(Debug, Clone)]
 pub enum PipelineSample {
@@ -39,4 +40,37 @@ pub fn plug(mut faucet: Faucet, mut sink: Sink) {
         }
     })
     .detach();
+}
+
+pub trait PipelineSampleExt {
+    fn with_epoch(self, epoch: u16) -> Self;
+
+    fn with_epoch_ref(self, epoch_ref: &Arc<RwLock<u16>>) -> Self
+    where
+        Self: Sized,
+    {
+        let epoch = *epoch_ref.read().unwrap();
+        self.with_epoch(epoch)
+    }
+}
+
+impl PipelineSampleExt for PipelineSampleResult {
+    fn with_epoch(self, epoch: u16) -> Self {
+        self.map(|s| s.with_epoch(epoch))
+    }
+}
+
+impl PipelineSampleExt for PipelineSample {
+    fn with_epoch(self, epoch: u16) -> Self {
+        match self {
+            PipelineSample::Sample(sample) => PipelineSample::Sample(sample.with_epoch(epoch)),
+        }
+    }
+}
+
+impl PipelineSampleExt for Sample {
+    fn with_epoch(mut self, epoch: u16) -> Self {
+        self.epoch = epoch;
+        self
+    }
 }
