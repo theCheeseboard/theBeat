@@ -16,10 +16,10 @@ pub struct AudioMetadata {
     pub artist: Option<String>,
     pub album: Option<String>,
     pub duration: Option<Duration>,
-    pub track_number: Option<u64>,
-    pub total_track_number: Option<u64>,
-    pub disc_number: Option<u64>,
-    pub total_disc_number: Option<u64>,
+    pub track_number: Option<u32>,
+    pub total_track_number: Option<u32>,
+    pub disc_number: Option<u32>,
+    pub total_disc_number: Option<u32>,
 
     pub album_cover: Option<Arc<Art>>,
 }

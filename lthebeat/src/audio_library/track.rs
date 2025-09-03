@@ -2,10 +2,12 @@ use crate::audio_library::database_query::DatabaseRecord;
 use crate::play_queue::PlayQueue;
 use crate::play_queue::media_item::MediaItem;
 use cntp_i18n::tr;
+use contemporary::components::skeleton::{SkeletonExt, skeleton, skeleton_row};
 use contemporary::components::spinner::spinner;
+use contemporary::styling::theme::{Theme, VariableColor};
 use gpui::{
     Context, Element, ElementId, InteractiveElement, IntoElement, ParentElement, Render,
-    StatefulInteractiveElement, Window, div,
+    StatefulInteractiveElement, Styled, Window, div, px,
 };
 use sqlx::sqlite::SqliteRow;
 use sqlx::{Error, Row};
@@ -15,8 +17,11 @@ use url::Url;
 pub enum Track {
     Ok {
         id: usize,
+        track: Option<u32>,
         url: Url,
-        name: String,
+        name: Option<String>,
+        artist: Option<String>,
+        album: Option<String>,
     },
 
     #[default]
@@ -26,12 +31,70 @@ pub enum Track {
 
 impl Render for Track {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        let theme = cx.global::<Theme>();
         match self {
-            Track::Ok { name, id, url } => {
+            Track::Ok {
+                name,
+                id,
+                url,
+                track,
+                artist,
+                album,
+            } => {
+                let mut supps = Vec::new();
+                if let Some(artist) = artist {
+                    supps.push(tr!("TRACK_ARTIST", "By {{artist}}", artist = artist).to_string());
+                }
+                if let Some(album) = album {
+                    supps.push(tr!("TRACK_ALBUM", "On {{album}}", album = album).to_string());
+                }
+
                 let url_clone = url.clone();
                 div()
                     .id(ElementId::from(*id))
-                    .child(name.to_string())
+                    .flex()
+                    .items_center()
+                    .child(
+                        div()
+                            .child(
+                                track
+                                    .map(|track| track.to_string())
+                                    .unwrap_or("-".to_string()),
+                            )
+                            .text_center()
+                            .h(theme.system_font_size * 2 + px(12.))
+                            .w(theme.system_font_size * 3 + px(12.))
+                            .p(px(4.))
+                            .text_color(theme.foreground.disabled())
+                            .text_size(theme.system_font_size * 2),
+                    )
+                    .child(
+                        div()
+                            .flex()
+                            .flex_col()
+                            .child(
+                                div().child(
+                                    name.clone()
+                                        .unwrap_or_else(|| {
+                                            url.to_file_path()
+                                                .map(|path| {
+                                                    path.file_name()
+                                                        .unwrap()
+                                                        .to_str()
+                                                        .unwrap()
+                                                        .to_string()
+                                                })
+                                                .unwrap_or_else(|_| url.to_string())
+                                        })
+                                        .to_string(),
+                                ),
+                            )
+                            .child(
+                                div()
+                                    .child(supps.join(" • "))
+                                    .text_color(theme.foreground.disabled()),
+                            ),
+                    )
                     .on_click(cx.listener(move |_, _, _, cx| {
                         let item = MediaItem::new(url_clone.clone(), cx);
                         let play_queue = cx.global_mut::<PlayQueue>();
@@ -39,7 +102,27 @@ impl Render for Track {
                     }))
                     .into_any_element()
             }
-            Track::Loading => div().child(spinner()).into_any_element(),
+            Track::Loading => div()
+                .flex()
+                .child(
+                    div()
+                        .child("-")
+                        .size(theme.system_font_size * 2 + px(12.))
+                        .p(px(4.))
+                        .into_skeleton("skel-track-no"),
+                )
+                .child(
+                    div()
+                        .flex()
+                        .flex_col()
+                        .child(
+                            skeleton_row("skel-title")
+                                .chunk("This is the track name")
+                                .chunk("00:00"),
+                        )
+                        .child(skeleton("skel-supps").child("Supplementary Data")),
+                )
+                .into_any_element(),
             Track::Error => div()
                 .child(tr!("LIBRARY_TRACKS_ERROR", "Error loading tracks"))
                 .into_any_element(),
@@ -52,8 +135,11 @@ impl DatabaseRecord for Track {
         if let Ok(row) = row {
             *self = Track::Ok {
                 id: row.get::<u32, _>("id") as usize,
+                track: row.get::<Option<u32>, _>("track"),
                 url: Url::parse(row.get::<String, _>("url").as_str()).unwrap(),
-                name: row.get::<String, _>("name"),
+                name: row.get::<Option<String>, _>("name"),
+                artist: row.get::<Option<String>, _>("artist"),
+                album: row.get::<Option<String>, _>("album"),
             }
         } else {
             *self = Track::Error;

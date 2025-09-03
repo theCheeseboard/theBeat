@@ -122,7 +122,18 @@ impl Database {
     ) -> impl Future<Output = anyhow::Result<DatabaseQuery<Track>>> + 'future {
         DatabaseQuery::new(
             self.pool.clone(),
-            "SELECT * FROM tracks ORDER BY name".to_string(),
+            "SELECT
+                 tracks.id as id,
+                 tracks.url as url,
+                 tracks.name as name,
+                 album.name as album,
+                 artist.name as artist,
+                 tracks.track as track
+             FROM tracks
+                 LEFT JOIN artist ON tracks.artist = artist.id
+                 LEFT JOIN album ON tracks.album = album.id
+             ORDER BY tracks.name"
+                .to_string(),
             Default::default(),
         )
     }
@@ -174,20 +185,46 @@ async fn scan_file_into_pool(
             None
         };
 
+        let album_id = if let Some(album) = audio_metadata.album {
+            let existing_album = sqlx::query("SELECT id FROM album WHERE name = ? LIMIT 1")
+                .bind(&album)
+                .fetch_optional(pool)
+                .await?
+                .map(|row| row.get::<i64, _>("id"));
+
+            if existing_album.is_none() {
+                sqlx::query(
+                    "INSERT INTO album(name) VALUES (?) ON CONFLICT DO NOTHING RETURNING id",
+                )
+                .bind(&album)
+                .fetch_optional(pool)
+                .await?
+                .map(|row| row.get::<i64, _>("id"))
+            } else {
+                existing_album
+            }
+        } else {
+            None
+        };
+
         sqlx::query(
             "
-            INSERT INTO tracks(url, name, artist, file_modified_date)
-                VALUES(?, ?, ?, ?)
+            INSERT INTO tracks(url, name, artist, album, file_modified_date, track)
+                VALUES(?, ?, ?, ?, ?, ?)
                 ON CONFLICT DO
-                    UPDATE SET name=?, artist=?, file_modified_date=?",
+                    UPDATE SET name=?, artist=?, album=?, file_modified_date=?, track=?",
         )
         .bind(url.as_str())
         .bind(&audio_metadata.title)
         .bind(artist_id)
+        .bind(album_id)
         .bind(modified_date)
+        .bind(audio_metadata.track_number)
         .bind(&audio_metadata.title)
         .bind(artist_id)
+        .bind(album_id)
         .bind(modified_date)
+        .bind(audio_metadata.track_number)
         .execute(pool)
         .await?;
     }

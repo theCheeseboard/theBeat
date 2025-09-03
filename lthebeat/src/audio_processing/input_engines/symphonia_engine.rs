@@ -305,7 +305,7 @@ fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &Metadata
                     }
                 }
                 Value::UnsignedInt(v) => {
-                    metadata.track_number = Some(*v);
+                    metadata.track_number = Some(*v as u32);
                 }
                 _ => (),
             },
@@ -323,7 +323,7 @@ fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &Metadata
                     }
                 }
                 Value::UnsignedInt(v) => {
-                    metadata.track_number = Some(*v);
+                    metadata.track_number = Some(*v as u32);
                 }
                 _ => (),
             },
