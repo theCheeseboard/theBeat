@@ -2,6 +2,8 @@ use crate::main_surface::MainSurface;
 use cntp_i18n::tr;
 use contemporary::about_surface::about_surface;
 use contemporary::components::dialog_box::{StandardButton, dialog_box};
+use contemporary::components::pager::lift_animation::LiftAnimation;
+use contemporary::components::pager::pager;
 use contemporary::components::text_field::TextField;
 use contemporary::window::contemporary_window;
 use gpui::http_client::Url;
@@ -48,13 +50,21 @@ impl MainWindow {
 impl Render for MainWindow {
     fn render(&mut self, _window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         contemporary_window()
-            .child(self.main_surface.clone())
-            .when(self.is_about_surface_open, |w| {
-                w.child(about_surface().on_back_click(cx.listener(|this, _, _, cx| {
-                    this.is_about_surface_open = false;
-                    cx.notify();
-                })))
-            })
+            .child(
+                pager("main-pager", if self.is_about_surface_open { 1 } else { 0 })
+                    .w_full()
+                    .h_full()
+                    .animation(LiftAnimation::new())
+                    .page(self.main_surface.clone().into_any_element())
+                    .page(
+                        about_surface()
+                            .on_back_click(cx.listener(|this, _, _, cx| {
+                                this.is_about_surface_open = false;
+                                cx.notify();
+                            }))
+                            .into_any_element(),
+                    ),
+            )
             .child(
                 dialog_box("open_url_dialog_box")
                     .visible(self.is_url_dialog_open)
