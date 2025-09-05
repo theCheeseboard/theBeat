@@ -5,7 +5,7 @@ use crate::audio_processing::audio_pipeline::sink::{
 };
 use crate::audio_processing::audio_pipeline::{PipelineSample, PipelineSampleExt};
 use crate::audio_processing::sample::{Sample, SampleData};
-use async_ringbuf::traits::AsyncProducer;
+use async_ringbuf::traits::{AsyncProducer, Observer};
 use rubato::{FftFixedIn, Resampler};
 use smol::stream::StreamExt;
 use tracing::info;
@@ -33,6 +33,7 @@ impl RubatoResampler {
                     sample_buffer.clear();
                     ct = reset_listeners.create_cancellation_token();
                 }
+
                 match rb_sink_cons.next().await {
                     Some(Ok(PipelineSample::Sample(next_sample))) => {
                         if matches!(next_sample.data, SampleData::Empty) {
@@ -71,7 +72,7 @@ impl RubatoResampler {
 
                             while required_samples <= sample_buffer.len() {
                                 if ct.is_canceled() {
-                                    continue;
+                                    break;
                                 }
 
                                 // Deinterleave samples
@@ -145,7 +146,7 @@ impl RubatoResampler {
                                 let next_sample = next_sample.convert_from_f64(resampled_buffer);
 
                                 if ct.is_canceled() {
-                                    continue;
+                                    break;
                                 }
 
                                 rb_faucet_prod
@@ -184,9 +185,7 @@ impl RubatoResampler {
 
                             let next_sample = next_sample.convert_from_f64(f32_samples);
                             rb_faucet_prod
-                                .push(Ok(PipelineSample::Sample(
-                                    next_sample.with_epoch_ref(&epoch_ref),
-                                )))
+                                .push(Ok(PipelineSample::Sample(next_sample.with_epoch(epoch))))
                                 .await
                                 .expect("failed to push sample to sink");
                         } else {
