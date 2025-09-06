@@ -9,12 +9,13 @@ use contemporary::styling::theme::Theme;
 use contemporary::transition::float_transition_element::TransitionExt;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    Action, Animation, App, AppContext, BorrowAppContext, Context, Entity, ImageSource,
-    IntoElement, ParentElement, Refineable, Render, Rgba, StyleRefinement, Styled, Window, div,
-    img, px, rgb,
+    Action, Animation, App, AppContext, BorrowAppContext, Context, Div, Entity, FontFeatures,
+    ImageSource, IntoElement, ParentElement, Refineable, Render, Rgba, StyleRefinement, Styled,
+    Window, div, img, px, rgb,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
+use std::sync::Arc;
 use std::time::Duration;
 
 pub struct TransportControls {
@@ -145,7 +146,7 @@ impl Render for TransportControls {
                     .flex()
                     .gap(px(4.))
                     // Elapsed
-                    .child(
+                    .child(tabular_numbers(
                         self.seek_value
                             .or(current_time)
                             .map(|d| {
@@ -153,7 +154,7 @@ impl Render for TransportControls {
                                 format!("{:02}:{:02}", secs / 60, secs % 60)
                             })
                             .unwrap_or("??:??".to_string()),
-                    )
+                    ))
                     .child(
                         slider("seek-slider")
                             .h(px(24.))
@@ -194,14 +195,14 @@ impl Render for TransportControls {
                             .when_none(&current_time, |slider| slider.disabled()),
                     )
                     // Total
-                    .child(
+                    .child(tabular_numbers(
                         meta.duration
                             .map(|d| {
                                 let secs = d.as_secs();
                                 format!("{:02}:{:02}", secs / 60, secs % 60)
                             })
                             .unwrap_or("∞".to_string()),
-                    ),
+                    )),
             );
         div.style().refine(&self.style);
 
@@ -222,4 +223,14 @@ impl Styled for TransportControls {
     fn style(&mut self) -> &mut StyleRefinement {
         &mut self.style
     }
+}
+
+fn tabular_numbers(text: String) -> Div {
+    let mut david = div().child(text);
+    let ff = &mut david
+        .text_style()
+        .get_or_insert_with(Default::default)
+        .font_features;
+    *ff = Some(FontFeatures(Arc::new(vec![("tnum".to_string(), 1)])));
+    david
 }
