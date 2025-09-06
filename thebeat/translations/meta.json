@@ -1,13 +1,13 @@
 {
   "ALBUMS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:114",
+    "definedIn": "src/main_surface.rs:117",
     "plural": false,
     "description": null
   },
   "ARTISTS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:102",
+    "definedIn": "src/main_surface.rs:105",
     "plural": false,
     "description": null
   },
@@ -49,7 +49,7 @@
   },
   "OTHER_SOURCES_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:138",
+    "definedIn": "src/main_surface.rs:141",
     "plural": false,
     "description": null
   },
@@ -73,7 +73,7 @@
   },
   "PLAYLISTS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:126",
+    "definedIn": "src/main_surface.rs:129",
     "plural": false,
     "description": null
   },
@@ -85,7 +85,7 @@
   },
   "TRACKS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:90",
+    "definedIn": "src/main_surface.rs:93",
     "plural": false,
     "description": null
   },

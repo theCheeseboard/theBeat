@@ -5,7 +5,7 @@ use crate::audio_processing::audio_pipeline::faucet::{Faucet, create_faucet};
 use crate::audio_processing::audio_pipeline::{
     PipelineSample, PipelineSampleExt, PipelineSampleResult, ResetPipelineFunction, plug,
 };
-use crate::audio_processing::input_engines::faucet_for_url;
+use crate::audio_processing::input_engines::{Controller, faucet_for_url};
 use crate::cyclic_cursor_vec::CyclicCursorVec;
 use crate::play_queue::media_item::MediaItem;
 use async_lock::RwLock;
@@ -13,11 +13,13 @@ use async_ringbuf::AsyncHeapProd;
 use async_ringbuf::traits::AsyncProducer;
 use gpui::{App, AsyncApp, Entity, Global};
 use rand::random_range;
+use smol::io::AsyncSeekExt;
 use std::sync::Arc;
 use std::time::Duration;
 
 struct FaucetQueueItem {
     associated_item: Entity<MediaItem>,
+    controller: Box<dyn Controller>,
     faucet: Faucet,
 }
 
@@ -67,7 +69,7 @@ impl PlayQueue {
 
                     let next_media_item_entity = played_items.next();
 
-                    if let Some(faucet) = next_media_item_entity
+                    if let Some(mut controller) = next_media_item_entity
                         .update(cx, |next_media_item, _| {
                             faucet_for_url(
                                 next_media_item.url.clone(),
@@ -78,7 +80,8 @@ impl PlayQueue {
                         .flatten()
                     {
                         faucet_queue_borrow.push(FaucetQueueItem {
-                            faucet,
+                            faucet: controller.faucet(),
+                            controller,
                             associated_item: next_media_item_entity.clone(),
                         })
                     }
@@ -208,6 +211,14 @@ impl PlayQueue {
         faucet_queue_borrow.clear();
 
         (self.reset_faucet)();
+    }
+
+    pub fn seek_to_position(&mut self, position: Duration) {
+        let mut faucet_queue_borrow = self.faucet_queue.write_blocking();
+        if let Some(queue_item) = faucet_queue_borrow.first_mut() {
+            (self.reset_faucet)();
+            queue_item.controller.seek(position);
+        }
     }
 
     pub fn display_queue(&self, cx: &App) -> Vec<DisplayQueueItem> {

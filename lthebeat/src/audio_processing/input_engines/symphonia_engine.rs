@@ -5,6 +5,7 @@ use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError, creat
 use crate::audio_processing::audio_pipeline::{
     PipelineSample, PipelineSampleResult, SAMPLE_BUFFER_SIZE,
 };
+use crate::audio_processing::input_engines::Controller;
 use crate::audio_processing::input_engines::symphonia_engine::http_source::HttpSource;
 use crate::audio_processing::sample::{Sample, SampleData};
 use crate::play_queue::media_item::MediaItem;
@@ -19,11 +20,13 @@ use std::sync::{Arc, RwLock};
 use std::thread;
 use std::time::{Duration, Instant};
 use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Signal};
+use symphonia::core::formats::{FormatReader, SeekMode, SeekTo};
 use symphonia::core::io::{MediaSource, MediaSourceStream, MediaSourceStreamOptions};
 use symphonia::core::meta::{
     MetadataLog, MetadataRevision, StandardTagKey, StandardVisualKey, Value,
 };
 use symphonia::core::probe::Hint;
+use symphonia::core::units::Time;
 use symphonia::default::{get_codecs, get_probe};
 use tracing::info;
 use tracing_subscriber::fmt::time;
@@ -31,6 +34,7 @@ use url::Url;
 
 pub struct SymphoniaEngine {
     faucet: Option<Faucet>,
+    format: Arc<RwLock<Box<dyn FormatReader>>>,
 }
 
 impl SymphoniaEngine {
@@ -48,8 +52,7 @@ impl SymphoniaEngine {
             probe.format(&hint, media_source_stream, &format_opts, &meta_opts)?;
 
         let codec_registry = get_codecs();
-        let mut format = probe_result.format;
-        let first_track = format.default_track().unwrap();
+        let first_track = probe_result.format.default_track().unwrap();
         let decoder_opts = Default::default();
         let mut decoder = codec_registry.make(&first_track.codec_params, &decoder_opts)?;
 
@@ -60,6 +63,9 @@ impl SymphoniaEngine {
                 Duration::from_secs(time.seconds) + Duration::from_secs_f64(time.frac)
             })
         });
+
+        let format = Arc::new(RwLock::new(probe_result.format));
+        let format_clone = format.clone();
 
         let (faucet, mut rb_prod, _) = create_faucet();
         let faucet_epoch = faucet.current_epoch();
@@ -81,14 +87,17 @@ impl SymphoniaEngine {
             if let Some(next_meta) = stream_metadata_log.write().unwrap().metadata().current() {
                 populate_metadata(&mut file_meta, next_meta);
             }
-            if let Some(next_meta) = format.metadata().current() {
+            let mut format_write = format.write().unwrap();
+            if let Some(next_meta) = format_write.metadata().current() {
                 populate_metadata(&mut file_meta, next_meta);
             }
+            drop(format_write);
 
             let mut pushed_first_sample = false;
             loop {
+                let mut format_write = format.write().unwrap();
                 let next_sample = {
-                    let next_packet = match format.next_packet() {
+                    let next_packet = match format_write.next_packet() {
                         Ok(packet) => packet,
                         Err(err) => {
                             warn!("SymphoniaEngine: error while reading packet: {err}");
@@ -106,12 +115,14 @@ impl SymphoniaEngine {
                     }
                     drop(stream_metadata);
 
-                    while !format.metadata().is_latest() {
-                        format.metadata().pop();
-                        if let Some(next_meta) = format.metadata().current() {
+                    let mut meta = format_write.metadata();
+                    while !meta.is_latest() {
+                        meta.pop();
+                        if let Some(next_meta) = meta.current() {
                             populate_metadata(&mut file_meta, next_meta);
                         }
                     }
+                    drop(format_write);
 
                     let decoded = decoder.decode(&next_packet).unwrap();
 
@@ -194,6 +205,7 @@ impl SymphoniaEngine {
 
         Ok(Self {
             faucet: Some(faucet),
+            format: format_clone,
         })
     }
 
@@ -238,11 +250,26 @@ impl SymphoniaEngine {
 
         Ok(file_meta)
     }
+}
 
-    pub fn faucet(&mut self) -> Faucet {
+impl Controller for SymphoniaEngine {
+    fn faucet(&mut self) -> Faucet {
         self.faucet
             .take()
             .expect("SymphoniaEngine: tried to take faucet twice")
+    }
+
+    fn seek(&mut self, position: Duration) {
+        let mut format_write = self.format.write().unwrap();
+        format_write
+            .seek(
+                SeekMode::Accurate,
+                SeekTo::Time {
+                    time: position.into(),
+                    track_id: None,
+                },
+            )
+            .unwrap();
     }
 }
 

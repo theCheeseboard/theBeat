@@ -5,7 +5,7 @@ use crate::SkipPreviousAction;
 use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlists, Tracks};
 use crate::play_queue::play_queue;
 use crate::tracks_view::TracksView;
-use crate::transport_controls::transport_controls;
+use crate::transport_controls::TransportControls;
 use cntp_i18n::tr;
 use contemporary::components::application_menu::ApplicationMenu;
 use contemporary::components::button::button;
@@ -24,6 +24,8 @@ pub struct MainSurface {
     selected_tab: MainSurfaceTab,
 
     tracks_view: Entity<TracksView>,
+
+    transport_controls: Entity<TransportControls>,
 }
 
 #[derive(PartialEq)]
@@ -65,6 +67,7 @@ impl MainSurface {
             ),
             selected_tab: Tracks,
             tracks_view: TracksView::new(cx),
+            transport_controls: TransportControls::new(cx),
         })
     }
 }
@@ -166,7 +169,7 @@ impl Render for MainSurface {
                             )
                             .child(play_queue()),
                     )
-                    .child(transport_controls()),
+                    .child(self.transport_controls.clone().into_any_element()),
             )
             .application_menu(self.application_menu.clone())
     }

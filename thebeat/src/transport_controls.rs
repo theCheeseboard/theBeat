@@ -2,33 +2,41 @@ use crate::actions::{SkipNextAction, SkipPreviousAction};
 use crate::track_metadata::TrackMetadata;
 use contemporary::components::button::button;
 use contemporary::components::icon::icon;
-use contemporary::components::layer::layer;
-use contemporary::components::slider::slider;
+use contemporary::components::slider::{SliderChangeEvent, slider};
 use contemporary::easing::ease_out_cubic;
 use contemporary::platform_support::platform_settings::PlatformSettings;
 use contemporary::styling::theme::Theme;
 use contemporary::transition::float_transition_element::TransitionExt;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    Action, Animation, App, BorrowAppContext, ImageSource, IntoElement, ParentElement, Refineable,
-    RenderOnce, Rgba, StyleRefinement, Styled, Window, div, img, px, rgb,
+    Action, Animation, App, AppContext, BorrowAppContext, Context, Entity, ImageSource,
+    IntoElement, ParentElement, Refineable, Render, Rgba, StyleRefinement, Styled, Window, div,
+    img, px, rgb,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
+use std::time::Duration;
 
-#[derive(IntoElement)]
 pub struct TransportControls {
     style: StyleRefinement,
+    seek_value: Option<Duration>,
 }
 
-pub fn transport_controls() -> TransportControls {
-    TransportControls {
-        style: Default::default(),
+impl TransportControls {
+    pub fn new(cx: &mut App) -> Entity<TransportControls> {
+        cx.new(|_| TransportControls {
+            style: Default::default(),
+            seek_value: None,
+        })
     }
 }
 
-impl RenderOnce for TransportControls {
-    fn render(self, _: &mut Window, cx: &mut App) -> impl IntoElement {
+impl Render for TransportControls {
+    fn render(
+        &mut self,
+        _: &mut Window,
+        cx: &mut Context<'_, TransportControls>,
+    ) -> impl IntoElement {
         let play_queue = cx.global::<PlayQueue>();
         let platform_settings = cx.global::<PlatformSettings>();
         let audio_controller = cx.global::<AudioController>();
@@ -138,7 +146,8 @@ impl RenderOnce for TransportControls {
                     .gap(px(4.))
                     // Elapsed
                     .child(
-                        current_time
+                        self.seek_value
+                            .or(current_time)
                             .map(|d| {
                                 let secs = d.as_secs();
                                 format!("{:02}:{:02}", secs / 60, secs % 60)
@@ -154,6 +163,31 @@ impl RenderOnce for TransportControls {
                                     slider
                                         .value(current_time.as_millis() as u32)
                                         .max_value(duration.as_millis() as u32)
+                                        .on_press(|_, _, cx| {
+                                            let audio_controller =
+                                                cx.global_mut::<AudioController>();
+                                            audio_controller.pause();
+                                        })
+                                        .on_release(cx.listener(|this, _, _, cx| {
+                                            let play_queue = cx.global_mut::<PlayQueue>();
+                                            if let Some(seek_position) = this.seek_value {
+                                                play_queue.seek_to_position(seek_position);
+                                            }
+                                            let audio_controller =
+                                                cx.global_mut::<AudioController>();
+                                            audio_controller.play();
+
+                                            this.seek_value = None;
+                                            cx.notify();
+                                        }))
+                                        .on_change(cx.listener(
+                                            |this, change_event: &SliderChangeEvent, _, cx| {
+                                                this.seek_value = Some(Duration::from_millis(
+                                                    change_event.new_value as u64,
+                                                ));
+                                                cx.notify();
+                                            },
+                                        ))
                                 })
                             })
                             .when_none(&meta.duration, |slider| slider.disabled())
