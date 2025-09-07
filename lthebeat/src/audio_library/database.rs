@@ -58,7 +58,9 @@ impl Database {
             .journal_mode(SqliteJournalMode::Wal)
             .create_if_missing(true);
         let pool = SqlitePool::connect_with(options).await?;
-        sqlx::migrate!("./migrations").run(&pool).await?;
+        if let Err(_) = sqlx::migrate!("./migrations").run(&pool).await {
+            error!("Failed to migrate database. Database may be corrupt.");
+        }
 
         Ok(pool)
     }
