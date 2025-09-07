@@ -1,12 +1,15 @@
 use cntp_i18n::tr;
+use contemporary::components::button::button;
 use contemporary::components::grandstand::grandstand;
+use contemporary::components::icon_text::icon_text;
 use contemporary::components::interstitial::interstitial;
 use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::Theme;
 use gpui::private::anyhow;
 use gpui::{
-    App, AppContext, AsyncApp, Context, Entity, InteractiveElement, IntoElement, ParentElement,
-    Render, StatefulInteractiveElement, Styled, Subscription, WeakEntity, Window, div, px,
+    App, AppContext, AsyncApp, BorrowAppContext, Context, Entity, InteractiveElement, IntoElement,
+    ParentElement, Render, StatefulInteractiveElement, Styled, Subscription, WeakEntity, Window,
+    div, px,
 };
 use lthebeat::audio_library::album::Album;
 use lthebeat::audio_library::database::Database;
@@ -110,12 +113,20 @@ impl Render for AlbumLibrary {
                             .h_full()
                             .icon("media-album-cover".into())
                             .title(tr!("LIBRARY_ALBUMS_ERROR", "Unable to load albums").into())
-                            .message(
-                                tr!(
-                                    "LIBRARY_CORRUPT_ERROR_MESSAGE",
-                                    "Your library may be corrupt. Try resetting your library."
-                                )
-                                .into(),
+                            .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE",).into())
+                            .child(
+                                button("tracks-corrupt-erase-button")
+                                    .child(icon_text(
+                                        "view-refresh".into(),
+                                        tr!("LIBRARY_ERASE", "Erase Library").into(),
+                                    ))
+                                    .destructive()
+                                    .on_click(cx.listener(|_, _, _, cx| {
+                                        cx.update_global::<Database, ()>(|database, cx| {
+                                            database.erase(cx);
+                                            database.start_scan(cx);
+                                        });
+                                    })),
                             )
                             .into_any_element(),
                     }

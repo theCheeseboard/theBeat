@@ -109,13 +109,7 @@ impl Render for IndividualAlbumView {
                             .h_full()
                             .icon("media-album-cover".into())
                             .title(tr!("LIBRARY_ALBUM_ERROR", "Unable to load album").into())
-                            .message(
-                                tr!(
-                                    "LIBRARY_CORRUPT_ERROR_MESSAGE",
-                                    "Your library may be corrupt. Try resetting your library."
-                                )
-                                .into(),
-                            )
+                            .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE",).into())
                             .into_any_element(),
                     }
                 }

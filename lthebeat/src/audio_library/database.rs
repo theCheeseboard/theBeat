@@ -21,8 +21,8 @@ use sqlx::sqlite::{
 };
 use sqlx::{Executor, Row, SqlitePool};
 use std::cell::RefCell;
-use std::fs::metadata;
-use std::path::Path;
+use std::fs::{metadata, remove_dir_all};
+use std::path::{Path, PathBuf};
 use std::ptr::read;
 use std::rc::Rc;
 use std::time::{Duration, SystemTime};
@@ -35,12 +35,21 @@ pub struct Database {
 
 impl Database {
     pub async fn new(cx: &mut App) -> anyhow::Result<Self> {
+        let library_dir = Self::library_dir(cx);
+        let pool = Self::open_library_connection(library_dir).await?;
+        Ok(Self { pool })
+    }
+
+    fn library_dir(cx: &mut App) -> PathBuf {
         let details = cx.global::<Details>();
 
         let directories = details.standard_dirs().unwrap();
         let data_dir = directories.data_dir();
 
-        let library_dir = data_dir.join("library");
+        data_dir.join("library")
+    }
+
+    async fn open_library_connection(library_dir: PathBuf) -> anyhow::Result<SqlitePool> {
         std::fs::create_dir_all(&library_dir)?;
 
         let options = SqliteConnectOptions::new()
@@ -50,7 +59,17 @@ impl Database {
             .create_if_missing(true);
         let pool = SqlitePool::connect_with(options).await?;
         sqlx::migrate!("./migrations").run(&pool).await?;
-        Ok(Self { pool })
+
+        Ok(pool)
+    }
+
+    pub fn erase(&mut self, cx: &mut App) {
+        smol::block_on(self.pool.close());
+
+        let library_dir = Self::library_dir(cx);
+        remove_dir_all(&library_dir).unwrap();
+
+        self.pool = smol::block_on(Self::open_library_connection(library_dir)).unwrap();
     }
 
     pub fn start_scan(&self, cx: &mut App) {

@@ -31,13 +31,13 @@
   },
   "LIBRARY_ALBUMS_ERROR": {
     "context": "album_library.rs",
-    "definedIn": "src/views/albums_view/album_library.rs:112",
+    "definedIn": "src/views/albums_view/album_library.rs:115",
     "plural": false,
     "description": null
   },
   "LIBRARY_ALBUMS_TITLE": {
     "context": "album_library.rs",
-    "definedIn": "src/views/albums_view/album_library.rs:74",
+    "definedIn": "src/views/albums_view/album_library.rs:77",
     "plural": false,
     "description": null
   },
@@ -49,19 +49,25 @@
   },
   "LIBRARY_CORRUPT_ERROR_MESSAGE": {
     "context": "tracks_view.rs",
-    "definedIn": "src/views/tracks_view.rs:105",
+    "definedIn": "src/views/tracks_view.rs:106",
+    "plural": false,
+    "description": null
+  },
+  "LIBRARY_ERASE": {
+    "context": "tracks_view.rs",
+    "definedIn": "src/views/tracks_view.rs:115",
     "plural": false,
     "description": null
   },
   "LIBRARY_TRACKS_ERROR": {
     "context": "tracks_view.rs",
-    "definedIn": "src/views/tracks_view.rs:102",
+    "definedIn": "src/views/tracks_view.rs:103",
     "plural": false,
     "description": null
   },
   "LIBRARY_TRACKS_TITLE": {
     "context": "tracks_view.rs",
-    "definedIn": "src/views/tracks_view.rs:69",
+    "definedIn": "src/views/tracks_view.rs:70",
     "plural": false,
     "description": null
   },
