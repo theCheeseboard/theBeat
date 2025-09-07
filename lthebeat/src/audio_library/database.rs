@@ -15,7 +15,10 @@ use sha2::{Digest, Sha256};
 use smol::fs::File;
 use smol::io::{AsyncReadExt, BufReader};
 use smol::stream::StreamExt;
-use sqlx::sqlite::{SqliteConnectOptions, SqliteJournalMode, SqlitePoolOptions, SqliteSynchronous};
+use sqlx::Arguments;
+use sqlx::sqlite::{
+    SqliteArguments, SqliteConnectOptions, SqliteJournalMode, SqlitePoolOptions, SqliteSynchronous,
+};
 use sqlx::{Executor, Row, SqlitePool};
 use std::cell::RefCell;
 use std::fs::metadata;
@@ -130,7 +133,8 @@ impl Database {
                  tracks.name as name,
                  album.name as album,
                  artist.name as artist,
-                 tracks.track as track
+                 tracks.track as track,
+                 tracks.disc as disc
              FROM tracks
                  LEFT JOIN artist ON tracks.artist = artist.id
                  LEFT JOIN album ON tracks.album = album.id
@@ -157,11 +161,37 @@ impl Database {
                     WHERE
                         tracks.album = album.id AND
                         tracks.id = (SELECT id FROM tracks WHERE tracks.album = album.id ORDER BY tracks.track LIMIT 1)
-             ) album
+                ) album
                 LEFT JOIN art ON album.coalesced_hash = art.hash
              ORDER BY album.name"
                 .to_string(),
             Default::default(),
+        )
+    }
+
+    pub fn query_album_tracks<'this, 'future: 'this>(
+        &'this self,
+        album_id: u32,
+    ) -> impl Future<Output = anyhow::Result<DatabaseQuery<Track>>> + 'future {
+        let mut args = SqliteArguments::<'static>::default();
+        args.add(album_id).unwrap();
+        DatabaseQuery::new(
+            self.pool.clone(),
+            "SELECT
+                 tracks.id as id,
+                 tracks.url as url,
+                 tracks.name as name,
+                 album.name as album,
+                 artist.name as artist,
+                 tracks.track as track,
+                 tracks.disc as disc
+             FROM tracks
+                 LEFT JOIN artist ON tracks.artist = artist.id
+                 LEFT JOIN album ON tracks.album = album.id
+             WHERE tracks.album = ?
+             ORDER BY tracks.disc, tracks.track"
+                .to_string(),
+            args,
         )
     }
 }
@@ -277,9 +307,9 @@ async fn scan_file_into_pool(
         .bind(&art_hash)
         .execute(pool)
         .await?;
-    }
 
-    cx.update_global::<Database, ()>(|_, _| ()).unwrap();
+        cx.update_global::<Database, ()>(|_, _| ()).unwrap();
+    }
 
     Ok(())
 }

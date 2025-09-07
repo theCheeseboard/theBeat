@@ -3,6 +3,7 @@
   "ARTISTS_BUTTON": "Artists",
   "FILE_OPEN": "Open",
   "FILE_OPEN_URL": "Open URL",
+  "INDIVIDUAL_ALBUM_TITLE": "Tracks in {{album}}",
   "LIBRARY_ALBUMS_ERROR": "Error loading albums",
   "LIBRARY_ALBUMS_TITLE": "Albums in Library",
   "LIBRARY_TRACKS_ERROR": "Error loading tracks",

@@ -87,7 +87,10 @@ where
         self.records.len()
     }
 
-    pub fn iter<'this>(&'this mut self, cx: &'this mut App) -> DatabaseQueryIterator<RecordType> {
+    pub fn iter<'this>(
+        &'this mut self,
+        cx: &'this mut App,
+    ) -> DatabaseQueryIterator<'this, RecordType> {
         DatabaseQueryIterator {
             parent: self,
             cx,
@@ -109,7 +112,7 @@ where
     current: usize,
 }
 
-impl<RecordType> Iterator for DatabaseQueryIterator<'_, RecordType>
+impl<'parent, RecordType> Iterator for DatabaseQueryIterator<'parent, RecordType>
 where
     RecordType: DatabaseRecord + 'static,
 {

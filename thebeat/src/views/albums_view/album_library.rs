@@ -11,21 +11,24 @@ use lthebeat::audio_library::album::Album;
 use lthebeat::audio_library::database::Database;
 use lthebeat::audio_library::database_query::DatabaseQuery;
 use std::cell::RefCell;
-use std::ops::Deref;
 use std::rc::Rc;
 
-pub struct AlbumsView {
+pub struct AlbumLibrary {
     database_subscription: Subscription,
     albums_query: Option<Rc<RefCell<anyhow::Result<DatabaseQuery<Album>>>>>,
+    on_album_click: Rc<Box<dyn Fn(&Entity<Album>, &mut Window, &mut App) + 'static>>,
 }
 
-impl AlbumsView {
-    pub fn new(cx: &mut App) -> Entity<Self> {
+impl AlbumLibrary {
+    pub fn new(
+        on_album_click: Box<dyn Fn(&Entity<Album>, &mut Window, &mut App) + 'static>,
+        cx: &mut App,
+    ) -> Entity<Self> {
         cx.new(|cx| {
             // The database is set as a global after the window is initialized, so this will
             // always run after the window is initialized.
             let database_subscription =
-                cx.observe_global::<Database>(|_, cx: &mut Context<AlbumsView>| {
+                cx.observe_global::<Database>(|_, cx: &mut Context<AlbumLibrary>| {
                     let database = cx.global::<Database>();
                     let query = database.query_all_albums();
 
@@ -44,17 +47,20 @@ impl AlbumsView {
                     .detach();
                 });
 
-            AlbumsView {
+            AlbumLibrary {
                 database_subscription,
                 albums_query: None,
+                on_album_click: Rc::new(on_album_click),
             }
         })
     }
 }
 
-impl Render for AlbumsView {
+impl Render for AlbumLibrary {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let theme = cx.global::<Theme>();
+
+        let album_click_handler = self.on_album_click.clone();
 
         div()
             .bg(theme.background)
@@ -73,13 +79,29 @@ impl Render for AlbumsView {
                     match albums_query.as_mut() {
                         Ok(albums_query) => albums_query
                             .iter(cx)
+                            .enumerate()
                             .fold(
                                 div()
                                     .id("album-grid")
                                     .grid()
                                     .grid_cols(3)
                                     .overflow_y_scroll(),
-                                |div, album| div.child(album.clone().into_any_element()),
+                                |david, (i, album)| {
+                                    let album_clone = album.clone();
+                                    let album_click_handler = album_click_handler.clone();
+                                    david.child(
+                                        div()
+                                            .id(i)
+                                            .child(album.clone().into_any_element())
+                                            .on_click(move |_, window, cx| {
+                                                album_click_handler.clone()(
+                                                    &album_clone,
+                                                    window,
+                                                    cx,
+                                                );
+                                            }),
+                                    )
+                                },
                             )
                             .into_any_element(),
                         Err(_) => div()

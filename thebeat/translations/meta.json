@@ -13,49 +13,55 @@
   },
   "FILE_OPEN": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:92",
+    "definedIn": "src/main.rs:91",
     "plural": false,
     "description": null
   },
   "FILE_OPEN_URL": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:94",
+    "definedIn": "src/main.rs:93",
+    "plural": false,
+    "description": null
+  },
+  "INDIVIDUAL_ALBUM_TITLE": {
+    "context": "individual_album_view.rs",
+    "definedIn": "src/views/albums_view/individual_album_view.rs:73",
     "plural": false,
     "description": null
   },
   "LIBRARY_ALBUMS_ERROR": {
-    "context": "albums_view.rs",
-    "definedIn": "src/albums_view.rs:89",
+    "context": "album_library.rs",
+    "definedIn": "src/views/albums_view/album_library.rs:108",
     "plural": false,
     "description": null
   },
   "LIBRARY_ALBUMS_TITLE": {
-    "context": "albums_view.rs",
-    "definedIn": "src/albums_view.rs:67",
+    "context": "album_library.rs",
+    "definedIn": "src/views/albums_view/album_library.rs:73",
     "plural": false,
     "description": null
   },
   "LIBRARY_TRACKS_ERROR": {
     "context": "tracks_view.rs",
-    "definedIn": "src/tracks_view.rs:94",
+    "definedIn": "src/views/tracks_view.rs:94",
     "plural": false,
     "description": null
   },
   "LIBRARY_TRACKS_TITLE": {
     "context": "tracks_view.rs",
-    "definedIn": "src/tracks_view.rs:68",
+    "definedIn": "src/views/tracks_view.rs:68",
     "plural": false,
     "description": null
   },
   "MENU_FILE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:90",
+    "definedIn": "src/main.rs:89",
     "plural": false,
     "description": null
   },
   "MENU_PLAYBACK": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:100",
+    "definedIn": "src/main.rs:99",
     "plural": false,
     "description": null
   },
@@ -67,19 +73,19 @@
   },
   "PLAYBACK_PLAY_PAUSE": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:103",
+    "definedIn": "src/main.rs:102",
     "plural": false,
     "description": null
   },
   "PLAYBACK_SKIP_NEXT": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:112",
+    "definedIn": "src/main.rs:111",
     "plural": false,
     "description": null
   },
   "PLAYBACK_SKIP_PREVIOUS": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:108",
+    "definedIn": "src/main.rs:107",
     "plural": false,
     "description": null
   },

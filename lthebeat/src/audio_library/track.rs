@@ -18,6 +18,7 @@ pub enum Track {
     Ok {
         id: usize,
         track: Option<u32>,
+        disc: Option<u32>,
         url: Url,
         name: Option<String>,
         artist: Option<String>,
@@ -38,6 +39,7 @@ impl Render for Track {
                 id,
                 url,
                 track,
+                disc,
                 artist,
                 album,
             } => {
@@ -136,6 +138,7 @@ impl DatabaseRecord for Track {
             *self = Track::Ok {
                 id: row.get::<u32, _>("id") as usize,
                 track: row.get::<Option<u32>, _>("track"),
+                disc: row.get::<Option<u32>, _>("disc"),
                 url: Url::parse(row.get::<String, _>("url").as_str()).unwrap(),
                 name: row.get::<Option<String>, _>("name"),
                 artist: row.get::<Option<String>, _>("artist"),

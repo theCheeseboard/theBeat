@@ -1,11 +1,10 @@
 mod actions;
-mod albums_view;
 mod main_surface;
 mod main_window;
 mod play_queue;
 mod track_metadata;
-mod tracks_view;
 mod transport_controls;
+mod views;
 
 use crate::actions::{
     OpenFileAction, OpenUrlAction, PlayPauseAction, SkipNextAction, SkipPreviousAction,

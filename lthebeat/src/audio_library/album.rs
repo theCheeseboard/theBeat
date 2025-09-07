@@ -8,10 +8,10 @@ use gpui::{
 use sqlx::sqlite::SqliteRow;
 use sqlx::{Error, Row};
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub enum Album {
     Ok {
-        id: usize,
+        id: u32,
         name: Option<String>,
         art: Option<Art>,
     },
@@ -54,7 +54,7 @@ impl DatabaseRecord for Album {
     fn read_from_row(&mut self, row: Result<SqliteRow, Error>) {
         if let Ok(row) = row {
             *self = Album::Ok {
-                id: row.get::<u32, _>("id") as usize,
+                id: row.get::<u32, _>("id"),
                 name: row.get::<Option<String>, _>("name"),
                 art: {
                     let image = row.get::<Option<Box<[u8]>>, _>("image");
