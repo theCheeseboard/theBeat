@@ -1,4 +1,5 @@
 mod actions;
+mod albums_view;
 mod main_surface;
 mod main_window;
 mod play_queue;
@@ -69,7 +70,7 @@ fn mane() {
                             generatable: application_details!(),
                             copyright_holder: "Victor Tran",
                             copyright_year: "2025",
-                            application_version: "1.0",
+                            application_version: "5.0",
                             license: License::Gpl3OrLater,
                             links: [
                                 (

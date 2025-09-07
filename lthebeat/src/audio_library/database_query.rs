@@ -86,8 +86,49 @@ where
     pub fn count(&self) -> usize {
         self.records.len()
     }
+
+    pub fn iter<'this>(&'this mut self, cx: &'this mut App) -> DatabaseQueryIterator<RecordType> {
+        DatabaseQueryIterator {
+            parent: self,
+            cx,
+            current: 0,
+        }
+    }
 }
 
 pub trait DatabaseRecord: Default {
     fn read_from_row(&mut self, row: Result<SqliteRow, sqlx::Error>);
+}
+
+pub struct DatabaseQueryIterator<'parent, RecordType>
+where
+    RecordType: DatabaseRecord,
+{
+    parent: &'parent mut DatabaseQuery<RecordType>,
+    cx: &'parent mut App,
+    current: usize,
+}
+
+impl<RecordType> Iterator for DatabaseQueryIterator<'_, RecordType>
+where
+    RecordType: DatabaseRecord + 'static,
+{
+    type Item = Entity<RecordType>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.current == self.parent.count() {
+            None
+        } else {
+            let next = self.parent.get(self.current, self.cx);
+            self.current += 1;
+            Some(next)
+        }
+    }
+
+    fn count(self) -> usize
+    where
+        Self: Sized,
+    {
+        self.parent.count()
+    }
 }

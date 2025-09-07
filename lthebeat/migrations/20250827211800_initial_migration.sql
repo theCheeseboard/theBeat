@@ -1,21 +1,34 @@
+create table art
+(
+    hash      TEXT not null
+        constraint art_pk
+            primary key,
+    image     BLOB not null,
+    mime_type TEXT not null
+);
+
 create table artist
 (
-    id              INTEGER
+    id         INTEGER
         constraint artist_pk
             primary key autoincrement,
-    name            TEXT,
-    image           BLOB,
-    image_mime_type TEXT
+    name       TEXT,
+    image_hash TEXT
+        constraint artist_image_hash_fk
+            references art
+            on update RESTRICT on delete RESTRICT
 );
 
 create table album
 (
-    id              INTEGER
+    id         INTEGER
         constraint album_pk
             primary key autoincrement,
-    name            TEXT,
-    image           BLOB,
-    image_mime_type TEXT
+    name       TEXT,
+    image_hash TEXT
+        constraint album_image_hash_fk
+            references art
+            on update RESTRICT on delete RESTRICT
 );
 
 create table tracks
@@ -36,8 +49,10 @@ create table tracks
     disc               integer,
     track              integer,
     duration           integer,
-    image              BLOB,
-    image_mime_type    TEXT,
+    image_hash         TEXT
+        constraint tracks_image_hash_fk
+            references art
+            on update RESTRICT on delete RESTRICT,
     file_modified_date REAL
 );
 

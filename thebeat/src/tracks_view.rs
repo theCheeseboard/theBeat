@@ -12,11 +12,12 @@ use lthebeat::audio_library::database_query::DatabaseQuery;
 use lthebeat::audio_library::track::Track;
 use std::cell::RefCell;
 use std::ops::Deref;
+use std::rc::Rc;
 use std::sync::Arc;
 
 pub struct TracksView {
     database_subscription: Subscription,
-    tracks_query: Option<Arc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>>,
+    tracks_query: Option<Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>>,
 }
 
 impl TracksView {
@@ -35,7 +36,7 @@ impl TracksView {
                             tracks_view
                                 .update(cx, |tracks_view, cx| {
                                     tracks_view.tracks_query =
-                                        Some(Arc::new(RefCell::new(tracks_query)));
+                                        Some(Rc::new(RefCell::new(tracks_query)));
                                     cx.notify();
                                 })
                                 .unwrap();

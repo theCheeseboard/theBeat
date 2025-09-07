@@ -1,3 +1,4 @@
+use crate::audio_library::album::Album;
 use crate::audio_library::database_query::DatabaseQuery;
 use crate::audio_library::track::Track;
 use crate::audio_processing::audio_metadata;
@@ -10,6 +11,7 @@ use contemporary::jobs::job_manager::{JobManager, Jobling};
 use contemporary::jobs::standard_job::StandardJob;
 use directories::UserDirs;
 use gpui::{App, AppContext, AsyncApp, BorrowAppContext, Global, hash};
+use sha2::{Digest, Sha256};
 use smol::fs::File;
 use smol::io::{AsyncReadExt, BufReader};
 use smol::stream::StreamExt;
@@ -137,6 +139,31 @@ impl Database {
             Default::default(),
         )
     }
+
+    pub fn query_all_albums<'this, 'future: 'this>(
+        &'this self,
+    ) -> impl Future<Output = anyhow::Result<DatabaseQuery<Album>>> + 'future {
+        DatabaseQuery::new(
+            self.pool.clone(),
+            "SELECT
+                 album.id as id,
+                 album.name as name,
+                 art.image as image,
+                 art.mime_type as image_mime_type
+             FROM (
+                -- Get the first track for each album
+                SELECT album.*, coalesce(album.image_hash, tracks.image_hash) AS coalesced_hash
+                    FROM album, tracks
+                    WHERE
+                        tracks.album = album.id AND
+                        tracks.id = (SELECT id FROM tracks WHERE tracks.album = album.id ORDER BY tracks.track LIMIT 1)
+             ) album
+                LEFT JOIN art ON album.coalesced_hash = art.hash
+             ORDER BY album.name"
+                .to_string(),
+            Default::default(),
+        )
+    }
 }
 
 async fn scan_file_into_pool(
@@ -207,24 +234,47 @@ async fn scan_file_into_pool(
             None
         };
 
+        let art_hash = if let Some(album_cover) = audio_metadata.album_cover {
+            let hash = Sha256::digest(&*album_cover.backing_store);
+            let hash = format!("{hash:X}");
+
+            sqlx::query(
+                "INSERT INTO art(hash, image, mime_type)
+                        VALUES (?, ?, ?)
+                        ON CONFLICT DO NOTHING",
+            )
+            .bind(&hash)
+            .bind(&*album_cover.backing_store)
+            .bind(&album_cover.mime_type)
+            .execute(pool)
+            .await?;
+
+            Some(hash)
+        } else {
+            None
+        };
+
         sqlx::query(
-            "
-            INSERT INTO tracks(url, name, artist, album, file_modified_date, track)
-                VALUES(?, ?, ?, ?, ?, ?)
+            "INSERT INTO tracks(url, name, artist, album, file_modified_date, track, image_hash)
+                VALUES(?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT DO
-                    UPDATE SET name=?, artist=?, album=?, file_modified_date=?, track=?",
+                    UPDATE SET name=?, artist=?, album=?, file_modified_date=?, track=?, image_hash=?",
         )
+        // VALUES
         .bind(url.as_str())
         .bind(&audio_metadata.title)
         .bind(artist_id)
         .bind(album_id)
         .bind(modified_date)
         .bind(audio_metadata.track_number)
+        .bind(&art_hash)
+        // ON CONFLICT DO UPDATE SET
         .bind(&audio_metadata.title)
         .bind(artist_id)
         .bind(album_id)
         .bind(modified_date)
         .bind(audio_metadata.track_number)
+        .bind(&art_hash)
         .execute(pool)
         .await?;
     }

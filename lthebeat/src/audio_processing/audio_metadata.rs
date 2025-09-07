@@ -42,16 +42,18 @@ impl AudioMetadata {
 
 #[derive(Clone, Debug)]
 pub struct Art {
-    backing_store: Arc<Box<[u8]>>,
+    pub backing_store: Arc<Box<[u8]>>,
+    pub mime_type: String,
     rendered_image: Arc<RwLock<Option<Option<Arc<RenderImage>>>>>,
     average_color: Arc<RwLock<Option<Option<Rgba>>>>,
 }
 
 impl Art {
-    pub fn new(backing_store: Box<[u8]>) -> Self {
+    pub fn new(backing_store: Box<[u8]>, mime_type: String) -> Self {
         let backing_store = Arc::new(backing_store);
         Self {
             backing_store,
+            mime_type,
             rendered_image: Arc::new(RwLock::new(None)),
             average_color: Arc::new(RwLock::new(None)),
         }

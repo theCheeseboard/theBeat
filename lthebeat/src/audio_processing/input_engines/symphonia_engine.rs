@@ -367,7 +367,10 @@ fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &Metadata
             .iter()
             .find(|visual| visual.usage == Some(StandardVisualKey::FrontCover))
             .unwrap_or_else(|| symphonia_metadata.visuals().first().unwrap());
-        metadata.album_cover = Some(Arc::new(Art::new(album_cover.data.clone())));
+        metadata.album_cover = Some(Arc::new(Art::new(
+            album_cover.data.clone(),
+            album_cover.media_type.clone(),
+        )));
     }
 }
 

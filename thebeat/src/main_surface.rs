@@ -2,6 +2,7 @@ use crate::OpenFileAction;
 use crate::OpenUrlAction;
 use crate::SkipNextAction;
 use crate::SkipPreviousAction;
+use crate::albums_view::AlbumsView;
 use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlists, Tracks};
 use crate::play_queue::play_queue;
 use crate::tracks_view::TracksView;
@@ -24,6 +25,7 @@ pub struct MainSurface {
     selected_tab: MainSurfaceTab,
 
     tracks_view: Entity<TracksView>,
+    albums_view: Entity<AlbumsView>,
 
     transport_controls: Entity<TransportControls>,
 }
@@ -67,6 +69,7 @@ impl MainSurface {
             ),
             selected_tab: Tracks,
             tracks_view: TracksView::new(cx),
+            albums_view: AlbumsView::new(cx),
             transport_controls: TransportControls::new(cx),
         })
     }
@@ -165,7 +168,9 @@ impl Render for MainSurface {
                                     .flex_grow()
                                     .h_full()
                                     .animation(SlideHorizontalAnimation::new())
-                                    .page(self.tracks_view.clone().into_any_element()),
+                                    .page(self.tracks_view.clone().into_any_element())
+                                    .page(div().into_any_element())
+                                    .page(self.albums_view.clone().into_any_element()),
                             )
                             .child(play_queue()),
                     )
