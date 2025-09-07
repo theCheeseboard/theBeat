@@ -1,5 +1,6 @@
 use cntp_i18n::tr;
 use contemporary::components::grandstand::grandstand;
+use contemporary::components::interstitial::interstitial;
 use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::Theme;
 use gpui::private::anyhow;
@@ -104,8 +105,18 @@ impl Render for AlbumLibrary {
                                 },
                             )
                             .into_any_element(),
-                        Err(_) => div()
-                            .child(tr!("LIBRARY_ALBUMS_ERROR", "Error loading albums"))
+                        Err(_) => interstitial()
+                            .w_full()
+                            .h_full()
+                            .icon("media-album-cover".into())
+                            .title(tr!("LIBRARY_ALBUMS_ERROR", "Unable to load albums").into())
+                            .message(
+                                tr!(
+                                    "LIBRARY_CORRUPT_ERROR_MESSAGE",
+                                    "Your library may be corrupt. Try resetting your library."
+                                )
+                                .into(),
+                            )
                             .into_any_element(),
                     }
                 }

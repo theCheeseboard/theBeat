@@ -1,5 +1,6 @@
 use cntp_i18n::tr;
 use contemporary::components::grandstand::grandstand;
+use contemporary::components::interstitial::interstitial;
 use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::Theme;
 use gpui::private::anyhow;
@@ -73,28 +74,43 @@ impl Render for TracksView {
                     let tracks_query_clone = tracks_query.clone();
                     let tracks_query = tracks_query.borrow();
                     match tracks_query.deref() {
-                        Ok(tracks_query) => div().flex_grow().child(
-                            uniform_list(
-                                "tracks-list",
-                                tracks_query.count(),
-                                move |range, _, cx| {
-                                    range
-                                        .map(|index| {
-                                            tracks_query_clone
-                                                .borrow_mut()
-                                                .as_mut()
-                                                .unwrap()
-                                                .get(index, cx)
-                                        })
-                                        .collect()
-                                },
+                        Ok(tracks_query) => div()
+                            .flex_grow()
+                            .child(
+                                uniform_list(
+                                    "tracks-list",
+                                    tracks_query.count(),
+                                    move |range, _, cx| {
+                                        range
+                                            .map(|index| {
+                                                tracks_query_clone
+                                                    .borrow_mut()
+                                                    .as_mut()
+                                                    .unwrap()
+                                                    .get(index, cx)
+                                            })
+                                            .collect()
+                                    },
+                                )
+                                .h_full(),
                             )
-                            .h_full(),
-                        ),
-                        Err(_) => div().child(tr!("LIBRARY_TRACKS_ERROR", "Error loading tracks")),
+                            .into_any_element(),
+                        Err(_) => interstitial()
+                            .w_full()
+                            .h_full()
+                            .icon("view-media-track".into())
+                            .title(tr!("LIBRARY_TRACKS_ERROR", "Unable to load tracks").into())
+                            .message(
+                                tr!(
+                                    "LIBRARY_CORRUPT_ERROR_MESSAGE",
+                                    "Your library may be corrupt. Try resetting your library."
+                                )
+                                .into(),
+                            )
+                            .into_any_element(),
                     }
                 }
-                _ => div().child(spinner()),
+                _ => div().child(spinner()).into_any_element(),
             })
     }
 }
