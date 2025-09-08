@@ -1,3 +1,4 @@
+use crate::track_listing::track_listing;
 use cntp_i18n::tr;
 use contemporary::components::button::button;
 use contemporary::components::grandstand::grandstand;
@@ -71,60 +72,40 @@ impl Render for TracksView {
                     .pt(px(36.)),
             )
             .child(match self.tracks_query.as_mut() {
-                Some(tracks_query) => {
-                    let tracks_query_clone = tracks_query.clone();
-                    let tracks_query = tracks_query.borrow();
-                    match tracks_query.deref() {
-                        Ok(tracks_query) => div()
-                            .flex_grow()
-                            .child(
-                                uniform_list(
-                                    "tracks-list",
-                                    tracks_query.count(),
-                                    move |range, _, cx| {
-                                        range
-                                            .map(|index| {
-                                                tracks_query_clone
-                                                    .borrow_mut()
-                                                    .as_mut()
-                                                    .unwrap()
-                                                    .get(index, cx)
-                                            })
-                                            .collect()
-                                    },
-                                )
-                                .h_full(),
+                Some(tracks_query) => match tracks_query.borrow().deref() {
+                    Ok(_) => div()
+                        .flex_grow()
+                        .w_full()
+                        .child(track_listing(tracks_query.clone()))
+                        .into_any_element(),
+                    Err(_) => interstitial()
+                        .w_full()
+                        .h_full()
+                        .icon("view-media-track".into())
+                        .title(tr!("LIBRARY_TRACKS_ERROR", "Unable to load tracks").into())
+                        .message(
+                            tr!(
+                                "LIBRARY_CORRUPT_ERROR_MESSAGE",
+                                "Your library may be corrupt. Try erasing your library."
                             )
-                            .into_any_element(),
-                        Err(_) => interstitial()
-                            .w_full()
-                            .h_full()
-                            .icon("view-media-track".into())
-                            .title(tr!("LIBRARY_TRACKS_ERROR", "Unable to load tracks").into())
-                            .message(
-                                tr!(
-                                    "LIBRARY_CORRUPT_ERROR_MESSAGE",
-                                    "Your library may be corrupt. Try erasing your library."
-                                )
-                                .into(),
-                            )
-                            .child(
-                                button("tracks-corrupt-erase-button")
-                                    .child(icon_text(
-                                        "view-refresh".into(),
-                                        tr!("LIBRARY_ERASE", "Erase Library").into(),
-                                    ))
-                                    .destructive()
-                                    .on_click(cx.listener(|_, _, _, cx| {
-                                        cx.update_global::<Database, ()>(|database, cx| {
-                                            database.erase(cx);
-                                            database.start_scan(cx);
-                                        });
-                                    })),
-                            )
-                            .into_any_element(),
-                    }
-                }
+                            .into(),
+                        )
+                        .child(
+                            button("tracks-corrupt-erase-button")
+                                .child(icon_text(
+                                    "view-refresh".into(),
+                                    tr!("LIBRARY_ERASE", "Erase Library").into(),
+                                ))
+                                .destructive()
+                                .on_click(cx.listener(|_, _, _, cx| {
+                                    cx.update_global::<Database, ()>(|database, cx| {
+                                        database.erase(cx);
+                                        database.start_scan(cx);
+                                    });
+                                })),
+                        )
+                        .into_any_element(),
+                },
                 _ => div().child(spinner()).into_any_element(),
             })
     }

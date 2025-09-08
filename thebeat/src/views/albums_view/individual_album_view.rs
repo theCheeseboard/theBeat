@@ -1,3 +1,4 @@
+use crate::track_listing::track_listing;
 use cntp_i18n::tr;
 use contemporary::components::grandstand::grandstand;
 use contemporary::components::interstitial::interstitial;
@@ -79,40 +80,20 @@ impl Render for IndividualAlbumView {
                     .on_back_click(move |_, window, cx| back_clicked_handler(&(), window, cx)),
             )
             .child(match self.tracks_query.as_mut() {
-                Some(tracks_query) => {
-                    let tracks_query_clone = tracks_query.clone();
-                    let tracks_query = tracks_query.borrow();
-                    match tracks_query.deref() {
-                        Ok(tracks_query) => div()
-                            .flex_grow()
-                            .child(
-                                uniform_list(
-                                    "tracks-list",
-                                    tracks_query.count(),
-                                    move |range, _, cx| {
-                                        range
-                                            .map(|index| {
-                                                tracks_query_clone
-                                                    .borrow_mut()
-                                                    .as_mut()
-                                                    .unwrap()
-                                                    .get(index, cx)
-                                            })
-                                            .collect()
-                                    },
-                                )
-                                .h_full(),
-                            )
-                            .into_any_element(),
-                        Err(_) => interstitial()
-                            .w_full()
-                            .h_full()
-                            .icon("media-album-cover".into())
-                            .title(tr!("LIBRARY_ALBUM_ERROR", "Unable to load album").into())
-                            .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE",).into())
-                            .into_any_element(),
-                    }
-                }
+                Some(tracks_query) => match tracks_query.borrow().deref() {
+                    Ok(_) => div()
+                        .flex_grow()
+                        .w_full()
+                        .child(track_listing(tracks_query.clone()))
+                        .into_any_element(),
+                    Err(_) => interstitial()
+                        .w_full()
+                        .h_full()
+                        .icon("media-album-cover".into())
+                        .title(tr!("LIBRARY_ALBUM_ERROR", "Unable to load album").into())
+                        .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE",).into())
+                        .into_any_element(),
+                },
                 _ => div().child(spinner()).into_any_element(),
             })
     }
