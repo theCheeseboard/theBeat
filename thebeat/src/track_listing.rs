@@ -1,4 +1,4 @@
-use cntp_i18n::tr;
+use cntp_i18n::{tr, trn};
 use contemporary::components::button::button;
 use contemporary::components::icon::icon;
 use contemporary::components::icon_text::icon_text;
@@ -33,46 +33,55 @@ impl RenderOnce for TrackListing {
             .id("track-listing")
             .flex()
             .child(
-                div().p(px(8.)).child(
-                    layer()
-                        .p(px(8.))
-                        .gap(px(8.))
-                        .flex()
-                        .flex_col()
-                        .child(subtitle(
-                            tr!("TRACK_LISTING_ACTIONS", "Actions").to_uppercase(),
-                        ))
-                        .child(
-                            button("play-all-button")
-                                .flat()
-                                .justify_start()
-                                .child(icon_text(
+                div()
+                    .p(px(8.))
+                    .gap(px(8.))
+                    .flex()
+                    .flex_col()
+                    .child(
+                        layer()
+                            .p(px(8.))
+                            .gap(px(8.))
+                            .flex()
+                            .flex_col()
+                            .child(subtitle(
+                                tr!("TRACK_LISTING_ACTIONS", "Actions").to_uppercase(),
+                            ))
+                            .child(button("play-all-button").flat().justify_start().child(
+                                icon_text(
                                     "media-playback-start".into(),
                                     tr!("TRACK_LISTING_PLAY_ALL", "Play All").into(),
-                                )),
-                        )
-                        .child(button("enqueue-all-button").flat().justify_start().child(
-                            icon_text(
-                                "view-media-playlist".into(),
-                                tr!("TRACK_LISTING_ENQUEUE_ALL", "Enqueue All").into(),
+                                ),
+                            ))
+                            .child(button("enqueue-all-button").flat().justify_start().child(
+                                icon_text(
+                                    "view-media-playlist".into(),
+                                    tr!("TRACK_LISTING_ENQUEUE_ALL", "Enqueue All").into(),
+                                ),
+                            ))
+                            .child(button("shuffle-all-button").flat().justify_start().child(
+                                icon_text(
+                                    "media-playlist-shuffle".into(),
+                                    tr!("TRACK_LISTING_SHUFFLE_ALL", "Shuffle All").into(),
+                                ),
+                            ))
+                            .child(
+                                button("burn-button")
+                                    .flat()
+                                    .justify_start()
+                                    .child(icon_text(
+                                        "tools-media-optical-burn".into(),
+                                        tr!("TRACK_LISTING_BURN", "Burn").into(),
+                                    )),
                             ),
-                        ))
-                        .child(button("shuffle-all-button").flat().justify_start().child(
-                            icon_text(
-                                "media-playlist-shuffle".into(),
-                                tr!("TRACK_LISTING_SHUFFLE_ALL", "Shuffle All").into(),
-                            ),
-                        ))
-                        .child(
-                            button("burn-button")
-                                .flat()
-                                .justify_start()
-                                .child(icon_text(
-                                    "tools-media-optical-burn".into(),
-                                    tr!("TRACK_LISTING_BURN", "Burn").into(),
-                                )),
-                        ),
-                ),
+                    )
+                    .child(div().flex_grow())
+                    .child(trn!(
+                        "TRACK_LISTING_TRACK_COUNT",
+                        "{{count}} track",
+                        "{{count}} tracks",
+                        count = track_count as isize
+                    )),
             )
             .child(
                 uniform_list("tracks-list", track_count, move |range, _, cx| {

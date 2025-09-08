@@ -25,6 +25,10 @@
   "TRACK_LISTING_ENQUEUE_ALL": "Enqueue All",
   "TRACK_LISTING_PLAY_ALL": "Play All",
   "TRACK_LISTING_SHUFFLE_ALL": "Shuffle All",
+  "TRACK_LISTING_TRACK_COUNT": {
+    "one": "{{count}} track",
+    "other": "{{count}} tracks"
+  },
   "UNKNOWN_ALBUM": "Unknown Album",
   "UNKNOWN_ARTIST": "Unknown Artist",
   "URL_OPEN_TEXT": "Enter the URL to open",
