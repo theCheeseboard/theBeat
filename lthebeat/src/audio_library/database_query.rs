@@ -18,10 +18,11 @@ where
     RecordType: DatabaseRecord + 'static,
 {
     pub async fn new(
-        pool: SqlitePool,
+        pool: Option<SqlitePool>,
         base_query: String,
         binds: SqliteArguments<'static>,
     ) -> anyhow::Result<Self> {
+        let pool = pool.ok_or(anyhow::anyhow!("No database pool"))?;
         let count_query_string = format!("SELECT COUNT(*) as count FROM ({base_query})");
         let count_query = sqlx::query_with(&count_query_string, binds.clone())
             .fetch_one(&pool.clone())

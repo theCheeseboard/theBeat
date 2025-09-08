@@ -1,3 +1,4 @@
+use anyhow::anyhow;
 use crate::audio_library::album::Album;
 use crate::audio_library::database_query::DatabaseQuery;
 use crate::audio_library::track::Track;
@@ -30,13 +31,13 @@ use tracing::error;
 use url::Url;
 
 pub struct Database {
-    pool: SqlitePool,
+    pool: Option<SqlitePool>,
 }
 
 impl Database {
     pub async fn new(cx: &mut App) -> anyhow::Result<Self> {
         let library_dir = Self::library_dir(cx);
-        let pool = Self::open_library_connection(library_dir).await?;
+        let pool = Self::open_library_connection(library_dir).await.ok();
         Ok(Self { pool })
     }
 
@@ -66,15 +67,23 @@ impl Database {
     }
 
     pub fn erase(&mut self, cx: &mut App) {
-        smol::block_on(self.pool.close());
+        let Some(pool) = &self.pool else {
+            return;
+        };
+
+        smol::block_on(pool.close());
 
         let library_dir = Self::library_dir(cx);
         remove_dir_all(&library_dir).unwrap();
 
-        self.pool = smol::block_on(Self::open_library_connection(library_dir)).unwrap();
+        self.pool = smol::block_on(Self::open_library_connection(library_dir)).ok();
     }
 
     pub fn start_scan(&self, cx: &mut App) {
+        let Some(pool) = &self.pool else {
+            return;
+        };
+
         let job = Rc::new(RefCell::new(StandardJob::new_transient(
             tr!("SCAN_JOB_TITLE", "Library Scan").into(),
             tr!("SCAN_JOB_DESCRIPTION", "Scanning library for music...").into(),
@@ -84,7 +93,7 @@ impl Database {
 
         let job_clone = job_entity.clone();
 
-        let pool = self.pool.clone();
+        let pool = pool.clone();
         cx.spawn(async move |cx: &mut AsyncApp| {
             job_clone
                 .update(cx, |_, cx| {
@@ -140,7 +149,11 @@ impl Database {
     }
 
     pub async fn scan_file(&self, path: &Path, cx: &mut AsyncApp) {
-        scan_file_into_pool(&self.pool, path, cx).await.unwrap();
+        let Some(pool) = &self.pool else {
+            return;
+        };
+
+        scan_file_into_pool(pool, path, cx).await.unwrap();
     }
 
     pub fn query_all_tracks<'this, 'future: 'this>(
