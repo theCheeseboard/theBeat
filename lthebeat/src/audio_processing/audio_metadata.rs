@@ -1,6 +1,6 @@
 use cntp_i18n::tr;
 use gpui::{ImageSource, RenderImage, Rgba, img};
-use image::{Frame, ImageReader, Pixel, RgbaImage};
+use image::{EncodableLayout, Frame, ImageReader, Pixel, RgbaImage};
 use smallvec::smallvec;
 use std::cell::LazyCell;
 use std::io::Cursor;
@@ -122,20 +122,15 @@ fn extract_image(backing_store: Box<[u8]>) -> Option<(Arc<RenderImage>, Rgba, (u
 
     rgb_to_bgr(&mut image);
 
-    let average_color = image.pixels().enumerate().fold(
+    let average_color = {
+        let dominant_colors = dominant_color::get_colors(image.as_bytes(), false);
         Rgba {
-            r: 0.,
-            g: 0.,
-            b: 0.,
+            r: dominant_colors[3] as f32 / 255.,
+            g: dominant_colors[4] as f32 / 255.,
+            b: dominant_colors[5] as f32 / 255.,
             a: 1.,
-        },
-        |acc, (i, rgba)| Rgba {
-            r: acc.r + (rgba.channels()[0] as f32 / 255. - acc.r) / (i + 1) as f32,
-            g: acc.g + (rgba.channels()[1] as f32 / 255. - acc.g) / (i + 1) as f32,
-            b: acc.b + (rgba.channels()[2] as f32 / 255. - acc.b) / (i + 1) as f32,
-            a: 1.,
-        },
-    );
+        }
+    };
 
     let dimensions = image.dimensions();
     let frame = Frame::new(image);

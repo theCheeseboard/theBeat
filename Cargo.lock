@@ -1767,6 +1767,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "dominant_color"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a4ac4e005485886ae93a8bf162ed056e809e14bd61877cda818adfe3e2a0056d"
+
+[[package]]
 name = "dotenvy"
 version = "0.15.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3860,6 +3866,7 @@ dependencies = [
  "contemporary",
  "cpal",
  "directories",
+ "dominant_color",
  "gpui",
  "image",
  "intx",
