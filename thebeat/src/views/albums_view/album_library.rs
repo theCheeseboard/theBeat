@@ -7,14 +7,16 @@ use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::Theme;
 use gpui::private::anyhow;
 use gpui::{
-    App, AppContext, AsyncApp, BorrowAppContext, Context, Entity, InteractiveElement, IntoElement,
-    ParentElement, Render, StatefulInteractiveElement, Styled, Subscription, WeakEntity, Window,
+    App, AppContext, AsyncApp, BorrowAppContext, Bounds, Context, Element, ElementId, Entity,
+    GlobalElementId, InspectorElementId, InteractiveElement, IntoElement, LayoutId, ParentElement,
+    Pixels, Render, StatefulInteractiveElement, Style, Styled, Subscription, WeakEntity, Window,
     div, px,
 };
 use lthebeat::audio_library::album::Album;
 use lthebeat::audio_library::database::Database;
 use lthebeat::audio_library::database_query::DatabaseQuery;
 use std::cell::RefCell;
+use std::panic::Location;
 use std::rc::Rc;
 
 pub struct AlbumLibrary {
@@ -87,8 +89,10 @@ impl Render for AlbumLibrary {
                             .fold(
                                 div()
                                     .id("album-grid")
-                                    .grid()
-                                    .grid_cols(3)
+                                    .flex()
+                                    .flex_wrap()
+                                    .justify_around()
+                                    .gap(px(24.))
                                     .overflow_y_scroll(),
                                 |david, (i, album)| {
                                     let album_clone = album.clone();

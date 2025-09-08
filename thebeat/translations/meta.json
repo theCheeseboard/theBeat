@@ -31,13 +31,13 @@
   },
   "LIBRARY_ALBUMS_ERROR": {
     "context": "album_library.rs",
-    "definedIn": "src/views/albums_view/album_library.rs:115",
+    "definedIn": "src/views/albums_view/album_library.rs:119",
     "plural": false,
     "description": null
   },
   "LIBRARY_ALBUMS_TITLE": {
     "context": "album_library.rs",
-    "definedIn": "src/views/albums_view/album_library.rs:77",
+    "definedIn": "src/views/albums_view/album_library.rs:79",
     "plural": false,
     "description": null
   },
