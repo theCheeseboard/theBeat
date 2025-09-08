@@ -127,37 +127,37 @@
   },
   "TRACK_LISTING_ACTIONS": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:48",
+    "definedIn": "src/track_listing.rs:52",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_BURN": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:74",
+    "definedIn": "src/track_listing.rs:90",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_ENQUEUE_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:59",
+    "definedIn": "src/track_listing.rs:72",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_PLAY_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:53",
+    "definedIn": "src/track_listing.rs:60",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_SHUFFLE_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:65",
+    "definedIn": "src/track_listing.rs:81",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_TRACK_COUNT": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:80",
+    "definedIn": "src/track_listing.rs:96",
     "plural": true,
     "description": null
   },

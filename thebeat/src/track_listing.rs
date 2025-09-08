@@ -6,11 +6,13 @@ use contemporary::components::layer::layer;
 use contemporary::components::subtitle::subtitle;
 use gpui::private::anyhow;
 use gpui::{
-    App, InteractiveElement, IntoElement, ParentElement, RenderOnce, Styled, Window, div, px,
-    uniform_list,
+    App, Entity, InteractiveElement, IntoElement, ParentElement, RenderOnce, Styled, Window, div,
+    px, uniform_list,
 };
 use lthebeat::audio_library::database_query::DatabaseQuery;
 use lthebeat::audio_library::track::Track;
+use lthebeat::play_queue::PlayQueue;
+use lthebeat::play_queue::media_item::MediaItem;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -26,8 +28,10 @@ pub fn track_listing(
 }
 
 impl RenderOnce for TrackListing {
-    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
+    fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
         let database_query_clone = self.database_query.clone();
+        let database_query_clone_2 = self.database_query.clone();
+        let database_query_clone_3 = self.database_query.clone();
         let track_count = self.database_query.borrow().as_ref().unwrap().count();
         div()
             .id("track-listing")
@@ -47,18 +51,30 @@ impl RenderOnce for TrackListing {
                             .child(subtitle(
                                 tr!("TRACK_LISTING_ACTIONS", "Actions").to_uppercase(),
                             ))
-                            .child(button("play-all-button").flat().justify_start().child(
-                                icon_text(
-                                    "media-playback-start".into(),
-                                    tr!("TRACK_LISTING_PLAY_ALL", "Play All").into(),
-                                ),
-                            ))
-                            .child(button("enqueue-all-button").flat().justify_start().child(
-                                icon_text(
-                                    "view-media-playlist".into(),
-                                    tr!("TRACK_LISTING_ENQUEUE_ALL", "Enqueue All").into(),
-                                ),
-                            ))
+                            .child(
+                                button("play-all-button")
+                                    .flat()
+                                    .justify_start()
+                                    .child(icon_text(
+                                        "media-playback-start".into(),
+                                        tr!("TRACK_LISTING_PLAY_ALL", "Play All").into(),
+                                    ))
+                                    .on_click(move |_, _, cx| {
+                                        play_all(database_query_clone_2.clone(), cx);
+                                    }),
+                            )
+                            .child(
+                                button("enqueue-all-button")
+                                    .flat()
+                                    .justify_start()
+                                    .child(icon_text(
+                                        "view-media-playlist".into(),
+                                        tr!("TRACK_LISTING_ENQUEUE_ALL", "Enqueue All").into(),
+                                    ))
+                                    .on_click(move |_, _, cx| {
+                                        enqueue_all(database_query_clone_3.clone(), cx);
+                                    }),
+                            )
                             .child(button("shuffle-all-button").flat().justify_start().child(
                                 icon_text(
                                     "media-playlist-shuffle".into(),
@@ -100,5 +116,27 @@ impl RenderOnce for TrackListing {
             )
             .h_full()
             .w_full()
+    }
+}
+
+fn play_all(database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>, cx: &mut App) {
+    enqueue_all(database_query, cx);
+}
+
+fn enqueue_all(database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>, cx: &mut App) {
+    let track_list: Vec<_> = database_query
+        .borrow_mut()
+        .as_mut()
+        .unwrap()
+        .iter(cx)
+        .collect();
+
+    for track in track_list {
+        let Track::Ok { url, .. } = track.read(cx) else {
+            continue;
+        };
+        let item = MediaItem::new(url.clone(), cx);
+        let play_queue = cx.global_mut::<PlayQueue>();
+        play_queue.add_item(item);
     }
 }
