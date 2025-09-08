@@ -46,6 +46,7 @@ pub struct Art {
     pub mime_type: String,
     rendered_image: Arc<RwLock<Option<Option<Arc<RenderImage>>>>>,
     average_color: Arc<RwLock<Option<Option<Rgba>>>>,
+    dimensions: Arc<RwLock<Option<Option<(u32, u32)>>>>,
 }
 
 impl Art {
@@ -56,6 +57,7 @@ impl Art {
             mime_type,
             rendered_image: Arc::new(RwLock::new(None)),
             average_color: Arc::new(RwLock::new(None)),
+            dimensions: Arc::new(RwLock::new(None)),
         }
     }
 
@@ -81,21 +83,36 @@ impl Art {
         }
     }
 
+    pub fn dimensions(&self) -> Option<(u32, u32)> {
+        let dim = self.dimensions.read().unwrap();
+        if let Some(dim) = *dim {
+            dim
+        } else {
+            drop(dim);
+            self.calculate_properties();
+            self.dimensions()
+        }
+    }
+
     fn calculate_properties(&self) {
         let mut image = self.rendered_image.write().unwrap();
         let mut avg = self.average_color.write().unwrap();
-        if let Some((extracted_image, average_color)) = extract_image((*self.backing_store).clone())
+        let mut dim = self.dimensions.write().unwrap();
+        if let Some((extracted_image, average_color, dimensions)) =
+            extract_image((*self.backing_store).clone())
         {
             *image = Some(Some(extracted_image));
             *avg = Some(Some(average_color));
+            *dim = Some(Some(dimensions));
         } else {
             *image = None;
             *avg = None;
+            *dim = None;
         }
     }
 }
 
-fn extract_image(backing_store: Box<[u8]>) -> Option<(Arc<RenderImage>, Rgba)> {
+fn extract_image(backing_store: Box<[u8]>) -> Option<(Arc<RenderImage>, Rgba, (u32, u32))> {
     let mut image = ImageReader::new(Cursor::new(backing_store))
         .with_guessed_format()
         .ok()?
@@ -120,8 +137,13 @@ fn extract_image(backing_store: Box<[u8]>) -> Option<(Arc<RenderImage>, Rgba)> {
         },
     );
 
+    let dimensions = image.dimensions();
     let frame = Frame::new(image);
-    Some((Arc::new(RenderImage::new(smallvec![frame])), average_color))
+    Some((
+        Arc::new(RenderImage::new(smallvec![frame])),
+        average_color,
+        dimensions,
+    ))
 }
 
 fn rgb_to_bgr(image: &mut RgbaImage) {
