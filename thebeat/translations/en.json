@@ -18,6 +18,8 @@
   "PLAYBACK_SKIP_NEXT": "Skip Next",
   "PLAYBACK_SKIP_PREVIOUS": "Skip Back",
   "PLAYLISTS_BUTTON": "Playlists",
+  "QUEUE_CONTEXT_MENU_CLEAR": "Clear Queue",
+  "QUEUE_CONTEXT_MENU_TITLE": "For Queue",
   "QUEUE_TITLE": "Queue",
   "TRACKS_BUTTON": "Tracks",
   "TRACK_LISTING_ACTIONS": "Actions",

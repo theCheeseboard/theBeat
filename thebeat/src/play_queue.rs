@@ -1,5 +1,6 @@
 use crate::track_metadata::TrackMetadata;
 use cntp_i18n::tr;
+use contemporary::components::context_menu::{ContextMenuExt, ContextMenuItem};
 use contemporary::components::grandstand::grandstand;
 use contemporary::components::icon::icon;
 use contemporary::components::layer::layer;
@@ -223,7 +224,20 @@ impl RenderOnce for PlayQueue {
                             }
                         })
                         .flex_grow(),
-                    ),
+                    )
+                    .with_context_menu([
+                        ContextMenuItem::separator()
+                            .label(tr!("QUEUE_CONTEXT_MENU_TITLE", "For Queue"))
+                            .build(),
+                        ContextMenuItem::menu_item()
+                            .label(tr!("QUEUE_CONTEXT_MENU_CLEAR", "Clear Queue"))
+                            .icon("edit-delete")
+                            .on_triggered(|_, _, cx| {
+                                let play_queue = cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                play_queue.clear();
+                            })
+                            .build(),
+                    ]),
             );
         div.style().refine(&self.style);
 
