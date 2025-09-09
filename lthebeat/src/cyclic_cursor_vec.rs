@@ -68,6 +68,11 @@ impl<T> CyclicCursorVec<T> {
         todo!("Ensure current_index is not out of bounds")
     }
 
+    pub fn clear(&mut self) {
+        self.vec.clear();
+        self.current_index = 0;
+    }
+
     pub fn len(&self) -> usize {
         self.vec.len()
     }

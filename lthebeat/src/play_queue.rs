@@ -10,7 +10,7 @@ use crate::cyclic_cursor_vec::CyclicCursorVec;
 use crate::play_queue::media_item::MediaItem;
 use async_lock::RwLock;
 use async_ringbuf::AsyncHeapProd;
-use async_ringbuf::traits::AsyncProducer;
+use async_ringbuf::traits::{AsyncProducer, Consumer};
 use gpui::{App, AsyncApp, Entity, Global};
 use rand::random_range;
 use smol::io::AsyncSeekExt;
@@ -206,6 +206,18 @@ impl PlayQueue {
         played_items.set_current(new_position);
         // Skip back again because the play thread will call next() on the current item
         played_items.prev();
+
+        let mut faucet_queue_borrow = self.faucet_queue.write_blocking();
+        faucet_queue_borrow.clear();
+
+        (self.reset_faucet)();
+    }
+
+    pub fn clear(&mut self) {
+        self.shown_items.clear();
+
+        let mut played_items = self.played_items.write_blocking();
+        played_items.clear();
 
         let mut faucet_queue_borrow = self.faucet_queue.write_blocking();
         faucet_queue_borrow.clear();

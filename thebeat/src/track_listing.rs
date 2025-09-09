@@ -120,6 +120,9 @@ impl RenderOnce for TrackListing {
 }
 
 fn play_all(database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>, cx: &mut App) {
+    let play_queue = cx.global_mut::<PlayQueue>();
+    play_queue.clear();
+
     enqueue_all(database_query, cx);
 }
 
