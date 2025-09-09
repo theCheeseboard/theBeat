@@ -225,6 +225,24 @@ impl PlayQueue {
         (self.reset_faucet)();
     }
 
+    pub fn remove_item(&mut self, item: Entity<MediaItem>) {
+        self.shown_items
+            .retain(|i| i.entity_id() != item.entity_id());
+
+        let mut played_items = self.played_items.write_blocking();
+        played_items.retain(|i| i.entity_id() != item.entity_id());
+
+        let mut faucet_queue_borrow = self.faucet_queue.write_blocking();
+        let flush_required = faucet_queue_borrow
+            .first()
+            .map(|i| i.associated_item.entity_id() == item.entity_id())
+            .unwrap_or(false);
+        faucet_queue_borrow.retain(|i| i.associated_item.entity_id() != item.entity_id());
+        if flush_required {
+            (self.reset_faucet)();
+        }
+    }
+
     pub fn seek_to_position(&mut self, position: Duration) {
         let mut faucet_queue_borrow = self.faucet_queue.write_blocking();
         if let Some(queue_item) = faucet_queue_borrow.first_mut() {

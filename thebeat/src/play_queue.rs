@@ -57,12 +57,43 @@ impl RenderOnce for PlayQueue {
                     .flex_grow()
                     .flex()
                     .flex_col()
+                    .with_context_menu([
+                        ContextMenuItem::separator()
+                            .label(tr!("QUEUE_CONTEXT_MENU_TITLE", "For Queue"))
+                            .build(),
+                        ContextMenuItem::menu_item()
+                            .label(tr!("QUEUE_CONTEXT_MENU_CLEAR", "Clear Queue"))
+                            .icon("edit-delete")
+                            .on_triggered(|_, _, cx| {
+                                let play_queue = cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                play_queue.clear();
+                            })
+                            .build(),
+                    ])
                     .child(
                         list(list_state.clone(), move |i, _, cx| {
                             let theme = cx.global::<Theme>();
+
+                            let queue_context_menu_items = [
+                                ContextMenuItem::separator()
+                                    .label(tr!("QUEUE_CONTEXT_MENU_TITLE"))
+                                    .build(),
+                                ContextMenuItem::menu_item()
+                                    .label(tr!("QUEUE_CONTEXT_MENU_CLEAR"))
+                                    .icon("edit-delete")
+                                    .on_triggered(|_, _, cx| {
+                                        let play_queue =
+                                            cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                        play_queue.clear();
+                                    })
+                                    .build(),
+                            ];
+
                             match display_queue.get(i).unwrap().clone() {
                                 DisplayQueueItem::SingleItemGroup(item_entity) => {
+                                    let item_entity_2 = item_entity.clone();
                                     let item = item_entity.read(cx);
+                                    let item_title = item.meta.get_title();
 
                                     let cover = item
                                         .meta
@@ -110,7 +141,7 @@ impl RenderOnce for PlayQueue {
                                                 .flex()
                                                 .flex_col()
                                                 .gap(px(3.))
-                                                .child(item.meta.get_title())
+                                                .child(item_title.clone())
                                                 .child(
                                                     div()
                                                         .text_color(theme.foreground.disabled())
@@ -123,10 +154,25 @@ impl RenderOnce for PlayQueue {
                                                 cx.global_mut::<lthebeat::play_queue::PlayQueue>();
                                             play_queue.skip_to_item(item_entity.clone());
                                         })
+                                        .with_context_menu([
+                                            ContextMenuItem::separator()
+                                                .label(tr!("QUEUE_ITEM_CONTEXT_MENU_TITLE", "For {{track}}", track:quote=item_title))
+                                                .build(),
+                                            ContextMenuItem::menu_item()
+                                                .label(tr!("QUEUE_ITEM_CONTEXT_MENU_REMOVE", "Remove from Queue"))
+                                                .icon("edit-delete")
+                                                .on_triggered(move |_, _, cx| {
+                                                    let play_queue = cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                                    play_queue.remove_item(item_entity_2.clone());
+                                                })
+                                                .build(),
+                                        ].into_iter().chain(queue_context_menu_items))
                                         .into_any_element()
                                 }
                                 DisplayQueueItem::GroupItem(item_entity) => {
+                                    let item_entity_2 = item_entity.clone();
                                     let item = item_entity.read(cx);
+                                    let item_title = item.meta.get_title();
 
                                     div()
                                         .id(ElementId::from(i))
@@ -165,6 +211,19 @@ impl RenderOnce for PlayQueue {
                                                 cx.global_mut::<lthebeat::play_queue::PlayQueue>();
                                             play_queue.skip_to_item(item_entity.clone());
                                         })
+                                        .with_context_menu([
+                                            ContextMenuItem::separator()
+                                                .label(tr!("QUEUE_ITEM_CONTEXT_MENU_TITLE", track:quote=item_title))
+                                                .build(),
+                                            ContextMenuItem::menu_item()
+                                                .label(tr!("QUEUE_ITEM_CONTEXT_MENU_REMOVE"))
+                                                .icon("edit-delete")
+                                                .on_triggered(move |_, _, cx| {
+                                                    let play_queue = cx.global_mut::<lthebeat::play_queue::PlayQueue>();
+                                                    play_queue.remove_item(item_entity_2.clone());
+                                                })
+                                                .build(),
+                                        ].into_iter().chain(queue_context_menu_items))
                                         .into_any_element()
                                 }
                                 DisplayQueueItem::GroupHeader(item_entity) => {
@@ -219,25 +278,13 @@ impl RenderOnce for PlayQueue {
                                                 cx.global_mut::<lthebeat::play_queue::PlayQueue>();
                                             play_queue.skip_to_item(item_entity.clone());
                                         })
+                                        .with_context_menu(queue_context_menu_items)
                                         .into_any_element()
                                 }
                             }
                         })
                         .flex_grow(),
-                    )
-                    .with_context_menu([
-                        ContextMenuItem::separator()
-                            .label(tr!("QUEUE_CONTEXT_MENU_TITLE", "For Queue"))
-                            .build(),
-                        ContextMenuItem::menu_item()
-                            .label(tr!("QUEUE_CONTEXT_MENU_CLEAR", "Clear Queue"))
-                            .icon("edit-delete")
-                            .on_triggered(|_, _, cx| {
-                                let play_queue = cx.global_mut::<lthebeat::play_queue::PlayQueue>();
-                                play_queue.clear();
-                            })
-                            .build(),
-                    ]),
+                    ),
             );
         div.style().refine(&self.style);
 

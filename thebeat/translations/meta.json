@@ -115,13 +115,25 @@
   },
   "QUEUE_CONTEXT_MENU_CLEAR": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:233",
+    "definedIn": "src/play_queue.rs:65",
     "plural": false,
     "description": null
   },
   "QUEUE_CONTEXT_MENU_TITLE": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:230",
+    "definedIn": "src/play_queue.rs:62",
+    "plural": false,
+    "description": null
+  },
+  "QUEUE_ITEM_CONTEXT_MENU_REMOVE": {
+    "context": "play_queue.rs",
+    "definedIn": "src/play_queue.rs:162",
+    "plural": false,
+    "description": null
+  },
+  "QUEUE_ITEM_CONTEXT_MENU_TITLE": {
+    "context": "play_queue.rs",
+    "definedIn": "src/play_queue.rs:159",
     "plural": false,
     "description": null
   },
@@ -175,13 +187,13 @@
   },
   "UNKNOWN_ALBUM": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:200",
+    "definedIn": "src/play_queue.rs:259",
     "plural": false,
     "description": null
   },
   "UNKNOWN_ARTIST": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:208",
+    "definedIn": "src/play_queue.rs:267",
     "plural": false,
     "description": null
   },

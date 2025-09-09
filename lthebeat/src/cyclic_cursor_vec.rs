@@ -58,14 +58,28 @@ impl<T> CyclicCursorVec<T> {
         self.vec.push(item);
     }
 
-    pub fn remove(&mut self, index: usize) -> T {
-        self.vec.remove(index);
-        todo!("Ensure current_index is not out of bounds")
-    }
-
     pub fn insert(&mut self, index: usize, item: T) {
         self.vec.insert(index, item);
-        todo!("Ensure current_index is not out of bounds")
+        if self.current_index >= index {
+            self.current_index += 1;
+        }
+    }
+
+    pub fn retain<F>(&mut self, mut f: F)
+    where
+        F: FnMut(&T) -> bool,
+    {
+        let mut i = 0;
+        while i < self.vec.len() {
+            if f(&self.vec[i]) {
+                i += 1;
+            } else {
+                self.vec.remove(i);
+                if self.current_index >= i && self.current_index > 0 {
+                    self.current_index -= 1;
+                }
+            }
+        }
     }
 
     pub fn clear(&mut self) {
