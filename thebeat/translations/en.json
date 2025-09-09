@@ -20,6 +20,8 @@
   "PLAYLISTS_BUTTON": "Playlists",
   "QUEUE_CONTEXT_MENU_CLEAR": "Clear Queue",
   "QUEUE_CONTEXT_MENU_TITLE": "For Queue",
+  "QUEUE_EMPTY_MESSAGE": "Select a track or drop something here!",
+  "QUEUE_EMPTY_TITLE": "Nothing here!",
   "QUEUE_ITEM_CONTEXT_MENU_REMOVE": "Remove from Queue",
   "QUEUE_ITEM_CONTEXT_MENU_TITLE": "For {{track}}",
   "QUEUE_TITLE": "Queue",

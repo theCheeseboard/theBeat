@@ -115,31 +115,43 @@
   },
   "QUEUE_CONTEXT_MENU_CLEAR": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:65",
+    "definedIn": "src/play_queue.rs:78",
     "plural": false,
     "description": null
   },
   "QUEUE_CONTEXT_MENU_TITLE": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:62",
+    "definedIn": "src/play_queue.rs:75",
+    "plural": false,
+    "description": null
+  },
+  "QUEUE_EMPTY_MESSAGE": {
+    "context": "play_queue.rs",
+    "definedIn": "src/play_queue.rs:69",
+    "plural": false,
+    "description": null
+  },
+  "QUEUE_EMPTY_TITLE": {
+    "context": "play_queue.rs",
+    "definedIn": "src/play_queue.rs:68",
     "plural": false,
     "description": null
   },
   "QUEUE_ITEM_CONTEXT_MENU_REMOVE": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:162",
+    "definedIn": "src/play_queue.rs:174",
     "plural": false,
     "description": null
   },
   "QUEUE_ITEM_CONTEXT_MENU_TITLE": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:159",
+    "definedIn": "src/play_queue.rs:171",
     "plural": false,
     "description": null
   },
   "QUEUE_TITLE": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:50",
+    "definedIn": "src/play_queue.rs:54",
     "plural": false,
     "description": null
   },
@@ -187,13 +199,13 @@
   },
   "UNKNOWN_ALBUM": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:259",
+    "definedIn": "src/play_queue.rs:271",
     "plural": false,
     "description": null
   },
   "UNKNOWN_ARTIST": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:267",
+    "definedIn": "src/play_queue.rs:279",
     "plural": false,
     "description": null
   },
