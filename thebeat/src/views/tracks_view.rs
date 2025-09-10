@@ -10,8 +10,8 @@ use contemporary::styling::theme::Theme;
 use gpui::prelude::FluentBuilder;
 use gpui::private::anyhow;
 use gpui::{
-    App, AppContext, AsyncApp, BorrowAppContext, Context, Entity, IntoElement, ParentElement,
-    Render, Styled, Subscription, WeakEntity, Window, div, px, uniform_list,
+    App, AppContext, AsyncApp, BorrowAppContext, ClickEvent, Context, Entity, IntoElement,
+    ParentElement, Render, Styled, Subscription, WeakEntity, Window, div, px, uniform_list,
 };
 use lthebeat::audio_library::database::Database;
 use lthebeat::audio_library::database_query::DatabaseQuery;
@@ -22,11 +22,15 @@ use std::rc::Rc;
 
 pub struct TracksView {
     database_subscription: Subscription,
+    on_setup_button_click: Rc<Box<dyn Fn(&ClickEvent, &mut Window, &mut App) + 'static>>,
     tracks_query: Option<Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>>,
 }
 
 impl TracksView {
-    pub fn new(cx: &mut App) -> Entity<Self> {
+    pub fn new(
+        on_setup_button_click: Rc<Box<dyn Fn(&ClickEvent, &mut Window, &mut App) + 'static>>,
+        cx: &mut App,
+    ) -> Entity<Self> {
         cx.new(|cx| {
             // The database is set as a global after the window is initialized, so this will
             // always run after the window is initialized.
@@ -52,6 +56,7 @@ impl TracksView {
 
             TracksView {
                 database_subscription,
+                on_setup_button_click,
                 tracks_query: None,
             }
         })
@@ -118,7 +123,14 @@ impl Render for TracksView {
                             _ => div().child(spinner()).into_any_element(),
                         })
                 },
-                |david| david.child(database_setup_interstitial()),
+                |david| {
+                    let setup_button_click = self.on_setup_button_click.clone();
+                    david.child(database_setup_interstitial().on_setup_button_click(
+                        move |event, window, cx| {
+                            setup_button_click(event, window, cx);
+                        },
+                    ))
+                },
             )
     }
 }

@@ -11,6 +11,7 @@ contemporary = { workspace = true }
 cntp_i18n = { workspace = true }
 cntp_icon_tool_macros = { workspace = true }
 lthebeat = { path = "../lthebeat" }
+directories = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 

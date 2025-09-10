@@ -20,7 +20,7 @@ use sqlx::sqlite::{
     SqliteArguments, SqliteConnectOptions, SqliteJournalMode, SqlitePoolOptions, SqliteRow,
     SqliteSynchronous,
 };
-use sqlx::{Arguments, Error};
+use sqlx::{Acquire, Arguments, Error};
 use sqlx::{Executor, Row, SqlitePool};
 use std::cell::RefCell;
 use std::fs::{metadata, remove_dir_all};
@@ -200,6 +200,53 @@ impl Database {
         };
 
         scan_file_into_pool(pool, path, cx).await.unwrap();
+    }
+
+    pub async fn get_scan_directories(&self) -> Vec<String> {
+        let Some(pool) = &self.pool else {
+            return Vec::new();
+        };
+
+        let mut scans = Vec::new();
+        let mut scans_query = sqlx::query("SELECT path FROM scans").fetch(pool);
+        while let Some(Ok(scan)) = scans_query.next().await {
+            let path = scan.get::<String, _>("path");
+            scans.push(path)
+        }
+        scans
+    }
+
+    pub async fn set_scan_directories(
+        &mut self,
+        paths: &Vec<String>,
+        cx: &mut App,
+    ) -> Result<(), Error> {
+        let Some(pool) = &self.pool else {
+            return Ok(());
+        };
+
+        let mut transaction = pool.begin().await?;
+
+        sqlx::query("DELETE FROM scans")
+            .execute(&mut *transaction)
+            .await?;
+
+        for path in paths {
+            sqlx::query("INSERT INTO scans(path) VALUES(?)")
+                .bind(path)
+                .execute(&mut *transaction)
+                .await?;
+        }
+
+        transaction.commit().await?;
+
+        if paths.is_empty() {
+            self.update_library_is_set_up(cx).await;
+        } else {
+            // We are guaranteed to have a library that is set up
+            self.is_library_set_up = true;
+        }
+        Ok(())
     }
 
     pub fn query_all_tracks<'this, 'future: 'this>(

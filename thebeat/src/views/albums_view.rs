@@ -6,13 +6,14 @@ use contemporary::components::pager::pager;
 use contemporary::styling::theme::Theme;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    App, AppContext, Context, Entity, InteractiveElement, IntoElement, ParentElement, Render,
-    StatefulInteractiveElement, Styled, Window, div,
+    App, AppContext, ClickEvent, Context, Entity, InteractiveElement, IntoElement, ParentElement,
+    Render, StatefulInteractiveElement, Styled, Window, div,
 };
 use lthebeat::audio_library::album::Album;
 use lthebeat::audio_library::database::Database;
 use smol::io::AsyncReadExt;
 use std::ops::Deref;
+use std::rc::Rc;
 
 mod album_library;
 mod individual_album_view;
@@ -20,11 +21,15 @@ mod individual_album_view;
 pub struct AlbumsView {
     album_library: Entity<AlbumLibrary>,
     individual_album_view: Option<Entity<IndividualAlbumView>>,
+    on_setup_button_click: Rc<Box<dyn Fn(&ClickEvent, &mut Window, &mut App) + 'static>>,
     in_album_view: bool,
 }
 
 impl AlbumsView {
-    pub fn new(cx: &mut App) -> Entity<Self> {
+    pub fn new(
+        on_setup_button_click: Rc<Box<dyn Fn(&ClickEvent, &mut Window, &mut App) + 'static>>,
+        cx: &mut App,
+    ) -> Entity<Self> {
         cx.new(|cx| {
             let on_album_click_listener =
                 cx.listener(|this: &mut AlbumsView, album: &Entity<Album>, _, cx| {
@@ -45,6 +50,7 @@ impl AlbumsView {
             AlbumsView {
                 album_library: AlbumLibrary::new(Box::new(on_album_click_listener), cx),
                 individual_album_view: None,
+                on_setup_button_click,
                 in_album_view: false,
             }
         })
@@ -72,7 +78,14 @@ impl Render for AlbumsView {
                         ),
                 )
             },
-            |david| david.child(database_setup_interstitial()),
+            |david| {
+                let setup_button_click = self.on_setup_button_click.clone();
+                david.child(database_setup_interstitial().on_setup_button_click(
+                    move |event, window, cx| {
+                        setup_button_click(event, window, cx);
+                    },
+                ))
+            },
         )
     }
 }

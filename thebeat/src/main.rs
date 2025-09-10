@@ -12,8 +12,8 @@ mod transport_controls;
 mod views;
 
 use crate::actions::{
-    OpenFileAction, OpenUrlAction, PlayPauseAction, SkipNextAction, SkipPreviousAction,
-    register_actions,
+    DatabaseSetupAction, OpenFileAction, OpenUrlAction, PlayPauseAction, SkipNextAction,
+    SkipPreviousAction, register_actions,
 };
 use crate::main_window::MainWindow;
 use cntp_i18n::{I18N_MANAGER, tr, tr_load};
@@ -30,6 +30,7 @@ use lthebeat::audio_processing::output_drivers::OutputDevice;
 use lthebeat::audio_processing::output_drivers::cpal_driver::cpal_default_output_device;
 use lthebeat::play_queue::PlayQueue;
 use smol_macros::main;
+use std::any::TypeId;
 use std::rc::Rc;
 
 fn mane() {
@@ -59,10 +60,18 @@ fn mane() {
                 let window = MainWindow::new(cx);
                 let weak_window = window.downgrade();
                 let weak_windew = window.downgrade();
+                let weak_windaw = window.downgrade();
 
                 cx.on_action(move |_: &OpenUrlAction, cx| {
                     weak_windew.upgrade().unwrap().update(cx, |window, cx| {
                         window.url_dialog_open(true);
+                        cx.notify()
+                    })
+                });
+
+                cx.on_action(move |_: &DatabaseSetupAction, cx| {
+                    weak_windaw.upgrade().unwrap().update(cx, |window, cx| {
+                        window.database_setup_surface_open(true);
                         cx.notify()
                     })
                 });
@@ -97,6 +106,11 @@ fn mane() {
                                         MenuItem::action(
                                             tr!("FILE_OPEN_URL", "Open URL"),
                                             OpenUrlAction,
+                                        ),
+                                        MenuItem::separator(),
+                                        MenuItem::action(
+                                            tr!("FILE_DATABASE_SETUP", "Library Setup..."),
+                                            DatabaseSetupAction,
                                         ),
                                     ],
                                 },

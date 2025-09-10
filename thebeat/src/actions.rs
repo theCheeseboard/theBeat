@@ -11,7 +11,8 @@ actions!(
         OpenUrlAction,
         PlayPauseAction,
         SkipNextAction,
-        SkipPreviousAction
+        SkipPreviousAction,
+        DatabaseSetupAction,
     ]
 );
 

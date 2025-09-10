@@ -2,6 +2,7 @@ use crate::OpenFileAction;
 use crate::OpenUrlAction;
 use crate::SkipNextAction;
 use crate::SkipPreviousAction;
+use crate::actions::DatabaseSetupAction;
 use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlists, Tracks};
 use crate::play_queue::play_queue;
 use crate::transport_controls::TransportControls;
@@ -17,9 +18,10 @@ use contemporary::components::pager::slide_horizontal_animation::SlideHorizontal
 use contemporary::styling::theme::Theme;
 use contemporary::surface::surface;
 use gpui::{
-    App, AppContext, Context, Entity, InteractiveElement, IntoElement, Menu, MenuItem,
+    App, AppContext, ClickEvent, Context, Entity, InteractiveElement, IntoElement, Menu, MenuItem,
     ParentElement, Render, Styled, Window, div, px,
 };
+use std::rc::Rc;
 
 pub struct MainSurface {
     application_menu: Entity<ApplicationMenu>,
@@ -54,7 +56,10 @@ impl MainSurfaceTab {
 }
 
 impl MainSurface {
-    pub fn new(cx: &mut App) -> Entity<MainSurface> {
+    pub fn new(
+        on_setup_button_click: Rc<Box<dyn Fn(&ClickEvent, &mut Window, &mut App) + 'static>>,
+        cx: &mut App,
+    ) -> Entity<MainSurface> {
         cx.new(|cx| MainSurface {
             application_menu: ApplicationMenu::new(
                 cx,
@@ -66,12 +71,14 @@ impl MainSurface {
                         MenuItem::separator(),
                         MenuItem::action(tr!("PLAYBACK_SKIP_PREVIOUS"), SkipPreviousAction),
                         MenuItem::action(tr!("PLAYBACK_SKIP_NEXT"), SkipNextAction),
+                        MenuItem::separator(),
+                        MenuItem::action(tr!("FILE_DATABASE_SETUP"), DatabaseSetupAction),
                     ],
                 },
             ),
             selected_tab: Tracks,
-            tracks_view: TracksView::new(cx),
-            albums_view: AlbumsView::new(cx),
+            tracks_view: TracksView::new(on_setup_button_click.clone(), cx),
+            albums_view: AlbumsView::new(on_setup_button_click, cx),
             other_sources_view: OtherSourcesView::new(cx),
             transport_controls: TransportControls::new(cx),
         })
@@ -79,7 +86,7 @@ impl MainSurface {
 }
 
 impl Render for MainSurface {
-    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let theme = cx.global::<Theme>();
 
         surface()
