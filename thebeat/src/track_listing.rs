@@ -1,13 +1,12 @@
 use cntp_i18n::{tr, trn};
 use contemporary::components::button::button;
-use contemporary::components::icon::icon;
 use contemporary::components::icon_text::icon_text;
 use contemporary::components::layer::layer;
 use contemporary::components::subtitle::subtitle;
 use gpui::private::anyhow;
 use gpui::{
-    App, BorrowAppContext, Entity, InteractiveElement, IntoElement, ParentElement, RenderOnce,
-    Styled, Window, div, px, uniform_list,
+    App, BorrowAppContext, InteractiveElement, IntoElement, ParentElement, RenderOnce, Styled,
+    Window, div, px, uniform_list,
 };
 use lthebeat::audio_library::database_query::DatabaseQuery;
 use lthebeat::audio_library::track::Track;
@@ -32,6 +31,7 @@ impl RenderOnce for TrackListing {
         let database_query_clone = self.database_query.clone();
         let database_query_clone_2 = self.database_query.clone();
         let database_query_clone_3 = self.database_query.clone();
+        let database_query_clone_4 = self.database_query.clone();
         let track_count = self.database_query.borrow().as_ref().unwrap().count();
         div()
             .id("track-listing")
@@ -75,12 +75,18 @@ impl RenderOnce for TrackListing {
                                         enqueue_all(database_query_clone_3.clone(), cx);
                                     }),
                             )
-                            .child(button("shuffle-all-button").flat().justify_start().child(
-                                icon_text(
-                                    "media-playlist-shuffle".into(),
-                                    tr!("TRACK_LISTING_SHUFFLE_ALL", "Shuffle All").into(),
-                                ),
-                            ))
+                            .child(
+                                button("shuffle-all-button")
+                                    .flat()
+                                    .justify_start()
+                                    .child(icon_text(
+                                        "media-playlist-shuffle".into(),
+                                        tr!("TRACK_LISTING_SHUFFLE_ALL", "Shuffle All").into(),
+                                    ))
+                                    .on_click(move |_, _, cx| {
+                                        shuffle_all(database_query_clone_4.clone(), cx);
+                                    }),
+                            )
                             .child(
                                 button("burn-button")
                                     .flat()
@@ -117,6 +123,15 @@ impl RenderOnce for TrackListing {
             .h_full()
             .w_full()
     }
+}
+
+fn shuffle_all(database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>, cx: &mut App) {
+    play_all(database_query, cx);
+
+    cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
+        play_queue.shuffle(true, cx);
+        play_queue.skip_next();
+    });
 }
 
 fn play_all(database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>, cx: &mut App) {

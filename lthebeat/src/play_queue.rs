@@ -14,7 +14,8 @@ use async_lock::RwLock;
 use async_ringbuf::AsyncHeapProd;
 use async_ringbuf::traits::{AsyncProducer, Consumer};
 use gpui::{App, AppContext, AsyncApp, Entity, Global};
-use rand::random_range;
+use rand::seq::SliceRandom;
+use rand::{random_range, rng, thread_rng};
 use smol::io::AsyncSeekExt;
 use std::sync::Arc;
 use std::time::Duration;
@@ -273,8 +274,36 @@ impl PlayQueue {
         self.evict_faucets(cx);
     }
 
-    pub fn shuffle(&mut self, shuffle: bool) {
+    pub fn shuffle(&mut self, shuffle: bool, cx: &mut App) {
         self.shuffle = shuffle;
+
+        let playing_track = playing_track(cx);
+        if shuffle {
+            let mut played_items = self.played_items.write_blocking();
+            played_items.vec.shuffle(&mut rng());
+
+            let playing_track_index = playing_track
+                .and_then(|playing_track| {
+                    played_items
+                        .vec
+                        .iter()
+                        .position(|i| i.entity_id() == playing_track.entity_id())
+                })
+                .unwrap_or_default();
+            played_items.set_current(playing_track_index)
+        } else {
+            let playing_track_index = playing_track
+                .and_then(|playing_track| {
+                    self.shown_items
+                        .iter()
+                        .position(|i| i.entity_id() == playing_track.entity_id())
+                })
+                .unwrap_or_default();
+            let mut played_items = self.played_items.write_blocking();
+            played_items.set_vec(self.shown_items.clone(), playing_track_index)
+        }
+
+        self.evict_faucets(cx);
     }
 
     fn evict_faucets(&mut self, cx: &mut App) {

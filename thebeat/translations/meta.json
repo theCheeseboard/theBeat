@@ -169,7 +169,7 @@
   },
   "TRACK_LISTING_BURN": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:90",
+    "definedIn": "src/track_listing.rs:96",
     "plural": false,
     "description": null
   },
@@ -187,13 +187,13 @@
   },
   "TRACK_LISTING_SHUFFLE_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:81",
+    "definedIn": "src/track_listing.rs:84",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_TRACK_COUNT": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:96",
+    "definedIn": "src/track_listing.rs:102",
     "plural": true,
     "description": null
   },

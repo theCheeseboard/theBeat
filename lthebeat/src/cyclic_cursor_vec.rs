@@ -105,4 +105,9 @@ impl<T> CyclicCursorVec<T> {
     pub fn repeat_one(&mut self, repeat: bool) {
         self.repeat_one = repeat;
     }
+
+    pub fn set_vec(&mut self, vec: Vec<T>, current_index: usize) {
+        self.vec = vec;
+        self.current_index = current_index;
+    }
 }

@@ -103,7 +103,7 @@ impl Render for TransportControls {
                             .checked_when(play_queue.shuffle)
                             .on_click(|_, _, cx| {
                                 cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
-                                    play_queue.shuffle(!play_queue.shuffle)
+                                    play_queue.shuffle(!play_queue.shuffle, cx)
                                 })
                             }),
                     )
