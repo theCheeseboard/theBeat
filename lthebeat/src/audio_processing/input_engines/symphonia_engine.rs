@@ -74,6 +74,7 @@ impl SymphoniaEngine {
             let mut file_meta = AudioMetadata {
                 url: Some(url),
                 duration: track_duration,
+                associated_item: associated_track.clone(),
                 ..AudioMetadata::default()
             };
             if let Some(probe_meta) = probe_result

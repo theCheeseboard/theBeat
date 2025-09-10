@@ -6,8 +6,8 @@ use contemporary::components::layer::layer;
 use contemporary::components::subtitle::subtitle;
 use gpui::private::anyhow;
 use gpui::{
-    App, Entity, InteractiveElement, IntoElement, ParentElement, RenderOnce, Styled, Window, div,
-    px, uniform_list,
+    App, BorrowAppContext, Entity, InteractiveElement, IntoElement, ParentElement, RenderOnce,
+    Styled, Window, div, px, uniform_list,
 };
 use lthebeat::audio_library::database_query::DatabaseQuery;
 use lthebeat::audio_library::track::Track;
@@ -134,12 +134,19 @@ fn enqueue_all(database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>
         .iter(cx)
         .collect();
 
-    for track in track_list {
-        let Track::Ok { url, .. } = track.read(cx) else {
-            continue;
-        };
-        let item = MediaItem::new(url.clone(), cx);
-        let play_queue = cx.global_mut::<PlayQueue>();
-        play_queue.add_item(item);
-    }
+    let url_list: Vec<_> = track_list
+        .iter()
+        .map(|track| track.read(cx))
+        .filter_map(|track| match track {
+            Track::Ok { url, .. } => Some(url.clone()),
+            _ => None,
+        })
+        .collect();
+
+    cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
+        for url in url_list {
+            let media_item = MediaItem::new(url, cx);
+            play_queue.add_item(media_item, cx);
+        }
+    })
 }

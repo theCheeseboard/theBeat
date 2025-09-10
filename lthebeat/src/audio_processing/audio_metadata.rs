@@ -1,17 +1,18 @@
+use crate::play_queue::media_item::MediaItem;
 use cntp_i18n::tr;
-use gpui::{ImageSource, RenderImage, Rgba, img};
+use gpui::{Entity, RenderImage, Rgba};
 use image::{EncodableLayout, Frame, ImageReader, Pixel, RgbaImage};
 use smallvec::smallvec;
-use std::cell::LazyCell;
 use std::io::Cursor;
 use std::path::Path;
-use std::sync::{Arc, LazyLock, RwLock};
+use std::sync::{Arc, RwLock};
 use std::time::Duration;
 use url::Url;
 
 #[derive(Default, Clone, Debug)]
 pub struct AudioMetadata {
     pub url: Option<Url>,
+    pub associated_item: Option<Entity<MediaItem>>,
     pub title: Option<String>,
     pub artist: Option<String>,
     pub album: Option<String>,

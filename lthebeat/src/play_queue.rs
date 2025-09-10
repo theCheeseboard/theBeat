@@ -1,5 +1,7 @@
 pub mod media_item;
 
+use crate::audio_processing::audio_controller::AudioController;
+use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::audio_processing::audio_pipeline::duplicator::Duplicator;
 use crate::audio_processing::audio_pipeline::faucet::{Faucet, create_faucet};
 use crate::audio_processing::audio_pipeline::{
@@ -11,7 +13,7 @@ use crate::play_queue::media_item::MediaItem;
 use async_lock::RwLock;
 use async_ringbuf::AsyncHeapProd;
 use async_ringbuf::traits::{AsyncProducer, Consumer};
-use gpui::{App, AsyncApp, Entity, Global};
+use gpui::{App, AppContext, AsyncApp, Entity, Global};
 use rand::random_range;
 use smol::io::AsyncSeekExt;
 use std::sync::Arc;
@@ -26,11 +28,12 @@ struct FaucetQueueItem {
 pub struct PlayQueue {
     pub shown_items: Vec<Entity<MediaItem>>,
     played_items: Arc<RwLock<CyclicCursorVec<Entity<MediaItem>>>>,
-    shuffle: bool,
     faucet_queue: Arc<RwLock<Vec<FaucetQueueItem>>>,
     faucet_input: Arc<RwLock<AsyncHeapProd<PipelineSampleResult>>>,
     reset_faucet: Box<dyn Fn() + Send + Sync>,
     duplicator: Duplicator,
+
+    pub shuffle: bool,
 }
 
 impl PlayQueue {
@@ -49,11 +52,11 @@ impl PlayQueue {
         let play_queue = Self {
             shown_items: Vec::new(),
             played_items: played_items.clone(),
-            shuffle: false,
             faucet_queue: faucet_queue.clone(),
             faucet_input: faucet_input.clone(),
             reset_faucet,
             duplicator,
+            shuffle: false,
         };
 
         cx.spawn(async move |cx: &mut AsyncApp| {
@@ -127,7 +130,7 @@ impl PlayQueue {
         play_queue
     }
 
-    pub fn add_item(&mut self, item: Entity<MediaItem>) {
+    pub fn add_item(&mut self, item: Entity<MediaItem>, cx: &mut App) {
         self.shown_items.push(item.clone());
 
         let mut played_items = self.played_items.write_blocking();
@@ -138,29 +141,9 @@ impl PlayQueue {
         } else {
             played_items.push(item);
         }
+        drop(played_items);
 
-        let mut faucet_queue_borrow = self.faucet_queue.write_blocking();
-
-        let current_item = played_items.current();
-        if !faucet_queue_borrow.is_empty() {
-            if faucet_queue_borrow
-                .first()
-                .unwrap()
-                .associated_item
-                .entity_id()
-                != current_item.entity_id()
-            {
-                // We've already started streaming the next item, so reset everything and jump straight to the next item
-                faucet_queue_borrow.clear();
-
-                (self.reset_faucet)();
-            } else {
-                // Enqueue new faucets
-                while faucet_queue_borrow.len() >= 2 {
-                    faucet_queue_borrow.remove(1);
-                }
-            }
-        }
+        self.evict_faucets(cx);
     }
 
     pub fn open_faucet(&mut self) -> Faucet {
@@ -277,6 +260,65 @@ impl PlayQueue {
 
         queue
     }
+
+    pub fn repeat_one(&self) -> bool {
+        self.played_items.read_blocking().repeat_one
+    }
+
+    pub fn set_repeat_one(&mut self, repeat_one: bool, cx: &mut App) {
+        let mut played_items = self.played_items.write_blocking();
+        played_items.repeat_one(repeat_one);
+        drop(played_items);
+
+        self.evict_faucets(cx);
+    }
+
+    pub fn shuffle(&mut self, shuffle: bool) {
+        self.shuffle = shuffle;
+    }
+
+    fn evict_faucets(&mut self, cx: &mut App) {
+        let mut faucet_queue_borrow = self.faucet_queue.write_blocking();
+
+        match playing_track(cx) {
+            Some(current_item) => {
+                if !faucet_queue_borrow.is_empty() {
+                    if faucet_queue_borrow
+                        .first()
+                        .unwrap()
+                        .associated_item
+                        .entity_id()
+                        != current_item.entity_id()
+                    {
+                        // We've already started streaming the next item, so reset everything and jump straight to the next item
+                        faucet_queue_borrow.clear();
+
+                        (self.reset_faucet)();
+                    } else {
+                        // Enqueue new faucets
+                        while faucet_queue_borrow.len() >= 2 {
+                            faucet_queue_borrow.remove(1);
+                        }
+                    }
+                }
+
+                let mut played_items = self.played_items.write_blocking();
+                if let Some(new_position) = played_items
+                    .vec
+                    .iter()
+                    .position(|i| i.entity_id() == current_item.entity_id())
+                {
+                    played_items.set_current(new_position);
+                }
+            }
+            None => {
+                // Enqueue new faucets
+                while faucet_queue_borrow.len() >= 2 {
+                    faucet_queue_borrow.remove(1);
+                }
+            }
+        }
+    }
 }
 
 impl Global for PlayQueue {}
@@ -286,4 +328,9 @@ pub enum DisplayQueueItem {
     SingleItemGroup(Entity<MediaItem>),
     GroupItem(Entity<MediaItem>),
     GroupHeader(Entity<MediaItem>),
+}
+
+fn playing_track(cx: &mut App) -> Option<Entity<MediaItem>> {
+    let audio_controller = cx.global::<AudioController>();
+    audio_controller.current_metadata().associated_item
 }

@@ -9,7 +9,8 @@ use contemporary::window::contemporary_window;
 use gpui::http_client::Url;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    App, AppContext, Context, Entity, IntoElement, ParentElement, Render, Styled, Window, div, px,
+    App, AppContext, BorrowAppContext, Context, Entity, IntoElement, ParentElement, Render, Styled,
+    Window, div, px,
 };
 use lthebeat::play_queue::PlayQueue;
 use lthebeat::play_queue::media_item::MediaItem;
@@ -93,8 +94,9 @@ impl Render for MainWindow {
                             match Url::parse(current_text.to_string().as_str()) {
                                 Ok(url) => {
                                     let item = MediaItem::new(url, cx);
-                                    let play_queue = cx.global_mut::<PlayQueue>();
-                                    play_queue.add_item(item);
+                                    cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
+                                        play_queue.add_item(item, cx);
+                                    });
                                     this.is_url_dialog_open = false;
                                     cx.notify();
                                 }

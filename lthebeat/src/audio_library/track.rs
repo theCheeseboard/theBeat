@@ -6,8 +6,8 @@ use contemporary::components::skeleton::{SkeletonExt, skeleton, skeleton_row};
 use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::{Theme, VariableColor};
 use gpui::{
-    Context, Element, ElementId, InteractiveElement, IntoElement, ParentElement, Render,
-    StatefulInteractiveElement, Styled, Window, div, px,
+    BorrowAppContext, Context, Element, ElementId, InteractiveElement, IntoElement, ParentElement,
+    Render, StatefulInteractiveElement, Styled, Window, div, px,
 };
 use sqlx::sqlite::SqliteRow;
 use sqlx::{Error, Row};
@@ -99,8 +99,9 @@ impl Render for Track {
                     )
                     .on_click(cx.listener(move |_, _, _, cx| {
                         let item = MediaItem::new(url_clone.clone(), cx);
-                        let play_queue = cx.global_mut::<PlayQueue>();
-                        play_queue.add_item(item);
+                        cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
+                            play_queue.add_item(item, cx);
+                        })
                     }))
                     .into_any_element()
             }

@@ -2,6 +2,7 @@
 pub struct CyclicCursorVec<T> {
     pub vec: Vec<T>,
     current_index: usize,
+    pub repeat_one: bool,
 }
 
 impl<T> CyclicCursorVec<T> {
@@ -9,6 +10,7 @@ impl<T> CyclicCursorVec<T> {
         Self {
             vec: Vec::new(),
             current_index: 0,
+            repeat_one: false,
         }
     }
 
@@ -16,6 +18,7 @@ impl<T> CyclicCursorVec<T> {
         Self {
             vec,
             current_index: 0,
+            repeat_one: false,
         }
     }
 
@@ -28,15 +31,19 @@ impl<T> CyclicCursorVec<T> {
     }
 
     pub fn next(&mut self) -> &T {
-        self.current_index = (self.current_index + 1) % self.vec.len();
+        if !self.repeat_one {
+            self.current_index = (self.current_index + 1) % self.vec.len();
+        }
         self.current()
     }
 
     pub fn prev(&mut self) -> &T {
-        if self.current_index == 0 {
-            self.current_index = self.vec.len() - 1;
-        } else {
-            self.current_index -= 1
+        if !self.repeat_one {
+            if self.current_index == 0 {
+                self.current_index = self.vec.len() - 1;
+            } else {
+                self.current_index -= 1
+            }
         }
         self.current()
     }
@@ -46,8 +53,12 @@ impl<T> CyclicCursorVec<T> {
     }
 
     pub fn peek(&self) -> &T {
-        let next_index = (self.current_index + 1) % self.vec.len();
-        &self.vec[next_index]
+        if self.repeat_one {
+            &self.vec[self.current_index]
+        } else {
+            let next_index = (self.current_index + 1) % self.vec.len();
+            &self.vec[next_index]
+        }
     }
 
     pub fn current(&self) -> &T {
@@ -89,5 +100,9 @@ impl<T> CyclicCursorVec<T> {
 
     pub fn len(&self) -> usize {
         self.vec.len()
+    }
+
+    pub fn repeat_one(&mut self, repeat: bool) {
+        self.repeat_one = repeat;
     }
 }

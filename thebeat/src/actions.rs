@@ -42,7 +42,7 @@ fn open_file(_: &OpenFileAction, cx: &mut App) {
             if let Ok(Ok(Some(paths))) = result {
                 for path in paths {
                     let item = MediaItem::new(Url::from_file_path(path.as_path()).unwrap(), cx);
-                    play_queue.add_item(item);
+                    play_queue.add_item(item, cx);
                 }
             }
         })

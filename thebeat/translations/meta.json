@@ -211,19 +211,19 @@
   },
   "URL_OPEN_TEXT": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:78",
+    "definedIn": "src/main_window.rs:79",
     "plural": false,
     "description": null
   },
   "URL_OPEN_TITLE": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:71",
+    "definedIn": "src/main_window.rs:72",
     "plural": false,
     "description": null
   },
   "URL_TEXT_FIELD_PLACEHOLDER": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:34",
+    "definedIn": "src/main_window.rs:35",
     "plural": false,
     "description": null
   }

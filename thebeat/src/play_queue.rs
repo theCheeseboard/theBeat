@@ -11,9 +11,9 @@ use contemporary::styling::theme::{Theme, VariableColor};
 use gpui::http_client::Url;
 use gpui::prelude::FluentBuilder;
 use gpui::{
-    App, ElementId, ExternalPaths, ImageSource, InteractiveElement, IntoElement, ListAlignment,
-    ListState, ParentElement, Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement,
-    Styled, Window, div, img, list, px, rgba,
+    App, BorrowAppContext, ElementId, ExternalPaths, ImageSource, InteractiveElement, IntoElement,
+    ListAlignment, ListState, ParentElement, Refineable, RenderOnce, StatefulInteractiveElement,
+    StyleRefinement, Styled, Window, div, img, list, px, rgba,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::DisplayQueueItem;
@@ -304,9 +304,9 @@ impl RenderOnce for PlayQueue {
                             for path in event.paths() {
                                 let url = Url::from_file_path(path).unwrap();
                                 let item = MediaItem::new(url, cx);
-
-                                let play_queue = cx.global_mut::<lthebeat::play_queue::PlayQueue>();
-                                play_queue.add_item(item);
+                                cx.update_global::<lthebeat::play_queue::PlayQueue, ()>(|play_queue, cx| {
+                                    play_queue.add_item(item, cx);
+                                })
                             }
                         })),
             );

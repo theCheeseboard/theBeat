@@ -99,12 +99,24 @@ impl Render for TransportControls {
                     .child(
                         button("shuffle-button")
                             .flat()
-                            .child(icon("media-playlist-shuffle".into())),
+                            .child(icon("media-playlist-shuffle".into()))
+                            .checked_when(play_queue.shuffle)
+                            .on_click(|_, _, cx| {
+                                cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
+                                    play_queue.shuffle(!play_queue.shuffle)
+                                })
+                            }),
                     )
                     .child(
                         button("repeat-button")
                             .flat()
-                            .child(icon("media-repeat-single".into())),
+                            .child(icon("media-repeat-single".into()))
+                            .checked_when(play_queue.repeat_one())
+                            .on_click(|_, _, cx| {
+                                cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
+                                    play_queue.set_repeat_one(!play_queue.repeat_one(), cx)
+                                })
+                            }),
                     )
                     .child(
                         button("skip-back-button")
