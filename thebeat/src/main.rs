@@ -2,6 +2,7 @@
 #![cfg_attr(all(not(test), target_os = "windows"), windows_subsystem = "windows")]
 
 mod actions;
+mod database_setup;
 mod main_surface;
 mod main_window;
 mod play_queue;

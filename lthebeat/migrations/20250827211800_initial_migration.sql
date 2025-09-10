@@ -1,3 +1,10 @@
+create table scans
+(
+    path TEXT not null
+        constraint scans_pk
+            primary key
+);
+
 create table art
 (
     hash      TEXT not null

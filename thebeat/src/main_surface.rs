@@ -6,6 +6,7 @@ use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlis
 use crate::play_queue::play_queue;
 use crate::transport_controls::TransportControls;
 use crate::views::albums_view::AlbumsView;
+use crate::views::other_sources_view::OtherSourcesView;
 use crate::views::tracks_view::TracksView;
 use cntp_i18n::tr;
 use contemporary::components::application_menu::ApplicationMenu;
@@ -26,6 +27,7 @@ pub struct MainSurface {
 
     tracks_view: Entity<TracksView>,
     albums_view: Entity<AlbumsView>,
+    other_sources_view: Entity<OtherSourcesView>,
 
     transport_controls: Entity<TransportControls>,
 }
@@ -70,6 +72,7 @@ impl MainSurface {
             selected_tab: Tracks,
             tracks_view: TracksView::new(cx),
             albums_view: AlbumsView::new(cx),
+            other_sources_view: OtherSourcesView::new(cx),
             transport_controls: TransportControls::new(cx),
         })
     }
@@ -170,7 +173,9 @@ impl Render for MainSurface {
                                     .animation(SlideHorizontalAnimation::new())
                                     .page(self.tracks_view.clone().into_any_element())
                                     .page(div().into_any_element())
-                                    .page(self.albums_view.clone().into_any_element()),
+                                    .page(self.albums_view.clone().into_any_element())
+                                    .page(div().into_any_element())
+                                    .page(self.other_sources_view.clone().into_any_element()),
                             )
                             .child(play_queue()),
                     )

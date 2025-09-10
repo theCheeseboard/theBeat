@@ -1,3 +1,4 @@
+use crate::database_setup::database_setup_interstitial::database_setup_interstitial;
 use crate::track_listing::track_listing;
 use cntp_i18n::tr;
 use contemporary::components::button::button;
@@ -6,6 +7,7 @@ use contemporary::components::icon_text::icon_text;
 use contemporary::components::interstitial::interstitial;
 use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::Theme;
+use gpui::prelude::FluentBuilder;
 use gpui::private::anyhow;
 use gpui::{
     App, AppContext, AsyncApp, BorrowAppContext, Context, Entity, IntoElement, ParentElement,
@@ -59,6 +61,7 @@ impl TracksView {
 impl Render for TracksView {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let theme = cx.global::<Theme>();
+        let database = cx.global::<Database>();
 
         div()
             .bg(theme.background)
@@ -66,47 +69,56 @@ impl Render for TracksView {
             .h_full()
             .flex()
             .flex_col()
-            .child(
-                grandstand("tracks-grandstand")
-                    .text(tr!("LIBRARY_TRACKS_TITLE", "Tracks in Library"))
-                    .pt(px(36.)),
-            )
-            .child(match self.tracks_query.as_mut() {
-                Some(tracks_query) => match tracks_query.borrow().deref() {
-                    Ok(_) => div()
-                        .flex_grow()
-                        .w_full()
-                        .child(track_listing(tracks_query.clone()))
-                        .into_any_element(),
-                    Err(_) => interstitial()
-                        .w_full()
-                        .h_full()
-                        .icon("view-media-track".into())
-                        .title(tr!("LIBRARY_TRACKS_ERROR", "Unable to load tracks").into())
-                        .message(
-                            tr!(
-                                "LIBRARY_CORRUPT_ERROR_MESSAGE",
-                                "Your library may be corrupt. Try erasing your library."
-                            )
-                            .into(),
-                        )
+            .when_else(
+                database.is_library_set_up,
+                |david| {
+                    david
                         .child(
-                            button("tracks-corrupt-erase-button")
-                                .child(icon_text(
-                                    "view-refresh".into(),
-                                    tr!("LIBRARY_ERASE", "Erase Library").into(),
-                                ))
-                                .destructive()
-                                .on_click(cx.listener(|_, _, _, cx| {
-                                    cx.update_global::<Database, ()>(|database, cx| {
-                                        database.erase(cx);
-                                        database.start_scan(cx);
-                                    });
-                                })),
+                            grandstand("tracks-grandstand")
+                                .text(tr!("LIBRARY_TRACKS_TITLE", "Tracks in Library"))
+                                .pt(px(36.)),
                         )
-                        .into_any_element(),
+                        .child(match self.tracks_query.as_mut() {
+                            Some(tracks_query) => match tracks_query.borrow().deref() {
+                                Ok(_) => div()
+                                    .flex_grow()
+                                    .w_full()
+                                    .child(track_listing(tracks_query.clone()))
+                                    .into_any_element(),
+                                Err(_) => interstitial()
+                                    .w_full()
+                                    .h_full()
+                                    .icon("view-media-track".into())
+                                    .title(
+                                        tr!("LIBRARY_TRACKS_ERROR", "Unable to load tracks").into(),
+                                    )
+                                    .message(
+                                        tr!(
+                                            "LIBRARY_CORRUPT_ERROR_MESSAGE",
+                                            "Your library may be corrupt. Try erasing your library."
+                                        )
+                                        .into(),
+                                    )
+                                    .child(
+                                        button("tracks-corrupt-erase-button")
+                                            .child(icon_text(
+                                                "view-refresh".into(),
+                                                tr!("LIBRARY_ERASE", "Erase Library").into(),
+                                            ))
+                                            .destructive()
+                                            .on_click(cx.listener(|_, _, _, cx| {
+                                                cx.update_global::<Database, ()>(|database, cx| {
+                                                    database.erase(cx);
+                                                    database.start_scan(cx);
+                                                });
+                                            })),
+                                    )
+                                    .into_any_element(),
+                            },
+                            _ => div().child(spinner()).into_any_element(),
+                        })
                 },
-                _ => div().child(spinner()).into_any_element(),
-            })
+                |david| david.child(database_setup_interstitial()),
+            )
     }
 }

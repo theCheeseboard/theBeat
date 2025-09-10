@@ -1,3 +1,4 @@
+use crate::database_setup::database_setup_interstitial::database_setup_interstitial;
 use crate::views::albums_view::album_library::AlbumLibrary;
 use crate::views::albums_view::individual_album_view::IndividualAlbumView;
 use contemporary::components::pager::lift_animation::LiftAnimation;
@@ -6,9 +7,10 @@ use contemporary::styling::theme::Theme;
 use gpui::prelude::FluentBuilder;
 use gpui::{
     App, AppContext, Context, Entity, InteractiveElement, IntoElement, ParentElement, Render,
-    StatefulInteractiveElement, Styled, Window,
+    StatefulInteractiveElement, Styled, Window, div,
 };
 use lthebeat::audio_library::album::Album;
+use lthebeat::audio_library::database::Database;
 use smol::io::AsyncReadExt;
 use std::ops::Deref;
 
@@ -51,16 +53,26 @@ impl AlbumsView {
 
 impl Render for AlbumsView {
     fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
-        pager("albums-view-pager", if self.in_album_view { 1 } else { 0 })
-            .w_full()
-            .h_full()
-            .animation(LiftAnimation::new())
-            .page(self.album_library.clone().into_any_element())
-            .when_some(
-                self.individual_album_view.as_ref(),
-                |pager, individual_album_view| {
-                    pager.page(individual_album_view.clone().into_any_element())
-                },
-            )
+        let database = cx.global::<Database>();
+
+        div().size_full().when_else(
+            database.is_library_set_up,
+            |david| {
+                david.child(
+                    pager("albums-view-pager", if self.in_album_view { 1 } else { 0 })
+                        .w_full()
+                        .h_full()
+                        .animation(LiftAnimation::new())
+                        .page(self.album_library.clone().into_any_element())
+                        .when_some(
+                            self.individual_album_view.as_ref(),
+                            |pager, individual_album_view| {
+                                pager.page(individual_album_view.clone().into_any_element())
+                            },
+                        ),
+                )
+            },
+            |david| david.child(database_setup_interstitial()),
+        )
     }
 }

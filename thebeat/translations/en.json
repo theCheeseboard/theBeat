@@ -1,6 +1,9 @@
 {
   "ALBUMS_BUTTON": "Albums",
   "ARTISTS_BUTTON": "Artists",
+  "DATABASE_SETUP_INTERSTITIAL_BUTTON_TEXT": "Set up library",
+  "DATABASE_SETUP_INTERSTITIAL_MESSAGE": "Set up your library to see your music organised here",
+  "DATABASE_SETUP_INTERSTITIAL_TITLE": "Welcome to theBeat!",
   "FILE_OPEN": "Open",
   "FILE_OPEN_URL": "Open URL",
   "INDIVIDUAL_ALBUM_TITLE": "Tracks in {{album}}",
@@ -14,6 +17,8 @@
   "MENU_FILE": "File",
   "MENU_PLAYBACK": "Playback",
   "OTHER_SOURCES_BUTTON": "Other Sources",
+  "OTHER_SOURCES_UNAVAILABLE_MESSAGE": "There's nothing else to play right now.",
+  "OTHER_SOURCES_UNAVAILABLE_TITLE": "No other sources available",
   "PLAYBACK_PLAY_PAUSE": "Play/Pause",
   "PLAYBACK_SKIP_NEXT": "Skip Next",
   "PLAYBACK_SKIP_PREVIOUS": "Skip Back",

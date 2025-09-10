@@ -1,11 +1,11 @@
-use anyhow::anyhow;
 use crate::audio_library::album::Album;
 use crate::audio_library::database_query::DatabaseQuery;
 use crate::audio_library::track::Track;
 use crate::audio_processing::audio_metadata;
 use crate::audio_processing::input_engines::symphonia_engine::SymphoniaEngine;
+use anyhow::anyhow;
 use async_walkdir::{Filtering, WalkDir};
-use cntp_i18n::tr;
+use cntp_i18n::{tr, trn};
 use contemporary::application::Details;
 use contemporary::jobs::job::JobStatus;
 use contemporary::jobs::job_manager::{JobManager, Jobling};
@@ -16,10 +16,11 @@ use sha2::{Digest, Sha256};
 use smol::fs::File;
 use smol::io::{AsyncReadExt, BufReader};
 use smol::stream::StreamExt;
-use sqlx::Arguments;
 use sqlx::sqlite::{
-    SqliteArguments, SqliteConnectOptions, SqliteJournalMode, SqlitePoolOptions, SqliteSynchronous,
+    SqliteArguments, SqliteConnectOptions, SqliteJournalMode, SqlitePoolOptions, SqliteRow,
+    SqliteSynchronous,
 };
+use sqlx::{Arguments, Error};
 use sqlx::{Executor, Row, SqlitePool};
 use std::cell::RefCell;
 use std::fs::{metadata, remove_dir_all};
@@ -32,13 +33,19 @@ use url::Url;
 
 pub struct Database {
     pool: Option<SqlitePool>,
+    pub is_library_set_up: bool,
 }
 
 impl Database {
     pub async fn new(cx: &mut App) -> anyhow::Result<Self> {
         let library_dir = Self::library_dir(cx);
         let pool = Self::open_library_connection(library_dir).await.ok();
-        Ok(Self { pool })
+        let mut db = Self {
+            pool,
+            is_library_set_up: false,
+        };
+        db.update_library_is_set_up(cx).await;
+        Ok(db)
     }
 
     fn library_dir(cx: &mut App) -> PathBuf {
@@ -64,6 +71,20 @@ impl Database {
         }
 
         Ok(pool)
+    }
+
+    async fn update_library_is_set_up(&mut self, cx: &mut App) {
+        let Some(pool) = &self.pool else {
+            self.is_library_set_up = false;
+            return;
+        };
+
+        self.is_library_set_up = matches!(
+            sqlx::query("SELECT * FROM scans, tracks LIMIT 1")
+                .fetch_optional(pool)
+                .await,
+            Ok(Some(_))
+        )
     }
 
     pub fn erase(&mut self, cx: &mut App) {
@@ -101,45 +122,70 @@ impl Database {
                     cx.notify();
                 })
                 .unwrap();
-            if let Some(user_dir) = UserDirs::new() {
-                // Get the Music directory
-                if let Some(music_dir) = user_dir.audio_dir() {
-                    let mut entries = WalkDir::new(music_dir);
 
-                    loop {
-                        match entries.next().await {
-                            Some(Ok(entry)) => {
-                                if entry.file_type().await.unwrap().is_dir() {
-                                    continue;
-                                }
+            // Search scans
+            let mut scans_query = sqlx::query("SELECT path FROM scans").fetch(&pool);
 
-                                if let Err(e) = scan_file_into_pool(&pool, &entry.path(), cx).await
-                                {
-                                    error!(
-                                        "Failed to scan file: {}: {e:?}",
-                                        entry.path().to_string_lossy()
-                                    );
+            let mut errors_encountered = 0_usize;
+            while let Some(scan) = scans_query.next().await {
+                match scan {
+                    Ok(row) => {
+                        let path = row.get::<String, _>("path");
+                        let mut entries = WalkDir::new(path);
+                        loop {
+                            match entries.next().await {
+                                Some(Ok(entry)) => {
+                                    if entry.file_type().await.unwrap().is_dir() {
+                                        continue;
+                                    }
+
+                                    if let Err(e) =
+                                        scan_file_into_pool(&pool, &entry.path(), cx).await
+                                    {
+                                        error!(
+                                            "Failed to scan file: {}: {e:?}",
+                                            entry.path().to_string_lossy()
+                                        );
+                                    }
                                 }
+                                Some(Err(e)) => {
+                                    error!("Failed to scan file: {e:?}");
+                                    errors_encountered += 1;
+                                    break;
+                                }
+                                None => break,
                             }
-                            Some(Err(e)) => {
-                                eprintln!("error: {}", e);
-                                break;
-                            }
-                            None => break,
                         }
                     }
+                    Err(e) => {
+                        error!("Failed to scan for tracks: {e:?}");
+                    }
                 }
+            }
 
-                job_clone
-                    .update(cx, |_, cx| {
+            job_clone
+                .update(cx, |_, cx| {
+                    if errors_encountered == 0 {
                         job.borrow_mut().update_job_status(
                             tr!("SCAN_JOB_COMPLETE_DESCRIPTION", "Library scan complete").into(),
                             JobStatus::Completed,
                         );
                         cx.notify();
-                    })
-                    .unwrap();
-            }
+                    } else {
+                        job.borrow_mut().update_job_status(
+                            trn!(
+                                "SCAN_JOB_ERROR_DESCRIPTION",
+                                "Library scan complete, but {{count}} error was reported",
+                                "Library scan complete, but {{count}} errors were reported",
+                                count = errors_encountered as isize
+                            )
+                            .into(),
+                            JobStatus::Failed,
+                        );
+                        cx.notify();
+                    }
+                })
+                .unwrap();
         })
         .detach();
 
