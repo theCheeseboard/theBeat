@@ -118,6 +118,7 @@ impl RenderOnce for PlayQueue {
                                                 .id(ElementId::from(i))
                                                 .flex()
                                                 .gap(px(3.))
+                                                .w_full()
                                                 .child(
                                                     div()
                                                         .size(px(48.))
@@ -152,10 +153,12 @@ impl RenderOnce for PlayQueue {
                                                     div()
                                                         .flex()
                                                         .flex_col()
+                                                        .flex_grow()
+                                                        .overflow_hidden()
                                                         .gap(px(3.))
-                                                        .child(item_title.clone())
+                                                        .child(div().overflow_hidden().text_ellipsis().child(item_title.clone()))
                                                         .child(
-                                                            div()
+                                                            div().overflow_hidden().text_ellipsis()
                                                                 .text_color(theme.foreground.disabled())
                                                                 .child(item.meta.supplementary_text()),
                                                         ),
@@ -189,6 +192,7 @@ impl RenderOnce for PlayQueue {
                                             div()
                                                 .id(ElementId::from(i))
                                                 .flex()
+                                                .w_full()
                                                 .gap(px(3.))
                                                 .child(
                                                     div()
@@ -216,7 +220,7 @@ impl RenderOnce for PlayQueue {
                                                             },
                                                         )),
                                                 )
-                                                .child(item.meta.get_title())
+                                                .child(div().overflow_hidden().text_ellipsis().child(item.meta.get_title()))
                                                 .on_click(move |_, _, cx| {
                                                     // Jump to this track
                                                     let play_queue =
@@ -251,6 +255,7 @@ impl RenderOnce for PlayQueue {
                                             div()
                                                 .id(ElementId::from(i))
                                                 .flex()
+                                                .w_full()
                                                 .gap(px(3.))
                                                 .child(div().size(px(48.)).when_some(
                                                     cover,
@@ -266,12 +271,19 @@ impl RenderOnce for PlayQueue {
                                                     div()
                                                         .flex()
                                                         .flex_col()
+                                                        .flex_grow()
+                                                        .overflow_hidden()
                                                         .gap(px(3.))
-                                                        .child(item.meta.album.clone().unwrap_or(
-                                                            tr!("UNKNOWN_ALBUM", "Unknown Album").into(),
-                                                        ))
+                                                        .child(div()
+                                                            .overflow_hidden()
+                                                            .text_ellipsis()
+                                                            .child(item.meta.album.clone().unwrap_or(
+                                                                tr!("UNKNOWN_ALBUM", "Unknown Album").into(),
+                                                            )))
                                                         .child(
                                                             div()
+                                                                .overflow_hidden()
+                                                                .text_ellipsis()
                                                                 .text_color(theme.foreground.disabled())
                                                                 .child(
                                                                     item.meta.artist.clone().unwrap_or(

@@ -241,13 +241,13 @@
   },
   "QUEUE_ITEM_CONTEXT_MENU_REMOVE": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:174",
+    "definedIn": "src/play_queue.rs:177",
     "plural": false,
     "description": null
   },
   "QUEUE_ITEM_CONTEXT_MENU_TITLE": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:171",
+    "definedIn": "src/play_queue.rs:174",
     "plural": false,
     "description": null
   },
@@ -301,13 +301,13 @@
   },
   "UNKNOWN_ALBUM": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:271",
+    "definedIn": "src/play_queue.rs:281",
     "plural": false,
     "description": null
   },
   "UNKNOWN_ARTIST": {
     "context": "play_queue.rs",
-    "definedIn": "src/play_queue.rs:279",
+    "definedIn": "src/play_queue.rs:291",
     "plural": false,
     "description": null
   },
