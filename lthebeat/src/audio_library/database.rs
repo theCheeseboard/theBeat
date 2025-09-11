@@ -287,7 +287,6 @@ impl Database {
                 SELECT album.*, coalesce(album.image_hash, tracks.image_hash) AS coalesced_hash
                     FROM album, tracks
                     WHERE
-                        tracks.album = album.id AND
                         tracks.id = (SELECT id FROM tracks WHERE tracks.album = album.id ORDER BY tracks.track LIMIT 1)
                 ) album
                 LEFT JOIN art ON album.coalesced_hash = art.hash

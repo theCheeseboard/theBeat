@@ -162,8 +162,8 @@
     "description": null
   },
   "LIBRARY_ERASE": {
-    "context": "artists_library.rs",
-    "definedIn": "src/views/artists_view/artists_library.rs:125",
+    "context": "tracks_view.rs",
+    "definedIn": "src/views/tracks_view.rs:111",
     "plural": false,
     "description": null
   },
