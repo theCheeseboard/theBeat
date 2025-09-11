@@ -1,4 +1,5 @@
 use crate::audio_library::album::Album;
+use crate::audio_library::artist::Artist;
 use crate::audio_library::database_query::DatabaseQuery;
 use crate::audio_library::track::Track;
 use crate::audio_processing::audio_metadata;
@@ -296,6 +297,24 @@ impl Database {
         )
     }
 
+    pub fn query_all_artists<'this, 'future: 'this>(
+        &'this self,
+    ) -> impl Future<Output = anyhow::Result<DatabaseQuery<Artist>>> + 'future {
+        DatabaseQuery::new(
+            self.pool.clone(),
+            "SELECT
+                 artist.id as id,
+                 artist.name as name,
+                 art.image as image,
+                 art.mime_type as image_mime_type
+             FROM artist
+                LEFT JOIN art ON artist.image_hash = art.hash
+             ORDER BY artist.name"
+                .to_string(),
+            Default::default(),
+        )
+    }
+
     pub fn query_album_tracks<'this, 'future: 'this>(
         &'this self,
         album_id: u32,
@@ -317,6 +336,32 @@ impl Database {
                  LEFT JOIN album ON tracks.album = album.id
              WHERE tracks.album = ?
              ORDER BY tracks.disc, tracks.track"
+                .to_string(),
+            args,
+        )
+    }
+
+    pub fn query_artist_tracks<'this, 'future: 'this>(
+        &'this self,
+        artist_id: u32,
+    ) -> impl Future<Output = anyhow::Result<DatabaseQuery<Track>>> + 'future {
+        let mut args = SqliteArguments::<'static>::default();
+        args.add(artist_id).unwrap();
+        DatabaseQuery::new(
+            self.pool.clone(),
+            "SELECT
+                 tracks.id as id,
+                 tracks.url as url,
+                 tracks.name as name,
+                 album.name as album,
+                 artist.name as artist,
+                 tracks.track as track,
+                 tracks.disc as disc
+             FROM tracks
+                 LEFT JOIN artist ON tracks.artist = artist.id
+                 LEFT JOIN album ON tracks.album = album.id
+             WHERE tracks.artist = ?
+             ORDER BY album.name, tracks.disc, tracks.track"
                 .to_string(),
             args,
         )

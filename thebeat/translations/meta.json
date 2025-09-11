@@ -1,13 +1,13 @@
 {
   "ALBUMS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:130",
+    "definedIn": "src/main_surface.rs:133",
     "plural": false,
     "description": null
   },
   "ARTISTS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:118",
+    "definedIn": "src/main_surface.rs:121",
     "plural": false,
     "description": null
   },
@@ -119,6 +119,12 @@
     "plural": false,
     "description": null
   },
+  "INDIVIDUAL_ARTISTS_TITLE": {
+    "context": "individual_artist_view.rs",
+    "definedIn": "src/views/artists_view/individual_artist_view.rs:93",
+    "plural": false,
+    "description": null
+  },
   "LIBRARY_ALBUMS_ERROR": {
     "context": "album_library.rs",
     "definedIn": "src/views/albums_view/album_library.rs:119",
@@ -137,6 +143,18 @@
     "plural": false,
     "description": null
   },
+  "LIBRARY_ARTISTS_ERROR": {
+    "context": "individual_artist_view.rs",
+    "definedIn": "src/views/artists_view/individual_artist_view.rs:111",
+    "plural": false,
+    "description": null
+  },
+  "LIBRARY_ARTISTS_TITLE": {
+    "context": "artists_library.rs",
+    "definedIn": "src/views/artists_view/artists_library.rs:79",
+    "plural": false,
+    "description": null
+  },
   "LIBRARY_CORRUPT_ERROR_MESSAGE": {
     "context": "tracks_view.rs",
     "definedIn": "src/views/tracks_view.rs:102",
@@ -144,8 +162,8 @@
     "description": null
   },
   "LIBRARY_ERASE": {
-    "context": "tracks_view.rs",
-    "definedIn": "src/views/tracks_view.rs:111",
+    "context": "artists_library.rs",
+    "definedIn": "src/views/artists_view/artists_library.rs:125",
     "plural": false,
     "description": null
   },
@@ -175,7 +193,7 @@
   },
   "OTHER_SOURCES_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:154",
+    "definedIn": "src/main_surface.rs:157",
     "plural": false,
     "description": null
   },
@@ -211,7 +229,7 @@
   },
   "PLAYLISTS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:142",
+    "definedIn": "src/main_surface.rs:145",
     "plural": false,
     "description": null
   },
@@ -259,7 +277,7 @@
   },
   "TRACKS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:106",
+    "definedIn": "src/main_surface.rs:109",
     "plural": false,
     "description": null
   },

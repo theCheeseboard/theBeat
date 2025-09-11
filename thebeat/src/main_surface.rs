@@ -7,6 +7,7 @@ use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlis
 use crate::play_queue::play_queue;
 use crate::transport_controls::TransportControls;
 use crate::views::albums_view::AlbumsView;
+use crate::views::artists_view::ArtistsView;
 use crate::views::other_sources_view::OtherSourcesView;
 use crate::views::tracks_view::TracksView;
 use cntp_i18n::tr;
@@ -28,6 +29,7 @@ pub struct MainSurface {
     selected_tab: MainSurfaceTab,
 
     tracks_view: Entity<TracksView>,
+    artists_view: Entity<ArtistsView>,
     albums_view: Entity<AlbumsView>,
     other_sources_view: Entity<OtherSourcesView>,
 
@@ -78,6 +80,7 @@ impl MainSurface {
             ),
             selected_tab: Tracks,
             tracks_view: TracksView::new(on_setup_button_click.clone(), cx),
+            artists_view: ArtistsView::new(on_setup_button_click.clone(), cx),
             albums_view: AlbumsView::new(on_setup_button_click, cx),
             other_sources_view: OtherSourcesView::new(cx),
             transport_controls: TransportControls::new(cx),
@@ -179,7 +182,7 @@ impl Render for MainSurface {
                                     .h_full()
                                     .animation(SlideHorizontalAnimation::new())
                                     .page(self.tracks_view.clone().into_any_element())
-                                    .page(div().into_any_element())
+                                    .page(self.artists_view.clone().into_any_element())
                                     .page(self.albums_view.clone().into_any_element())
                                     .page(div().into_any_element())
                                     .page(self.other_sources_view.clone().into_any_element()),

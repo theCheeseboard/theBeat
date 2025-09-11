@@ -7,25 +7,25 @@
   },
   "SCAN_JOB_COMPLETE_DESCRIPTION": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:170",
+    "definedIn": "src/audio_library/database.rs:171",
     "plural": false,
     "description": null
   },
   "SCAN_JOB_DESCRIPTION": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:110",
+    "definedIn": "src/audio_library/database.rs:111",
     "plural": false,
     "description": null
   },
   "SCAN_JOB_ERROR_DESCRIPTION": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:177",
+    "definedIn": "src/audio_library/database.rs:178",
     "plural": true,
     "description": null
   },
   "SCAN_JOB_TITLE": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:109",
+    "definedIn": "src/audio_library/database.rs:110",
     "plural": false,
     "description": null
   },
