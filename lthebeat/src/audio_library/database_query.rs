@@ -2,6 +2,7 @@ use gpui::{App, AppContext, AsyncApp, Entity};
 use smol::stream::StreamExt;
 use sqlx::sqlite::{SqliteArguments, SqliteRow};
 use sqlx::{Arguments, Row, SqlitePool};
+use std::ops::Range;
 
 pub struct DatabaseQuery<RecordType>
 where
@@ -58,6 +59,7 @@ where
             let base_query = self.base_query.clone();
             let pool = self.pool.clone();
             let mut binds = self.binds.clone();
+
             cx.spawn(async move |cx: &mut AsyncApp| {
                 let get_query_string = format!("SELECT * FROM ({base_query}) LIMIT ? OFFSET ?");
                 binds.add(items.len() as u32).unwrap();
@@ -82,6 +84,28 @@ where
                 .clone();
         };
         record.clone()
+    }
+
+    pub async fn populate_range(&mut self, range: Range<usize>, cx: &mut App) {
+        let get_query_string = format!("SELECT * FROM ({}) LIMIT ? OFFSET ?", self.base_query);
+        let mut binds = self.binds.clone();
+        binds.add(range.end as u32 - range.start as u32).unwrap();
+        binds.add(range.start as u32).unwrap();
+        let mut get_query = sqlx::query_with(&get_query_string, binds).fetch(&self.pool.clone());
+
+        let mut i = range.start;
+        while let Some(row) = get_query.next().await {
+            let record = self.records[i].get_or_insert_with(|| cx.new(|_| Default::default()));
+            cx.update_entity(record, |item, cx| {
+                item.read_from_row(row);
+                cx.notify();
+            });
+            i += 1;
+        }
+    }
+
+    pub async fn populate_all(&mut self, cx: &mut App) {
+        self.populate_range(0..self.count(), cx).await;
     }
 
     pub fn count(&self) -> usize {

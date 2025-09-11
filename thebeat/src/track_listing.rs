@@ -142,12 +142,11 @@ fn play_all(database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>, c
 }
 
 fn enqueue_all(database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>, cx: &mut App) {
-    let track_list: Vec<_> = database_query
-        .borrow_mut()
-        .as_mut()
-        .unwrap()
-        .iter(cx)
-        .collect();
+    let mut database_query_borrow = database_query.borrow_mut();
+    let database_query = database_query_borrow.as_mut().unwrap();
+    smol::block_on(database_query.populate_all(cx));
+
+    let track_list: Vec<_> = database_query.iter(cx).collect();
 
     let url_list: Vec<_> = track_list
         .iter()
