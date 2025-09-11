@@ -107,6 +107,7 @@ impl PlatformHandler for MacPlatform {
 enum MediaPlayerEvent {
     Play,
     Pause,
+    PlayPause,
     SkipBack,
     SkipForward,
     Seek(Duration),
@@ -138,6 +139,15 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                 .pauseCommand()
                 .addTargetWithHandler(&RcBlock::new(move |_| {
                     smol::block_on(tx_pause.send(MediaPlayerEvent::Pause)).unwrap();
+                    MPRemoteCommandHandlerStatus::Success
+                }));
+
+            let tx_play_pause = tx_event.clone();
+            command_center.togglePlayPauseCommand().setEnabled(true);
+            command_center
+                .togglePlayPauseCommand()
+                .addTargetWithHandler(&RcBlock::new(move |_| {
+                    smol::block_on(tx_play_pause.send(MediaPlayerEvent::PlayPause)).unwrap();
                     MPRemoteCommandHandlerStatus::Success
                 }));
 
@@ -191,6 +201,11 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                         MediaPlayerEvent::Pause => cx
                             .update_global::<AudioController, ()>(|audio_controller, cx| {
                                 audio_controller.pause();
+                            })
+                            .unwrap(),
+                        MediaPlayerEvent::PlayPause => cx
+                            .update_global::<AudioController, ()>(|audio_controller, cx| {
+                                audio_controller.play_pause();
                             })
                             .unwrap(),
                         MediaPlayerEvent::SkipBack => cx
