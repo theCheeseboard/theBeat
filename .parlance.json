@@ -1,0 +1,17 @@
+{
+  "name": "theBeat",
+  "subprojects": [
+    {
+      "name": "libthebeat",
+      "type": "cntp-rs",
+      "path": "/lthebeat/translations/{lang}.json",
+      "baseLang": "en"
+    },
+    {
+      "name": "theBeat",
+      "type": "cntp-rs",
+      "path": "/thebeat/translations/{lang}.json",
+      "baseLang": "en"
+    }
+  ]
+}
