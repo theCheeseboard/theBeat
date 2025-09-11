@@ -1,0 +1,12 @@
+{
+  "LIBRARY_TRACKS_ERROR": "Không thể tải bài hát",
+  "SCAN_JOB_COMPLETE_DESCRIPTION": "Quét thư viện hoàn tất",
+  "SCAN_JOB_DESCRIPTION": "Đang quét thư viện cho bài hát mới...",
+  "SCAN_JOB_ERROR_DESCRIPTION": {
+    "other": "Quét thư viện hoàn tất, nhưng {{count}} lỗi xảy ra"
+  },
+  "SCAN_JOB_TITLE": "Quét thư viện",
+  "TRACK_ALBUM": "Trên {{album}}",
+  "TRACK_ARTIST": "Bởi {{artist}}",
+  "TRACK_UNKNOWN_TITLE": "Bài hát"
+}
