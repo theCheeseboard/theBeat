@@ -3853,6 +3853,7 @@ dependencies = [
  "async-lock 3.4.1",
  "async-ringbuf",
  "async-walkdir",
+ "block2",
  "cancellation-token",
  "cntp_i18n",
  "cntp_i18n_gen",
@@ -3865,6 +3866,11 @@ dependencies = [
  "intx",
  "isahc",
  "log",
+ "objc2",
+ "objc2-app-kit",
+ "objc2-core-foundation",
+ "objc2-foundation",
+ "objc2-media-player",
  "rand 0.9.2",
  "rb",
  "regex",
@@ -4426,6 +4432,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "objc2-av-foundation"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2e085a2e16c61dadbad7a808fc9d5b5f8472b1b825b53d529c9f64ccac78e722"
+dependencies = [
+ "bitflags 2.9.4",
+ "objc2",
+ "objc2-foundation",
+]
+
+[[package]]
 name = "objc2-cloud-kit"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4476,7 +4493,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1c10c2894a6fed806ade6027bcd50662746363a9589d3ec9d9bef30a4e4bc166"
 dependencies = [
  "bitflags 2.9.4",
+ "block2",
  "dispatch2",
+ "libc",
  "objc2",
 ]
 
@@ -4531,6 +4550,21 @@ dependencies = [
  "bitflags 2.9.4",
  "objc2",
  "objc2-core-foundation",
+]
+
+[[package]]
+name = "objc2-media-player"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e5fb6217df3aef0b6ffc5890e9f90adf6ca818810b68158d43ba922b77543e25"
+dependencies = [
+ "bitflags 2.9.4",
+ "block2",
+ "objc2",
+ "objc2-app-kit",
+ "objc2-av-foundation",
+ "objc2-core-foundation",
+ "objc2-foundation",
 ]
 
 [[package]]

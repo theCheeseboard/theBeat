@@ -5,8 +5,10 @@ use crate::audio_processing::audio_pipeline::sink::Sink;
 use crate::audio_processing::audio_pipeline::sync_lock_sync::SyncLockSync;
 use crate::audio_processing::output_drivers::OutputDevice;
 use crate::audio_processing::output_drivers::cpal_driver::cpal_default_output_device;
+use crate::platform::{Platform, PlatformHandler};
 use crate::play_queue::PlayQueue;
 use crate::play_queue::media_item::MediaItem;
+use cntp_i18n::{I18N_MANAGER, tr_load};
 use gpui::{App, AsyncApp, Entity, Global};
 use std::time::Duration;
 
@@ -21,14 +23,21 @@ impl AudioController {
     pub fn new(cx: &mut App) -> AudioController {
         let mut sync_lock_sync = SyncLockSync::new();
         let event_channel = sync_lock_sync.event_channel();
+        let current_meta = sync_lock_sync.current_meta.clone();
 
         let duplicator = Duplicator::new();
 
         cx.spawn(async move |cx: &mut AsyncApp| {
             loop {
+                I18N_MANAGER.write().unwrap().load_source(tr_load!());
                 event_channel.recv().await.unwrap();
                 cx.update_global::<AudioController, ()>(|_, _| {
                     // Do nothing
+                })
+                .unwrap();
+                cx.update_global::<Platform, ()>(|platform, cx| {
+                    let metadata = current_meta.read().unwrap().clone();
+                    platform.new_metadata_available(metadata, cx)
                 })
                 .unwrap();
                 cx.refresh().unwrap();
