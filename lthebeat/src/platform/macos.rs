@@ -1,25 +1,32 @@
 use crate::audio_processing::audio_controller::AudioController;
-use crate::audio_processing::audio_metadata::AudioMetadata;
+use crate::audio_processing::audio_metadata::{Art, AudioMetadata};
 use crate::platform::PlatformHandler;
 use crate::play_queue::PlayQueue;
 use block2::RcBlock;
 use gpui::{App, AppContext, AsyncApp, Entity};
+use objc2::AllocAnyThread;
 use objc2::rc::Retained;
 use objc2::runtime::ProtocolObject;
-use objc2_foundation::{NSMutableDictionary, NSNumber, NSString};
+use objc2_app_kit::NSImage;
+use objc2_core_foundation::{CGFloat, CGSize};
+use objc2_foundation::{NSData, NSMutableDictionary, NSNumber, NSString};
 use objc2_media_player::{
-    MPChangePlaybackPositionCommandEvent, MPMediaItemPropertyAlbumTitle, MPMediaItemPropertyArtist,
-    MPMediaItemPropertyMediaType, MPMediaItemPropertyPlaybackDuration, MPMediaItemPropertyTitle,
-    MPNowPlayingInfoCenter, MPNowPlayingInfoMediaType, MPNowPlayingInfoPropertyElapsedPlaybackTime,
+    MPChangePlaybackPositionCommandEvent, MPMediaItemArtwork, MPMediaItemPropertyAlbumTitle,
+    MPMediaItemPropertyArtist, MPMediaItemPropertyArtwork, MPMediaItemPropertyMediaType,
+    MPMediaItemPropertyPlaybackDuration, MPMediaItemPropertyTitle, MPNowPlayingInfoCenter,
+    MPNowPlayingInfoMediaType, MPNowPlayingInfoPropertyElapsedPlaybackTime,
     MPNowPlayingInfoPropertyIsLiveStream, MPNowPlayingPlaybackState, MPRemoteCommandCenter,
     MPRemoteCommandEvent, MPRemoteCommandHandlerStatus,
 };
 use std::any::Any;
 use std::ptr::NonNull;
+use std::sync::Arc;
 use std::time::Duration;
 
 struct MacPlatform {
     current_metadata: Option<AudioMetadata>,
+    current_art: Option<Arc<Art>>,
+    platform_art: Option<Retained<MPMediaItemArtwork>>,
 }
 
 impl MacPlatform {
@@ -75,6 +82,12 @@ impl MacPlatform {
                         ProtocolObject::from_ref(MPNowPlayingInfoPropertyElapsedPlaybackTime),
                     );
                 }
+                if let Some(art) = &self.platform_art {
+                    dictionary.setObject_forKey(
+                        art,
+                        ProtocolObject::from_ref(MPMediaItemPropertyArtwork),
+                    );
+                }
             } else {
                 dictionary.setObject_forKey(
                     &NSNumber::numberWithUnsignedInteger(MPNowPlayingInfoMediaType::None.0),
@@ -96,6 +109,30 @@ impl MacPlatform {
 
 impl PlatformHandler for MacPlatform {
     fn new_metadata_available(&mut self, meta: AudioMetadata, cx: &mut App) {
+        if self.current_art.as_ref().map(|art| Arc::as_ptr(art))
+            != meta.album_cover.as_ref().map(|art| Arc::as_ptr(art))
+        {
+            self.platform_art = None;
+
+            if let Some(new_art) = meta.album_cover.as_ref()
+                && let Some(image_dimensions) = new_art.dimensions()
+            {
+                let art_data = NSData::with_bytes(&new_art.backing_store);
+                let image_data = NSImage::initWithData(NSImage::alloc(), &art_data).unwrap();
+
+                unsafe {
+                    self.platform_art = Some(MPMediaItemArtwork::initWithBoundsSize_requestHandler(
+                        MPMediaItemArtwork::alloc(),
+                        CGSize::new(image_dimensions.0 as CGFloat, image_dimensions.1 as CGFloat),
+                        &RcBlock::new(move |_| {
+                            NonNull::new(Retained::into_raw(image_data.clone())).unwrap()
+                        }),
+                    ))
+                }
+            }
+            self.current_art = meta.album_cover.clone();
+        }
+
         self.current_metadata = Some(meta);
         self.propagate_changes_to_np_center(cx);
     }
@@ -132,6 +169,8 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
     cx.new(|cx| -> Box<dyn PlatformHandler> {
         let platform = MacPlatform {
             current_metadata: None,
+            platform_art: None,
+            current_art: None,
         };
 
         let (tx_event, rx_event) = async_channel::bounded(3);

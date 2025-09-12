@@ -24,7 +24,6 @@ struct LinuxPlatform {
 
 impl PlatformHandler for LinuxPlatform {
     fn new_metadata_available(&mut self, meta: AudioMetadata, cx: &mut App) {
-        // Check if current_art is different. If both are None, it is not different. If both are Some, check if they are the same. If one is None, it is different. Do it in one line.
         if self.current_art.as_ref().map(|art| Arc::as_ptr(art))
             != meta.album_cover.as_ref().map(|art| Arc::as_ptr(art))
         {
