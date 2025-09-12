@@ -139,8 +139,8 @@ impl Render for TransportControls {
                                 },
                             )
                             .on_click(|_, _, cx| {
-                                cx.update_global::<AudioController, ()>(|audio_controller, _| {
-                                    audio_controller.play_pause()
+                                cx.update_global::<AudioController, ()>(|audio_controller, cx| {
+                                    audio_controller.play_pause(cx)
                                 })
                             }),
                     )
@@ -177,18 +177,28 @@ impl Render for TransportControls {
                                         .value(current_time.as_millis() as u32)
                                         .max_value(duration.as_millis() as u32)
                                         .on_press(|_, _, cx| {
-                                            let audio_controller =
-                                                cx.global_mut::<AudioController>();
-                                            audio_controller.pause();
+                                            cx.update_global::<AudioController, ()>(
+                                                |audio_controller, cx| {
+                                                    audio_controller
+                                                        .pause(cx);
+                                                },
+                                            );
                                         })
                                         .on_release(cx.listener(|this, _, _, cx| {
-                                            let play_queue = cx.global_mut::<PlayQueue>();
                                             if let Some(seek_position) = this.seek_value {
-                                                play_queue.seek_to_position(seek_position);
-                                            }
-                                            let audio_controller =
-                                                cx.global_mut::<AudioController>();
-                                            audio_controller.play();
+                                                cx.update_global::<PlayQueue, ()>(
+                                                    |play_queue, cx| {
+                                                        play_queue
+                                                            .seek_to_position(seek_position, cx);
+                                                    },
+                                                );
+                                            };
+                                            cx.update_global::<AudioController, ()>(
+                                                |audio_controller, cx| {
+                                                    audio_controller
+                                                        .play(cx);
+                                                },
+                                            );
 
                                             this.seek_value = None;
                                             cx.notify();

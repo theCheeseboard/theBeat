@@ -9,7 +9,7 @@ use crate::platform::{Platform, PlatformHandler};
 use crate::play_queue::PlayQueue;
 use crate::play_queue::media_item::MediaItem;
 use cntp_i18n::{I18N_MANAGER, tr_load};
-use gpui::{App, AsyncApp, Entity, Global};
+use gpui::{App, AsyncApp, BorrowAppContext, Entity, Global};
 use std::time::Duration;
 
 pub struct AudioController {
@@ -81,29 +81,37 @@ impl AudioController {
         self.connected_devices.push(device);
     }
 
-    pub fn play(&mut self) {
+    pub fn play(&mut self, cx: &mut App) {
         self.is_playing = true;
         for device in self.connected_devices.iter_mut() {
             device.play();
         }
+
+        cx.update_global::<Platform, ()>(|platform, cx| {
+            platform.play_state_changed(true, cx);
+        });
     }
 
-    pub fn pause(&mut self) {
+    pub fn pause(&mut self, cx: &mut App) {
         self.is_playing = false;
         for device in self.connected_devices.iter_mut() {
             device.pause();
         }
+        
+        cx.update_global::<Platform, ()>(|platform, cx| {
+            platform.play_state_changed(false, cx);
+        });
     }
 
     pub fn is_playing(&self) -> bool {
         self.is_playing
     }
 
-    pub fn play_pause(&mut self) {
+    pub fn play_pause(&mut self, cx: &mut App) {
         if self.is_playing {
-            self.pause();
+            self.pause(cx);
         } else {
-            self.play();
+            self.play(cx);
         }
     }
 

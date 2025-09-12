@@ -13,12 +13,13 @@ use crate::play_queue::media_item::MediaItem;
 use async_lock::RwLock;
 use async_ringbuf::AsyncHeapProd;
 use async_ringbuf::traits::{AsyncProducer, Consumer};
-use gpui::{App, AppContext, AsyncApp, Entity, Global};
+use gpui::{App, AppContext, AsyncApp, BorrowAppContext, Entity, Global};
 use rand::seq::SliceRandom;
 use rand::{random_range, rng, thread_rng};
 use smol::io::AsyncSeekExt;
 use std::sync::Arc;
 use std::time::Duration;
+use crate::platform::{Platform, PlatformHandler};
 
 struct FaucetQueueItem {
     associated_item: Entity<MediaItem>,
@@ -227,12 +228,16 @@ impl PlayQueue {
         }
     }
 
-    pub fn seek_to_position(&mut self, position: Duration) {
+    pub fn seek_to_position(&mut self, position: Duration, cx: &mut App) {
         let mut faucet_queue_borrow = self.faucet_queue.write_blocking();
         if let Some(queue_item) = faucet_queue_borrow.first_mut() {
             (self.reset_faucet)();
             queue_item.controller.seek(position);
         }
+
+        cx.update_global::<Platform, ()>(|platform, cx| {
+            platform.seek_performed(position, cx);
+        });
     }
 
     pub fn display_queue(&self, cx: &App) -> Vec<DisplayQueueItem> {

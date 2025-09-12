@@ -3,6 +3,7 @@ use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::platform::PlatformHandler;
 use crate::play_queue::PlayQueue;
 use block2::RcBlock;
+use std::any::Any;
 use gpui::{App, AppContext, AsyncApp, Entity};
 use objc2::rc::Retained;
 use objc2::runtime::ProtocolObject;
@@ -99,9 +100,13 @@ impl PlatformHandler for MacPlatform {
         self.propagate_changes_to_np_center(cx);
     }
 
-    fn play_state_changed(&mut self, cx: &mut App) {
+    fn play_state_changed(&mut self, is_playing: bool, cx: &mut App) {
         self.propagate_changes_to_np_center(cx);
     }
+
+    fn as_any(&self) -> &dyn Any { self }
+    fn as_any_mut(&mut self) -> &mut dyn Any { self }
+
 }
 
 enum MediaPlayerEvent {
@@ -195,17 +200,17 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                     Ok(event) => match event {
                         MediaPlayerEvent::Play => cx
                             .update_global::<AudioController, ()>(|audio_controller, cx| {
-                                audio_controller.play();
+                                audio_controller.play(cx);
                             })
                             .unwrap(),
                         MediaPlayerEvent::Pause => cx
                             .update_global::<AudioController, ()>(|audio_controller, cx| {
-                                audio_controller.pause();
+                                audio_controller.pause(cx);
                             })
                             .unwrap(),
                         MediaPlayerEvent::PlayPause => cx
                             .update_global::<AudioController, ()>(|audio_controller, cx| {
-                                audio_controller.play_pause();
+                                audio_controller.play_pause(cx);
                             })
                             .unwrap(),
                         MediaPlayerEvent::SkipBack => cx

@@ -1,5 +1,7 @@
 use crate::audio_processing::audio_metadata::AudioMetadata;
 use gpui::{App, AppContext, Entity, Global};
+use std::any::Any;
+use std::time::Duration;
 
 #[cfg(target_os = "linux")]
 mod linux;
@@ -10,9 +12,13 @@ mod macos;
 #[cfg(target_os = "windows")]
 mod win;
 
-pub trait PlatformHandler {
+pub trait PlatformHandler: Any {
     fn new_metadata_available(&mut self, meta: AudioMetadata, cx: &mut App) {}
-    fn play_state_changed(&mut self, cx: &mut App) {}
+    fn play_state_changed(&mut self, is_playing: bool, cx: &mut App) {}
+    fn seek_performed(&mut self, current_time: Duration, cx: &mut App) {}
+
+    fn as_any(&self) -> &dyn Any;
+    fn as_any_mut(&mut self) -> &mut dyn Any;
 }
 
 pub struct Platform {
@@ -33,8 +39,21 @@ impl PlatformHandler for Platform {
             inner.new_metadata_available(meta, cx)
         })
     }
-    fn play_state_changed(&mut self, cx: &mut App) {
-        cx.update_entity(&self.inner, |inner, cx| inner.play_state_changed(cx))
+    fn play_state_changed(&mut self, is_playing: bool, cx: &mut App) {
+        cx.update_entity(&self.inner, |inner, cx| inner.play_state_changed(is_playing, cx))
+    }
+    fn seek_performed(&mut self, current_time: Duration, cx: &mut App) {
+        cx.update_entity(&self.inner, |inner, cx| {
+            inner.seek_performed(current_time, cx)
+        })
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
+
+    fn as_any_mut(&mut self) -> &mut dyn Any {
+        self
     }
 }
 

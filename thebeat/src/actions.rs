@@ -63,7 +63,7 @@ fn skip_previous(_: &SkipPreviousAction, cx: &mut App) {
 }
 
 fn play_pause(_: &PlayPauseAction, cx: &mut App) {
-    cx.update_global::<AudioController, ()>(|audio_controller: &mut AudioController, _| {
-        audio_controller.play_pause();
+    cx.update_global::<AudioController, ()>(|audio_controller: &mut AudioController, cx| {
+        audio_controller.play_pause(cx);
     })
 }

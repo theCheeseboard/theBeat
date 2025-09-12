@@ -3866,6 +3866,7 @@ dependencies = [
  "intx",
  "isahc",
  "log",
+ "mpris-server",
  "objc2",
  "objc2-app-kit",
  "objc2-core-foundation",
@@ -3880,6 +3881,7 @@ dependencies = [
  "smol",
  "sqlx",
  "symphonia",
+ "tempfile",
  "tracing",
  "tracing-subscriber",
  "url",
@@ -4102,6 +4104,19 @@ checksum = "ddd32fa8935aeadb8a8a6b6b351e40225570a37c43de67690383d87ef170cd08"
 dependencies = [
  "num-traits",
  "pxfm",
+]
+
+[[package]]
+name = "mpris-server"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "392ce2be7224867869df37e473f28871ab0ff725c0014f1b196ba56a38aea9a8"
+dependencies = [
+ "async-channel 2.5.0",
+ "futures-channel",
+ "serde",
+ "trait-variant",
+ "zbus",
 ]
 
 [[package]]
@@ -7545,6 +7560,17 @@ dependencies = [
  "tracing",
  "tracing-core",
  "tracing-log",
+]
+
+[[package]]
+name = "trait-variant"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "70977707304198400eb4835a78f6a9f928bf41bba420deb8fdb175cd965d77a7"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.106",
 ]
 
 [[package]]
