@@ -12,6 +12,12 @@
       "type": "cntp-rs",
       "path": "/thebeat/translations/{lang}.json",
       "baseLang": "en"
+    },
+    {
+      "name": "theBeat Metadata",
+      "type": "i18next",
+      "path": "/thebeat/dist/contemporary_toml_translations/{lang}.json",
+      "baseLang": "en"
     }
   ]
 }
