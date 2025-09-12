@@ -3,7 +3,6 @@ use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::platform::PlatformHandler;
 use crate::play_queue::PlayQueue;
 use block2::RcBlock;
-use std::any::Any;
 use gpui::{App, AppContext, AsyncApp, Entity};
 use objc2::rc::Retained;
 use objc2::runtime::ProtocolObject;
@@ -15,6 +14,7 @@ use objc2_media_player::{
     MPNowPlayingInfoPropertyIsLiveStream, MPNowPlayingPlaybackState, MPRemoteCommandCenter,
     MPRemoteCommandEvent, MPRemoteCommandHandlerStatus,
 };
+use std::any::Any;
 use std::ptr::NonNull;
 use std::time::Duration;
 
@@ -101,12 +101,22 @@ impl PlatformHandler for MacPlatform {
     }
 
     fn play_state_changed(&mut self, is_playing: bool, cx: &mut App) {
-        self.propagate_changes_to_np_center(cx);
+        unsafe {
+            let center = MPNowPlayingInfoCenter::defaultCenter();
+            center.setPlaybackState(if is_playing {
+                MPNowPlayingPlaybackState::Playing
+            } else {
+                MPNowPlayingPlaybackState::Paused
+            })
+        }
     }
 
-    fn as_any(&self) -> &dyn Any { self }
-    fn as_any_mut(&mut self) -> &mut dyn Any { self }
-
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
+    fn as_any_mut(&mut self) -> &mut dyn Any {
+        self
+    }
 }
 
 enum MediaPlayerEvent {
@@ -225,7 +235,7 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                             .unwrap(),
                         MediaPlayerEvent::Seek(position) => cx
                             .update_global::<PlayQueue, ()>(|play_queue, cx| {
-                                play_queue.seek_to_position(position)
+                                play_queue.seek_to_position(position, cx)
                             })
                             .unwrap(),
                     },
@@ -234,11 +244,6 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                     }
                 }
             }
-        })
-        .detach();
-
-        cx.observe_global::<AudioController>(|platform, cx| {
-            platform.play_state_changed(cx);
         })
         .detach();
 
