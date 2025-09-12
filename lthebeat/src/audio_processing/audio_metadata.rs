@@ -125,11 +125,22 @@ fn extract_image(backing_store: Box<[u8]>) -> Option<(Arc<RenderImage>, Rgba, (u
 
     let average_color = {
         let dominant_colors = dominant_color::get_colors(image.as_bytes(), false);
-        Rgba {
-            r: dominant_colors[3] as f32 / 255.,
-            g: dominant_colors[4] as f32 / 255.,
-            b: dominant_colors[5] as f32 / 255.,
-            a: 1.,
+        if dominant_colors.len() >= 6 {
+            Rgba {
+                r: dominant_colors[3] as f32 / 255.,
+                g: dominant_colors[4] as f32 / 255.,
+                b: dominant_colors[5] as f32 / 255.,
+                a: 1.,
+            }
+        } else if dominant_colors.len() >= 3 {
+            Rgba {
+                r: dominant_colors[0] as f32 / 255.,
+                g: dominant_colors[1] as f32 / 255.,
+                b: dominant_colors[2] as f32 / 255.,
+                a: 1.,
+            }
+        } else {
+            Rgba::default()
         }
     };
 
