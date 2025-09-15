@@ -2,7 +2,7 @@ use crate::OpenFileAction;
 use crate::OpenUrlAction;
 use crate::SkipNextAction;
 use crate::SkipPreviousAction;
-use crate::actions::DatabaseSetupAction;
+use crate::actions::{DatabaseSetupAction, ToggleRepeatOneAction, ToggleShuffleAction};
 use crate::main_surface::MainSurfaceTab::{Albums, Artists, OtherSources, Playlists, Tracks};
 use crate::play_queue::play_queue;
 use crate::transport_controls::TransportControls;
@@ -73,6 +73,9 @@ impl MainSurface {
                         MenuItem::separator(),
                         MenuItem::action(tr!("PLAYBACK_SKIP_PREVIOUS"), SkipPreviousAction),
                         MenuItem::action(tr!("PLAYBACK_SKIP_NEXT"), SkipNextAction),
+                        MenuItem::separator(),
+                        MenuItem::action(tr!("PLAYBACK_REPEAT_ONE"), ToggleRepeatOneAction),
+                        MenuItem::action(tr!("PLAYBACK_SHUFFLE"), ToggleShuffleAction),
                         MenuItem::separator(),
                         MenuItem::action(tr!("FILE_DATABASE_SETUP"), DatabaseSetupAction),
                     ],

@@ -13,7 +13,8 @@ mod views;
 
 use crate::actions::{
     DatabaseSetupAction, OpenFileAction, OpenUrlAction, PlayPauseAction, SkipNextAction,
-    SkipPreviousAction, VolumeDownAction, VolumeUpAction, register_actions,
+    SkipPreviousAction, ToggleRepeatOneAction, ToggleShuffleAction, VolumeDownAction,
+    VolumeUpAction, register_actions,
 };
 use crate::main_window::MainWindow;
 use cntp_i18n::{I18N_MANAGER, tr, tr_load};
@@ -136,6 +137,15 @@ fn mane() {
                                         MenuItem::action(
                                             tr!("PLAYBACK_DECREASE_VOLUME", "Decrease Volume"),
                                             VolumeDownAction,
+                                        ),
+                                        MenuItem::separator(),
+                                        MenuItem::action(
+                                            tr!("PLAYBACK_REPEAT_ONE", "Repeat One"),
+                                            ToggleRepeatOneAction,
+                                        ),
+                                        MenuItem::action(
+                                            tr!("PLAYBACK_SHUFFLE", "Shuffle"),
+                                            ToggleShuffleAction,
                                         ),
                                     ],
                                 },

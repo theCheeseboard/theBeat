@@ -14,6 +14,8 @@ actions!(
         SkipPreviousAction,
         VolumeUpAction,
         VolumeDownAction,
+        ToggleRepeatOneAction,
+        ToggleShuffleAction,
         DatabaseSetupAction,
     ]
 );
@@ -25,6 +27,8 @@ pub fn register_actions(cx: &mut App) {
     cx.on_action(skip_previous);
     cx.on_action(volume_up);
     cx.on_action(volume_down);
+    cx.on_action(toggle_repeat_one);
+    cx.on_action(toggle_shuffle);
     cx.bind_keys([
         KeyBinding::new("secondary-o", OpenFileAction, None),
         KeyBinding::new("secondary-shift-o", OpenUrlAction, None),
@@ -33,6 +37,8 @@ pub fn register_actions(cx: &mut App) {
         KeyBinding::new("shift-left", SkipPreviousAction, None),
         KeyBinding::new("up", VolumeUpAction, None),
         KeyBinding::new("down", VolumeDownAction, None),
+        KeyBinding::new("secondary-r", ToggleRepeatOneAction, None),
+        KeyBinding::new("secondary-s", ToggleShuffleAction, None),
     ])
 }
 
@@ -83,5 +89,17 @@ fn volume_up(_: &VolumeUpAction, cx: &mut App) {
 fn volume_down(_: &VolumeDownAction, cx: &mut App) {
     cx.update_global::<AudioController, ()>(|audio_controller: &mut AudioController, cx| {
         audio_controller.set_master_volume(audio_controller.master_volume() - 0.1);
+    })
+}
+
+fn toggle_repeat_one(_: &ToggleRepeatOneAction, cx: &mut App) {
+    cx.update_global::<PlayQueue, ()>(|play_queue: &mut PlayQueue, cx| {
+        play_queue.set_repeat_one(!play_queue.repeat_one(), cx);
+    })
+}
+
+fn toggle_shuffle(_: &ToggleShuffleAction, cx: &mut App) {
+    cx.update_global::<PlayQueue, ()>(|play_queue: &mut PlayQueue, cx| {
+        play_queue.shuffle(!play_queue.shuffle, cx);
     })
 }
