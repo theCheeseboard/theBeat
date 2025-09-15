@@ -10,8 +10,8 @@ use contemporary::transition::float_transition_element::TransitionExt;
 use gpui::prelude::FluentBuilder;
 use gpui::{
     Action, Animation, App, AppContext, BorrowAppContext, Context, Div, Entity, FontFeatures,
-    ImageSource, IntoElement, ParentElement, Refineable, Render, Rgba, StyleRefinement, Styled,
-    Window, div, img, px, rgb,
+    ImageSource, InteractiveElement, IntoElement, ParentElement, Refineable, Render, Rgba,
+    StatefulInteractiveElement, StyleRefinement, Styled, Window, div, img, px, rgb,
 };
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
@@ -21,6 +21,7 @@ use std::time::Duration;
 pub struct TransportControls {
     style: StyleRefinement,
     seek_value: Option<Duration>,
+    volume_hovering: bool,
 }
 
 impl TransportControls {
@@ -28,6 +29,7 @@ impl TransportControls {
         cx.new(|_| TransportControls {
             style: Default::default(),
             seek_value: None,
+            volume_hovering: false,
         })
     }
 }
@@ -76,6 +78,8 @@ impl Render for TransportControls {
                     .flex()
                     .items_center()
                     .gap(px(4.))
+                    .max_w_full()
+                    .overflow_hidden()
                     // Album Art
                     .child(
                         div()
@@ -91,11 +95,53 @@ impl Render for TransportControls {
                             .flex()
                             .flex_col()
                             .flex_grow()
-                            .child(div().text_size(px(18.)).child(title))
-                            .child(div().child(supplementary)),
+                            .overflow_hidden()
+                            .child(div().text_size(px(18.)).text_ellipsis().child(title))
+                            .child(div().text_ellipsis().child(supplementary)),
                     )
-                    // TODO: Volume
-                    .child(div())
+                    .child(
+                        div()
+                            .id("volume-container")
+                            .flex()
+                            .items_center()
+                            .p(px(4.))
+                            .mr(px(-4.))
+                            .on_hover(cx.listener(|this, hovering, _, cx| {
+                                this.volume_hovering = *hovering;
+                                cx.notify()
+                            }))
+                            .child(
+                                div().pr(px(4.)).child(
+                                    slider("master-volume-slider")
+                                        .max_value(100)
+                                        .value((audio_controller.master_volume() * 100.) as u32)
+                                        .h(px(16.))
+                                        .on_change(|event: &SliderChangeEvent, _, cx| {
+                                            cx.update_global::<AudioController, ()>(
+                                                |audio_controller, _| {
+                                                    audio_controller.set_master_volume(
+                                                        event.new_value as f64 / 100.,
+                                                    );
+                                                },
+                                            );
+                                        })
+                                        .with_transition(
+                                            "master-volume-slider-transition",
+                                            if self.volume_hovering { 1. } else { 0. },
+                                            Animation::new(platform_settings.animation_duration)
+                                                .with_easing(ease_out_cubic),
+                                            |slider, progress| {
+                                                slider.w(px(progress * 100.)).opacity(progress)
+                                            },
+                                        ),
+                                ),
+                            )
+                            .child(
+                                button("volume-button")
+                                    .flat()
+                                    .child(icon("audio-volume-high".into())),
+                            ),
+                    )
                     .child(
                         button("shuffle-button")
                             .flat()
@@ -169,7 +215,7 @@ impl Render for TransportControls {
                     ))
                     .child(
                         slider("seek-slider")
-                            .h(px(24.))
+                            .h(px(20.))
                             .flex_grow()
                             .when_some(meta.duration, |slider, duration| {
                                 slider.when_some(current_time, |slider, current_time| {
@@ -179,8 +225,7 @@ impl Render for TransportControls {
                                         .on_press(|_, _, cx| {
                                             cx.update_global::<AudioController, ()>(
                                                 |audio_controller, cx| {
-                                                    audio_controller
-                                                        .pause(cx);
+                                                    audio_controller.pause(cx);
                                                 },
                                             );
                                         })
@@ -195,8 +240,7 @@ impl Render for TransportControls {
                                             };
                                             cx.update_global::<AudioController, ()>(
                                                 |audio_controller, cx| {
-                                                    audio_controller
-                                                        .play(cx);
+                                                    audio_controller.play(cx);
                                                 },
                                             );
 

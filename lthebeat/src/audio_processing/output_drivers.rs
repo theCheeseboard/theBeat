@@ -16,6 +16,8 @@ pub trait OutputDevice {
     fn play(&self);
 
     fn open_sink(&self) -> anyhow::Result<OutputDeviceOutputStream>;
+
+    fn set_attenuation_factor(&self, factor: f64);
 }
 
 pub struct OutputDeviceOutputStream {

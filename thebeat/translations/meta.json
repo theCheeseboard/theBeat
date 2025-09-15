@@ -209,6 +209,18 @@
     "plural": false,
     "description": null
   },
+  "PLAYBACK_DECREASE_VOLUME": {
+    "context": "main.rs",
+    "definedIn": "src/main.rs:137",
+    "plural": false,
+    "description": null
+  },
+  "PLAYBACK_INCREASE_VOLUME": {
+    "context": "main.rs",
+    "definedIn": "src/main.rs:133",
+    "plural": false,
+    "description": null
+  },
   "PLAYBACK_PLAY_PAUSE": {
     "context": "main.rs",
     "definedIn": "src/main.rs:120",
@@ -217,13 +229,13 @@
   },
   "PLAYBACK_SKIP_NEXT": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:129",
+    "definedIn": "src/main.rs:128",
     "plural": false,
     "description": null
   },
   "PLAYBACK_SKIP_PREVIOUS": {
     "context": "main.rs",
-    "definedIn": "src/main.rs:125",
+    "definedIn": "src/main.rs:124",
     "plural": false,
     "description": null
   },

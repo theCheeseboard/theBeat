@@ -12,6 +12,8 @@ actions!(
         PlayPauseAction,
         SkipNextAction,
         SkipPreviousAction,
+        VolumeUpAction,
+        VolumeDownAction,
         DatabaseSetupAction,
     ]
 );
@@ -21,12 +23,16 @@ pub fn register_actions(cx: &mut App) {
     cx.on_action(play_pause);
     cx.on_action(skip_next);
     cx.on_action(skip_previous);
+    cx.on_action(volume_up);
+    cx.on_action(volume_down);
     cx.bind_keys([
         KeyBinding::new("secondary-o", OpenFileAction, None),
         KeyBinding::new("secondary-shift-o", OpenUrlAction, None),
         KeyBinding::new("space", PlayPauseAction, None),
         KeyBinding::new("shift-right", SkipNextAction, None),
         KeyBinding::new("shift-left", SkipPreviousAction, None),
+        KeyBinding::new("up", VolumeUpAction, None),
+        KeyBinding::new("down", VolumeDownAction, None),
     ])
 }
 
@@ -65,5 +71,17 @@ fn skip_previous(_: &SkipPreviousAction, cx: &mut App) {
 fn play_pause(_: &PlayPauseAction, cx: &mut App) {
     cx.update_global::<AudioController, ()>(|audio_controller: &mut AudioController, cx| {
         audio_controller.play_pause(cx);
+    })
+}
+
+fn volume_up(_: &VolumeUpAction, cx: &mut App) {
+    cx.update_global::<AudioController, ()>(|audio_controller: &mut AudioController, cx| {
+        audio_controller.set_master_volume(audio_controller.master_volume() + 0.1);
+    })
+}
+
+fn volume_down(_: &VolumeDownAction, cx: &mut App) {
+    cx.update_global::<AudioController, ()>(|audio_controller: &mut AudioController, cx| {
+        audio_controller.set_master_volume(audio_controller.master_volume() - 0.1);
     })
 }

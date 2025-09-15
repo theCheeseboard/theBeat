@@ -4,6 +4,7 @@ use crate::audio_processing::sample::Sample;
 use log::warn;
 use std::sync::{Arc, RwLock};
 
+pub mod attenuator;
 pub mod audio_format;
 pub mod duplicator;
 pub mod faucet;

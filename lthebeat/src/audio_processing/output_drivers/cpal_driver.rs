@@ -1,3 +1,4 @@
+use crate::audio_processing::attenuate::Attenuate;
 use crate::audio_processing::audio_pipeline::audio_format::AudioFormat;
 use crate::audio_processing::audio_pipeline::sink::{ResetListenerGroupTrait, create_sink};
 use crate::audio_processing::audio_pipeline::sync_lock::SyncLock;
@@ -27,6 +28,7 @@ const BUFFER_DURATION_MSEC: usize = BUFFER_DURATION.as_millis() as usize;
 pub struct CpalOutputDevice {
     device: Device,
     streams: RefCell<Vec<Stream>>,
+    attenuation_factor: Arc<RwLock<f64>>,
 }
 
 impl CpalOutputDevice {
@@ -34,6 +36,7 @@ impl CpalOutputDevice {
         Self {
             device,
             streams: RefCell::new(Vec::new()),
+            attenuation_factor: Arc::new(RwLock::new(1.0)),
         }
     }
 
@@ -50,10 +53,13 @@ impl CpalOutputDevice {
         let consumer_arc = Arc::new(RwLock::new(consumer));
         let consumer_arc_2 = consumer_arc.clone();
 
+        let attenuation_factor = self.attenuation_factor.clone();
+
         let mut was_underrun = false;
         let stream = self.device.build_output_stream(
             &config,
             move |data: &mut [T], _: &cpal::OutputCallbackInfo| {
+                let attenuation_factor = *attenuation_factor.read().unwrap();
                 let written = consumer_arc.write().unwrap().pop_slice(data);
 
                 if written < data.len() {
@@ -65,6 +71,8 @@ impl CpalOutputDevice {
                 } else {
                     was_underrun = false;
                 }
+                data.iter_mut()
+                    .for_each(|v| *v = v.attenuated(attenuation_factor))
             },
             move |err| {
                 // Errors? What errors!?
@@ -128,6 +136,10 @@ impl OutputDevice for CpalOutputDevice {
             .for_each(|stream| stream.play().unwrap());
     }
 
+    fn set_attenuation_factor(&self, factor: f64) {
+        *self.attenuation_factor.write().unwrap() = factor
+    }
+
     fn open_sink(&self) -> anyhow::Result<OutputDeviceOutputStream> {
         let sync_lock = SyncLock::create_sync_lock();
         let supported_stream_config = self.device.default_output_config()?;
@@ -173,9 +185,9 @@ impl OutputDevice for CpalOutputDevice {
     }
 }
 
-trait CpalSample: SizedSample + Default + Send + Sized + 'static + Mute {}
+trait CpalSample: SizedSample + Default + Send + Sized + 'static + Mute + Attenuate {}
 
-impl<T> CpalSample for T where T: SizedSample + Default + Send + Sized + 'static + Mute {}
+impl<T> CpalSample for T where T: SizedSample + Default + Send + Sized + 'static + Mute + Attenuate {}
 
 pub fn cpal_output_devices() -> Vec<Box<CpalOutputDevice>> {
     let Ok(output_devices) = cpal::default_host().output_devices() else {

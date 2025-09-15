@@ -13,7 +13,7 @@ mod views;
 
 use crate::actions::{
     DatabaseSetupAction, OpenFileAction, OpenUrlAction, PlayPauseAction, SkipNextAction,
-    SkipPreviousAction, register_actions,
+    SkipPreviousAction, VolumeDownAction, VolumeUpAction, register_actions,
 };
 use crate::main_window::MainWindow;
 use cntp_i18n::{I18N_MANAGER, tr, tr_load};
@@ -120,7 +120,6 @@ fn mane() {
                                             tr!("PLAYBACK_PLAY_PAUSE", "Play/Pause"),
                                             PlayPauseAction,
                                         ),
-                                        MenuItem::separator(),
                                         MenuItem::action(
                                             tr!("PLAYBACK_SKIP_PREVIOUS", "Skip Back"),
                                             SkipPreviousAction,
@@ -128,6 +127,15 @@ fn mane() {
                                         MenuItem::action(
                                             tr!("PLAYBACK_SKIP_NEXT", "Skip Next"),
                                             SkipNextAction,
+                                        ),
+                                        MenuItem::separator(),
+                                        MenuItem::action(
+                                            tr!("PLAYBACK_INCREASE_VOLUME", "Increase Volume"),
+                                            VolumeUpAction,
+                                        ),
+                                        MenuItem::action(
+                                            tr!("PLAYBACK_DECREASE_VOLUME", "Decrease Volume"),
+                                            VolumeDownAction,
                                         ),
                                     ],
                                 },
@@ -142,7 +150,7 @@ fn mane() {
                         },
                     },
                 );
-                
+
                 lthebeat::setup_libthebeat(cx);
 
                 let database = smol::block_on(Database::new(cx)).unwrap();

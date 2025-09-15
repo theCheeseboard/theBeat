@@ -34,6 +34,8 @@
   "OTHER_SOURCES_BUTTON": "Other Sources",
   "OTHER_SOURCES_UNAVAILABLE_MESSAGE": "There's nothing else to play right now.",
   "OTHER_SOURCES_UNAVAILABLE_TITLE": "No other sources available",
+  "PLAYBACK_DECREASE_VOLUME": "Decrease Volume",
+  "PLAYBACK_INCREASE_VOLUME": "Increase Volume",
   "PLAYBACK_PLAY_PAUSE": "Play/Pause",
   "PLAYBACK_SKIP_NEXT": "Skip Next",
   "PLAYBACK_SKIP_PREVIOUS": "Skip Back",

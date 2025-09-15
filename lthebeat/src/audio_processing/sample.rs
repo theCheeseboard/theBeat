@@ -1,3 +1,4 @@
+use crate::audio_processing::attenuate::Attenuate;
 use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::play_queue::media_item::MediaItem;
 use cpal::U24;
@@ -190,6 +191,67 @@ impl Sample {
             epoch: self.epoch,
         }
     }
+
+    pub fn attenuate(self, factor: f64) -> Self {
+        let new_sample_data = match self.data {
+            SampleData::Empty => SampleData::Empty,
+            SampleData::Signed8(data) => SampleData::Signed8(
+                data.into_iter()
+                    .map(|sample| sample.attenuated(factor))
+                    .collect(),
+            ),
+            SampleData::Unsigned8(data) => SampleData::Unsigned8(
+                data.into_iter()
+                    .map(|sample| sample.attenuated(factor))
+                    .collect(),
+            ),
+            SampleData::Unsigned16(data) => SampleData::Unsigned16(
+                data.into_iter()
+                    .map(|sample| sample.attenuated(factor))
+                    .collect(),
+            ),
+            SampleData::Signed16(data) => SampleData::Signed16(
+                data.into_iter()
+                    .map(|sample| sample.attenuated(factor))
+                    .collect(),
+            ),
+            SampleData::Unsigned24(_) => todo!(),
+            SampleData::Signed24(_) => todo!(),
+            SampleData::Unsigned32(data) => SampleData::Unsigned32(
+                data.into_iter()
+                    .map(|sample| sample.attenuated(factor))
+                    .collect(),
+            ),
+            SampleData::Signed32(data) => SampleData::Signed32(
+                data.into_iter()
+                    .map(|sample| sample.attenuated(factor))
+                    .collect(),
+            ),
+            SampleData::Unsigned64(_) => todo!(),
+            SampleData::Signed64(_) => todo!(),
+            SampleData::Float32(data) => SampleData::Float32(
+                data.into_iter()
+                    .map(|sample| sample.attenuated(factor))
+                    .collect(),
+            ),
+            SampleData::Float64(data) => SampleData::Float64(
+                data.into_iter()
+                    .map(|sample| sample.attenuated(factor))
+                    .collect(),
+            ),
+        };
+
+        Self {
+            channels: self.channels,
+            sample_rate: self.sample_rate,
+            meta: self.meta,
+            sample_id: self.sample_id,
+            elapsed_since_start: self.elapsed_since_start,
+            data: new_sample_data,
+            associated_track: self.associated_track,
+            epoch: self.epoch,
+        }
+    }
 }
 
 pub trait UnwrapSample<T>: Debug {
@@ -226,7 +288,7 @@ unwrap_impl!(I24, SampleData::Signed24);
 unwrap_impl!(i16, SampleData::Signed16);
 unwrap_impl!(i8, SampleData::Signed8);
 
-trait SampleInto<T> {
+pub trait SampleInto<T> {
     fn sample_into(self) -> T;
 }
 
@@ -253,7 +315,7 @@ f64_to!(i32, i32, 0.0);
 f64_to!(i16, i16, 0.0);
 f64_to!(i8, i8, 0.0);
 
-trait SampleFrom<T> {
+pub trait SampleFrom<T> {
     fn sample_from(value: T) -> Self;
 }
 
