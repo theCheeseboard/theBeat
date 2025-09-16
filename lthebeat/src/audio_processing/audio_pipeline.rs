@@ -12,6 +12,7 @@ mod resetter;
 pub mod sink;
 pub mod sync_lock;
 pub mod sync_lock_sync;
+pub mod bufferer;
 
 pub const SAMPLE_BUFFER_SIZE: usize = 4;
 

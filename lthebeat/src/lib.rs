@@ -11,4 +11,7 @@ pub mod play_queue;
 pub fn setup_libthebeat(cx: &mut App) {
     I18N_MANAGER.write().unwrap().load_source(tr_load!());
     setup_platform(cx);
+    
+    #[cfg(target_os = "linux")]
+    cx.set_global(audio_processing::input_engines::cdio_paranoia_engine::cdio_manager::CdioManager::new());
 }

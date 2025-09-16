@@ -75,10 +75,11 @@ impl PlayQueue {
                     let next_media_item_entity = played_items.next();
 
                     if let Some(mut controller) = next_media_item_entity
-                        .update(cx, |next_media_item, _| {
+                        .update(cx, |next_media_item, cx| {
                             faucet_for_url(
                                 next_media_item.url.clone(),
                                 Some(next_media_item_entity.clone()),
+                                cx
                             )
                         })
                         .ok()
