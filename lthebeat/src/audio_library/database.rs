@@ -456,10 +456,10 @@ async fn scan_file_into_pool(
         };
 
         sqlx::query(
-            "INSERT INTO tracks(url, name, artist, album, file_modified_date, track, image_hash)
-                VALUES(?, ?, ?, ?, ?, ?, ?)
+            "INSERT INTO tracks(url, name, artist, album, file_modified_date, track, disc, image_hash)
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT DO
-                    UPDATE SET name=?, artist=?, album=?, file_modified_date=?, track=?, image_hash=?",
+                    UPDATE SET name=?, artist=?, album=?, file_modified_date=?, track=?, disc=?, image_hash=?",
         )
         // VALUES
         .bind(url.as_str())
@@ -468,6 +468,7 @@ async fn scan_file_into_pool(
         .bind(album_id)
         .bind(modified_date)
         .bind(audio_metadata.track_number)
+        .bind(audio_metadata.disc_number)
         .bind(&art_hash)
         // ON CONFLICT DO UPDATE SET
         .bind(&audio_metadata.title)
@@ -475,6 +476,7 @@ async fn scan_file_into_pool(
         .bind(album_id)
         .bind(modified_date)
         .bind(audio_metadata.track_number)
+        .bind(audio_metadata.disc_number)
         .bind(&art_hash)
         .execute(pool)
         .await?;
