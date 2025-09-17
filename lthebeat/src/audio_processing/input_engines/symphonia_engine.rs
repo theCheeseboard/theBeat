@@ -350,11 +350,11 @@ fn populate_metadata(metadata: &mut AudioMetadata, symphonia_metadata: &Metadata
                             metadata.total_disc_number = total.as_str().parse().ok();
                         }
                     } else {
-                        metadata.track_number = v.clone().parse().ok();
+                        metadata.disc_number = v.clone().parse().ok();
                     }
                 }
                 Value::UnsignedInt(v) => {
-                    metadata.track_number = Some(*v as u32);
+                    metadata.disc_number = Some(*v as u32);
                 }
                 _ => (),
             },
