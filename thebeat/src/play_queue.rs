@@ -32,7 +32,7 @@ pub fn play_queue() -> PlayQueue {
 
 impl RenderOnce for PlayQueue {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
-        let list_state = window.use_state(cx, |_, _| ListState::new(0, ListAlignment::Top, px(0.)));
+        let list_state = window.use_state(cx, |_, _| ListState::new(0, ListAlignment::Top, px(200.)));
 
         let audio_controller = cx.global::<AudioController>();
         let play_queue = cx.global::<lthebeat::play_queue::PlayQueue>();
@@ -305,7 +305,7 @@ impl RenderOnce for PlayQueue {
                                                 .into_any_element()
                                         }
                                     }
-                                }).h_full()).into_any_element()),
+                                }).flex().flex_col().h_full()).into_any_element()),
                     ).child(
                     div()
                         .absolute()
