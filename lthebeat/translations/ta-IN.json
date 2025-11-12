@@ -1,0 +1,13 @@
+{
+  "LIBRARY_TRACKS_ERROR": "பாடல்களை பதிவேற்றுவதில் பிழை",
+  "SCAN_JOB_COMPLETE_DESCRIPTION": "சேகரிப்பு ஆய்வு நிறைந்தது",
+  "SCAN_JOB_DESCRIPTION": "இசைக்கான சேகரிப்பை ஆய்வு செய்கிறது...",
+  "SCAN_JOB_ERROR_DESCRIPTION": {
+    "one": "சேகரிப்பு ஆய்வு நிறைந்தது, ஆனால் {{count}} பிழை புகாரளிக்கப்பட்டது",
+    "other": "சேகரிப்பு ஆய்வு நிறைந்தது, ஆனால் {{count}} பிழைகள் புகாரளிக்கப்பட்டன"
+  },
+  "SCAN_JOB_TITLE": "சேகரிப்பு ஆய்வு",
+  "TRACK_ALBUM": "{{album}} இல்",
+  "TRACK_ARTIST": "{{artist}} ஆல்",
+  "TRACK_UNKNOWN_TITLE": "பாடல்கள்"
+}
