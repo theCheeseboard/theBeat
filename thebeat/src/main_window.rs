@@ -53,12 +53,11 @@ impl MainWindow {
                 ),
                 current_surface: vec![MainWindowSurface::Main],
                 is_url_dialog_open: false,
-                url_text_field: TextField::new(
-                    cx,
-                    "url_text_field",
-                    "".into(),
-                    tr!("URL_TEXT_FIELD_PLACEHOLDER", "URL").into(),
-                ),
+                url_text_field: cx.new(|cx| {
+                    let mut text_field = TextField::new("url_text_field", cx);
+                    text_field.set_placeholder(tr!("URL_TEXT_FIELD_PLACEHOLDER", "URL").to_string().as_str());
+                    text_field
+                }),
             }
         })
     }
@@ -137,8 +136,8 @@ impl Render for MainWindow {
                         StandardButton::Ok,
                         cx.listener(|this, _, _, cx| {
                             let text_field = this.url_text_field.read(cx);
-                            let current_text = text_field.current_text(cx);
-                            match Url::parse(current_text.to_string().as_str()) {
+                            let current_text = text_field.text();
+                            match Url::parse(current_text) {
                                 Ok(url) => {
                                     let item = MediaItem::new(url, cx);
                                     cx.update_global::<PlayQueue, ()>(|play_queue, cx| {

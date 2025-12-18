@@ -1,6 +1,6 @@
 use crate::audio_library::database_query::DatabaseRecord;
 use crate::audio_processing::audio_metadata::Art;
-use contemporary::styling::theme::{Theme, VariableColor};
+use contemporary::styling::theme::{Theme, ThemeStorage, VariableColor};
 use gpui::prelude::FluentBuilder;
 use gpui::{
     Context, Element, ImageSource, InteractiveElement, IntoElement, ParentElement, Render,
@@ -24,7 +24,7 @@ pub enum Album {
 
 impl Render for Album {
     fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
-        let theme = cx.global::<Theme>();
+        let theme = cx.theme();
         match self {
             Album::Ok { name, art, id } => {
                 let art = art

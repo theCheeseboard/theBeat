@@ -162,8 +162,8 @@
     "description": null
   },
   "LIBRARY_ERASE": {
-    "context": "artists_library.rs",
-    "definedIn": "src/views/artists_view/artists_library.rs:125",
+    "context": "tracks_view.rs",
+    "definedIn": "src/views/tracks_view.rs:111",
     "plural": false,
     "description": null
   },
@@ -355,19 +355,19 @@
   },
   "URL_OPEN_TEXT": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:126",
+    "definedIn": "src/main_window.rs:125",
     "plural": false,
     "description": null
   },
   "URL_OPEN_TITLE": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:119",
+    "definedIn": "src/main_window.rs:118",
     "plural": false,
     "description": null
   },
   "URL_TEXT_FIELD_PLACEHOLDER": {
     "context": "main_window.rs",
-    "definedIn": "src/main_window.rs:60",
+    "definedIn": "src/main_window.rs:58",
     "plural": false,
     "description": null
   }
