@@ -7,7 +7,7 @@ use gpui::{
     StatefulInteractiveElement, Styled, Window, div, img, px, rgb,
 };
 use sqlx::sqlite::SqliteRow;
-use sqlx::{Error, Row};
+use sqlx::{Error, Row, SqlitePool};
 
 #[derive(Default, Clone)]
 pub enum Artist {
@@ -66,7 +66,7 @@ impl Render for Artist {
 }
 
 impl DatabaseRecord for Artist {
-    fn read_from_row(&mut self, row: Result<SqliteRow, Error>) {
+    fn read_from_row(&mut self, row: Result<SqliteRow, Error>, _: &SqlitePool) {
         if let Ok(row) = row {
             *self = Artist::Ok {
                 id: row.get::<u32, _>("id"),

@@ -69,7 +69,7 @@ where
                 let mut i = 0_usize;
                 while let Some(row) = get_query.next().await {
                     cx.update_entity(&items[i], |item, cx| {
-                        item.read_from_row(row);
+                        item.read_from_row(row, &pool);
                         cx.notify();
                     })
                     .unwrap();
@@ -88,16 +88,17 @@ where
 
     pub async fn populate_range(&mut self, range: Range<usize>, cx: &mut App) {
         let get_query_string = format!("SELECT * FROM ({}) LIMIT ? OFFSET ?", self.base_query);
+        let pool = self.pool.clone();
         let mut binds = self.binds.clone();
         binds.add(range.end as u32 - range.start as u32).unwrap();
         binds.add(range.start as u32).unwrap();
-        let mut get_query = sqlx::query_with(&get_query_string, binds).fetch(&self.pool.clone());
+        let mut get_query = sqlx::query_with(&get_query_string, binds).fetch(&pool);
 
         let mut i = range.start;
         while let Some(row) = get_query.next().await {
             let record = self.records[i].get_or_insert_with(|| cx.new(|_| Default::default()));
             cx.update_entity(record, |item, cx| {
-                item.read_from_row(row);
+                item.read_from_row(row, &pool);
                 cx.notify();
             });
             i += 1;
@@ -125,7 +126,7 @@ where
 }
 
 pub trait DatabaseRecord: Default {
-    fn read_from_row(&mut self, row: Result<SqliteRow, sqlx::Error>);
+    fn read_from_row(&mut self, row: Result<SqliteRow, sqlx::Error>, pool: &SqlitePool);
 }
 
 pub struct DatabaseQueryIterator<'parent, RecordType>

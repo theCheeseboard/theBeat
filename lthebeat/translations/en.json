@@ -1,4 +1,5 @@
 {
+  "ADD_TO_PLAYLIST": "Add to playlist...",
   "LIBRARY_TRACKS_ERROR": "Error loading tracks",
   "SCAN_JOB_COMPLETE_DESCRIPTION": "Library scan complete",
   "SCAN_JOB_DESCRIPTION": "Scanning library for music...",
@@ -9,5 +10,6 @@
   "SCAN_JOB_TITLE": "Library Scan",
   "TRACK_ALBUM": "On {{album}}",
   "TRACK_ARTIST": "By {{artist}}",
+  "TRACK_CONTEXT_MENU_TITLE": "For {{track}}",
   "TRACK_UNKNOWN_TITLE": "Track"
 }

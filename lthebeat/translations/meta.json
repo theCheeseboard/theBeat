@@ -1,43 +1,55 @@
 {
+  "ADD_TO_PLAYLIST": {
+    "context": "track.rs",
+    "definedIn": "src/audio_library/track.rs:67",
+    "plural": false,
+    "description": null
+  },
   "LIBRARY_TRACKS_ERROR": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:130",
+    "definedIn": "src/audio_library/track.rs:135",
     "plural": false,
     "description": null
   },
   "SCAN_JOB_COMPLETE_DESCRIPTION": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:171",
+    "definedIn": "src/audio_library/database.rs:172",
     "plural": false,
     "description": null
   },
   "SCAN_JOB_DESCRIPTION": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:111",
+    "definedIn": "src/audio_library/database.rs:112",
     "plural": false,
     "description": null
   },
   "SCAN_JOB_ERROR_DESCRIPTION": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:178",
+    "definedIn": "src/audio_library/database.rs:179",
     "plural": true,
     "description": null
   },
   "SCAN_JOB_TITLE": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:110",
+    "definedIn": "src/audio_library/database.rs:111",
     "plural": false,
     "description": null
   },
   "TRACK_ALBUM": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:51",
+    "definedIn": "src/audio_library/track.rs:49",
     "plural": false,
     "description": null
   },
   "TRACK_ARTIST": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:48",
+    "definedIn": "src/audio_library/track.rs:46",
+    "plural": false,
+    "description": null
+  },
+  "TRACK_CONTEXT_MENU_TITLE": {
+    "context": "track.rs",
+    "definedIn": "src/audio_library/track.rs:66",
     "plural": false,
     "description": null
   },

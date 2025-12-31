@@ -31,6 +31,7 @@ use std::rc::Rc;
 use std::time::{Duration, SystemTime};
 use tracing::error;
 use url::Url;
+use crate::audio_library::playlist::Playlist;
 
 pub struct Database {
     pool: Option<SqlitePool>,
@@ -361,6 +362,37 @@ impl Database {
                  LEFT JOIN album ON tracks.album = album.id
              WHERE tracks.artist = ?
              ORDER BY album.name, tracks.disc, tracks.track"
+                .to_string(),
+            args,
+        )
+    }
+
+    pub async fn create_playlist(&self, name: &str) -> anyhow::Result<i64> {
+        let Some(pool) = &self.pool else {
+            return Err(anyhow!("Database not ready"));
+        };
+
+        Ok(
+            sqlx::query("INSERT INTO playlists(name) VALUES (?) RETURNING id")
+                .bind(name)
+                .fetch_one(pool)
+                .await?
+                .get("id"),
+        )
+    }
+    
+    pub fn query_playlists<'this, 'future: 'this>(
+        &'this self,
+        artist_id: u32,
+    ) -> impl Future<Output = anyhow::Result<DatabaseQuery<Playlist>>> + 'future {
+        let mut args = SqliteArguments::<'static>::default();
+        args.add(artist_id).unwrap();
+        DatabaseQuery::new(
+            self.pool.clone(),
+            "SELECT
+                playlists.id AS id,
+                playlists.name AS name
+             FROM playlists"
                 .to_string(),
             args,
         )

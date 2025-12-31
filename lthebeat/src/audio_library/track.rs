@@ -1,16 +1,14 @@
 use crate::audio_library::database_query::DatabaseRecord;
 use crate::play_queue::PlayQueue;
 use crate::play_queue::media_item::MediaItem;
-use cntp_i18n::tr;
+use cntp_i18n::{tr, Quote};
+use contemporary::components::context_menu::{ContextMenuExt, ContextMenuItem};
 use contemporary::components::skeleton::{SkeletonExt, skeleton, skeleton_row};
 use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::{Theme, VariableColor};
-use gpui::{
-    BorrowAppContext, Context, Element, ElementId, InteractiveElement, IntoElement, ParentElement,
-    Render, StatefulInteractiveElement, Styled, Window, div, px,
-};
+use gpui::{BorrowAppContext, Context, Element, ElementId, InteractiveElement, IntoElement, ParentElement, Render, StatefulInteractiveElement, Styled, Window, div, px};
 use sqlx::sqlite::SqliteRow;
-use sqlx::{Error, Row};
+use sqlx::{Error, Row, SqlitePool};
 use url::Url;
 
 #[derive(Default)]
@@ -50,6 +48,24 @@ impl Render for Track {
                 if let Some(album) = album {
                     supps.push(tr!("TRACK_ALBUM", "On {{album}}", album = album).to_string());
                 }
+                
+                let track_name = name.clone()
+                    .unwrap_or_else(|| {
+                        url.to_file_path()
+                            .map(|path| {
+                                path.file_name()
+                                    .unwrap()
+                                    .to_str()
+                                    .unwrap()
+                                    .to_string()
+                            })
+                            .unwrap_or_else(|_| url.to_string())
+                    })
+                    .to_string();
+                let context_menu = vec![
+                    ContextMenuItem::separator().label(tr!("TRACK_CONTEXT_MENU_TITLE", "For {{track}}", track:Quote=track_name)).build(),
+                    ContextMenuItem::menu_item().label(tr!("ADD_TO_PLAYLIST", "Add to playlist...")).icon("list-add").build()
+                ];
 
                 let url_clone = url.clone();
                 div()
@@ -76,19 +92,7 @@ impl Render for Track {
                             .flex_col()
                             .child(
                                 div().child(
-                                    name.clone()
-                                        .unwrap_or_else(|| {
-                                            url.to_file_path()
-                                                .map(|path| {
-                                                    path.file_name()
-                                                        .unwrap()
-                                                        .to_str()
-                                                        .unwrap()
-                                                        .to_string()
-                                                })
-                                                .unwrap_or_else(|_| url.to_string())
-                                        })
-                                        .to_string(),
+                                    track_name,
                                 ),
                             )
                             .child(
@@ -103,6 +107,7 @@ impl Render for Track {
                             play_queue.add_item(item, cx);
                         })
                     }))
+                    .with_context_menu(context_menu)
                     .into_any_element()
             }
             Track::Loading => div()
@@ -134,7 +139,7 @@ impl Render for Track {
 }
 
 impl DatabaseRecord for Track {
-    fn read_from_row(&mut self, row: Result<SqliteRow, Error>) {
+    fn read_from_row(&mut self, row: Result<SqliteRow, Error>, _: &SqlitePool) {
         if let Ok(row) = row {
             *self = Track::Ok {
                 id: row.get::<u32, _>("id") as usize,
