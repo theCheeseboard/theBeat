@@ -1,13 +1,25 @@
 {
   "ADD_TO_PLAYLIST": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:67",
+    "definedIn": "src/audio_library/track.rs:82",
+    "plural": false,
+    "description": null
+  },
+  "ADD_TO_PLAYLIST_PROMPT": {
+    "context": "track.rs",
+    "definedIn": "src/audio_library/track.rs:236",
+    "plural": false,
+    "description": null
+  },
+  "ADD_TO_PLAYLIST_TITLE": {
+    "context": "track.rs",
+    "definedIn": "src/audio_library/track.rs:224",
     "plural": false,
     "description": null
   },
   "LIBRARY_TRACKS_ERROR": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:135",
+    "definedIn": "src/audio_library/track.rs:155",
     "plural": false,
     "description": null
   },
@@ -37,19 +49,19 @@
   },
   "TRACK_ALBUM": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:49",
+    "definedIn": "src/audio_library/track.rs:69",
     "plural": false,
     "description": null
   },
   "TRACK_ARTIST": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:46",
+    "definedIn": "src/audio_library/track.rs:66",
     "plural": false,
     "description": null
   },
   "TRACK_CONTEXT_MENU_TITLE": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:66",
+    "definedIn": "src/audio_library/track.rs:81",
     "plural": false,
     "description": null
   },

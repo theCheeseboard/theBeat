@@ -23,6 +23,7 @@ use gpui::{
     ParentElement, Render, Styled, Window, div, px,
 };
 use std::rc::Rc;
+use crate::views::playlists_view::PlaylistsView;
 
 pub struct MainSurface {
     application_menu: Entity<ApplicationMenu>,
@@ -31,6 +32,7 @@ pub struct MainSurface {
     tracks_view: Entity<TracksView>,
     artists_view: Entity<ArtistsView>,
     albums_view: Entity<AlbumsView>,
+    playlists_view: Entity<PlaylistsView>,
     other_sources_view: Entity<OtherSourcesView>,
 
     transport_controls: Entity<TransportControls>,
@@ -85,6 +87,7 @@ impl MainSurface {
             tracks_view: TracksView::new(on_setup_button_click.clone(), cx),
             artists_view: ArtistsView::new(on_setup_button_click.clone(), cx),
             albums_view: AlbumsView::new(on_setup_button_click, cx),
+            playlists_view: cx.new(|cx| PlaylistsView::new(cx)),
             other_sources_view: OtherSourcesView::new(cx),
             transport_controls: TransportControls::new(cx),
         })
@@ -187,7 +190,7 @@ impl Render for MainSurface {
                                     .page(self.tracks_view.clone().into_any_element())
                                     .page(self.artists_view.clone().into_any_element())
                                     .page(self.albums_view.clone().into_any_element())
-                                    .page(div().into_any_element())
+                                    .page(self.playlists_view.clone().into_any_element())
                                     .page(self.other_sources_view.clone().into_any_element()),
                             )
                             .child(play_queue()),

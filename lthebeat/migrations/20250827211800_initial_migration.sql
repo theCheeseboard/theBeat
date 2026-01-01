@@ -78,11 +78,12 @@ create table playlist_tracks
             primary key autoincrement,
     track_id
         constraint playlist_tracks_tracks_id_fk
-            references tracks,
+            references tracks on delete cascade,
     playlist_id
         constraint playlist_tracks_playlists_id_fk
-            references playlists (id),
-    sort integer
+            references playlists (id) on delete cascade,
+    sort_num integer not null,
+    sort_dem integer not null
 );
 
 create unique index tracks_url_uindex

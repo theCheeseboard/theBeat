@@ -1,14 +1,29 @@
-use crate::audio_library::database_query::DatabaseRecord;
+use crate::audio_library::database::Database;
+use crate::audio_library::database_query::{DatabaseQuery, DatabaseRecord};
+use crate::audio_library::playlist::Playlist;
 use crate::play_queue::PlayQueue;
 use crate::play_queue::media_item::MediaItem;
-use cntp_i18n::{tr, Quote};
-use contemporary::components::context_menu::{ContextMenuExt, ContextMenuItem};
+use cntp_i18n::{Quote, tr};
+use contemporary::components::constrainer::constrainer;
+use contemporary::components::context_menu::{
+    ContextMenuActionEvent, ContextMenuExt, ContextMenuItem,
+};
+use contemporary::components::grandstand::grandstand;
+use contemporary::components::layer::layer;
+use contemporary::components::popover::popover;
 use contemporary::components::skeleton::{SkeletonExt, skeleton, skeleton_row};
 use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::{Theme, VariableColor};
-use gpui::{BorrowAppContext, Context, Element, ElementId, InteractiveElement, IntoElement, ParentElement, Render, StatefulInteractiveElement, Styled, Window, div, px};
+use gpui::prelude::FluentBuilder;
+use gpui::{
+    App, AsyncApp, BorrowAppContext, ClickEvent, Context, Element, ElementId, Entity,
+    InteractiveElement, IntoElement, ListSizingBehavior, ParentElement, Render, RenderOnce,
+    StatefulInteractiveElement, Styled, WeakEntity, Window, div, px, uniform_list,
+};
 use sqlx::sqlite::SqliteRow;
 use sqlx::{Error, Row, SqlitePool};
+use std::cell::RefCell;
+use std::rc::Rc;
 use url::Url;
 
 #[derive(Default)]
@@ -30,6 +45,8 @@ pub enum Track {
 
 impl Render for Track {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        let add_to_playlist_popover_open = window.use_state(cx, |_, _| false);
+
         let theme = cx.global::<Theme>();
         match self {
             Track::Ok {
@@ -41,6 +58,9 @@ impl Render for Track {
                 artist,
                 album,
             } => {
+                let add_to_playlist_popover_open_clone = add_to_playlist_popover_open.clone();
+                let add_to_playlist_popover_open_clone_2 = add_to_playlist_popover_open.clone();
+
                 let mut supps = Vec::new();
                 if let Some(artist) = artist {
                     supps.push(tr!("TRACK_ARTIST", "By {{artist}}", artist = artist).to_string());
@@ -48,66 +68,66 @@ impl Render for Track {
                 if let Some(album) = album {
                     supps.push(tr!("TRACK_ALBUM", "On {{album}}", album = album).to_string());
                 }
-                
-                let track_name = name.clone()
+
+                let track_name = name
+                    .clone()
                     .unwrap_or_else(|| {
                         url.to_file_path()
-                            .map(|path| {
-                                path.file_name()
-                                    .unwrap()
-                                    .to_str()
-                                    .unwrap()
-                                    .to_string()
-                            })
+                            .map(|path| path.file_name().unwrap().to_str().unwrap().to_string())
                             .unwrap_or_else(|_| url.to_string())
                     })
                     .to_string();
                 let context_menu = vec![
                     ContextMenuItem::separator().label(tr!("TRACK_CONTEXT_MENU_TITLE", "For {{track}}", track:Quote=track_name)).build(),
-                    ContextMenuItem::menu_item().label(tr!("ADD_TO_PLAYLIST", "Add to playlist...")).icon("list-add").build()
+                    ContextMenuItem::menu_item().label(tr!("ADD_TO_PLAYLIST", "Add to playlist...")).icon("list-add").on_triggered(move |_, _, cx| {
+                        add_to_playlist_popover_open_clone.write(cx, true);
+                    }).build()
                 ];
 
                 let url_clone = url.clone();
                 div()
                     .id(ElementId::from(*id))
-                    .flex()
-                    .items_center()
                     .child(
                         div()
-                            .child(
-                                track
-                                    .map(|track| track.to_string())
-                                    .unwrap_or("-".to_string()),
-                            )
-                            .text_center()
-                            .h(theme.system_font_size * 2 + px(12.))
-                            .w(theme.system_font_size * 3 + px(12.))
-                            .p(px(4.))
-                            .text_color(theme.foreground.disabled())
-                            .text_size(theme.system_font_size * 2),
-                    )
-                    .child(
-                        div()
+                            .id("clickable")
                             .flex()
-                            .flex_col()
+                            .items_center()
                             .child(
-                                div().child(
-                                    track_name,
-                                ),
+                                div()
+                                    .child(
+                                        track
+                                            .map(|track| track.to_string())
+                                            .unwrap_or("-".to_string()),
+                                    )
+                                    .text_center()
+                                    .h(theme.system_font_size * 2 + px(12.))
+                                    .w(theme.system_font_size * 3 + px(12.))
+                                    .p(px(4.))
+                                    .text_color(theme.foreground.disabled())
+                                    .text_size(theme.system_font_size * 2),
                             )
                             .child(
                                 div()
-                                    .child(supps.join(" • "))
-                                    .text_color(theme.foreground.disabled()),
-                            ),
+                                    .flex()
+                                    .flex_col()
+                                    .child(div().child(track_name))
+                                    .child(
+                                        div()
+                                            .child(supps.join(" • "))
+                                            .text_color(theme.foreground.disabled()),
+                                    ),
+                            )
+                            .on_click(cx.listener(move |_, _, _, cx| {
+                                let item = MediaItem::new(url_clone.clone(), cx);
+                                cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
+                                    play_queue.add_item(item, cx);
+                                })
+                            }))
+                            .with_context_menu(context_menu),
                     )
-                    .on_click(cx.listener(move |_, _, _, cx| {
-                        let item = MediaItem::new(url_clone.clone(), cx);
-                        cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
-                            play_queue.add_item(item, cx);
-                        })
-                    }))
-                    .with_context_menu(context_menu)
+                    .child(PlaylistSelectionPopover {
+                        visible: add_to_playlist_popover_open.clone(),
+                    })
                     .into_any_element()
             }
             Track::Loading => div()
@@ -153,5 +173,100 @@ impl DatabaseRecord for Track {
         } else {
             *self = Track::Error;
         }
+    }
+}
+
+#[derive(IntoElement)]
+struct PlaylistSelectionPopover {
+    visible: Entity<bool>,
+}
+
+impl RenderOnce for PlaylistSelectionPopover {
+    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
+        let popover_open_clone = self.visible.clone();
+
+        let playlists_query =
+            window.use_state::<Option<RefCell<DatabaseQuery<Playlist>>>>(cx, |_, cx| {
+                let database = cx.global::<Database>();
+                let query = database.query_all_playlists();
+
+                cx.spawn(
+                    async move |playlists_view: WeakEntity<
+                        Option<RefCell<DatabaseQuery<Playlist>>>,
+                    >,
+                                cx: &mut AsyncApp| {
+                        let playlist_query = query.await;
+                        let _ = playlists_view.upgrade().unwrap().write(
+                            cx,
+                            playlist_query
+                                .ok()
+                                .map(|playlist_query| RefCell::new(playlist_query)),
+                        );
+                    },
+                )
+                .detach();
+
+                None
+            });
+
+        popover("add-to-playlist-popover")
+            .visible(*self.visible.read(cx))
+            .size_neg(100.)
+            .anchor_bottom()
+            .render_as_deferred(true)
+            .content(
+                div()
+                    .flex()
+                    .flex_col()
+                    .gap(px(9.))
+                    .child(
+                        grandstand("add-to-playlist-grandstand")
+                            .text(tr!("ADD_TO_PLAYLIST_TITLE", "Add to playlist"))
+                            .on_back_click(move |_, _, cx| {
+                                popover_open_clone.write(cx, false);
+                            }),
+                    )
+                    .child(
+                        constrainer("add-to-playlist-constrainer").child(
+                            layer()
+                                .flex()
+                                .flex_col()
+                                .p(px(8.))
+                                .w_full()
+                                .child(tr!("ADD_TO_PLAYLIST_PROMPT", "Which playlist?"))
+                                .when_some(playlists_query.read(cx).as_ref(), |david, query| {
+                                    let playlists_query = playlists_query.clone();
+                                    david.child(
+                                        uniform_list(
+                                            "playlist_list",
+                                            query.borrow().count(),
+                                            move |range, _, cx| {
+                                                playlists_query.update(cx, |playlists_query, cx| {
+                                                    let playlists_query =
+                                                        playlists_query.as_ref().unwrap();
+                                                    range
+                                                        .map(|index| {
+                                                            match playlists_query
+                                                                .borrow_mut()
+                                                                .get(index, cx)
+                                                                .read(cx)
+                                                            {
+                                                                Playlist::Ok {
+                                                                    name, id, ..
+                                                                } => div().child(name.clone()),
+                                                                _ => div(),
+                                                            }
+                                                        })
+                                                        .collect()
+                                                })
+                                            },
+                                        )
+                                        .with_sizing_behavior(ListSizingBehavior::Infer),
+                                    )
+                                }),
+                        ),
+                    )
+                    .into_any_element(),
+            )
     }
 }

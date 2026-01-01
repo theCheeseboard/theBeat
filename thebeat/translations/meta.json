@@ -1,13 +1,13 @@
 {
   "ALBUMS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:136",
+    "definedIn": "src/main_surface.rs:139",
     "plural": false,
     "description": null
   },
   "ARTISTS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:124",
+    "definedIn": "src/main_surface.rs:127",
     "plural": false,
     "description": null
   },
@@ -167,6 +167,18 @@
     "plural": false,
     "description": null
   },
+  "LIBRARY_PLAYLISTS_ERROR": {
+    "context": "playlist_library.rs",
+    "definedIn": "src/views/playlists_view/playlist_library.rs:140",
+    "plural": false,
+    "description": null
+  },
+  "LIBRARY_PLAYLISTS_TITLE": {
+    "context": "playlist_library.rs",
+    "definedIn": "src/views/playlists_view/playlist_library.rs:86",
+    "plural": false,
+    "description": null
+  },
   "LIBRARY_TRACKS_ERROR": {
     "context": "tracks_view.rs",
     "definedIn": "src/views/tracks_view.rs:98",
@@ -193,7 +205,7 @@
   },
   "OTHER_SOURCES_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:160",
+    "definedIn": "src/main_surface.rs:163",
     "plural": false,
     "description": null
   },
@@ -253,7 +265,31 @@
   },
   "PLAYLISTS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:148",
+    "definedIn": "src/main_surface.rs:151",
+    "plural": false,
+    "description": null
+  },
+  "PLAYLIST_CREATE_BUTTON": {
+    "context": "playlist_library.rs",
+    "definedIn": "src/views/playlists_view/playlist_library.rs:189",
+    "plural": false,
+    "description": null
+  },
+  "PLAYLIST_CREATE_ERROR_TITLE": {
+    "context": "playlist_library.rs",
+    "definedIn": "src/views/playlists_view/playlist_library.rs:204",
+    "plural": false,
+    "description": null
+  },
+  "PLAYLIST_CREATE_PROMPT": {
+    "context": "playlist_library.rs",
+    "definedIn": "src/views/playlists_view/playlist_library.rs:173",
+    "plural": false,
+    "description": null
+  },
+  "PLAYLIST_CREATE_TITLE": {
+    "context": "playlist_library.rs",
+    "definedIn": "src/views/playlists_view/playlist_library.rs:165",
     "plural": false,
     "description": null
   },
@@ -301,7 +337,7 @@
   },
   "TRACKS_BUTTON": {
     "context": "main_surface.rs",
-    "definedIn": "src/main_surface.rs:112",
+    "definedIn": "src/main_surface.rs:115",
     "plural": false,
     "description": null
   },

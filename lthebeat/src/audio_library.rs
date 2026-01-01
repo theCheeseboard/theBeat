@@ -3,4 +3,4 @@ pub mod artist;
 pub mod database;
 pub mod database_query;
 pub mod track;
-mod playlist;
+pub mod playlist;

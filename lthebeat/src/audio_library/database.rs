@@ -1,6 +1,7 @@
 use crate::audio_library::album::Album;
 use crate::audio_library::artist::Artist;
 use crate::audio_library::database_query::DatabaseQuery;
+use crate::audio_library::playlist::Playlist;
 use crate::audio_library::track::Track;
 use crate::audio_processing::audio_metadata;
 use crate::audio_processing::input_engines::symphonia_engine::SymphoniaEngine;
@@ -31,7 +32,6 @@ use std::rc::Rc;
 use std::time::{Duration, SystemTime};
 use tracing::error;
 use url::Url;
-use crate::audio_library::playlist::Playlist;
 
 pub struct Database {
     pool: Option<SqlitePool>,
@@ -367,26 +367,27 @@ impl Database {
         )
     }
 
-    pub async fn create_playlist(&self, name: &str) -> anyhow::Result<i64> {
+    pub async fn create_playlist(&self, name: &str, cx: &mut App) -> anyhow::Result<i64> {
         let Some(pool) = &self.pool else {
             return Err(anyhow!("Database not ready"));
         };
 
-        Ok(
-            sqlx::query("INSERT INTO playlists(name) VALUES (?) RETURNING id")
-                .bind(name)
-                .fetch_one(pool)
-                .await?
-                .get("id"),
-        )
+        let result = sqlx::query("INSERT INTO playlists(name) VALUES (?) RETURNING id")
+            .bind(name)
+            .fetch_one(pool)
+            .await?
+            .get("id");
+
+        cx.defer(|cx| {
+            cx.update_global::<Database, ()>(|_, _| {});
+        });
+
+        Ok(result)
     }
-    
-    pub fn query_playlists<'this, 'future: 'this>(
+
+    pub fn query_all_playlists<'this, 'future: 'this>(
         &'this self,
-        artist_id: u32,
     ) -> impl Future<Output = anyhow::Result<DatabaseQuery<Playlist>>> + 'future {
-        let mut args = SqliteArguments::<'static>::default();
-        args.add(artist_id).unwrap();
         DatabaseQuery::new(
             self.pool.clone(),
             "SELECT
@@ -394,8 +395,40 @@ impl Database {
                 playlists.name AS name
              FROM playlists"
                 .to_string(),
-            args,
+            Default::default(),
         )
+    }
+
+    pub async fn add_to_playlist(
+        &self,
+        playlist_id: i64,
+        track_id: i64,
+        cx: &mut App,
+    ) -> anyhow::Result<()> {
+        let Some(pool) = &self.pool else {
+            return Err(anyhow!("Database not ready"));
+        };
+
+        sqlx::query(
+            "INSERT INTO playlist_tracks(playlist_id, track_id, sort_num, sort_dem)
+                    VALUES (
+                        ?,
+                        ?,
+                        (SELECT CEIL(MAX(sort_num / sort_dem)) FROM playlist_tracks WHERE playlist_id = ?),
+                        1
+                    )",
+        )
+        .bind(playlist_id)
+        .bind(track_id)
+        .bind(playlist_id)
+        .fetch_one(pool)
+        .await?;
+
+        cx.defer(|cx| {
+            cx.update_global::<Database, ()>(|_, _| {});
+        });
+
+        Ok(())
     }
 }
 

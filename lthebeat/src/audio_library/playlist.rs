@@ -55,7 +55,8 @@ impl Playlist {
                         JOIN tracks ON playlist_tracks.track_id = tracks.id
                             LEFT JOIN artist ON tracks.artist = artist.id
                             LEFT JOIN album ON tracks.album = album.id
-                     WHERE playlist_id = ?"
+                     WHERE playlist_id = ?
+                     ORDER BY playlist_tracks.sort_num / playlist_tracks.sort_dem"
                         .to_string(),
                     args,
                 )

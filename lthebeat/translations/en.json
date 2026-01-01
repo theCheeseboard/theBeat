@@ -1,5 +1,7 @@
 {
   "ADD_TO_PLAYLIST": "Add to playlist...",
+  "ADD_TO_PLAYLIST_PROMPT": "Which playlist?",
+  "ADD_TO_PLAYLIST_TITLE": "Add to playlist",
   "LIBRARY_TRACKS_ERROR": "Error loading tracks",
   "SCAN_JOB_COMPLETE_DESCRIPTION": "Library scan complete",
   "SCAN_JOB_DESCRIPTION": "Scanning library for music...",
