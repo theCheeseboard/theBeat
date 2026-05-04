@@ -247,36 +247,36 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
             loop {
                 match rx_event.recv().await {
                     Ok(event) => match event {
-                        MediaPlayerEvent::Play => cx
-                            .update_global::<AudioController, ()>(|audio_controller, cx| {
+                        MediaPlayerEvent::Play => {
+                            cx.update_global::<AudioController, ()>(|audio_controller, cx| {
                                 audio_controller.play(cx);
                             })
-                            .unwrap(),
-                        MediaPlayerEvent::Pause => cx
-                            .update_global::<AudioController, ()>(|audio_controller, cx| {
+                        }
+                        MediaPlayerEvent::Pause => {
+                            cx.update_global::<AudioController, ()>(|audio_controller, cx| {
                                 audio_controller.pause(cx);
                             })
-                            .unwrap(),
-                        MediaPlayerEvent::PlayPause => cx
-                            .update_global::<AudioController, ()>(|audio_controller, cx| {
+                        }
+                        MediaPlayerEvent::PlayPause => {
+                            cx.update_global::<AudioController, ()>(|audio_controller, cx| {
                                 audio_controller.play_pause(cx);
                             })
-                            .unwrap(),
-                        MediaPlayerEvent::SkipBack => cx
-                            .update_global::<PlayQueue, ()>(|play_queue, cx| {
+                        }
+                        MediaPlayerEvent::SkipBack => {
+                            cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
                                 play_queue.skip_previous();
                             })
-                            .unwrap(),
-                        MediaPlayerEvent::SkipForward => cx
-                            .update_global::<PlayQueue, ()>(|play_queue, cx| {
+                        }
+                        MediaPlayerEvent::SkipForward => {
+                            cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
                                 play_queue.skip_next();
                             })
-                            .unwrap(),
-                        MediaPlayerEvent::Seek(position) => cx
-                            .update_global::<PlayQueue, ()>(|play_queue, cx| {
+                        }
+                        MediaPlayerEvent::Seek(position) => {
+                            cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
                                 play_queue.seek_to_position(position, cx)
                             })
-                            .unwrap(),
+                        }
                     },
                     Err(_) => {
                         return;

@@ -29,20 +29,20 @@ impl DatabaseSetupInterstitial {
 impl RenderOnce for DatabaseSetupInterstitial {
     fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
         interstitial()
-            .icon("view-media-track".into())
-            .title(tr!("DATABASE_SETUP_INTERSTITIAL_TITLE", "Welcome to theBeat!").into())
-            .message(
-                tr!(
-                    "DATABASE_SETUP_INTERSTITIAL_MESSAGE",
-                    "Set up your library to see your music organised here"
-                )
-                .into(),
-            )
+            .icon("view-media-track")
+            .title(tr!(
+                "DATABASE_SETUP_INTERSTITIAL_TITLE",
+                "Welcome to theBeat!"
+            ))
+            .message(tr!(
+                "DATABASE_SETUP_INTERSTITIAL_MESSAGE",
+                "Set up your library to see your music organised here"
+            ))
             .child(
                 button("database-setup-library-setup-button")
                     .child(icon_text(
-                        "arrow-right".into(),
-                        tr!("DATABASE_SETUP_INTERSTITIAL_BUTTON_TEXT", "Set up library").into(),
+                        "arrow-right",
+                        tr!("DATABASE_SETUP_INTERSTITIAL_BUTTON_TEXT", "Set up library"),
                     ))
                     .when_some(
                         self.on_setup_button_click,

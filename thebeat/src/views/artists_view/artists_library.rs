@@ -115,14 +115,14 @@ impl Render for ArtistsLibrary {
                         Err(_) => interstitial()
                             .w_full()
                             .h_full()
-                            .icon("media-artists-cover".into())
-                            .title(tr!("LIBRARY_ARTISTS_ERROR", "Unable to load artists").into())
-                            .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE",).into())
+                            .icon("media-artists-cover")
+                            .title(tr!("LIBRARY_ARTISTS_ERROR", "Unable to load artists"))
+                            .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE"))
                             .child(
                                 button("tracks-corrupt-erase-button")
                                     .child(icon_text(
-                                        "view-refresh".into(),
-                                        tr!("LIBRARY_ERASE", "Erase Library").into(),
+                                        "view-refresh",
+                                        tr!("LIBRARY_ERASE", "Erase Library"),
                                     ))
                                     .destructive()
                                     .on_click(cx.listener(|_, _, _, cx| {

@@ -213,7 +213,6 @@ impl RenderOnce for PlaylistSelectionPopover {
             .visible(*self.visible.read(cx))
             .size_neg(100.)
             .anchor_bottom()
-            .render_as_deferred(true)
             .content(
                 div()
                     .flex()

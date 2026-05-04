@@ -139,13 +139,13 @@ impl Render for TransportControls {
                             .child(
                                 button("volume-button")
                                     .flat()
-                                    .child(icon("audio-volume-high".into())),
+                                    .child(icon("audio-volume-high")),
                             ),
                     )
                     .child(
                         button("shuffle-button")
                             .flat()
-                            .child(icon("media-playlist-shuffle".into()))
+                            .child(icon("media-playlist-shuffle"))
                             .checked_when(play_queue.shuffle)
                             .on_click(|_, _, cx| {
                                 cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
@@ -156,7 +156,7 @@ impl Render for TransportControls {
                     .child(
                         button("repeat-button")
                             .flat()
-                            .child(icon("media-repeat-single".into()))
+                            .child(icon("media-repeat-single"))
                             .checked_when(play_queue.repeat_one())
                             .on_click(|_, _, cx| {
                                 cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
@@ -167,7 +167,7 @@ impl Render for TransportControls {
                     .child(
                         button("skip-back-button")
                             .flat()
-                            .child(icon("media-skip-backward".into()))
+                            .child(icon("media-skip-backward"))
                             .on_click(|_, window, cx| {
                                 window.dispatch_action(SkipPreviousAction.boxed_clone(), cx)
                             }),
@@ -177,12 +177,8 @@ impl Render for TransportControls {
                             .flat()
                             .when_else(
                                 audio_controller.is_playing(),
-                                |button| {
-                                    button.child(icon("media-playback-pause".into()).size(32.))
-                                },
-                                |button| {
-                                    button.child(icon("media-playback-start".into()).size(32.))
-                                },
+                                |button| button.child(icon("media-playback-pause").size(32.)),
+                                |button| button.child(icon("media-playback-start").size(32.)),
                             )
                             .on_click(|_, _, cx| {
                                 cx.update_global::<AudioController, ()>(|audio_controller, cx| {
@@ -193,7 +189,7 @@ impl Render for TransportControls {
                     .child(
                         button("skip-forward-button")
                             .flat()
-                            .child(icon("media-skip-forward".into()))
+                            .child(icon("media-skip-forward"))
                             .on_click(|_, window, cx| {
                                 window.dispatch_action(SkipNextAction.boxed_clone(), cx)
                             }),
@@ -293,10 +289,7 @@ impl Styled for TransportControls {
 
 fn tabular_numbers(text: String) -> Div {
     let mut david = div().child(text);
-    let ff = &mut david
-        .text_style()
-        .get_or_insert_with(Default::default)
-        .font_features;
+    let ff = &mut david.text_style().font_features;
     *ff = Some(FontFeatures(Arc::new(vec![("tnum".to_string(), 1)])));
     david
 }

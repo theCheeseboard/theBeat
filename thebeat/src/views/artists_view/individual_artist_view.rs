@@ -107,9 +107,9 @@ impl Render for IndividualArtistView {
                 Err(_) => interstitial()
                     .w_full()
                     .h_full()
-                    .icon("media-artists-cover".into())
-                    .title(tr!("LIBRARY_ARTISTS_ERROR", "Unable to load artists").into())
-                    .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE",).into())
+                    .icon("media-artists-cover")
+                    .title(tr!("LIBRARY_ARTISTS_ERROR", "Unable to load artists"))
+                    .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE"))
                     .into_any_element(),
             },
             _ => div().child(spinner()).into_any_element(),

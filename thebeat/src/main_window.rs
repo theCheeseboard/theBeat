@@ -55,7 +55,7 @@ impl MainWindow {
                 is_url_dialog_open: false,
                 url_text_field: cx.new(|cx| {
                     let mut text_field = TextField::new("url_text_field", cx);
-                    text_field.set_placeholder(tr!("URL_TEXT_FIELD_PLACEHOLDER", "URL").to_string().as_str());
+                    text_field.set_placeholder(&tr!("URL_TEXT_FIELD_PLACEHOLDER", "URL"));
                     text_field
                 }),
             }
@@ -115,7 +115,7 @@ impl Render for MainWindow {
             .child(
                 dialog_box("open_url_dialog_box")
                     .visible(self.is_url_dialog_open)
-                    .title(tr!("URL_OPEN_TITLE", "Open URL").into())
+                    .title(tr!("URL_OPEN_TITLE", "Open URL"))
                     .content(
                         div()
                             .flex()
@@ -137,7 +137,7 @@ impl Render for MainWindow {
                         cx.listener(|this, _, _, cx| {
                             let text_field = this.url_text_field.read(cx);
                             let current_text = text_field.text();
-                            match Url::parse(current_text) {
+                            match Url::parse(current_text.to_string().as_str()) {
                                 Ok(url) => {
                                     let item = MediaItem::new(url, cx);
                                     cx.update_global::<PlayQueue, ()>(|play_queue, cx| {

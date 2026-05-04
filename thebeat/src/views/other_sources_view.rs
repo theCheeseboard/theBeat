@@ -26,20 +26,14 @@ impl Render for OtherSourcesView {
             .child(
                 interstitial()
                     .size_full()
-                    .title(
-                        tr!(
-                            "OTHER_SOURCES_UNAVAILABLE_TITLE",
-                            "No other sources available"
-                        )
-                        .into(),
-                    )
-                    .message(
-                        tr!(
-                            "OTHER_SOURCES_UNAVAILABLE_MESSAGE",
-                            "There's nothing else to play right now."
-                        )
-                        .into(),
-                    ),
+                    .title(tr!(
+                        "OTHER_SOURCES_UNAVAILABLE_TITLE",
+                        "No other sources available"
+                    ))
+                    .message(tr!(
+                        "OTHER_SOURCES_UNAVAILABLE_MESSAGE",
+                        "There's nothing else to play right now."
+                    )),
             )
     }
 }

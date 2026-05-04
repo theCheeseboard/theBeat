@@ -24,11 +24,10 @@ impl MediaItem {
                 cx.update_entity(&entity_clone, |media_item, cx| {
                     media_item.meta = meta;
                     cx.notify()
-                })
-                    .unwrap();
+                });
             }
         })
-            .detach();
+        .detach();
 
         entity
     }

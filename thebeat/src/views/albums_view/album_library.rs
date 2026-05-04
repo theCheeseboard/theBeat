@@ -115,14 +115,14 @@ impl Render for AlbumLibrary {
                         Err(_) => interstitial()
                             .w_full()
                             .h_full()
-                            .icon("media-album-cover".into())
-                            .title(tr!("LIBRARY_ALBUMS_ERROR", "Unable to load albums").into())
-                            .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE",).into())
+                            .icon("media-album-cover")
+                            .title(tr!("LIBRARY_ALBUMS_ERROR", "Unable to load albums"))
+                            .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE"))
                             .child(
                                 button("tracks-corrupt-erase-button")
                                     .child(icon_text(
-                                        "view-refresh".into(),
-                                        tr!("LIBRARY_ERASE", "Erase Library").into(),
+                                        "view-refresh",
+                                        tr!("LIBRARY_ERASE", "Erase Library"),
                                     ))
                                     .destructive()
                                     .on_click(cx.listener(|_, _, _, cx| {

@@ -49,7 +49,7 @@ fn mane() {
         cx.set_global(play_queue);
         cx.set_global(audio_controller);
 
-        let default_window_options = contemporary_window_options(cx, "theBeat".into());
+        let default_window_options = contemporary_window_options(cx, "theBeat");
         register_actions(cx);
         cx.open_window(
             WindowOptions {
@@ -113,6 +113,7 @@ fn mane() {
                                             DatabaseSetupAction,
                                         ),
                                     ],
+                                    disabled: false,
                                 },
                                 Menu {
                                     name: tr!("MENU_PLAYBACK", "Playback").into(),
@@ -148,6 +149,7 @@ fn mane() {
                                             ToggleShuffleAction,
                                         ),
                                     ],
+                                    disabled: false,
                                 },
                             ],
                             on_about: Rc::new(move |cx| {

@@ -185,7 +185,7 @@ impl Render for DatabaseSetupSurface {
                                                                 button("remove-button")
                                                                     .flat()
                                                                     .child(icon(
-                                                                        "list-remove".into(),
+                                                                        "list-remove",
                                                                     ))
                                                                     .on_click(move |_, _, cx| {
                                                                         weak_this
@@ -212,12 +212,11 @@ impl Render for DatabaseSetupSurface {
                                 .child(
                                     div().flex().child(div().flex_grow()).child(
                                         button("add-other-folder").child(icon_text(
-                                            "list-add".into(),
+                                            "list-add",
                                             tr!(
                                                 "DATABASE_SETUP_OTHER_SCAN_FOLDERS_ADD",
                                                 "Browse for folder..."
-                                            )
-                                            .into(),
+                                            ),
                                         ))
                                         .on_click(cx.listener(|_, _, _, cx| {
                                             let future = cx.prompt_for_paths(PathPromptOptions {
@@ -237,7 +236,7 @@ impl Render for DatabaseSetupSurface {
                                                         }
 
                                                         cx.notify();
-                                                    }).unwrap();
+                                                    });
                                                 }
                                             })
                                                 .detach()
@@ -252,8 +251,7 @@ impl Render for DatabaseSetupSurface {
                             tr!(
                                 "DATABASE_SETUP_SUBMIT_ERROR_TITLE",
                                 "Unable to save library setup"
-                            )
-                            .into(),
+                            ),
                         )
                         .content(tr!(
                             "DATABASE_SETUP_SUBMIT_ERROR_MESSAGE",

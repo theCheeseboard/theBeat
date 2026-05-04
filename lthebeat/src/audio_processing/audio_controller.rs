@@ -34,14 +34,12 @@ impl AudioController {
                 event_channel.recv().await.unwrap();
                 cx.update_global::<AudioController, ()>(|_, _| {
                     // Do nothing
-                })
-                .unwrap();
+                });
                 cx.update_global::<Platform, ()>(|platform, cx| {
                     let metadata = current_meta.read().unwrap().clone();
                     platform.new_metadata_available(metadata, cx)
-                })
-                .unwrap();
-                cx.refresh().unwrap();
+                });
+                cx.refresh();
             }
         })
         .detach();

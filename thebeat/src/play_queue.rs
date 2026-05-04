@@ -32,7 +32,8 @@ pub fn play_queue() -> PlayQueue {
 
 impl RenderOnce for PlayQueue {
     fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {
-        let list_state = window.use_state(cx, |_, _| ListState::new(0, ListAlignment::Top, px(200.)));
+        let list_state =
+            window.use_state(cx, |_, _| ListState::new(0, ListAlignment::Top, px(200.)));
 
         let audio_controller = cx.global::<AudioController>();
         let play_queue = cx.global::<lthebeat::play_queue::PlayQueue>();
@@ -65,8 +66,8 @@ impl RenderOnce for PlayQueue {
                         pager("queue-pager", if display_queue.is_empty() { 0 } else { 1 }).flex_grow()
                             .animation(FadeAnimation::new())
                             .page(interstitial()
-                                .title(tr!("QUEUE_EMPTY_TITLE", "Nothing here!").into())
-                                .message(tr!("QUEUE_EMPTY_MESSAGE", "Select a track or drop something here!").into())
+                                .title(tr!("QUEUE_EMPTY_TITLE", "Nothing here!"))
+                                .message(tr!("QUEUE_EMPTY_MESSAGE", "Select a track or drop something here!"))
                                 .h_full()
                                 .into_any_element())
                             .page(div().h_full()
@@ -143,7 +144,7 @@ impl RenderOnce for PlayQueue {
                                                                         .justify_center()
                                                                         .bg(rgba(0x00000070))
                                                                         .child(icon(
-                                                                            "media-playback-start".into(),
+                                                                            "media-playback-start",
                                                                         )),
                                                                 )
                                                             },
@@ -204,7 +205,7 @@ impl RenderOnce for PlayQueue {
                                                             current_track == Some(item_entity.entity_id()),
                                                             |div| {
                                                                 div.child(icon(
-                                                                    "media-playback-start".into(),
+                                                                    "media-playback-start",
                                                                 ))
                                                             },
                                                             |div| {

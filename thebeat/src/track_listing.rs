@@ -56,8 +56,8 @@ impl RenderOnce for TrackListing {
                                     .flat()
                                     .justify_start()
                                     .child(icon_text(
-                                        "media-playback-start".into(),
-                                        tr!("TRACK_LISTING_PLAY_ALL", "Play All").into(),
+                                        "media-playback-start",
+                                        tr!("TRACK_LISTING_PLAY_ALL", "Play All"),
                                     ))
                                     .on_click(move |_, _, cx| {
                                         play_all(database_query_clone_2.clone(), cx);
@@ -68,8 +68,8 @@ impl RenderOnce for TrackListing {
                                     .flat()
                                     .justify_start()
                                     .child(icon_text(
-                                        "view-media-playlist".into(),
-                                        tr!("TRACK_LISTING_ENQUEUE_ALL", "Enqueue All").into(),
+                                        "view-media-playlist",
+                                        tr!("TRACK_LISTING_ENQUEUE_ALL", "Enqueue All"),
                                     ))
                                     .on_click(move |_, _, cx| {
                                         enqueue_all(database_query_clone_3.clone(), cx);
@@ -80,8 +80,8 @@ impl RenderOnce for TrackListing {
                                     .flat()
                                     .justify_start()
                                     .child(icon_text(
-                                        "media-playlist-shuffle".into(),
-                                        tr!("TRACK_LISTING_SHUFFLE_ALL", "Shuffle All").into(),
+                                        "media-playlist-shuffle",
+                                        tr!("TRACK_LISTING_SHUFFLE_ALL", "Shuffle All"),
                                     ))
                                     .on_click(move |_, _, cx| {
                                         shuffle_all(database_query_clone_4.clone(), cx);
@@ -92,8 +92,8 @@ impl RenderOnce for TrackListing {
                                     .flat()
                                     .justify_start()
                                     .child(icon_text(
-                                        "tools-media-optical-burn".into(),
-                                        tr!("TRACK_LISTING_BURN", "Burn").into(),
+                                        "tools-media-optical-burn",
+                                        tr!("TRACK_LISTING_BURN", "Burn"),
                                     )),
                             ),
                     )

@@ -108,8 +108,8 @@ impl Database {
         };
 
         let job = Rc::new(RefCell::new(StandardJob::new_transient(
-            tr!("SCAN_JOB_TITLE", "Library Scan").into(),
-            tr!("SCAN_JOB_DESCRIPTION", "Scanning library for music...").into(),
+            tr!("SCAN_JOB_TITLE", "Library Scan"),
+            tr!("SCAN_JOB_DESCRIPTION", "Scanning library for music..."),
         )));
         let job_entity_source = job.clone();
         let job_entity = cx.new::<Jobling>(|_| job_entity_source);
@@ -118,12 +118,10 @@ impl Database {
 
         let pool = pool.clone();
         cx.spawn(async move |cx: &mut AsyncApp| {
-            job_clone
-                .update(cx, |_, cx| {
-                    job.borrow_mut().update_job_progress(0, 0);
-                    cx.notify();
-                })
-                .unwrap();
+            job_clone.update(cx, |_, cx| {
+                job.borrow_mut().update_job_progress(0, 0);
+                cx.notify();
+            });
 
             // Search scans
             let mut scans_query = sqlx::query("SELECT path FROM scans").fetch(&pool);
@@ -165,29 +163,26 @@ impl Database {
                 }
             }
 
-            job_clone
-                .update(cx, |_, cx| {
-                    if errors_encountered == 0 {
-                        job.borrow_mut().update_job_status(
-                            tr!("SCAN_JOB_COMPLETE_DESCRIPTION", "Library scan complete").into(),
-                            JobStatus::Completed,
-                        );
-                        cx.notify();
-                    } else {
-                        job.borrow_mut().update_job_status(
-                            trn!(
-                                "SCAN_JOB_ERROR_DESCRIPTION",
-                                "Library scan complete, but {{count}} error was reported",
-                                "Library scan complete, but {{count}} errors were reported",
-                                count = errors_encountered as isize
-                            )
-                            .into(),
-                            JobStatus::Failed,
-                        );
-                        cx.notify();
-                    }
-                })
-                .unwrap();
+            job_clone.update(cx, |_, cx| {
+                if errors_encountered == 0 {
+                    job.borrow_mut().update_job_status(
+                        tr!("SCAN_JOB_COMPLETE_DESCRIPTION", "Library scan complete"),
+                        JobStatus::Completed,
+                    );
+                    cx.notify();
+                } else {
+                    job.borrow_mut().update_job_status(
+                        trn!(
+                            "SCAN_JOB_ERROR_DESCRIPTION",
+                            "Library scan complete, but {{count}} error was reported",
+                            "Library scan complete, but {{count}} errors were reported",
+                            count = errors_encountered as isize
+                        ),
+                        JobStatus::Failed,
+                    );
+                    cx.notify();
+                }
+            });
         })
         .detach();
 
@@ -546,7 +541,7 @@ async fn scan_file_into_pool(
         .execute(pool)
         .await?;
 
-        cx.update_global::<Database, ()>(|_, _| ()).unwrap();
+        cx.update_global::<Database, ()>(|_, _| ());
     }
 
     Ok(())

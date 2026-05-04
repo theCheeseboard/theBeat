@@ -93,22 +93,17 @@ impl Render for TracksView {
                                 Err(_) => interstitial()
                                     .w_full()
                                     .h_full()
-                                    .icon("view-media-track".into())
-                                    .title(
-                                        tr!("LIBRARY_TRACKS_ERROR", "Unable to load tracks").into(),
-                                    )
-                                    .message(
-                                        tr!(
-                                            "LIBRARY_CORRUPT_ERROR_MESSAGE",
-                                            "Your library may be corrupt. Try erasing your library."
-                                        )
-                                        .into(),
-                                    )
+                                    .icon("view-media-track")
+                                    .title(tr!("LIBRARY_TRACKS_ERROR", "Unable to load tracks"))
+                                    .message(tr!(
+                                        "LIBRARY_CORRUPT_ERROR_MESSAGE",
+                                        "Your library may be corrupt. Try erasing your library."
+                                    ))
                                     .child(
                                         button("tracks-corrupt-erase-button")
                                             .child(icon_text(
-                                                "view-refresh".into(),
-                                                tr!("LIBRARY_ERASE", "Erase Library").into(),
+                                                "view-refresh",
+                                                tr!("LIBRARY_ERASE", "Erase Library"),
                                             ))
                                             .destructive()
                                             .on_click(cx.listener(|_, _, _, cx| {

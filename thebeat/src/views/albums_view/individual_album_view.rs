@@ -107,9 +107,9 @@ impl Render for IndividualAlbumView {
                 Err(_) => interstitial()
                     .w_full()
                     .h_full()
-                    .icon("media-album-cover".into())
-                    .title(tr!("LIBRARY_ALBUM_ERROR", "Unable to load album").into())
-                    .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE",).into())
+                    .icon("media-album-cover")
+                    .title(tr!("LIBRARY_ALBUM_ERROR", "Unable to load album"))
+                    .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE"))
                     .into_any_element(),
             },
             _ => div().child(spinner()).into_any_element(),

@@ -7,13 +7,13 @@
   },
   "ADD_TO_PLAYLIST_PROMPT": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:236",
+    "definedIn": "src/audio_library/track.rs:235",
     "plural": false,
     "description": null
   },
   "ADD_TO_PLAYLIST_TITLE": {
     "context": "track.rs",
-    "definedIn": "src/audio_library/track.rs:224",
+    "definedIn": "src/audio_library/track.rs:223",
     "plural": false,
     "description": null
   },
@@ -25,7 +25,7 @@
   },
   "SCAN_JOB_COMPLETE_DESCRIPTION": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:172",
+    "definedIn": "src/audio_library/database.rs:169",
     "plural": false,
     "description": null
   },
@@ -37,7 +37,7 @@
   },
   "SCAN_JOB_ERROR_DESCRIPTION": {
     "context": "database.rs",
-    "definedIn": "src/audio_library/database.rs:179",
+    "definedIn": "src/audio_library/database.rs:176",
     "plural": true,
     "description": null
   },

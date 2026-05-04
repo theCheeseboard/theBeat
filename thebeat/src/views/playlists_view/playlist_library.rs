@@ -87,7 +87,7 @@ impl Render for PlaylistLibrary {
                     .pt(px(36.))
                     .child(
                         button("playlist-create-button")
-                            .child(icon("list-add".into()))
+                            .child(icon("list-add"))
                             .flat()
                             .on_click(cx.listener(|this, _, _, cx| {
                                 this.create_playlist_dialog_open = true;
@@ -135,17 +135,12 @@ impl Render for PlaylistLibrary {
                         Err(_) => interstitial()
                             .w_full()
                             .h_full()
-                            .icon("view-media-playlist".into())
-                            .title(
-                                tr!("LIBRARY_PLAYLISTS_ERROR", "Unable to load playlists").into(),
-                            )
-                            .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE",).into())
+                            .icon("view-media-playlist")
+                            .title(tr!("LIBRARY_PLAYLISTS_ERROR", "Unable to load playlists"))
+                            .message(tr!("LIBRARY_CORRUPT_ERROR_MESSAGE"))
                             .child(
                                 button("tracks-corrupt-erase-button")
-                                    .child(icon_text(
-                                        "view-refresh".into(),
-                                        tr!("LIBRARY_ERASE").into(),
-                                    ))
+                                    .child(icon_text("view-refresh", tr!("LIBRARY_ERASE")))
                                     .destructive()
                                     .on_click(cx.listener(|_, _, _, cx| {
                                         cx.update_global::<Database, ()>(|database, cx| {
@@ -162,7 +157,7 @@ impl Render for PlaylistLibrary {
             .child(
                 dialog_box("create-playlist-dialog-box")
                     .visible(self.create_playlist_dialog_open)
-                    .title(tr!("PLAYLIST_CREATE_TITLE", "Create Playlist").into())
+                    .title(tr!("PLAYLIST_CREATE_TITLE", "Create Playlist"))
                     .content(
                         div()
                             .flex()
@@ -185,25 +180,27 @@ impl Render for PlaylistLibrary {
                     .button(
                         button("create-button")
                             .child(icon_text(
-                                "list-add".into(),
-                                tr!("PLAYLIST_CREATE_BUTTON", "Create").into(),
+                                "list-add",
+                                tr!("PLAYLIST_CREATE_BUTTON", "Create"),
                             ))
                             .on_click(cx.listener(|this, _, window, cx| {
                                 cx.update_global::<Database, _>(|db, cx| {
-                                    let playlist_name = this.create_playlist_name.read(cx).text().to_string();
-                                    match smol::block_on(
-                                        db.create_playlist(&playlist_name, cx),
-                                    ) {
+                                    let playlist_name =
+                                        this.create_playlist_name.read(cx).text().to_string();
+                                    match smol::block_on(db.create_playlist(&playlist_name, cx)) {
                                         Ok(playlist_id) => {
                                             this.create_playlist_dialog_open = false;
                                         }
                                         Err(e) => {
                                             let error_message = format!("{e}");
                                             Toast::new()
-                                                .title(&tr!(
-                                                    "PLAYLIST_CREATE_ERROR_TITLE",
-                                                    "Playlist not created"
-                                                ).to_string())
+                                                .title(
+                                                    &tr!(
+                                                        "PLAYLIST_CREATE_ERROR_TITLE",
+                                                        "Playlist not created"
+                                                    )
+                                                    .to_string(),
+                                                )
                                                 .body(&error_message)
                                                 .severity(AdmonitionSeverity::Error)
                                                 .post(window, cx)

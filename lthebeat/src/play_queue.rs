@@ -9,6 +9,7 @@ use crate::audio_processing::audio_pipeline::{
 };
 use crate::audio_processing::input_engines::{Controller, faucet_for_url};
 use crate::cyclic_cursor_vec::CyclicCursorVec;
+use crate::platform::{Platform, PlatformHandler};
 use crate::play_queue::media_item::MediaItem;
 use async_lock::RwLock;
 use async_ringbuf::AsyncHeapProd;
@@ -19,7 +20,6 @@ use rand::{random_range, rng, thread_rng};
 use smol::io::AsyncSeekExt;
 use std::sync::Arc;
 use std::time::Duration;
-use crate::platform::{Platform, PlatformHandler};
 
 struct FaucetQueueItem {
     associated_item: Entity<MediaItem>,
@@ -74,16 +74,14 @@ impl PlayQueue {
 
                     let next_media_item_entity = played_items.next();
 
-                    if let Some(mut controller) = next_media_item_entity
-                        .update(cx, |next_media_item, cx| {
+                    if let Some(mut controller) =
+                        next_media_item_entity.update(cx, |next_media_item, cx| {
                             faucet_for_url(
                                 next_media_item.url.clone(),
                                 Some(next_media_item_entity.clone()),
-                                cx
+                                cx,
                             )
                         })
-                        .ok()
-                        .flatten()
                     {
                         faucet_queue_borrow.push(FaucetQueueItem {
                             faucet: controller.faucet(),

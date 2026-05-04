@@ -81,6 +81,7 @@ impl MainSurface {
                         MenuItem::separator(),
                         MenuItem::action(tr!("FILE_DATABASE_SETUP"), DatabaseSetupAction),
                     ],
+                    disabled: false,
                 },
             ),
             selected_tab: Tracks,
@@ -111,8 +112,8 @@ impl Render for MainSurface {
                         .child(
                             button("tracks-button")
                                 .child(icon_text(
-                                    "view-media-track".into(),
-                                    tr!("TRACKS_BUTTON", "Tracks").into(),
+                                    "view-media-track",
+                                    tr!("TRACKS_BUTTON", "Tracks"),
                                 ))
                                 .checked_when(self.selected_tab == Tracks)
                                 .on_click(cx.listener(|this, _, _, cx| {
@@ -123,8 +124,8 @@ impl Render for MainSurface {
                         .child(
                             button("artists-button")
                                 .child(icon_text(
-                                    "view-media-artist".into(),
-                                    tr!("ARTISTS_BUTTON", "Artists").into(),
+                                    "view-media-artist",
+                                    tr!("ARTISTS_BUTTON", "Artists"),
                                 ))
                                 .checked_when(self.selected_tab == Artists)
                                 .on_click(cx.listener(|this, _, _, cx| {
@@ -135,8 +136,8 @@ impl Render for MainSurface {
                         .child(
                             button("albums-button")
                                 .child(icon_text(
-                                    "media-album-cover".into(),
-                                    tr!("ALBUMS_BUTTON", "Albums").into(),
+                                    "media-album-cover",
+                                    tr!("ALBUMS_BUTTON", "Albums"),
                                 ))
                                 .checked_when(self.selected_tab == Albums)
                                 .on_click(cx.listener(|this, _, _, cx| {
@@ -147,8 +148,8 @@ impl Render for MainSurface {
                         .child(
                             button("playlists-button")
                                 .child(icon_text(
-                                    "view-media-playlist".into(),
-                                    tr!("PLAYLISTS_BUTTON", "Playlists").into(),
+                                    "view-media-playlist",
+                                    tr!("PLAYLISTS_BUTTON", "Playlists"),
                                 ))
                                 .checked_when(self.selected_tab == Playlists)
                                 .on_click(cx.listener(|this, _, _, cx| {
@@ -159,8 +160,8 @@ impl Render for MainSurface {
                         .child(
                             button("other-sources-button")
                                 .child(icon_text(
-                                    "view-list-details".into(),
-                                    tr!("OTHER_SOURCES_BUTTON", "Other Sources").into(),
+                                    "view-list-details",
+                                    tr!("OTHER_SOURCES_BUTTON", "Other Sources"),
                                 ))
                                 .checked_when(self.selected_tab == OtherSources)
                                 .on_click(cx.listener(|this, _, _, cx| {

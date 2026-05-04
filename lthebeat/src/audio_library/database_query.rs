@@ -71,8 +71,7 @@ where
                     cx.update_entity(&items[i], |item, cx| {
                         item.read_from_row(row, &pool);
                         cx.notify();
-                    })
-                    .unwrap();
+                    });
                     i += 1;
                 }
             })

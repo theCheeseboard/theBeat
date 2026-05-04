@@ -58,8 +58,7 @@ fn open_file(_: &OpenFileAction, cx: &mut App) {
                     play_queue.add_item(item, cx);
                 }
             }
-        })
-        .unwrap();
+        });
     })
     .detach()
 }
