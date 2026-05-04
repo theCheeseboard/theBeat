@@ -34,6 +34,7 @@ jobs:
             libasound2-dev \
             libcdio-dev \
             libiso9660-dev \
+            libudf-dev \
             libfontconfig-dev
           rustup update
       - uses: Swatinem/rust-cache@v2
