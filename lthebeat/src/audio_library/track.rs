@@ -196,12 +196,14 @@ impl RenderOnce for PlaylistSelectionPopover {
                     >,
                                 cx: &mut AsyncApp| {
                         let playlist_query = query.await;
-                        let _ = playlists_view.upgrade().unwrap().write(
-                            cx,
-                            playlist_query
-                                .ok()
-                                .map(|playlist_query| RefCell::new(playlist_query)),
-                        );
+                        if let Some(playlists_view) = playlists_view.upgrade() {
+                            playlists_view.write(
+                                cx,
+                                playlist_query
+                                    .ok()
+                                    .map(|playlist_query| RefCell::new(playlist_query)),
+                            )
+                        }
                     },
                 )
                 .detach();
