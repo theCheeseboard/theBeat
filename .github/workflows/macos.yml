@@ -8,23 +8,30 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [ macos-latest ]
     runs-on: ${{ matrix.os }}
+    env:
+      BIN_CHICKEN_SIGNATURE_PUBLIC_KEY: ${{ vars.MINISIGN_PUBLIC_KEY }}
     steps:
+      - name: Generate build UUID
+        id: build_uuid
+        run: |
+          BUILD_UUID=$(uuidgen)
+          echo "BUILD_UUID=$BUILD_UUID" >> $GITHUB_OUTPUT
+          echo "BIN_CHICKEN_UUID=$BUILD_UUID" >> $GITHUB_ENV
+          echo "The UUID for this build is $BUILD_UUID"
       - uses: actions/checkout@v4
         with:
           submodules: "true"
       - name: Update Rust
         run: |
           rustup update
-          rustup target install x86_64-apple-darwin
       - uses: Swatinem/rust-cache@v2
       - uses: r7kamura/rust-problem-matchers@v1
       - name: Install libcontemporary utils
         run: |
-          git clone https://github.com/vicr123/contemporary-rs
-          cargo install --path ./contemporary-rs/deploy_tool/cargo_cntp_bundle
-          cargo install --path ./contemporary-rs/deploy_tool/cargo_cntp_deploy
+          cargo install --git https://github.com/vicr123/contemporary-rs.git cargo-cntp-bundle
+          cargo install --git https://github.com/vicr123/contemporary-rs.git cargo-cntp-deploy
       - name: Build (arm)
         run: cargo build --verbose --release
       - name: Build (x86_64)
@@ -32,10 +39,156 @@ jobs:
       - name: Bundle
         run: cargo cntp-bundle --target x86_64-apple-darwin --target aarch64-apple-darwin
         working-directory: thebeat
+      # Codesigning adapted from https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/
+      - name: Codesign app bundle
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE }}
+          MACOS_CERTIFICATE_PWD: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
+          MACOS_CERTIFICATE_NAME: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_NAME }}
+          MACOS_CI_KEYCHAIN_PWD: ${{ secrets.APPLE_DEVELOPER_KEYCHAIN_PASSWORD }}
+        run: |
+          # Turn our base64-encoded certificate back to a regular .p12 file
+
+          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+
+          # We need to create a new keychain, otherwise using the certificate will prompt
+          # with a UI dialog asking for the certificate password, which we can't
+          # use in a headless CI environment
+
+          security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+
+          # We finally codesign our app bundle, specifying the Hardened runtime option
+
+          /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime target/bundle/*/release/*.app -v
+      - name: "Notarize app bundle"
+        env:
+          PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.APPLE_NOTARIZATION_APPLE_ID }}
+          PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.APPLE_NOTARIZATION_TEAM_ID }}
+          PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.APPLE_NOTARIZATION_PASSWORD }}
+        run: |
+          # Store the notarization credentials so that we can prevent a UI password dialog
+          # from blocking the CI
+
+          echo "Create keychain profile"
+          xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
+
+          # We can't notarize an app bundle directly, but we need to compress it as an archive.
+          # Therefore, we create a zip file containing our app bundle, so that we can send it to the
+          # notarization service
+
+          echo "Creating temp notarization archive"
+          ditto -c -k --keepParent target/bundle/*/release/*.app "notarization.zip"
+
+          # Here we send the notarization request to the Apple's Notarization service, waiting for the result.
+          # This typically takes a few seconds inside a CI environment, but it might take more depending on the App
+          # characteristics. Visit the Notarization docs for more information and strategies on how to optimize it if
+          # you're curious
+
+          echo "Notarize app"
+          xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
+
+          # Finally, we need to "attach the staple" to our executable, which will allow our app to be
+          # validated by macOS even when an internet connection is not available.
+          echo "Attach staple"
+          xcrun stapler staple target/bundle/*/release/*.app
       - name: Deploy
         run: cargo cntp-deploy --target x86_64-apple-darwin --target aarch64-apple-darwin --output-file "$HOME/theBeat-macOS.dmg"
         working-directory: thebeat
+      - name: Build Zip
+        run: |
+          cd target/bundle/x86_64-apple-darwin-aarch64-apple-darwin/release
+          zip -r ~/theBeat-macOS.zip *.app
       - uses: actions/upload-artifact@v4
         with:
           name: theBeat-macOS
           path: "~/theBeat-macOS.dmg"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: theBeat-macOS-zip
+          path: "~/theBeat-macOS.zip"
+      - name: Print build UUID
+        env:
+          BUILD_UUID: ${{ steps.build_uuid.outputs.BUILD_UUID }}
+        run: echo "$BUILD_UUID" > build_uuid.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build_uuid
+          path: build_uuid.txt
+  bin-chicken-dmg:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install minisign
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y minisign
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: theBeat-macOS
+      - name: Sign artifact
+        env:
+          MINISIGN_PRIV_KEY: ${{ secrets.MINISIGN_KEY }}
+        run: |
+          printf '%s' "$MINISIGN_PRIV_KEY" > minisign.key
+          minisign -S -s minisign.key -m theBeat-macOS.dmg
+      - name: Upload to bin-chicken
+        env:
+          BIN_CHICKEN_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BIN_CHICKEN_CHANNEL: blueprint
+          BIN_CHICKEN_TARGET: aarch64-apple-darwin-dmg
+          BIN_CHICKEN_REPOSITORY: thebeat
+          UPLOAD_FILE: "theBeat-macOS.dmg"
+        run: |
+          curl -v --fail-with-body -T $UPLOAD_FILE \
+            -H "Authorization: Bearer $BIN_CHICKEN_TOKEN" \
+            -H "Content-Type: application/octet-stream" \
+            -H "X-Bin-Chicken-Channel: $BIN_CHICKEN_CHANNEL" \
+            -H "X-Bin-Chicken-Target: $BIN_CHICKEN_TARGET" \
+            -H "X-Bin-Chicken-UUID: $(uuidgen)" \
+            -H "X-Bin-Chicken-Original-Filename: $UPLOAD_FILE" \
+            -H "X-Bin-Chicken-Signature: $(cat $UPLOAD_FILE.minisig | base64 -w 0)" \
+            https://binchicken.vicr123.com/api/repositories/$BIN_CHICKEN_REPOSITORY
+  bin-chicken-zip:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install minisign
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y minisign
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: theBeat-macOS-zip
+      - name: Download build UUID
+        uses: actions/download-artifact@v4
+        with:
+          name: build_uuid
+      - name: Sign artifact
+        env:
+          MINISIGN_PRIV_KEY: ${{ secrets.MINISIGN_KEY }}
+        run: |
+          printf '%s' "$MINISIGN_PRIV_KEY" > minisign.key
+          minisign -S -s minisign.key -m theBeat-macOS.zip
+      - name: Upload to bin-chicken
+        env:
+          BIN_CHICKEN_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BIN_CHICKEN_CHANNEL: blueprint
+          BIN_CHICKEN_TARGET: aarch64-apple-darwin
+          BIN_CHICKEN_REPOSITORY: thebeat
+          UPLOAD_FILE: "theBeat-macOS.zip"
+        run: |
+          curl -v --fail-with-body -T $UPLOAD_FILE \
+            -H "Authorization: Bearer $BIN_CHICKEN_TOKEN" \
+            -H "Content-Type: application/octet-stream" \
+            -H "X-Bin-Chicken-Channel: $BIN_CHICKEN_CHANNEL" \
+            -H "X-Bin-Chicken-Target: $BIN_CHICKEN_TARGET" \
+            -H "X-Bin-Chicken-UUID: $(cat build_uuid.txt)" \
+            -H "X-Bin-Chicken-Original-Filename: $UPLOAD_FILE" \
+            -H "X-Bin-Chicken-Signature: $(cat $UPLOAD_FILE.minisig | base64 -w 0)" \
+            https://binchicken.vicr123.com/api/repositories/$BIN_CHICKEN_REPOSITORY
