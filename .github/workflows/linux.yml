@@ -35,6 +35,8 @@ jobs:
             libcdio-dev \
             libiso9660-dev \
             libudf-dev \
+            libcdio-paranoia-dev \
+            libcdio-cdda-dev \
             libfontconfig-dev
           rustup update
       - uses: Swatinem/rust-cache@v2
