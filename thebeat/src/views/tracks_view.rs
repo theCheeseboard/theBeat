@@ -86,7 +86,7 @@ impl Render for TracksView {
                         .child(match self.tracks_query.as_mut() {
                             Some(tracks_query) => match tracks_query.borrow().deref() {
                                 Ok(_) => div()
-                                    .flex_grow()
+                                    .flex_grow(1.)
                                     .w_full()
                                     .child(track_listing(tracks_query.clone()))
                                     .into_any_element(),

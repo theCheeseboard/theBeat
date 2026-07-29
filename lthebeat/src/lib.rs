@@ -9,7 +9,7 @@ mod platform;
 pub mod play_queue;
 
 pub fn setup_libthebeat(cx: &mut App) {
-    I18N_MANAGER.write().unwrap().load_source(tr_load!());
+    I18N_MANAGER.load_source(tr_load!());
     setup_platform(cx);
     
     #[cfg(target_os = "linux")]

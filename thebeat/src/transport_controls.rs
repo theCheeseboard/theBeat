@@ -94,7 +94,7 @@ impl Render for TransportControls {
                         div()
                             .flex()
                             .flex_col()
-                            .flex_grow()
+                            .flex_grow(1.)
                             .overflow_hidden()
                             .child(div().text_size(px(18.)).text_ellipsis().child(title))
                             .child(div().text_ellipsis().child(supplementary)),
@@ -212,7 +212,7 @@ impl Render for TransportControls {
                     .child(
                         slider("seek-slider")
                             .h(px(20.))
-                            .flex_grow()
+                            .flex_grow(1.)
                             .when_some(meta.duration, |slider, duration| {
                                 slider.when_some(current_time, |slider, current_time| {
                                     slider

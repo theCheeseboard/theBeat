@@ -181,11 +181,11 @@ impl Render for MainSurface {
                     .child(
                         div()
                             .flex()
-                            .flex_grow()
+                            .flex_grow(1.)
                             .gap(px(4.))
                             .child(
                                 pager("main-pager", self.selected_tab.index())
-                                    .flex_grow()
+                                    .flex_grow(1.)
                                     .h_full()
                                     .animation(SlideHorizontalAnimation::new())
                                     .page(self.tracks_view.clone().into_any_element())

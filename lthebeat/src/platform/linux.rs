@@ -167,8 +167,7 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                                     move |audio_controller, cx| {
                                         audio_controller.play(cx);
                                     },
-                                )
-                                .unwrap();
+                                );
                         });
 
                         let pause_async_cx = cx.clone();
@@ -178,8 +177,7 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                                     move |audio_controller, cx| {
                                         audio_controller.pause(cx);
                                     },
-                                )
-                                .unwrap();
+                                );
                         });
 
                         let play_pause_async_cx = cx.clone();
@@ -189,8 +187,7 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                                     move |audio_controller, cx| {
                                         audio_controller.play_pause(cx);
                                     },
-                                )
-                                .unwrap();
+                                );
                         });
 
                         let skip_back_async_cx = cx.clone();
@@ -198,8 +195,7 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                             skip_back_async_cx
                                 .update_global::<PlayQueue, ()>(move |play_queue, _| {
                                     play_queue.skip_previous();
-                                })
-                                .unwrap();
+                                });
                         });
 
                         let skip_next_async_cx = cx.clone();
@@ -207,8 +203,7 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                             skip_next_async_cx
                                 .update_global::<PlayQueue, ()>(move |play_queue, _| {
                                     play_queue.skip_next();
-                                })
-                                .unwrap();
+                                });
                         });
 
                         let seek_async_cx = cx.clone();
@@ -219,8 +214,7 @@ pub fn create_platform(cx: &mut App) -> Entity<Box<dyn PlatformHandler>> {
                                         Duration::from_millis(time.as_millis() as u64),
                                         cx,
                                     );
-                                })
-                                .unwrap();
+                                });
                         });
 
                         let player_rc = Rc::new(player);

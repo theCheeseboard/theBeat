@@ -5,14 +5,7 @@ use contemporary::components::interstitial::interstitial;
 use contemporary::components::spinner::spinner;
 use contemporary::styling::theme::Theme;
 use gpui::private::anyhow;
-use gpui::{
-    Along, AnyElement, App, AppContext, AsyncApp, Axis, Background, BorderStyle, Bounds, Context,
-    Corner, Corners, Edges, EdgesRefinement, Element, ElementId, Entity, GlobalElementId,
-    InspectorElementId, IntoElement, LayoutId, LinearColorStop, ParentElement, Pixels, Refineable,
-    Render, RenderImage, Rgba, Size, Style, StyleRefinement, Styled, Subscription, WeakEntity,
-    Window, div, linear_color_stop, linear_gradient, px, quad, rgb, transparent_black,
-    uniform_list,
-};
+use gpui::{div, linear_color_stop, linear_gradient, px, quad, rgb, transparent_black, uniform_list, Along, Anchor, AnyElement, App, AppContext, AsyncApp, Axis, Background, BorderStyle, Bounds, Context, Corners, Edges, EdgesRefinement, Element, ElementId, Entity, GlobalElementId, InspectorElementId, IntoElement, LayoutId, LinearColorStop, ParentElement, Pixels, Refineable, Render, RenderImage, Rgba, Size, Style, StyleRefinement, Styled, Subscription, WeakEntity, Window};
 use lthebeat::audio_library::artist::Artist;
 use lthebeat::audio_library::database::Database;
 use lthebeat::audio_library::database_query::DatabaseQuery;
@@ -100,7 +93,7 @@ impl Render for IndividualArtistView {
         .child(match self.tracks_query.as_mut() {
             Some(tracks_query) => match tracks_query.borrow().deref() {
                 Ok(_) => div()
-                    .flex_grow()
+                    .flex_grow(1.)
                     .w_full()
                     .child(track_listing(tracks_query.clone()))
                     .into_any_element(),
@@ -224,8 +217,8 @@ impl Element for ArtistsBackground {
                     .apply_along(Axis::Vertical, |y| y + px(HEADER_SIZE)),
                 bounds.bottom_right(),
             ),
-            shade_bounds: Bounds::from_corner_and_size(
-                Corner::TopLeft,
+            shade_bounds: Bounds::from_anchor_and_size(
+                Anchor::TopLeft,
                 bounds.origin,
                 bounds.size.apply_along(Axis::Vertical, |_| px(HEADER_SIZE)),
             ),
@@ -246,8 +239,8 @@ impl Element for ArtistsBackground {
 
                 prepaint_state.background_art = Some((
                     render_image,
-                    Bounds::from_corner_and_size(
-                        Corner::TopLeft,
+                    Bounds::from_anchor_and_size(
+                        Anchor::TopLeft,
                         bounds.origin.apply_along(Axis::Vertical, |y| {
                             y - bounds.size.width / ratio / 2. + px(HEADER_SIZE / 2.)
                         }),

@@ -180,7 +180,7 @@ impl Render for DatabaseSetupSurface {
                                                             .items_center()
                                                             .p(px(2.))
                                                             .gap(px(8.))
-                                                            .child(div().child(path.clone()).flex_grow())
+                                                            .child(div().child(path.clone()).flex_grow(1.))
                                                             .child(
                                                                 button("remove-button")
                                                                     .flat()
@@ -210,7 +210,7 @@ impl Render for DatabaseSetupSurface {
                                     .with_sizing_behavior(ListSizingBehavior::Infer),
                                 )
                                 .child(
-                                    div().flex().child(div().flex_grow()).child(
+                                    div().flex().child(div().flex_grow(1.)).child(
                                         button("add-other-folder").child(icon_text(
                                             "list-add",
                                             tr!(

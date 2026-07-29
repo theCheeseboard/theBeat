@@ -30,7 +30,7 @@ impl AudioController {
 
         cx.spawn(async move |cx: &mut AsyncApp| {
             loop {
-                I18N_MANAGER.write().unwrap().load_source(tr_load!());
+                I18N_MANAGER.load_source(tr_load!());
                 event_channel.recv().await.unwrap();
                 cx.update_global::<AudioController, ()>(|_, _| {
                     // Do nothing

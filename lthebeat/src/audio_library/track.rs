@@ -4,11 +4,13 @@ use crate::audio_library::playlist::Playlist;
 use crate::play_queue::PlayQueue;
 use crate::play_queue::media_item::MediaItem;
 use cntp_i18n::{Quote, tr};
+use contemporary::components::button::button;
 use contemporary::components::constrainer::constrainer;
 use contemporary::components::context_menu::{
     ContextMenuActionEvent, ContextMenuExt, ContextMenuItem,
 };
 use contemporary::components::grandstand::grandstand;
+use contemporary::components::icon::icon;
 use contemporary::components::layer::layer;
 use contemporary::components::popover::popover;
 use contemporary::components::skeleton::{SkeletonExt, skeleton, skeleton_row};
@@ -18,7 +20,7 @@ use gpui::prelude::FluentBuilder;
 use gpui::{
     App, AsyncApp, BorrowAppContext, ClickEvent, Context, Element, ElementId, Entity,
     InteractiveElement, IntoElement, ListSizingBehavior, ParentElement, Render, RenderOnce,
-    StatefulInteractiveElement, Styled, WeakEntity, Window, div, px, uniform_list,
+    StatefulInteractiveElement, Styled, WeakEntity, Window, div, px, rgb, uniform_list,
 };
 use sqlx::sqlite::SqliteRow;
 use sqlx::{Error, Row, SqlitePool};
@@ -46,6 +48,7 @@ pub enum Track {
 impl Render for Track {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let add_to_playlist_popover_open = window.use_state(cx, |_, _| false);
+        let hovering = window.use_state(cx, |_, _| false);
 
         let theme = cx.global::<Theme>();
         match self {
@@ -58,8 +61,7 @@ impl Render for Track {
                 artist,
                 album,
             } => {
-                let add_to_playlist_popover_open_clone = add_to_playlist_popover_open.clone();
-                let add_to_playlist_popover_open_clone_2 = add_to_playlist_popover_open.clone();
+                let hovering_clone = hovering.clone();
 
                 let mut supps = Vec::new();
                 if let Some(artist) = artist {
@@ -79,9 +81,9 @@ impl Render for Track {
                     .to_string();
                 let context_menu = vec![
                     ContextMenuItem::separator().label(tr!("TRACK_CONTEXT_MENU_TITLE", "For {{track}}", track:Quote=track_name)).build(),
-                    ContextMenuItem::menu_item().label(tr!("ADD_TO_PLAYLIST", "Add to playlist...")).icon("list-add").on_triggered(move |_, _, cx| {
-                        add_to_playlist_popover_open_clone.write(cx, true);
-                    }).build()
+                    ContextMenuItem::menu_item().label(tr!("ADD_TO_PLAYLIST", "Add to playlist...")).icon("list-add").on_triggered({let add_to_playlist_popover_open = add_to_playlist_popover_open.clone(); move |_, _, cx| {
+                        add_to_playlist_popover_open.write(cx, true);
+                    }}).build()
                 ];
 
                 let url_clone = url.clone();
@@ -117,6 +119,35 @@ impl Render for Track {
                                             .text_color(theme.foreground.disabled()),
                                     ),
                             )
+                            .when(*hovering.read(cx), |david| {
+                                david.child(
+                                    div()
+                                        .absolute()
+                                        .size_full()
+                                        .flex()
+                                        .p(px(8.))
+                                        .child(div().flex_grow(1.))
+                                        .child(
+                                            div().flex().block_mouse_except_scroll().child(
+                                                button("add-to-playlist-button")
+                                                    .child(icon("view-media-playlist"))
+                                                    .on_click(cx.listener({
+                                                        let add_to_playlist_popover_open =
+                                                            add_to_playlist_popover_open.clone();
+                                                        move |this, _, _, cx| {
+                                                            add_to_playlist_popover_open
+                                                                .write(cx, true);
+                                                        }
+                                                    })),
+                                            ),
+                                        ),
+                                )
+                            })
+                            .child(div().id("hoverer").absolute().size_full().on_hover(
+                                move |is_hovering, _, cx| {
+                                    hovering_clone.write(cx, *is_hovering);
+                                },
+                            ))
                             .on_click(cx.listener(move |_, _, _, cx| {
                                 let item = MediaItem::new(url_clone.clone(), cx);
                                 cx.update_global::<PlayQueue, ()>(|play_queue, cx| {

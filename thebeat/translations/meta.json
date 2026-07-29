@@ -115,13 +115,13 @@
   },
   "INDIVIDUAL_ALBUM_TITLE": {
     "context": "individual_album_view.rs",
-    "definedIn": "src/views/albums_view/individual_album_view.rs:93",
+    "definedIn": "src/views/albums_view/individual_album_view.rs:86",
     "plural": false,
     "description": null
   },
   "INDIVIDUAL_ARTISTS_TITLE": {
     "context": "individual_artist_view.rs",
-    "definedIn": "src/views/artists_view/individual_artist_view.rs:93",
+    "definedIn": "src/views/artists_view/individual_artist_view.rs:86",
     "plural": false,
     "description": null
   },
@@ -139,13 +139,13 @@
   },
   "LIBRARY_ALBUM_ERROR": {
     "context": "individual_album_view.rs",
-    "definedIn": "src/views/albums_view/individual_album_view.rs:111",
+    "definedIn": "src/views/albums_view/individual_album_view.rs:104",
     "plural": false,
     "description": null
   },
   "LIBRARY_ARTISTS_ERROR": {
     "context": "individual_artist_view.rs",
-    "definedIn": "src/views/artists_view/individual_artist_view.rs:111",
+    "definedIn": "src/views/artists_view/individual_artist_view.rs:104",
     "plural": false,
     "description": null
   },
@@ -162,8 +162,8 @@
     "description": null
   },
   "LIBRARY_ERASE": {
-    "context": "artists_library.rs",
-    "definedIn": "src/views/artists_view/artists_library.rs:125",
+    "context": "tracks_view.rs",
+    "definedIn": "src/views/tracks_view.rs:106",
     "plural": false,
     "description": null
   },

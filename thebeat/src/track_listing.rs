@@ -97,7 +97,7 @@ impl RenderOnce for TrackListing {
                                     )),
                             ),
                     )
-                    .child(div().flex_grow())
+                    .child(div().flex_grow(1.))
                     .child(trn!(
                         "TRACK_LISTING_TRACK_COUNT",
                         "{{count}} track",
@@ -118,7 +118,7 @@ impl RenderOnce for TrackListing {
                         .collect()
                 })
                 .h_full()
-                .flex_grow(),
+                .flex_grow(1.),
             )
             .h_full()
             .w_full()
