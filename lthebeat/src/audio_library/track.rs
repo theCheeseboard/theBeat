@@ -28,6 +28,8 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use url::Url;
 
+type PlaylistSelectedEvent = Rc<dyn Fn(usize, &mut Window, &mut App)>;
+
 #[derive(Default)]
 pub enum Track {
     Ok {
@@ -158,6 +160,17 @@ impl Render for Track {
                     )
                     .child(PlaylistSelectionPopover {
                         visible: add_to_playlist_popover_open.clone(),
+                        on_select: Rc::new({
+                            let id = *id;
+                            move |playlist, window, cx| {
+                                let mutate = cx.update_global::<Database, _>(move |database, cx| {
+                                    database.mutate().unwrap()
+                                });
+                                cx.spawn(async move |cx: &mut AsyncApp| {
+                                    mutate.add_to_playlist(playlist as i64, id as i64, cx).await.unwrap();
+                                }).detach();
+                            }
+                        }),
                     })
                     .into_any_element()
             }
@@ -210,6 +223,7 @@ impl DatabaseRecord for Track {
 #[derive(IntoElement)]
 struct PlaylistSelectionPopover {
     visible: Entity<bool>,
+    on_select: PlaylistSelectedEvent,
 }
 
 impl RenderOnce for PlaylistSelectionPopover {
@@ -269,30 +283,44 @@ impl RenderOnce for PlaylistSelectionPopover {
                                 .when_some(playlists_query.read(cx).as_ref(), |david, query| {
                                     let playlists_query = playlists_query.clone();
                                     david.child(
-                                        uniform_list(
-                                            "playlist_list",
-                                            query.borrow().count(),
+                                        uniform_list("playlist_list", query.borrow().count(), {
+                                            let on_select = self.on_select.clone();
                                             move |range, _, cx| {
-                                                playlists_query.update(cx, |playlists_query, cx| {
-                                                    let playlists_query =
-                                                        playlists_query.as_ref().unwrap();
-                                                    range
-                                                        .map(|index| {
-                                                            match playlists_query
+                                                playlists_query.update(cx, {
+                                                    let on_select = on_select.clone();
+                                                    move |playlists_query, cx| {
+                                                        let playlists_query =
+                                                            playlists_query.as_ref().unwrap();
+                                                        range
+                                                            .map(move |index| match playlists_query
                                                                 .borrow_mut()
                                                                 .get(index, cx)
                                                                 .read(cx)
                                                             {
                                                                 Playlist::Ok {
                                                                     name, id, ..
-                                                                } => div().child(name.clone()),
+                                                                } => div().child(
+                                                                    div()
+                                                                        .id(*id)
+                                                                        .child(name.clone())
+                                                                        .on_click({
+                                                                            let on_select =
+                                                                                on_select.clone();
+                                                                            let id = *id;
+                                                                            move |_, window, cx| {
+                                                                                on_select(
+                                                                                    id, window, cx,
+                                                                                );
+                                                                            }
+                                                                        }),
+                                                                ),
                                                                 _ => div(),
-                                                            }
-                                                        })
-                                                        .collect()
+                                                            })
+                                                            .collect()
+                                                    }
                                                 })
-                                            },
-                                        )
+                                            }
+                                        })
                                         .with_sizing_behavior(ListSizingBehavior::Infer),
                                     )
                                 }),

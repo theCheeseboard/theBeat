@@ -5,7 +5,7 @@ use crate::audio_library::playlist::Playlist;
 use crate::audio_library::track::Track;
 use crate::audio_processing::audio_metadata;
 use crate::audio_processing::input_engines::symphonia_engine::SymphoniaEngine;
-use anyhow::anyhow;
+use anyhow::{anyhow, Context};
 use async_walkdir::{Filtering, WalkDir};
 use cntp_i18n::{tr, trn};
 use contemporary::application::Details;
@@ -246,6 +246,10 @@ impl Database {
         Ok(())
     }
 
+    pub fn mutate(&self) -> anyhow::Result<DatabaseMutate> {
+        self.pool.clone().map(|pool| DatabaseMutate { pool }).context("Database not ready")
+    }
+
     pub fn query_all_tracks<'this, 'future: 'this>(
         &'this self,
     ) -> impl Future<Output = anyhow::Result<DatabaseQuery<Track>>> + 'future {
@@ -393,38 +397,6 @@ impl Database {
             Default::default(),
         )
     }
-
-    pub async fn add_to_playlist(
-        &self,
-        playlist_id: i64,
-        track_id: i64,
-        cx: &mut App,
-    ) -> anyhow::Result<()> {
-        let Some(pool) = &self.pool else {
-            return Err(anyhow!("Database not ready"));
-        };
-
-        sqlx::query(
-            "INSERT INTO playlist_tracks(playlist_id, track_id, sort_num, sort_dem)
-                    VALUES (
-                        ?,
-                        ?,
-                        (SELECT CEIL(MAX(sort_num / sort_dem)) FROM playlist_tracks WHERE playlist_id = ?),
-                        1
-                    )",
-        )
-        .bind(playlist_id)
-        .bind(track_id)
-        .bind(playlist_id)
-        .fetch_one(pool)
-        .await?;
-
-        cx.defer(|cx| {
-            cx.update_global::<Database, ()>(|_, _| {});
-        });
-
-        Ok(())
-    }
 }
 
 async fn scan_file_into_pool(
@@ -548,3 +520,35 @@ async fn scan_file_into_pool(
 }
 
 impl Global for Database {}
+
+pub struct DatabaseMutate {
+    pool: SqlitePool
+}
+
+impl DatabaseMutate {
+    pub async fn add_to_playlist(
+        self,
+        playlist_id: i64,
+        track_id: i64,
+        cx: &mut AsyncApp,
+    ) -> anyhow::Result<()> {
+        sqlx::query(
+            "INSERT INTO playlist_tracks(playlist_id, track_id, sort_num, sort_dem)
+                    VALUES (
+                        ?,
+                        ?,
+                        (SELECT COALESCE(ROUND(MAX(sort_num / sort_dem) + 0.5), 0) FROM playlist_tracks WHERE playlist_id = ?),
+                        1
+                    )",
+        )
+            .bind(playlist_id)
+            .bind(track_id)
+            .bind(playlist_id)
+            .execute(&self.pool)
+            .await?;
+
+        cx.update_global::<Database, ()>(|_, _| {});
+
+        Ok(())
+    }
+}

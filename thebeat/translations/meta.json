@@ -125,6 +125,12 @@
     "plural": false,
     "description": null
   },
+  "INDIVIDUAL_PLAYLISTS_TITLE": {
+    "context": "individual_playlist_view.rs",
+    "definedIn": "src/views/playlists_view/individual_playlist_view.rs:84",
+    "plural": false,
+    "description": null
+  },
   "LIBRARY_ALBUMS_ERROR": {
     "context": "album_library.rs",
     "definedIn": "src/views/albums_view/album_library.rs:119",
@@ -168,8 +174,8 @@
     "description": null
   },
   "LIBRARY_PLAYLISTS_ERROR": {
-    "context": "playlist_library.rs",
-    "definedIn": "src/views/playlists_view/playlist_library.rs:139",
+    "context": "individual_playlist_view.rs",
+    "definedIn": "src/views/playlists_view/individual_playlist_view.rs:102",
     "plural": false,
     "description": null
   },

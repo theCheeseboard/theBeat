@@ -20,6 +20,7 @@
   "FILE_OPEN_URL": "Open URL",
   "INDIVIDUAL_ALBUM_TITLE": "Tracks in {{album}}",
   "INDIVIDUAL_ARTISTS_TITLE": "Tracks by {{artists}}",
+  "INDIVIDUAL_PLAYLISTS_TITLE": "Tracks in {{playlist}}",
   "LIBRARY_ALBUMS_ERROR": "Unable to load albums",
   "LIBRARY_ALBUMS_TITLE": "Albums in Library",
   "LIBRARY_ALBUM_ERROR": "Unable to load album",

@@ -5,7 +5,7 @@ use sqlx::sqlite::{SqliteArguments, SqliteRow};
 use sqlx::{Error, Row, SqlitePool};
 use url::Url;
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub enum Playlist {
     Ok {
         id: usize,
