@@ -2,10 +2,7 @@ use crate::audio_library::database_query::DatabaseRecord;
 use crate::audio_processing::audio_metadata::Art;
 use contemporary::styling::theme::{Theme, VariableColor};
 use gpui::prelude::FluentBuilder;
-use gpui::{
-    Context, ImageSource, InteractiveElement, IntoElement, ParentElement, Render,
-    StatefulInteractiveElement, Styled, Window, div, img, px, rgb,
-};
+use gpui::{div, img, px, rgb, rgba, Context, ImageSource, InteractiveElement, IntoElement, ParentElement, Render, StatefulInteractiveElement, Styled, Window};
 use sqlx::sqlite::SqliteRow;
 use sqlx::{Error, Row, SqlitePool};
 
@@ -51,7 +48,7 @@ impl Render for Artist {
                                 )
                             })
                             .when_none(&art, |div| {
-                                div.bg(rgb(0xFF0000)).rounded(theme.border_radius)
+                                div.bg(rgba(0x00000040)).rounded(theme.border_radius)
                             }),
                     )
                     .child(name.clone().unwrap_or("Album".to_string()))

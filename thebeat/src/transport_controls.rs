@@ -8,11 +8,7 @@ use contemporary::platform_support::platform_settings::PlatformSettings;
 use contemporary::styling::theme::Theme;
 use contemporary::transition::float_transition_element::TransitionExt;
 use gpui::prelude::FluentBuilder;
-use gpui::{
-    Action, Animation, App, AppContext, BorrowAppContext, Context, Div, Entity, FontFeatures,
-    ImageSource, InteractiveElement, IntoElement, ParentElement, Refineable, Render, Rgba,
-    StatefulInteractiveElement, StyleRefinement, Styled, Window, div, img, px, rgb,
-};
+use gpui::{div, img, px, rgb, rgba, Action, Animation, App, AppContext, BorrowAppContext, Context, Div, Entity, FontFeatures, ImageSource, InteractiveElement, IntoElement, ParentElement, Refineable, Render, Rgba, StatefulInteractiveElement, StyleRefinement, Styled, Window};
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
 use std::sync::Arc;
@@ -87,7 +83,7 @@ impl Render for TransportControls {
                             .when_some(cover.clone(), |div, album_cover| {
                                 div.child(img(ImageSource::Render(album_cover)).h_full().w_full())
                             })
-                            .when_none(&cover, |div| div.bg(rgb(0xFF0000))),
+                            .when_none(&cover, |div| div.bg(rgba(0x00000040))).rounded(theme.border_radius),
                     )
                     // Text
                     .child(

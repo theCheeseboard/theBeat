@@ -51,7 +51,7 @@ impl Render for Album {
                                 )
                             })
                             .when_none(&art, |div| {
-                                div.bg(rgb(0xFF0000)).rounded(theme.border_radius)
+                                div.bg(rgba(0x00000040)).rounded(theme.border_radius)
                             }),
                     )
                     .child(name.clone().unwrap_or("Album".to_string()))
