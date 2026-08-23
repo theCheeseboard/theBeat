@@ -1,12 +1,13 @@
 pub mod playlist_selection_popover;
 pub mod track_element;
 
-use crate::track_listing::track_element::track_element;
+use crate::track_listing::track_element::{TrackContext, track_element};
 use cntp_i18n::{tr, trn};
 use contemporary::components::button::button;
 use contemporary::components::icon_text::icon_text;
 use contemporary::components::layer::layer;
 use contemporary::components::subtitle::subtitle;
+use gpui::prelude::FluentBuilder;
 use gpui::private::anyhow;
 use gpui::{
     App, BorrowAppContext, InteractiveElement, IntoElement, ParentElement, RenderOnce, Styled,
@@ -22,12 +23,23 @@ use std::rc::Rc;
 #[derive(IntoElement)]
 pub struct TrackListing {
     database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>,
+    context: Option<TrackContext>,
 }
 
 pub fn track_listing(
     database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>,
 ) -> TrackListing {
-    TrackListing { database_query }
+    TrackListing {
+        database_query,
+        context: None,
+    }
+}
+
+impl TrackListing {
+    pub fn context(mut self, context: TrackContext) -> TrackListing {
+        self.context = Some(context);
+        self
+    }
 }
 
 impl RenderOnce for TrackListing {
@@ -119,7 +131,9 @@ impl RenderOnce for TrackListing {
                                     .as_mut()
                                     .unwrap()
                                     .get(index, cx),
-                            ).custom_id(index as u64)
+                            )
+                            .custom_id(index as u64)
+                            .when_some(self.context, |el, context| el.context(context))
                         })
                         .collect()
                 })

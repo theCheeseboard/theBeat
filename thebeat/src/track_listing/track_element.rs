@@ -19,16 +19,31 @@ use std::rc::Rc;
 #[derive(IntoElement)]
 pub struct TrackElement {
     track: Entity<Track>,
-    id: Option<u64>
+    id: Option<u64>,
+    context: Option<TrackContext>,
+}
+
+#[derive(Copy, Clone)]
+pub enum TrackContext {
+    InPlaylist { playlist_id: u64 },
 }
 
 pub fn track_element(track: Entity<Track>) -> TrackElement {
-    TrackElement { track, id: None }
+    TrackElement {
+        track,
+        id: None,
+        context: None,
+    }
 }
 
 impl TrackElement {
     pub fn custom_id(mut self, id: u64) -> TrackElement {
         self.id = Some(id);
+        self
+    }
+
+    pub fn context(mut self, context: TrackContext) -> TrackElement {
+        self.context = Some(context);
         self
     }
 }
@@ -44,11 +59,19 @@ impl RenderOnce for TrackElement {
                 disc,
                 artist,
                 album,
+                playlist_track_id,
             } => {
                 let effective_id = self.id.unwrap_or(id as u64);
-                let add_to_playlist_popover_open =
-                    window.use_keyed_state(ElementId::NamedInteger("add_to_playlist_open".into(), effective_id), cx, |_, _| false);
-                let hovering = window.use_keyed_state(ElementId::NamedInteger("hovering".into(), effective_id), cx, |_, _| false);
+                let add_to_playlist_popover_open = window.use_keyed_state(
+                    ElementId::NamedInteger("add_to_playlist_open".into(), effective_id),
+                    cx,
+                    |_, _| false,
+                );
+                let hovering = window.use_keyed_state(
+                    ElementId::NamedInteger("hovering".into(), effective_id),
+                    cx,
+                    |_, _| false,
+                );
 
                 let theme = cx.theme();
 
@@ -70,13 +93,46 @@ impl RenderOnce for TrackElement {
                             .unwrap_or_else(|_| url.to_string())
                     })
                     .to_string();
-                let context_menu = vec![
+                let mut context_menu = vec![
                     ContextMenuItem::separator().label(tr!("TRACK_CONTEXT_MENU_TITLE", "For {{track}}", track:quote=track_name)).build(),
-                    ContextMenuItem::menu_item().label(tr!("ADD_TO_PLAYLIST", "Add to playlist...")).icon("list-add").on_triggered({
-                        let add_to_playlist_popover_open = add_to_playlist_popover_open.clone(); move |_, _, cx| {
-                        add_to_playlist_popover_open.write(cx, true);
-                    }}).build()
                 ];
+                if let Some(TrackContext::InPlaylist { playlist_id }) = self.context {
+                    let playlist_track_id = playlist_track_id.expect("TrackElement rendered with playlist context, but query does not return a playlist_track_id");
+                    context_menu.push(
+                        ContextMenuItem::menu_item()
+                            .label(tr!("REMOVE_FROM_PLAYLIST", "Remove from playlist"))
+                            .icon("list-remove")
+                            .on_triggered({
+                                move |_, _, cx| {
+                                    let mutate = cx.global::<Database>().mutate().unwrap();
+                                    cx.spawn(async move |cx: &mut AsyncApp| {
+                                        mutate
+                                            .remove_from_playlist(
+                                                playlist_id as i64,
+                                                playlist_track_id as i64,
+                                                cx,
+                                            )
+                                            .await
+                                            .unwrap();
+                                    })
+                                    .detach();
+                                }
+                            })
+                            .build(),
+                    );
+                }
+                context_menu.push(
+                    ContextMenuItem::menu_item()
+                        .label(tr!("ADD_TO_PLAYLIST", "Add to playlist..."))
+                        .icon("list-add")
+                        .on_triggered({
+                            let add_to_playlist_popover_open = add_to_playlist_popover_open.clone();
+                            move |_, _, cx| {
+                                add_to_playlist_popover_open.write(cx, true);
+                            }
+                        })
+                        .build(),
+                );
 
                 let url_clone = url.clone();
                 div()
@@ -151,9 +207,7 @@ impl RenderOnce for TrackElement {
                     .child(PlaylistSelectionPopover {
                         visible: add_to_playlist_popover_open.clone(),
                         on_select: Rc::new(move |playlist, window, cx| {
-                            let mutate = cx.update_global::<Database, _>(move |database, cx| {
-                                database.mutate().unwrap()
-                            });
+                            let mutate = cx.global::<Database>().mutate().unwrap();
                             cx.spawn(async move |cx: &mut AsyncApp| {
                                 mutate
                                     .add_to_playlist(playlist as i64, id as i64, cx)

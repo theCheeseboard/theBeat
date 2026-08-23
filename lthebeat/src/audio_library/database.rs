@@ -551,4 +551,23 @@ impl DatabaseMutate {
 
         Ok(())
     }
+    
+    pub async fn remove_from_playlist(
+        self,
+        playlist_id: i64,
+        playlist_track_id: i64,
+        cx: &mut AsyncApp,
+    ) -> anyhow::Result<()> {
+        sqlx::query(
+            "DELETE FROM playlist_tracks WHERE playlist_id = ? AND id = ?",
+        )
+            .bind(playlist_id)
+            .bind(playlist_track_id)
+            .execute(&self.pool)
+            .await?;
+
+        cx.update_global::<Database, ()>(|_, _| {});
+
+        Ok(())
+    }
 }

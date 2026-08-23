@@ -59,6 +59,7 @@
   "QUEUE_ITEM_CONTEXT_MENU_REMOVE": "Remove from Queue",
   "QUEUE_ITEM_CONTEXT_MENU_TITLE": "For {{track}}",
   "QUEUE_TITLE": "Queue",
+  "REMOVE_FROM_PLAYLIST": "Remove from playlist",
   "TRACKS_BUTTON": "Tracks",
   "TRACK_ALBUM": "On {{album}}",
   "TRACK_ARTIST": "By {{artist}}",

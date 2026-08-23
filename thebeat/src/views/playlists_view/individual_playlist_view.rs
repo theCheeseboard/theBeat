@@ -24,9 +24,11 @@ use std::ops::Deref;
 use std::panic::Location;
 use std::rc::Rc;
 use std::sync::Arc;
+use crate::track_listing::track_element::TrackContext;
 
 pub struct IndividualPlaylistView {
     playlist_name: String,
+    playlist_id: u64,
     database_subscription: Subscription,
     tracks_query: Option<Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>>,
     on_back_clicked: Rc<Box<dyn Fn(&(), &mut Window, &mut App) + 'static>>,
@@ -40,6 +42,7 @@ impl IndividualPlaylistView {
     ) -> Entity<Self> {
         let Playlist::Ok {
             name: playlist_name,
+            id: playlist_id,
             ..
         } = playlists.read(cx).clone()
         else {
@@ -58,6 +61,7 @@ impl IndividualPlaylistView {
 
             IndividualPlaylistView {
                 playlist_name,
+                playlist_id: playlist_id as u64,
                 database_subscription,
                 tracks_query: None,
                 on_back_clicked: Rc::new(on_back_clicked),
@@ -93,7 +97,9 @@ impl Render for IndividualPlaylistView {
                     Ok(_) => div()
                         .flex_grow(1.)
                         .w_full()
-                        .child(track_listing(tracks_query.clone()))
+                        .child(track_listing(tracks_query.clone()).context(TrackContext::InPlaylist {
+                            playlist_id: self.playlist_id
+                        }))
                         .into_any_element(),
                     Err(_) => interstitial()
                         .w_full()

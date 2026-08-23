@@ -13,6 +13,8 @@ pub enum Track {
         name: Option<String>,
         artist: Option<String>,
         album: Option<String>,
+
+        playlist_track_id: Option<u32>
     },
 
     #[default]
@@ -31,6 +33,8 @@ impl DatabaseRecord for Track {
                 name: row.get::<Option<String>, _>("name"),
                 artist: row.get::<Option<String>, _>("artist"),
                 album: row.get::<Option<String>, _>("album"),
+
+                playlist_track_id: row.try_get::<Option<u32>, _>("playlist_track_id").ok().flatten(),
             }
         } else {
             *self = Track::Error;

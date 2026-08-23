@@ -50,7 +50,8 @@ impl Playlist {
                          album.name as album,
                          artist.name as artist,
                          tracks.track as track,
-                         tracks.disc as disc
+                         tracks.disc as disc,
+                         playlist_tracks.id as playlist_track_id
                      FROM playlist_tracks
                         JOIN tracks ON playlist_tracks.track_id = tracks.id
                             LEFT JOIN artist ON tracks.artist = artist.id
