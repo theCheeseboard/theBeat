@@ -1,3 +1,7 @@
+pub mod playlist_selection_popover;
+pub mod track_element;
+
+use crate::track_listing::track_element::track_element;
 use cntp_i18n::{tr, trn};
 use contemporary::components::button::button;
 use contemporary::components::icon_text::icon_text;
@@ -109,11 +113,13 @@ impl RenderOnce for TrackListing {
                 uniform_list("tracks-list", track_count, move |range, _, cx| {
                     range
                         .map(|index| {
-                            database_query_clone
-                                .borrow_mut()
-                                .as_mut()
-                                .unwrap()
-                                .get(index, cx)
+                            track_element(
+                                database_query_clone
+                                    .borrow_mut()
+                                    .as_mut()
+                                    .unwrap()
+                                    .get(index, cx),
+                            ).custom_id(index as u64)
                         })
                         .collect()
                 })

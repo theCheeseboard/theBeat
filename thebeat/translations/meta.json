@@ -1,4 +1,22 @@
 {
+  "ADD_TO_PLAYLIST": {
+    "context": "track_element.rs",
+    "definedIn": "src/track_listing/track_element.rs:75",
+    "plural": false,
+    "description": null
+  },
+  "ADD_TO_PLAYLIST_PROMPT": {
+    "context": "playlist_selection_popover.rs",
+    "definedIn": "src/track_listing/playlist_selection_popover.rs:75",
+    "plural": false,
+    "description": null
+  },
+  "ADD_TO_PLAYLIST_TITLE": {
+    "context": "playlist_selection_popover.rs",
+    "definedIn": "src/track_listing/playlist_selection_popover.rs:63",
+    "plural": false,
+    "description": null
+  },
   "ALBUMS_BUTTON": {
     "context": "main_surface.rs",
     "definedIn": "src/main_surface.rs:140",
@@ -186,8 +204,8 @@
     "description": null
   },
   "LIBRARY_TRACKS_ERROR": {
-    "context": "tracks_view.rs",
-    "definedIn": "src/views/tracks_view.rs:97",
+    "context": "track_element.rs",
+    "definedIn": "src/track_listing/track_element.rs:193",
     "plural": false,
     "description": null
   },
@@ -347,39 +365,57 @@
     "plural": false,
     "description": null
   },
+  "TRACK_ALBUM": {
+    "context": "track_element.rs",
+    "definedIn": "src/track_listing/track_element.rs:62",
+    "plural": false,
+    "description": null
+  },
+  "TRACK_ARTIST": {
+    "context": "track_element.rs",
+    "definedIn": "src/track_listing/track_element.rs:59",
+    "plural": false,
+    "description": null
+  },
+  "TRACK_CONTEXT_MENU_TITLE": {
+    "context": "track_element.rs",
+    "definedIn": "src/track_listing/track_element.rs:74",
+    "plural": false,
+    "description": null
+  },
   "TRACK_LISTING_ACTIONS": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:52",
+    "definedIn": "src/track_listing.rs:56",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_BURN": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:96",
+    "definedIn": "src/track_listing.rs:100",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_ENQUEUE_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:72",
+    "definedIn": "src/track_listing.rs:76",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_PLAY_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:60",
+    "definedIn": "src/track_listing.rs:64",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_SHUFFLE_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:84",
+    "definedIn": "src/track_listing.rs:88",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_TRACK_COUNT": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:102",
+    "definedIn": "src/track_listing.rs:106",
     "plural": true,
     "description": null
   },

@@ -1,8 +1,4 @@
 {
-  "ADD_TO_PLAYLIST": "Add to playlist...",
-  "ADD_TO_PLAYLIST_PROMPT": "Which playlist?",
-  "ADD_TO_PLAYLIST_TITLE": "Add to playlist",
-  "LIBRARY_TRACKS_ERROR": "Error loading tracks",
   "SCAN_JOB_COMPLETE_DESCRIPTION": "Library scan complete",
   "SCAN_JOB_DESCRIPTION": "Scanning library for music...",
   "SCAN_JOB_ERROR_DESCRIPTION": {
@@ -10,8 +6,5 @@
     "other": "Library scan complete, but {{count}} errors were reported"
   },
   "SCAN_JOB_TITLE": "Library Scan",
-  "TRACK_ALBUM": "On {{album}}",
-  "TRACK_ARTIST": "By {{artist}}",
-  "TRACK_CONTEXT_MENU_TITLE": "For {{track}}",
   "TRACK_UNKNOWN_TITLE": "Track"
 }
