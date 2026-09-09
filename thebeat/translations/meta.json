@@ -233,15 +233,33 @@
     "plural": false,
     "description": null
   },
+  "OTHER_SOURCES_NOTHING_SELECTED": {
+    "context": "other_sources_view.rs",
+    "definedIn": "src/views/other_sources_view.rs:74",
+    "plural": false,
+    "description": null
+  },
+  "OTHER_SOURCES_NOTHING_SELECTED_DESCRIPTION": {
+    "context": "other_sources_view.rs",
+    "definedIn": "src/views/other_sources_view.rs:76",
+    "plural": false,
+    "description": null
+  },
+  "OTHER_SOURCES_TITLE": {
+    "context": "other_sources_view.rs",
+    "definedIn": "src/views/other_sources_view.rs:103",
+    "plural": false,
+    "description": null
+  },
   "OTHER_SOURCES_UNAVAILABLE_MESSAGE": {
     "context": "other_sources_view.rs",
-    "definedIn": "src/views/other_sources_view.rs:34",
+    "definedIn": "src/views/other_sources_view.rs:51",
     "plural": false,
     "description": null
   },
   "OTHER_SOURCES_UNAVAILABLE_TITLE": {
     "context": "other_sources_view.rs",
-    "definedIn": "src/views/other_sources_view.rs:30",
+    "definedIn": "src/views/other_sources_view.rs:47",
     "plural": false,
     "description": null
   },

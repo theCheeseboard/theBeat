@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["lthebeat", "thebeat"]
+members = ["lthebeat", "thebeat", "thebeat_internet_radio"]
 
 [workspace.dependencies]
 gpui = { version = "1.11", package = "gpui-unofficial" }
@@ -26,3 +26,5 @@ sqlx = { version = "0.8", features = ["runtime-async-std", "sqlite"] }
 directories = "6"
 async-walkdir = "2"
 sha2 = "0.10"
+lthebeat = { path = "lthebeat" }
+thebeat_internet_radio = { path = "thebeat_internet_radio" }

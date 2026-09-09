@@ -3,6 +3,10 @@ name = "thebeat"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+default = ["internet-radio"]
+internet-radio = ["thebeat_internet_radio"]
+
 [dependencies]
 gpui = { workspace = true }
 smol = { workspace = true }
@@ -10,10 +14,11 @@ smol-macros = { workspace = true }
 contemporary = { workspace = true }
 cntp_i18n = { workspace = true }
 cntp_icon_tool_macros = { workspace = true }
-lthebeat = { path = "../lthebeat" }
+lthebeat = { workspace = true }
 directories = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
+thebeat_internet_radio = { workspace = true, optional = true }
 
 [build-dependencies]
 cntp_i18n_gen = { workspace = true }

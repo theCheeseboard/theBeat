@@ -164,6 +164,7 @@ fn mane() {
                 );
 
                 lthebeat::setup_libthebeat(cx);
+                setup_features(cx);
 
                 let database = smol::block_on(Database::new(cx)).unwrap();
                 database.start_scan(cx);
@@ -175,6 +176,11 @@ fn mane() {
         .unwrap();
         cx.activate(true);
     });
+}
+
+fn setup_features(cx: &mut App) {
+    #[cfg(feature = "internet-radio")]
+    thebeat_internet_radio::init(cx);
 }
 
 main! {
