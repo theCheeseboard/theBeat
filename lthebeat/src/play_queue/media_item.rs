@@ -1,34 +1,55 @@
 use crate::audio_processing::audio_metadata::AudioMetadata;
 use crate::audio_processing::input_engines::symphonia_engine::SymphoniaEngine;
-use gpui::{App, AppContext, AsyncApp, Entity};
+use crate::metadata_registry::MetadataRegistry;
+use gpui::{App, AppContext, AsyncApp, Context, Entity};
 use url::Url;
 
 pub struct MediaItem {
     pub url: Url,
-    pub meta: AudioMetadata,
+    symphonia_meta: AudioMetadata,
+    metadata_registry_metadata: Option<AudioMetadata>,
 }
 
 impl MediaItem {
-    pub fn new(url: Url, cx: &mut App) -> Entity<Self> {
-        let entity = cx.new(|_| MediaItem {
-            url: url.clone(),
-            meta: AudioMetadata {
-                url: Some(url.clone()),
-                ..AudioMetadata::default()
-            },
-        });
-
-        let entity_clone = entity.clone();
-        cx.spawn(async move |cx: &mut AsyncApp| {
-            if let Ok(meta) = SymphoniaEngine::audio_metadata(url.clone()).await {
-                cx.update_entity(&entity_clone, |media_item, cx| {
-                    media_item.meta = meta;
-                    cx.notify()
-                });
+    pub fn new(url: Url, cx: &mut Context<Self>) -> Self {
+        cx.spawn({
+            let url = url.clone();
+            async move |weak_this, cx: &mut AsyncApp| {
+                if let Ok(meta) = SymphoniaEngine::audio_metadata(url.clone()).await {
+                    let _ = weak_this.update(cx, |this, cx| {
+                        this.symphonia_meta = meta;
+                        cx.notify()
+                    });
+                }
             }
         })
         .detach();
 
-        entity
+        cx.observe_global::<MetadataRegistry>({
+            let url = url.clone();
+            move |this, cx| {
+                let metadata_registry = cx.global::<MetadataRegistry>();
+                this.metadata_registry_metadata = metadata_registry.metadata(&url).cloned();
+                cx.notify()
+            }
+        })
+        .detach();
+
+        let metadata_registry = cx.global::<MetadataRegistry>();
+
+        MediaItem {
+            url: url.clone(),
+            symphonia_meta: AudioMetadata {
+                url: Some(url.clone()),
+                ..AudioMetadata::default()
+            },
+            metadata_registry_metadata: metadata_registry.metadata(&url).cloned(),
+        }
+    }
+
+    pub fn meta(&self) -> &AudioMetadata {
+        self.metadata_registry_metadata
+            .as_ref()
+            .unwrap_or(&self.symphonia_meta)
     }
 }

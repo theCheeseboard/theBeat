@@ -10,11 +10,7 @@ use contemporary::components::pager::pager;
 use contemporary::styling::theme::{Theme, VariableColor};
 use gpui::http_client::Url;
 use gpui::prelude::FluentBuilder;
-use gpui::{
-    App, BorrowAppContext, ElementId, ExternalPaths, ImageSource, InteractiveElement, IntoElement,
-    ListAlignment, ListState, ParentElement, Refineable, RenderOnce, StatefulInteractiveElement,
-    StyleRefinement, Styled, Window, div, img, list, px, rgba,
-};
+use gpui::{div, img, list, px, rgba, App, AppContext, BorrowAppContext, ElementId, ExternalPaths, ImageSource, InteractiveElement, IntoElement, ListAlignment, ListState, ParentElement, Refineable, RenderOnce, StatefulInteractiveElement, StyleRefinement, Styled, Window};
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::DisplayQueueItem;
 use lthebeat::play_queue::media_item::MediaItem;
@@ -106,10 +102,10 @@ impl RenderOnce for PlayQueue {
                                         DisplayQueueItem::SingleItemGroup(item_entity) => {
                                             let item_entity_2 = item_entity.clone();
                                             let item = item_entity.read(cx);
-                                            let item_title = item.meta.get_title();
+                                            let item_title = item.meta().get_title();
 
                                             let cover = item
-                                                .meta
+                                                .meta()
                                                 .clone()
                                                 .album_cover
                                                 .and_then(|album_cover| album_cover.render_image())
@@ -161,7 +157,7 @@ impl RenderOnce for PlayQueue {
                                                         .child(
                                                             div().overflow_hidden().text_ellipsis()
                                                                 .text_color(theme.foreground.disabled())
-                                                                .child(item.meta.supplementary_text()),
+                                                                .child(item.meta().supplementary_text()),
                                                         ),
                                                 )
                                                 .on_click(move |_, _, cx| {
@@ -188,7 +184,7 @@ impl RenderOnce for PlayQueue {
                                         DisplayQueueItem::GroupItem(item_entity) => {
                                             let item_entity_2 = item_entity.clone();
                                             let item = item_entity.read(cx);
-                                            let item_title = item.meta.get_title();
+                                            let item_title = item.meta().get_title();
 
                                             div()
                                                 .id(ElementId::from(i))
@@ -211,7 +207,7 @@ impl RenderOnce for PlayQueue {
                                                             |div| {
                                                                 div.text_color(theme.foreground.disabled())
                                                                     .child(
-                                                                        item.meta
+                                                                        item.meta()
                                                                             .track_number
                                                                             .map(|track_number| {
                                                                                 track_number.to_string()
@@ -221,7 +217,7 @@ impl RenderOnce for PlayQueue {
                                                             },
                                                         )),
                                                 )
-                                                .child(div().overflow_hidden().text_ellipsis().child(item.meta.get_title()))
+                                                .child(div().overflow_hidden().text_ellipsis().child(item.meta().get_title()))
                                                 .on_click(move |_, _, cx| {
                                                     // Jump to this track
                                                     let play_queue =
@@ -247,7 +243,7 @@ impl RenderOnce for PlayQueue {
                                             let item = item_entity.read(cx);
 
                                             let cover = item
-                                                .meta
+                                                .meta()
                                                 .clone()
                                                 .album_cover
                                                 .and_then(|album_cover| album_cover.render_image())
@@ -278,7 +274,7 @@ impl RenderOnce for PlayQueue {
                                                         .child(div()
                                                             .overflow_hidden()
                                                             .text_ellipsis()
-                                                            .child(item.meta.album.clone().unwrap_or(
+                                                            .child(item.meta().album.clone().unwrap_or(
                                                                 tr!("UNKNOWN_ALBUM", "Unknown Album").into(),
                                                             )))
                                                         .child(
@@ -287,7 +283,7 @@ impl RenderOnce for PlayQueue {
                                                                 .text_ellipsis()
                                                                 .text_color(theme.foreground.disabled())
                                                                 .child(
-                                                                    item.meta.artist.clone().unwrap_or(
+                                                                    item.meta().artist.clone().unwrap_or(
                                                                         tr!(
                                                                     "UNKNOWN_ARTIST",
                                                                     "Unknown Artist"
@@ -316,7 +312,7 @@ impl RenderOnce for PlayQueue {
                         .on_drop(|event: &ExternalPaths, _, cx| {
                             for path in event.paths() {
                                 let url = Url::from_file_path(path).unwrap();
-                                let item = MediaItem::new(url, cx);
+                                let item = cx.new(|cx| MediaItem::new(url, cx));
                                 cx.update_global::<lthebeat::play_queue::PlayQueue, ()>(|play_queue, cx| {
                                     play_queue.add_item(item, cx);
                                 })

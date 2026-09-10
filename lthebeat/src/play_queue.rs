@@ -246,16 +246,16 @@ impl PlayQueue {
         let mut peekable = self.shown_items.iter().peekable();
         while let Some(item_entity) = peekable.next() {
             let item = item_entity.read(cx);
-            if item.meta.album == current_group_album && current_group_album.is_some() {
+            if item.meta().album == current_group_album && current_group_album.is_some() {
                 queue.push(DisplayQueueItem::GroupItem(item_entity.clone()));
             } else {
                 let next_item = peekable.peek().map(|item| item.read(cx));
                 if let Some(next_item) = next_item
-                    && next_item.meta.album == item.meta.album
+                    && next_item.meta().album == item.meta().album
                 {
                     queue.push(DisplayQueueItem::GroupHeader(item_entity.clone()));
                     queue.push(DisplayQueueItem::GroupItem(item_entity.clone()));
-                    current_group_album = next_item.meta.album.clone()
+                    current_group_album = next_item.meta().album.clone()
                 } else {
                     queue.push(DisplayQueueItem::SingleItemGroup(item_entity.clone()));
                     current_group_album = None;

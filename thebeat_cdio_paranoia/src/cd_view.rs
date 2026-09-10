@@ -1,5 +1,4 @@
-use std::cell::RefCell;
-use std::rc::Rc;
+use crate::track_url;
 use cntp_i18n::tr;
 use contemporary::components::button::button;
 use contemporary::components::grandstand::grandstand;
@@ -11,15 +10,19 @@ use gpui::{
     IntoElement, ParentElement, Render, Rgba, SharedString, StatefulInteractiveElement, Styled,
     Window, div, px, uniform_list,
 };
+use lthebeat::audio_library::database_query::DatabaseQuery;
+use lthebeat::audio_library::track::Track;
+use lthebeat::audio_processing::audio_metadata::AudioMetadata;
+use lthebeat::metadata_registry::MetadataRegistry;
 use lthebeat::other_sources::OtherSource;
 use lthebeat::play_queue::PlayQueue;
 use lthebeat::play_queue::media_item::MediaItem;
 use lthebeat::ui::track_list_skeleton::track_list_skeleton;
+use std::cell::RefCell;
+use std::rc::Rc;
 use std::str::FromStr;
 use udisks2::Client;
 use url::Url;
-use lthebeat::audio_library::database_query::DatabaseQuery;
-use lthebeat::audio_library::track::Track;
 
 pub struct CdSource {
     name: String,
@@ -30,7 +33,31 @@ pub struct CdSource {
 }
 
 impl CdSource {
-    pub fn new(dbus_client: &Client, block_device: &str, num_tracks: u32, drive_name: &str, cx: &mut App) -> Self {
+    pub fn new(
+        dbus_client: &Client,
+        block_device: &str,
+        num_tracks: u32,
+        drive_name: &str,
+        cx: &mut App,
+    ) -> Self {
+        cx.update_global::<MetadataRegistry, _>(|metadata_registry, cx| {
+            for i in 0..num_tracks {
+                let url = track_url(block_device, i + 1);
+                metadata_registry.insert_metadata(
+                    url.clone(),
+                    AudioMetadata {
+                        url: Some(url),
+                        associated_item: None,
+                        title: Some(tr!("CD_TRACK_NUMBER", number = (i + 1)).into()),
+                        album: Some(drive_name.into()),
+                        track_number: Some(i + 1),
+                        total_track_number: Some(num_tracks + 1),
+                        ..Default::default()
+                    },
+                )
+            }
+        });
+
         CdSource {
             name: drive_name.into(),
             block_device: block_device.to_string(),
@@ -97,23 +124,17 @@ impl CdView {
     }
 
     fn enqueue_all(&self, cx: &mut Context<Self>) {
-        let url_list: Vec<_> = (0..self.num_tracks).map(|track| {
-            Url::from_str(&format!(
-                "cd://{}?track={}",
-                self.block_device,
-                track + 1
-            ))
-                .unwrap()
-        }).collect();
+        let url_list: Vec<_> = (0..self.num_tracks)
+            .map(|track| track_url(&self.block_device, track + 1))
+            .collect();
 
         cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
             for url in url_list {
-                let media_item = MediaItem::new(url, cx);
+                let media_item = cx.new(|cx| MediaItem::new(url, cx));
                 play_queue.add_item(media_item, cx);
             }
         })
     }
-
 }
 
 impl Render for CdView {
@@ -125,7 +146,11 @@ impl Render for CdView {
             .h_full()
             .flex()
             .flex_col()
-            .child(grandstand("cd-grandstand").text(self.drive_name.clone()).pt(px(36.)))
+            .child(
+                grandstand("cd-grandstand")
+                    .text(self.drive_name.clone())
+                    .pt(px(36.)),
+            )
             .child(
                 track_list_skeleton(
                     uniform_list(
@@ -134,11 +159,7 @@ impl Render for CdView {
                         move |range, _, cx| {
                             range
                                 .map(|index| {
-                                    let url = Url::from_str(&format!(
-                                        "cd://{block_device}?track={}",
-                                        index + 1
-                                    ))
-                                    .unwrap();
+                                    let url = track_url(&block_device, index + 1);
 
                                     div()
                                         .id(index)
@@ -148,7 +169,7 @@ impl Render for CdView {
                                             number = (index + 1)
                                         ))
                                         .on_click(move |_, _, cx| {
-                                            let item = MediaItem::new(url.clone(), cx);
+                                            let item = cx.new(|cx| MediaItem::new(url.clone(), cx));
                                             cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
                                                 play_queue.add_item(item, cx);
                                             })

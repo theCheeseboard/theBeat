@@ -9,10 +9,7 @@ use contemporary::components::layer::layer;
 use contemporary::components::subtitle::subtitle;
 use gpui::prelude::FluentBuilder;
 use gpui::private::anyhow;
-use gpui::{
-    App, BorrowAppContext, InteractiveElement, IntoElement, ParentElement, RenderOnce, Styled,
-    Window, div, px, uniform_list,
-};
+use gpui::{div, px, uniform_list, App, AppContext, BorrowAppContext, InteractiveElement, IntoElement, ParentElement, RenderOnce, Styled, Window};
 use lthebeat::audio_library::database_query::DatabaseQuery;
 use lthebeat::audio_library::track::Track;
 use lthebeat::play_queue::PlayQueue;
@@ -163,7 +160,7 @@ fn enqueue_all(database_query: Rc<RefCell<anyhow::Result<DatabaseQuery<Track>>>>
 
     cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
         for url in url_list {
-            let media_item = MediaItem::new(url, cx);
+            let media_item = cx.new(|cx| MediaItem::new(url, cx));
             play_queue.add_item(media_item, cx);
         }
     })

@@ -139,7 +139,7 @@ impl Render for MainWindow {
                             let current_text = text_field.text();
                             match Url::parse(current_text.to_string().as_str()) {
                                 Ok(url) => {
-                                    let item = MediaItem::new(url, cx);
+                                    let item = cx.new(|cx| MediaItem::new(url, cx));
                                     cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
                                         play_queue.add_item(item, cx);
                                     });

@@ -6,10 +6,7 @@ use contemporary::components::icon::icon;
 use contemporary::components::skeleton::{SkeletonExt, skeleton, skeleton_row};
 use contemporary::styling::theme::{Theme, ThemeStorage, VariableColor};
 use gpui::prelude::FluentBuilder;
-use gpui::{
-    App, AsyncApp, BorrowAppContext, ElementId, Entity, InteractiveElement, IntoElement,
-    ParentElement, RenderOnce, StatefulInteractiveElement, Styled, Window, div, px,
-};
+use gpui::{div, px, App, AppContext, AsyncApp, BorrowAppContext, ElementId, Entity, InteractiveElement, IntoElement, ParentElement, RenderOnce, StatefulInteractiveElement, Styled, Window};
 use lthebeat::audio_library::database::Database;
 use lthebeat::audio_library::track::Track;
 use lthebeat::play_queue::PlayQueue;
@@ -197,7 +194,7 @@ impl RenderOnce for TrackElement {
                                 },
                             ))
                             .on_click(move |_, _, cx| {
-                                let item = MediaItem::new(url_clone.clone(), cx);
+                                let item = cx.new(|cx| MediaItem::new(url_clone.clone(), cx));
                                 cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
                                     play_queue.add_item(item, cx);
                                 })

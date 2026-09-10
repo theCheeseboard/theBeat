@@ -1,5 +1,5 @@
 use gpui::http_client::Url;
-use gpui::{App, AsyncApp, BorrowAppContext, KeyBinding, PathPromptOptions, actions};
+use gpui::{actions, App, AppContext, AsyncApp, BorrowAppContext, KeyBinding, PathPromptOptions};
 use lthebeat::audio_processing::audio_controller::AudioController;
 use lthebeat::play_queue::PlayQueue;
 use lthebeat::play_queue::media_item::MediaItem;
@@ -54,7 +54,7 @@ fn open_file(_: &OpenFileAction, cx: &mut App) {
         cx.update_global::<PlayQueue, ()>(|play_queue: &mut PlayQueue, cx| {
             if let Ok(Ok(Some(paths))) = result {
                 for path in paths {
-                    let item = MediaItem::new(Url::from_file_path(path.as_path()).unwrap(), cx);
+                    let item = cx.new(|cx| MediaItem::new(Url::from_file_path(path.as_path()).unwrap(), cx));
                     play_queue.add_item(item, cx);
                 }
             }
