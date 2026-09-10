@@ -6,7 +6,10 @@ mod cdio_paranoia;
 mod cdio_paranoia_track;
 mod lsn;
 
+use crate::cdio_paranoia_engine::cdio_manager::{CdioCd, CdioManager};
+use crate::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
 use async_ringbuf::AsyncHeapRb;
+use cntp_i18n::tr;
 use gpui::{App, Entity};
 use libcdio_sys::{CdIo_t, cdio_open_cd};
 use lsn::Lsn;
@@ -16,6 +19,7 @@ use lthebeat::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError, cr
 use lthebeat::audio_processing::audio_pipeline::{PipelineSample, PipelineSampleResult, plug};
 use lthebeat::audio_processing::input_engines::{Controller, EngineFactory};
 use lthebeat::audio_processing::sample::Sample;
+use lthebeat::metadata_registry::MetadataRegistry;
 use lthebeat::play_queue::media_item::MediaItem;
 use smol::stream::StreamExt;
 use std::ffi::CString;
@@ -26,8 +30,6 @@ use std::thread;
 use std::time::Instant;
 use tracing::{info, warn};
 use url::Url;
-use crate::cdio_paranoia_engine::cdio_manager::{CdioCd, CdioManager};
-use crate::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
 
 pub struct CdioParanoiaEngine {
     faucet: Option<Faucet>,
@@ -36,13 +38,18 @@ pub struct CdioParanoiaEngine {
 }
 
 #[derive(Default)]
-pub struct CdioParanoiaFactory {
-
-}
+pub struct CdioParanoiaFactory {}
 
 impl EngineFactory for CdioParanoiaFactory {
-    fn faucet_for_url(&self, url: Url, associated_track: Option<Entity<MediaItem>>, cx: &mut App) -> Option<Box<dyn Controller>> {
-        if let Ok(cdio_paranoia_engine) = CdioParanoiaEngine::new(url.clone(), associated_track.clone(), cx) {
+    fn faucet_for_url(
+        &self,
+        url: Url,
+        associated_track: Option<Entity<MediaItem>>,
+        cx: &mut App,
+    ) -> Option<Box<dyn Controller>> {
+        if let Ok(cdio_paranoia_engine) =
+            CdioParanoiaEngine::new(url.clone(), associated_track.clone(), cx)
+        {
             Some(Box::new(cdio_paranoia_engine))
         } else {
             None
@@ -78,20 +85,26 @@ impl CdioParanoiaEngine {
 
         let last_track = cdio_cd.last_track();
 
+        let track_information = cdio_cd.track_information(requested_track);
+
         let paranoia = CdioCd::paranoia(cdio_cd);
         let next_requested_lsn = Arc::new(RwLock::new(Lsn(0)));
         let next_requested_lsn_clone = next_requested_lsn.clone();
 
         let track = CdioParanoia::get_track(paranoia.clone(), requested_track)?;
 
-        let meta = AudioMetadata {
-            url: Some(url.clone()),
-            title: Some(format!("Track {}", requested_track)),
-            duration: Some(track.max_len().into()),
-            track_number: Some(requested_track.into()),
-            total_track_number: Some(last_track.into()),
-            ..AudioMetadata::default()
-        };
+        let metadata_registry = cx.global::<MetadataRegistry>();
+        let meta = metadata_registry
+            .metadata(&url)
+            .cloned()
+            .unwrap_or_else(|| AudioMetadata {
+                url: Some(url.clone()),
+                title: Some(tr!("CD_TRACK_NUMBER", number = requested_track).into()),
+                duration: Some(track.max_len().into()),
+                track_number: Some(requested_track.into()),
+                total_track_number: Some(last_track.into()),
+                ..AudioMetadata::default()
+            });
 
         thread::spawn(move || {
             paranoia.init_if_required();

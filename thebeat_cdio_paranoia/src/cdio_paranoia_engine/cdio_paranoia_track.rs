@@ -65,6 +65,6 @@ impl CdioParanoiaTrack {
     }
 
     pub fn max_len(&self) -> Lsn {
-        self.track_information.last_lsn - self.track_information.first_lsn
+        self.track_information.max_len()
     }
 }

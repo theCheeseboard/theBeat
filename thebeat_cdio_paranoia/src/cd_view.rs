@@ -41,16 +41,32 @@ impl CdSource {
     ) -> Self {
         let cdio_manager = cx.global::<CdioManager>();
         if let Ok(cd_device) = cdio_manager.get_cd(block_device) {
+            let album_name = cd_device
+                .disc_cd_text()
+                .and_then(|cd_text| cd_text.title)
+                .unwrap_or_else(|| drive_name.to_string());
+            let artist_name = cd_device
+                .disc_cd_text()
+                .and_then(|cd_text| cd_text.performer);
             cx.update_global::<MetadataRegistry, _>(|metadata_registry, cx| {
                 for i in cd_device.first_track()..=cd_device.last_track() {
+                    let track_info = cd_device.track_information(i).unwrap();
+
                     let url = track_url(block_device, i);
                     metadata_registry.insert_metadata(
                         url.clone(),
                         AudioMetadata {
                             url: Some(url),
                             associated_item: None,
-                            title: Some(tr!("CD_TRACK_NUMBER", number = i).into()),
-                            album: Some(drive_name.into()),
+                            duration: Some(track_info.max_len().into()),
+                            title: Some(
+                                track_info
+                                    .cd_text
+                                    .and_then(|cd_text| cd_text.title)
+                                    .unwrap_or_else(|| tr!("CD_TRACK_NUMBER", number = i).into()),
+                            ),
+                            album: Some(album_name.clone()),
+                            artist: artist_name.clone(),
                             track_number: Some(i as u32),
                             total_track_number: Some(num_tracks + 1),
                             ..Default::default()
@@ -60,7 +76,7 @@ impl CdSource {
             });
 
             CdSource {
-                name: drive_name.into(),
+                name: album_name.clone(),
                 id: format!("cd-paranoia-{}", block_device).into(),
                 view: cx.new(|cx| {
                     CdView::new(
@@ -68,7 +84,7 @@ impl CdSource {
                         block_device,
                         cd_device.first_track() as u32,
                         cd_device.last_track() as u32,
-                        drive_name,
+                        &album_name,
                         cx,
                     )
                 }),
@@ -193,17 +209,26 @@ impl Render for CdView {
             .child(
                 track_list_skeleton(
                     uniform_list("tracks-list", num_tracks, move |range, _, cx| {
+                        let metadata_registry = cx.global::<MetadataRegistry>();
                         range
                             .map(|index| {
                                 let url = track_url(&block_device, index + 1);
 
                                 div()
                                     .id(index)
-                                    .child(tr!(
-                                        "CD_TRACK_NUMBER",
-                                        "Track {{number}}",
-                                        number = (index + 1)
-                                    ))
+                                    .child(
+                                        metadata_registry
+                                            .metadata(&url)
+                                            .and_then(|meta| meta.title.clone())
+                                            .unwrap_or_else(|| {
+                                                tr!(
+                                                    "CD_TRACK_NUMBER",
+                                                    "Track {{number}}",
+                                                    number = (index + 1)
+                                                )
+                                                .into()
+                                            }),
+                                    )
                                     .on_click(move |_, _, cx| {
                                         let item = cx.new(|cx| MediaItem::new(url.clone(), cx));
                                         cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
