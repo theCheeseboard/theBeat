@@ -11,6 +11,7 @@ mod cyclic_cursor_vec;
 mod platform;
 pub mod play_queue;
 pub mod other_sources;
+pub mod ui;
 
 pub fn setup_libthebeat(cx: &mut App) {
     I18N_MANAGER.load_source(tr_load!());

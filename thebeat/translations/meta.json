@@ -235,31 +235,31 @@
   },
   "OTHER_SOURCES_NOTHING_SELECTED": {
     "context": "other_sources_view.rs",
-    "definedIn": "src/views/other_sources_view.rs:74",
+    "definedIn": "src/views/other_sources_view.rs:78",
     "plural": false,
     "description": null
   },
   "OTHER_SOURCES_NOTHING_SELECTED_DESCRIPTION": {
     "context": "other_sources_view.rs",
-    "definedIn": "src/views/other_sources_view.rs:76",
+    "definedIn": "src/views/other_sources_view.rs:80",
     "plural": false,
     "description": null
   },
   "OTHER_SOURCES_TITLE": {
     "context": "other_sources_view.rs",
-    "definedIn": "src/views/other_sources_view.rs:103",
+    "definedIn": "src/views/other_sources_view.rs:107",
     "plural": false,
     "description": null
   },
   "OTHER_SOURCES_UNAVAILABLE_MESSAGE": {
     "context": "other_sources_view.rs",
-    "definedIn": "src/views/other_sources_view.rs:51",
+    "definedIn": "src/views/other_sources_view.rs:55",
     "plural": false,
     "description": null
   },
   "OTHER_SOURCES_UNAVAILABLE_TITLE": {
     "context": "other_sources_view.rs",
-    "definedIn": "src/views/other_sources_view.rs:47",
+    "definedIn": "src/views/other_sources_view.rs:51",
     "plural": false,
     "description": null
   },
@@ -409,38 +409,32 @@
   },
   "TRACK_LISTING_ACTIONS": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:68",
+    "definedIn": "src/track_listing.rs:81",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_BURN": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:112",
+    "definedIn": "src/track_listing.rs:125",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_ENQUEUE_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:88",
+    "definedIn": "src/track_listing.rs:101",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_PLAY_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:76",
+    "definedIn": "src/track_listing.rs:89",
     "plural": false,
     "description": null
   },
   "TRACK_LISTING_SHUFFLE_ALL": {
     "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:100",
+    "definedIn": "src/track_listing.rs:113",
     "plural": false,
-    "description": null
-  },
-  "TRACK_LISTING_TRACK_COUNT": {
-    "context": "track_listing.rs",
-    "definedIn": "src/track_listing.rs:118",
-    "plural": true,
     "description": null
   },
   "UNKNOWN_ALBUM": {

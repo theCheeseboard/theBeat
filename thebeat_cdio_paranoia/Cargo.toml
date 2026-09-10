@@ -5,6 +5,8 @@ edition = "2024"
 
 [dependencies]
 gpui = { workspace = true }
+contemporary = { workspace = true }
+cntp_i18n = { workspace = true }
 lthebeat = { workspace = true }
 tracing = { workspace = true }
 anyhow = { workspace = true }
@@ -14,3 +16,7 @@ smol = { workspace = true }
 
 [target.'cfg(target_os = "linux")'.dependencies]
 libcdio-sys = { version = "1", features = ["paranoia"] }
+udisks2 = "0.3"
+
+[build-dependencies]
+cntp_i18n_gen = { workspace = true }

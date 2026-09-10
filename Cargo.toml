@@ -26,6 +26,7 @@ sqlx = { version = "0.8", features = ["runtime-async-std", "sqlite"] }
 directories = "6"
 async-walkdir = "2"
 sha2 = "0.10"
+uuid = "1"
 lthebeat = { path = "lthebeat" }
 thebeat_internet_radio = { path = "thebeat_internet_radio" }
 thebeat_cdio_paranoia = { path = "thebeat_cdio_paranoia" }

@@ -1,0 +1,32 @@
+{
+  "CD_TRACK_NUMBER": {
+    "context": "cd_view.rs",
+    "definedIn": "src/cd_view.rs:146",
+    "plural": false,
+    "description": null
+  },
+  "TRACK_LISTING_ACTIONS": {
+    "context": "cd_view.rs",
+    "definedIn": "src/cd_view.rs:171",
+    "plural": false,
+    "description": null
+  },
+  "TRACK_LISTING_ENQUEUE_ALL": {
+    "context": "cd_view.rs",
+    "definedIn": "src/cd_view.rs:191",
+    "plural": false,
+    "description": null
+  },
+  "TRACK_LISTING_PLAY_ALL": {
+    "context": "cd_view.rs",
+    "definedIn": "src/cd_view.rs:179",
+    "plural": false,
+    "description": null
+  },
+  "TRACK_LISTING_SHUFFLE_ALL": {
+    "context": "cd_view.rs",
+    "definedIn": "src/cd_view.rs:203",
+    "plural": false,
+    "description": null
+  }
+}

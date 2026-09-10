@@ -19,10 +19,14 @@ pub struct OtherSourcesView {
 }
 
 impl OtherSourcesView {
-    pub fn new(cx: &mut App) -> Entity<Self> {
-        cx.new(|_| OtherSourcesView {
+    pub fn new(cx: &mut Context<Self>) -> Self {
+        cx.observe_global::<OtherSourcesManager>(|_, cx| {
+            cx.notify();
+        }).detach();
+
+        OtherSourcesView {
             selected_item: None,
-        })
+        }
     }
 }
 
@@ -30,7 +34,7 @@ impl Render for OtherSourcesView {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let theme = cx.theme();
 
-        let sources = cx.global::<OtherSourcesManager>().sources();
+        let sources = cx.global::<OtherSourcesManager>().sources().collect::<Vec<_>>();
         let ids = sources.iter().map(|source| source.id());
 
         if sources.is_empty() {
@@ -109,7 +113,7 @@ impl Render for OtherSourcesView {
                                     "other-sources-list",
                                     sources.len(),
                                     cx.processor(move |this, range: Range<usize>, _, cx| {
-                                        let sources = cx.global::<OtherSourcesManager>().sources();
+                                        let sources = cx.global::<OtherSourcesManager>().sources().collect::<Vec<_>>();
                                         let theme = cx.theme();
 
                                         range

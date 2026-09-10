@@ -32,6 +32,7 @@ directories = { workspace = true }
 async-walkdir = { workspace = true }
 sha2 = { workspace = true }
 dominant_color = "0.4.0"
+uuid = { workspace = true }
 
 [build-dependencies]
 cntp_i18n_gen = { workspace = true }

@@ -6,5 +6,9 @@
     "other": "Library scan complete, but {{count}} errors were reported"
   },
   "SCAN_JOB_TITLE": "Library Scan",
+  "TRACK_LISTING_TRACK_COUNT": {
+    "one": "{{count}} track",
+    "other": "{{count}} tracks"
+  },
   "TRACK_UNKNOWN_TITLE": "Track"
 }

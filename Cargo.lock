@@ -2835,6 +2835,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "gettext-rs"
+version = "0.7.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5d5857dc1b7f0fee86961de833f434e29494d72af102ce5355738c0664222bdf"
+dependencies = [
+ "gettext-sys",
+ "locale_config",
+]
+
+[[package]]
+name = "gettext-sys"
+version = "0.26.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4ea859ab0dd7e70ff823032b3e077d03d39c965d68c6c10775add60e999d8ee9"
+dependencies = [
+ "cc",
+ "temp-dir",
+]
+
+[[package]]
 name = "gif"
 version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4602,6 +4622,7 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "url",
+ "uuid",
 ]
 
 [[package]]
@@ -8297,6 +8318,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "temp-dir"
+version = "0.1.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "83176759e9416cf81ee66cb6508dbfe9c96f20b8b56265a39917551c23c70964"
+
+[[package]]
 name = "tempfile"
 version = "3.27.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8375,11 +8402,15 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "async-ringbuf",
+ "cntp_i18n",
+ "cntp_i18n_gen 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "contemporary",
  "gpui-unofficial",
  "libcdio-sys",
  "lthebeat",
  "smol",
  "tracing",
+ "udisks2",
  "url",
 ]
 
@@ -8835,6 +8866,19 @@ name = "typenum"
 version = "1.20.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b6f5e870be6c3b371b77fe0ee0bafb859fa4964b4404c27de1d380043c4dda20"
+
+[[package]]
+name = "udisks2"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ce19d0471b9df48c9625576e9f2a44b53fa680cfed49cbd7f89904d48c280620"
+dependencies = [
+ "enumflags2",
+ "gettext-rs",
+ "serde",
+ "serde_repr",
+ "zbus",
+]
 
 [[package]]
 name = "uds_windows"

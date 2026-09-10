@@ -89,7 +89,7 @@ impl MainSurface {
             artists_view: ArtistsView::new(on_setup_button_click.clone(), cx),
             albums_view: AlbumsView::new(on_setup_button_click, cx),
             playlists_view: cx.new(|cx| PlaylistsView::new(cx)),
-            other_sources_view: OtherSourcesView::new(cx),
+            other_sources_view: cx.new(|cx| OtherSourcesView::new(cx)),
             transport_controls: TransportControls::new(cx),
         })
     }

@@ -17,6 +17,7 @@ use lthebeat::audio_library::database_query::DatabaseQuery;
 use lthebeat::audio_library::track::Track;
 use lthebeat::play_queue::PlayQueue;
 use lthebeat::play_queue::media_item::MediaItem;
+use lthebeat::ui::track_list_skeleton::track_list_skeleton;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -49,99 +50,82 @@ impl RenderOnce for TrackListing {
         let database_query_clone_3 = self.database_query.clone();
         let database_query_clone_4 = self.database_query.clone();
         let track_count = self.database_query.borrow().as_ref().unwrap().count();
-        div()
-            .id("track-listing")
-            .flex()
-            .child(
-                div()
-                    .p(px(8.))
-                    .gap(px(8.))
-                    .flex()
-                    .flex_col()
-                    .child(
-                        layer()
-                            .p(px(8.))
-                            .gap(px(8.))
-                            .flex()
-                            .flex_col()
-                            .child(subtitle(
-                                tr!("TRACK_LISTING_ACTIONS", "Actions").to_uppercase(),
-                            ))
-                            .child(
-                                button("play-all-button")
-                                    .flat()
-                                    .justify_start()
-                                    .child(icon_text(
-                                        "media-playback-start",
-                                        tr!("TRACK_LISTING_PLAY_ALL", "Play All"),
-                                    ))
-                                    .on_click(move |_, _, cx| {
-                                        play_all(database_query_clone_2.clone(), cx);
-                                    }),
-                            )
-                            .child(
-                                button("enqueue-all-button")
-                                    .flat()
-                                    .justify_start()
-                                    .child(icon_text(
-                                        "view-media-playlist",
-                                        tr!("TRACK_LISTING_ENQUEUE_ALL", "Enqueue All"),
-                                    ))
-                                    .on_click(move |_, _, cx| {
-                                        enqueue_all(database_query_clone_3.clone(), cx);
-                                    }),
-                            )
-                            .child(
-                                button("shuffle-all-button")
-                                    .flat()
-                                    .justify_start()
-                                    .child(icon_text(
-                                        "media-playlist-shuffle",
-                                        tr!("TRACK_LISTING_SHUFFLE_ALL", "Shuffle All"),
-                                    ))
-                                    .on_click(move |_, _, cx| {
-                                        shuffle_all(database_query_clone_4.clone(), cx);
-                                    }),
-                            )
-                            .child(
-                                button("burn-button")
-                                    .flat()
-                                    .justify_start()
-                                    .child(icon_text(
-                                        "tools-media-optical-burn",
-                                        tr!("TRACK_LISTING_BURN", "Burn"),
-                                    )),
-                            ),
-                    )
-                    .child(div().flex_grow(1.))
-                    .child(trn!(
-                        "TRACK_LISTING_TRACK_COUNT",
-                        "{{count}} track",
-                        "{{count}} tracks",
-                        count = track_count as isize
-                    )),
-            )
-            .child(
-                uniform_list("tracks-list", track_count, move |range, _, cx| {
-                    range
-                        .map(|index| {
-                            track_element(
-                                database_query_clone
-                                    .borrow_mut()
-                                    .as_mut()
-                                    .unwrap()
-                                    .get(index, cx),
-                            )
-                            .custom_id(index as u64)
-                            .when_some(self.context, |el, context| el.context(context))
-                        })
-                        .collect()
-                })
-                .h_full()
-                .flex_grow(1.),
-            )
+
+        track_list_skeleton(
+            uniform_list("tracks-list", track_count, move |range, _, cx| {
+                range
+                    .map(|index| {
+                        track_element(
+                            database_query_clone
+                                .borrow_mut()
+                                .as_mut()
+                                .unwrap()
+                                .get(index, cx),
+                        )
+                        .custom_id(index as u64)
+                        .when_some(self.context, |el, context| el.context(context))
+                    })
+                    .collect()
+            })
             .h_full()
-            .w_full()
+            .flex_grow(1.),
+        )
+        .track_count(track_count)
+        .side_list_area_child(
+            layer()
+                .p(px(8.))
+                .gap(px(8.))
+                .flex()
+                .flex_col()
+                .child(subtitle(
+                    tr!("TRACK_LISTING_ACTIONS", "Actions").to_uppercase(),
+                ))
+                .child(
+                    button("play-all-button")
+                        .flat()
+                        .justify_start()
+                        .child(icon_text(
+                            "media-playback-start",
+                            tr!("TRACK_LISTING_PLAY_ALL", "Play All"),
+                        ))
+                        .on_click(move |_, _, cx| {
+                            play_all(database_query_clone_2.clone(), cx);
+                        }),
+                )
+                .child(
+                    button("enqueue-all-button")
+                        .flat()
+                        .justify_start()
+                        .child(icon_text(
+                            "view-media-playlist",
+                            tr!("TRACK_LISTING_ENQUEUE_ALL", "Enqueue All"),
+                        ))
+                        .on_click(move |_, _, cx| {
+                            enqueue_all(database_query_clone_3.clone(), cx);
+                        }),
+                )
+                .child(
+                    button("shuffle-all-button")
+                        .flat()
+                        .justify_start()
+                        .child(icon_text(
+                            "media-playlist-shuffle",
+                            tr!("TRACK_LISTING_SHUFFLE_ALL", "Shuffle All"),
+                        ))
+                        .on_click(move |_, _, cx| {
+                            shuffle_all(database_query_clone_4.clone(), cx);
+                        }),
+                )
+                .child(
+                    button("burn-button")
+                        .flat()
+                        .justify_start()
+                        .child(icon_text(
+                            "tools-media-optical-burn",
+                            tr!("TRACK_LISTING_BURN", "Burn"),
+                        )),
+                ),
+        )
     }
 }
 

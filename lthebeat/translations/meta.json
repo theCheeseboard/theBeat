@@ -23,6 +23,12 @@
     "plural": false,
     "description": null
   },
+  "TRACK_LISTING_TRACK_COUNT": {
+    "context": "track_list_skeleton.rs",
+    "definedIn": "src/ui/track_list_skeleton.rs:48",
+    "plural": true,
+    "description": null
+  },
   "TRACK_UNKNOWN_TITLE": {
     "context": "audio_metadata.rs",
     "definedIn": "src/audio_processing/audio_metadata.rs:39",
