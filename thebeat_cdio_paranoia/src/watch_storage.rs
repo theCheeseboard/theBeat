@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::ffi::CStr;
 use std::time::Duration;
 use gpui::{App, AppContext, AsyncApp, Global};
 use smol::stream::StreamExt;
@@ -89,13 +90,17 @@ async fn watch_block_device(client: &Client, block_device: OwnedObjectPath, cx: 
             return;
         };
 
-        let Ok(block_device) = String::from_utf8(block_device) else {
+        let Ok(block_device) = CStr::from_bytes_with_nul(&block_device) else {
+            return;
+        };
+
+        let Ok(block_device) = block_device.to_str() else {
             return;
         };
 
         let drive_vendor = drive.vendor().await;
         let drive_model = drive.model().await;
-        
+
         let drive_name = if let Ok(ref drive_vendor) = drive_vendor && let Ok(ref drive_model) = drive_model {
             format!("{drive_vendor} {drive_model}")
         } else if let Ok(drive_vendor) = drive_vendor {

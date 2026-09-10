@@ -23,7 +23,7 @@ impl CdioManager {
         }
     }
 
-    pub fn get_cd(&self, path: String) -> anyhow::Result<Arc<CdioCd>> {
+    pub fn get_cd(&self, path: &str) -> anyhow::Result<Arc<CdioCd>> {
         let mut cdios = self.cdios.borrow_mut();
         for cdio in cdios.iter() {
             if let Some(cdio) = cdio.upgrade() {
@@ -33,7 +33,7 @@ impl CdioManager {
             }
         }
 
-        let cdio = Arc::new(CdioCd::new(path)?);
+        let cdio = Arc::new(CdioCd::new(path.to_string())?);
         cdios.push(Arc::downgrade(&cdio));
         Ok(cdio)
     }

@@ -1,3 +1,4 @@
+use crate::cdio_paranoia_engine::cdio_manager::CdioManager;
 use crate::track_url;
 use cntp_i18n::tr;
 use contemporary::components::button::button;
@@ -26,9 +27,7 @@ use url::Url;
 
 pub struct CdSource {
     name: String,
-    block_device: String,
     id: SharedString,
-    num_tracks: u32,
     view: Entity<CdView>,
 }
 
@@ -40,30 +39,66 @@ impl CdSource {
         drive_name: &str,
         cx: &mut App,
     ) -> Self {
-        cx.update_global::<MetadataRegistry, _>(|metadata_registry, cx| {
-            for i in 0..num_tracks {
-                let url = track_url(block_device, i + 1);
-                metadata_registry.insert_metadata(
-                    url.clone(),
-                    AudioMetadata {
-                        url: Some(url),
-                        associated_item: None,
-                        title: Some(tr!("CD_TRACK_NUMBER", number = (i + 1)).into()),
-                        album: Some(drive_name.into()),
-                        track_number: Some(i + 1),
-                        total_track_number: Some(num_tracks + 1),
-                        ..Default::default()
-                    },
-                )
-            }
-        });
+        let cdio_manager = cx.global::<CdioManager>();
+        if let Ok(cd_device) = cdio_manager.get_cd(block_device) {
+            cx.update_global::<MetadataRegistry, _>(|metadata_registry, cx| {
+                for i in cd_device.first_track()..=cd_device.last_track() {
+                    let url = track_url(block_device, i);
+                    metadata_registry.insert_metadata(
+                        url.clone(),
+                        AudioMetadata {
+                            url: Some(url),
+                            associated_item: None,
+                            title: Some(tr!("CD_TRACK_NUMBER", number = i).into()),
+                            album: Some(drive_name.into()),
+                            track_number: Some(i as u32),
+                            total_track_number: Some(num_tracks + 1),
+                            ..Default::default()
+                        },
+                    )
+                }
+            });
 
-        CdSource {
-            name: drive_name.into(),
-            block_device: block_device.to_string(),
-            id: format!("cd-paranoia-{}", block_device).into(),
-            num_tracks,
-            view: cx.new(|cx| CdView::new(dbus_client, block_device, num_tracks, drive_name, cx)),
+            CdSource {
+                name: drive_name.into(),
+                id: format!("cd-paranoia-{}", block_device).into(),
+                view: cx.new(|cx| {
+                    CdView::new(
+                        dbus_client,
+                        block_device,
+                        cd_device.first_track() as u32,
+                        cd_device.last_track() as u32,
+                        drive_name,
+                        cx,
+                    )
+                }),
+            }
+        } else {
+            cx.update_global::<MetadataRegistry, _>(|metadata_registry, cx| {
+                for i in 0..num_tracks {
+                    let url = track_url(block_device, i + 1);
+                    metadata_registry.insert_metadata(
+                        url.clone(),
+                        AudioMetadata {
+                            url: Some(url),
+                            associated_item: None,
+                            title: Some(tr!("CD_TRACK_NUMBER", number = (i + 1)).into()),
+                            album: Some(drive_name.into()),
+                            track_number: Some(i + 1),
+                            total_track_number: Some(num_tracks + 1),
+                            ..Default::default()
+                        },
+                    )
+                }
+            });
+
+            CdSource {
+                name: drive_name.into(),
+                id: format!("cd-paranoia-{}", block_device).into(),
+                view: cx.new(|cx| {
+                    CdView::new(dbus_client, block_device, 1, 1 + num_tracks, drive_name, cx)
+                }),
+            }
         }
     }
 }
@@ -85,7 +120,8 @@ impl OtherSource for CdSource {
 pub struct CdView {
     block_device: String,
     dbus_client: Client,
-    num_tracks: u32,
+    first_track: u32,
+    last_track: u32,
     drive_name: String,
 }
 
@@ -93,14 +129,16 @@ impl CdView {
     pub fn new(
         dbus_client: &Client,
         block_device: &str,
-        num_tracks: u32,
+        first_track: u32,
+        last_track: u32,
         drive_name: &str,
         cx: &mut Context<Self>,
     ) -> Self {
         CdView {
             block_device: block_device.to_string(),
             dbus_client: dbus_client.clone(),
-            num_tracks,
+            first_track,
+            last_track,
             drive_name: drive_name.to_string(),
         }
     }
@@ -124,8 +162,8 @@ impl CdView {
     }
 
     fn enqueue_all(&self, cx: &mut Context<Self>) {
-        let url_list: Vec<_> = (0..self.num_tracks)
-            .map(|track| track_url(&self.block_device, track + 1))
+        let url_list: Vec<_> = (self.first_track..=self.last_track)
+            .map(|track| track_url(&self.block_device, track))
             .collect();
 
         cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
@@ -140,6 +178,7 @@ impl CdView {
 impl Render for CdView {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let block_device = self.block_device.clone();
+        let num_tracks = (self.last_track - self.first_track + 1) as usize;
 
         div()
             .w_full()
@@ -153,35 +192,31 @@ impl Render for CdView {
             )
             .child(
                 track_list_skeleton(
-                    uniform_list(
-                        "tracks-list",
-                        self.num_tracks as usize,
-                        move |range, _, cx| {
-                            range
-                                .map(|index| {
-                                    let url = track_url(&block_device, index + 1);
+                    uniform_list("tracks-list", num_tracks, move |range, _, cx| {
+                        range
+                            .map(|index| {
+                                let url = track_url(&block_device, index + 1);
 
-                                    div()
-                                        .id(index)
-                                        .child(tr!(
-                                            "CD_TRACK_NUMBER",
-                                            "Track {{number}}",
-                                            number = (index + 1)
-                                        ))
-                                        .on_click(move |_, _, cx| {
-                                            let item = cx.new(|cx| MediaItem::new(url.clone(), cx));
-                                            cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
-                                                play_queue.add_item(item, cx);
-                                            })
+                                div()
+                                    .id(index)
+                                    .child(tr!(
+                                        "CD_TRACK_NUMBER",
+                                        "Track {{number}}",
+                                        number = (index + 1)
+                                    ))
+                                    .on_click(move |_, _, cx| {
+                                        let item = cx.new(|cx| MediaItem::new(url.clone(), cx));
+                                        cx.update_global::<PlayQueue, ()>(|play_queue, cx| {
+                                            play_queue.add_item(item, cx);
                                         })
-                                })
-                                .collect()
-                        },
-                    )
+                                    })
+                            })
+                            .collect()
+                    })
                     .h_full()
                     .flex_grow(1.),
                 )
-                .track_count(self.num_tracks as usize)
+                .track_count(num_tracks)
                 .side_list_area_child(
                     layer()
                         .p(px(8.))

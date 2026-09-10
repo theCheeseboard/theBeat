@@ -8,7 +8,9 @@ use url::Url;
 #[cfg(target_os = "linux")]
 pub mod cdio_paranoia_engine;
 
+#[cfg(target_os = "linux")]
 pub mod cd_view;
+
 #[cfg(target_os = "linux")]
 mod watch_storage;
 

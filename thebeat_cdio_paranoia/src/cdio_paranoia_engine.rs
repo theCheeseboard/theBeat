@@ -174,7 +174,7 @@ fn open_media_source(url: &Url, cx: &mut App) -> anyhow::Result<(Arc<CdioCd>, u8
                 .find(|(k, _)| k == "track")
                 .map(|(_, v)| v.parse::<u8>().unwrap())
                 .unwrap_or(1);
-            Ok((cdio_manager.get_cd("/dev/sr0".to_string())?, track_number))
+            Ok((cdio_manager.get_cd(url.path().trim_end())?, track_number))
         }
         _ => Err(anyhow::anyhow!("Unsupported scheme")),
     }
