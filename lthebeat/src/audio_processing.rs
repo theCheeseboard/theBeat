@@ -6,4 +6,4 @@ pub mod input_engines;
 mod mute;
 pub mod output_drivers;
 mod resamplers;
-mod sample;
+pub mod sample;

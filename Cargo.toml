@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["lthebeat", "thebeat", "thebeat_internet_radio"]
+members = ["lthebeat", "thebeat", "thebeat_cdio_paranoia", "thebeat_internet_radio"]
 
 [workspace.dependencies]
 gpui = { version = "1.11", package = "gpui-unofficial" }
@@ -28,3 +28,4 @@ async-walkdir = "2"
 sha2 = "0.10"
 lthebeat = { path = "lthebeat" }
 thebeat_internet_radio = { path = "thebeat_internet_radio" }
+thebeat_cdio_paranoia = { path = "thebeat_cdio_paranoia" }

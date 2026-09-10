@@ -1,9 +1,9 @@
-use crate::audio_processing::input_engines::cdio_paranoia_engine::cdio_manager::CdioCdTrack;
-use crate::audio_processing::input_engines::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
-use crate::audio_processing::input_engines::cdio_paranoia_engine::lsn::Lsn;
-use crate::audio_processing::sample::SampleData;
+use lthebeat::audio_processing::sample::SampleData;
 use std::sync::Arc;
 use std::sync::Mutex;
+use crate::cdio_paranoia_engine::cdio_manager::CdioCdTrack;
+use crate::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
+use crate::cdio_paranoia_engine::lsn::Lsn;
 
 pub struct CdioParanoiaTrack {
     cdio_paranoia: Arc<CdioParanoia>,

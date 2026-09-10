@@ -1,5 +1,3 @@
-use crate::audio_processing::input_engines::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
-use crate::audio_processing::input_engines::cdio_paranoia_engine::lsn::Lsn;
 use gpui::Global;
 use libcdio_sys::{
     CdIo_t, cdio_cddap_speed_set, cdio_free, cdio_get_first_track_num, cdio_get_last_track_num,
@@ -11,6 +9,8 @@ use std::ffi::CString;
 use std::sync::Arc;
 use std::sync::RwLock;
 use std::sync::Weak;
+use crate::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
+use crate::cdio_paranoia_engine::lsn::Lsn;
 
 pub struct CdioManager {
     cdios: RefCell<Vec<Weak<CdioCd>>>,

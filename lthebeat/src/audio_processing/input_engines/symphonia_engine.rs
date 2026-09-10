@@ -5,13 +5,13 @@ use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError, creat
 use crate::audio_processing::audio_pipeline::{
     PipelineSample, PipelineSampleResult, SAMPLE_BUFFER_SIZE,
 };
-use crate::audio_processing::input_engines::Controller;
+use crate::audio_processing::input_engines::{Controller, EngineFactory};
 use crate::audio_processing::input_engines::symphonia_engine::http_source::HttpSource;
 use crate::audio_processing::sample::{Sample, SampleData};
 use crate::play_queue::media_item::MediaItem;
 use async_ringbuf::AsyncHeapRb;
 use async_ringbuf::traits::{AsyncProducer, Split};
-use gpui::Entity;
+use gpui::{App, Entity};
 use log::warn;
 use regex::Regex;
 use std::borrow::Cow;
@@ -35,6 +35,21 @@ use url::Url;
 pub struct SymphoniaEngine {
     faucet: Option<Faucet>,
     format: Arc<RwLock<Box<dyn FormatReader>>>,
+}
+
+#[derive(Default)]
+pub struct SymphoniaFactory {
+
+}
+
+impl EngineFactory for SymphoniaFactory {
+    fn faucet_for_url(&self, url: Url, associated_track: Option<Entity<MediaItem>>, _: &mut App) -> Option<Box<dyn Controller>> {
+        if let Ok(symphonia_engine) = SymphoniaEngine::new(url.clone(), associated_track.clone()) {
+            Some(Box::new(symphonia_engine))
+        } else {
+            None
+        }
+    }
 }
 
 impl SymphoniaEngine {

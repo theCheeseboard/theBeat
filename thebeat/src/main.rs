@@ -181,6 +181,9 @@ fn mane() {
 fn setup_features(cx: &mut App) {
     #[cfg(feature = "internet-radio")]
     thebeat_internet_radio::init(cx);
+
+    #[cfg(feature = "cdio-paranoia")]
+    thebeat_cdio_paranoia::init(cx);
 }
 
 main! {

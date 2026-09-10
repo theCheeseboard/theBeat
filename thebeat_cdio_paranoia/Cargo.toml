@@ -1,0 +1,16 @@
+[package]
+name = "thebeat_cdio_paranoia"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+gpui = { workspace = true }
+lthebeat = { workspace = true }
+tracing = { workspace = true }
+anyhow = { workspace = true }
+async-ringbuf = { workspace = true }
+url = { workspace = true }
+smol = { workspace = true }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+libcdio-sys = { version = "1", features = ["paranoia"] }

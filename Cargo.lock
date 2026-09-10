@@ -4582,7 +4582,6 @@ dependencies = [
  "image",
  "intx",
  "isahc",
- "libcdio-sys",
  "log",
  "mpris-server",
  "objc2 0.6.4",
@@ -8364,9 +8363,24 @@ dependencies = [
  "lthebeat",
  "smol",
  "smol-macros",
+ "thebeat_cdio_paranoia",
  "thebeat_internet_radio",
  "tracing",
  "tracing-subscriber",
+]
+
+[[package]]
+name = "thebeat_cdio_paranoia"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-ringbuf",
+ "gpui-unofficial",
+ "libcdio-sys",
+ "lthebeat",
+ "smol",
+ "tracing",
+ "url",
 ]
 
 [[package]]

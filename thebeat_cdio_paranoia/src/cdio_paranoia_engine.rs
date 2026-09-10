@@ -6,22 +6,17 @@ mod cdio_paranoia;
 mod cdio_paranoia_track;
 mod lsn;
 
-use crate::audio_processing::audio_metadata::AudioMetadata;
-use crate::audio_processing::audio_pipeline::bufferer::create_bufferer;
-use crate::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError, create_faucet};
-use crate::audio_processing::audio_pipeline::{PipelineSample, PipelineSampleResult, plug};
-use crate::audio_processing::input_engines::Controller;
-use crate::audio_processing::input_engines::cdio_paranoia_engine::cdio_manager::{
-    CdioCd, CdioManager,
-};
-use crate::audio_processing::input_engines::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
-use crate::audio_processing::sample::Sample;
-use crate::play_queue::media_item::MediaItem;
 use async_ringbuf::AsyncHeapRb;
 use gpui::{App, Entity};
 use libcdio_sys::{CdIo_t, cdio_open_cd};
-use log::warn;
 use lsn::Lsn;
+use lthebeat::audio_processing::audio_metadata::AudioMetadata;
+use lthebeat::audio_processing::audio_pipeline::bufferer::create_bufferer;
+use lthebeat::audio_processing::audio_pipeline::faucet::{Faucet, FaucetError, create_faucet};
+use lthebeat::audio_processing::audio_pipeline::{PipelineSample, PipelineSampleResult, plug};
+use lthebeat::audio_processing::input_engines::{Controller, EngineFactory};
+use lthebeat::audio_processing::sample::Sample;
+use lthebeat::play_queue::media_item::MediaItem;
 use smol::stream::StreamExt;
 use std::ffi::CString;
 use std::fs::File;
@@ -29,13 +24,30 @@ use std::rc::Rc;
 use std::sync::{Arc, RwLock};
 use std::thread;
 use std::time::Instant;
-use tracing::info;
+use tracing::{info, warn};
 use url::Url;
+use crate::cdio_paranoia_engine::cdio_manager::{CdioCd, CdioManager};
+use crate::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
 
 pub struct CdioParanoiaEngine {
     faucet: Option<Faucet>,
     next_requested_lsn: Arc<RwLock<Lsn>>,
     reset_faucet: Box<dyn Fn() + Send + Sync>,
+}
+
+#[derive(Default)]
+pub struct CdioParanoiaFactory {
+
+}
+
+impl EngineFactory for CdioParanoiaFactory {
+    fn faucet_for_url(&self, url: Url, associated_track: Option<Entity<MediaItem>>, cx: &mut App) -> Option<Box<dyn Controller>> {
+        if let Ok(cdio_paranoia_engine) = CdioParanoiaEngine::new(url.clone(), associated_track.clone(), cx) {
+            Some(Box::new(cdio_paranoia_engine))
+        } else {
+            None
+        }
+    }
 }
 
 impl CdioParanoiaEngine {

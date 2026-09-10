@@ -1,15 +1,14 @@
-use crate::audio_processing::input_engines::cdio_paranoia_engine::cdio_manager::CdioCd;
-use crate::audio_processing::input_engines::cdio_paranoia_engine::cdio_paranoia_track::CdioParanoiaTrack;
-use crate::audio_processing::input_engines::cdio_paranoia_engine::lsn::Lsn;
-use crate::audio_processing::sample::SampleData;
 use libcdio_sys::{cdio_cd_enums_CDIO_CD_FRAMESIZE_RAW, cdio_cddap_close_no_free_cdio, cdio_cddap_disc_firstsector, cdio_cddap_identify_cdio, cdio_cddap_open, cdio_cddap_speed_set, cdio_cddap_verbose_set, cdio_paranoia_free, cdio_paranoia_init, cdio_paranoia_modeset, cdio_paranoia_read, cdio_paranoia_seek, cdio_set_speed, cdrom_drive_t, cdrom_paranoia_t, lsn_t, paranoia_cdda_enums_t_CDDA_MESSAGE_PRINTIT, paranoia_mode_t_PARANOIA_MODE_FULL};
+use lthebeat::audio_processing::sample::SampleData;
 use std::collections::HashMap;
-use std::iter::Map;
 use std::ptr::null_mut;
 use std::slice;
 use std::sync::Arc;
 use std::sync::Mutex;
 use std::sync::Weak;
+use crate::cdio_paranoia_engine::cdio_manager::CdioCd;
+use crate::cdio_paranoia_engine::cdio_paranoia_track::CdioParanoiaTrack;
+use crate::cdio_paranoia_engine::lsn::Lsn;
 
 pub struct CdioParanoia {
     pub cdio_cd: Arc<CdioCd>,
