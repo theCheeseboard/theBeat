@@ -73,6 +73,8 @@ impl CdioParanoiaEngine {
                 cdio_cd.track_information(track)
             );
         }
+        info!("Lead out: {:?}", cdio_cd.lead_out_offset());
+        info!("MB Disc ID: {}", cdio_cd.musicbrainz_disc_id());
 
         let last_track = cdio_cd.last_track();
 

@@ -1,16 +1,21 @@
+use crate::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
+use crate::cdio_paranoia_engine::lsn::Lsn;
+use base64::alphabet::{Alphabet, Symbol};
+use base64::engine::GeneralPurpose;
+use base64::engine::general_purpose::{PAD, URL_SAFE};
+use base64::{Engine, alphabet};
 use gpui::Global;
 use libcdio_sys::{
-    CdIo_t, cdio_cddap_speed_set, cdio_free, cdio_get_first_track_num, cdio_get_last_track_num,
-    cdio_get_track_last_lsn, cdio_get_track_lsn, cdio_get_track_pregap_lsn, cdio_open_cd,
-    cdio_set_speed,
+    CdIo_t, cdio_cddap_speed_set, cdio_free, cdio_get_disc_last_lsn, cdio_get_first_track_num,
+    cdio_get_last_track_num, cdio_get_track_last_lsn, cdio_get_track_lsn,
+    cdio_get_track_pregap_lsn, cdio_open_cd, cdio_set_speed,
 };
+use sha1::{Digest, Sha1};
 use std::cell::RefCell;
 use std::ffi::CString;
 use std::sync::Arc;
 use std::sync::RwLock;
 use std::sync::Weak;
-use crate::cdio_paranoia_engine::cdio_paranoia::CdioParanoia;
-use crate::cdio_paranoia_engine::lsn::Lsn;
 
 pub struct CdioManager {
     cdios: RefCell<Vec<Weak<CdioCd>>>,
@@ -107,6 +112,10 @@ impl CdioCd {
         }
     }
 
+    pub fn lead_out_offset(&self) -> Lsn {
+        unsafe { Lsn(cdio_get_disc_last_lsn(self.cdio_cd)) }
+    }
+
     /// Get the Cdio_t pointer
     ///
     /// # Safety
@@ -126,6 +135,35 @@ impl CdioCd {
         let mut paranoia_borrow = cdio_cd.paranoia.write().unwrap();
         *paranoia_borrow = Arc::downgrade(&paranoia);
         paranoia
+    }
+
+    pub fn musicbrainz_disc_id(&self) -> String {
+        let mut hasher = Sha1::new();
+
+        // First track number
+        hasher.update(format!("{:02X}", self.first_track()));
+        // Last track number
+        hasher.update(format!("{:02X}", self.last_track()));
+        // Lead out offset
+        hasher.update(format!("{:08X}", self.lead_out_offset().0 + 150));
+        for i in 1..=99 {
+            if let Some(track_information) = self.track_information(i) {
+                hasher.update(format!("{:08X}", track_information.first_lsn.0 + 150));
+            } else {
+                hasher.update(format!("{:08X}", 0));
+            }
+        }
+
+        let hash = hasher.finalize();
+        let musicbrainz_base64_encoder = GeneralPurpose::new(
+            &Alphabet::new_with_padding(
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._",
+                Symbol::new(b'-').unwrap(),
+            )
+            .unwrap(),
+            PAD,
+        );
+        musicbrainz_base64_encoder.encode(hash.as_slice())
     }
 }
 
